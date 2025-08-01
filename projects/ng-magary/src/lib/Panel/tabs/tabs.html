@@ -1,0 +1,21 @@
+<div class="tabs">
+  <div
+    class="tab-headers"
+    #tabHeaders
+    [style.--background-color-line]="backgroundLine()"
+  >
+    @for (tab of tabs.toArray(); track $index) {
+      <button
+        #tabButton
+        (click)="selectTab($index)"
+        [class.active]="activeIndex() === $index"
+      >
+        {{ tab.label() }}
+      </button>
+    }
+  </div>
+
+  <div class="tab-content">
+    <ng-content></ng-content>
+  </div>
+</div>
