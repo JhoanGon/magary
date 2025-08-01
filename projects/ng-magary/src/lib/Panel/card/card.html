@@ -1,0 +1,26 @@
+<div
+  class="card"
+  [ngClass]="[type(), 'shadow-' + shadow()]"
+  [style.width]="width()"
+  [style.height]="height()"
+>
+  @if (img() && positionImage() === "top") {
+    <img [src]="img()" class="img-top" />
+  }
+
+  <div class="card-content">
+    @if (img() && positionImage() === "left") {
+      <img [src]="img()" class="img-left" />
+    }
+
+    <div class="card-body">
+      <ng-content></ng-content>
+    </div>
+    @if (img() && positionImage() === "right") {
+      <img [src]="img()" class="img-right" />
+    }
+  </div>
+  @if (img() && positionImage() === "bottom") {
+    <img [src]="img()" class="img-bottom" />
+  }
+</div>
