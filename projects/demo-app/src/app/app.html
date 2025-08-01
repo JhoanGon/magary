@@ -1,9 +1,42 @@
 <magary-card
-  width="800px"
-  height="50px"
-  type="warning"
-  [img]="'/assets/check.png'"
-  positionImage="left"
-  [shadow]="2">
-  ¡Operación completada con éxito!
+  width="500px"
+  [img]="'/assets/pika.jpg'"
+  positionImage="right"
+  [shadow]="5"
+  borderRadius="16px"
+  imageSize="600px"
+  [backgroundColor]="'lightblue'"
+  padding="0px"
+>
+  <div style="padding: 20px">
+    <h2 slot="header">Título de la Tarjeta</h2>
+
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum nulla quo
+    </p>
+
+    <div slot="footer">
+      <button>Aceptar</button>
+    </div>
+  </div>
 </magary-card>
+
+<magary-tabs [backgroundLine]="'#007bff'">
+  <magary-tab label="Inicio">
+    <h2>Bienvenido</h2>
+    <p>Contenido de la pestaña de inicio.</p>
+  </magary-tab>
+
+  <magary-tab label="Perfil">
+    <h2>Tu perfil</h2>
+    <p>Detalles personales, ajustes, etc.</p>
+  </magary-tab>
+
+  <magary-tab label="Ayuda">
+    <p>Aquí puedes encontrar asistencia.</p>
+  </magary-tab>
+
+  <magary-tab label="Contacto">
+    <p>Aquí puedes encontrar los numeros de contacto.</p>
+  </magary-tab>
+</magary-tabs>
