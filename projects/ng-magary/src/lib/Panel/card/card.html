@@ -1,26 +1,35 @@
 <div
   class="card"
-  [ngClass]="[type(), 'shadow-' + shadow()]"
+  [ngClass]="['shadow-' + shadow(), 'layout-' + positionImage()]"
   [style.width]="width()"
-  [style.height]="height()"
+  [style.height]="'auto'"
+  [style.padding]="padding()"
+  [style.gap]="gap()"
+  [style.border-radius]="borderRadius()"
+  [style.background-color]="backgroundColor()"
 >
-  @if (img() && positionImage() === "top") {
-    <img [src]="img()" class="img-top" />
+  @if (img()) {
+    <img
+      [src]="img()"
+      class="card-img"
+      [ngClass]="'img-' + positionImage()"
+      [style.width]="imageWidth()"
+      [style.height]="imageHeight()"
+      [ngStyle]="imageBorderRadius()"
+      alt="Card image"
+    />
   }
-
   <div class="card-content">
-    @if (img() && positionImage() === "left") {
-      <img [src]="img()" class="img-left" />
-    }
-
     <div class="card-body">
+      <div class="card-header">
+        <ng-content select="[slot='header']"></ng-content>
+      </div>
+
       <ng-content></ng-content>
+
+      <div class="card-footer">
+        <ng-content select="[slot='footer']"></ng-content>
+      </div>
     </div>
-    @if (img() && positionImage() === "right") {
-      <img [src]="img()" class="img-right" />
-    }
   </div>
-  @if (img() && positionImage() === "bottom") {
-    <img [src]="img()" class="img-bottom" />
-  }
 </div>
