@@ -1,1 +1,34 @@
-<p>button works!</p>
+<button
+  type="button"
+  [disabled]="disabled() || loading()"
+  [style.border-radius]="rounded() ? '22px' : '8px'"
+  [ngClass]="[
+    'p-button',
+    'shadow-' + shadow(),
+    'p-button-' + severity(),
+    variant() === 'text' ? 'p-button-text' : '',
+    variant() === 'outlined' ? 'p-button-outlined' : '',
+    icon() && !label() ? 'p-button-icon-only' : '',
+    icon() && label() && iconPos() === 'left' ? 'p-button-icon-left' : '',
+    icon() && label() && iconPos() === 'right' ? 'p-button-icon-right' : '',
+    loading() ? 'p-button-loading' : '',
+  ]"
+>
+  @if (loading()) {
+    <span class="p-button-loading-icon fas fa-spinner fa-spin"></span>
+  }
+
+  @if (icon() && !loading() && iconPos() === "left") {
+    <span class="p-button-icon" [ngClass]="icon()"></span>
+  }
+
+  @if (label()) {
+    <span class="p-button-label">{{ label() }}</span>
+  } @else if (!icon()) {
+    <span class="p-button-label">&nbsp;</span>
+  }
+
+  @if (icon() && !loading() && iconPos() === "right") {
+    <span class="p-button-icon" [ngClass]="icon()"></span>
+  }
+</button>

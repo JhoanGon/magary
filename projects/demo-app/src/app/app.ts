@@ -1,9 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { Card, Tab, Tabs } from 'ng-magary';
+import { Button, Card, Tab, Tabs } from 'ng-magary';
 
 @Component({
   selector: 'app-root',
-  imports: [Card, Tabs, Tab],
+  imports: [Card, Tabs, Tab, Button],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
