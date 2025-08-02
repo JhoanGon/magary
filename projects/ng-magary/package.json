@@ -2,6 +2,7 @@
   "name": "ng-magary",
   "version": "0.0.1",
   "peerDependencies": {
+    "@fortawesome/fontawesome-free": "^7.0.0",
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0"
   },

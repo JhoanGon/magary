@@ -1,0 +1,137 @@
+@use 'sass:list';
+// Colores por tipo de botón
+$button-variants: (
+  primary: (#020617, #3b3c3d),
+  secondary: (#d2d3d4, #d8dbdd),
+  success: (#22c55e, #54cc80),
+  danger: (#ef4444, #ce3c3c),
+  info: (#0ea5e9, #3d97c0),
+  warning: (#e7c52d, #c4aa3a),
+  help: (#a855f7, #854dbd),
+);
+
+// Estilos base del botón
+.p-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  gap: 0.5rem;
+  background-color: #007bff;
+  color: #ffffff;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // Icono a la derecha
+  &.p-button-icon-right {
+    flex-direction: row-reverse;
+  }
+
+  // Solo icono
+  &.p-button-icon-only {
+    padding: 10px;
+  }
+
+  // Estados de carga
+  &.p-button-loading {
+    position: relative;
+
+    .p-button-label,
+    .p-button-icon {
+      visibility: hidden;
+    }
+
+    .p-button-loading-icon {
+      position: absolute;
+      font-size: 1.2rem;
+    }
+  }
+
+  // Variante: text
+  &.p-button-text {
+    background-color: transparent;
+    border-color: transparent;
+    color: #007bff;
+
+    &:hover {
+      background-color: rgba(0, 123, 255, 0.05);
+    }
+  }
+
+  // Variante: outlined
+  &.p-button-outlined {
+    background-color: transparent;
+    border: 2px solid;
+    color: #007bff;
+
+    &:hover {
+      background-color: #007bff;
+      color: #ffffff;
+    }
+  }
+
+  // Generar estilos variantes: normal, text, outlined
+  @each $name, $colors in $button-variants {
+    $bg: list.nth($colors, 1);
+    $hover: list.nth($colors, 2);
+
+    &.p-button-#{$name} {
+      background-color: $bg;
+      color: #ffffff;
+
+      &:hover {
+        background-color: $hover;
+      }
+    }
+
+    &.p-button-text.p-button-#{$name} {
+      background-color: transparent;
+      color: $bg;
+
+      &:hover {
+        background-color: rgba($bg, 0.1);
+      }
+    }
+
+    &.p-button-outlined.p-button-#{$name} {
+      background-color: transparent;
+      border-color: $bg;
+      color: $bg;
+
+      &:hover {
+        background-color: rgba($bg, 0.1);
+        color: $bg;
+      }
+    }
+  }
+}
+
+// Animación de loading spin
+.pi-spin {
+  animation: pi-spin 1s linear infinite;
+}
+
+@keyframes pi-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Sombras reutilizables
+@for $i from 1 through 7 {
+  .shadow-#{$i} {
+    box-shadow: 0 #{2 + $i * 2}px #{4 + $i * 2}px rgba(0, 0, 0, 0.1 + $i * 0.05);
+  }
+}

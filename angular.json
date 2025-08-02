@@ -60,7 +60,8 @@
               }
             ],
             "styles": [
-              "projects/demo-app/src/styles.scss"
+              "projects/demo-app/src/styles.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ]
           },
           "configurations": {
@@ -113,9 +114,7 @@
                 "input": "projects/demo-app/public"
               }
             ],
-            "styles": [
-              "projects/demo-app/src/styles.scss"
-            ]
+            "styles": ["projects/demo-app/src/styles.scss"]
           }
         }
       }
