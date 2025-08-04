@@ -1,0 +1,201 @@
+<div class="container">
+  <div class="header">
+    <h1>MagaryTabs</h1>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu módulo o componente standalone</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre> {{ importExample }} </pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo básico</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Default</h4>
+          <magary-tabs
+            [backgroundLine]="'#007bff'"
+            [postionContent]="'flex-start'"
+          >
+            <magary-tab label="Inicio">
+              <h2>Bienvenido</h2>
+              <p>Contenido de la pestaña de inicio.</p>
+            </magary-tab>
+
+            <magary-tab label="Perfil">
+              <h2>Tu perfil</h2>
+              <p>Detalles personales, ajustes, etc.</p>
+            </magary-tab>
+
+            <magary-tab label="Ayuda">
+              <p>Aquí puedes encontrar asistencia.</p>
+            </magary-tab>
+
+            <magary-tab label="Contacto">
+              <p>Aquí puedes encontrar los numeros de contacto.</p>
+            </magary-tab>
+          </magary-tabs>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>
+&lt;magary-tabs [backgroundLine]="'#007bff'" [postionContent]="'flex-start'"&gt;
+  &lt;magary-tab label="Inicio"&gt;
+    &lt;h2&gt;Bienvenido&lt;/h2&gt;
+    &lt;p&gt;Contenido de la pestaña de inicio.&lt;/p&gt;
+  &lt;/magary-tab&gt;
+
+  &lt;magary-tab label="Perfil"&gt;
+    &lt;h2&gt;Tu perfil&lt;/h2&gt;
+    &lt;p&gt;Detalles personales, ajustes, etc.&lt;/p&gt;
+  &lt;/magary-tab&gt;
+
+  &lt;magary-tab label="Ayuda"&gt;
+    &lt;p&gt;Aquí puedes encontrar asistencia.&lt;/p&gt;
+  &lt;/magary-tab&gt;
+
+  &lt;magary-tab label="Contacto"&gt;
+    &lt;p&gt;Aquí puedes encontrar los numeros de contacto.&lt;/p&gt;
+  &lt;/magary-tab&gt;
+&lt;/magary-tabs&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Properties -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente</p>
+    </div>
+    <div class="section-content">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Valor por Defecto</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>backgroundLine</code></td>
+            <td><code>string</code></td>
+            <td><code>'#000'</code></td>
+            <td>Color de la línea que indica la pestaña activa</td>
+          </tr>
+          <tr>
+            <td><code>postionContent</code></td>
+            <td><code>string</code></td>
+            <td><code>'center'</code></td>
+            <td>
+              Posición del contenido, se utiliza los mismos que con
+              justify-content
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- API Events -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos emitidos por el componente</p>
+    </div>
+    <div class="section-content">
+      <p>
+        Este componente no emite eventos directamente, pero puedes reaccionar a
+        los cambios en las pestañas internas.
+      </p>
+    </div>
+  </div>
+
+  <!-- Estructura esperada -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Contenido Esperado</h2>
+      <p>
+        Este componente espera recibir uno o más componentes
+        <code>&lt;magary-tab&gt;</code> como hijos.
+      </p>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li>
+          Cada <code>&lt;magary-tab&gt;</code> debe tener una propiedad
+          <code>label</code>.
+        </li>
+        <li>
+          El contenido dentro de cada tab se mostrará solo cuando esté activa.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Accessibility -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Accesibilidad</h2>
+      <p>Características de accesibilidad implementadas</p>
+    </div>
+    <div class="section-content">
+      <ul class="accessibility-list">
+        <li>
+          <strong>Teclado:</strong> Los botones de pestañas pueden ser accedidos
+          con Tab
+        </li>
+        <li>
+          <strong>Activación:</strong> Las pestañas se activan con Enter o Click
+        </li>
+        <li><strong>Foco:</strong> Las pestañas muestran foco visual</li>
+        <li>
+          <strong>Semántica:</strong> Botones con estructura clara y etiquetas
+          visibles
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Ejemplos -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplos Completos</h2>
+      <p>Casos de uso comunes</p>
+    </div>
+    <div class="section-content">
+      <h4>Pestañas Básicas</h4>
+      <div class="code-block">
+        <pre>
+&lt;magary-tabs backgroundLine="#ff4081"&gt;
+  &lt;magary-tab label="Perfil"&gt;
+    &lt;p&gt;Contenido del perfil&lt;/p&gt;
+  &lt;/magary-tab&gt;
+
+  &lt;magary-tab label="Configuración"&gt;
+    &lt;p&gt;Contenido de configuración&lt;/p&gt;
+  &lt;/magary-tab&gt;
+
+  &lt;magary-tab label="Seguridad"&gt;
+    &lt;p&gt;Contenido de seguridad&lt;/p&gt;
+  &lt;/magary-tab&gt;
+&lt;/magary-tabs&gt;
+      </pre
+        >
+      </div>
+    </div>
+  </div>
+</div>

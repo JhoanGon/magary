@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, EventEmitter, input, output } from '@angular/core';
 
 @Component({
   selector: 'magary-button',
@@ -7,11 +7,12 @@ import { Component, input } from '@angular/core';
   templateUrl: './button.html',
   styleUrl: './button.scss',
 })
-export class Button {
+export class MagaryButton {
   public label = input<string>();
   public icon = input<string>();
   public shadow = input<number>(0);
   public rounded = input<boolean>(false);
+  public customBackgroundColor = input<string>();
   public iconPos = input<'left' | 'right'>('left');
   public severity = input<
     'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help'
@@ -19,4 +20,5 @@ export class Button {
   public loading = input<boolean>(false);
   public disabled = input<boolean>(false);
   public variant = input<'solid' | 'text' | 'outlined'>('solid');
+  public buttonClick = output<Event>();
 }

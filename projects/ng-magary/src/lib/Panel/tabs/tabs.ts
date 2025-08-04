@@ -10,7 +10,7 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { Tab } from './tab/tab';
+import { MagaryTab } from './tab/tab';
 
 @Component({
   selector: 'magary-tabs',
@@ -18,13 +18,14 @@ import { Tab } from './tab/tab';
   templateUrl: './tabs.html',
   styleUrl: './tabs.scss',
 })
-export class Tabs implements OnInit, AfterContentInit {
-  @ContentChildren(Tab) tabs!: QueryList<Tab>;
+export class MagaryTabs implements OnInit, AfterContentInit {
+  @ContentChildren(MagaryTab) tabs!: QueryList<MagaryTab>;
   @ViewChild('tabHeaders') headersRef!: ElementRef<HTMLElement>;
   @ViewChildren('tabButton') buttonsRef!: QueryList<ElementRef<HTMLElement>>;
 
   public activeIndex = signal(0);
   public backgroundLine = input<string>('#000');
+  public postionContent = input<string>('center');
 
   ngOnInit(): void {
     this.activeIndex.set(0);

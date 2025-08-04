@@ -44,6 +44,8 @@
 
 .tab-content {
   padding: 1rem;
+  display: flex;
+  justify-content: --postion-content;
 
   &.animated {
     animation: slideIn 0.7s ease-out;

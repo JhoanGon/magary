@@ -1,0 +1,517 @@
+<div class="container">
+  <div class="header">
+    <h1>MagaryButton</h1>
+    <p>Componente de botón altamente personalizable para Angular</p>
+  </div>
+
+  <!-- Import Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu módulo o componente standalone</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre> {{ importExample }} </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic Usage -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Uso Básico</h2>
+      <p>Ejemplos básicos del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Default</h4>
+          <magary-button label="Button"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Con Icono</h4>
+          <magary-button label="Home" icon="fas fa-home"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Solo Icono</h4>
+          <magary-button icon="fas fa-heart"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Cargando</h4>
+          <magary-button label="Loading..." [loading]="true"></magary-button>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>
+&lt;magary-button label="Button"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Home" icon="fas fa-home"&gt;&lt;/magary-button&gt;
+&lt;magary-button icon="fas fa-heart"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Loading..." [loading]="true"&gt;&lt;/magary-button&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Severities -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Severidades</h2>
+      <p>Diferentes tipos de botones según su propósito</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Primary</h4>
+          <magary-button label="Primary" severity="primary"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Secondary</h4>
+          <magary-button label="Secondary" severity="secondary"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Success</h4>
+          <magary-button label="Success" severity="success"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Info</h4>
+          <magary-button label="Info" severity="info"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Warning</h4>
+          <magary-button label="Warning" severity="warning"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Danger</h4>
+          <magary-button label="Danger" severity="danger"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Help</h4>
+          <magary-button label="Help" severity="help"></magary-button>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>
+&lt;magary-button label="Primary" severity="primary"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Secondary" severity="secondary"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Success" severity="success"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Info" severity="info"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Warning" severity="warning"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Danger" severity="danger"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Help" severity="help"&gt;&lt;/magary-button&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Variants -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Variantes</h2>
+      <p>Diferentes estilos visuales del botón</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Solid</h4>
+          <div class="variantButtons">
+            <magary-button
+              label="Solid"
+              variant="solid"
+              [customBackgroundColor]="'#40cae7'"
+            ></magary-button>
+            <magary-button
+              label="Solid"
+              variant="solid"
+              [customBackgroundColor]="'#ed8a15'"
+            ></magary-button>
+            <magary-button
+              label="Solid"
+              variant="solid"
+              [customBackgroundColor]="'#f12cc9'"
+            ></magary-button>
+          </div>
+        </div>
+        <div class="demo-item">
+          <h4>Outlined</h4>
+          <div class="variantButtons">
+            <magary-button
+              label="Outlined"
+              variant="outlined"
+              severity="primary"
+            ></magary-button>
+            <magary-button
+              label="Outlined"
+              variant="outlined"
+              severity="success"
+            ></magary-button>
+            <magary-button
+              label="Outlined"
+              variant="outlined"
+              severity="danger"
+            ></magary-button>
+          </div>
+        </div>
+        <div class="demo-item">
+          <h4>Text</h4>
+          <div class="variantButtons">
+            <magary-button
+              label="Text"
+              variant="text"
+              severity="primary"
+            ></magary-button>
+            <magary-button
+              label="Text"
+              variant="text"
+              severity="success"
+            ></magary-button>
+            <magary-button
+              label="Text"
+              variant="text"
+              severity="danger"
+            ></magary-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>
+&lt;magary-button label="Solid" variant="solid" [customBackgroundColor]="'#40cae7'"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Outlined" variant="outlined" severity="primary"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Text" variant="text" severity="primary"&gt;&lt;/magary-button&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shadows & Rounded -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Personalización Visual</h2>
+      <p>Sombras y bordes redondeados</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Sombras</h4>
+          <div class="variantButtons">
+            <magary-button
+              label="Shadow 1"
+              [shadow]="1"
+              severity="primary"
+            ></magary-button>
+            <magary-button
+              label="Shadow 3"
+              [shadow]="3"
+              severity="primary"
+            ></magary-button>
+            <magary-button
+              label="Shadow 5"
+              [shadow]="5"
+              severity="primary"
+            ></magary-button>
+          </div>
+        </div>
+        <div class="demo-item">
+          <h4>Rounded</h4>
+          <div class="variantButtons">
+            <magary-button label="Normal" severity="primary"></magary-button>
+            <magary-button
+              label="Rounded"
+              [rounded]="true"
+              severity="primary"
+            ></magary-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>
+&lt;magary-button label="Shadow 1" [shadow]="1"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Shadow 3" [shadow]="3"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Shadow 5" [shadow]="5"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Rounded" [rounded]="true"&gt;&lt;/magary-button&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- States -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Estados</h2>
+      <p>Estados del botón</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Normal</h4>
+          <magary-button label="Normal" severity="primary"></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Disabled</h4>
+          <magary-button
+            label="Disabled"
+            [disabled]="true"
+            severity="primary"
+          ></magary-button>
+        </div>
+        <div class="demo-item">
+          <h4>Loading</h4>
+          <magary-button
+            label="Loading..."
+            [loading]="true"
+            severity="primary"
+          ></magary-button>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>
+&lt;magary-button label="Normal"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Disabled" [disabled]="true"&gt;&lt;/magary-button&gt;
+&lt;magary-button label="Loading..." [loading]="true"&gt;&lt;/magary-button&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Properties -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente</p>
+    </div>
+    <div class="section-content">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Valor por Defecto</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>label</code></td>
+            <td><code>string</code></td>
+            <td><code>undefined</code></td>
+            <td>Texto del botón</td>
+          </tr>
+          <tr>
+            <td><code>icon</code></td>
+            <td><code>string</code></td>
+            <td><code>undefined</code></td>
+            <td>Clase CSS del icono (ej: 'fas fa-home')</td>
+          </tr>
+          <tr>
+            <td><code>shadow</code></td>
+            <td><code>number</code></td>
+            <td><code>0</code></td>
+            <td>Nivel de sombra (0-5)</td>
+          </tr>
+          <tr>
+            <td><code>rounded</code></td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>Aplica bordes redondeados</td>
+          </tr>
+          <tr>
+            <td><code>iconPos</code></td>
+            <td><code>'left' | 'right'</code></td>
+            <td><code>'left'</code></td>
+            <td>Posición del icono</td>
+          </tr>
+          <tr>
+            <td><code>severity</code></td>
+            <td>
+              <code
+                >'primary' | 'secondary' | 'success' | 'info' | 'warning' |
+                'danger' | 'help'</code
+              >
+            </td>
+            <td><code>undefined</code></td>
+            <td>Tema del botón</td>
+          </tr>
+          <tr>
+            <td><code>loading</code></td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>Muestra estado de carga</td>
+          </tr>
+          <tr>
+            <td><code>disabled</code></td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>Desactiva el botón</td>
+          </tr>
+          <tr>
+            <td><code>variant</code></td>
+            <td><code>'solid' | 'text' | 'outlined'</code></td>
+            <td><code>'solid'</code></td>
+            <td>Variante visual del botón</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- API Events -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos emitidos por el componente</p>
+    </div>
+    <div class="section-content">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>buttonClick</code></td>
+            <td><code>Event</code></td>
+            <td>Se emite cuando se hace clic en el botón</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <pre>
+&lt;magary-button
+  label="Click me"
+  (buttonClick)="handleClick($event)"&gt;
+&lt;/magary-button&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessibility -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Accesibilidad</h2>
+      <p>Características de accesibilidad implementadas</p>
+    </div>
+    <div class="section-content">
+      <ul class="accessibility-list">
+        <li>
+          <strong>Teclado:</strong> El botón es accesible mediante navegación
+          por teclado (Tab)
+        </li>
+        <li>
+          <strong>Activación:</strong> Se puede activar con Espacio o Enter
+        </li>
+        <li>
+          <strong>Estados:</strong> Los estados disabled y loading son
+          comunicados correctamente
+        </li>
+        <li>
+          <strong>Foco:</strong> El botón recibe foco visual cuando se navega
+          por teclado
+        </li>
+        <li>
+          <strong>Semántica:</strong> Usa el elemento button nativo para máxima
+          compatibilidad
+        </li>
+        <li>
+          <strong>ARIA:</strong> Los estados se comunican automáticamente a
+          lectores de pantalla
+        </li>
+      </ul>
+
+      <h4 style="margin-top: 25px; margin-bottom: 15px">Recomendaciones:</h4>
+      <ul class="accessibility-list">
+        <li>
+          <strong>Labels:</strong> Asegúrate de que el texto del botón sea
+          descriptivo
+        </li>
+        <li>
+          <strong>Contraste:</strong> Verifica que los colores cumplan con WCAG
+          2.1 AA
+        </li>
+        <li>
+          <strong>Tamaño:</strong> Mantén un área de click mínima de 44x44px
+        </li>
+        <li>
+          <strong>Loading:</strong> Considera agregar aria-label descriptivo
+          durante la carga
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Examples -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplos Completos</h2>
+      <p>Casos de uso comunes</p>
+    </div>
+    <div class="section-content">
+      <h4>Formulario de Login</h4>
+      <div class="code-block">
+        <pre>
+&lt;form&gt;
+  &lt;!-- Campos del formulario --&gt;
+
+  &lt;div class="button-group"&gt;
+    &lt;magary-button
+      label="Iniciar Sesión"
+      severity="primary"
+      icon="fas fa-sign-in-alt"
+      [loading]="isLoading"
+      (buttonClick)="login()"&gt;
+    &lt;/magary-button&gt;
+
+    &lt;magary-button
+      label="Cancelar"
+      variant="outlined"
+      severity="secondary"
+      (buttonClick)="cancel()"&gt;
+    &lt;/magary-button&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+          </pre
+        >
+      </div>
+
+      <h4>Toolbar de Acciones</h4>
+      <div class="code-block">
+        <pre>
+&lt;div class="toolbar"&gt;
+  &lt;magary-button
+    icon="fas fa-plus"
+    severity="success"
+    [rounded]="true"
+    [shadow]="2"
+    (buttonClick)="create()"&gt;
+  &lt;/magary-button&gt;
+
+  &lt;magary-button
+    icon="fas fa-edit"
+    severity="info"
+    [disabled]="!selectedItem"
+    (buttonClick)="edit()"&gt;
+  &lt;/magary-button&gt;
+
+  &lt;magary-button
+    icon="fas fa-trash"
+    severity="danger"
+    variant="outlined"
+    [disabled]="!selectedItem"
+    (buttonClick)="delete()"&gt;
+  &lt;/magary-button&gt;
+&lt;/div&gt;
+          </pre
+        >
+      </div>
+    </div>
+  </div>
+</div>

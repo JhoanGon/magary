@@ -1,0 +1,190 @@
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>MagaryPanelMenu</h1>
+  </div>
+
+  <!-- Import Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>
+        Importa el componente en tu módulo o úsalo como componente standalone.
+      </p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre> {{ importExample }} </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ejemplo Básico -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo básico</h2>
+    </div>
+    <div class="section-content">
+      <div class="component">
+        <magary-panelmenu
+          [title]="'Menú Principal'"
+          [items]="menuItems"
+          [backgroundColor]="'#ffffff'"
+          [textColor]="'#1f2937'"
+          [hoverColor]="'#007bff'"
+          [shadow]="2"
+          [width]="'300px'"
+        ></magary-panelmenu>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#007bff'"
+          [postionContent]="'flex-start'"
+        >
+          <magary-tab label="HTML">
+            <pre>
+&lt;magary-panelmenu
+[title]="'Menú Principal'"
+[items]="menuItems"
+[backgroundColor]="'#ffffff'"
+[textColor]="'#1f2937'"
+[hoverColor]="'#007bff'"
+[shadow]="2"
+[width]="'300px'"
+&gt;&lt;/magary-panelmenu&gt;
+            </pre>
+          </magary-tab>
+
+          <magary-tab label="TS">
+            <pre>{{ exampleMenuItems }}</pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Propiedades (Inputs) -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Estas son las entradas que puedes configurar en el componente:</p>
+    </div>
+    <div class="section-content">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Valor por Defecto</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>title</code></td>
+            <td><code>string</code></td>
+            <td><code>'Panel Menu'</code></td>
+            <td>Título del panel que se muestra en el header</td>
+          </tr>
+          <tr>
+            <td><code>items</code></td>
+            <td><code>MenuItem[]</code></td>
+            <td><code>[]</code></td>
+            <td>Lista de elementos que componen el menú</td>
+          </tr>
+          <tr>
+            <td><code>backgroundColor</code></td>
+            <td><code>string</code></td>
+            <td><code>'#f9fafb'</code></td>
+            <td>Color de fondo del panel</td>
+          </tr>
+          <tr>
+            <td><code>textColor</code></td>
+            <td><code>string</code></td>
+            <td><code>'#1f2937'</code></td>
+            <td>Color del texto</td>
+          </tr>
+          <tr>
+            <td><code>hoverColor</code></td>
+            <td><code>string</code></td>
+            <td><code>'#007bff'</code></td>
+            <td>Color de fondo al pasar el mouse sobre un ítem</td>
+          </tr>
+          <tr>
+            <td><code>borderRadius</code></td>
+            <td><code>string</code></td>
+            <td><code>'8px'</code></td>
+            <td>Radio del borde del panel</td>
+          </tr>
+          <tr>
+            <td><code>shadow</code></td>
+            <td><code>number</code></td>
+            <td><code>0</code></td>
+            <td>Nivel de sombra del panel</td>
+          </tr>
+          <tr>
+            <td><code>width</code></td>
+            <td><code>string</code></td>
+            <td><code>'100%'</code></td>
+            <td>Ancho del panel</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Eventos -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos</h2>
+      <p>Este componente no emite eventos personalizados directamente.</p>
+    </div>
+  </div>
+
+  <!-- Estructura esperada -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Estructura esperada</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li>
+          El <code>items</code> debe ser un arreglo de objetos
+          <code>MenuItem</code>.
+        </li>
+        <li>
+          Cada <code>MenuItem</code> puede tener <code>children</code> de forma
+          recursiva.
+        </li>
+        <li>
+          Cada ítem puede tener un <code>label</code>, <code>route</code> y un
+          <code>icon</code>.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Accesibilidad -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Accesibilidad</h2>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li>
+          <strong>Teclado:</strong> La navegación del menú puede extenderse con
+          soporte de accesibilidad de teclado.
+        </li>
+        <li>
+          <strong>Visibilidad:</strong> Cambios de color y foco en hover para
+          mejor UX.
+        </li>
+        <li>
+          <strong>Semántica:</strong> Uso de elementos como
+          <code>&lt;a&gt;</code> para enlaces semánticos.
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Avatar } from './avatar';
+import { MagaryAvatar } from './avatar';
 
 @NgModule({
-  imports: [CommonModule, Avatar],
-  exports: [Avatar],
+  imports: [CommonModule, MagaryAvatar],
+  exports: [MagaryAvatar],
 })
 export class AvatarModule {}

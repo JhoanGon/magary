@@ -1,0 +1,333 @@
+<div class="container">
+  <div class="header">
+    <h1>MagaryCard</h1>
+  </div>
+
+  <!-- Import -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu módulo o componente standalone</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre> {{ importExample }} </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ejemplo básico -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo básico</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item" style="gap: 20px">
+          <h4>Default</h4>
+          <magary-card
+            [width]="'300px'"
+            [shadow]="5"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'#ccf0f7'"
+          >
+            <div slot="header">
+              <h3>Encabezado</h3>
+            </div>
+            <p>Este es el contenido principal de la tarjeta.</p>
+            <div slot="footer">
+              <magary-button label="Click" severity="primary"></magary-button>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>
+&lt;magary-card
+  [img]="'https://via.placeholder.com/300x150'"
+  [positionImage]="'top'"
+  [width]="'300px'"
+  [shadow]="5"
+  [borderRadius]="'1rem'"
+  [backgroundColor]="'#ccf0f7'"&gt;
+
+  &lt;div slot="header"&gt;
+    &lt;h3&gt;Encabezado&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;Este es el contenido principal de la tarjeta.&lt;/p&gt;
+
+  &lt;div slot="footer"&gt;
+    &lt;magary-button label="Click" severity="primary"&gt;&lt;/magary-button&gt;
+  &lt;/div&gt;
+
+&lt;/magary-card&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo con imagen</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Imagen Arriba</h4>
+          <magary-card
+            [img]="'/assets/Magary.png'"
+            [positionImage]="'top'"
+            [imageSize]="'300px'"
+            [width]="'200px'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'#ccf0f7'"
+          >
+            <div slot="header">
+              <h3>Encabezado</h3>
+            </div>
+            <p>Este es el contenido principal de la tarjeta.</p>
+            <div slot="footer">
+              <magary-button label="Click" severity="primary"></magary-button>
+            </div>
+          </magary-card>
+        </div>
+        <div class="demo-item">
+          <h4>Imagen Abajo</h4>
+          <magary-card
+            [img]="'/assets/Magary.png'"
+            [positionImage]="'bottom'"
+            [imageSize]="'600px'"
+            [width]="'285px'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'#ccf0f7'"
+          >
+            <div slot="header">
+              <h3>Encabezado</h3>
+            </div>
+            <p>Este es el contenido principal de la tarjeta.</p>
+            <div slot="footer">
+              <magary-button label="Click" severity="primary"></magary-button>
+            </div>
+          </magary-card>
+        </div>
+        <div
+          class="laterals"
+          style="display: flex; flex-direction: column; gap: 40px"
+        >
+          <div class="demo-item">
+            <h4>Imagen a la izquierda</h4>
+            <magary-card
+              [img]="'/assets/Magary.png'"
+              [positionImage]="'left'"
+              [imageSize]="'300px'"
+              [width]="'300px'"
+              [shadow]="2"
+              [borderRadius]="'1rem'"
+              [backgroundColor]="'#ccf0f7'"
+            >
+              <div slot="header">
+                <h3>Encabezado</h3>
+              </div>
+              <p>Este es el contenido principal de la tarjeta.</p>
+              <div slot="footer">
+                <magary-button label="Click" severity="primary"></magary-button>
+              </div>
+            </magary-card>
+          </div>
+          <div class="demo-item">
+            <h4>Imagen a la derecha</h4>
+            <magary-card
+              [img]="'/assets/Magary.png'"
+              [positionImage]="'right'"
+              [imageSize]="'300px'"
+              [width]="'300px'"
+              [shadow]="2"
+              [borderRadius]="'1rem'"
+              [backgroundColor]="'#ccf0f7'"
+            >
+              <div slot="header">
+                <h3>Encabezado</h3>
+              </div>
+              <p>Este es el contenido principal de la tarjeta.</p>
+              <div slot="footer">
+                <magary-button label="Click" severity="primary"></magary-button>
+              </div>
+            </magary-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <pre>
+&lt;magary-card
+  [img]="'/assets/Magary.png'"
+  [positionImage]="'top'"
+  [imageSize]="'300px'"
+  [width]="'200px'"
+  [shadow]="2"
+  [borderRadius]="'1rem'"
+  [backgroundColor]="'#ccf0f7'"&gt;
+
+  &lt;div slot="header"&gt;
+    &lt;h3&gt;Encabezado&lt;/h3&gt;
+  &lt;/div&gt;
+
+  &lt;p&gt;Este es el contenido principal de la tarjeta.&lt;/p&gt;
+
+  &lt;div slot="footer"&gt;
+    &lt;magary-button label="Click" severity="primary"&gt;&lt;/magary-button&gt;
+  &lt;/div&gt;
+
+&lt;/magary-card&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Properties -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente</p>
+    </div>
+    <div class="section-content">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Valor por Defecto</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>img</code></td>
+            <td><code>string</code></td>
+            <td><code>undefined</code></td>
+            <td>URL de la imagen a mostrar</td>
+          </tr>
+          <tr>
+            <td><code>positionImage</code></td>
+            <td><code>'left' | 'right' | 'top' | 'bottom'</code></td>
+            <td><code>'top'</code></td>
+            <td>Posición de la imagen respecto al contenido</td>
+          </tr>
+          <tr>
+            <td><code>shadow</code></td>
+            <td><code>number</code></td>
+            <td><code>1</code></td>
+            <td>Nivel de sombra aplicado (0-5)</td>
+          </tr>
+          <tr>
+            <td><code>width</code></td>
+            <td><code>string</code></td>
+            <td><code>'250px'</code></td>
+            <td>Ancho de la tarjeta</td>
+          </tr>
+          <tr>
+            <td><code>padding</code></td>
+            <td><code>string</code></td>
+            <td><code>'1rem'</code></td>
+            <td>Espaciado interno de la tarjeta</td>
+          </tr>
+          <tr>
+            <td><code>gap</code></td>
+            <td><code>string</code></td>
+            <td><code>'1rem'</code></td>
+            <td>Espacio entre elementos internos</td>
+          </tr>
+          <tr>
+            <td><code>borderRadius</code></td>
+            <td><code>string</code></td>
+            <td><code>'0.75rem'</code></td>
+            <td>Radio del borde de la tarjeta</td>
+          </tr>
+          <tr>
+            <td><code>imageSize</code></td>
+            <td><code>string</code></td>
+            <td><code>'500px'</code></td>
+            <td>Altura máxima de la imagen (para top/bottom)</td>
+          </tr>
+          <tr>
+            <td><code>backgroundColor</code></td>
+            <td><code>string</code></td>
+            <td><code>'#fff'</code></td>
+            <td>Color de fondo de la tarjeta</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Slots -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Slots (Contenido)</h2>
+      <p>Contenido personalizable dentro del componente</p>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li><code>slot="header"</code>: Área del encabezado</li>
+        <li><code>slot="footer"</code>: Área del pie de página</li>
+        <li>Contenido libre entre ambos slots</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Accesibilidad -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Accesibilidad</h2>
+      <p>Características de accesibilidad implementadas</p>
+    </div>
+    <div class="section-content">
+      <ul class="accessibility-list">
+        <li>
+          <strong>Semántica:</strong> Estructura clara con imagen y contenido
+        </li>
+        <li>
+          <strong>Responsive:</strong> Imagen y contenido se adaptan a su
+          posición
+        </li>
+        <li>
+          <strong>Contraste:</strong> Personalizable con
+          <code>backgroundColor</code>
+        </li>
+        <li>
+          <strong>Imagen:</strong> Incluye atributo <code>alt</code> accesible
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Ejemplos Completos -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplos Completos</h2>
+      <p>Casos de uso comunes</p>
+    </div>
+    <div class="section-content">
+      <h4>Card con imagen lateral</h4>
+      <div class="code-block">
+        <pre>
+&lt;magary-card
+  [img]="'/assets/avatar.jpg'"
+  [positionImage]="'left'"
+  [width]="'400px'"
+  [gap]="'1.5rem'"&gt;
+
+  &lt;div slot="header"&gt;&lt;h3&gt;Perfil de Usuario&lt;/h3&gt;&lt;/div&gt;
+  &lt;p&gt;Nombre, correo, rol y otra información relevante.&lt;/p&gt;
+  &lt;div slot="footer"&gt;&lt;button&gt;Editar&lt;/button&gt;&lt;/div&gt;
+
+&lt;/magary-card&gt;
+        </pre>
+      </div>
+    </div>
+  </div>
+</div>

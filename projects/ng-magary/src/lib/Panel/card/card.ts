@@ -8,7 +8,7 @@ import { Component, input } from '@angular/core';
   templateUrl: './card.html',
   styleUrl: './card.scss',
 })
-export class Card {
+export class MagaryCard {
   public img = input<string | undefined>();
   public positionImage = input<'left' | 'right' | 'top' | 'bottom'>('top');
   public shadow = input<number>(1);

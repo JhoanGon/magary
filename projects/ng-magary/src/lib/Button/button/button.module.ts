@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Button } from './button';
+import { MagaryButton } from './button';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, Button],
-  exports: [Button],
+  imports: [CommonModule, MagaryButton],
+  exports: [MagaryButton],
 })
 export class ButtonModule {}

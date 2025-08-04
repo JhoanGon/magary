@@ -7,7 +7,7 @@ import { Component, input, signal } from '@angular/core';
     <ng-content />
   }`,
 })
-export class Tab {
+export class MagaryTab {
   public label = input<string>('');
   public active = signal(false);
 }
