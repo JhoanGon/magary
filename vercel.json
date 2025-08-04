@@ -1,0 +1,6 @@
+{
+  "buildCommand": "bunx ng build ng-magary && bunx ng build demo-app",
+  "outputDirectory": "dist/demo-app",
+  "installCommand": "bun install",
+  "framework": null
+}
