@@ -3,6 +3,7 @@
     class="tab-headers"
     #tabHeaders
     [style.--background-color-line]="backgroundLine()"
+    [style.--postion-content]="postionContent()"
   >
     @for (tab of tabs.toArray(); track $index) {
       <button

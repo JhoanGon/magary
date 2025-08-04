@@ -2,6 +2,8 @@
   type="button"
   [disabled]="disabled() || loading()"
   [style.border-radius]="rounded() ? '22px' : '8px'"
+  [style.background]="customBackgroundColor()"
+  (click)="buttonClick.emit($event)"
   [ngClass]="[
     'p-button',
     'shadow-' + shadow(),

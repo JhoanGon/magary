@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, output, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Panelmenu } from '../panelmenu/panelmenu';
+import { MagaryPanelmenu } from '../panelmenu/panelmenu';
 import { MenuItem } from '../panelmenu/panelmenu.interface';
-import { Avatar } from '../../Misc/avatar/avatar';
+import { MagaryAvatar } from '../../Misc/avatar/avatar';
 
 interface SidebarSection {
   title: string;
@@ -31,7 +31,7 @@ interface AvatarConfig {
 
 @Component({
   selector: 'magary-sidebar',
-  imports: [CommonModule, RouterModule, Panelmenu, Avatar],
+  imports: [CommonModule, RouterModule, MagaryPanelmenu, MagaryAvatar],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })

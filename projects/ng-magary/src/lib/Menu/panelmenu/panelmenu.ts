@@ -15,7 +15,7 @@ export interface MenuItem {
   templateUrl: './panelmenu.html',
   styleUrl: './panelmenu.scss',
 })
-export class Panelmenu {
+export class MagaryPanelmenu {
   public title = input<string>('Panel Menu');
   public items = input<MenuItem[]>([]);
   public backgroundColor = input<string>('#f9fafb');
@@ -24,11 +24,8 @@ export class Panelmenu {
   public shadow = input<number>(0);
   public width = input<string>('100%');
   public hoverColor = input<string>('#007bff');
-
-  // Estado del panel principal
   public isOpen = signal(false);
 
-  // Estados para hover y subitems expandidos
   hovered: string | null = null;
   hoverHeader = false;
   expandedItems = signal<Set<string>>(new Set());

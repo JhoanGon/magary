@@ -50,7 +50,7 @@ export class Layout {
           children: [
             {
               label: 'Button',
-              route: '/Button',
+              route: 'components/Button',
               icon: '',
             },
           ],
@@ -87,12 +87,12 @@ export class Layout {
           children: [
             {
               label: 'Panel Menu',
-              route: '',
+              route: 'components/Panel-Menu',
               icon: '',
             },
             {
               label: 'Sidebar',
-              route: '',
+              route: 'components/Sidebar',
               icon: '',
             },
           ],
@@ -108,7 +108,7 @@ export class Layout {
           children: [
             {
               label: 'Avatar',
-              route: '',
+              route: 'components/Avatar',
               icon: '',
             },
           ],
@@ -124,12 +124,12 @@ export class Layout {
           children: [
             {
               label: 'Card',
-              route: '',
+              route: 'components/Card',
               icon: '',
             },
             {
               label: 'Tabs',
-              route: '',
+              route: 'components/Tabs',
               icon: '',
             },
           ],

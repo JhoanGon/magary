@@ -1,19 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Avatar, Button, Card, Panelmenu, Sidebar, Tab, Tabs } from 'ng-magary';
+import {
+  MagaryAvatar,
+  MagaryButton,
+  MagaryCard,
+  MagaryPanelmenu,
+  Sidebar,
+  MagaryTab,
+  MagaryTabs,
+} from 'ng-magary';
 
 @Component({
   selector: 'app-root',
   imports: [
     CommonModule,
-    Card,
-    Tabs,
-    Tab,
-    Button,
+    MagaryCard,
+    MagaryTabs,
+    MagaryTab,
+    MagaryButton,
     Sidebar,
-    Panelmenu,
-    Avatar,
+    MagaryPanelmenu,
+    MagaryAvatar,
     RouterOutlet,
   ],
   templateUrl: './app.html',

@@ -7,7 +7,7 @@ import { Component, input } from '@angular/core';
   templateUrl: './avatar.html',
   styleUrl: './avatar.scss',
 })
-export class Avatar {
+export class MagaryAvatar {
   public label = input<string | undefined>();
   public image = input<string | undefined>();
   public icon = input<string | undefined>();
