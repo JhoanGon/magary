@@ -1,4 +1,4 @@
-<magary-card
+<!-- <magary-card
   width="500px"
   [img]="'/assets/pika.jpg'"
   positionImage="right"
@@ -70,3 +70,37 @@
   severity="secondary"
   [rounded]="true"
 ></magary-button>
+
+@for (section of menuData; track $index) {
+  <magary-panelmenu
+    [title]="section.title"
+    [items]="section.items"
+    [backgroundColor]="section.backgroundColor"
+    [hoverColor]="section.hoverColor"
+    [textColor]="section.textColor"
+    [borderRadius]="section.borderRadius"
+    [shadow]="section.shadow"
+    [width]="section.width"
+  >
+  </magary-panelmenu>
+}
+
+<magary-sidebar [menu]="sidebarMenu" [showUserSection]="true"></magary-sidebar>
+
+<magary-avatar label="P" size="large"></magary-avatar>
+
+<magary-avatar
+  image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png"
+  size="normal"
+  shape="circle"
+></magary-avatar>
+
+<magary-avatar icon="user" shape="circle" size="large"></magary-avatar>
+
+<magary-avatar
+  label="U"
+  size="xlarge"
+  [badgeValue]="'4'"
+  badgeSeverity="success"
+></magary-avatar> -->
+<router-outlet></router-outlet>

@@ -1,0 +1,90 @@
+<button class="hamburger-button" (click)="toggleMobileSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
+
+<div class="sidebar" [class.open]="isMobileOpen()">
+  <div class="sidebar-header">
+    <img [src]="logoSrc()" alt="Logo" class="logo" />
+    <span class="title">{{ appTitle() }}</span>
+  </div>
+
+  <div class="sidebar-content">
+    <div class="menu-container">
+      @if (sections().length > 0) {
+        @for (section of sections(); track $index) {
+          <magary-panelmenu
+            [title]="section.title"
+            [items]="section.items"
+            [backgroundColor]="section.backgroundColor || '#ffffff'"
+            [textColor]="section.textColor || '#374151'"
+            [hoverColor]="section.hoverColor || '#3b82f6'"
+            [borderRadius]="'12px'"
+            [shadow]="2"
+            [width]="'100%'"
+          />
+        }
+      }
+
+      @if (menu().length > 0 && sections().length === 0) {
+        <magary-panelmenu
+          [title]="menuTitle()"
+          [items]="menu()"
+          [backgroundColor]="'#ffffff'"
+          [textColor]="'#374151'"
+          [hoverColor]="'#3b82f6'"
+          [borderRadius]="'12px'"
+          [shadow]="2"
+          [width]="'100%'"
+        />
+      }
+    </div>
+
+    @if (showUserSection()) {
+      <div class="user-section">
+        <div class="user-info">
+          @switch (avatarConfig().type) {
+            @case ("image") {
+              <magary-avatar
+                [image]="avatarConfig().image || ''"
+                [size]="avatarConfig().size || 'normal'"
+                [shape]="avatarConfig().shape || 'circle'"
+                [badgeValue]="avatarConfig().badgeValue"
+                [badgeSeverity]="avatarConfig().badgeSeverity"
+                class="user-avatar"
+              />
+            }
+            @case ("label") {
+              <magary-avatar
+                [label]="avatarConfig().label || userName().charAt(0)"
+                [size]="avatarConfig().size || 'normal'"
+                [shape]="avatarConfig().shape || 'circle'"
+                [badgeValue]="avatarConfig().badgeValue"
+                [badgeSeverity]="avatarConfig().badgeSeverity"
+                class="user-avatar"
+              />
+            }
+            @case ("icon") {
+              <magary-avatar
+                [icon]="avatarConfig().icon || 'user'"
+                [size]="avatarConfig().size || 'normal'"
+                [shape]="avatarConfig().shape || 'circle'"
+                [badgeValue]="avatarConfig().badgeValue"
+                [badgeSeverity]="avatarConfig().badgeSeverity || undefined"
+                class="user-avatar"
+              />
+            }
+          }
+
+          <div class="user-details">
+            <div class="username">{{ userName() }}</div>
+            <div class="email">{{ userEmail() }}</div>
+          </div>
+        </div>
+        <button class="logout-button" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          Cerrar sesión
+        </button>
+      </div>
+    }
+  </div>
+</div>
