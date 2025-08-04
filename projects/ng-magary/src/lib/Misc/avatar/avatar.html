@@ -1,0 +1,29 @@
+<div
+  class="avatar-wrapper"
+  [ngClass]="[size(), shape()]"
+  [ngStyle]="customStyle()"
+>
+  @if (image()) {
+    <ng-container>
+      <img [src]="image()" class="avatar-img" [ngClass]="shape()" />
+    </ng-container>
+  }
+
+  @if (!image() && icon()) {
+    <ng-container>
+      <i [class]="'fas fa-' + icon()"></i>
+    </ng-container>
+  }
+
+  @if (!image() && !icon() && label()) {
+    <ng-container>
+      {{ label() }}
+    </ng-container>
+  }
+
+  @if (badgeValue()) {
+    <div class="badge" [ngClass]="badgeSeverity()">
+      {{ badgeValue() }}
+    </div>
+  }
+</div>

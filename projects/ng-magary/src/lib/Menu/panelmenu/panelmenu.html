@@ -1,0 +1,165 @@
+<div
+  class="panel-menu"
+  [ngClass]="['shadow-' + shadow()]"
+  [class.open]="isOpen()"
+  [style.background]="backgroundColor()"
+  [style.color]="textColor()"
+  [style.border-radius]="borderRadius()"
+  [style.box-shadow]="shadow()"
+  [style.width]="width()"
+  [style.height]="'auto'"
+>
+  <div
+    class="panel-header"
+    (click)="toggle()"
+    (mouseenter)="hoverHeader = true"
+    (mouseleave)="hoverHeader = false"
+    [style.background]="hoverHeader ? hoverColor() : backgroundColor()"
+    [style.color]="hoverHeader ? '#fff' : textColor()"
+  >
+    {{ title() }}
+    <span class="arrow">
+      <i
+        class="fas"
+        [ngClass]="isOpen() ? 'fa-chevron-up' : 'fa-chevron-down'"
+      ></i>
+    </span>
+  </div>
+
+  <ul class="panel-items" [class.expanded]="isOpen()">
+    @for (item of items(); track getItemId(item, $index)) {
+      <li class="menu-item">
+        @if (hasChildren(item)) {
+          <div
+            class="category-item"
+            (click)="toggleSubItem(item.label)"
+            (mouseenter)="onItemHover(getItemId(item, $index))"
+            (mouseleave)="onItemLeave()"
+            [style.background]="
+              hovered === getItemId(item, $index) ? hoverColor() : ''
+            "
+            [style.color]="hovered === getItemId(item, $index) ? '#fff' : ''"
+          >
+            @if (item.icon) {
+              <i [class]="item.icon" class="item-icon"></i>
+            }
+            <span class="item-label">{{ item.label }}</span>
+            <span class="sub-arrow">
+              <i
+                class="fas"
+                [ngClass]="
+                  isSubItemExpanded(item.label) ? 'fa-minus' : 'fa-plus'
+                "
+              ></i>
+            </span>
+          </div>
+          <ul
+            class="sub-items"
+            [class.expanded]="isSubItemExpanded(item.label)"
+          >
+            @for (subItem of item.children; track getItemId(subItem, $index)) {
+              <li>
+                @if (hasChildren(subItem)) {
+                  <div
+                    class="sub-category-item"
+                    (click)="toggleSubItem(subItem.label)"
+                    (mouseenter)="onItemHover(getItemId(subItem, $index))"
+                    (mouseleave)="onItemLeave()"
+                    [style.background]="
+                      hovered === getItemId(subItem, $index) ? hoverColor() : ''
+                    "
+                    [style.color]="
+                      hovered === getItemId(subItem, $index) ? '#fff' : ''
+                    "
+                  >
+                    @if (subItem.icon) {
+                      <i [class]="subItem.icon" class="item-icon"></i>
+                    }
+                    <span class="item-label">{{ subItem.label }}</span>
+                    <span class="sub-arrow">
+                      <i
+                        class="fas"
+                        [ngClass]="
+                          isSubItemExpanded(subItem.label)
+                            ? 'fa-chevron-up'
+                            : 'fa-chevron-down'
+                        "
+                      ></i>
+                    </span>
+                  </div>
+
+                  <ul
+                    class="sub-sub-items"
+                    [class.expanded]="isSubItemExpanded(subItem.label)"
+                  >
+                    @for (
+                      subSubItem of subItem.children;
+                      track getItemId(subSubItem, $index)
+                    ) {
+                      <li>
+                        <a
+                          [routerLink]="subSubItem.route"
+                          (mouseenter)="
+                            onItemHover(getItemId(subSubItem, $index))
+                          "
+                          (mouseleave)="onItemLeave()"
+                          [style.background]="
+                            hovered === getItemId(subSubItem, $index)
+                              ? hoverColor()
+                              : ''
+                          "
+                          [style.color]="
+                            hovered === getItemId(subSubItem, $index)
+                              ? '#fff'
+                              : ''
+                          "
+                        >
+                          @if (subSubItem.icon) {
+                            <i [class]="subSubItem.icon" class="item-icon"></i>
+                          }
+                          {{ subSubItem.label }}
+                        </a>
+                      </li>
+                    }
+                  </ul>
+                } @else {
+                  <a
+                    [routerLink]="subItem.route"
+                    (mouseenter)="onItemHover(getItemId(subItem, $index))"
+                    (mouseleave)="onItemLeave()"
+                    [style.background]="
+                      hovered === getItemId(subItem, $index) ? hoverColor() : ''
+                    "
+                    [style.color]="
+                      hovered === getItemId(subItem, $index) ? '#fff' : ''
+                    "
+                  >
+                    @if (subItem.icon) {
+                      <i [class]="subItem.icon" class="item-icon"></i>
+                    }
+                    {{ subItem.label }}
+                  </a>
+                }
+              </li>
+            }
+          </ul>
+        } @else {
+          <a
+            [routerLink]="item.route"
+            (mouseenter)="onItemHover(getItemId(item, $index))"
+            (mouseleave)="onItemLeave()"
+            [style.background]="
+              hovered === getItemId(item, $index) ? hoverColor() : ''
+            "
+            [style.color]="hovered === getItemId(item, $index) ? '#fff' : ''"
+          >
+            @if (item.icon) {
+              <i [class]="item.icon" class="item-icon"></i>
+            }
+            {{ item.label }}
+          </a>
+        }
+      </li>
+    }
+  </ul>
+</div>

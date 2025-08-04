@@ -24,6 +24,11 @@ export * from './Form/cascade-select/cascade-select.module';
 // =====================
 // 📂 Menu
 // =====================
+export * from './Menu/panelmenu/panelmenu';
+export * from './Menu/panelmenu/panelmenu.module';
+
+export * from './Menu/sidebar/sidebar';
+export * from './Menu/sidebar/sidebar.module';
 
 // =====================
 // 💬 Messages
@@ -32,7 +37,8 @@ export * from './Form/cascade-select/cascade-select.module';
 // =====================
 // 🧩 Misc
 // =====================
-
+export * from './Misc/avatar/avatar';
+export * from './Misc/avatar/avatar.module';
 // =====================
 // 🎭 Overlay
 // =====================
