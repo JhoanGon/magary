@@ -1,0 +1,152 @@
+.speed-dial-container {
+  position: relative;
+  display: inline-block;
+}
+
+.trigger-button {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--background);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  z-index: 1001;
+  transition: transform 0.3s ease;
+}
+
+.is-open .trigger-button {
+  transform: rotate(45deg);
+}
+
+.speed-dial-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+
+.speed-dial-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 20%;
+  left: 16%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.speed-dial-items li {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.is-open .speed-dial-items {
+  pointer-events: auto;
+}
+
+.is-open .speed-dial-items li {
+  opacity: 1;
+}
+
+.action-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-tooltip {
+  position: absolute;
+  background-color: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  right: 120%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+li:hover .action-tooltip {
+  opacity: 1;
+}
+
+.is-open .speed-dial-items {
+  &[data-direction="up"] li { transform: translateY(calc(-55px * (var(--i) + 1))); }
+  &[data-direction="down"] li { transform: translateY(calc(55px * (var(--i) + 1))); }
+  &[data-direction="left"] li { transform: translateX(calc(-55px * (var(--i) + 1))); }
+  &[data-direction="right"] li { transform: translateX(calc(55px * (var(--i) + 1))); }
+  & .item-circle {
+    --angle: calc(var(--i) * (360deg / var(--item-count)));
+    transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1));
+  }
+  &[data-direction="left"] .item-semicircle {
+    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+    transform: rotate(calc(var(--angle) - 180deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) - 180deg) * -1));
+  }
+  &[data-direction="right"] .item-semicircle {
+    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+    transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1));
+  }
+  &[data-direction="down"] .item-semicircle {
+    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+    transform: rotate(calc(var(--angle) + 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 90deg) * -1));
+  }
+  &[data-direction="up"] .item-semicircle {
+    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+    transform: rotate(calc(var(--angle) - 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) - 90deg) * -1));
+  }
+  &[data-direction="up-right"] .item-quartercircle {
+  --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
+  transform: rotate(var(--angle))
+             translateY(calc(var(--radius) * -1))
+             rotate(calc(var(--angle) * -1));
+}
+
+&[data-direction="down-right"] .item-quartercircle {
+  --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
+  transform: rotate(calc(var(--angle) + 90deg))
+             translateY(calc(var(--radius) * -1))
+             rotate(calc((var(--angle) + 90deg) * -1));
+}
+
+&[data-direction="down-left"] .item-quartercircle {
+  --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
+  transform: rotate(calc(var(--angle) + 180deg))
+             translateY(calc(var(--radius) * -1))
+             rotate(calc((var(--angle) + 180deg) * -1));
+}
+
+&[data-direction="up-left"] .item-quartercircle {
+  --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
+  transform: rotate(calc(var(--angle) + 270deg))
+             translateY(calc(var(--radius) * -1))
+             rotate(calc((var(--angle) + 270deg) * -1));
+}
+}

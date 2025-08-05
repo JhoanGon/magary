@@ -14,7 +14,7 @@
     content: '';
     position: absolute;
     bottom: -1px;
-    height: 2px;
+    height: var(--height-line);;
     background-color: var(--background-color-line);
     transition: left 0.4s ease-in-out, width 0.4s ease-in-out;
     left: var(--underline-left, 0);
@@ -43,9 +43,10 @@
 }
 
 .tab-content {
-  padding: 1rem;
+  padding: var(--padding);
   display: flex;
-  justify-content: --postion-content;
+  justify-content: var(--position-content);
+  background: var(--background);
 
   &.animated {
     animation: slideIn 0.7s ease-out;

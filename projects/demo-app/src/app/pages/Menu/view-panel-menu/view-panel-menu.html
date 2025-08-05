@@ -1,10 +1,8 @@
 <div class="container">
-  <!-- Header -->
   <div class="header">
     <h1>MagaryPanelMenu</h1>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
       <h2>Import</h2>
@@ -14,12 +12,11 @@
     </div>
     <div class="section-content">
       <div class="code-block">
-        <pre> {{ importExample }} </pre>
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- Ejemplo Básico -->
   <div class="section">
     <div class="section-header">
       <h2>Ejemplo básico</h2>
@@ -39,32 +36,22 @@
 
       <div class="code-block">
         <magary-tabs
-          [backgroundLine]="'#007bff'"
-          [postionContent]="'flex-start'"
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
         >
           <magary-tab label="HTML">
-            <pre>
-&lt;magary-panelmenu
-[title]="'Menú Principal'"
-[items]="menuItems"
-[backgroundColor]="'#ffffff'"
-[textColor]="'#1f2937'"
-[hoverColor]="'#007bff'"
-[shadow]="2"
-[width]="'300px'"
-&gt;&lt;/magary-panelmenu&gt;
-            </pre>
+            <pre><code [highlight]="exampleMenuItemsHtml" language="html"></code></pre>
           </magary-tab>
 
           <magary-tab label="TS">
-            <pre>{{ exampleMenuItems }}</pre>
+            <pre><code [highlight]="exampleMenuItems" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
       </div>
     </div>
   </div>
 
-  <!-- Propiedades (Inputs) -->
   <div class="section">
     <div class="section-header">
       <h2>Propiedades (Inputs)</h2>
@@ -134,7 +121,6 @@
     </div>
   </div>
 
-  <!-- Eventos -->
   <div class="section">
     <div class="section-header">
       <h2>Eventos</h2>
@@ -142,7 +128,6 @@
     </div>
   </div>
 
-  <!-- Estructura esperada -->
   <div class="section">
     <div class="section-header">
       <h2>Estructura esperada</h2>
@@ -165,7 +150,6 @@
     </div>
   </div>
 
-  <!-- Accesibilidad -->
   <div class="section">
     <div class="section-header">
       <h2>Accesibilidad</h2>

@@ -53,6 +53,11 @@ export class Layout {
               route: 'components/Button',
               icon: '',
             },
+            {
+              label: 'SpeedDial',
+              route: 'components/SpeedDial',
+              icon: '',
+            },
           ],
         },
         {

@@ -1,10 +1,8 @@
 <div class="container">
-  <!-- Header -->
   <div class="header">
     <h1>MagaryAvatar</h1>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
       <h2>Import</h2>
@@ -14,7 +12,7 @@
     </div>
     <div class="section-content">
       <div class="code-block">
-        <pre> {{ importExample }} </pre>
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
       </div>
     </div>
   </div>
@@ -100,16 +98,7 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-avatar
-  [label]="'MG'"
-  [shape]="'circle'"
-  [size]="'large'"
-  [badgeValue]="'3'"
-  [badgeSeverity]="'success'"
-  [customStyle]="{{ "{" }} background: '#ece9fc', color: '#000' {{ "}" }}"
-/&gt;
-        </pre>
+        <pre><code [highlight]="exampleLabel" language="html"></code></pre>
       </div>
     </div>
   </div>
@@ -195,16 +184,7 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-avatar
-  [image]="'https://example.com/avatar.jpg'"
-  [shape]="'circle'"
-  [size]="'large'"
-  [badgeValue]="'3'"
-  [badgeSeverity]="'success'"
-  [customStyle]="{{ "{" }} background: '#ece9fc', color: '#000' {{ "}" }}"
-/&gt;
-        </pre>
+        <pre><code [highlight]="exampleIcon" language="html"></code></pre>
       </div>
     </div>
   </div>
@@ -306,16 +286,7 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-avatar
-  [image]="'https://example.com/avatar.jpg'"
-  [shape]="'circle'"
-  [size]="'large'"
-  [badgeValue]="'3'"
-  [badgeSeverity]="'success'"
-  [customStyle]="{{ "{" }} background: '#ece9fc', color: '#000' {{ "}" }}"
-/&gt;
-        </pre>
+        <pre><code [highlight]="exampleImage" language="html"></code></pre>
       </div>
     </div>
   </div>
@@ -393,7 +364,6 @@
     </div>
   </div>
 
-  <!-- Eventos -->
   <div class="section">
     <div class="section-header">
       <h2>Eventos</h2>
@@ -401,7 +371,6 @@
     </div>
   </div>
 
-  <!-- Accesibilidad -->
   <div class="section">
     <div class="section-header">
       <h2>Accesibilidad</h2>

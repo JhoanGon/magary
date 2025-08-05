@@ -17,6 +17,13 @@ export const routes: Routes = [
             (m) => m.ViewButton,
           ),
       },
+      {
+        path: 'components/SpeedDial',
+        loadComponent: () =>
+          import('./pages/Buttons/view-speed-dial/view-speed-dial').then(
+            (m) => m.ViewSpeedDial,
+          ),
+      },
       // --- Rutas para la categoría 'Data' ---
       // --- Rutas para la categoría 'File' ---
       // --- Rutas para la categoría 'Form' ---
