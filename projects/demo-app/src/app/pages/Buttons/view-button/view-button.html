@@ -4,7 +4,6 @@
     <p>Componente de botón altamente personalizable para Angular</p>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
       <h2>Import</h2>
@@ -12,12 +11,11 @@
     </div>
     <div class="section-content">
       <div class="code-block">
-        <pre> {{ importExample }} </pre>
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- Basic Usage -->
   <div class="section">
     <div class="section-header">
       <h2>Uso Básico</h2>
@@ -44,17 +42,11 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-button label="Button"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Home" icon="fas fa-home"&gt;&lt;/magary-button&gt;
-&lt;magary-button icon="fas fa-heart"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Loading..." [loading]="true"&gt;&lt;/magary-button&gt;
-        </pre>
+        <pre><code [highlight]="exampleBasic" language="html"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- Severities -->
   <div class="section">
     <div class="section-header">
       <h2>Severidades</h2>
@@ -93,20 +85,11 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-button label="Primary" severity="primary"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Secondary" severity="secondary"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Success" severity="success"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Info" severity="info"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Warning" severity="warning"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Danger" severity="danger"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Help" severity="help"&gt;&lt;/magary-button&gt;
-        </pre>
+        <pre><code [highlight]="exampleSeveritys" language="html"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- Variants -->
   <div class="section">
     <div class="section-header">
       <h2>Variantes</h2>
@@ -177,16 +160,11 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-button label="Solid" variant="solid" [customBackgroundColor]="'#40cae7'"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Outlined" variant="outlined" severity="primary"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Text" variant="text" severity="primary"&gt;&lt;/magary-button&gt;
-        </pre>
+        <pre><code [highlight]="exampleVariants" language="html"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- Shadows & Rounded -->
   <div class="section">
     <div class="section-header">
       <h2>Personalización Visual</h2>
@@ -228,17 +206,11 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-button label="Shadow 1" [shadow]="1"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Shadow 3" [shadow]="3"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Shadow 5" [shadow]="5"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Rounded" [rounded]="true"&gt;&lt;/magary-button&gt;
-        </pre>
+        <pre><code [highlight]="exampleCustom" language="html"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- States -->
   <div class="section">
     <div class="section-header">
       <h2>Estados</h2>
@@ -269,16 +241,11 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-button label="Normal"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Disabled" [disabled]="true"&gt;&lt;/magary-button&gt;
-&lt;magary-button label="Loading..." [loading]="true"&gt;&lt;/magary-button&gt;
-        </pre>
+        <pre><code [highlight]="exampleState" language="html"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- API Properties -->
   <div class="section">
     <div class="section-header">
       <h2>Propiedades (Inputs)</h2>
@@ -359,7 +326,6 @@
     </div>
   </div>
 
-  <!-- API Events -->
   <div class="section">
     <div class="section-header">
       <h2>Eventos (Outputs)</h2>
@@ -384,17 +350,11 @@
       </table>
 
       <div class="code-block">
-        <pre>
-&lt;magary-button
-  label="Click me"
-  (buttonClick)="handleClick($event)"&gt;
-&lt;/magary-button&gt;
-        </pre>
+        <pre><code [highlight]="exampleEventClick" language="html"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- Accessibility -->
   <div class="section">
     <div class="section-header">
       <h2>Accesibilidad</h2>
@@ -448,7 +408,6 @@
     </div>
   </div>
 
-  <!-- Examples -->
   <div class="section">
     <div class="section-header">
       <h2>Ejemplos Completos</h2>
@@ -457,60 +416,12 @@
     <div class="section-content">
       <h4>Formulario de Login</h4>
       <div class="code-block">
-        <pre>
-&lt;form&gt;
-  &lt;!-- Campos del formulario --&gt;
-
-  &lt;div class="button-group"&gt;
-    &lt;magary-button
-      label="Iniciar Sesión"
-      severity="primary"
-      icon="fas fa-sign-in-alt"
-      [loading]="isLoading"
-      (buttonClick)="login()"&gt;
-    &lt;/magary-button&gt;
-
-    &lt;magary-button
-      label="Cancelar"
-      variant="outlined"
-      severity="secondary"
-      (buttonClick)="cancel()"&gt;
-    &lt;/magary-button&gt;
-  &lt;/div&gt;
-&lt;/form&gt;
-          </pre
-        >
+        <pre><code [highlight]="exampleLoginForm" language="html"></code></pre>
       </div>
 
       <h4>Toolbar de Acciones</h4>
       <div class="code-block">
-        <pre>
-&lt;div class="toolbar"&gt;
-  &lt;magary-button
-    icon="fas fa-plus"
-    severity="success"
-    [rounded]="true"
-    [shadow]="2"
-    (buttonClick)="create()"&gt;
-  &lt;/magary-button&gt;
-
-  &lt;magary-button
-    icon="fas fa-edit"
-    severity="info"
-    [disabled]="!selectedItem"
-    (buttonClick)="edit()"&gt;
-  &lt;/magary-button&gt;
-
-  &lt;magary-button
-    icon="fas fa-trash"
-    severity="danger"
-    variant="outlined"
-    [disabled]="!selectedItem"
-    (buttonClick)="delete()"&gt;
-  &lt;/magary-button&gt;
-&lt;/div&gt;
-          </pre
-        >
+        <pre><code [highlight]="exampleToolbar" language="html"></code></pre>
       </div>
     </div>
   </div>

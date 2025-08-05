@@ -25,7 +25,10 @@ export class MagaryTabs implements OnInit, AfterContentInit {
 
   public activeIndex = signal(0);
   public backgroundLine = input<string>('#000');
-  public postionContent = input<string>('center');
+  public positionContent = input<string>('center');
+  public background = input<string>('#fff');
+  public padding = input<string>('0');
+  public heightLine = input<string>('5px');
 
   ngOnInit(): void {
     this.activeIndex.set(0);

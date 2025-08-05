@@ -4,7 +4,7 @@ import { Component, input, signal } from '@angular/core';
   selector: 'magary-tab',
   standalone: true,
   template: `@if (active()) {
-    <ng-content />
+    <ng-content style="width: 100%;" />
   }`,
 })
 export class MagaryTab {

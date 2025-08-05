@@ -1,0 +1,38 @@
+<div
+  class="speed-dial-container"
+  [class.is-open]="isOpen()"
+  [style.--background]="background()"
+>
+  @if (showMask() && isOpen()) {
+    <div class="speed-dial-mask" (click)="isOpen.set(false)"></div>
+  }
+  <ul
+    class="speed-dial-items"
+    [attr.data-direction]="direction()"
+    [style.--item-count]="itemCount()"
+  >
+    @for (item of items(); track $index) {
+      <li
+        [style.--i]="$index"
+        [style.--radius.px]="radius()"
+        [style.transition-delay]="isOpen() ? $index * 50 + 'ms' : '0ms'"
+        [class]="'item-' + type()"
+      >
+        @if (item.tooltip) {
+          <div class="action-tooltip">{{ item.tooltip }}</div>
+        }
+        <button
+          type="button"
+          class="action-button"
+          (click)="onItemClick($event, item)"
+        >
+          <i [ngClass]="item.icon"></i>
+        </button>
+      </li>
+    }
+  </ul>
+
+  <button type="button" class="trigger-button" (click)="toggle($event)">
+    <i [ngClass]="isOpen() ? activeIcon() : icon()"></i>
+  </button>
+</div>

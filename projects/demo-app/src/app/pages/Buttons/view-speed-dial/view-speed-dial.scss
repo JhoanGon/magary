@@ -51,8 +51,6 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   margin-bottom: 25px;
-  justify-items: center;
-  align-items: center;
 }
 
 .demo-item {
@@ -61,8 +59,6 @@
   background: #f8f9fa;
   border-radius: 8px;
   border: 1px solid #e9ecef;
-  width: fit-content;
-  height: fit-content;
 }
 
 .demo-item h4 {
@@ -79,9 +75,9 @@
   gap: 10px;
 }
 
-.component {
-  display: flex;
-  justify-content: center;
+.p-button-icon-only {
+  padding: 0.75rem;
+  min-width: auto;
 }
 
 .code-block {
@@ -160,3 +156,68 @@
   min-width: 120px;
   display: inline-block;
 }
+
+.speed-dial-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  padding: 20px;
+}
+
+.speed-dial-container > magary-speed-dial {
+  position: absolute;
+}
+
+.speed-dial-container > .top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.speed-dial-container > .left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.speed-dial-container > .right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.speed-dial-container > .bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.speed-dial-container > .center {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.speed-dial-container > .top-left {
+  left: 5%;
+  top: 5%;
+  transform: translateY(-50%);
+}
+
+.speed-dial-container > .down-left {
+  left: 5%;
+  top: 80%;
+}
+
+.speed-dial-container > .top-right {
+  right: 5%;
+  top: 5%;
+  transform: translateY(-50%);
+}
+
+.speed-dial-container > .down-right {
+  right: 5%;
+  top: 80%;
+}
+
+

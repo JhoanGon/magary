@@ -3,7 +3,6 @@
     <h1>MagaryCard</h1>
   </div>
 
-  <!-- Import -->
   <div class="section">
     <div class="section-header">
       <h2>Import</h2>
@@ -11,12 +10,11 @@
     </div>
     <div class="section-content">
       <div class="code-block">
-        <pre> {{ importExample }} </pre>
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- Ejemplo básico -->
   <div class="section">
     <div class="section-header">
       <h2>Ejemplo básico</h2>
@@ -43,27 +41,7 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-card
-  [img]="'https://via.placeholder.com/300x150'"
-  [positionImage]="'top'"
-  [width]="'300px'"
-  [shadow]="5"
-  [borderRadius]="'1rem'"
-  [backgroundColor]="'#ccf0f7'"&gt;
-
-  &lt;div slot="header"&gt;
-    &lt;h3&gt;Encabezado&lt;/h3&gt;
-  &lt;/div&gt;
-
-  &lt;p&gt;Este es el contenido principal de la tarjeta.&lt;/p&gt;
-
-  &lt;div slot="footer"&gt;
-    &lt;magary-button label="Click" severity="primary"&gt;&lt;/magary-button&gt;
-  &lt;/div&gt;
-
-&lt;/magary-card&gt;
-        </pre>
+        <pre><code [highlight]="exampleBasic" language="html"></code></pre>
       </div>
     </div>
   </div>
@@ -162,33 +140,11 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-card
-  [img]="'/assets/Magary.png'"
-  [positionImage]="'top'"
-  [imageSize]="'300px'"
-  [width]="'200px'"
-  [shadow]="2"
-  [borderRadius]="'1rem'"
-  [backgroundColor]="'#ccf0f7'"&gt;
-
-  &lt;div slot="header"&gt;
-    &lt;h3&gt;Encabezado&lt;/h3&gt;
-  &lt;/div&gt;
-
-  &lt;p&gt;Este es el contenido principal de la tarjeta.&lt;/p&gt;
-
-  &lt;div slot="footer"&gt;
-    &lt;magary-button label="Click" severity="primary"&gt;&lt;/magary-button&gt;
-  &lt;/div&gt;
-
-&lt;/magary-card&gt;
-        </pre>
+        <pre><code [highlight]="exampleImage" language="html"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- API Properties -->
   <div class="section">
     <div class="section-header">
       <h2>Propiedades (Inputs)</h2>
@@ -264,7 +220,6 @@
     </div>
   </div>
 
-  <!-- Slots -->
   <div class="section">
     <div class="section-header">
       <h2>Slots (Contenido)</h2>
@@ -279,7 +234,6 @@
     </div>
   </div>
 
-  <!-- Accesibilidad -->
   <div class="section">
     <div class="section-header">
       <h2>Accesibilidad</h2>
@@ -305,7 +259,6 @@
     </div>
   </div>
 
-  <!-- Ejemplos Completos -->
   <div class="section">
     <div class="section-header">
       <h2>Ejemplos Completos</h2>
@@ -314,19 +267,7 @@
     <div class="section-content">
       <h4>Card con imagen lateral</h4>
       <div class="code-block">
-        <pre>
-&lt;magary-card
-  [img]="'/assets/avatar.jpg'"
-  [positionImage]="'left'"
-  [width]="'400px'"
-  [gap]="'1.5rem'"&gt;
-
-  &lt;div slot="header"&gt;&lt;h3&gt;Perfil de Usuario&lt;/h3&gt;&lt;/div&gt;
-  &lt;p&gt;Nombre, correo, rol y otra información relevante.&lt;/p&gt;
-  &lt;div slot="footer"&gt;&lt;button&gt;Editar&lt;/button&gt;&lt;/div&gt;
-
-&lt;/magary-card&gt;
-        </pre>
+        <pre><code [highlight]="exampleUser" language="html"></code></pre>
       </div>
     </div>
   </div>

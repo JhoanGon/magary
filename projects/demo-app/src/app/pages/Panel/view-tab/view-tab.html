@@ -9,7 +9,7 @@
     </div>
     <div class="section-content">
       <div class="code-block">
-        <pre> {{ importExample }} </pre>
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
       </div>
     </div>
   </div>
@@ -24,7 +24,8 @@
           <h4>Default</h4>
           <magary-tabs
             [backgroundLine]="'#007bff'"
-            [postionContent]="'flex-start'"
+            [positionContent]="'flex-start'"
+            [padding]="'2rem'"
           >
             <magary-tab label="Inicio">
               <h2>Bienvenido</h2>
@@ -48,32 +49,11 @@
       </div>
 
       <div class="code-block">
-        <pre>
-&lt;magary-tabs [backgroundLine]="'#007bff'" [postionContent]="'flex-start'"&gt;
-  &lt;magary-tab label="Inicio"&gt;
-    &lt;h2&gt;Bienvenido&lt;/h2&gt;
-    &lt;p&gt;Contenido de la pestaña de inicio.&lt;/p&gt;
-  &lt;/magary-tab&gt;
-
-  &lt;magary-tab label="Perfil"&gt;
-    &lt;h2&gt;Tu perfil&lt;/h2&gt;
-    &lt;p&gt;Detalles personales, ajustes, etc.&lt;/p&gt;
-  &lt;/magary-tab&gt;
-
-  &lt;magary-tab label="Ayuda"&gt;
-    &lt;p&gt;Aquí puedes encontrar asistencia.&lt;/p&gt;
-  &lt;/magary-tab&gt;
-
-  &lt;magary-tab label="Contacto"&gt;
-    &lt;p&gt;Aquí puedes encontrar los numeros de contacto.&lt;/p&gt;
-  &lt;/magary-tab&gt;
-&lt;/magary-tabs&gt;
-        </pre>
+        <pre><code [highlight]="exampleTab" language="html"></code></pre>
       </div>
     </div>
   </div>
 
-  <!-- API Properties -->
   <div class="section">
     <div class="section-header">
       <h2>Propiedades (Inputs)</h2>
@@ -97,7 +77,7 @@
             <td>Color de la línea que indica la pestaña activa</td>
           </tr>
           <tr>
-            <td><code>postionContent</code></td>
+            <td><code>positionContent</code></td>
             <td><code>string</code></td>
             <td><code>'center'</code></td>
             <td>
@@ -110,7 +90,6 @@
     </div>
   </div>
 
-  <!-- API Events -->
   <div class="section">
     <div class="section-header">
       <h2>Eventos (Outputs)</h2>
@@ -124,7 +103,6 @@
     </div>
   </div>
 
-  <!-- Estructura esperada -->
   <div class="section">
     <div class="section-header">
       <h2>Contenido Esperado</h2>
@@ -146,7 +124,6 @@
     </div>
   </div>
 
-  <!-- Accessibility -->
   <div class="section">
     <div class="section-header">
       <h2>Accesibilidad</h2>
@@ -170,7 +147,6 @@
     </div>
   </div>
 
-  <!-- Ejemplos -->
   <div class="section">
     <div class="section-header">
       <h2>Ejemplos Completos</h2>
@@ -179,22 +155,7 @@
     <div class="section-content">
       <h4>Pestañas Básicas</h4>
       <div class="code-block">
-        <pre>
-&lt;magary-tabs backgroundLine="#ff4081"&gt;
-  &lt;magary-tab label="Perfil"&gt;
-    &lt;p&gt;Contenido del perfil&lt;/p&gt;
-  &lt;/magary-tab&gt;
-
-  &lt;magary-tab label="Configuración"&gt;
-    &lt;p&gt;Contenido de configuración&lt;/p&gt;
-  &lt;/magary-tab&gt;
-
-  &lt;magary-tab label="Seguridad"&gt;
-    &lt;p&gt;Contenido de seguridad&lt;/p&gt;
-  &lt;/magary-tab&gt;
-&lt;/magary-tabs&gt;
-      </pre
-        >
+        <pre><code [highlight]="exampleBasic" language="html"></code></pre>
       </div>
     </div>
   </div>

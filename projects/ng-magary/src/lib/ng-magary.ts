@@ -3,6 +3,9 @@
 // =====================
 export * from './Button/button/button';
 export * from './Button/button/button.module';
+
+export * from './Button/speed-dial/speed-dial';
+export * from './Button/speed-dial/speed-dial.module';
 // =====================
 // 📋 Data
 // =====================
