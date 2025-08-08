@@ -1,6 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, input, output } from '@angular/core';
-
+import {
+  Component,
+  computed,
+  EventEmitter,
+  input,
+  output,
+} from '@angular/core';
+type ButtonSeverity =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'info'
+  | 'warning'
+  | 'danger'
+  | 'help';
+type ButtonVariant = 'solid' | 'text' | 'outlined';
+type ButtonSize = 'small' | 'normal' | 'large';
+type IconPosition = 'left' | 'right';
+type ShadowLevel = 0 | 1 | 2 | 3 | 4 | 5;
 @Component({
   selector: 'magary-button',
   imports: [CommonModule],
@@ -8,17 +25,48 @@ import { Component, EventEmitter, input, output } from '@angular/core';
   styleUrl: './button.scss',
 })
 export class MagaryButton {
-  public label = input<string>();
-  public icon = input<string>();
-  public shadow = input<number>(0);
-  public rounded = input<boolean>(false);
-  public customBackgroundColor = input<string>();
-  public iconPos = input<'left' | 'right'>('left');
-  public severity = input<
-    'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help'
-  >();
-  public loading = input<boolean>(false);
-  public disabled = input<boolean>(false);
-  public variant = input<'solid' | 'text' | 'outlined'>('solid');
-  public buttonClick = output<Event>();
+  readonly label = input<string>();
+  readonly icon = input<string>();
+  readonly shadow = input<ShadowLevel>(0);
+  readonly rounded = input<boolean>(false);
+  readonly customBackgroundColor = input<string>();
+  readonly iconPos = input<IconPosition>('left');
+  readonly severity = input<ButtonSeverity>();
+  readonly loading = input<boolean>(false);
+  readonly disabled = input<boolean>(false);
+  readonly variant = input<ButtonVariant>('solid');
+  readonly size = input<ButtonSize>('normal');
+  readonly ariaLabel = input<string>(); 
+  readonly buttonClick = output<Event>();
+  readonly isDisabled = computed(() => this.disabled() || this.loading());
+  readonly buttonClasses = computed(() =>
+    [
+      'p-button',
+      `shadow-${this.shadow()}`,
+      `p-button-${this.size()}`,
+      this.severity() ? `p-button-${this.severity()}` : '',
+      this.variant() === 'text' ? 'p-button-text' : '',
+      this.variant() === 'outlined' ? 'p-button-outlined' : '',
+      this.icon() && !this.label() ? 'p-button-icon-only' : '',
+      this.icon() && this.label() && this.iconPos() === 'left'
+        ? 'p-button-icon-left'
+        : '',
+      this.icon() && this.label() && this.iconPos() === 'right'
+        ? 'p-button-icon-right'
+        : '',
+      this.loading() ? 'p-button-loading' : '',
+    ].filter(Boolean),
+  );
+  readonly buttonStyles = computed(() => ({
+    'border-radius': this.rounded() ? '22px' : '8px',
+    background: this.customBackgroundColor() || undefined,
+  }));
+  readonly effectiveAriaLabel = computed(
+    () => this.ariaLabel() || this.label() || 'Button',
+  );
+  onButtonClick(event: Event): void {
+    if (!this.isDisabled()) {
+      this.buttonClick.emit(event);
+    }
+  }
 }

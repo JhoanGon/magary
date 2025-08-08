@@ -1,15 +1,11 @@
 import { Routes } from '@angular/router';
 import { Layout } from './layout/layout';
-
 export const routes: Routes = [
   {
     path: '',
     component: Layout,
     children: [
-      // Redirección por defecto a la página de botones
       { path: '', redirectTo: 'components/Button', pathMatch: 'full' },
-
-      // --- Rutas para la categoría 'Buttons' ---
       {
         path: 'components/Button',
         loadComponent: () =>
@@ -24,11 +20,6 @@ export const routes: Routes = [
             (m) => m.ViewSpeedDial,
           ),
       },
-      // --- Rutas para la categoría 'Data' ---
-      // --- Rutas para la categoría 'File' ---
-      // --- Rutas para la categoría 'Form' ---
-      // --- Rutas para la categoría 'Media' ---
-      // --- Rutas para la categoría 'Menu' ---
       {
         path: 'components/Panel-Menu',
         loadComponent: () =>
@@ -43,8 +34,6 @@ export const routes: Routes = [
             (m) => m.ViewSidebar,
           ),
       },
-      // --- Rutas para la categoría 'Messages' ---
-      // --- Rutas para la categoría 'Misc' ---
       {
         path: 'components/Avatar',
         loadComponent: () =>
@@ -52,8 +41,6 @@ export const routes: Routes = [
             (m) => m.ViewAvatar,
           ),
       },
-      // --- Rutas para la categoría 'Overlay' ---
-      // --- Rutas para la categoría 'Panel' ---
       {
         path: 'components/Card',
         loadComponent: () =>

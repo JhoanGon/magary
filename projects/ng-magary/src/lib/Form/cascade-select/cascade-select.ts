@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'lib-cascade-select',
   imports: [],
@@ -7,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrl: './cascade-select.scss'
 })
 export class CascadeSelect {
-
 }

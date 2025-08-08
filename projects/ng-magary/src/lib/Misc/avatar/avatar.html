@@ -1,28 +1,43 @@
 <div
   class="avatar-wrapper"
-  [ngClass]="[size(), shape()]"
+  [ngClass]="avatarClasses()"
   [ngStyle]="customStyle()"
+  [attr.aria-label]="alt()"
+  [attr.role]="clickable() ? 'button' : null"
+  [attr.tabindex]="clickable() && !disabled() ? '0' : null"
+  (click)="clickable() && onAvatarClick()"
+  (keydown.enter)="clickable() && onAvatarClick()"
+  (keydown.space)="clickable() && onAvatarClick()"
 >
-  @if (image()) {
-    <ng-container>
-      <img [src]="image()" class="avatar-img" [ngClass]="shape()" />
-    </ng-container>
+  @if (loading()) {
+    <div class="avatar-loading">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+  } @else {
+    @if (shouldShowImage()) {
+      <img
+        [src]="image()"
+        [alt]="alt()"
+        class="avatar-img"
+        [ngClass]="shape()"
+        (error)="onImageError()"
+        (load)="onImageLoad()"
+      />
+    }
+    @if (shouldShowIcon()) {
+      <i [class]="'fas fa-' + icon()" class="avatar-icon"></i>
+    }
+    @if (shouldShowLabel()) {
+      <span class="avatar-label">{{ displayLabel() }}</span>
+    }
   }
-
-  @if (!image() && icon()) {
-    <ng-container>
-      <i [class]="'fas fa-' + icon()"></i>
-    </ng-container>
-  }
-
-  @if (!image() && !icon() && label()) {
-    <ng-container>
-      {{ label() }}
-    </ng-container>
-  }
-
   @if (badgeValue()) {
-    <div class="badge" [ngClass]="badgeSeverity()">
+    <div
+      class="badge"
+      [ngClass]="badgeSeverity()"
+      [attr.aria-label]="'Badge: ' + badgeValue()"
+      (click)="onBadgeClick($event)"
+    >
       {{ badgeValue() }}
     </div>
   }

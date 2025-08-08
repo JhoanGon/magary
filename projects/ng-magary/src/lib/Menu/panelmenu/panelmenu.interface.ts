@@ -4,7 +4,6 @@ export interface MenuItem {
   icon?: string;
   children?: MenuItem[];
 }
-
 export interface NavigationItem {
   label: string;
   route?: string;

@@ -1,13 +1,11 @@
 <button class="hamburger-button" (click)="toggleMobileSidebar()">
   <i class="fas fa-bars"></i>
 </button>
-
 <div class="sidebar" [class.open]="isMobileOpen()">
   <div class="sidebar-header">
     <img [src]="logoSrc()" alt="Logo" class="logo" />
     <span class="title">{{ appTitle() }}</span>
   </div>
-
   <div class="sidebar-content">
     <div class="menu-container">
       @if (sections().length > 0) {
@@ -24,7 +22,6 @@
           />
         }
       }
-
       @if (menu().length > 0 && sections().length === 0) {
         <magary-panelmenu
           [title]="menuTitle()"
@@ -38,7 +35,6 @@
         />
       }
     </div>
-
     @if (showUserSection()) {
       <div class="user-section">
         <div class="user-info">
@@ -49,7 +45,7 @@
                 [size]="avatarConfig().size || 'normal'"
                 [shape]="avatarConfig().shape || 'circle'"
                 [badgeValue]="avatarConfig().badgeValue"
-                [badgeSeverity]="avatarConfig().badgeSeverity"
+                [badgeSeverity]="avatarConfig().badgeSeverity || 'danger'"
                 class="user-avatar"
               />
             }
@@ -59,7 +55,7 @@
                 [size]="avatarConfig().size || 'normal'"
                 [shape]="avatarConfig().shape || 'circle'"
                 [badgeValue]="avatarConfig().badgeValue"
-                [badgeSeverity]="avatarConfig().badgeSeverity"
+                [badgeSeverity]="avatarConfig().badgeSeverity || 'danger'"
                 class="user-avatar"
               />
             }
@@ -69,12 +65,11 @@
                 [size]="avatarConfig().size || 'normal'"
                 [shape]="avatarConfig().shape || 'circle'"
                 [badgeValue]="avatarConfig().badgeValue"
-                [badgeSeverity]="avatarConfig().badgeSeverity || undefined"
+                [badgeSeverity]="avatarConfig().badgeSeverity || 'danger'"
                 class="user-avatar"
               />
             }
           }
-
           <div class="user-details">
             <div class="username">{{ userName() }}</div>
             <div class="email">{{ userEmail() }}</div>

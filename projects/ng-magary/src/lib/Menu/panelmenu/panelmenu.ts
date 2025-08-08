@@ -1,14 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, signal } from '@angular/core';
+import { Component, input, output, signal, computed } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
 export interface MenuItem {
   label: string;
   route?: string;
   icon?: string;
   children?: MenuItem[];
+  disabled?: boolean;
+  metadata?: any; 
 }
-
+export interface MenuItemClickEvent {
+  item: MenuItem;
+  level: number;
+  path: string[];
+}
+export interface MenuToggleEvent {
+  isOpen: boolean;
+  menuTitle: string;
+}
 @Component({
   selector: 'magary-panelmenu',
   imports: [CommonModule, RouterModule],
@@ -24,45 +33,102 @@ export class MagaryPanelmenu {
   public shadow = input<number>(0);
   public width = input<string>('100%');
   public hoverColor = input<string>('#007bff');
-  public isOpen = signal(false);
-
-  hovered: string | null = null;
-  hoverHeader = false;
-  expandedItems = signal<Set<string>>(new Set());
-
-  toggle(): void {
-    this.isOpen.update((open) => !open);
+  public allowMultipleExpanded = input<boolean>(false);
+  public defaultOpen = input<boolean>(false);
+  public menuToggle = output<MenuToggleEvent>();
+  public itemClick = output<MenuItemClickEvent>();
+  public itemExpand = output<{ item: MenuItem; expanded: boolean }>();
+  public isOpen = signal(this.defaultOpen());
+  public hoveredItem = signal<string | null>(null);
+  public hoveredHeader = signal<boolean>(false);
+  public expandedItems = signal<Set<string>>(new Set());
+  public panelStyles = computed(() => ({
+    '--panel-bg': this.backgroundColor(),
+    '--panel-text': this.textColor(),
+    '--panel-hover': this.hoverColor(),
+    '--panel-radius': this.borderRadius(),
+    width: this.width(),
+  }));
+  constructor() {
+    if (this.defaultOpen()) {
+      this.isOpen.set(true);
+    }
   }
-
-  toggleSubItem(itemLabel: string): void {
+  toggle(): void {
+    const newOpenState = !this.isOpen();
+    this.isOpen.set(newOpenState);
+    this.menuToggle.emit({
+      isOpen: newOpenState,
+      menuTitle: this.title(),
+    });
+  }
+  toggleSubItem(itemKey: string, item?: MenuItem): void {
     this.expandedItems.update((expanded) => {
       const newSet = new Set(expanded);
-      if (newSet.has(itemLabel)) {
-        newSet.delete(itemLabel);
+      if (!this.allowMultipleExpanded() && !newSet.has(itemKey)) {
+        const currentLevel = itemKey.split('/').length;
+        for (const key of newSet) {
+          if (key.split('/').length === currentLevel) {
+            newSet.delete(key);
+          }
+        }
+      }
+      const wasExpanded = newSet.has(itemKey);
+      if (wasExpanded) {
+        newSet.delete(itemKey);
+        for (const key of newSet) {
+          if (key.startsWith(itemKey + '/')) {
+            newSet.delete(key);
+          }
+        }
       } else {
-        newSet.add(itemLabel);
+        newSet.add(itemKey);
+      }
+      if (item) {
+        this.itemExpand.emit({
+          item,
+          expanded: !wasExpanded,
+        });
       }
       return newSet;
     });
   }
-
-  isSubItemExpanded(itemLabel: string): boolean {
-    return this.expandedItems().has(itemLabel);
+  onItemClick(item: MenuItem, level: number = 0, path: string[] = []): void {
+    if (item.disabled) return;
+    this.itemClick.emit({
+      item,
+      level,
+      path: [...path, item.label],
+    });
   }
-
+  isSubItemExpanded(itemKey: string): boolean {
+    return this.expandedItems().has(itemKey);
+  }
   hasChildren(item: MenuItem): boolean {
     return !!(item.children && item.children.length > 0);
   }
-
   onItemHover(itemId: string): void {
-    this.hovered = itemId;
+    this.hoveredItem.set(itemId);
   }
-
   onItemLeave(): void {
-    this.hovered = null;
+    this.hoveredItem.set(null);
   }
-
-  getItemId(item: MenuItem, index: number): string {
-    return `${item.label}-${index}`;
+  onHeaderHover(isHovering: boolean): void {
+    this.hoveredHeader.set(isHovering);
+  }
+  getItemId(item: MenuItem, index: number, parentPath: string = ''): string {
+    const path = parentPath
+      ? `${parentPath}-${item.label}-${index}`
+      : `${item.label}-${index}`;
+    return path;
+  }
+  getUniqueItemKey(item: MenuItem, parentPath: string = ''): string {
+    return parentPath ? `${parentPath}/${item.label}` : item.label;
+  }
+  isItemHovered(itemId: string): boolean {
+    return this.hoveredItem() === itemId;
+  }
+  isItemDisabled(item: MenuItem): boolean {
+    return item.disabled === true;
   }
 }

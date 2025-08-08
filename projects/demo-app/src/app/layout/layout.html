@@ -1,5 +1,4 @@
 <div class="layout">
-  <!-- Opción 1: Usando múltiples secciones -->
   <magary-sidebar
     [sections]="sidebarSections"
     [showUserSection]="true"
@@ -10,20 +9,10 @@
     (onLogout)="handleLogout()"
     [avatarConfig]="{ type: 'label', shape: 'circle' }"
   />
-
-  <!-- Opción 2: Usando un solo menú -->
-  <!-- <magary-sidebar
-    [menu]="allMenuItems"
-    [menuTitle]="'Navegación'"
-    [showUserSection]="true"
-    (onLogout)="handleLogout()"
-  /> -->
-
   <main class="main">
     <header class="header">
       <h1>Magary Demo</h1>
     </header>
-
     <section class="content">
       <router-outlet></router-outlet>
     </section>
