@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Sidebar } from './sidebar';
 import { RouterModule } from '@angular/router';
-
 @NgModule({
   imports: [CommonModule, Sidebar, RouterModule],
   exports: [Sidebar],

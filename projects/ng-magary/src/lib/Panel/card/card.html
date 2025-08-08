@@ -1,35 +1,58 @@
-<div
-  class="card"
-  [ngClass]="['shadow-' + shadow(), 'layout-' + positionImage()]"
-  [style.width]="width()"
-  [style.height]="'auto'"
-  [style.padding]="padding()"
-  [style.gap]="gap()"
-  [style.border-radius]="borderRadius()"
-  [style.background-color]="backgroundColor()"
+<article
+  [ngClass]="cardClasses()"
+  [ngStyle]="cardStyles()"
+  [attr.role]="clickable() ? 'button' : 'region'"
+  [attr.tabindex]="isInteractive() ? '0' : null"
+  [attr.aria-label]="
+    'Card with ' +
+    (hasImage() ? 'image and ' : '') +
+    'content' +
+    (clickable() ? '. Clickable' : '') +
+    (loading() ? '. Loading' : '') +
+    (disabled() ? '. Disabled' : '')
+  "
+  [attr.aria-disabled]="disabled() ? 'true' : null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  (click)="onCardClick($event)"
+  (keydown)="onCardKeydown($event)"
 >
-  @if (img()) {
-    <img
-      [src]="img()"
-      class="card-img"
-      [ngClass]="'img-' + positionImage()"
-      [style.width]="imageWidth()"
-      [style.height]="imageHeight()"
-      [ngStyle]="imageBorderRadius()"
-      alt="Card image"
-    />
+  @if (hasImage()) {
+    <div class="card-image-container">
+      <img
+        [src]="img()"
+        [ngClass]="imageClasses()"
+        [ngStyle]="imageStyles()"
+        [alt]="altText()"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
   }
-  <div class="card-content">
+  <div class="card-content" [attr.aria-label]="'Card content'">
     <div class="card-body">
-      <div class="card-header">
-        <ng-content select="[slot='header']"></ng-content>
-      </div>
-
-      <ng-content></ng-content>
-
-      <div class="card-footer">
-        <ng-content select="[slot='footer']"></ng-content>
-      </div>
+      @if (true) {
+        <header class="card-header" role="banner">
+          <ng-content select="[slot='header']"></ng-content>
+        </header>
+      }
+      <main class="card-main" role="main">
+        <ng-content></ng-content>
+      </main>
+      @if (true) {
+        <footer class="card-footer" role="contentinfo">
+          <ng-content select="[slot='footer']"></ng-content>
+        </footer>
+      }
     </div>
   </div>
-</div>
+  @if (showLoadingOverlay()) {
+    <div
+      class="card-loading-overlay"
+      role="status"
+      [attr.aria-label]="loadingText()"
+    >
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <span class="loading-text">{{ loadingText() }}</span>
+    </div>
+  }
+</article>

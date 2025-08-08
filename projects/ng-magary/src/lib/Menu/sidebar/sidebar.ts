@@ -3,8 +3,12 @@ import { Component, input, output, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MagaryPanelmenu } from '../panelmenu/panelmenu';
 import { MenuItem } from '../panelmenu/panelmenu.interface';
-import { MagaryAvatar } from '../../Misc/avatar/avatar';
-
+import {
+  MagaryAvatar,
+  BadgeSeverity,
+  AvatarSize,
+  AvatarShape,
+} from '../../Misc/avatar/avatar';
 interface SidebarSection {
   title: string;
   items: MenuItem[];
@@ -12,12 +16,7 @@ interface SidebarSection {
   textColor?: string;
   hoverColor?: string;
 }
-
 type AvatarType = 'image' | 'label' | 'icon';
-type AvatarSize = 'normal' | 'large' | 'xlarge';
-type AvatarShape = 'square' | 'circle';
-type AvatarBadgeSeverity = 'info' | 'success' | 'warning' | 'danger';
-
 interface AvatarConfig {
   type: AvatarType;
   size?: AvatarSize;
@@ -26,9 +25,8 @@ interface AvatarConfig {
   label?: string;
   icon?: string;
   badgeValue?: string;
-  badgeSeverity?: AvatarBadgeSeverity | undefined;
+  badgeSeverity?: BadgeSeverity | undefined;
 }
-
 @Component({
   selector: 'magary-sidebar',
   imports: [CommonModule, RouterModule, MagaryPanelmenu, MagaryAvatar],
@@ -37,10 +35,8 @@ interface AvatarConfig {
 })
 export class Sidebar {
   public sections = input<SidebarSection[]>([]);
-
   public menu = input<MenuItem[]>([]);
   public menuTitle = input<string>('Menu');
-
   public showUserSection = input<boolean>(false);
   public userName = input<string>('John Doe');
   public userEmail = input<string>('user@example.com');
@@ -54,18 +50,14 @@ export class Sidebar {
   public logoSrc = input<string>('assets/logo.svg');
   public appTitle = input<string>('PRIMENG');
   public isMobileOpen = signal(false);
-
   Logout = output<void>();
   closeSidebar = output<void>();
-
   toggleMobileSidebar() {
     this.isMobileOpen.update((open) => !open);
   }
-
   closeMobileSidebar() {
     this.isMobileOpen.set(false);
   }
-
   logout() {
     this.Logout.emit();
   }

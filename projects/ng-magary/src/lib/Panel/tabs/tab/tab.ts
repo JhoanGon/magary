@@ -1,5 +1,4 @@
 import { Component, input, signal } from '@angular/core';
-
 @Component({
   selector: 'magary-tab',
   standalone: true,

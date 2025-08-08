@@ -22,6 +22,17 @@
     </div>
     <div class="section-content">
       <div class="component">
+        <div class="event-status">
+          <div class="status-item">
+            <strong>Estado del menú:</strong> {{ lastToggleState }}
+          </div>
+          <div class="status-item">
+            <strong>Último item clickeado:</strong> {{ lastClickedItem }}
+          </div>
+          <div class="status-item">
+            <strong>Último item expandido:</strong> {{ lastExpandedItem }}
+          </div>
+        </div>
         <magary-panelmenu
           [title]="'Menú Avanzado'"
           [items]="menuItems"
@@ -112,7 +123,7 @@
             <td><code>shadow</code></td>
             <td><code>number</code></td>
             <td><code>0</code></td>
-            <td>Nivel de sombra del panel</td>
+            <td>Nivel de sombra del panel (1-7)</td>
           </tr>
           <tr>
             <td><code>width</code></td>
@@ -163,7 +174,7 @@
           </tr>
           <tr>
             <td><code>itemExpand</code></td>
-            <td><code>item: MenuItem; expanded: boolean</code></td>
+            <td><code>object</code></td>
             <td>Se emite cuando un item se expande o contrae</td>
           </tr>
         </tbody>
@@ -185,8 +196,8 @@
           recursiva.
         </li>
         <li>
-          Cada ítem puede tener un <code>label</code>, <code>route</code> y un
-          <code>icon</code>.
+          Cada ítem puede tener un <code>label</code>, <code>route</code>, un
+          <code>icon</code> y puede estar <code>disabled</code>.
         </li>
       </ul>
     </div>
@@ -208,6 +219,10 @@
         <li>
           <strong>Semántica:</strong> Uso de elementos como
           <code>&lt;a&gt;</code> para enlaces semánticos.
+        </li>
+        <li>
+          <strong>Estados:</strong> Soporte para items deshabilitados con
+          indicación visual y accesibilidad.
         </li>
       </ul>
     </div>

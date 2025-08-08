@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'magary-view-sidebar',
   imports: [],
@@ -7,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrl: './view-sidebar.scss'
 })
 export class ViewSidebar {
-
 }

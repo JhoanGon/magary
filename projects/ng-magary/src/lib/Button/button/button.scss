@@ -8,7 +8,6 @@ $button-variants: (
   warning: (#e7c52d, #c4aa3a),
   help: (#a855f7, #854dbd),
 );
-
 .p-button {
   display: inline-flex;
   align-items: center;
@@ -22,86 +21,159 @@ $button-variants: (
   gap: 0.5rem;
   background-color: #007bff;
   color: #ffffff;
-
+  min-height: 44px; 
+  font-size: 1rem;
   &:hover {
     background-color: #0056b3;
   }
-
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
-
   &.p-button-icon-right {
     flex-direction: row-reverse;
   }
-
   &.p-button-icon-only {
     padding: 10px;
+    min-width: 44px; 
   }
-
   &.p-button-loading {
     position: relative;
-
     .p-button-label,
     .p-button-icon {
       visibility: hidden;
     }
-
     .p-button-loading-icon {
       position: absolute;
       font-size: 1.2rem;
     }
   }
-
   &.p-button-text {
     background-color: transparent;
     border-color: transparent;
     color: #007bff;
-
     &:hover {
       background-color: rgba(0, 123, 255, 0.05);
     }
   }
-
   &.p-button-outlined {
     background-color: transparent;
     border: 2px solid;
     color: #007bff;
-
     &:hover {
       background-color: #007bff;
       color: #ffffff;
     }
   }
-
+  &.p-button-small {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    min-height: 36px;
+    gap: 0.375rem;
+    &.p-button-icon-only {
+      padding: 6px;
+      min-width: 36px;
+    }
+  }
+  &.p-button-normal {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    min-height: 44px;
+    gap: 0.5rem;
+    &.p-button-icon-only {
+      padding: 10px;
+      min-width: 44px;
+    }
+  }
+  &.p-button-large {
+    padding: 1rem 1.75rem;
+    font-size: 1.125rem;
+    min-height: 52px;
+    gap: 0.625rem;
+    &.p-button-icon-only {
+      padding: 14px;
+      min-width: 52px;
+    }
+  }
+  @media (max-width: 768px) {
+    &.p-button-small {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.8rem;
+      min-height: 32px;
+      &.p-button-icon-only {
+        padding: 5px;
+        min-width: 32px;
+      }
+    }
+    &.p-button-normal {
+      padding: 0.625rem 1rem;
+      font-size: 0.9rem;
+      min-height: 40px;
+      &.p-button-icon-only {
+        padding: 8px;
+        min-width: 40px;
+      }
+    }
+    &.p-button-large {
+      padding: 0.875rem 1.5rem;
+      font-size: 1rem;
+      min-height: 48px;
+      &.p-button-icon-only {
+        padding: 12px;
+        min-width: 48px;
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    &.p-button-small {
+      padding: 0.25rem 0.625rem;
+      font-size: 0.75rem;
+      min-height: 28px;
+      &.p-button-icon-only {
+        padding: 4px;
+        min-width: 28px;
+      }
+    }
+    &.p-button-normal {
+      padding: 0.5rem 0.875rem;
+      font-size: 0.85rem;
+      min-height: 36px;
+      &.p-button-icon-only {
+        padding: 6px;
+        min-width: 36px;
+      }
+    }
+    &.p-button-large {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.95rem;
+      min-height: 44px;
+      &.p-button-icon-only {
+        padding: 10px;
+        min-width: 44px;
+      }
+    }
+  }
   @each $name, $colors in $button-variants {
     $bg: list.nth($colors, 1);
     $hover: list.nth($colors, 2);
-
     &.p-button-#{$name} {
       background-color: $bg;
       color: #ffffff;
-
       &:hover {
         background-color: $hover;
       }
     }
-
     &.p-button-text.p-button-#{$name} {
       background-color: transparent;
       color: $bg;
-
       &:hover {
         background-color: rgba($bg, 0.1);
       }
     }
-
     &.p-button-outlined.p-button-#{$name} {
       background-color: transparent;
       border-color: $bg;
       color: $bg;
-
       &:hover {
         background-color: rgba($bg, 0.1);
         color: $bg;
@@ -109,17 +181,14 @@ $button-variants: (
     }
   }
 }
-
 .pi-spin {
   animation: pi-spin 1s linear infinite;
 }
-
 @keyframes pi-spin {
   100% {
     transform: rotate(360deg);
   }
 }
-
 @for $i from 1 through 7 {
   .shadow-#{$i} {
     box-shadow: 0 #{2 + $i * 2}px #{4 + $i * 2}px rgba(0, 0, 0, 0.1 + $i * 0.05);

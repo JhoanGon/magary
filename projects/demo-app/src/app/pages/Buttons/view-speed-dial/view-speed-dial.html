@@ -3,391 +3,174 @@
     <h1>MagarySpeedDial</h1>
     <p>Componente de menú flotante interactivo para accesos rápidos</p>
   </div>
-  <div class="section">
-    <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone</p>
-    </div>
-    <div class="section-content">
-      <div class="code-block">
-        <pre><code [highlight]="importExample" [language]="'typescript'"></code></pre>
+  @for (section of sections; track section.id) {
+    <div
+      class="section"
+      role="region"
+      [attr.aria-labelledby]="'section-' + section.id"
+    >
+      <div class="section-header">
+        <h2 [id]="'section-' + section.id">{{ section.title }}</h2>
+        <p>{{ section.description }}</p>
+      </div>
+      <div class="section-content">
+        @if (section.type === "code") {
+          <div class="code-block">
+            <pre><code [highlight]="section.content!.code" [language]="section.content!.language"></code></pre>
+          </div>
+        }
+        @if (section.type === "demo") {
+          <div class="speed-dial-container">
+            @for (config of section.configs; track config.class) {
+              <magary-speed-dial
+                [class]="config.class"
+                [items]="getItems(config.items)"
+                [direction]="config.direction!"
+                [type]="config.type || 'linear'"
+                [showMask]="config.showMask ?? false"
+              >
+              </magary-speed-dial>
+            }
+          </div>
+          @if (section.codeExamples?.length) {
+            <div class="code-block">
+              <magary-tabs
+                [backgroundLine]="tabsConfig.backgroundLine"
+                [positionContent]="tabsConfig.positionContent"
+                [background]="tabsConfig.background"
+              >
+                @for (example of section.codeExamples; track example.label) {
+                  <magary-tab [label]="example.label">
+                    <pre>
+                      <code [highlight]="example.code" [language]="example.language"></code>
+                    </pre>
+                  </magary-tab>
+                }
+              </magary-tabs>
+            </div>
+          }
+        }
+        @if (section.type === "single-demo") {
+          <div class="speed-dial-container">
+            <magary-speed-dial
+              [class]="section.config!.class"
+              [type]="section.config!.type!"
+              [items]="getItems(section.config!.items)"
+              [showMask]="section.config!.showMask!"
+            >
+            </magary-speed-dial>
+          </div>
+          @if (section.codeExamples?.length) {
+            <div class="code-block">
+              <magary-tabs
+                [backgroundLine]="tabsConfig.backgroundLine"
+                [positionContent]="tabsConfig.positionContent"
+                [background]="tabsConfig.background"
+              >
+                @for (example of section.codeExamples; track example.label) {
+                  <magary-tab [label]="example.label">
+                    <pre>
+                      <code [highlight]="example.code" [language]="example.language"></code>
+                    </pre>
+                  </magary-tab>
+                }
+              </magary-tabs>
+            </div>
+          }
+        }
+        @if (section.type === "custom-demo") {
+          <div class="speed-dial-container" style="height: 100px">
+            <magary-speed-dial
+              [class]="section.customConfig!.class"
+              [style]="section.customConfig!.style!"
+              [direction]="section.customConfig!.direction!"
+              [items]="getItems(section.customConfig!.items)"
+              [showMask]="section.customConfig!.showMask!"
+              [background]="section.customConfig!.background!"
+            >
+            </magary-speed-dial>
+          </div>
+          @if (section.codeExamples?.length) {
+            <div class="code-block">
+              <magary-tabs
+                [backgroundLine]="tabsConfig.backgroundLine"
+                [positionContent]="tabsConfig.positionContent"
+                [background]="tabsConfig.background"
+              >
+                @for (example of section.codeExamples; track example.label) {
+                  <magary-tab [label]="example.label">
+                    <pre>
+                      <code [highlight]="example.code" [language]="example.language"></code>
+                    </pre>
+                  </magary-tab>
+                }
+              </magary-tabs>
+            </div>
+          }
+        }
+        @if (section.type === "table") {
+          @if (section.tableData?.length) {
+            <table class="api-table">
+              <thead>
+                <tr>
+                  @if (section.id === "properties") {
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Valor por Defecto</th>
+                  }
+                  <th>Descripción</th>
+                  @if (section.id === "events") {
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                @for (row of section.tableData; track $index) {
+                  <tr>
+                    @if (section.id === "properties") {
+                      <td>
+                        <code>{{ row.name }}</code>
+                      </td>
+                      <td>
+                        <code>{{ row.type }}</code>
+                      </td>
+                      <td>
+                        <code>{{ row.default }}</code>
+                      </td>
+                    }
+                    <td>{{ row.description }}</td>
+                    @if (section.id === "events") {
+                      <td>
+                        <code>{{ row.name }}</code>
+                      </td>
+                      <td>
+                        <code>{{ row.type }}</code>
+                      </td>
+                    }
+                  </tr>
+                }
+              </tbody>
+            </table>
+          }
+          @if (section.id === "events") {
+            <div class="code-block">
+              <pre><code [highlight]="exampleCommand" language="typescript"></code></pre>
+            </div>
+          }
+        }
+        @if (section.type === "list") {
+          @if (section.listItems?.length) {
+            <ul class="accessibility-list">
+              @for (item of section.listItems; track $index) {
+                <li [innerHTML]="item"></li>
+              }
+            </ul>
+          }
+        }
       </div>
     </div>
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <h2>Uso Básico</h2>
-      <p>Ejemplo simple con configuración por defecto</p>
-    </div>
-    <div class="section-content">
-      <div class="speed-dial-container">
-        <magary-speed-dial
-          class="top"
-          [items]="actionItems"
-          direction="down"
-        ></magary-speed-dial>
-
-        <magary-speed-dial
-          class="left"
-          [items]="actionItems"
-          direction="right"
-        ></magary-speed-dial>
-
-        <magary-speed-dial
-          class="right"
-          [items]="actionItems"
-          direction="left"
-        ></magary-speed-dial>
-
-        <magary-speed-dial
-          class="bottom"
-          [items]="actionItems"
-          direction="up"
-        ></magary-speed-dial>
-      </div>
-      <div class="code-block">
-        <magary-tabs
-          [backgroundLine]="'#ed2c44'"
-          [positionContent]="'flex-start'"
-          [background]="'#282c34'"
-        >
-          <magary-tab label="HTML">
-            <pre>
-              <code [highlight]="exampleBasicHtml" language="html"></code>
-            </pre>
-          </magary-tab>
-
-          <magary-tab label="TS">
-            <pre>
-              <code [highlight]="exampleTs" language="typescript"></code>
-            </pre>
-          </magary-tab>
-        </magary-tabs>
-        <pre></pre>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <h2>Circulo</h2>
-      <p>Ejemplo de menu en circulo</p>
-    </div>
-    <div class="section-content">
-      <div class="speed-dial-container">
-        <magary-speed-dial
-          class="center"
-          [type]="'circle'"
-          [items]="actionItems"
-          [showMask]="false"
-        ></magary-speed-dial>
-      </div>
-      <div class="code-block">
-        <magary-tabs
-          [backgroundLine]="'#ed2c44'"
-          [positionContent]="'flex-start'"
-          [background]="'#282c34'"
-        >
-          <magary-tab label="HTML">
-            <pre>
-              <code [highlight]="exampleCircleHtml" language="html"></code>
-            </pre>
-          </magary-tab>
-
-          <magary-tab label="TS">
-            <pre><code [highlight]="exampleTs" language="typescript"></code></pre>
-          </magary-tab>
-        </magary-tabs>
-        <pre></pre>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <h2>Semi Circulo</h2>
-      <p>Ejemplo simple con configuración por defecto</p>
-    </div>
-    <div class="section-content">
-      <div class="speed-dial-container">
-        <magary-speed-dial
-          class="top"
-          [items]="actionItems"
-          direction="down"
-          [type]="'semicircle'"
-          [showMask]="false"
-        ></magary-speed-dial>
-
-        <magary-speed-dial
-          class="left"
-          [items]="actionItems"
-          direction="right"
-          [type]="'semicircle'"
-          [showMask]="false"
-        ></magary-speed-dial>
-
-        <magary-speed-dial
-          class="right"
-          [items]="actionItems"
-          direction="left"
-          [type]="'semicircle'"
-          [showMask]="false"
-        ></magary-speed-dial>
-
-        <magary-speed-dial
-          class="bottom"
-          [items]="actionItems"
-          direction="up"
-          [type]="'semicircle'"
-          [showMask]="false"
-        ></magary-speed-dial>
-      </div>
-      <div class="code-block">
-        <magary-tabs
-          [backgroundLine]="'#ed2c44'"
-          [positionContent]="'flex-start'"
-          [background]="'#282c34'"
-        >
-          <magary-tab label="HTML">
-            <pre>
-              <code [highlight]="exampleSemiCircleHtml" language="html"></code>
-            </pre>
-          </magary-tab>
-
-          <magary-tab label="TS">
-            <pre><code [highlight]="exampleTs" language="typescript"></code></pre>
-          </magary-tab>
-        </magary-tabs>
-        <pre></pre>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <h2>Quarto de Circulo</h2>
-      <p>Ejemplo simple con configuración por defecto</p>
-    </div>
-    <div class="section-content">
-      <div class="speed-dial-container">
-        <magary-speed-dial
-          class="top-left"
-          [items]="actionItems"
-          direction="down-right"
-          [type]="'quartercircle'"
-          [showMask]="false"
-        ></magary-speed-dial>
-
-        <magary-speed-dial
-          class="down-left"
-          [items]="actionItems"
-          direction="up-right"
-          [type]="'quartercircle'"
-          [showMask]="false"
-        ></magary-speed-dial>
-
-        <magary-speed-dial
-          class="top-right"
-          [items]="actionItems"
-          direction="down-left"
-          [type]="'quartercircle'"
-          [showMask]="false"
-        ></magary-speed-dial>
-
-        <magary-speed-dial
-          class="down-right"
-          [items]="actionItems"
-          direction="up-left"
-          [type]="'quartercircle'"
-          [showMask]="false"
-        ></magary-speed-dial>
-      </div>
-      <div class="code-block">
-        <magary-tabs
-          [backgroundLine]="'#ed2c44'"
-          [positionContent]="'flex-start'"
-          [background]="'#282c34'"
-        >
-          <magary-tab label="HTML">
-            <pre>
-              <code [highlight]="exampleQuarterCircleHtml" language="html"></code>
-            </pre>
-          </magary-tab>
-
-          <magary-tab label="TS">
-            <pre><code [highlight]="exampleTs" language="typescript"></code></pre>
-          </magary-tab>
-        </magary-tabs>
-        <pre></pre>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <h2>Tooltip</h2>
-      <p>
-        El tooltip es opcional, se puede agregar o quitar a gusto por cada item
-      </p>
-    </div>
-    <div class="section-content">
-      <div class="speed-dial-container" style="height: 100px">
-        <magary-speed-dial
-          class="center"
-          style="top: 10%"
-          [direction]="'right'"
-          [items]="actionItemsTooltip"
-          [showMask]="false"
-          [background]="'#0eb4d7'"
-        ></magary-speed-dial>
-      </div>
-      <div class="code-block">
-        <magary-tabs
-          [backgroundLine]="'#ed2c44'"
-          [positionContent]="'flex-start'"
-          [background]="'#282c34'"
-        >
-          <magary-tab label="HTML">
-            <pre>
-              <code [highlight]="exampleTooltipHtml" language="html"></code>
-            </pre>
-          </magary-tab>
-
-          <magary-tab label="TS">
-            <pre><code [highlight]="exampleTooltipTs" language="typescript"></code></pre>
-          </magary-tab>
-        </magary-tabs>
-        <pre></pre>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente</p>
-    </div>
-    <div class="section-content">
-      <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Valor por Defecto</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>items</code></td>
-            <td><code>SpeedDialItem[]</code></td>
-            <td><code>—</code></td>
-            <td>Lista de acciones con ícono, tooltip y comando</td>
-          </tr>
-          <tr>
-            <td><code>icon</code></td>
-            <td><code>string</code></td>
-            <td><code>'fas fa-plus'</code></td>
-            <td>Ícono del botón inicial</td>
-          </tr>
-          <tr>
-            <td><code>activeIcon</code></td>
-            <td><code>string</code></td>
-            <td><code>'fas fa-times'</code></td>
-            <td>Ícono al estar abierto</td>
-          </tr>
-          <tr>
-            <td><code>type</code></td>
-            <td>
-              <code>'linear' | 'circle' | 'semicircle' | 'quartercircle'</code>
-            </td>
-            <td><code>'linear'</code></td>
-            <td>Tipo de disposición</td>
-          </tr>
-          <tr>
-            <td><code>direction</code></td>
-            <td>
-              <code>'up' | 'down' | 'left' | 'right' | 'up-left' | ...</code>
-            </td>
-            <td><code>—</code></td>
-            <td>Dirección del despliegue (solo para linear)</td>
-          </tr>
-          <tr>
-            <td><code>radius</code></td>
-            <td><code>number</code></td>
-            <td><code>80</code></td>
-            <td>Radio de expansión</td>
-          </tr>
-          <tr>
-            <td><code>showMask</code></td>
-            <td><code>boolean</code></td>
-            <td><code>true</code></td>
-            <td>Activa máscara al abrir</td>
-          </tr>
-          <tr>
-            <td><code>background</code></td>
-            <td><code>string</code></td>
-            <td><code>'#007bff'</code></td>
-            <td>Color del botón trigger</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos emitidos por cada acción</p>
-    </div>
-    <div class="section-content">
-      <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>command</code></td>
-            <td><code>(event: Event) => void</code></td>
-            <td>Función que se ejecuta al hacer clic en un ítem</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="code-block">
-        <pre><code [highlight]="exampleCommand" language="typescript"></code></pre>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-header">
-      <h2>Accesibilidad</h2>
-      <p>Características de accesibilidad del SpeedDial</p>
-    </div>
-    <div class="section-content">
-      <ul class="accessibility-list">
-        <li>
-          <strong>Foco:</strong> El botón principal y los ítems pueden ser
-          navegados con teclado
-        </li>
-        <li>
-          <strong>ARIA:</strong> Puedes agregar <code>aria-label</code> a los
-          ítems en tu propia lógica
-        </li>
-        <li>
-          <strong>Visual:</strong> Indicadores visuales de estado
-          abierto/cerrado y foco
-        </li>
-      </ul>
-    </div>
-  </div>
-
+  }
   <div class="section">
     <div class="section-header">
       <h2>Ejemplos Completos</h2>

@@ -1,36 +1,29 @@
 <button
   type="button"
-  [disabled]="disabled() || loading()"
-  [style.border-radius]="rounded() ? '22px' : '8px'"
-  [style.background]="customBackgroundColor()"
-  (click)="buttonClick.emit($event)"
-  [ngClass]="[
-    'p-button',
-    'shadow-' + shadow(),
-    'p-button-' + severity(),
-    variant() === 'text' ? 'p-button-text' : '',
-    variant() === 'outlined' ? 'p-button-outlined' : '',
-    icon() && !label() ? 'p-button-icon-only' : '',
-    icon() && label() && iconPos() === 'left' ? 'p-button-icon-left' : '',
-    icon() && label() && iconPos() === 'right' ? 'p-button-icon-right' : '',
-    loading() ? 'p-button-loading' : '',
-  ]"
+  [disabled]="isDisabled()"
+  [ngStyle]="buttonStyles()"
+  [ngClass]="buttonClasses()"
+  [attr.aria-label]="effectiveAriaLabel()"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  [attr.aria-disabled]="isDisabled() ? 'true' : null"
+  (click)="onButtonClick($event)"
 >
   @if (loading()) {
-    <span class="p-button-loading-icon fas fa-spinner fa-spin"></span>
+    <span
+      class="p-button-loading-icon fas fa-spinner fa-spin"
+      aria-hidden="true"
+    >
+    </span>
   }
-
   @if (icon() && !loading() && iconPos() === "left") {
-    <span class="p-button-icon" [ngClass]="icon()"></span>
+    <span class="p-button-icon" [ngClass]="icon()" aria-hidden="true"> </span>
   }
-
   @if (label()) {
     <span class="p-button-label">{{ label() }}</span>
   } @else if (!icon()) {
     <span class="p-button-label">&nbsp;</span>
   }
-
   @if (icon() && !loading() && iconPos() === "right") {
-    <span class="p-button-icon" [ngClass]="icon()"></span>
+    <span class="p-button-icon" [ngClass]="icon()" aria-hidden="true"> </span>
   }
 </button>

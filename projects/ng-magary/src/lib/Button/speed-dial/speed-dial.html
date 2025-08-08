@@ -1,38 +1,57 @@
-<div
-  class="speed-dial-container"
-  [class.is-open]="isOpen()"
-  [style.--background]="background()"
->
+<div [ngClass]="containerClasses()" [ngStyle]="triggerStyles()">
   @if (showMask() && isOpen()) {
-    <div class="speed-dial-mask" (click)="isOpen.set(false)"></div>
+    <div class="speed-dial-mask" (click)="closeMask()" aria-hidden="true"></div>
   }
   <ul
     class="speed-dial-items"
     [attr.data-direction]="direction()"
-    [style.--item-count]="itemCount()"
+    [ngStyle]="itemsStyles()"
+    role="menu"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-label]="ariaLabel()"
   >
-    @for (item of items(); track $index) {
+    @for (item of items(); track trackByItem($index, item)) {
       <li
         [style.--i]="$index"
         [style.--radius.px]="radius()"
         [style.transition-delay]="isOpen() ? $index * 50 + 'ms' : '0ms'"
         [class]="'item-' + type()"
+        role="presentation"
       >
         @if (item.tooltip) {
-          <div class="action-tooltip">{{ item.tooltip }}</div>
+          <div
+            class="action-tooltip"
+            role="tooltip"
+            [attr.id]="'tooltip-' + $index"
+          >
+            {{ item.tooltip }}
+          </div>
         }
         <button
           type="button"
           class="action-button"
+          role="menuitem"
+          [disabled]="item.disabled"
+          [attr.aria-label]="
+            item.ariaLabel || item.tooltip || 'Speed dial action'
+          "
+          [attr.aria-describedby]="item.tooltip ? 'tooltip-' + $index : null"
+          [style.background-color]="item.backgroundColor"
           (click)="onItemClick($event, item)"
         >
-          <i [ngClass]="item.icon"></i>
+          <i [ngClass]="item.icon" aria-hidden="true"> </i>
         </button>
       </li>
     }
   </ul>
-
-  <button type="button" class="trigger-button" (click)="toggle($event)">
-    <i [ngClass]="isOpen() ? activeIcon() : icon()"></i>
+  <button
+    type="button"
+    class="trigger-button"
+    [attr.aria-label]="ariaLabel() + (isOpen() ? ' - Cerrar' : ' - Abrir')"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-haspopup]="'menu'"
+    (click)="toggleSpeedDial($event)"
+  >
+    <i [ngClass]="currentIcon()" aria-hidden="true"> </i>
   </button>
 </div>

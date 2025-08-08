@@ -4,12 +4,10 @@
   overflow: hidden;
   background: #fff;
 }
-
 .tab-headers {
   display: flex;
   border-bottom: 1px solid #ddd;
   position: relative;
-
   &::after {
     content: '';
     position: absolute;
@@ -20,7 +18,6 @@
     left: var(--underline-left, 0);
     width: var(--underline-width, 0);
   }
-
   button {
     flex: 1;
     padding: 1rem;
@@ -30,28 +27,23 @@
     font-weight: bold;
     transition: background 0.3s;
     z-index: 1;
-
     &:hover {
       background: #f0f0f0;
     }
-
     &.active {
       background: #f9f9f9;
       color: #000;
     }
   }
 }
-
 .tab-content {
   padding: var(--padding);
   display: flex;
   justify-content: var(--position-content);
   background: var(--background);
-
   &.animated {
     animation: slideIn 0.7s ease-out;
   }
-
   @keyframes slideIn {
     from {
       opacity: 0;

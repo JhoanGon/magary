@@ -2,162 +2,256 @@
   class="panel-menu"
   [ngClass]="['shadow-' + shadow()]"
   [class.open]="isOpen()"
-  [style.background]="backgroundColor()"
-  [style.color]="textColor()"
-  [style.border-radius]="borderRadius()"
-  [style.box-shadow]="shadow()"
-  [style.width]="width()"
-  [style.height]="'auto'"
+  [ngStyle]="panelStyles()"
 >
   <div
     class="panel-header"
+    [class.header-hovered]="hoveredHeader()"
     (click)="toggle()"
-    (mouseenter)="hoverHeader = true"
-    (mouseleave)="hoverHeader = false"
-    [style.background]="hoverHeader ? hoverColor() : backgroundColor()"
-    [style.color]="hoverHeader ? '#fff' : textColor()"
+    (mouseenter)="onHeaderHover(true)"
+    (mouseleave)="onHeaderHover(false)"
   >
     {{ title() }}
-    <span class="arrow">
-      <i
-        class="fas"
-        [ngClass]="isOpen() ? 'fa-chevron-up' : 'fa-chevron-down'"
-      ></i>
+    <span class="arrow" [class.open]="isOpen()">
+      <i class="fas fa-chevron-down"></i>
     </span>
   </div>
-
   <ul class="panel-items" [class.expanded]="isOpen()">
     @for (item of items(); track getItemId(item, $index)) {
       <li class="menu-item">
         @if (hasChildren(item)) {
           <div
             class="category-item"
-            (click)="toggleSubItem(item.label)"
+            [class.item-hovered]="isItemHovered(getItemId(item, $index))"
+            [class.disabled]="isItemDisabled(item)"
+            (click)="
+              !isItemDisabled(item) &&
+                toggleSubItem(getUniqueItemKey(item), item)
+            "
             (mouseenter)="onItemHover(getItemId(item, $index))"
             (mouseleave)="onItemLeave()"
-            [style.background]="
-              hovered === getItemId(item, $index) ? hoverColor() : ''
-            "
-            [style.color]="hovered === getItemId(item, $index) ? '#fff' : ''"
           >
             @if (item.icon) {
               <i [class]="item.icon" class="item-icon"></i>
             }
             <span class="item-label">{{ item.label }}</span>
-            <span class="sub-arrow">
+            <span
+              class="sub-arrow"
+              [class.expanded]="isSubItemExpanded(getUniqueItemKey(item))"
+            >
               <i
                 class="fas"
                 [ngClass]="
-                  isSubItemExpanded(item.label) ? 'fa-minus' : 'fa-plus'
+                  isSubItemExpanded(getUniqueItemKey(item))
+                    ? 'fa-minus'
+                    : 'fa-plus'
                 "
               ></i>
             </span>
           </div>
           <ul
             class="sub-items"
-            [class.expanded]="isSubItemExpanded(item.label)"
+            [class.expanded]="isSubItemExpanded(getUniqueItemKey(item))"
           >
-            @for (subItem of item.children; track getItemId(subItem, $index)) {
+            @for (
+              subItem of item.children;
+              track subItem.label + "-" + $index
+            ) {
               <li>
                 @if (hasChildren(subItem)) {
                   <div
                     class="sub-category-item"
-                    (click)="toggleSubItem(subItem.label)"
-                    (mouseenter)="onItemHover(getItemId(subItem, $index))"
+                    [class.item-hovered]="
+                      isItemHovered(subItem.label + '-sub-' + $index)
+                    "
+                    [class.disabled]="isItemDisabled(subItem)"
+                    (click)="
+                      !isItemDisabled(subItem) &&
+                        toggleSubItem(
+                          getUniqueItemKey(subItem, getUniqueItemKey(item)),
+                          subItem
+                        )
+                    "
+                    (mouseenter)="onItemHover(subItem.label + '-sub-' + $index)"
                     (mouseleave)="onItemLeave()"
-                    [style.background]="
-                      hovered === getItemId(subItem, $index) ? hoverColor() : ''
-                    "
-                    [style.color]="
-                      hovered === getItemId(subItem, $index) ? '#fff' : ''
-                    "
                   >
                     @if (subItem.icon) {
                       <i [class]="subItem.icon" class="item-icon"></i>
                     }
                     <span class="item-label">{{ subItem.label }}</span>
-                    <span class="sub-arrow">
+                    <span
+                      class="sub-arrow"
+                      [class.expanded]="
+                        isSubItemExpanded(
+                          getUniqueItemKey(subItem, getUniqueItemKey(item))
+                        )
+                      "
+                    >
                       <i
                         class="fas"
                         [ngClass]="
-                          isSubItemExpanded(subItem.label)
-                            ? 'fa-chevron-up'
-                            : 'fa-chevron-down'
+                          isSubItemExpanded(
+                            getUniqueItemKey(subItem, getUniqueItemKey(item))
+                          )
+                            ? 'fa-minus'
+                            : 'fa-plus'
                         "
                       ></i>
                     </span>
                   </div>
-
                   <ul
                     class="sub-sub-items"
-                    [class.expanded]="isSubItemExpanded(subItem.label)"
+                    [class.expanded]="
+                      isSubItemExpanded(
+                        getUniqueItemKey(subItem, getUniqueItemKey(item))
+                      )
+                    "
                   >
                     @for (
                       subSubItem of subItem.children;
-                      track getItemId(subSubItem, $index)
+                      track subSubItem.label + "-" + $index
                     ) {
                       <li>
-                        <a
-                          [routerLink]="subSubItem.route"
-                          (mouseenter)="
-                            onItemHover(getItemId(subSubItem, $index))
-                          "
-                          (mouseleave)="onItemLeave()"
-                          [style.background]="
-                            hovered === getItemId(subSubItem, $index)
-                              ? hoverColor()
-                              : ''
-                          "
-                          [style.color]="
-                            hovered === getItemId(subSubItem, $index)
-                              ? '#fff'
-                              : ''
-                          "
-                        >
-                          @if (subSubItem.icon) {
-                            <i [class]="subSubItem.icon" class="item-icon"></i>
-                          }
-                          {{ subSubItem.label }}
-                        </a>
+                        @if (subSubItem.route) {
+                          <a
+                            [routerLink]="subSubItem.route"
+                            [class.item-hovered]="
+                              isItemHovered(
+                                subSubItem.label + '-subsub-' + $index
+                              )
+                            "
+                            [class.disabled]="isItemDisabled(subSubItem)"
+                            (click)="
+                              onItemClick(subSubItem, 2, [
+                                item.label,
+                                subItem.label,
+                              ])
+                            "
+                            (mouseenter)="
+                              onItemHover(
+                                subSubItem.label + '-subsub-' + $index
+                              )
+                            "
+                            (mouseleave)="onItemLeave()"
+                          >
+                            @if (subSubItem.icon) {
+                              <i
+                                [class]="subSubItem.icon"
+                                class="item-icon"
+                              ></i>
+                            }
+                            {{ subSubItem.label }}
+                          </a>
+                        } @else {
+                          <div
+                            class="menu-item-base"
+                            [class.item-hovered]="
+                              isItemHovered(
+                                subSubItem.label + '-subsub-' + $index
+                              )
+                            "
+                            [class.disabled]="isItemDisabled(subSubItem)"
+                            (click)="
+                              !isItemDisabled(subSubItem) &&
+                                onItemClick(subSubItem, 2, [
+                                  item.label,
+                                  subItem.label,
+                                ])
+                            "
+                            (mouseenter)="
+                              onItemHover(
+                                subSubItem.label + '-subsub-' + $index
+                              )
+                            "
+                            (mouseleave)="onItemLeave()"
+                          >
+                            @if (subSubItem.icon) {
+                              <i
+                                [class]="subSubItem.icon"
+                                class="item-icon"
+                              ></i>
+                            }
+                            {{ subSubItem.label }}
+                          </div>
+                        }
                       </li>
                     }
                   </ul>
                 } @else {
-                  <a
-                    [routerLink]="subItem.route"
-                    (mouseenter)="onItemHover(getItemId(subItem, $index))"
-                    (mouseleave)="onItemLeave()"
-                    [style.background]="
-                      hovered === getItemId(subItem, $index) ? hoverColor() : ''
-                    "
-                    [style.color]="
-                      hovered === getItemId(subItem, $index) ? '#fff' : ''
-                    "
-                  >
-                    @if (subItem.icon) {
-                      <i [class]="subItem.icon" class="item-icon"></i>
-                    }
-                    {{ subItem.label }}
-                  </a>
+                  @if (subItem.route) {
+                    <a
+                      [routerLink]="subItem.route"
+                      [class.item-hovered]="
+                        isItemHovered(subItem.label + '-sub-' + $index)
+                      "
+                      [class.disabled]="isItemDisabled(subItem)"
+                      (click)="onItemClick(subItem, 1, [item.label])"
+                      (mouseenter)="
+                        onItemHover(subItem.label + '-sub-' + $index)
+                      "
+                      (mouseleave)="onItemLeave()"
+                    >
+                      @if (subItem.icon) {
+                        <i [class]="subItem.icon" class="item-icon"></i>
+                      }
+                      {{ subItem.label }}
+                    </a>
+                  } @else {
+                    <div
+                      class="menu-item-base"
+                      [class.item-hovered]="
+                        isItemHovered(subItem.label + '-sub-' + $index)
+                      "
+                      [class.disabled]="isItemDisabled(subItem)"
+                      (click)="
+                        !isItemDisabled(subItem) &&
+                          onItemClick(subItem, 1, [item.label])
+                      "
+                      (mouseenter)="
+                        onItemHover(subItem.label + '-sub-' + $index)
+                      "
+                      (mouseleave)="onItemLeave()"
+                    >
+                      @if (subItem.icon) {
+                        <i [class]="subItem.icon" class="item-icon"></i>
+                      }
+                      {{ subItem.label }}
+                    </div>
+                  }
                 }
               </li>
             }
           </ul>
         } @else {
-          <a
-            [routerLink]="item.route"
-            (mouseenter)="onItemHover(getItemId(item, $index))"
-            (mouseleave)="onItemLeave()"
-            [style.background]="
-              hovered === getItemId(item, $index) ? hoverColor() : ''
-            "
-            [style.color]="hovered === getItemId(item, $index) ? '#fff' : ''"
-          >
-            @if (item.icon) {
-              <i [class]="item.icon" class="item-icon"></i>
-            }
-            {{ item.label }}
-          </a>
+          @if (item.route) {
+            <a
+              [routerLink]="item.route"
+              [class.item-hovered]="isItemHovered(getItemId(item, $index))"
+              [class.disabled]="isItemDisabled(item)"
+              (click)="onItemClick(item, 0)"
+              (mouseenter)="onItemHover(getItemId(item, $index))"
+              (mouseleave)="onItemLeave()"
+            >
+              @if (item.icon) {
+                <i [class]="item.icon" class="item-icon"></i>
+              }
+              {{ item.label }}
+            </a>
+          } @else {
+            <div
+              class="menu-item-base"
+              [class.item-hovered]="isItemHovered(getItemId(item, $index))"
+              [class.disabled]="isItemDisabled(item)"
+              (click)="!isItemDisabled(item) && onItemClick(item, 0)"
+              (mouseenter)="onItemHover(getItemId(item, $index))"
+              (mouseleave)="onItemLeave()"
+            >
+              @if (item.icon) {
+                <i [class]="item.icon" class="item-icon"></i>
+              }
+              {{ item.label }}
+            </div>
+          }
         }
       </li>
     }

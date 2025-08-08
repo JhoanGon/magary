@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 .layout {
   display: flex;
   height: 100vh;
@@ -12,7 +11,6 @@
   padding: 0;
   overflow: hidden;
 }
-
 .main {
   flex: 1;
   display: flex;
@@ -20,14 +18,12 @@
   background: #ffffff;
   overflow: hidden;
 }
-
 .header {
   padding: 1rem 2rem;
   background: #ffffff;
   border-bottom: 1px solid #e2e8f0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   height: 60px;
-
   h1 {
     margin: 0;
     color: #1f2937;
@@ -35,14 +31,12 @@
     font-weight: 600;
   }
 }
-
 .content {
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
   background: #f8fafc;
 }
-
 @media (max-width: 768px) {
   .header {
     padding: 20px 20px 20px 90px;
