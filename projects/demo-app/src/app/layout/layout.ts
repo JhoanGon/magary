@@ -73,7 +73,12 @@ export class Layout {
           children: [
             {
               label: 'Cascade Select',
-              route: '',
+              route: 'components/Cascade-Select',
+              icon: '',
+            },
+            {
+              label: 'Input',
+              route: 'components/Input',
               icon: '',
             },
           ],

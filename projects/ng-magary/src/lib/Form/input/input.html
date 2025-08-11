@@ -1,0 +1,66 @@
+<div [ngClass]="containerClasses()" [ngStyle]="inputStyles()">
+  @if (label()) {
+    <label [for]="getId()" class="input-label">
+      {{ label() }}
+      @if (required()) {
+        <span class="required-asterisk">*</span>
+      }
+    </label>
+  }
+
+  <div class="input-wrapper">
+    @if (prefixIcon()) {
+      <i
+        [class]="prefixIcon()"
+        class="prefix-icon"
+        (click)="onPrefixIconClick()"
+        [class.clickable]="!disabled()"
+      ></i>
+    }
+
+    <input
+      [id]="getId()"
+      [ngClass]="inputClasses()"
+      [type]="actualType()"
+      [value]="value()"
+      [placeholder]="placeholder()"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [required]="required()"
+      attr.maxlength="{{ maxLength() }}"
+      (input)="onInput($event)"
+      (focus)="onFocus($event)"
+      (blur)="onBlur($event)"
+    />
+
+    @if (loading()) {
+      <i class="fas fa-spinner fa-spin suffix-icon loading-icon"></i>
+    } @else if (type() === "password") {
+      <i
+        [class]="passwordIcon()"
+        class="suffix-icon password-toggle"
+        (click)="togglePasswordVisibility()"
+      ></i>
+    } @else if (suffixIcon()) {
+      <i
+        [class]="suffixIcon()"
+        class="suffix-icon"
+        (click)="onSuffixIconClick()"
+        [class.clickable]="!disabled()"
+      ></i>
+    }
+  </div>
+
+  @if (error() || helpText()) {
+    <div class="input-message">
+      @if (error()) {
+        <span class="error-message">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ error() }}
+        </span>
+      } @else if (helpText()) {
+        <span class="help-message">{{ helpText() }}</span>
+      }
+    </div>
+  }
+</div>

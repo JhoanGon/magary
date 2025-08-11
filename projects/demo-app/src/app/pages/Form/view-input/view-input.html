@@ -1,0 +1,854 @@
+<div class="container">
+  <div class="header">
+    <h1>MagaryInput</h1>
+    <p>Componente de input altamente personalizable para Angular</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu módulo o componente standalone</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Uso Básico</h2>
+      <p>Ejemplos básicos del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Input Básico</h4>
+          <magary-input
+            [label]="'Nombre'"
+            [placeholder]="'Escribe tu nombre'"
+            [value]="inputValue"
+            (valueChange)="onInputChange($event)"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Con Icono Prefijo</h4>
+          <magary-input
+            [label]="'Usuario'"
+            [placeholder]="'Nombre de usuario'"
+            [prefixIcon]="'fas fa-user'"
+            [value]="inputValue"
+            (valueChange)="onInputChange($event)"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Solo Lectura</h4>
+          <magary-input
+            [label]="'Solo lectura'"
+            [placeholder]="'No puedes editar'"
+            [readonly]="true"
+            [value]="'Valor fijo'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Deshabilitado</h4>
+          <magary-input
+            [label]="'Deshabilitado'"
+            [placeholder]="'Campo deshabilitado'"
+            [disabled]="true"
+          ></magary-input>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'Input Básico'">
+            <pre><code [highlight]="basicExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Con Icono'">
+            <pre><code [highlight]="basicExampleWithIcon" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Solo Lectura'">
+            <pre><code [highlight]="basicExampleReadonly" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Deshabilitado'">
+            <pre><code [highlight]="basicExampleDisabled" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Tipos de Input</h2>
+      <p>Diferentes tipos de inputs según su propósito</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Text</h4>
+          <magary-input
+            [type]="'text'"
+            [label]="'Texto'"
+            [placeholder]="'Escribe texto'"
+            [value]="inputValue"
+            (valueChange)="onInputChange($event)"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Email</h4>
+          <magary-input
+            [type]="'email'"
+            [label]="'Email'"
+            [placeholder]="'tu@email.com'"
+            [value]="emailValue"
+            (valueChange)="onEmailChange($event)"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Password</h4>
+          <magary-input
+            [type]="'password'"
+            [label]="'Contraseña'"
+            [placeholder]="'Tu contraseña'"
+            [value]="passwordValue"
+            (valueChange)="onPasswordChange($event)"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Search</h4>
+          <magary-input
+            [type]="'search'"
+            [label]="'Buscar'"
+            [placeholder]="'Buscar...'"
+            [prefixIcon]="'fas fa-search'"
+            [value]="searchValue"
+            (valueChange)="onSearchChange($event)"
+          ></magary-input>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'Text'">
+            <pre><code [highlight]="typesExampleText" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Email'">
+            <pre><code [highlight]="typesExampleEmail" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Password'">
+            <pre><code [highlight]="typesExamplePassword" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Search'">
+            <pre><code [highlight]="typesExampleSearch" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Tamaños</h2>
+      <p>Diferentes tamaños disponibles para el componente</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Pequeño</h4>
+          <magary-input
+            [size]="'small'"
+            [label]="'Pequeño'"
+            [placeholder]="'Input pequeño'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Normal</h4>
+          <magary-input
+            [size]="'normal'"
+            [label]="'Normal'"
+            [placeholder]="'Input normal'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Grande</h4>
+          <magary-input
+            [size]="'large'"
+            [label]="'Grande'"
+            [placeholder]="'Input grande'"
+          ></magary-input>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'Pequeño'">
+            <pre><code [highlight]="sizesExampleSmall" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Normal'">
+            <pre><code [highlight]="sizesExampleNormal" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Grande'">
+            <pre><code [highlight]="sizesExampleLarge" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Variantes</h2>
+      <p>Diferentes estilos visuales del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Outlined</h4>
+          <magary-input
+            [variant]="'outlined'"
+            [label]="'Outlined'"
+            [placeholder]="'Estilo outlined'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Filled</h4>
+          <magary-input
+            [variant]="'filled'"
+            [label]="'Filled'"
+            [placeholder]="'Estilo filled'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Underlined</h4>
+          <magary-input
+            [variant]="'underlined'"
+            [label]="'Underlined'"
+            [placeholder]="'Estilo underlined'"
+          ></magary-input>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'Outlined'">
+            <pre><code [highlight]="variantsExampleOutlined" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Filled'">
+            <pre><code [highlight]="variantsExampleFilled" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Underlined'">
+            <pre><code [highlight]="variantsExampleUnderlined" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Validación</h2>
+      <p>Estados de validación y mensajes de ayuda</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Con Error</h4>
+          <magary-input
+            [label]="'Campo con error'"
+            [placeholder]="'Email inválido'"
+            [error]="'Por favor ingresa un email válido'"
+            [value]="'email-invalido'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Exitoso</h4>
+          <magary-input
+            [label]="'Campo exitoso'"
+            [placeholder]="'Email válido'"
+            [success]="true"
+            [value]="'usuario@ejemplo.com'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Requerido</h4>
+          <magary-input
+            [label]="'Campo requerido'"
+            [placeholder]="'Campo obligatorio'"
+            [required]="true"
+            [helpText]="'Este campo es obligatorio'"
+          ></magary-input>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'Con Error'">
+            <pre><code [highlight]="validationExampleError" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Exitoso'">
+            <pre><code [highlight]="validationExampleSuccess" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Requerido'">
+            <pre><code [highlight]="validationExampleRequired" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Iconos</h2>
+      <p>Uso de iconos como prefijo y sufijo</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Icono Prefijo</h4>
+          <magary-input
+            [label]="'Usuario'"
+            [placeholder]="'Nombre de usuario'"
+            [prefixIcon]="'fas fa-user'"
+            (iconClick)="onIconClick($event)"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Iconos Múltiples</h4>
+          <magary-input
+            [label]="'Búsqueda'"
+            [placeholder]="'Buscar productos...'"
+            [prefixIcon]="'fas fa-search'"
+            [suffixIcon]="'fas fa-times'"
+            (iconClick)="onIconClick($event)"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Con Loading</h4>
+          <magary-input
+            [label]="'Cargando'"
+            [placeholder]="'Procesando...'"
+            [loading]="true"
+            [disabled]="true"
+          ></magary-input>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'Icono Prefijo'">
+            <pre><code [highlight]="iconsExamplePrefix" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Iconos Múltiples'">
+            <pre><code [highlight]="iconsExampleMultiple" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Con Loading'">
+            <pre><code [highlight]="iconsExampleLoading" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Estados</h2>
+      <p>Diferentes estados del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Normal</h4>
+          <magary-input
+            [label]="'Campo normal'"
+            [placeholder]="'Input normal'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Deshabilitado</h4>
+          <magary-input
+            [label]="'Campo deshabilitado'"
+            [placeholder]="'No puedes escribir aquí'"
+            [disabled]="true"
+            [value]="'Valor fijo'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Solo Lectura</h4>
+          <magary-input
+            [label]="'Campo solo lectura'"
+            [placeholder]="'Solo lectura'"
+            [readonly]="true"
+            [value]="'Solo puedes leer esto'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Con Límite</h4>
+          <magary-input
+            [label]="'Con límite'"
+            [placeholder]="'Máximo 20 caracteres'"
+            [maxLength]="20"
+            [helpText]="'Máximo 20 caracteres permitidos'"
+          ></magary-input>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'Normal'">
+            <pre><code [highlight]="statesExampleNormal" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Deshabilitado'">
+            <pre><code [highlight]="statesExampleDisabled" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Solo Lectura'">
+            <pre><code [highlight]="statesExampleReadonly" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Con Límite'">
+            <pre><code [highlight]="statesExampleWithLimit" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades de Input</h2>
+      <p>Todas las propiedades disponibles para el componente MagaryInput</p>
+    </div>
+    <div class="section-content">
+      <div class="properties-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Propiedad</th>
+              <th>Tipo</th>
+              <th>Valor por defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>value</code></td>
+              <td>string</td>
+              <td>''</td>
+              <td>Valor del input</td>
+            </tr>
+            <tr>
+              <td><code>label</code></td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>Etiqueta del input</td>
+            </tr>
+            <tr>
+              <td><code>placeholder</code></td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>Texto de placeholder</td>
+            </tr>
+            <tr>
+              <td><code>type</code></td>
+              <td>
+                'text' | 'email' | 'password' | 'search' | 'number' | 'tel' |
+                'url'
+              </td>
+              <td>'text'</td>
+              <td>Tipo de input HTML</td>
+            </tr>
+            <tr>
+              <td><code>size</code></td>
+              <td>'small' | 'normal' | 'large'</td>
+              <td>'normal'</td>
+              <td>Tamaño del componente</td>
+            </tr>
+            <tr>
+              <td><code>variant</code></td>
+              <td>'outlined' | 'filled' | 'underlined'</td>
+              <td>'outlined'</td>
+              <td>Variante visual del componente</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Deshabilita el input</td>
+            </tr>
+            <tr>
+              <td><code>readonly</code></td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Hace el input de solo lectura</td>
+            </tr>
+            <tr>
+              <td><code>required</code></td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Marca el campo como requerido</td>
+            </tr>
+            <tr>
+              <td><code>maxLength</code></td>
+              <td>number</td>
+              <td>undefined</td>
+              <td>Longitud máxima del texto</td>
+            </tr>
+            <tr>
+              <td><code>prefixIcon</code></td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>Icono antes del input</td>
+            </tr>
+            <tr>
+              <td><code>suffixIcon</code></td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>Icono después del input</td>
+            </tr>
+            <tr>
+              <td><code>loading</code></td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Muestra indicador de carga</td>
+            </tr>
+            <tr>
+              <td><code>error</code></td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>Mensaje de error</td>
+            </tr>
+            <tr>
+              <td><code>success</code></td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Indica estado exitoso</td>
+            </tr>
+            <tr>
+              <td><code>helpText</code></td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>Texto de ayuda</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos</h2>
+      <p>Gestión de eventos del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Input con Eventos</h4>
+          <magary-input
+            [label]="'Input con eventos'"
+            [placeholder]="'Escribe algo...'"
+            [value]="inputValue"
+            [prefixIcon]="'fas fa-edit'"
+            (valueChange)="onInputChange($event)"
+            (iconClick)="onIconClick($event)"
+          ></magary-input>
+          <p class="event-info" style="margin-top: 10px">
+            Valor actual: {{ inputValue }}
+          </p>
+        </div>
+        <div class="demo-item">
+          <h4>Eventos Múltiples</h4>
+          <magary-input
+            [label]="'Eventos completos'"
+            [placeholder]="'Prueba todos los eventos'"
+            [value]="eventValue"
+            [suffixIcon]="'fas fa-times'"
+            (valueChange)="onEventValueChange($event)"
+            (inputFocus)="onFocus($event)"
+            (inputBlur)="onBlur($event)"
+            (iconClick)="onIconClick($event)"
+          ></magary-input>
+          <div class="event-logs" style="margin-top: 10px; font-size: 12px">
+            <p>Último evento: {{ lastEvent }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'Eventos Básicos'">
+            <pre><code [highlight]="eventsExampleBasic" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Eventos Completos'">
+            <pre><code [highlight]="eventsExampleComplete" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'TypeScript'">
+            <pre><code [highlight]="eventsExampleTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+
+      <div class="events-table">
+        <h4>Eventos Disponibles</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Evento</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>valueChange</code></td>
+              <td>EventEmitter&lt;string&gt;</td>
+              <td>Se emite cuando cambia el valor del input</td>
+            </tr>
+            <tr>
+              <td><code>focus</code></td>
+              <td>EventEmitter&lt;FocusEvent&gt;</td>
+              <td>Se emite cuando el input recibe el foco</td>
+            </tr>
+            <tr>
+              <td><code>blur</code></td>
+              <td>EventEmitter&lt;FocusEvent&gt;</td>
+              <td>Se emite cuando el input pierde el foco</td>
+            </tr>
+            <tr>
+              <td><code>iconClick</code></td>
+              <td>EventEmitter&lt;'prefix' | 'suffix'&gt;</td>
+              <td>Se emite cuando se hace clic en un icono</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Accesibilidad</h2>
+      <p>Funciones de accesibilidad y cumplimiento con estándares WCAG</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Con Labels y Ayuda</h4>
+          <magary-input
+            [label]="'Nombre completo'"
+            [placeholder]="'Escribe tu nombre completo'"
+            [helpText]="'Ingresa tu nombre y apellido completos'"
+            [required]="true"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Campo con Identificación</h4>
+          <magary-input
+            [label]="'Email de contacto'"
+            [placeholder]="'tu@email.com'"
+            [type]="'email'"
+            [helpText]="'Usa Tab para navegar entre campos'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Estado de Error Claro</h4>
+          <magary-input
+            [label]="'Contraseña'"
+            [type]="'password'"
+            [error]="'La contraseña debe tener al menos 8 caracteres'"
+            [helpText]="'Mínimo 8 caracteres'"
+          ></magary-input>
+        </div>
+        <div class="demo-item">
+          <h4>Campo Deshabilitado</h4>
+          <magary-input
+            [label]="'Usuario del sistema'"
+            [value]="'admin@sistema.com'"
+            [disabled]="true"
+            [helpText]="'Este campo no se puede modificar'"
+          ></magary-input>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'Con Labels'">
+            <pre><code [highlight]="accessibilityExampleLabels" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Navegación'">
+            <pre><code [highlight]="accessibilityExampleNavigation" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Error'">
+            <pre><code [highlight]="accessibilityExampleError" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab [label]="'Deshabilitado'">
+            <pre><code [highlight]="accessibilityExampleDisabled" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+
+      <div class="accessibility-features">
+        <h4>Características de Accesibilidad Implementadas</h4>
+        <ul>
+          <li>
+            ✅ <strong>Labels Semánticos:</strong> Uso de labels descriptivos
+            para cada campo
+          </li>
+          <li>
+            ✅ <strong>Navegación por Teclado:</strong> Navegación completa con
+            Tab, Enter, Escape
+          </li>
+          <li>
+            ✅ <strong>Estados Claros:</strong> Indicación visual clara de
+            estados (error, éxito, deshabilitado)
+          </li>
+          <li>
+            ✅ <strong>Contraste:</strong> Cumple con estándares de contraste
+            para legibilidad
+          </li>
+          <li>
+            ✅ <strong>Focus Visible:</strong> Indicadores de foco claramente
+            visibles
+          </li>
+          <li>
+            ✅ <strong>Mensajes de Error:</strong> Mensajes descriptivos y
+            contextuales
+          </li>
+          <li>
+            ✅ <strong>Texto de Ayuda:</strong> Información adicional cuando es
+            necesaria
+          </li>
+          <li>
+            ✅ <strong>Tamaño de Área Táctil:</strong> Mínimo recomendado para
+            dispositivos táctiles
+          </li>
+        </ul>
+      </div>
+
+      <div class="accessibility-best-practices">
+        <h4>Mejores Prácticas de Implementación</h4>
+        <div class="practices-grid">
+          <div class="practice-item">
+            <strong>Labels Descriptivos</strong>
+            <p>Usa labels claros que describan el propósito del campo</p>
+          </div>
+          <div class="practice-item">
+            <strong>Mensajes de Error</strong>
+            <p>Proporciona mensajes específicos y útiles sobre qué corregir</p>
+          </div>
+          <div class="practice-item">
+            <strong>Texto de Ayuda</strong>
+            <p>Incluye información adicional cuando el formato es específico</p>
+          </div>
+          <div class="practice-item">
+            <strong>Estados Visuales</strong>
+            <p>Usa colores y iconos para indicar estados del campo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo de Búsqueda</h2>
+      <p>Implementación de filtros de búsqueda</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item search-demo" style="width: 50%">
+          <h4>Filtros de Búsqueda</h4>
+          <div class="search-container">
+            <magary-input
+              [type]="'search'"
+              [label]="'Buscar productos'"
+              [placeholder]="'Nombre, categoría, descripción...'"
+              [prefixIcon]="'fas fa-search'"
+              [suffixIcon]="'fas fa-times'"
+              [value]="searchValue"
+              (valueChange)="onSearchChange($event)"
+              (iconClick)="onIconClick($event)"
+            ></magary-input>
+
+            <div class="price-filters">
+              <magary-input
+                [label]="'Precio mínimo'"
+                [type]="'number'"
+                [placeholder]="'0'"
+                [prefixIcon]="'fas fa-dollar-sign'"
+                [size]="'small'"
+              ></magary-input>
+
+              <magary-input
+                [label]="'Precio máximo'"
+                [type]="'number'"
+                [placeholder]="'1000'"
+                [prefixIcon]="'fas fa-dollar-sign'"
+                [size]="'small'"
+              ></magary-input>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+          [heightLine]="tabsConfig.heightLine"
+        >
+          <magary-tab [label]="'HTML'">
+            <pre><code [highlight]="searchExample" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+</div>
