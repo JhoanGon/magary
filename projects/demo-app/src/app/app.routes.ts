@@ -21,6 +21,11 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'components/Input',
+        loadComponent: () =>
+          import('./pages/Form/view-input/view-input').then((m) => m.ViewInput),
+      },
+      {
         path: 'components/Panel-Menu',
         loadComponent: () =>
           import('./pages/Menu/view-panel-menu/view-panel-menu').then(
