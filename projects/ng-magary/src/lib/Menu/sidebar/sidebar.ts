@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output, signal } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MagaryPanelmenu } from '../panelmenu/panelmenu';
 import { MenuItem } from '../panelmenu/panelmenu.interface';
@@ -32,6 +38,7 @@ interface AvatarConfig {
   imports: [CommonModule, RouterModule, MagaryPanelmenu, MagaryAvatar],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Sidebar {
   public sections = input<SidebarSection[]>([]);

@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, input } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 type ImagePosition = 'left' | 'right' | 'top' | 'bottom';
 type ShadowLevel = 0 | 1 | 2 | 3 | 4 | 5;
 type CardVariant = 'elevated' | 'outlined' | 'filled';
@@ -9,6 +14,7 @@ type CardVariant = 'elevated' | 'outlined' | 'filled';
   imports: [CommonModule],
   templateUrl: './card.html',
   styleUrl: './card.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MagaryCard {
   readonly img = input<string>();
@@ -22,10 +28,10 @@ export class MagaryCard {
   readonly imageSize = input<string>('500px');
   readonly backgroundColor = input<string>('#fff');
   readonly responsive = input<boolean>(true);
-  readonly altText = input<string>('Card image'); 
+  readonly altText = input<string>('Card image');
   readonly imageFit = input<
     'cover' | 'contain' | 'fill' | 'scale-down' | 'none'
-  >('cover'); 
+  >('cover');
   readonly clickable = input<boolean>(false);
   readonly loading = input<boolean>(false);
   readonly disabled = input<boolean>(false);
@@ -50,7 +56,7 @@ export class MagaryCard {
     'background-color': this.backgroundColor(),
     '--border-radius': this.borderRadius(),
     '--gap': this.gap(),
-    '--padding': this.padding(), 
+    '--padding': this.padding(),
     cursor: this.clickable() && !this.disabled() ? 'pointer' : 'default',
     opacity: this.disabled() ? '0.6' : '1',
     'pointer-events': this.disabled() ? 'none' : 'auto',

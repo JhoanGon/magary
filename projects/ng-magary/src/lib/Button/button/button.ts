@@ -5,6 +5,7 @@ import {
   EventEmitter,
   input,
   output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 type ButtonSeverity =
   | 'primary'
@@ -23,6 +24,7 @@ type ShadowLevel = 0 | 1 | 2 | 3 | 4 | 5;
   imports: [CommonModule],
   templateUrl: './button.html',
   styleUrl: './button.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MagaryButton {
   readonly label = input<string>();
@@ -36,7 +38,7 @@ export class MagaryButton {
   readonly disabled = input<boolean>(false);
   readonly variant = input<ButtonVariant>('solid');
   readonly size = input<ButtonSize>('normal');
-  readonly ariaLabel = input<string>(); 
+  readonly ariaLabel = input<string>();
   readonly buttonClick = output<Event>();
   readonly isDisabled = computed(() => this.disabled() || this.loading());
   readonly buttonClasses = computed(() =>

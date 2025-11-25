@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output, signal, computed } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 export interface MenuItem {
   label: string;
@@ -7,7 +14,7 @@ export interface MenuItem {
   icon?: string;
   children?: MenuItem[];
   disabled?: boolean;
-  metadata?: any; 
+  metadata?: any;
 }
 export interface MenuItemClickEvent {
   item: MenuItem;
@@ -23,6 +30,7 @@ export interface MenuToggleEvent {
   imports: [CommonModule, RouterModule],
   templateUrl: './panelmenu.html',
   styleUrl: './panelmenu.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MagaryPanelmenu {
   public title = input<string>('Panel Menu');

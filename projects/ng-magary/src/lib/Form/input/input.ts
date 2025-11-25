@@ -1,4 +1,11 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -20,6 +27,7 @@ export type InputVariant = 'filled' | 'outlined' | 'underlined';
   imports: [CommonModule, FormsModule],
   templateUrl: './input.html',
   styleUrl: './input.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MagaryInput {
   value = input<string>('');
