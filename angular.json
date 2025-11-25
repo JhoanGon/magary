@@ -31,7 +31,8 @@
       },
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "changeDetection": "OnPush"
         }
       }
     },
@@ -40,7 +41,8 @@
       "schematics": {
         "@schematics/angular:component": {
           "prefix": "magary",
-          "style": "scss"
+          "style": "scss",
+          "changeDetection": "OnPush"
         }
       },
       "root": "projects/demo-app",
@@ -120,5 +122,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

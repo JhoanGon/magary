@@ -9,6 +9,7 @@ import {
   signal,
   ViewChild,
   ViewChildren,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { MagaryTab } from './tab/tab';
 @Component({
@@ -16,6 +17,7 @@ import { MagaryTab } from './tab/tab';
   imports: [],
   templateUrl: './tabs.html',
   styleUrl: './tabs.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MagaryTabs implements OnInit, AfterContentInit {
   @ContentChildren(MagaryTab) tabs!: QueryList<MagaryTab>;

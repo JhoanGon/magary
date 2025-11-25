@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output, signal, computed } from '@angular/core';
+import {
+  Component,
+  input,
+  output,
+  signal,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 export type AvatarShape = 'circle' | 'square';
 export type AvatarSize = 'xsmall' | 'small' | 'normal' | 'large' | 'xlarge';
 export type BadgeSeverity = 'info' | 'success' | 'warning' | 'danger';
@@ -12,6 +19,7 @@ export interface AvatarClickEvent {
   imports: [CommonModule],
   templateUrl: './avatar.html',
   styleUrl: './avatar.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MagaryAvatar {
   public label = input<string>();

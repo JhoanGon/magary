@@ -8,6 +8,7 @@ import {
   ElementRef,
   HostListener,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { SpeedDialItem } from './speed-dial-item.interface';
 type SpeedDialType = 'linear' | 'circle' | 'semicircle' | 'quartercircle';
@@ -25,6 +26,7 @@ type SpeedDialDirection =
   imports: [CommonModule],
   templateUrl: './speed-dial.html',
   styleUrl: './speed-dial.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MagarySpeedDial {
   private readonly elementRef = inject(ElementRef);
@@ -36,7 +38,7 @@ export class MagarySpeedDial {
   readonly radius = input<number>(80);
   readonly showMask = input<boolean>(false);
   readonly background = input<string>('#007bff');
-  readonly ariaLabel = input<string>('Speed dial menu'); 
+  readonly ariaLabel = input<string>('Speed dial menu');
   readonly isOpen = signal(false);
   readonly speedDialToggle = output<boolean>();
   readonly itemSelect = output<{ item: SpeedDialItem; event: Event }>();
