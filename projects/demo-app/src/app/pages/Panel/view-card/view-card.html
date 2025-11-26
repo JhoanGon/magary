@@ -19,20 +19,23 @@
     </div>
     <div class="section-content">
       <div class="demo-grid">
-        <div class="demo-item" style="gap: 20px">
+        <div class="demo-item">
           <h4>Default</h4>
           <magary-card
             [width]="'300px'"
-            [shadow]="5"
+            [shadow]="3"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#ccf0f7'"
+            [backgroundColor]="'var(--surface-0)'"
           >
             <div slot="header">
-              <h3>Encabezado</h3>
+              <h3 class="card-title">Basic Card</h3>
             </div>
-            <p>Este es el contenido principal de la tarjeta.</p>
+            <p class="card-text">
+              A simple card with a clean layout, perfect for displaying content
+              in a structured way.
+            </p>
             <div slot="footer">
-              <magary-button label="Click" severity="primary"></magary-button>
+              <magary-button label="Explore" severity="primary"></magary-button>
             </div>
           </magary-card>
         </div>
@@ -51,46 +54,64 @@
         <div class="demo-item">
           <h4>Imagen Arriba</h4>
           <magary-card
-            [img]="'/assets/Magary.png'"
+            [img]="
+              'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60'
+            "
             [positionImage]="'top'"
-            [imageSize]="'250px'"
-            [width]="'280px'"
-            [shadow]="2"
+            [imageSize]="'200px'"
+            [width]="'300px'"
+            [shadow]="3"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#ccf0f7'"
-            [altText]="'Logo de Magary'"
-            [imageFit]="'contain'"
+            [backgroundColor]="'var(--surface-0)'"
+            [altText]="'Abstract Art'"
+            [imageFit]="'cover'"
           >
             <div slot="header">
-              <h3>Encabezado</h3>
+              <h3 class="card-title">Artistic Vision</h3>
             </div>
-            <p>Este es el contenido principal de la tarjeta.</p>
+            <p class="card-text">
+              Discover the beauty of abstract art and how it influences modern
+              design trends.
+            </p>
             <div slot="footer">
-              <magary-button label="Click" severity="primary"></magary-button>
+              <magary-button
+                label="View Gallery"
+                severity="secondary"
+                variant="outlined"
+              ></magary-button>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
           <h4>Imagen a la derecha</h4>
           <magary-card
-            [img]="'/assets/Magary.png'"
+            [img]="
+              'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&auto=format&fit=crop&q=60'
+            "
             [positionImage]="'right'"
-            [imageSize]="'200px'"
-            [width]="'350px'"
+            [imageSize]="'140px'"
+            [width]="'400px'"
             [height]="'200px'"
-            [shadow]="2"
+            [shadow]="3"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#ccf0f7'"
-            [altText]="'Logo de Magary'"
-            [imageFit]="'contain'"
+            [backgroundColor]="'var(--surface-0)'"
+            [altText]="'Team working'"
+            [imageFit]="'cover'"
             [responsive]="true"
           >
             <div slot="header">
-              <h3>Encabezado</h3>
+              <h3 class="card-title">Team Collaboration</h3>
             </div>
-            <p>Este es el contenido principal de la tarjeta.</p>
+            <p class="card-text">
+              Boost productivity with our new collaboration tools designed for
+              remote teams.
+            </p>
             <div slot="footer">
-              <magary-button label="Click" severity="primary"></magary-button>
+              <magary-button
+                label="Learn More"
+                severity="primary"
+                size="small"
+              ></magary-button>
             </div>
           </magary-card>
         </div>
@@ -113,10 +134,65 @@
   </div>
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplos Avanzados</h2>
-      <p>Uso de propiedades adicionales para mayor control</p>
+      <h2>Premium Product Card</h2>
+      <p>
+        Ejemplo de una tarjeta de producto con estilo premium y hover effects
+      </p>
     </div>
     <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Product Card</h4>
+          <magary-card
+            [img]="
+              'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D'
+            "
+            [positionImage]="'top'"
+            [imageSize]="'200px'"
+            [width]="'300px'"
+            [shadow]="3"
+            [borderRadius]="'1.5rem'"
+            [backgroundColor]="'rgba(255, 255, 255, 0.8)'"
+            [clickable]="true"
+            [imageFit]="'cover'"
+          >
+            <div slot="header">
+              <div class="card-header-flex">
+                <h3 class="card-title">Headphones Pro</h3>
+                <span
+                  class="tag"
+                  style="
+                    background: var(--primary-100);
+                    color: var(--primary-700);
+                  "
+                  >$299</span
+                >
+              </div>
+            </div>
+            <p class="card-text">
+              Experience premium sound quality with our latest noise-cancelling
+              technology.
+            </p>
+            <div slot="footer" class="card-footer-flex">
+              <magary-button
+                label="Add to Cart"
+                severity="primary"
+                style="flex: 1"
+              ></magary-button>
+              <magary-button
+                icon="fas fa-heart"
+                severity="secondary"
+                variant="outlined"
+              ></magary-button>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplos Avanzados</h2>
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Con altura fija</h4>
@@ -125,20 +201,20 @@
             [height]="'300px'"
             [shadow]="3"
             [borderRadius]="'1.5rem'"
-            [backgroundColor]="'#f0f8ff'"
+            [backgroundColor]="'var(--surface-50)'"
             [padding]="'1.5rem'"
             [gap]="'1.2rem'"
           >
             <div slot="header">
-              <h3>Card con altura fija</h3>
+              <h3 class="card-title">Fixed Height</h3>
             </div>
-            <p>
-              Esta tarjeta tiene una altura fija de 300px y padding
-              personalizado.
+            <p class="card-text">
+              This card maintains a fixed height of 300px regardless of content,
+              useful for grid layouts.
             </p>
             <div slot="footer">
               <magary-button
-                label="Acción"
+                label="Action"
                 severity="secondary"
               ></magary-button>
             </div>
@@ -147,23 +223,30 @@
         <div class="demo-item">
           <h4>ImageFit: contain</h4>
           <magary-card
-            [img]="'/assets/Magary.png'"
+            [img]="
+              'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60'
+            "
             [positionImage]="'top'"
             [imageSize]="'200px'"
             [height]="'300px'"
             [width]="'280px'"
             [shadow]="4"
             [borderRadius]="'0.5rem'"
-            [backgroundColor]="'#ffe6f0'"
-            [altText]="'Logo completo de Magary'"
+            [backgroundColor]="'var(--surface-0)'"
+            [altText]="'Retro Tech'"
             [imageFit]="'contain'"
           >
             <div slot="header">
-              <h3>Imagen completa</h3>
+              <h3 class="card-title">Full Contain</h3>
             </div>
-            <p>La imagen se ajusta completamente sin recortes.</p>
+            <p class="card-text">
+              The image fits perfectly within the container without cropping.
+            </p>
             <div slot="footer">
-              <magary-button label="Ver más" severity="primary"></magary-button>
+              <magary-button
+                label="View Details"
+                severity="primary"
+              ></magary-button>
             </div>
           </magary-card>
         </div>
@@ -196,24 +279,22 @@
           <magary-card
             [width]="'280px'"
             [shadow]="2"
-            [height]="'168px'"
+            [height]="'180px'"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#e6f3ff'"
+            [backgroundColor]="'var(--surface-0)'"
             [clickable]="true"
             (cardClick)="onCardClick($event)"
           >
             <div slot="header">
-              <h3>Card Clickeable</h3>
+              <h3 class="card-title">Clickable Card</h3>
             </div>
-            <p>Esta tarjeta responde a clicks y eventos de teclado.</p>
+            <p class="card-text">
+              This card emits events on click and keyboard interaction.
+            </p>
             <div slot="footer">
-              <span style="color: #0066cc; font-size: 0.9rem"
-                >Haz click aquí</span
-              >
+              <span class="link-action">Click me to test</span>
               @if (lastClickedCard) {
-                <div
-                  style="margin-top: 0.5rem; font-size: 0.8rem; color: #28a745"
-                >
+                <div class="status-message success">
                   {{ lastClickedCard }}
                 </div>
               }
@@ -221,49 +302,55 @@
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Cargando</h4>
+          <h4>Loading State</h4>
           <magary-card
             [width]="'280px'"
-            [height]="'168px'"
+            [height]="'200px'"
             [shadow]="2"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#fff3e0'"
+            [backgroundColor]="'var(--surface-0)'"
             [loading]="true"
-            [loadingText]="'Procesando...'"
           >
             <div slot="header">
-              <h3>Card con Loading</h3>
+              <h3 class="card-title">Loading...</h3>
             </div>
-            <p>Esta tarjeta muestra un estado de carga.</p>
+            <p class="card-text">
+              This content is hidden by the loading overlay.
+            </p>
             <div slot="footer">
-              <magary-button
-                label="Procesar"
-                severity="primary"
-              ></magary-button>
+              <magary-button label="Wait" severity="secondary"></magary-button>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Deshabilitada</h4>
+          <h4>Disabled State</h4>
           <magary-card
             [width]="'280px'"
-            [height]="'168px'"
-            [shadow]="1"
+            [height]="'200px'"
+            [shadow]="0"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#f5f5f5'"
+            [backgroundColor]="'var(--surface-50)'"
             [disabled]="true"
             [clickable]="true"
           >
             <div slot="header">
-              <h3>Card Deshabilitada</h3>
+              <div class="card-header-flex">
+                <h3 class="card-title" style="color: var(--text-secondary)">
+                  Locked Item
+                </h3>
+                <i class="fas fa-lock" style="color: var(--text-secondary)"></i>
+              </div>
             </div>
-            <p>
-              Esta tarjeta está deshabilitada y no responde a interacciones.
+            <p class="card-text" style="color: var(--text-secondary)">
+              This item is currently unavailable or requires higher permissions.
             </p>
             <div slot="footer">
               <magary-button
-                label="No disponible"
+                label="Locked"
                 severity="secondary"
+                [disabled]="true"
+                variant="outlined"
+                style="width: 100%"
               ></magary-button>
             </div>
           </magary-card>
@@ -274,35 +361,45 @@
           <h4>Variant: Outlined</h4>
           <magary-card
             [width]="'280px'"
-            [height]="'168px'"
+            [height]="'200px'"
             [variant]="'outlined'"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#ffffff'"
+            [backgroundColor]="'transparent'"
           >
             <div slot="header">
-              <h3>Card Outlined</h3>
+              <h3 class="card-title">Outlined</h3>
             </div>
-            <p>Tarjeta con borde y sin sombra.</p>
+            <p class="card-text">
+              Clean look with a subtle gradient border, perfect for secondary
+              content.
+            </p>
             <div slot="footer">
-              <magary-button label="Acción" severity="primary"></magary-button>
+              <magary-button
+                label="Details"
+                severity="secondary"
+                variant="outlined"
+              ></magary-button>
             </div>
           </magary-card>
         </div>
+
         <div class="demo-item">
           <h4>Variant: Filled</h4>
           <magary-card
             [width]="'280px'"
-            [height]="'168px'"
+            [height]="'180px'"
             [variant]="'filled'"
             [borderRadius]="'1rem'"
           >
             <div slot="header">
-              <h3>Card Filled</h3>
+              <h3 class="card-title">Filled Variant</h3>
             </div>
-            <p>Tarjeta con fondo gris y sin sombra.</p>
+            <p class="card-text">
+              A card with a subtle background fill and no shadow.
+            </p>
             <div slot="footer">
               <magary-button
-                label="Acción"
+                label="Action"
                 severity="secondary"
               ></magary-button>
             </div>
@@ -351,19 +448,20 @@
           <h4>Notificaciones de Éxito</h4>
           <magary-card
             [width]="'280px'"
-            [height]="'190px'"
+            [height]="'200px'"
             [shadow]="2"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#f8fff9'"
+            [backgroundColor]="'var(--surface-0)'"
             [clickable]="true"
             (cardClick)="onCardClick($event)"
+            class="bg-success-soft"
           >
             <div slot="header">
-              <h3>✅ Success Actions</h3>
+              <h3 class="card-title">✅ Success Actions</h3>
             </div>
-            <p>
-              Estas acciones muestran notificaciones de éxito cuando se
-              completan correctamente.
+            <p class="card-text">
+              These actions trigger success notifications when completed
+              successfully.
             </p>
             <div slot="footer">
               <magary-button
@@ -379,20 +477,21 @@
           <h4>Notificaciones de Error</h4>
           <magary-card
             [width]="'280px'"
-            [height]="'190px'"
+            [height]="'200px'"
             [shadow]="2"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#fff8f8'"
+            [backgroundColor]="'var(--surface-0)'"
             [clickable]="true"
             variant="outlined"
             (cardClick)="onCardClick($event)"
+            class="bg-danger-soft"
           >
             <div slot="header">
-              <h3>❌ Error Actions</h3>
+              <h3 class="card-title">❌ Error Actions</h3>
             </div>
-            <p>
-              Estas acciones pueden fallar y mostrarán notificaciones de error
-              apropiadas.
+            <p class="card-text">
+              These actions might fail and will display appropriate error
+              notifications.
             </p>
             <div slot="footer">
               <magary-button
@@ -408,23 +507,26 @@
           <h4>Información y Alertas</h4>
           <magary-card
             [width]="'280px'"
-            [height]="'190px'"
+            [height]="'200px'"
             [shadow]="2"
             [borderRadius]="'1rem'"
-            [backgroundColor]="'#fffbf0'"
+            [backgroundColor]="'var(--surface-0)'"
             [clickable]="true"
             variant="outlined"
             (cardClick)="onCardClick($event)"
+            class="bg-info-soft"
           >
             <div slot="header">
-              <h3>ℹ️ Info & Alerts</h3>
+              <h3 class="card-title">ℹ️ Info & Alerts</h3>
             </div>
-            <p>Información importante y alertas del sistema para el usuario.</p>
+            <p class="card-text">
+              Important information and system alerts for the user.
+            </p>
             <div slot="footer">
               <div class="footer-buttons">
                 <magary-button
                   label="Info Toast"
-                  [customBackgroundColor]="'#59acf9'"
+                  severity="info"
                   size="small"
                   (click)="onDemoButtonClick('info'); $event.stopPropagation()"
                 ></magary-button>
