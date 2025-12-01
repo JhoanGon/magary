@@ -25,8 +25,8 @@ export class MagaryCard {
   readonly padding = input<string>('1rem');
   readonly gap = input<string>('1rem');
   readonly borderRadius = input<string>('0.75rem');
-  readonly imageSize = input<string>('500px');
-  readonly backgroundColor = input<string>('#fff');
+  readonly imageSize = input<string>('200px'); // Default adjusted for better initial look
+  readonly backgroundColor = input<string>();
   readonly responsive = input<boolean>(true);
   readonly altText = input<string>('Card image');
   readonly imageFit = input<
@@ -37,6 +37,13 @@ export class MagaryCard {
   readonly disabled = input<boolean>(false);
   readonly variant = input<CardVariant>('elevated');
   readonly loadingText = input<string>('Cargando...');
+  readonly hoverEffect = input<boolean>(true);
+
+  // New Features
+  readonly badge = input<string>();
+  readonly badgeColor = input<string>('var(--primary-500, #0066cc)');
+  readonly border = input<string>();
+
   readonly cardClasses = computed(() =>
     [
       'card',
@@ -47,73 +54,47 @@ export class MagaryCard {
       this.clickable() ? 'clickable' : '',
       this.loading() ? 'loading' : '',
       this.disabled() ? 'disabled' : '',
+      !this.hoverEffect() ? 'no-hover' : '',
     ].filter(Boolean),
   );
-  readonly cardStyles = computed(() => ({
-    width: this.width(),
-    height: this.height(),
-    'border-radius': this.borderRadius(),
-    'background-color': this.backgroundColor(),
-    '--border-radius': this.borderRadius(),
-    '--gap': this.gap(),
-    '--padding': this.padding(),
-    cursor: this.clickable() && !this.disabled() ? 'pointer' : 'default',
-    opacity: this.disabled() ? '0.6' : '1',
-    'pointer-events': this.disabled() ? 'none' : 'auto',
-  }));
-  readonly imageWidth = computed((): string => {
-    if (this.positionImage() === 'left' || this.positionImage() === 'right') {
-      return `calc(${this.width()} / 2)`;
-    }
-    return '100%';
-  });
-  readonly imageHeight = computed((): string => {
-    if (this.positionImage() === 'top' || this.positionImage() === 'bottom') {
-      return `calc(${this.imageSize()} / 2)`;
-    }
-    return '100%';
-  });
-  readonly imageClasses = computed(() => [
-    'card-img',
-    `img-${this.positionImage()}`,
-  ]);
-  readonly imageBorderRadius = computed((): Record<string, string> => {
-    const radius = this.borderRadius();
-    const pos = this.positionImage();
-    const radiusMap: Record<ImagePosition, Record<string, string>> = {
-      top: {
-        'border-top-left-radius': radius,
-        'border-top-right-radius': radius,
-      },
-      bottom: {
-        'border-bottom-left-radius': radius,
-        'border-bottom-right-radius': radius,
-      },
-      left: {
-        'border-top-left-radius': radius,
-        'border-bottom-left-radius': radius,
-      },
-      right: {
-        'border-top-right-radius': radius,
-        'border-bottom-right-radius': radius,
-      },
+
+  readonly cardStyles = computed(() => {
+    const userBg = this.backgroundColor();
+    const defaultBg =
+      this.variant() === 'filled' ? 'var(--surface-100, #f3f4f6)' : '#fff';
+
+    return {
+      width: this.width(),
+      height: this.height(),
+      '--card-bg': userBg ?? defaultBg,
+      '--card-radius': this.borderRadius(),
+      '--card-gap': this.gap(),
+      '--card-padding': this.padding(),
+      '--img-size': this.imageSize(),
+      '--badge-color': this.badgeColor(),
+      ...(this.border() ? { border: this.border() } : {}),
+      cursor: this.clickable() && !this.disabled() ? 'pointer' : 'default',
+      opacity: this.disabled() ? '0.6' : '1',
+      'pointer-events': this.disabled() ? 'none' : 'auto',
     };
-    return radiusMap[pos] || {};
   });
+
   readonly imageStyles = computed(() => ({
-    width: this.imageWidth(),
-    height: this.imageHeight(),
     'object-fit': this.imageFit(),
-    ...this.imageBorderRadius(),
   }));
+
   readonly hasImage = computed(() => Boolean(this.img()));
+
   readonly isHorizontalLayout = computed(
     () => this.positionImage() === 'left' || this.positionImage() === 'right',
   );
+
   readonly isInteractive = computed(
     () => this.clickable() && !this.disabled() && !this.loading(),
   );
+
   readonly showLoadingOverlay = computed(() => this.loading());
+
   onCardClick(event: Event) {
     if (this.isInteractive()) {
       const cardClickEvent = new CustomEvent('cardClick', {
@@ -123,6 +104,7 @@ export class MagaryCard {
       (event.target as HTMLElement).dispatchEvent(cardClickEvent);
     }
   }
+
   onCardKeydown(event: KeyboardEvent) {
     if (this.isInteractive() && (event.key === 'Enter' || event.key === ' ')) {
       event.preventDefault();

@@ -19,14 +19,19 @@
   @if (hasImage()) {
     <div class="card-image-container">
       <img
+        class="card-img"
         [src]="img()"
-        [ngClass]="imageClasses()"
         [ngStyle]="imageStyles()"
         [alt]="altText()"
         loading="lazy"
         decoding="async"
       />
     </div>
+  }
+  @if (badge()) {
+    <span class="card-badge" [style.background-color]="badgeColor()">
+      {{ badge() }}
+    </span>
   }
   <div class="card-content" [attr.aria-label]="'Card content'">
     <div class="card-body">

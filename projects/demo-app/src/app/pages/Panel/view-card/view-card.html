@@ -270,142 +270,219 @@
   <div class="section">
     <div class="section-header">
       <h2>Estados y Variantes</h2>
-      <p>Diferentes estados y variantes visuales del componente</p>
+      <p>Explora las diferentes interacciones y estilos visuales disponibles</p>
     </div>
     <div class="section-content">
-      <div class="demo-grid">
-        <div class="demo-item">
-          <h4>Clickeable</h4>
-          <magary-card
-            [width]="'280px'"
-            [shadow]="2"
-            [height]="'180px'"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-            [clickable]="true"
-            (cardClick)="onCardClick($event)"
-          >
-            <div slot="header">
-              <h3 class="card-title">Clickable Card</h3>
-            </div>
-            <p class="card-text">
-              This card emits events on click and keyboard interaction.
-            </p>
-            <div slot="footer">
-              <span class="link-action">Click me to test</span>
-              @if (lastClickedCard) {
-                <div class="status-message success">
-                  {{ lastClickedCard }}
+      <!-- Interactive States Group -->
+      <div class="variant-group">
+        <h3 class="group-title">Estados Interactivos</h3>
+        <div class="demo-grid">
+          <div class="demo-item">
+            <div class="card-wrapper">
+              <magary-card
+                [width]="'100%'"
+                [shadow]="2"
+                [borderRadius]="'1rem'"
+                [clickable]="true"
+                (cardClick)="onCardClick($event)"
+              >
+                <div slot="header">
+                  <div class="card-header-flex">
+                    <h3 class="card-title">Clickable</h3>
+                    <i
+                      class="fas fa-hand-pointer"
+                      style="color: var(--primary-500)"
+                    ></i>
+                  </div>
                 </div>
-              }
+                <p class="card-text">
+                  Tarjeta interactiva que responde a eventos de click y teclado.
+                  Ideal para navegación.
+                </p>
+                <div slot="footer">
+                  <span class="link-action">Probar interacción &rarr;</span>
+                  @if (lastClickedCard) {
+                    <div class="status-message success fade-in">
+                      {{ lastClickedCard }}
+                    </div>
+                  }
+                </div>
+              </magary-card>
             </div>
-          </magary-card>
-        </div>
-        <div class="demo-item">
-          <h4>Loading State</h4>
-          <magary-card
-            [width]="'280px'"
-            [height]="'200px'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-            [loading]="true"
-          >
-            <div slot="header">
-              <h3 class="card-title">Loading...</h3>
+            <div class="item-label">
+              <h4>Interactive</h4>
+              <p>Soporte completo para eventos</p>
             </div>
-            <p class="card-text">
-              This content is hidden by the loading overlay.
-            </p>
-            <div slot="footer">
-              <magary-button label="Wait" severity="secondary"></magary-button>
-            </div>
-          </magary-card>
-        </div>
-        <div class="demo-item">
-          <h4>Disabled State</h4>
-          <magary-card
-            [width]="'280px'"
-            [height]="'200px'"
-            [shadow]="0"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-50)'"
-            [disabled]="true"
-            [clickable]="true"
-          >
-            <div slot="header">
-              <div class="card-header-flex">
-                <h3 class="card-title" style="color: var(--text-secondary)">
-                  Locked Item
-                </h3>
-                <i class="fas fa-lock" style="color: var(--text-secondary)"></i>
-              </div>
-            </div>
-            <p class="card-text" style="color: var(--text-secondary)">
-              This item is currently unavailable or requires higher permissions.
-            </p>
-            <div slot="footer">
-              <magary-button
-                label="Locked"
-                severity="secondary"
-                [disabled]="true"
-                variant="outlined"
-                style="width: 100%"
-              ></magary-button>
-            </div>
-          </magary-card>
-        </div>
-      </div>
-      <div class="demo-grid">
-        <div class="demo-item">
-          <h4>Variant: Outlined</h4>
-          <magary-card
-            [width]="'280px'"
-            [height]="'200px'"
-            [variant]="'outlined'"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'transparent'"
-          >
-            <div slot="header">
-              <h3 class="card-title">Outlined</h3>
-            </div>
-            <p class="card-text">
-              Clean look with a subtle gradient border, perfect for secondary
-              content.
-            </p>
-            <div slot="footer">
-              <magary-button
-                label="Details"
-                severity="secondary"
-                variant="outlined"
-              ></magary-button>
-            </div>
-          </magary-card>
-        </div>
+          </div>
 
-        <div class="demo-item">
-          <h4>Variant: Filled</h4>
-          <magary-card
-            [width]="'280px'"
-            [height]="'180px'"
-            [variant]="'filled'"
-            [borderRadius]="'1rem'"
-          >
-            <div slot="header">
-              <h3 class="card-title">Filled Variant</h3>
+          <div class="demo-item">
+            <div class="card-wrapper">
+              <magary-card
+                [width]="'100%'"
+                [shadow]="2"
+                [borderRadius]="'1rem'"
+                [loading]="true"
+                [loadingText]="'Procesando...'"
+              >
+                <div slot="header">
+                  <h3 class="card-title">Loading State</h3>
+                </div>
+                <p class="card-text">
+                  El contenido se oculta automáticamente bajo una capa de carga
+                  elegante.
+                </p>
+                <div slot="footer">
+                  <magary-button
+                    label="Wait"
+                    severity="secondary"
+                  ></magary-button>
+                </div>
+              </magary-card>
             </div>
-            <p class="card-text">
-              A card with a subtle background fill and no shadow.
-            </p>
-            <div slot="footer">
-              <magary-button
-                label="Action"
-                severity="secondary"
-              ></magary-button>
+            <div class="item-label">
+              <h4>Loading</h4>
+              <p>Overlay de carga integrado</p>
             </div>
-          </magary-card>
+          </div>
+
+          <div class="demo-item">
+            <div class="card-wrapper">
+              <magary-card
+                [width]="'100%'"
+                [shadow]="0"
+                [borderRadius]="'1rem'"
+                [disabled]="true"
+              >
+                <div slot="header">
+                  <div class="card-header-flex">
+                    <h3 class="card-title" style="color: var(--text-secondary)">
+                      Disabled
+                    </h3>
+                    <i
+                      class="fas fa-lock"
+                      style="color: var(--text-secondary)"
+                    ></i>
+                  </div>
+                </div>
+                <p class="card-text" style="color: var(--text-secondary)">
+                  Estado visual para contenido no disponible o restringido.
+                </p>
+                <div slot="footer">
+                  <magary-button
+                    label="Locked"
+                    severity="secondary"
+                    [disabled]="true"
+                    variant="outlined"
+                    style="width: 100%"
+                  ></magary-button>
+                </div>
+              </magary-card>
+            </div>
+            <div class="item-label">
+              <h4>Disabled</h4>
+              <p>Indicador visual de estado inactivo</p>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Visual Variants Group -->
+      <div class="variant-group">
+        <h3 class="group-title">Variantes Visuales</h3>
+        <div class="demo-grid">
+          <div class="demo-item">
+            <div class="card-wrapper">
+              <magary-card
+                [width]="'100%'"
+                [variant]="'outlined'"
+                [borderRadius]="'1rem'"
+                [backgroundColor]="'transparent'"
+                [border]="'1px solid var(--surface-200)'"
+              >
+                <div slot="header">
+                  <h3 class="card-title">Outlined</h3>
+                </div>
+                <p class="card-text">
+                  Diseño limpio con borde sutil, perfecto para contenido
+                  secundario o agrupaciones.
+                </p>
+                <div slot="footer">
+                  <magary-button
+                    label="Ver detalles"
+                    severity="secondary"
+                    variant="outlined"
+                    size="small"
+                  ></magary-button>
+                </div>
+              </magary-card>
+            </div>
+            <div class="item-label">
+              <h4>Outlined</h4>
+              <p>Borde sutil sin sombra</p>
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <div class="card-wrapper">
+              <magary-card
+                [width]="'100%'"
+                [variant]="'filled'"
+                [shadow]="0"
+                [hoverEffect]="false"
+                [borderRadius]="'1rem'"
+                [border]="'1px solid var(--surface-200)'"
+              >
+                <div slot="header">
+                  <h3 class="card-title">Filled</h3>
+                </div>
+                <p class="card-text">
+                  Fondo sólido sutil que destaca sin elevarse de la superficie.
+                </p>
+                <div slot="footer">
+                  <magary-button
+                    label="Acción"
+                    severity="secondary"
+                    size="small"
+                  ></magary-button>
+                </div>
+              </magary-card>
+            </div>
+            <div class="item-label">
+              <h4>Filled</h4>
+              <p>Fondo sólido plano</p>
+            </div>
+          </div>
+
+          <div class="demo-item">
+            <div class="card-wrapper">
+              <magary-card
+                [width]="'100%'"
+                [shadow]="4"
+                [borderRadius]="'1rem'"
+              >
+                <div slot="header">
+                  <h3 class="card-title">Elevated</h3>
+                </div>
+                <p class="card-text">
+                  Alta elevación para contenido destacado o modal.
+                </p>
+                <div slot="footer">
+                  <magary-button
+                    label="Destacado"
+                    severity="primary"
+                    size="small"
+                  ></magary-button>
+                </div>
+              </magary-card>
+            </div>
+            <div class="item-label">
+              <h4>High Elevation</h4>
+              <p>Sombra profunda (Shadow 4)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="code-block">
         <magary-tabs
           [backgroundLine]="'#ed2c44'"
@@ -454,10 +531,13 @@
             [backgroundColor]="'var(--surface-0)'"
             [clickable]="true"
             (cardClick)="onCardClick($event)"
-            class="bg-success-soft"
+            class="notification-card success-card"
           >
             <div slot="header">
-              <h3 class="card-title">✅ Success Actions</h3>
+              <div class="card-header-flex">
+                <h3 class="card-title">Success Actions</h3>
+                <i class="fas fa-check-circle icon-success"></i>
+              </div>
             </div>
             <p class="card-text">
               These actions trigger success notifications when completed
@@ -482,12 +562,14 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
             [clickable]="true"
-            variant="outlined"
             (cardClick)="onCardClick($event)"
-            class="bg-danger-soft"
+            class="notification-card error-card"
           >
             <div slot="header">
-              <h3 class="card-title">❌ Error Actions</h3>
+              <div class="card-header-flex">
+                <h3 class="card-title">Error Actions</h3>
+                <i class="fas fa-times-circle icon-error"></i>
+              </div>
             </div>
             <p class="card-text">
               These actions might fail and will display appropriate error
@@ -512,12 +594,14 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
             [clickable]="true"
-            variant="outlined"
             (cardClick)="onCardClick($event)"
-            class="bg-info-soft"
+            class="notification-card info-card"
           >
             <div slot="header">
-              <h3 class="card-title">ℹ️ Info & Alerts</h3>
+              <div class="card-header-flex">
+                <h3 class="card-title">Info & Alerts</h3>
+                <i class="fas fa-info-circle icon-info"></i>
+              </div>
             </div>
             <p class="card-text">
               Important information and system alerts for the user.
@@ -689,6 +773,30 @@
               <td><code>'Cargando...'</code></td>
               <td>Texto mostrado durante la carga</td>
             </tr>
+            <tr>
+              <td><code>hoverEffect</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Habilita el efecto de elevación al pasar el mouse</td>
+            </tr>
+            <tr>
+              <td><code>border</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Estilo CSS completo del borde (ej: '1px solid red')</td>
+            </tr>
+            <tr>
+              <td><code>badge</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Texto del badge mostrado en la esquina superior derecha</td>
+            </tr>
+            <tr>
+              <td><code>badgeColor</code></td>
+              <td><code>string</code></td>
+              <td><code>'var(--primary-500)'</code></td>
+              <td>Color de fondo del badge</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -757,6 +865,9 @@
         </li>
         <li>
           <strong>Imagen:</strong> Incluye atributo <code>alt</code> accesible
+        </li>
+        <li>
+          <strong>Badge:</strong> Elemento visual para estados o etiquetas
         </li>
       </ul>
     </div>

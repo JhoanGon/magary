@@ -307,3 +307,193 @@
 .bg-warning-soft { background-color: var(--warning-50) !important; }
 .bg-info-soft { background-color: var(--info-50) !important; }
 .bg-surface-soft { background-color: var(--surface-50) !important; }
+
+/* States and Variants Section Styles */
+.variant-group {
+  margin-bottom: 3rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.group-title {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-left: 0.5rem;
+  border-left: 3px solid var(--primary-500);
+}
+
+.card-wrapper {
+  width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.item-label {
+  margin-top: 1rem;
+  text-align: left;
+
+  h4 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    text-transform: none; /* Override default uppercase */
+  }
+
+  p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin: 0;
+  }
+}
+
+
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Notification Cards */
+.notification-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  .card-title {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  i {
+    font-size: 1.25rem;
+  }
+
+  &.success-card {
+    background-color: var(--success-50) !important;
+    border: 1px solid var(--success-200);
+
+    .icon-success { color: var(--success-600); }
+    .card-title { color: var(--success-800); }
+  }
+
+  &.error-card {
+    background-color: var(--danger-50) !important;
+    border: 1px solid var(--danger-200);
+
+    .icon-error { color: var(--danger-600); }
+    .card-title { color: var(--danger-800); }
+  }
+
+  &.info-card {
+    background-color: var(--info-50) !important;
+    border: 1px solid var(--info-200);
+
+    .icon-info { color: var(--info-600); }
+    .card-title { color: var(--info-800); }
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* Filled Card Demo */
+.filled-card-demo {
+  background-color: #e5e7eb !important; /* Darker gray (Tailwind gray-200 equivalent) */
+  border: none !important;
+  box-shadow: none !important; /* Ensure no shadow in base state */
+  text-align: center;
+  
+  .card-title {
+    justify-content: center;
+    width: 100%;
+    font-weight: 700; /* Make title bolder to stand out */
+  }
+  
+  .card-text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  div[slot="footer"] {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* Toast & Alert Demos */
+.toast-demo, .alert-demo {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: slideInRight 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  min-width: 300px;
+  backdrop-filter: blur(10px);
+
+  span {
+    font-weight: 500;
+    flex: 1;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    padding: 0;
+    line-height: 1;
+
+    &:hover { opacity: 1; }
+  }
+}
+
+.toast-success {
+  background: rgba(209, 250, 229, 0.95);
+  border-left: 4px solid var(--success);
+  color: var(--success-900);
+}
+
+.toast-error {
+  background: rgba(254, 226, 226, 0.95);
+  border-left: 4px solid var(--danger);
+  color: var(--danger-900);
+}
+
+.toast-info {
+  background: rgba(224, 242, 254, 0.95);
+  border-left: 4px solid var(--info);
+  color: var(--info-900);
+}
+
+.alert-warning {
+  background: rgba(254, 243, 199, 0.95);
+  border-left: 4px solid var(--warning);
+  color: var(--warning-900);
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
