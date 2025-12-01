@@ -5,7 +5,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build:lib": "ng build ng-magary",
+    "build:demo": "ng build demo-app",
+    "build": "pnpm run build:lib && pnpm run build:demo",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "eslint . --ext .ts,.html"
