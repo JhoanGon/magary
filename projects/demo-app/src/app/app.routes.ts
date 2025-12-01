@@ -5,7 +5,14 @@ export const routes: Routes = [
     path: '',
     component: Layout,
     children: [
-      { path: '', redirectTo: 'components/Button', pathMatch: 'full' },
+      { path: '', redirectTo: 'installation', pathMatch: 'full' },
+      {
+        path: 'installation',
+        loadComponent: () =>
+          import('./pages/Installation/installation').then(
+            (m) => m.Installation,
+          ),
+      },
       {
         path: 'components/Button',
         loadComponent: () =>
@@ -58,5 +65,5 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'installation' },
 ];

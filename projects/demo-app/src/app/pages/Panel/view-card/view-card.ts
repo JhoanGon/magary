@@ -169,11 +169,13 @@ export class ViewCard {
     [width]="'280px'"
     [variant]="'filled'"
     [borderRadius]="'1rem'"
+    [hoverEffect]="false"
+    [border]="'1px solid var(--surface-200)'"
   >
     <div slot="header">
       <h3>Card Filled</h3>
     </div>
-    <p>Tarjeta con fondo gris y sin sombra.</p>
+    <p>Tarjeta con fondo gris, sin sombra y borde personalizado.</p>
     <div slot="footer">
       <magary-button label="Acción" severity="secondary"></magary-button>
     </div>
@@ -311,7 +313,7 @@ export class ViewCard {
       new Notification('Card clickeada!', {
         body: 'Has hecho click en una tarjeta de Magary',
         icon: '/assets/Magary.png',
-        tag: 'magary-card-click', 
+        tag: 'magary-card-click',
       });
     } else if (Notification.permission !== 'denied') {
       Notification.requestPermission().then((permission) => {
