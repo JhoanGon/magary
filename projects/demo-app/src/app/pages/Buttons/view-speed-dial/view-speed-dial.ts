@@ -175,7 +175,7 @@ export class ViewSpeedDial {
       },
       {
         id: 'quartercircle',
-        title: 'Quarto de Círculo',
+        title: 'Cuarto de Círculo',
         description: 'Ejemplo de menu en cuarto de círculo',
         type: 'demo',
         configs: this.speedDialConfigs.quartercircle,
@@ -216,75 +216,98 @@ export class ViewSpeedDial {
           {
             name: 'items',
             type: 'SpeedDialItem[]',
-            default: '—',
-            description: 'Lista de acciones con ícono, tooltip y comando',
+            default: 'REQUIRED',
+            description:
+              'Array de objetos que definen las acciones del menú. Cada ítem incluye icono, tooltip, comando y estado.',
           },
           {
             name: 'icon',
             type: 'string',
             default: "'fas fa-plus'",
-            description: 'Ícono del botón inicial',
+            description:
+              'Clase CSS del icono a mostrar en el botón principal cuando el menú está cerrado.',
           },
           {
             name: 'activeIcon',
             type: 'string',
             default: "'fas fa-times'",
-            description: 'Ícono al estar abierto',
+            description:
+              'Clase CSS del icono a mostrar en el botón principal cuando el menú está desplegado.',
           },
           {
             name: 'type',
             type: "'linear' | 'circle' | 'semicircle' | 'quartercircle'",
             default: "'linear'",
-            description: 'Tipo de disposición',
+            description:
+              'Define la disposición geométrica de los botones de acción al desplegarse.',
           },
           {
             name: 'direction',
-            type: "'up' | 'down' | 'left' | 'right' | 'up-left' | ...",
-            default: '—',
-            description: 'Dirección del despliegue (solo para linear)',
+            type: "'up' | 'down' | 'left' | 'right' | ...",
+            default: 'undefined',
+            description:
+              'Dirección de despliegue. Crítico para los modos lineal y cuarto de círculo.',
           },
           {
             name: 'radius',
             type: 'number',
             default: '80',
-            description: 'Radio de expansión',
+            description:
+              'Distancia en píxeles desde el botón central hasta los ítems en modos circulares.',
           },
           {
             name: 'showMask',
             type: 'boolean',
-            default: 'true',
-            description: 'Activa máscara al abrir',
+            default: 'false',
+            description:
+              'Habilita un fondo oscuro (backdrop) detrás del menú para resaltar las acciones.',
           },
           {
             name: 'background',
             type: 'string',
             default: "'#007bff'",
-            description: 'Color del botón trigger',
+            description:
+              'Color de fondo del botón disparador. Acepta valores HEX, RGB o nombres de colores.',
+          },
+          {
+            name: 'ariaLabel',
+            type: 'string',
+            default: "'Speed dial menu'",
+            description:
+              'Etiqueta descriptiva para lectores de pantalla, mejorando la accesibilidad.',
           },
         ],
       },
       {
         id: 'events',
         title: 'Eventos (Outputs)',
-        description: 'Eventos emitidos por cada acción',
+        description: 'Eventos emitidos por el componente',
         type: 'table',
         tableData: [
           {
-            name: 'command',
-            type: '(event: Event) => void',
-            description: 'Función que se ejecuta al hacer clic en un ítem',
+            name: 'speedDialToggle',
+            type: 'boolean',
+            description:
+              'Notifica cambios de visibilidad: true (abierto) o false (cerrado).',
+          },
+          {
+            name: 'itemSelect',
+            type: '{ item: SpeedDialItem; event: Event }',
+            description:
+              'Se emite al seleccionar una acción, proporcionando el ítem y el evento nativo.',
           },
         ],
       },
       {
         id: 'accessibility',
         title: 'Accesibilidad',
-        description: 'Características de accesibilidad del SpeedDial',
+        description: 'Características de accesibilidad integradas',
         type: 'list',
         listItems: [
-          '<strong>Foco:</strong> El botón principal y los ítems pueden ser navegados con teclado',
-          '<strong>ARIA:</strong> Puedes agregar <code>aria-label</code> a los ítems en tu propia lógica',
-          '<strong>Visual:</strong> Indicadores visuales de estado abierto/cerrado y foco',
+          '<strong>Teclado:</strong> Soporte completo para navegación por teclado. <code>Escape</code> cierra el menú.',
+          '<strong>ARIA:</strong> Uso de <code>aria-label</code> configurable y roles apropiados.',
+          '<strong>Foco:</strong> Gestión del foco al abrir/cerrar y navegar entre ítems.',
+          '<strong>Click Outside:</strong> Cierra el menú al hacer clic fuera del componente.',
         ],
       },
     ];
@@ -391,15 +414,17 @@ export class ViewSpeedDial {
     }
   ];`;
   exampleRandom: string = `
-  <magary-speed-dial
-    [items]="[
-      { icon: 'fas fa-plus', tooltip: 'Nuevo', command: create },
-      { icon: 'fas fa-edit', tooltip: 'Editar', command: edit },
-      { icon: 'fas fa-trash', tooltip: 'Eliminar', command: remove }
-    ]"
-    [type]="'circle'"
-    [background]="'#0d6efd'"
-  ></magary-speed-dial>`;
+  <div class="relative-container">
+    <magary-speed-dial
+      [items]="[
+        { icon: 'fas fa-plus', tooltip: 'Nuevo', command: create },
+        { icon: 'fas fa-edit', tooltip: 'Editar', command: edit },
+        { icon: 'fas fa-trash', tooltip: 'Eliminar', command: remove }
+      ]"
+      [type]="'circle'"
+      [background]="'#0d6efd'"
+    ></magary-speed-dial>
+  </div>`;
   trackByIndex(index: number): number {
     return index;
   }

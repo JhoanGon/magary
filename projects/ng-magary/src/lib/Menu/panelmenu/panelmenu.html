@@ -2,6 +2,7 @@
   class="panel-menu"
   [ngClass]="['shadow-' + shadow()]"
   [class.open]="isOpen()"
+  [class.collapsed]="collapsed()"
   [ngStyle]="panelStyles()"
 >
   <div
@@ -11,7 +12,10 @@
     (mouseenter)="onHeaderHover(true)"
     (mouseleave)="onHeaderHover(false)"
   >
-    {{ title() }}
+    @if (icon()) {
+      <i [class]="icon()" class="header-icon"></i>
+    }
+    <span class="header-title">{{ title() }}</span>
     <span class="arrow" [class.open]="isOpen()">
       <i class="fas fa-chevron-down"></i>
     </span>
@@ -140,7 +144,9 @@
                                 class="item-icon"
                               ></i>
                             }
-                            {{ subSubItem.label }}
+                            <span class="item-label">{{
+                              subSubItem.label
+                            }}</span>
                           </a>
                         } @else {
                           <div
@@ -171,7 +177,9 @@
                                 class="item-icon"
                               ></i>
                             }
-                            {{ subSubItem.label }}
+                            <span class="item-label">{{
+                              subSubItem.label
+                            }}</span>
                           </div>
                         }
                       </li>
@@ -194,7 +202,7 @@
                       @if (subItem.icon) {
                         <i [class]="subItem.icon" class="item-icon"></i>
                       }
-                      {{ subItem.label }}
+                      <span class="item-label">{{ subItem.label }}</span>
                     </a>
                   } @else {
                     <div
@@ -215,7 +223,7 @@
                       @if (subItem.icon) {
                         <i [class]="subItem.icon" class="item-icon"></i>
                       }
-                      {{ subItem.label }}
+                      <span class="item-label">{{ subItem.label }}</span>
                     </div>
                   }
                 }
@@ -235,7 +243,7 @@
               @if (item.icon) {
                 <i [class]="item.icon" class="item-icon"></i>
               }
-              {{ item.label }}
+              <span class="item-label">{{ item.label }}</span>
             </a>
           } @else {
             <div
@@ -249,7 +257,7 @@
               @if (item.icon) {
                 <i [class]="item.icon" class="item-icon"></i>
               }
-              {{ item.label }}
+              <span class="item-label">{{ item.label }}</span>
             </div>
           }
         }

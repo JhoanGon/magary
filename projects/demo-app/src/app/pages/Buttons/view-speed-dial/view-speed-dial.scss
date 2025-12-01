@@ -222,25 +222,25 @@
 }
 
 .speed-dial-container > .top {
-  top: 0;
+  top: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .speed-dial-container > .left {
-  left: 0;
+  left: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .speed-dial-container > .right {
-  right: 0;
+  right: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .speed-dial-container > .bottom {
-  bottom: 0;
+  bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -252,23 +252,25 @@
 }
 
 .speed-dial-container > .top-left {
-  left: 5%;
-  top: 5%;
-  transform: translateY(-50%);
+  left: 1.5rem;
+  top: 1.5rem;
+  transform: translateY(0); /* Removed translateY(-50%) as it's corner */
 }
 
 .speed-dial-container > .down-left {
-  left: 5%;
-  top: 80%;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  top: auto; /* Reset top */
 }
 
 .speed-dial-container > .top-right {
-  right: 5%;
-  top: 5%;
-  transform: translateY(-50%);
+  right: 1.5rem;
+  top: 1.5rem;
+  transform: translateY(0); /* Removed translateY(-50%) */
 }
 
 .speed-dial-container > .down-right {
-  right: 5%;
-  top: 80%;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  top: auto; /* Reset top */
 }
