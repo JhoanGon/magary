@@ -15,14 +15,18 @@ import {
   AvatarSize,
   AvatarShape,
 } from '../../Misc/avatar/avatar';
+
 interface SidebarSection {
   title: string;
+  icon?: string;
   items: MenuItem[];
   backgroundColor?: string;
   textColor?: string;
   hoverColor?: string;
 }
+
 type AvatarType = 'image' | 'label' | 'icon';
+
 interface AvatarConfig {
   type: AvatarType;
   size?: AvatarSize;
@@ -33,6 +37,7 @@ interface AvatarConfig {
   badgeValue?: string;
   badgeSeverity?: BadgeSeverity | undefined;
 }
+
 @Component({
   selector: 'magary-sidebar',
   imports: [CommonModule, RouterModule, MagaryPanelmenu, MagaryAvatar],
@@ -56,15 +61,36 @@ export class Sidebar {
   });
   public logoSrc = input<string>('assets/logo.svg');
   public appTitle = input<string>('PRIMENG');
+  public menuBackgroundColor = input<string>('transparent');
+  public menuTextColor = input<string>('var(--sidebar-text)');
+  public menuHoverColor = input<string>('var(--hover-bg)');
+  public collapsible = input<boolean>(true);
+  public showToggle = input<boolean>(true);
+
   public isMobileOpen = signal(false);
+  public isCollapsed = signal(false);
+
   Logout = output<void>();
   closeSidebar = output<void>();
+
   toggleMobileSidebar() {
     this.isMobileOpen.update((open) => !open);
   }
+
+  toggleCollapse() {
+    if (this.collapsible()) {
+      this.isCollapsed.update((collapsed) => !collapsed);
+    }
+  }
+
+  openSidebar() {
+    this.isCollapsed.set(false);
+  }
+
   closeMobileSidebar() {
     this.isMobileOpen.set(false);
   }
+
   logout() {
     this.Logout.emit();
   }

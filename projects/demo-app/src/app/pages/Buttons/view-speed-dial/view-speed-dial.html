@@ -1,8 +1,12 @@
 <div class="container">
   <div class="header">
-    <h1>MagarySpeedDial</h1>
-    <p>Componente de menú flotante interactivo para accesos rápidos</p>
+    <h1>Magary Speed Dial</h1>
+    <p>
+      Componente de menú flotante interactivo para accesos rápidos y acciones
+      frecuentes.
+    </p>
   </div>
+
   @for (section of sections; track section.id) {
     <div
       class="section"
@@ -13,12 +17,14 @@
         <h2 [id]="'section-' + section.id">{{ section.title }}</h2>
         <p>{{ section.description }}</p>
       </div>
+
       <div class="section-content">
         @if (section.type === "code") {
           <div class="code-block">
             <pre><code [highlight]="section.content!.code" [language]="section.content!.language"></code></pre>
           </div>
         }
+
         @if (section.type === "demo") {
           <div class="speed-dial-container">
             @for (config of section.configs; track config.class) {
@@ -32,6 +38,7 @@
               </magary-speed-dial>
             }
           </div>
+
           @if (section.codeExamples?.length) {
             <div class="code-block">
               <magary-tabs
@@ -41,15 +48,14 @@
               >
                 @for (example of section.codeExamples; track example.label) {
                   <magary-tab [label]="example.label">
-                    <pre>
-                      <code [highlight]="example.code" [language]="example.language"></code>
-                    </pre>
+                    <pre><code [highlight]="example.code" [language]="example.language"></code></pre>
                   </magary-tab>
                 }
               </magary-tabs>
             </div>
           }
         }
+
         @if (section.type === "single-demo") {
           <div class="speed-dial-container">
             <magary-speed-dial
@@ -60,6 +66,7 @@
             >
             </magary-speed-dial>
           </div>
+
           @if (section.codeExamples?.length) {
             <div class="code-block">
               <magary-tabs
@@ -69,17 +76,16 @@
               >
                 @for (example of section.codeExamples; track example.label) {
                   <magary-tab [label]="example.label">
-                    <pre>
-                      <code [highlight]="example.code" [language]="example.language"></code>
-                    </pre>
+                    <pre><code [highlight]="example.code" [language]="example.language"></code></pre>
                   </magary-tab>
                 }
               </magary-tabs>
             </div>
           }
         }
+
         @if (section.type === "custom-demo") {
-          <div class="speed-dial-container" style="height: 100px">
+          <div class="speed-dial-container" style="height: 80px">
             <magary-speed-dial
               [class]="section.customConfig!.class"
               [style]="section.customConfig!.style!"
@@ -90,6 +96,7 @@
             >
             </magary-speed-dial>
           </div>
+
           @if (section.codeExamples?.length) {
             <div class="code-block">
               <magary-tabs
@@ -99,59 +106,65 @@
               >
                 @for (example of section.codeExamples; track example.label) {
                   <magary-tab [label]="example.label">
-                    <pre>
-                      <code [highlight]="example.code" [language]="example.language"></code>
-                    </pre>
+                    <pre><code [highlight]="example.code" [language]="example.language"></code></pre>
                   </magary-tab>
                 }
               </magary-tabs>
             </div>
           }
         }
+
         @if (section.type === "table") {
           @if (section.tableData?.length) {
-            <table class="api-table">
-              <thead>
-                <tr>
-                  @if (section.id === "properties") {
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                    <th>Valor por Defecto</th>
-                  }
-                  <th>Descripción</th>
-                  @if (section.id === "events") {
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                  }
-                </tr>
-              </thead>
-              <tbody>
-                @for (row of section.tableData; track $index) {
+            <div style="overflow-x: auto">
+              <table class="api-table">
+                <thead>
                   <tr>
                     @if (section.id === "properties") {
-                      <td>
-                        <code>{{ row.name }}</code>
-                      </td>
-                      <td>
-                        <code>{{ row.type }}</code>
-                      </td>
-                      <td>
-                        <code>{{ row.default }}</code>
-                      </td>
+                      <th>Nombre</th>
+                      <th>Tipo</th>
+                      <th>Valor por Defecto</th>
                     }
-                    <td>{{ row.description }}</td>
+                    <th>Descripción</th>
                     @if (section.id === "events") {
-                      <td>
-                        <code>{{ row.name }}</code>
-                      </td>
-                      <td>
-                        <code>{{ row.type }}</code>
-                      </td>
+                      <th>Nombre</th>
+                      <th>Tipo</th>
                     }
                   </tr>
-                }
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  @for (row of section.tableData; track $index) {
+                    <tr>
+                      @if (section.id === "properties") {
+                        <td>
+                          <code>{{ row.name }}</code>
+                        </td>
+                        <td>
+                          <code>{{ row.type }}</code>
+                        </td>
+                        <td>
+                          <code>{{ row.default }}</code>
+                        </td>
+                        <td>
+                          <code>{{ row.description }}</code>
+                        </td>
+                      }
+                      @if (section.id === "events") {
+                        <td>
+                          <code>{{ row.description }}</code>
+                        </td>
+                        <td>
+                          <code>{{ row.name }}</code>
+                        </td>
+                        <td>
+                          <code>{{ row.type }}</code>
+                        </td>
+                      }
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
           }
           @if (section.id === "events") {
             <div class="code-block">
@@ -159,6 +172,7 @@
             </div>
           }
         }
+
         @if (section.type === "list") {
           @if (section.listItems?.length) {
             <ul class="accessibility-list">
@@ -171,13 +185,12 @@
       </div>
     </div>
   }
+
   <div class="section">
     <div class="section-header">
       <h2>Ejemplos Completos</h2>
-      <p>Casos de uso comunes</p>
-    </div>
-    <div class="section-content">
-      <h4>SpeedDial con acciones CRUD</h4>
+      <p>Casos de uso comunes para integrar en tu aplicación</p>
+
       <div class="code-block">
         <pre><code [highlight]="exampleRandom" language="html"></code></pre>
       </div>

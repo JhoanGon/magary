@@ -34,6 +34,7 @@ export interface MenuToggleEvent {
 })
 export class MagaryPanelmenu {
   public title = input<string>('Panel Menu');
+  public icon = input<string>('');
   public items = input<MenuItem[]>([]);
   public backgroundColor = input<string>('#f9fafb');
   public textColor = input<string>('#1f2937');
@@ -43,9 +44,11 @@ export class MagaryPanelmenu {
   public hoverColor = input<string>('#007bff');
   public allowMultipleExpanded = input<boolean>(false);
   public defaultOpen = input<boolean>(false);
+  public collapsed = input<boolean>(false);
   public menuToggle = output<MenuToggleEvent>();
   public itemClick = output<MenuItemClickEvent>();
   public itemExpand = output<{ item: MenuItem; expanded: boolean }>();
+  public expandSidebar = output<void>();
   public isOpen = signal(this.defaultOpen());
   public hoveredItem = signal<string | null>(null);
   public hoveredHeader = signal<boolean>(false);
@@ -63,6 +66,13 @@ export class MagaryPanelmenu {
     }
   }
   toggle(): void {
+    if (this.collapsed()) {
+      this.expandSidebar.emit();
+      // Also open the menu so user sees contents immediately
+      this.isOpen.set(true);
+      return;
+    }
+
     const newOpenState = !this.isOpen();
     this.isOpen.set(newOpenState);
     this.menuToggle.emit({
@@ -71,6 +81,14 @@ export class MagaryPanelmenu {
     });
   }
   toggleSubItem(itemKey: string, item?: MenuItem): void {
+    // Hybrid behavior: If collapsed and item has children, request sidebar expansion
+    if (this.collapsed() && item && this.hasChildren(item)) {
+      this.expandSidebar.emit();
+      // Optionally, we can also expand the item internally so it's open when sidebar expands
+      // But let's just emit for now and let the user click again or handle it in parent
+      // Actually, better UX: Expand it internally too so it appears open immediately
+    }
+
     this.expandedItems.update((expanded) => {
       const newSet = new Set(expanded);
       if (!this.allowMultipleExpanded() && !newSet.has(itemKey)) {

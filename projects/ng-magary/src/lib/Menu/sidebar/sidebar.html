@@ -1,10 +1,38 @@
 <button class="hamburger-button" (click)="toggleMobileSidebar()">
   <i class="fas fa-bars"></i>
 </button>
-<div class="sidebar" [class.open]="isMobileOpen()">
-  <div class="sidebar-header">
-    <img [src]="logoSrc()" alt="Logo" class="logo" />
-    <span class="title">{{ appTitle() }}</span>
+@if (isMobileOpen()) {
+  <div class="sidebar-backdrop" (click)="closeMobileSidebar()"></div>
+}
+<div
+  class="sidebar"
+  [class.open]="isMobileOpen()"
+  [class.collapsed]="isCollapsed()"
+>
+  <div class="sidebar-header" [class.collapsed-header]="isCollapsed()">
+    @if (isCollapsed()) {
+      @if (showToggle() && collapsible()) {
+        <button class="header-toggle collapsed" (click)="toggleCollapse()">
+          <i class="fas fa-bars"></i>
+        </button>
+      } @else {
+        <!-- If toggle hidden but collapsed, show logo icon? -->
+        <img [src]="logoSrc()" alt="Logo" class="logo collapsed-logo" />
+      }
+    } @else {
+      <div class="header-brand">
+        <img [src]="logoSrc()" alt="Logo" class="logo" />
+        <span class="title">{{ appTitle() }}</span>
+      </div>
+      @if (showToggle() && collapsible()) {
+        <button class="header-toggle expanded" (click)="toggleCollapse()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      }
+    }
+    <button class="close-button" (click)="closeMobileSidebar()">
+      <i class="fas fa-times"></i>
+    </button>
   </div>
   <div class="sidebar-content">
     <div class="menu-container">
@@ -12,13 +40,16 @@
         @for (section of sections(); track $index) {
           <magary-panelmenu
             [title]="section.title"
+            [icon]="section.icon || ''"
             [items]="section.items"
-            [backgroundColor]="section.backgroundColor || '#ffffff'"
-            [textColor]="section.textColor || '#374151'"
-            [hoverColor]="section.hoverColor || '#3b82f6'"
-            [borderRadius]="'12px'"
-            [shadow]="2"
+            [backgroundColor]="section.backgroundColor || menuBackgroundColor()"
+            [textColor]="section.textColor || menuTextColor()"
+            [hoverColor]="section.hoverColor || menuHoverColor()"
+            [borderRadius]="'0.5rem'"
+            [shadow]="0"
             [width]="'100%'"
+            [collapsed]="isCollapsed()"
+            (expandSidebar)="openSidebar()"
           />
         }
       }
@@ -26,12 +57,14 @@
         <magary-panelmenu
           [title]="menuTitle()"
           [items]="menu()"
-          [backgroundColor]="'#ffffff'"
-          [textColor]="'#374151'"
-          [hoverColor]="'#3b82f6'"
-          [borderRadius]="'12px'"
-          [shadow]="2"
+          [backgroundColor]="menuBackgroundColor()"
+          [textColor]="menuTextColor()"
+          [hoverColor]="menuHoverColor()"
+          [borderRadius]="'0.5rem'"
+          [shadow]="0"
           [width]="'100%'"
+          [collapsed]="isCollapsed()"
+          (expandSidebar)="openSidebar()"
         />
       }
     </div>
@@ -70,15 +103,27 @@
               />
             }
           }
-          <div class="user-details">
-            <div class="username">{{ userName() }}</div>
-            <div class="email">{{ userEmail() }}</div>
-          </div>
+          @if (!isCollapsed()) {
+            <div class="user-details">
+              <div class="username">{{ userName() }}</div>
+              <div class="email">{{ userEmail() }}</div>
+            </div>
+          }
         </div>
-        <button class="logout-button" (click)="logout()">
-          <i class="fas fa-sign-out-alt"></i>
-          Cerrar sesión
-        </button>
+        @if (!isCollapsed()) {
+          <button class="logout-button" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Cerrar sesión
+          </button>
+        } @else {
+          <button
+            class="logout-button"
+            (click)="logout()"
+            title="Cerrar sesión"
+          >
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        }
       </div>
     }
   </div>

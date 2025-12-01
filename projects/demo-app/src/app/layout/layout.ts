@@ -25,6 +25,7 @@ export class Layout {
   sidebarSections = [
     {
       title: 'Primeros Pasos',
+      icon: 'fas fa-rocket',
       items: [
         {
           label: 'Instalación',
@@ -37,115 +38,118 @@ export class Layout {
           icon: 'fas fa-cog',
         },
       ],
+      hoverColor: '#e34e4e',
     },
     {
       title: 'Componentes',
+      icon: 'fas fa-cubes',
       items: [
         {
           label: 'Buttons',
-          icon: '',
+          icon: 'fas fa-toggle-on',
           children: [
             {
               label: 'Button',
               route: 'components/Button',
-              icon: '',
+              icon: 'fas fa-square',
             },
             {
               label: 'SpeedDial',
               route: 'components/SpeedDial',
-              icon: '',
+              icon: 'fas fa-ellipsis-v',
             },
           ],
         },
         {
           label: 'Data',
-          icon: '',
+          icon: 'fas fa-database',
           children: [{}],
         },
         {
           label: 'File',
-          icon: '',
+          icon: 'fas fa-file',
           children: [{}],
         },
         {
           label: 'Form',
-          icon: '',
+          icon: 'fas fa-edit',
           children: [
             {
               label: 'Cascade Select',
               route: 'components/Cascade-Select',
-              icon: '',
+              icon: 'fas fa-list-ul',
             },
             {
               label: 'Input',
               route: 'components/Input',
-              icon: '',
+              icon: 'fas fa-keyboard',
             },
           ],
         },
         {
           label: 'Media',
-          icon: '',
+          icon: 'fas fa-image',
           children: [{}],
         },
         {
           label: 'Menu',
-          icon: '',
+          icon: 'fas fa-bars',
           children: [
             {
               label: 'Panel Menu',
               route: 'components/Panel-Menu',
-              icon: '',
+              icon: 'fas fa-list-alt',
             },
             {
               label: 'Sidebar',
               route: 'components/Sidebar',
-              icon: '',
+              icon: 'fas fa-columns',
             },
           ],
         },
         {
           label: 'Messages',
-          icon: '',
+          icon: 'fas fa-comment-alt',
           children: [{}],
         },
         {
           label: 'Misc',
-          icon: '',
+          icon: 'fas fa-cube',
           children: [
             {
               label: 'Avatar',
               route: 'components/Avatar',
-              icon: '',
+              icon: 'fas fa-user-circle',
             },
           ],
         },
         {
           label: 'Overlay',
-          icon: '',
+          icon: 'fas fa-layer-group',
           children: [{}],
         },
         {
           label: 'Panel',
-          icon: '',
+          icon: 'fas fa-window-maximize',
           children: [
             {
               label: 'Card',
               route: 'components/Card',
-              icon: '',
+              icon: 'fas fa-id-card',
             },
             {
               label: 'Tabs',
               route: 'components/Tabs',
-              icon: '',
+              icon: 'fas fa-folder',
             },
           ],
         },
       ],
-      hoverColor: '#10b981',
+      hoverColor: '#e34e4e',
     },
     {
       title: 'Utilidades',
+      icon: 'fas fa-tools',
       items: [
         {
           label: 'Theming',
@@ -158,15 +162,39 @@ export class Layout {
           icon: 'fas fa-icons',
         },
       ],
+      hoverColor: '#e34e4e',
     },
   ];
   isSidebarOpen = signal(false);
+  isDarkMode = signal(false);
+
+  constructor() {
+    // Initialize theme based on system preference
+    const prefersDark = window.matchMedia(
+      '(prefers-color-scheme: dark)',
+    ).matches;
+    this.isDarkMode.set(prefersDark);
+    this.updateTheme();
+  }
+
   toggleSidebar() {
     this.isSidebarOpen.update((open) => !open);
   }
+
   closeSidebar() {
     this.isSidebarOpen.set(false);
   }
+
+  toggleTheme() {
+    this.isDarkMode.update((dark) => !dark);
+    this.updateTheme();
+  }
+
+  private updateTheme() {
+    const theme = this.isDarkMode() ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+
   handleLogout() {
     console.log('Usuario cerrando sesión...');
   }

@@ -32,6 +32,14 @@
     background: var(--panel-hover);
     color: #ffffff;
   }
+  .header-icon {
+    margin-right: 0.5rem;
+    width: 20px;
+    text-align: center;
+  }
+  .header-title {
+    flex: 1;
+  }
   .arrow {
     transition: transform 0.3s ease;
     &.open {
@@ -173,5 +181,57 @@
 @for $i from 1 through 7 {
   .shadow-#{$i} {
     box-shadow: 0 #{2 + $i * 2}px #{4 + $i * 2}px rgba(0, 0, 0, 0.1 + $i * 0.05);
+  }
+}
+
+// Collapsed State Styles
+.panel-menu.collapsed {
+  // Hide header content except maybe icon if we had one, but here we just hide text/arrow
+  .panel-header {
+    padding: 10px 0;
+    justify-content: center;
+    // pointer-events: none; // ENABLED so we can click to expand
+    
+    .header-title, .arrow {
+      display: none;
+    }
+    
+    .header-icon {
+      margin-right: 0;
+      font-size: 1.2rem;
+    }
+  }
+
+  // Hide items in collapsed mode (only header icon is visible)
+  .panel-items {
+    display: none;
+  }
+
+  // Item styles
+  .menu-item-base, .category-item, .sub-category-item, .panel-items li a {
+    justify-content: center;
+    padding: 0.75rem 0.5rem;
+    background: transparent !important; // Force transparent to avoid "blue box"
+    box-shadow: none !important;
+    
+    &:hover {
+      background: var(--panel-hover) !important; // Restore hover color
+      color: #ffffff;
+    }
+    
+    .item-label, .sub-arrow {
+      display: none;
+    }
+
+    .item-icon {
+      margin-right: 0;
+      font-size: 1.2rem;
+      width: auto;
+    }
+  }
+
+  // Hide sub-items in collapsed mode to avoid mess
+  .sub-items, .sub-sub-items {
+    display: none !important;
   }
 }
