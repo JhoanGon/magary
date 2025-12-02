@@ -1,18 +1,18 @@
 .tabs {
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 1px solid var(--surface-200);
+  border-radius: var(--border-radius);
   overflow: hidden;
-  background: #fff;
+  background: var(--surface-0);
 }
 .tab-headers {
   display: flex;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--surface-200);
   position: relative;
   &::after {
     content: '';
     position: absolute;
     bottom: -1px;
-    height: var(--height-line);;
+    height: var(--height-line);
     background-color: var(--background-color-line);
     transition: left 0.4s ease-in-out, width 0.4s ease-in-out;
     left: var(--underline-left, 0);
@@ -27,13 +27,15 @@
     font-weight: bold;
     transition: background 0.3s;
     z-index: 1;
+    color: var(--text-secondary);
     &:hover {
-      background: #f0f0f0;
+      background: var(--surface-50);
+      color: var(--text-primary);
     }
     &.active {
-      background: #f9f9f9;
-      color: #000;
-      height: 4px;
+      background: var(--surface-50);
+      color: var(--text-primary);
+      height: auto; /* Removed fixed height that might break layout */
     }
   }
 }
