@@ -1,12 +1,14 @@
 <div class="container">
   <div class="header">
     <h1>MagaryButton</h1>
-    <p>Componente de botón altamente personalizable para Angular</p>
+    <p>Componente de botón versátil y personalizable.</p>
   </div>
+
+  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
       <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone</p>
+      <p>Importa el componente en tu módulo o componente standalone.</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -14,28 +16,40 @@
       </div>
     </div>
   </div>
+
+  <!-- Basic Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Uso Básico</h2>
-      <p>Ejemplos básicos del componente</p>
+      <h2>Ejemplo Básico</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Default</h4>
-          <magary-button label="Button"></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Con Icono</h4>
-          <magary-button label="Home" icon="fas fa-home"></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Solo Icono</h4>
-          <magary-button icon="fas fa-heart"></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Cargando</h4>
-          <magary-button label="Loading..." [loading]="true"></magary-button>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 1rem;
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+              "
+            >
+              <magary-button label="Button"></magary-button>
+              <magary-button label="Home" icon="fas fa-home"></magary-button>
+              <magary-button icon="fas fa-heart"></magary-button>
+              <magary-button
+                label="Loading..."
+                [loading]="true"
+              ></magary-button>
+            </div>
+          </magary-card>
         </div>
       </div>
       <div class="code-block">
@@ -43,40 +57,44 @@
       </div>
     </div>
   </div>
+
+  <!-- Severity Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Severidades</h2>
-      <p>Diferentes tipos de botones según su propósito</p>
+      <h2>Severidad</h2>
+      <p>Colores semánticos para diferentes acciones.</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Primary</h4>
-          <magary-button label="Primary" severity="primary"></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Secondary</h4>
-          <magary-button label="Secondary" severity="secondary"></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Success</h4>
-          <magary-button label="Success" severity="success"></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Info</h4>
-          <magary-button label="Info" severity="info"></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Warning</h4>
-          <magary-button label="Warning" severity="warning"></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Danger</h4>
-          <magary-button label="Danger" severity="danger"></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Help</h4>
-          <magary-button label="Help" severity="help"></magary-button>
+          <h4>Colores</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 1.5rem;
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+              "
+            >
+              <magary-button label="Primary" severity="primary"></magary-button>
+              <magary-button
+                label="Secondary"
+                severity="secondary"
+              ></magary-button>
+              <magary-button label="Success" severity="success"></magary-button>
+              <magary-button label="Info" severity="info"></magary-button>
+              <magary-button label="Warning" severity="warning"></magary-button>
+              <magary-button label="Danger" severity="danger"></magary-button>
+              <magary-button label="Help" severity="help"></magary-button>
+            </div>
+          </magary-card>
         </div>
       </div>
       <div class="code-block">
@@ -84,62 +102,71 @@
       </div>
     </div>
   </div>
+
+  <!-- Sizes Section -->
   <div class="section">
     <div class="section-header">
       <h2>Tamaños</h2>
-      <p>Controla el tamaño del botón con la propiedad size</p>
+      <p>Diferentes tamaños disponibles.</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Small</h4>
-          <magary-button
-            label="Small Button"
-            size="small"
-            severity="primary"
-          ></magary-button>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                label="Small"
+                size="small"
+                severity="primary"
+              ></magary-button>
+            </div>
+          </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Normal (Default)</h4>
-          <magary-button
-            label="Normal Button"
-            size="normal"
-            severity="primary"
-          ></magary-button>
+          <h4>Normal</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                label="Normal"
+                size="normal"
+                severity="primary"
+              ></magary-button>
+            </div>
+          </magary-card>
         </div>
         <div class="demo-item">
           <h4>Large</h4>
-          <magary-button
-            label="Large Button"
-            size="large"
-            severity="primary"
-          ></magary-button>
-        </div>
-      </div>
-      <div class="demo-grid">
-        <div class="demo-item">
-          <h4>Icon Only - Small</h4>
-          <magary-button
-            icon="fas fa-star"
-            size="small"
-            severity="success"
-          ></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Icon Only - Normal</h4>
-          <magary-button
-            icon="fas fa-star"
-            size="normal"
-            severity="success"
-          ></magary-button>
-        </div>
-        <div class="demo-item">
-          <h4>Icon Only - Large</h4>
-          <magary-button
-            icon="fas fa-star"
-            size="large"
-            severity="success"
-          ></magary-button>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                label="Large"
+                size="large"
+                severity="primary"
+              ></magary-button>
+            </div>
+          </magary-card>
         </div>
       </div>
       <div class="code-block">
@@ -147,72 +174,67 @@
       </div>
     </div>
   </div>
+
+  <!-- Variants Section -->
   <div class="section">
     <div class="section-header">
       <h2>Variantes</h2>
-      <p>Diferentes estilos visuales del botón</p>
+      <p>Estilos visuales alternativos.</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Solid</h4>
-          <div class="variantButtons">
-            <magary-button
-              label="Solid"
-              variant="solid"
-              [customBackgroundColor]="'#40cae7'"
-            ></magary-button>
-            <magary-button
-              label="Solid"
-              variant="solid"
-              [customBackgroundColor]="'#ed8a15'"
-            ></magary-button>
-            <magary-button
-              label="Solid"
-              variant="solid"
-              [customBackgroundColor]="'#f12cc9'"
-            ></magary-button>
-          </div>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button label="Solid" variant="solid"></magary-button>
+            </div>
+          </magary-card>
         </div>
         <div class="demo-item">
           <h4>Outlined</h4>
-          <div class="variantButtons">
-            <magary-button
-              label="Outlined"
-              variant="outlined"
-              severity="primary"
-            ></magary-button>
-            <magary-button
-              label="Outlined"
-              variant="outlined"
-              severity="success"
-            ></magary-button>
-            <magary-button
-              label="Outlined"
-              variant="outlined"
-              severity="danger"
-            ></magary-button>
-          </div>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                label="Outlined"
+                variant="outlined"
+                severity="secondary"
+              ></magary-button>
+            </div>
+          </magary-card>
         </div>
         <div class="demo-item">
           <h4>Text</h4>
-          <div class="variantButtons">
-            <magary-button
-              label="Text"
-              variant="text"
-              severity="primary"
-            ></magary-button>
-            <magary-button
-              label="Text"
-              variant="text"
-              severity="success"
-            ></magary-button>
-            <magary-button
-              label="Text"
-              variant="text"
-              severity="danger"
-            ></magary-button>
-          </div>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                label="Text"
+                variant="text"
+                severity="secondary"
+              ></magary-button>
+            </div>
+          </magary-card>
         </div>
       </div>
       <div class="code-block">
@@ -220,43 +242,51 @@
       </div>
     </div>
   </div>
+
+  <!-- Custom Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Personalización Visual</h2>
-      <p>Sombras y bordes redondeados</p>
+      <h2>Personalización</h2>
+      <p>Opciones adicionales de estilo.</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Sombras</h4>
-          <div class="variantButtons">
-            <magary-button
-              label="Shadow 1"
-              [shadow]="1"
-              severity="primary"
-            ></magary-button>
-            <magary-button
-              label="Shadow 3"
-              [shadow]="3"
-              severity="primary"
-            ></magary-button>
-            <magary-button
-              label="Shadow 5"
-              [shadow]="5"
-              severity="primary"
-            ></magary-button>
-          </div>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 1.5rem;
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+              "
+            >
+              <magary-button label="Shadow 1" [shadow]="1"></magary-button>
+              <magary-button label="Shadow 3" [shadow]="3"></magary-button>
+            </div>
+          </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Rounded</h4>
-          <div class="variantButtons">
-            <magary-button label="Normal" severity="primary"></magary-button>
-            <magary-button
-              label="Rounded"
-              [rounded]="true"
-              severity="primary"
-            ></magary-button>
-          </div>
+          <h4>Redondeado</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button label="Rounded" [rounded]="true"></magary-button>
+            </div>
+          </magary-card>
         </div>
       </div>
       <div class="code-block">
@@ -264,32 +294,62 @@
       </div>
     </div>
   </div>
+
+  <!-- States Section -->
   <div class="section">
     <div class="section-header">
       <h2>Estados</h2>
-      <p>Estados del botón</p>
+      <p>Estados interactivos del botón.</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Normal</h4>
-          <magary-button label="Normal" severity="primary"></magary-button>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button label="Normal"></magary-button>
+            </div>
+          </magary-card>
         </div>
         <div class="demo-item">
           <h4>Disabled</h4>
-          <magary-button
-            label="Disabled"
-            [disabled]="true"
-            severity="primary"
-          ></magary-button>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button label="Disabled" [disabled]="true"></magary-button>
+            </div>
+          </magary-card>
         </div>
         <div class="demo-item">
           <h4>Loading</h4>
-          <magary-button
-            label="Loading..."
-            [loading]="true"
-            severity="primary"
-          ></magary-button>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                label="Loading..."
+                [loading]="true"
+              ></magary-button>
+            </div>
+          </magary-card>
         </div>
       </div>
       <div class="code-block">
@@ -297,6 +357,8 @@
       </div>
     </div>
   </div>
+
+  <!-- Inputs Section -->
   <div class="section">
     <div class="section-header">
       <h2>Propiedades (Inputs)</h2>
@@ -318,31 +380,19 @@
               <td><code>label</code></td>
               <td><code>string</code></td>
               <td><code>undefined</code></td>
-              <td>Texto del botón</td>
+              <td>Texto del botón.</td>
             </tr>
             <tr>
               <td><code>icon</code></td>
               <td><code>string</code></td>
               <td><code>undefined</code></td>
-              <td>Clase CSS del icono (ej: 'fas fa-home')</td>
-            </tr>
-            <tr>
-              <td><code>shadow</code></td>
-              <td><code>number</code></td>
-              <td><code>0</code></td>
-              <td>Nivel de sombra (0-5)</td>
-            </tr>
-            <tr>
-              <td><code>rounded</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Aplica bordes redondeados</td>
+              <td>Clase del icono (ej: 'fas fa-home').</td>
             </tr>
             <tr>
               <td><code>iconPos</code></td>
               <td><code>'left' | 'right'</code></td>
               <td><code>'left'</code></td>
-              <td>Posición del icono</td>
+              <td>Posición del icono.</td>
             </tr>
             <tr>
               <td><code>severity</code></td>
@@ -352,32 +402,52 @@
                   'danger' | 'help'</code
                 >
               </td>
-              <td><code>undefined</code></td>
-              <td>Tema del botón</td>
+              <td><code>'primary'</code></td>
+              <td>Color semántico del botón.</td>
             </tr>
             <tr>
-              <td><code>loading</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Muestra estado de carga</td>
+              <td><code>variant</code></td>
+              <td><code>'solid' | 'outlined' | 'text'</code></td>
+              <td><code>'solid'</code></td>
+              <td>Estilo visual del botón.</td>
+            </tr>
+            <tr>
+              <td><code>size</code></td>
+              <td><code>'small' | 'normal' | 'large'</code></td>
+              <td><code>'normal'</code></td>
+              <td>Tamaño del botón.</td>
             </tr>
             <tr>
               <td><code>disabled</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Desactiva el botón</td>
+              <td>Deshabilita el botón.</td>
             </tr>
             <tr>
-              <td><code>variant</code></td>
-              <td><code>'solid' | 'text' | 'outlined'</code></td>
-              <td><code>'solid'</code></td>
-              <td>Variante visual del botón</td>
+              <td><code>loading</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Muestra un indicador de carga.</td>
+            </tr>
+            <tr>
+              <td><code>rounded</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Bordes completamente redondeados.</td>
+            </tr>
+            <tr>
+              <td><code>shadow</code></td>
+              <td><code>number</code></td>
+              <td><code>0</code></td>
+              <td>Nivel de sombra (1-5).</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
+
+  <!-- Outputs Section -->
   <div class="section">
     <div class="section-header">
       <h2>Eventos (Outputs)</h2>
@@ -396,82 +466,40 @@
           <tbody>
             <tr>
               <td><code>buttonClick</code></td>
-              <td><code>Event</code></td>
-              <td>Se emite cuando se hace clic en el botón</td>
+              <td><code>EventEmitter&lt;Event&gt;</code></td>
+              <td>Se emite cuando se hace click en el botón.</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="code-block">
-        <pre><code [highlight]="exampleEventClick" language="html"></code></pre>
-      </div>
     </div>
   </div>
+
+  <!-- Accessibility Section -->
   <div class="section">
     <div class="section-header">
       <h2>Accesibilidad</h2>
-      <p>Características de accesibilidad implementadas</p>
+      <p>Consideraciones para lectores de pantalla y navegación por teclado.</p>
     </div>
     <div class="section-content">
       <ul class="accessibility-list">
         <li>
-          <strong>Teclado:</strong> El botón es accesible mediante navegación
-          por teclado (Tab)
+          <strong>Teclado:</strong> El botón es completamente navegable mediante
+          la tecla Tab y activable con Enter o Espacio.
         </li>
         <li>
-          <strong>Activación:</strong> Se puede activar con Espacio o Enter
+          <strong>ARIA:</strong> Se utilizan atributos ARIA adecuados,
+          incluyendo <code>aria-label</code> si no hay texto visible.
         </li>
         <li>
-          <strong>Estados:</strong> Los estados disabled y loading son
-          comunicados correctamente
+          <strong>Foco:</strong> El estado de foco es visible y claro para la
+          navegación por teclado.
         </li>
         <li>
-          <strong>Foco:</strong> El botón recibe foco visual cuando se navega
-          por teclado
-        </li>
-        <li>
-          <strong>Semántica:</strong> Usa el elemento button nativo para máxima
-          compatibilidad
-        </li>
-        <li>
-          <strong>ARIA:</strong> Los estados se comunican automáticamente a
-          lectores de pantalla
+          <strong>Contraste:</strong> Los colores por defecto cumplen con los
+          estándares de contraste WCAG AA.
         </li>
       </ul>
-      <h4 style="margin-top: 25px; margin-bottom: 15px">Recomendaciones:</h4>
-      <ul class="accessibility-list">
-        <li>
-          <strong>Labels:</strong> Asegúrate de que el texto del botón sea
-          descriptivo
-        </li>
-        <li>
-          <strong>Contraste:</strong> Verifica que los colores cumplan con WCAG
-          2.1 AA
-        </li>
-        <li>
-          <strong>Tamaño:</strong> Mantén un área de click mínima de 44x44px
-        </li>
-        <li>
-          <strong>Loading:</strong> Considera agregar aria-label descriptivo
-          durante la carga
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="section">
-    <div class="section-header">
-      <h2>Ejemplos Completos</h2>
-      <p>Casos de uso comunes</p>
-    </div>
-    <div class="section-content">
-      <h4>Formulario de Login</h4>
-      <div class="code-block">
-        <pre><code [highlight]="exampleLoginForm" language="html"></code></pre>
-      </div>
-      <h4>Toolbar de Acciones</h4>
-      <div class="code-block">
-        <pre><code [highlight]="exampleToolbar" language="html"></code></pre>
-      </div>
     </div>
   </div>
 </div>

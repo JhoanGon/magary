@@ -1,12 +1,12 @@
 :host {
-  --input-primary: #007bff;
-  --input-success: #28a745;
-  --input-error: #dc3545;
-  --input-border: #ced4da;
-  --input-bg: #ffffff;
-  --input-text: #495057;
-  --input-placeholder: #6c757d;
-  --input-radius: 6px;
+  --input-primary: var(--primary-500, #007bff);
+  --input-success: var(--success, #28a745);
+  --input-error: var(--danger, #dc3545);
+  --input-border: var(--surface-200, #ced4da);
+  --input-bg: var(--surface-0, #ffffff);
+  --input-text: var(--text-primary, #495057);
+  --input-placeholder: var(--text-secondary, #6c757d);
+  --input-radius: var(--border-radius, 6px);
   --input-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
@@ -75,7 +75,7 @@
 
   &.input-filled {
     border: none;
-    background: #f8f9fa;
+    background: var(--surface-50, #f8f9fa);
     border-bottom: 2px solid var(--input-border);
     border-radius: var(--input-radius) var(--input-radius) 0 0;
   }
@@ -111,14 +111,14 @@
   }
 
   &.input-disabled {
-    background: #e9ecef;
-    color: #6c757d;
+    background: var(--surface-100, #e9ecef);
+    color: var(--text-secondary, #6c757d);
     cursor: not-allowed;
     opacity: 0.6;
   }
 
   &.input-readonly {
-    background: #f8f9fa;
+    background: var(--surface-50, #f8f9fa);
     cursor: default;
   }
 }
