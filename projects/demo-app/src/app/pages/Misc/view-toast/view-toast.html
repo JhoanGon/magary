@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="header">
+    <h1>Toast</h1>
+    <p>
+      Notificaciones flotantes con estilo premium, animaciones fluidas y soporte
+      para múltiples tipos de mensajes.
+    </p>
+  </div>
+
+  @for (section of sections; track section.id) {
+    <div class="section" [attr.id]="'section-' + section.id">
+      <div class="section-header">
+        <h2>{{ section.title }}</h2>
+        <p>{{ section.description }}</p>
+      </div>
+
+      <div class="section-content">
+        @if (section.type === "code") {
+          <div class="code-block">
+            <pre><code [highlight]="section.content!.code" [language]="section.content!.language"></code></pre>
+          </div>
+        }
+
+        @if (section.type === "demo") {
+          <div class="demo-card">
+            <div class="demo-actions">
+              @if (section.id === "basic") {
+                <magary-button
+                  (click)="showSuccess()"
+                  variant="solid"
+                  severity="help"
+                  >Mostrar Notificación</magary-button
+                >
+              }
+              @if (section.id === "types") {
+                <magary-button
+                  (click)="showSuccess()"
+                  variant="solid"
+                  severity="success"
+                  >Success</magary-button
+                >
+                <magary-button
+                  (click)="showInfo()"
+                  variant="solid"
+                  severity="info"
+                  >Info</magary-button
+                >
+                <magary-button
+                  (click)="showWarning()"
+                  variant="solid"
+                  severity="warning"
+                  >Warning</magary-button
+                >
+                <magary-button
+                  (click)="showError()"
+                  variant="solid"
+                  severity="danger"
+                  >Error</magary-button
+                >
+              }
+              @if (section.id === "sticky") {
+                <magary-button
+                  (click)="showSticky()"
+                  variant="outlined"
+                  severity="help"
+                  >Mostrar Sticky</magary-button
+                >
+              }
+            </div>
+          </div>
+
+          @if (section.codeExamples?.length) {
+            <div class="code-block">
+              <magary-tabs
+                [backgroundLine]="tabsConfig.backgroundLine"
+                [positionContent]="tabsConfig.positionContent"
+                [background]="tabsConfig.background"
+              >
+                @for (example of section.codeExamples; track example.label) {
+                  <magary-tab [label]="example.label">
+                    <pre><code [highlight]="example.code" [language]="example.language"></code></pre>
+                  </magary-tab>
+                }
+              </magary-tabs>
+            </div>
+          }
+        }
+
+        @if (section.type === "table") {
+          <div class="table-container">
+            <table class="api-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Default</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (row of section.tableData; track row.name) {
+                  <tr>
+                    <td>
+                      <code>{{ row.name }}</code>
+                    </td>
+                    <td>
+                      <code>{{ row.type }}</code>
+                    </td>
+                    <td>
+                      <code>{{ row.default }}</code>
+                    </td>
+                    <td>{{ row.description }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

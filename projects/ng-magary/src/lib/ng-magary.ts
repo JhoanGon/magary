@@ -31,6 +31,9 @@ export * from './Menu/sidebar/sidebar.module';
 // 👤 Misc //
 export * from './Misc/avatar/avatar';
 export * from './Misc/avatar/avatar.module';
+export * from './Misc/toast/toast';
+export * from './Misc/toast/toast-item';
+export * from './Misc/toast/toast.service';
 
 // 🗂️ Overlay //
 // (por ahora vacío)

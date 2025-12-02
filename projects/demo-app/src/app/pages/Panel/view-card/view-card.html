@@ -152,7 +152,7 @@
             [width]="'300px'"
             [shadow]="3"
             [borderRadius]="'1.5rem'"
-            [backgroundColor]="'rgba(255, 255, 255, 0.8)'"
+            [backgroundColor]="'var(--surface-0)'"
             [clickable]="true"
             [imageFit]="'cover'"
           >
@@ -201,7 +201,7 @@
             [height]="'300px'"
             [shadow]="3"
             [borderRadius]="'1.5rem'"
-            [backgroundColor]="'var(--surface-50)'"
+            [backgroundColor]="'var(--surface-0)'"
             [padding]="'1.5rem'"
             [gap]="'1.2rem'"
           >
@@ -213,10 +213,7 @@
               useful for grid layouts.
             </p>
             <div slot="footer">
-              <magary-button
-                label="Action"
-                severity="secondary"
-              ></magary-button>
+              <magary-button label="Action" severity="primary"></magary-button>
             </div>
           </magary-card>
         </div>
@@ -228,10 +225,12 @@
             "
             [positionImage]="'top'"
             [imageSize]="'200px'"
-            [height]="'300px'"
             [width]="'280px'"
-            [shadow]="4"
-            [borderRadius]="'0.5rem'"
+            [height]="'300px'"
+            [shadow]="3"
+            [borderRadius]="'1.5rem'"
+            [padding]="'1.5rem'"
+            [gap]="'1.2rem'"
             [backgroundColor]="'var(--surface-0)'"
             [altText]="'Retro Tech'"
             [imageFit]="'contain'"
@@ -283,6 +282,7 @@
                 [width]="'100%'"
                 [shadow]="2"
                 [borderRadius]="'1rem'"
+                [backgroundColor]="'var(--surface-0)'"
                 [clickable]="true"
                 (cardClick)="onCardClick($event)"
               >
@@ -322,6 +322,7 @@
                 [shadow]="2"
                 [borderRadius]="'1rem'"
                 [loading]="true"
+                [backgroundColor]="'var(--surface-0)'"
                 [loadingText]="'Procesando...'"
               >
                 <div slot="header">
@@ -351,6 +352,7 @@
                 [width]="'100%'"
                 [shadow]="0"
                 [borderRadius]="'1rem'"
+                [backgroundColor]="'var(--surface-0)'"
                 [disabled]="true"
               >
                 <div slot="header">
@@ -431,6 +433,7 @@
                 [hoverEffect]="false"
                 [borderRadius]="'1rem'"
                 [border]="'1px solid var(--surface-200)'"
+                [backgroundColor]="'var(--surface-0)'"
               >
                 <div slot="header">
                   <h3 class="card-title">Filled</h3>
@@ -459,6 +462,7 @@
                 [width]="'100%'"
                 [shadow]="4"
                 [borderRadius]="'1rem'"
+                [backgroundColor]="'var(--surface-0)'"
               >
                 <div slot="header">
                   <h3 class="card-title">Elevated</h3>
@@ -508,18 +512,7 @@
       <p>Cards interactivas con notificaciones integradas</p>
     </div>
     <div class="section-content">
-      @if (showToast) {
-        <div class="toast-demo" [class]="'toast-' + toastType">
-          <span>🔔 Toast: {{ toastMessage }}</span>
-          <button (click)="showToast = false" class="close-btn">×</button>
-        </div>
-      }
-      @if (showAlert) {
-        <div class="alert-demo" [class]="'alert-' + alertType">
-          <span>⚠️ Alert: {{ alertMessage }}</span>
-          <button (click)="closeAlert()" class="close-btn">×</button>
-        </div>
-      }
+      <magary-toast position="top-right"></magary-toast>
       <div class="demo-grid">
         <div class="demo-item">
           <h4>Notificaciones de Éxito</h4>
@@ -546,7 +539,7 @@
             <div slot="footer">
               <magary-button
                 label="Success Toast"
-                severity="primary"
+                severity="success"
                 size="small"
                 (click)="onDemoButtonClick('success'); $event.stopPropagation()"
               ></magary-button>
@@ -618,7 +611,9 @@
                   label="Alert"
                   severity="warning"
                   size="small"
-                  (click)="onDemoButtonClick('alert'); $event.stopPropagation()"
+                  (click)="
+                    onDemoButtonClick('warning'); $event.stopPropagation()
+                  "
                 ></magary-button>
               </div>
             </div>

@@ -1,0 +1,13 @@
+<div
+  class="magary-toast-container"
+  [ngClass]="position"
+  [style.zIndex]="baseZIndex"
+>
+  @for (toast of toasts; track toast.id) {
+    <magary-toast-item
+      [@toastAnimation]
+      [toast]="toast"
+      (onClose)="onToastClose($event)"
+    ></magary-toast-item>
+  }
+</div>

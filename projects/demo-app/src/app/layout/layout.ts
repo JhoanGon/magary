@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Sidebar } from 'ng-magary';
+import { Sidebar, MagaryToast } from 'ng-magary';
 export interface MenuItem {
   label: string;
   route?: string;
@@ -17,7 +17,7 @@ export interface NavigationItem {
 }
 @Component({
   selector: 'magary-layout',
-  imports: [CommonModule, Sidebar, RouterOutlet],
+  imports: [CommonModule, Sidebar, RouterOutlet, MagaryToast],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
 })
@@ -120,6 +120,11 @@ export class Layout {
               label: 'Avatar',
               route: 'components/Avatar',
               icon: 'fas fa-user-circle',
+            },
+            {
+              label: 'Toast',
+              route: 'components/Toast',
+              icon: 'fas fa-bell',
             },
           ],
         },

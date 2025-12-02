@@ -63,6 +63,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/Panel/view-tab/view-tab').then((m) => m.ViewTab),
       },
+      {
+        path: 'components/Toast',
+        loadComponent: () =>
+          import('./pages/Misc/view-toast/view-toast').then((m) => m.ViewToast),
+      },
     ],
   },
   { path: '**', redirectTo: 'installation' },
