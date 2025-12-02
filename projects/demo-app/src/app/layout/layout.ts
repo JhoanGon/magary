@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Sidebar, MagaryToast } from 'ng-magary';
+import { Sidebar, MagaryToast, MAGARY_VERSION } from 'ng-magary';
 export interface MenuItem {
   label: string;
   route?: string;
@@ -22,6 +22,7 @@ export interface NavigationItem {
   styleUrl: './layout.scss',
 })
 export class Layout {
+  version = MAGARY_VERSION;
   sidebarSections = [
     {
       title: 'Primeros Pasos',
