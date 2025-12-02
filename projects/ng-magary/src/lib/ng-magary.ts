@@ -15,6 +15,10 @@ export * from './Form/cascade-select/cascade-select';
 export * from './Form/cascade-select/cascade-select.module';
 export * from './Form/input/input';
 export * from './Form/input/input.module';
+export * from './Form/checkbox/checkbox';
+export * from './Form/checkbox/checkbox.module';
+export * from './Form/switch/switch';
+export * from './Form/switch/switch.module';
 
 // 🖼️ Media //
 // (por ahora vacío)
@@ -32,6 +36,7 @@ export * from './Menu/sidebar/sidebar.module';
 export * from './Misc/avatar/avatar';
 export * from './Misc/avatar/avatar.module';
 export * from './Misc/toast/toast';
+export * from './Misc/toast/toast.module';
 export * from './Misc/toast/toast-item';
 export * from './Misc/toast/toast.service';
 

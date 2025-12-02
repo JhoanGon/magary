@@ -81,9 +81,19 @@ export class Layout {
               icon: 'fas fa-list-ul',
             },
             {
+              label: 'Checkbox',
+              route: 'components/Checkbox',
+              icon: 'fas fa-check-square',
+            },
+            {
               label: 'Input',
               route: 'components/Input',
               icon: 'fas fa-keyboard',
+            },
+            {
+              label: 'Switch',
+              route: 'components/Switch',
+              icon: 'fas fa-toggle-on',
             },
           ],
         },

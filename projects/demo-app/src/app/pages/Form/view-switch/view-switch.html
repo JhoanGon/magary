@@ -1,0 +1,253 @@
+<div class="container">
+  <div class="header">
+    <h1>MagarySwitch</h1>
+    <p>
+      Componente de interruptor para alternar entre dos estados, con animaciones
+      fluidas y soporte completo de temas.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu módulo o componente standalone</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Básico</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Default</h4>
+          <magary-card
+            [width]="'300px'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1rem; display: flex; justify-content: center">
+              <magary-switch
+                [(checked)]="checked1"
+                label="Notifications"
+              ></magary-switch>
+            </div>
+            <div
+              slot="footer"
+              style="
+                text-align: center;
+                color: var(--text-secondary);
+                font-size: 0.9rem;
+              "
+            >
+              Value: {{ checked1() }}
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="exampleBasic" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Estados</h2>
+      <p>Diferentes estados interactivos del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: flex-start;
+              "
+            >
+              <magary-switch
+                [(checked)]="checked2"
+                label="Checked State"
+              ></magary-switch>
+              <magary-switch
+                [checked]="false"
+                label="Unchecked State"
+              ></magary-switch>
+              <magary-switch
+                [checked]="true"
+                [disabled]="true"
+                label="Disabled Checked"
+              ></magary-switch>
+              <magary-switch
+                [checked]="false"
+                [disabled]="true"
+                label="Disabled Unchecked"
+              ></magary-switch>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="exampleStates" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Colores</h2>
+      <p>Variantes semánticas de color</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 2rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem;
+                justify-content: center;
+              "
+            >
+              <magary-switch
+                [(checked)]="valPrimary"
+                label="Primary"
+                color="primary"
+              ></magary-switch>
+              <magary-switch
+                [(checked)]="valSuccess"
+                label="Success"
+                color="success"
+              ></magary-switch>
+              <magary-switch
+                [(checked)]="valDanger"
+                label="Danger"
+                color="danger"
+              ></magary-switch>
+              <magary-switch
+                [(checked)]="valWarning"
+                label="Warning"
+                color="warning"
+              ></magary-switch>
+              <magary-switch
+                [(checked)]="valInfo"
+                label="Info"
+                color="info"
+              ></magary-switch>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="exampleColors" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>API</h2>
+      <p>Propiedades y eventos disponibles</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Default</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>checked</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Valor del switch (Two-way binding)</td>
+            </tr>
+            <tr>
+              <td><code>label</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>Texto a mostrar junto al switch</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Deshabilita la interacción</td>
+            </tr>
+            <tr>
+              <td><code>color</code></td>
+              <td><code>'primary' | 'success' | ...</code></td>
+              <td><code>'primary'</code></td>
+              <td>Color semántico del componente</td>
+            </tr>
+            <tr>
+              <td><code>change</code></td>
+              <td><code>EventEmitter&lt;boolean&gt;</code></td>
+              <td><code>-</code></td>
+              <td>Evento emitido al cambiar el valor</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Accesibilidad</h2>
+    </div>
+    <div class="section-content">
+      <ul class="accessibility-list">
+        <li>
+          <strong>Role</strong>
+          <span
+            >Utiliza <code>role="switch"</code> para identificar el componente
+            ante tecnologías de asistencia.</span
+          >
+        </li>
+        <li>
+          <strong>Keyboard Support</strong>
+          <span
+            >Soporta navegación con <code>Tab</code> y activación con
+            <code>Space</code>.</span
+          >
+        </li>
+        <li>
+          <strong>ARIA Attributes</strong>
+          <span
+            >Gestiona automáticamente <code>aria-checked</code> para reflejar el
+            estado actual.</span
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

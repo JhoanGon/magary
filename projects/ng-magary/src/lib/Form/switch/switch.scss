@@ -1,0 +1,126 @@
+:host {
+  display: inline-block;
+  --switch-width: 44px;
+  --switch-height: 24px;
+  --switch-handle-size: 20px;
+  --switch-padding: 2px;
+  --switch-transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+  // Colors
+  --sw-primary: #007bff;
+  --sw-success: #28a745;
+  --sw-danger: #dc3545;
+  --sw-warning: #ffc107;
+  --sw-info: #17a2b8;
+  
+  --sw-bg-off: #e9ecef;
+  --sw-bg-on: var(--sw-primary);
+  --sw-handle: #ffffff;
+  --sw-border: #ced4da;
+  --sw-text: var(--text-primary, #495057);
+  --sw-disabled: #f8f9fa;
+}
+
+.magary-switch-container {
+  font-family: inherit;
+  
+  &.switch-primary { --sw-bg-on: var(--sw-primary); }
+  &.switch-success { --sw-bg-on: var(--sw-success); }
+  &.switch-danger { --sw-bg-on: var(--sw-danger); }
+  &.switch-warning { --sw-bg-on: var(--sw-warning); }
+  &.switch-info { --sw-bg-on: var(--sw-info); }
+}
+
+.switch-wrapper {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 12px;
+  position: relative;
+  user-select: none;
+}
+
+.hidden-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.switch-track {
+  width: var(--switch-width);
+  height: var(--switch-height);
+  background: var(--sw-bg-off);
+  border-radius: 999px;
+  position: relative;
+  transition: background-color var(--switch-transition);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  border: 1px solid transparent;
+}
+
+.switch-handle {
+  width: var(--switch-handle-size);
+  height: var(--switch-handle-size);
+  background: var(--sw-handle);
+  border-radius: 50%;
+  position: absolute;
+  top: var(--switch-padding);
+  left: var(--switch-padding);
+  transition: transform var(--switch-transition);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+// Checked State
+.switch-checked {
+  .switch-track {
+    background: var(--sw-bg-on);
+  }
+
+  .switch-handle {
+    transform: translateX(calc(var(--switch-width) - var(--switch-handle-size) - (var(--switch-padding) * 2)));
+  }
+}
+
+// Focus State
+.switch-focused {
+  .switch-track {
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15);
+  }
+}
+
+// Hover State
+.switch-wrapper:hover:not(.switch-disabled) {
+  .switch-handle {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  }
+}
+
+// Disabled State
+.switch-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+
+  .switch-wrapper {
+    cursor: not-allowed;
+  }
+
+  .switch-track {
+    background: var(--sw-disabled);
+    border-color: var(--sw-border);
+  }
+  
+  &.switch-checked .switch-track {
+    background: var(--sw-border);
+  }
+}
+
+.switch-label {
+  font-size: 1rem;
+  color: var(--sw-text);
+  font-weight: 500;
+}

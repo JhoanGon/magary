@@ -19,29 +19,26 @@
     </div>
     <div class="section-content">
       <div class="demo-grid">
-        <div class="demo-item">
-          <h4>Default</h4>
-          <magary-tabs
-            [backgroundLine]="'var(--primary-500)'"
-            [positionContent]="'flex-start'"
-            [padding]="'2rem'"
-          >
-            <magary-tab label="Inicio">
-              <h2>Bienvenido</h2>
-              <p>Contenido de la pestaña de inicio.</p>
-            </magary-tab>
-            <magary-tab label="Perfil">
-              <h2>Tu perfil</h2>
-              <p>Detalles personales, ajustes, etc.</p>
-            </magary-tab>
-            <magary-tab label="Ayuda">
-              <p>Aquí puedes encontrar asistencia.</p>
-            </magary-tab>
-            <magary-tab label="Contacto">
-              <p>Aquí puedes encontrar los numeros de contacto.</p>
-            </magary-tab>
-          </magary-tabs>
-        </div>
+        <magary-tabs
+          [backgroundLine]="'var(--primary-500)'"
+          [positionContent]="'flex-start'"
+          [padding]="'2rem'"
+        >
+          <magary-tab label="Inicio">
+            <h2>Bienvenido</h2>
+            <p>Contenido de la pestaña de inicio.</p>
+          </magary-tab>
+          <magary-tab label="Perfil">
+            <h2>Tu perfil</h2>
+            <p>Detalles personales, ajustes, etc.</p>
+          </magary-tab>
+          <magary-tab label="Ayuda">
+            <p>Aquí puedes encontrar asistencia.</p>
+          </magary-tab>
+          <magary-tab label="Contacto">
+            <p>Aquí puedes encontrar los numeros de contacto.</p>
+          </magary-tab>
+        </magary-tabs>
       </div>
       <div class="code-block">
         <pre><code [highlight]="exampleTab" language="html"></code></pre>

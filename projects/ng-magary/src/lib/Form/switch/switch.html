@@ -1,0 +1,22 @@
+<div [class]="containerClasses()">
+  <label [for]="uniqueId" class="switch-wrapper">
+    <input
+      type="checkbox"
+      [id]="uniqueId"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      (change)="onChange($event)"
+      (focus)="onFocus()"
+      (blur)="onBlur()"
+      class="hidden-input"
+      role="switch"
+      [attr.aria-checked]="checked()"
+    />
+    <div class="switch-track">
+      <div class="switch-handle">
+        <div class="handle-shadow"></div>
+      </div>
+    </div>
+    <span *ngIf="label()" class="switch-label">{{ label() }}</span>
+  </label>
+</div>
