@@ -6,7 +6,7 @@ import {
   signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MagaryPanelmenu } from '../panelmenu/panelmenu';
 import { MenuItem } from '../panelmenu/panelmenu.interface';
 import {
@@ -93,5 +93,10 @@ export class Sidebar {
 
   logout() {
     this.Logout.emit();
+  }
+  constructor(private router: Router) {
+    this.router.events.subscribe(() => {
+      this.closeMobileSidebar();
+    });
   }
 }
