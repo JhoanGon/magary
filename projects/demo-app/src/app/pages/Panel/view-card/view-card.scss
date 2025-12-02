@@ -59,7 +59,7 @@
 }
 
 .section {
-  background: var(--surface-0);
+  background: var(--surface-50);
   margin-bottom: 2rem;
   border-radius: var(--border-radius);
   border: 1px solid var(--surface-200);
@@ -224,11 +224,18 @@
 
   .action-buttons, .footer-buttons {
     display: flex;
-    gap: 0.5rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
     margin-top: auto;
   }
 }
+.footer-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
 
 @media (max-width: 768px) {
   .header {
@@ -251,6 +258,7 @@
   .card-content .footer-buttons {
     flex-direction: column;
     magary-button { width: 100%; }
+    gap: 1.5rem;
   }
 }
 

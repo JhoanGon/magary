@@ -74,8 +74,8 @@
 /* Dark Mode Overrides */
 [data-theme="dark"] {
   /* Inverted Surface Colors */
-  --surface-0: #0f172a;  /* Darkest */
-  --surface-50: #1e293b;
+  --surface-50: #0f172a;  /* Darkest (Background) */
+  --surface-0: #1e293b;   /* Lighter (Card Surface) */
   --surface-100: #334155;
   --surface-200: #475569;
   --surface-300: #64748b;

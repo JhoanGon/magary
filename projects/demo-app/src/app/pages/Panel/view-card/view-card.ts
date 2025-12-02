@@ -1,5 +1,12 @@
-import { Component } from '@angular/core';
-import { MagaryButton, MagaryCard, MagaryTab, MagaryTabs } from 'ng-magary';
+import { Component, inject } from '@angular/core';
+import {
+  MagaryButton,
+  MagaryCard,
+  MagaryTab,
+  MagaryTabs,
+  MagaryToast,
+  MagaryToastService,
+} from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 const CODE_EXAMPLES = {
   BASIC_CARD: `
@@ -40,16 +47,21 @@ const CODE_EXAMPLES = {
 } as const;
 @Component({
   selector: 'magary-view-card',
-  imports: [MagaryCard, MagaryButton, MagaryTabs, MagaryTab, Highlight],
+  imports: [
+    MagaryCard,
+    MagaryButton,
+    MagaryTabs,
+    MagaryTab,
+    Highlight,
+    MagaryToast,
+  ],
   templateUrl: './view-card.html',
   styleUrl: './view-card.scss',
 })
 export class ViewCard {
+  private toastService = inject(MagaryToastService);
   lastClickedCard = '';
-  showToast = false;
   showAlert = false;
-  toastMessage = '';
-  toastType: 'success' | 'error' | 'info' = 'success';
   alertMessage = '';
   alertType: 'success' | 'warning' | 'error' | 'info' = 'success';
   readonly importExample = "import { MagaryCard } from 'ng-magary';";
@@ -200,18 +212,20 @@ export class ViewCard {
     try {
       const customEvent = event as CustomEvent;
       this.showToastNotification('¡Card clickeada exitosamente!');
-      this.showAlertNotification('Card Interactive', 'Has clickeado una tarjeta de Magary', 'success');
+      this.showToastNotification('Card Interactive: Has clickeado una tarjeta de Magary', 'success');
     } catch (error) {
       console.warn('Error handling card click:', error);
       this.showToastNotification('Error al procesar el click', 'error');
     }
   }`;
   exampleNotificationsTS = `
-  private showToastNotification(message: string, type: 'success' | 'error' | 'info' = 'success'): void {
-    this.toastMessage = message;
-    this.toastType = type;
-    this.showToast = true;
-    setTimeout(() => this.showToast = false, 3000);
+  private showToastNotification(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'success'): void {
+    this.toastService.add({
+      type: type,
+      title: type === 'success' ? 'Éxito' : type === 'error' ? 'Error' : type === 'warning' ? 'Alerta' : 'Información',
+      message: message,
+      duration: 3000,
+    });
   }
   onDemoButtonClick(action: string): void {
     switch (action) {
@@ -224,19 +238,15 @@ export class ViewCard {
       case 'info':
         this.showToastNotification('Información importante', 'info');
         break;
-      case 'alert':
-        this.showAlertNotification('Atención', 'Esta es una alerta importante', 'warning');
+      case 'warning':
+        this.showToastNotification('Alerta importante', 'warning');
         break;
     }
   }`;
   exampleNotificationsHTML = `
-  <!-- Estados actuales de notificaciones -->
-  @if (showToast) {
-    <div class="toast-demo" [class]="'toast-' + toastType">
-      <span>🔔 Toast: {{ toastMessage }}</span>
-      <button (click)="showToast = false" class="close-btn">×</button>
-    </div>
-  }
+  <!-- Componente Toast en el template -->
+  <magary-toast position="top-right"></magary-toast>
+
   <!-- Uso con MagaryButton dentro de Cards -->
   <magary-card [clickable]="true" (cardClick)="onCardClick($event)">
     <div slot="header">
@@ -246,12 +256,13 @@ export class ViewCard {
     <div slot="footer">
       <magary-button
         label="Success Toast"
-        severity="primary"
+        severity="success"
         size="small"
         (click)="onDemoButtonClick('success'); $event.stopPropagation()">
       </magary-button>
     </div>
   </magary-card>`;
+
   onCardClick(event: Event): void {
     try {
       const customEvent = event as CustomEvent;
@@ -264,26 +275,26 @@ export class ViewCard {
       this.showToastNotification('Error al procesar el click', 'error');
     }
   }
+
   private showToastNotification(
     message: string,
-    type: 'success' | 'error' | 'info' = 'success',
+    type: 'success' | 'error' | 'info' | 'warning' = 'success',
   ): void {
-    this.toastMessage = message;
-    this.toastType = type;
-    this.showToast = true;
-    setTimeout(() => {
-      this.showToast = false;
-    }, 3000);
+    this.toastService.add({
+      type: type,
+      title:
+        type === 'success'
+          ? 'Éxito'
+          : type === 'error'
+            ? 'Error'
+            : type === 'warning'
+              ? 'Alerta'
+              : 'Información',
+      message: message,
+      duration: 3000,
+    });
   }
-  private showAlertNotification(
-    title: string,
-    message: string,
-    type: 'success' | 'warning' | 'error' | 'info' = 'info',
-  ): void {
-    this.alertMessage = `${title}: ${message}`;
-    this.alertType = type;
-    this.showAlert = true;
-  }
+
   closeAlert(): void {
     this.showAlert = false;
   }
@@ -298,12 +309,8 @@ export class ViewCard {
       case 'info':
         this.showToastNotification('Información importante', 'info');
         break;
-      case 'alert':
-        this.showAlertNotification(
-          'Atención',
-          'Esta es una alerta importante',
-          'warning',
-        );
+      case 'warning':
+        this.showToastNotification('Alerta importante', 'warning');
         break;
     }
   }
