@@ -34,7 +34,18 @@
       Para usar el sistema de temas en tu proyecto, primero inyecta el servicio
       en tu componente principal o layout:
     </p>
-    <pre><code [highlight]="usageExample" language="typescript"></code></pre>
+    <magary-tabs
+      [backgroundLine]="'#ed2c44'"
+      [positionContent]="'flex-start'"
+      [background]="'#282c34'"
+    >
+      <magary-tab label="TypeScript">
+        <pre><code [highlight]="usageExample" language="typescript"></code></pre>
+      </magary-tab>
+      <magary-tab label="HTML">
+        <pre><code [highlight]="htmlExample" language="html"></code></pre>
+      </magary-tab>
+    </magary-tabs>
   </div>
 
   <div class="doc-card">

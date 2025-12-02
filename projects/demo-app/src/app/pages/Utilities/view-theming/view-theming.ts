@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Highlight } from 'ngx-highlightjs';
+import { MagaryTabs, MagaryTab } from 'ng-magary';
 
 @Component({
   selector: 'app-view-theming',
   standalone: true,
-  imports: [CommonModule, Highlight],
+  imports: [CommonModule, Highlight, MagaryTabs, MagaryTab],
   templateUrl: './view-theming.html',
   styleUrl: './view-theming.scss',
 })
@@ -26,7 +27,12 @@ export class AppComponent {
   // Alternar entre temas disponibles
   toggleTheme() {
     this.themeService.toggleTheme(); 
-    // O usa setTheme('purple') para temas personalizados
+  }
+
+  // Establecer un tema específico
+  // 'light', 'dark' o el nombre de tu tema personalizado (ej: 'purple')
+  setPurpleTheme() {
+    this.themeService.setTheme('purple');
   }
 }`;
 
@@ -51,4 +57,21 @@ export class AppComponent {
   // Opcional: Gradientes personalizados
   --gradient-text: linear-gradient(135deg, #a855f7, #ec4899);
 }`;
+
+  htmlExample = `
+<!-- En tu template (app.component.html) -->
+<div class="theme-controls">
+  <!-- Botón para alternar tema -->
+  <magary-button 
+    label="Toggle Theme" 
+    (click)="toggleTheme()">
+  </magary-button>
+
+  <!-- Botón para tema específico -->
+  <magary-button 
+    label="Purple Theme" 
+    severity="help"
+    (click)="setPurpleTheme()">
+  </magary-button>
+</div>`;
 }
