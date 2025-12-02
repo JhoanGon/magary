@@ -54,6 +54,7 @@
 }
 
 // Dark Mode Support
+// Dark Mode Support
 :host-context([data-theme="dark"]) {
   --surface-0: #1e293b;
   --surface-50: #0f172a;
@@ -64,6 +65,46 @@
   
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
+}
+
+// Purple Theme (Dark variant)
+:host-context([data-theme="purple"]) {
+  --surface-0: #2d1b4e;
+  --surface-50: #1a102e;
+  --surface-100: #2d1b4e;
+  --surface-200: #432c7a;
+  --surface-300: #5b3ea8;
+  --surface-900: #f3e8ff;
+
+  --primary-50: #f3e8ff;
+  --primary-100: #d8b4fe;
+  --primary-500: #a855f7;
+  --primary-600: #9333ea;
+
+  --text-primary: #f3e8ff;
+  --text-secondary: #d8b4fe;
+  
+  --gradient-text: linear-gradient(135deg, #a855f7, #ec4899);
+}
+
+// Green Theme (Dark variant)
+:host-context([data-theme="green"]) {
+  --surface-0: #14532d;
+  --surface-50: #052e16;
+  --surface-100: #14532d;
+  --surface-200: #166534;
+  --surface-300: #15803d;
+  --surface-900: #dcfce7;
+
+  --primary-50: #dcfce7;
+  --primary-100: #86efac;
+  --primary-500: #22c55e;
+  --primary-600: #16a34a;
+
+  --text-primary: #f0fdf4;
+  --text-secondary: #86efac;
+
+  --gradient-text: linear-gradient(135deg, #22c55e, #10b981);
 }
 
 .container {

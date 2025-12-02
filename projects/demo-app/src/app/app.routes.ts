@@ -82,6 +82,20 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/Misc/view-toast/view-toast').then((m) => m.ViewToast),
       },
+      {
+        path: 'theming',
+        loadComponent: () =>
+          import('./pages/Utilities/view-theming/view-theming').then(
+            (m) => m.ViewTheming,
+          ),
+      },
+      {
+        path: 'icons',
+        loadComponent: () =>
+          import('./pages/Utilities/view-icons/view-icons').then(
+            (m) => m.ViewIcons,
+          ),
+      },
     ],
   },
   { path: '**', redirectTo: 'installation' },

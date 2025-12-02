@@ -15,9 +15,17 @@ export interface NavigationItem {
   isCategory?: boolean;
   children?: NavigationItem[];
 }
+import { ThemeSwitcherComponent } from '../components/theme-switcher/theme-switcher.component';
+
 @Component({
   selector: 'magary-layout',
-  imports: [CommonModule, Sidebar, RouterOutlet, MagaryToast],
+  imports: [
+    CommonModule,
+    Sidebar,
+    RouterOutlet,
+    MagaryToast,
+    ThemeSwitcherComponent,
+  ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
 })
@@ -182,16 +190,6 @@ export class Layout {
     },
   ];
   isSidebarOpen = signal(false);
-  isDarkMode = signal(false);
-
-  constructor() {
-    // Initialize theme based on system preference
-    const prefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)',
-    ).matches;
-    this.isDarkMode.set(prefersDark);
-    this.updateTheme();
-  }
 
   toggleSidebar() {
     this.isSidebarOpen.update((open) => !open);
@@ -199,16 +197,6 @@ export class Layout {
 
   closeSidebar() {
     this.isSidebarOpen.set(false);
-  }
-
-  toggleTheme() {
-    this.isDarkMode.update((dark) => !dark);
-    this.updateTheme();
-  }
-
-  private updateTheme() {
-    const theme = this.isDarkMode() ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', theme);
   }
 
   handleLogout() {

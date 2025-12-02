@@ -1,0 +1,95 @@
+<div class="view-theming">
+  <header>
+    <h1>Theming System</h1>
+    <p>
+      Un sistema de temas flexible y potente basado en CSS Variables y Signals.
+      Personaliza cada aspecto de tu aplicación con facilidad.
+    </p>
+  </header>
+
+  <div class="doc-card">
+    <div class="section-title">
+      <i class="fas fa-rocket"></i>
+      <span>Introducción</span>
+    </div>
+    <p>
+      Magary utiliza un enfoque moderno para el theming, aprovechando las
+      <strong>CSS Custom Properties (Variables)</strong> para definir colores,
+      espaciados y tipografía. Esto permite cambiar de tema en tiempo real sin
+      necesidad de recargar la página y con un rendimiento óptimo.
+    </p>
+    <p>
+      El sistema está gestionado por <code>MagaryThemeService</code>, que se
+      encarga de persistir la preferencia del usuario y aplicar las clases
+      necesarias.
+    </p>
+  </div>
+
+  <div class="doc-card">
+    <div class="section-title">
+      <i class="fas fa-code"></i>
+      <span>Implementación</span>
+    </div>
+    <p>
+      Para usar el sistema de temas en tu proyecto, primero inyecta el servicio
+      en tu componente principal o layout:
+    </p>
+    <pre><code [highlight]="usageExample" language="typescript"></code></pre>
+  </div>
+
+  <div class="doc-card">
+    <div class="section-title">
+      <i class="fas fa-palette"></i>
+      <span>Creando un Nuevo Tema</span>
+    </div>
+    <p>
+      Para añadir un nuevo tema (por ejemplo, "Midnight Purple"), simplemente
+      define un bloque CSS con el atributo
+      <code>data-theme</code> correspondiente. Debes sobrescribir las variables
+      de color principales.
+    </p>
+    <pre><code [highlight]="cssExample" language="scss"></code></pre>
+  </div>
+
+  <div class="doc-card">
+    <div class="section-title">
+      <i class="fas fa-swatchbook"></i>
+      <span>Variables Principales</span>
+    </div>
+    <p>
+      Estas son las variables clave que debes definir para asegurar que todos
+      los componentes se adapten correctamente:
+    </p>
+
+    <div class="color-grid">
+      <div class="color-item">
+        <div class="swatch" style="background: var(--primary-500)"></div>
+        <div class="info">
+          <span class="name">Primary</span>
+          <span class="var">--primary-500</span>
+        </div>
+      </div>
+      <div class="color-item">
+        <div class="swatch" style="background: var(--surface-0)"></div>
+        <div class="info">
+          <span class="name">Surface</span>
+          <span class="var">--surface-0</span>
+        </div>
+      </div>
+      <div class="color-item">
+        <div class="swatch" style="background: var(--text-primary)"></div>
+        <div class="info">
+          <span class="name">Text Main</span>
+          <span class="var">--text-primary</span>
+        </div>
+      </div>
+      <div class="color-item">
+        <div class="swatch" style="background: var(--text-secondary)"></div>
+        <div class="info">
+          <span class="name">Text Muted</span>
+          <span class="var">--text-secondary</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

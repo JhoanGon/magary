@@ -1,12 +1,12 @@
-// Variables (can be moved to a global theme file later)
+// Variables mapped to global theme
 :host {
   --sidebar-width: 280px;
-  --sidebar-bg: #1e293b;
-  --sidebar-border: #334155;
-  --sidebar-text: #f8fafc;
-  --sidebar-text-secondary: #94a3b8;
-  --primary-color: #3b82f6;
-  --hover-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-bg: var(--surface-0);
+  --sidebar-border: var(--surface-200);
+  --sidebar-text: var(--text-primary);
+  --sidebar-text-secondary: var(--text-secondary);
+  --primary-color: var(--primary-500);
+  --hover-bg: var(--surface-100);
 }
 
 .sidebar {
