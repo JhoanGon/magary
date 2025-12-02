@@ -1,69 +1,13 @@
 // Variables
+// Variables
 :host {
   --pad: 1.5rem;
-  --surface-0: #ffffff;
-  --surface-50: #f8fafc;
-  --surface-100: #f1f5f9;
-  --surface-200: #e2e8f0;
-  --surface-300: #cbd5e1;
-  --surface-900: #0f172a;
-  
-  --primary-50: #eff6ff;
-  --primary-100: #dbeafe;
-  --primary-500: #3b82f6;
-  --primary-600: #2563eb;
-  
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  
   --border-radius: 1rem;
   --transition: all 0.3s ease;
-
-  // Additional variables from view-card for consistency
-  --success: #10b981;
-  --success-50: #ecfdf5;
-  --success-200: #a7f3d0;
-  --success-600: #059669;
-  --success-800: #065f46;
-  --success-900: #064e3b;
-
-  --danger: #ef4444;
-  --danger-50: #fef2f2;
-  --danger-200: #fecaca;
-  --danger-600: #dc2626;
-  --danger-800: #991b1b;
-  --danger-900: #7f1d1d;
-
-  --info: #3b82f6;
-  --info-50: #eff6ff;
-  --info-200: #bfdbfe;
-  --info-600: #2563eb;
-  --info-800: #1e40af;
-  --info-900: #1e3a8a;
-
-  --warning: #f59e0b;
-  --warning-50: #fffbeb;
-  --warning-200: #fde68a;
-  --warning-900: #78350f;
-
+  
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-  
-  --gradient-text: linear-gradient(135deg, var(--primary-600), #8b5cf6);
-}
-
-// Dark Mode Support
-:host-context([data-theme="dark"]) {
-  --surface-0: #1e293b;
-  --surface-50: #0f172a;
-  --surface-100: #1e293b;
-  --surface-200: #334155;
-  --surface-300: #475569;
-  --surface-900: #f8fafc;
-  
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
 }
 
 .container {

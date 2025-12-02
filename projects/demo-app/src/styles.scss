@@ -101,6 +101,62 @@
   --gradient-text: linear-gradient(to right, #22d3ee, #e879f9); /* Brighter for dark mode */
 }
 
+/* Purple Theme (Dark variant) */
+[data-theme="purple"] {
+  --surface-50: #1a102e;
+  --surface-0: #2d1b4e;
+  --surface-100: #2d1b4e;
+  --surface-200: #432c7a;
+  --surface-300: #5b3ea8;
+  --surface-900: #f3e8ff;
+
+  --primary-50: #f3e8ff;
+  --primary-100: #d8b4fe;
+  --primary-500: #a855f7;
+  --primary-600: #9333ea;
+
+  --text-primary: #f3e8ff;
+  --text-secondary: #f0fdf4;
+  
+  --gradient-text: linear-gradient(135deg, #a855f7, #ec4899);
+
+  /* Purple Glassmorphism */
+  --glass-bg: rgba(26, 16, 46, 0.7);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+
+  /* Purple Gradients */
+  --gradient-surface: linear-gradient(180deg, #1a102e 0%, #2d1b4e 100%);
+}
+
+/* Green Theme (Dark variant) */
+[data-theme="green"] {
+  --surface-50: #052e16;
+  --surface-0: #14532d;
+  --surface-100: #14532d;
+  --surface-200: #166534;
+  --surface-300: #15803d;
+  --surface-900: #dcfce7;
+
+  --primary-50: #dcfce7;
+  --primary-100: #86efac;
+  --primary-500: #22c55e;
+  --primary-600: #16a34a;
+
+  --text-primary: #f0fdf4;
+  --text-secondary: #f0fdf4;
+
+  --gradient-text: linear-gradient(135deg, #13b8aa, #00ffaa);
+
+  /* Green Glassmorphism */
+  --glass-bg: rgba(5, 46, 22, 0.7);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+
+  /* Green Gradients */
+  --gradient-surface: linear-gradient(180deg, #052e16 0%, #14532d 100%);
+}
+
 /* Animations */
 @keyframes fadeInUp {
   from {

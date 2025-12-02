@@ -61,9 +61,9 @@ export class Sidebar {
   });
   public logoSrc = input<string>('assets/logo.svg');
   public appTitle = input<string>('PRIMENG');
-  public menuBackgroundColor = input<string>('transparent');
-  public menuTextColor = input<string>('var(--sidebar-text)');
-  public menuHoverColor = input<string>('var(--hover-bg)');
+  public menuBackgroundColor = input<string>('var(--surface-50)');
+  public menuTextColor = input<string>('var(--text-primary)');
+  public menuHoverColor = input<string>('var(--surface-100)');
   public collapsible = input<boolean>(true);
   public showToggle = input<boolean>(true);
 

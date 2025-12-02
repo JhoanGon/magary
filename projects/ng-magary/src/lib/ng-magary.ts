@@ -49,3 +49,6 @@ export * from './Panel/card/card.module';
 export * from './Panel/tabs/tabs';
 export * from './Panel/tabs/tabs.module';
 export * from './Panel/tabs/tab/tab';
+
+// 🛠️ Services //
+export * from './Services/theme.service';
