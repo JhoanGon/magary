@@ -1,1 +1,55 @@
-<p>cascade-select works!</p>
+<div
+  class="magary-cascade-select"
+  [class.disabled]="disabled()"
+  [class.open]="isOpen()"
+  [style.width]="width()"
+  (click)="toggle()"
+>
+  <div class="select-trigger">
+    <span class="select-label" [class.placeholder]="!value()">
+      {{ selectedLabel() }}
+    </span>
+    <i class="fas fa-chevron-down select-icon"></i>
+  </div>
+
+  @if (isOpen()) {
+    <div class="select-panel" (click)="$event.stopPropagation()">
+      <ul class="select-list">
+        <ng-template #optionTemplate let-items>
+          @for (option of items; track $index) {
+            <li
+              class="select-item"
+              [class.group]="isOptionGroup(option)"
+              [class.selected]="getOptionValue(option) === value()"
+              (click)="selectOption(option, $event)"
+            >
+              <div class="item-content">
+                <span>{{ getOptionLabel(option) }}</span>
+                @if (isOptionGroup(option)) {
+                  <i class="fas fa-chevron-right group-icon"></i>
+                }
+              </div>
+
+              @if (isOptionGroup(option)) {
+                <div class="submenu">
+                  <ul class="select-list">
+                    <ng-container
+                      *ngTemplateOutlet="
+                        optionTemplate;
+                        context: { $implicit: getOptionChildren(option) }
+                      "
+                    ></ng-container>
+                  </ul>
+                </div>
+              }
+            </li>
+          }
+        </ng-template>
+
+        <ng-container
+          *ngTemplateOutlet="optionTemplate; context: { $implicit: options() }"
+        ></ng-container>
+      </ul>
+    </div>
+  }
+</div>

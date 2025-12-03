@@ -69,6 +69,9 @@
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
   --shadow-glow: 0 0 20px rgba(6, 182, 212, 0.4);
+
+  /* API Table Colors */
+  --api-table-color-text: #0e7490;
 }
 
 /* Dark Mode Overrides */
@@ -99,6 +102,9 @@
   /* Dark Gradients */
   --gradient-surface: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
   --gradient-text: linear-gradient(to right, #22d3ee, #e879f9); /* Brighter for dark mode */
+
+  /* API Table Colors */
+  --api-table-color-text: #f8fafc;
 }
 
 /* Purple Theme (Dark variant) */
@@ -127,6 +133,9 @@
 
   /* Purple Gradients */
   --gradient-surface: linear-gradient(180deg, #1a102e 0%, #2d1b4e 100%);
+
+  /* API Table Colors */
+  --api-table-color-text: #f8fafc;
 }
 
 /* Green Theme (Dark variant) */
@@ -155,6 +164,9 @@
 
   /* Green Gradients */
   --gradient-surface: linear-gradient(180deg, #052e16 0%, #14532d 100%);
+
+  /* API Table Colors */
+  --api-table-color-text: #f8fafc;
 }
 
 /* Animations */

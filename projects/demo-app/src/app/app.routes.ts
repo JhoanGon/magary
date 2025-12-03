@@ -47,6 +47,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'components/Cascade-Select',
+        loadComponent: () =>
+          import('./pages/Form/view-cascade-select/view-cascade-select').then(
+            (m) => m.ViewCascadeSelect,
+          ),
+      },
+      {
         path: 'components/Panel-Menu',
         loadComponent: () =>
           import('./pages/Menu/view-panel-menu/view-panel-menu').then(

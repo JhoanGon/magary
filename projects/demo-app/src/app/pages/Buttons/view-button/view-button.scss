@@ -1,13 +1,6 @@
 // Variables
-// Variables
 :host {
   --pad: 1.5rem;
-  --border-radius: 1rem;
-  --transition: all 0.3s ease;
-  
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
 .container {
@@ -143,7 +136,6 @@
 }
 
 .code-block {
-  background: var(--surface-900);
   border-radius: var(--border-radius);
   margin: 1rem 0;
   font-family: 'Fira Code', monospace;
@@ -193,7 +185,7 @@
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
     font-size: 0.8125rem;
-    color: var(--primary-700);
+    color: var(--api-table-color-text);
     font-family: monospace;
     border: 1px solid var(--surface-200);
   }
