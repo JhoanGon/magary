@@ -57,8 +57,13 @@
   .title {
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--sidebar-text);
+    // color: var(--sidebar-text); // Overridden by gradient
     white-space: nowrap;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--sidebar-title-fill, transparent);
+    background-clip: text;
+    color: var(--sidebar-title-color, transparent); // Fallback
+    font-style: var(--sidebar-title-font-style, italic);
   }
   
   .header-toggle {
@@ -123,8 +128,51 @@
   gap: 0.5rem;
 }
 
+.brand-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  
+  &.bottom {
+    margin-top: auto;
+  }
+  
+  &.top {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--sidebar-border);
+  }
+  
+  &.center {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  .brand-logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 120px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+  }
+  
+  &.collapsed {
+    padding: 0.5rem;
+    
+    .brand-logo {
+      max-height: 40px;
+    }
+  }
+}
+
 .user-section {
-  margin-top: auto;
   padding-top: 1rem;
   border-top: 1px solid var(--sidebar-border);
 }

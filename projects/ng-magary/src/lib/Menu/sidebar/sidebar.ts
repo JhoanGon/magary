@@ -61,11 +61,17 @@ export class Sidebar {
   });
   public logoSrc = input<string>('assets/logo.svg');
   public appTitle = input<string>('PRIMENG');
+  public appTitleClass = input<string>('');
+  public appTitleStyle = input<{ [klass: string]: any } | null>(null);
   public menuBackgroundColor = input<string>('var(--surface-50)');
   public menuTextColor = input<string>('var(--text-primary)');
   public menuHoverColor = input<string>('var(--surface-100)');
   public collapsible = input<boolean>(true);
   public showToggle = input<boolean>(true);
+  public showLogo = input<boolean>(true);
+  public showBrandLogo = input<boolean>(false);
+  public brandLogoSrc = input<string>('');
+  public brandLogoPosition = input<'top' | 'bottom' | 'center'>('bottom');
 
   public isMobileOpen = signal(false);
   public isCollapsed = signal(false);
