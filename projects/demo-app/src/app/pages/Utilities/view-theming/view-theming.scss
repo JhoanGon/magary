@@ -112,3 +112,42 @@
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+// Responsive Adjustments
+@media (max-width: 768px) {
+  .view-theming {
+    padding-bottom: 2rem;
+
+    header {
+      margin-bottom: 2rem;
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      margin: 2rem 0 1rem;
+    }
+
+    .doc-card {
+      padding: 1.5rem;
+      
+      // Ensure code blocks scroll on mobile
+      pre {
+        overflow-x: auto;
+        max-width: 100%;
+      }
+    }
+    
+    .color-grid {
+      grid-template-columns: 1fr; // Stack colors on very small screens
+    }
+  }
+}
