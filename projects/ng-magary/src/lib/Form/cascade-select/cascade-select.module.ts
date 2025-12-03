@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CascadeSelect } from './cascade-select';
+import { MagaryCascadeSelect } from './cascade-select';
 @NgModule({
-  imports: [CommonModule, CascadeSelect],
-  exports: [CascadeSelect],
+  imports: [CommonModule, MagaryCascadeSelect],
+  exports: [MagaryCascadeSelect],
 })
-export class CascadeSelectModule { }
+export class CascadeSelectModule {}

@@ -1,0 +1,132 @@
+:host {
+  display: inline-block;
+  width: 100%;
+}
+
+.magary-cascade-select {
+  position: relative;
+  width: 100%;
+  background: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-radius: var(--border-radius, 6px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+
+  &:hover:not(.disabled) {
+    border-color: var(--primary-500);
+  }
+
+  &.open {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 0.2rem rgba(var(--primary-500-rgb), 0.25);
+    
+    .select-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--surface-100);
+    color: var(--text-secondary);
+  }
+}
+
+.select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  min-height: 42px;
+}
+
+.select-label {
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &.placeholder {
+    color: var(--text-secondary);
+  }
+}
+
+.select-icon {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  transition: transform 0.2s ease;
+}
+
+.select-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.25rem;
+  min-width: 100%;
+  background: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  padding: 0.25rem 0;
+}
+
+.select-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.select-item {
+  position: relative;
+  padding: 0.625rem 1rem;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: var(--surface-100);
+    color: var(--primary-600);
+    
+    > .submenu {
+      display: block;
+    }
+  }
+
+  &.selected {
+    background-color: var(--primary-50);
+    color: var(--primary-600);
+    font-weight: 500;
+  }
+
+  .item-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .group-icon {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+  }
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 100%;
+  background: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 0.25rem 0;
+  // margin-left: 0.25rem; // Removed to fix hover gap
+  z-index: 1001;
+}

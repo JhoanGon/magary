@@ -1,3 +1,10 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--pad);
+  animation: fadeIn 0.5s ease-out;
+}
+
 .header {
   background: var(--surface-0);
   border: 1px solid var(--surface-200);
@@ -49,17 +56,18 @@
 }
 
 .section {
-  background: var(--surface-0);
+  background: var(--surface-50);
   margin-bottom: 2rem;
   border-radius: var(--border-radius);
   border: 1px solid var(--surface-200);
   box-shadow: var(--shadow-sm);
-  overflow: hidden;
+  overflow: visible; // Changed from hidden to visible
   animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
+
+
 .section-header {
-  background: var(--surface-50);
   padding: 1.5rem;
   border-bottom: 1px solid var(--surface-200);
 
@@ -83,22 +91,27 @@
 
 .demo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+  justify-items: center;
+  align-items: start;
 }
 
 .demo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: 1.5rem;
-  background: var(--surface-50);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--surface-200);
-  transition: all 0.2s ease;
+  padding: 1rem;
+  width: 100%;
+  max-width: 600px;
+  animation: fadeInUp 0.6s ease-out backwards;
 
-  &:hover {
-    border-color: var(--primary-200);
-    box-shadow: var(--shadow-sm);
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
   }
 
   h4 {
@@ -111,12 +124,6 @@
   }
 }
 
-.variantButtons {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
 .code-block {
   border-radius: var(--border-radius);
   margin: 1rem 0;
@@ -124,11 +131,18 @@
   font-size: 0.875rem;
   overflow-x: auto;
   border: 1px solid var(--surface-800);
+
+  pre {
+    margin: 0;
+    white-space: pre-wrap;
+  }
 }
 
-.code-block pre {
-  margin: 0;
-  white-space: pre-wrap;
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--surface-200);
 }
 
 .api-table {
@@ -166,110 +180,32 @@
   }
 }
 
-.tag {
-  display: inline-block;
-  background: var(--primary-50);
-  color: var(--primary-700);
-  padding: 0.125rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  margin-right: 0.25rem;
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  &.required {
-    background: var(--danger-50);
-    color: var(--danger-700);
+@keyframes pulse-glow {
+  0% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+  100% { opacity: 0.5; transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 2rem 1rem;
+    
+    h1 {
+      font-size: 2rem;
+    }
+  }
+
+  .demo-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   }
 }
 
-.accessibility-list {
-  list-style: none;
-  padding: 0;
-
-  li {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--surface-200);
-    color: var(--text-secondary);
-    display: flex;
-    align-items: baseline;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    strong {
-      color: var(--text-primary);
-      min-width: 120px;
-      display: inline-block;
-      font-weight: 600;
-    }
-  }
-}
-
-.speed-dial-container {
-  position: relative;
-  width: 100%;
-  height: 500px;
-  padding: 1.5rem;
-  background: var(--surface-50);
-  border-radius: var(--border-radius);
-  border: 1px solid var(--surface-200);
-}
-
-.speed-dial-container > magary-speed-dial {
-  position: absolute;
-}
-
-.speed-dial-container > .top {
-  top: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.speed-dial-container > .left {
-  left: 1.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.speed-dial-container > .right {
-  right: 1.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.speed-dial-container > .bottom {
-  bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.speed-dial-container > .center {
-  top: 50%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.speed-dial-container > .top-left {
-  left: 1.5rem;
-  top: 1.5rem;
-  transform: translateY(0); /* Removed translateY(-50%) as it's corner */
-}
-
-.speed-dial-container > .down-left {
-  left: 1.5rem;
-  bottom: 1.5rem;
-  top: auto; /* Reset top */
-}
-
-.speed-dial-container > .top-right {
-  right: 1.5rem;
-  top: 1.5rem;
-  transform: translateY(0); /* Removed translateY(-50%) */
-}
-
-.speed-dial-container > .down-right {
-  right: 1.5rem;
-  bottom: 1.5rem;
-  top: auto; /* Reset top */
+// Override card overflow for cascade select dropdown
+::ng-deep magary-card .card {
+  overflow: visible !important;
 }
