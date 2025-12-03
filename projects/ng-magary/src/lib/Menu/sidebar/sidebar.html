@@ -17,12 +17,22 @@
         </button>
       } @else {
         <!-- If toggle hidden but collapsed, show logo icon? -->
-        <img [src]="logoSrc()" alt="Logo" class="logo collapsed-logo" />
+        @if (showLogo()) {
+          <img [src]="logoSrc()" alt="Logo" class="logo collapsed-logo" />
+        }
       }
     } @else {
       <div class="header-brand">
-        <img [src]="logoSrc()" alt="Logo" class="logo" />
-        <span class="title">{{ appTitle() }}</span>
+        @if (showLogo()) {
+          <img [src]="logoSrc()" alt="Logo" class="logo" />
+        }
+        <span
+          class="title"
+          [ngClass]="appTitleClass()"
+          [ngStyle]="appTitleStyle()"
+        >
+          {{ appTitle() }}
+        </span>
       </div>
       @if (showToggle() && collapsible()) {
         <button class="header-toggle expanded" (click)="toggleCollapse()">
@@ -35,6 +45,11 @@
     </button>
   </div>
   <div class="sidebar-content">
+    @if (showBrandLogo() && brandLogoPosition() === "top") {
+      <div class="brand-logo-container top" [class.collapsed]="isCollapsed()">
+        <img [src]="brandLogoSrc()" alt="Brand Logo" class="brand-logo" />
+      </div>
+    }
     <div class="menu-container">
       @if (sections().length > 0) {
         @for (section of sections(); track $index) {
@@ -68,6 +83,14 @@
         />
       }
     </div>
+    @if (showBrandLogo() && brandLogoPosition() === "bottom") {
+      <div
+        class="brand-logo-container bottom"
+        [class.collapsed]="isCollapsed()"
+      >
+        <img [src]="brandLogoSrc()" alt="Brand Logo" class="brand-logo" />
+      </div>
+    }
     @if (showUserSection()) {
       <div class="user-section">
         <div class="user-info">
@@ -127,4 +150,9 @@
       </div>
     }
   </div>
+  @if (showBrandLogo() && brandLogoPosition() === "center") {
+    <div class="brand-logo-container center" [class.collapsed]="isCollapsed()">
+      <img [src]="brandLogoSrc()" alt="Brand Logo" class="brand-logo" />
+    </div>
+  }
 </div>
