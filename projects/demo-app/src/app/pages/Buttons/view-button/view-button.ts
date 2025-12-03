@@ -5,14 +5,10 @@ import { Highlight } from 'ngx-highlightjs';
 
 const CODE_EXAMPLES = {
   import: `import { MagaryButton } from 'ng-magary';`,
-  basic: `<magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
-  <div style="padding: 1rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-    <magary-button label="Button"></magary-button>
+  basic: `    <magary-button label="Button"></magary-button>
     <magary-button label="Home" icon="fas fa-home"></magary-button>
     <magary-button icon="fas fa-heart"></magary-button>
-    <magary-button label="Loading..." [loading]="true"></magary-button>
-  </div>
-</magary-card>`,
+    <magary-button label="Loading..." [loading]="true"></magary-button>`,
   severity: `<magary-button label="Primary" severity="primary"></magary-button>
 <magary-button label="Secondary" severity="secondary"></magary-button>
 <magary-button label="Success" severity="success"></magary-button>
