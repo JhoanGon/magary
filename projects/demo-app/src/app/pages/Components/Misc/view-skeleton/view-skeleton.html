@@ -1,0 +1,157 @@
+<div class="container">
+  <div class="header">
+    <h1>Skeleton</h1>
+    <p>Skeleton is a placeholder to display a loading state.</p>
+  </div>
+
+  <!-- Import -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Import the component to use it in your application.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Basic</h2>
+      <p>Basic usage with different dimensions.</p>
+    </div>
+    <div class="section-content">
+      <div class="example-preview">
+        <magary-skeleton width="10rem" height="2rem"></magary-skeleton>
+        <magary-skeleton width="5rem" height="1rem"></magary-skeleton>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="basicExample" language="xml"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shapes -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Shapes</h2>
+      <p>Skeleton supports rectangle and circle shapes.</p>
+    </div>
+    <div class="section-content">
+      <div class="example-preview">
+        <magary-skeleton shape="circle" size="4rem"></magary-skeleton>
+        <magary-skeleton
+          shape="rectangle"
+          width="100%"
+          height="150px"
+        ></magary-skeleton>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="shapesExample" language="xml"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Example -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Card Example</h2>
+      <p>A complex example simulating a card loading state.</p>
+    </div>
+    <div class="section-content">
+      <div class="example-preview">
+        <div
+          class="custom-skeleton-card"
+          style="
+            width: 300px;
+            border: 1px solid var(--surface-border);
+            padding: 1rem;
+            border-radius: 6px;
+          "
+        >
+          <div style="display: flex; margin-bottom: 1rem">
+            <magary-skeleton
+              shape="circle"
+              size="4rem"
+              style="margin-right: 1rem"
+            ></magary-skeleton>
+            <div style="flex: 1">
+              <magary-skeleton
+                width="100%"
+                style="margin-bottom: 0.5rem"
+              ></magary-skeleton>
+              <magary-skeleton width="75%" height=".5rem"></magary-skeleton>
+            </div>
+          </div>
+          <magary-skeleton width="100%" height="150px"></magary-skeleton>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="cardExample" language="xml"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- API -->
+  <div class="section">
+    <div class="section-header">
+      <h2>API</h2>
+      <p>Properties and events available for the component.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>shape</td>
+              <td><code>string</code></td>
+              <td><code>rectangle</code></td>
+              <td>Shape of the element. Options: 'rectangle' | 'circle'.</td>
+            </tr>
+            <tr>
+              <td>size</td>
+              <td><code>string</code></td>
+              <td><code>null</code></td>
+              <td>Size of the element, shortcut for width and height.</td>
+            </tr>
+            <tr>
+              <td>width</td>
+              <td><code>string</code></td>
+              <td><code>100%</code></td>
+              <td>Width of the element.</td>
+            </tr>
+            <tr>
+              <td>height</td>
+              <td><code>string</code></td>
+              <td><code>1rem</code></td>
+              <td>Height of the element.</td>
+            </tr>
+            <tr>
+              <td>borderRadius</td>
+              <td><code>string</code></td>
+              <td><code>null</code></td>
+              <td>Border radius of the element.</td>
+            </tr>
+            <tr>
+              <td>animation</td>
+              <td><code>string</code></td>
+              <td><code>shimmer</code></td>
+              <td>Type of the animation. Options: 'shimmer' | 'none'.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

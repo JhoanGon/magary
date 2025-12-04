@@ -5,7 +5,8 @@ export * from './Button/speed-dial/speed-dial';
 export * from './Button/speed-dial/speed-dial.module';
 
 // 🗄️ Data //
-// (por ahora vacío)
+export * from './Data/table/table';
+export * from './Data/table/table.module';
 
 // 📂 File //
 // (por ahora vacío)
@@ -39,6 +40,8 @@ export * from './Misc/toast/toast';
 export * from './Misc/toast/toast.module';
 export * from './Misc/toast/toast-item';
 export * from './Misc/toast/toast.service';
+export * from './Misc/skeleton/skeleton';
+export * from './Misc/skeleton/skeleton.module';
 
 // 🗂️ Overlay //
 // (por ahora vacío)
