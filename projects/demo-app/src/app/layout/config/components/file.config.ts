@@ -5,11 +5,6 @@ export const FILE_CONFIG: NavigationItem = {
   icon: 'fas fa-file',
   children: [
     {
-      label: 'EmptyState',
-      route: '/installation',
-      icon: '',
-    },
-    {
       label: 'Upload',
       route: 'components/Upload',
       icon: 'fas fa-upload',
