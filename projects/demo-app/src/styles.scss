@@ -72,6 +72,9 @@
 
   /* API Table Colors */
   --api-table-color-text: #0e7490;
+
+  /* Skeleton */
+  --skeleton-bg: var(--surface-300);
 }
 
 /* Dark Mode Overrides */
@@ -105,6 +108,9 @@
 
   /* API Table Colors */
   --api-table-color-text: #f8fafc;
+
+  /* Skeleton */
+  --skeleton-bg: var(--surface-200);
 }
 
 /* Purple Theme (Dark variant) */
@@ -136,6 +142,9 @@
 
   /* API Table Colors */
   --api-table-color-text: #f8fafc;
+
+  /* Skeleton */
+  --skeleton-bg: rgba(255, 255, 255, 0.15);
 }
 
 /* Green Theme (Dark variant) */
@@ -167,6 +176,9 @@
 
   /* API Table Colors */
   --api-table-color-text: #f8fafc;
+
+  /* Skeleton */
+  --skeleton-bg: rgba(255, 255, 255, 0.15);
 }
 
 /* Animations */

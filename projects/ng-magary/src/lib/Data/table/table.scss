@@ -1,0 +1,246 @@
+:host {
+  display: block;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+}
+
+.magary-table-container {
+  background: var(--surface-0);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--surface-200);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+
+  // Fixed Layout (Default)
+  &:not(.responsive-layout) {
+    height: 600px; // Fixed height
+    
+    .table-scroll-wrapper {
+      flex: 1;
+      overflow-y: auto;
+    }
+  }
+
+  // Responsive Layout
+  &.responsive-layout {
+    height: auto; // Adapts to content
+    
+    .table-scroll-wrapper {
+      overflow-y: visible;
+    }
+  }
+}
+
+// Header
+.magary-table-header {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--surface-200);
+  background: var(--surface-50);
+
+  .table-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .search-wrapper {
+    position: relative;
+  }
+}
+
+// Table
+.table-scroll-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.magary-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  thead {
+    background: var(--surface-50);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    th {
+      padding: 1rem 1.5rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--surface-200);
+      background: inherit; // For sticky header
+    }
+  }
+
+  tbody {
+    tr.table-row {
+      transition: background-color 0.2s;
+      border-bottom: 1px solid var(--surface-100);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: var(--surface-50);
+      }
+
+      td {
+        padding: 1rem 1.5rem;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        vertical-align: middle;
+        font-weight: 500;
+      }
+    }
+
+    // Skeleton Loading Styles
+    .skeleton-row {
+      td {
+        padding: 1rem 1.5rem;
+      }
+    }
+
+    .empty-row {
+      td {
+        padding: 4rem;
+        text-align: center;
+        color: var(--text-secondary);
+
+        .empty-state {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+
+          i {
+            font-size: 2.5rem;
+            opacity: 0.5;
+          }
+          
+          p {
+            font-size: 1rem;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Badges
+.magary-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  display: inline-flex;
+  align-items: center;
+
+  &.status-active,
+  &.status-success,
+  &.status-instock {
+    background: rgba(34, 197, 94, 0.1);
+    color: #15803d;
+  }
+
+  &.status-inactive,
+  &.status-error,
+  &.status-outofstock {
+    background: rgba(239, 68, 68, 0.1);
+    color: #b91c1c;
+  }
+
+  &.status-pending,
+  &.status-warning,
+  &.status-lowstock {
+    background: rgba(245, 158, 11, 0.1);
+    color: #b45309;
+  }
+}
+
+// Premium Paginator
+.magary-paginator {
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--surface-200);
+  background: var(--surface-0);
+
+  .paginator-info {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  .paginator-pages {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    .page-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--text-secondary);
+      
+      &.nav-btn {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        color: var(--text-tertiary);
+        
+        &:hover:not(:disabled) {
+          background: var(--surface-100);
+          color: var(--primary-500);
+        }
+
+        &:disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+      }
+
+      &.number-btn {
+        min-width: 2rem;
+        height: 2rem;
+        padding: 0 0.5rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+
+        &:hover:not(.active) {
+          background: var(--surface-100);
+          color: var(--primary-500);
+        }
+
+        &.active {
+          background: var(--primary-500);
+          color: white;
+          box-shadow: var(--shadow-md);
+          transform: translateY(-1px);
+        }
+      }
+    }
+  }
+}
+
+

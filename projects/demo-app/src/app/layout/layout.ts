@@ -72,7 +72,13 @@ export class Layout {
         {
           label: 'Data',
           icon: 'fas fa-database',
-          children: [{}],
+          children: [
+            {
+              label: 'Table',
+              route: 'components/Table',
+              icon: 'fas fa-table',
+            },
+          ],
         },
         {
           label: 'File',
@@ -144,6 +150,11 @@ export class Layout {
               label: 'Toast',
               route: 'components/Toast',
               icon: 'fas fa-bell',
+            },
+            {
+              label: 'Skeleton',
+              route: 'components/Skeleton',
+              icon: 'fas fa-spinner',
             },
           ],
         },

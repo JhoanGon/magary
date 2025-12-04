@@ -1,0 +1,338 @@
+<div class="container">
+  <div class="header">
+    <h1>MagaryTable</h1>
+    <p>
+      Componente de tabla de datos con soporte para paginación, filtrado y tipos
+      de columna personalizados.
+    </p>
+  </div>
+
+  <!-- Import Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu módulo o componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic Example Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Básico</h2>
+      <p>Tabla simple con datos y columnas definidas.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item" style="width: 100%">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem">
+              <magary-table
+                [value]="products.slice(0, 5)"
+                [columns]="cols"
+              ></magary-table>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="basicExample" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Paginator & Filter Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Paginación y Filtrado con diseño fijo</h2>
+      <p>Tabla completa con paginación, búsqueda global y título.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item" style="width: 100%">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem">
+              <magary-table
+                [value]="products"
+                [columns]="cols"
+                [paginator]="true"
+                [rows]="5"
+                [globalFilterFields]="['name', 'category', 'status']"
+                title="Products List"
+                [responsiveLayout]="false"
+              >
+              </magary-table>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="filterExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="tsExample" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Paginación y Filtrado con diseño responsivo</h2>
+      <p>Tabla completa con paginación, búsqueda global y título.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item" style="width: 100%">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem">
+              <magary-table
+                [value]="products"
+                [columns]="cols"
+                [paginator]="true"
+                [rows]="5"
+                [globalFilterFields]="['name', 'category', 'status']"
+                title="Products List"
+              >
+              </magary-table>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="filterResponsiveExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="tsExample" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fixed Layout Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Diseño Fijo</h2>
+      <p>Tabla con altura fija y scroll interno (responsiveLayout="false").</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item" style="width: 100%">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem">
+              <magary-table
+                [value]="products"
+                [columns]="cols"
+                [responsiveLayout]="false"
+                title="Fixed Height Table"
+              >
+              </magary-table>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="fixedLayoutExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="tsExample" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Estado de Carga</h2>
+      <p>Muestra un estado de carga cuando no hay datos disponibles.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item" style="width: 100%">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem">
+              <magary-table
+                [value]="[]"
+                [columns]="cols"
+                [loading]="true"
+                title="Loading State"
+              >
+              </magary-table>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="loadingExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="tsExample" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Valor por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>value</code></td>
+              <td><code>any[]</code></td>
+              <td><code>[]</code></td>
+              <td>Array de objetos a mostrar.</td>
+            </tr>
+            <tr>
+              <td><code>columns</code></td>
+              <td><code>MagaryTableColumn[]</code></td>
+              <td><code>[]</code></td>
+              <td>Configuración de columnas.</td>
+            </tr>
+            <tr>
+              <td><code>paginator</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Habilita la paginación.</td>
+            </tr>
+            <tr>
+              <td><code>rows</code></td>
+              <td><code>number</code></td>
+              <td><code>5</code></td>
+              <td>Número de filas por página.</td>
+            </tr>
+            <tr>
+              <td><code>globalFilterFields</code></td>
+              <td><code>string[]</code></td>
+              <td><code>[]</code></td>
+              <td>Campos para la búsqueda global.</td>
+            </tr>
+            <tr>
+              <td><code>title</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>Título de la tabla.</td>
+            </tr>
+            <tr>
+              <td><code>responsiveLayout</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>
+                Define si la tabla adapta su altura al contenido (true) o tiene
+                altura fija con scroll (false).
+              </td>
+            </tr>
+            <tr>
+              <td><code>loading</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Muestra estado de carga (skeleton/spinner).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos emitidos por el componente</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>onPageChange</code></td>
+              <td><code>EventEmitter&lt;any&gt;</code></td>
+              <td>
+                Se emite al cambiar de página. Retorna un objeto con:
+                <code>first</code>, <code>rows</code>, <code>page</code>,
+                <code>pageCount</code>.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
