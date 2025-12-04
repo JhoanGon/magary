@@ -24,7 +24,9 @@
   user-select: none;
   border-radius: inherit;
   background: var(--panel-header-bg);
-  transition: background var(--panel-transition), color var(--panel-transition);
+  transition:
+    background var(--panel-transition),
+    color var(--panel-transition);
   &:hover {
     background: var(--panel-header-hover);
   }
@@ -56,7 +58,11 @@
   opacity: 0;
   transform: scaleY(0.95);
   transform-origin: top;
-  transition: max-height 0.3s ease, opacity 0.3s ease, transform 0.3s ease, margin-top 0.3s ease;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    margin-top 0.3s ease;
   &.expanded {
     opacity: 1;
     transform: scaleY(1);
@@ -74,7 +80,10 @@
   align-items: center;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
-  transition: background var(--panel-transition), color var(--panel-transition), box-shadow var(--panel-transition);
+  transition:
+    background var(--panel-transition),
+    color var(--panel-transition),
+    box-shadow var(--panel-transition);
   cursor: pointer;
   text-decoration: none;
   color: inherit;
@@ -105,7 +114,8 @@
 .menu-item {
   padding-bottom: 10px;
 }
-.category-item, .sub-category-item {
+.category-item,
+.sub-category-item {
   @extend .menu-item-base;
   justify-content: space-between;
   font-weight: 500;
@@ -135,7 +145,10 @@
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.3s ease,
+    padding 0.3s ease;
   &.expanded {
     max-height: 500px;
     opacity: 1;
@@ -160,7 +173,10 @@
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.3s ease,
+    padding 0.3s ease;
   &.expanded {
     max-height: 300px;
     opacity: 1;
@@ -180,7 +196,45 @@
 }
 @for $i from 1 through 7 {
   .shadow-#{$i} {
-    box-shadow: 0 #{2 + $i * 2}px #{4 + $i * 2}px rgba(0, 0, 0, 0.1 + $i * 0.05);
+    box-shadow: 0
+      #{2 +
+      $i *
+      2}px
+      #{4 +
+      $i *
+      2}px
+      rgba(0, 0, 0, 0.1 + $i * 0.05);
+  }
+}
+
+// Badge Styles
+.menu-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25em 0.5em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: 0.25rem;
+  margin-left: 0.5rem;
+  color: #fff;
+  white-space: nowrap;
+
+  &.badge-info {
+    background-color: #3b82f6;
+  }
+  &.badge-success {
+    background-color: #22c55e;
+  }
+  &.badge-warning {
+    background-color: #f59e0b;
+  }
+  &.badge-danger {
+    background-color: #ef4444;
+  }
+  &.badge-contrast {
+    background-color: #1f2937;
   }
 }
 
@@ -191,11 +245,12 @@
     padding: 10px 0;
     justify-content: center;
     // pointer-events: none; // ENABLED so we can click to expand
-    
-    .header-title, .arrow {
+
+    .header-title,
+    .arrow {
       display: none;
     }
-    
+
     .header-icon {
       margin-right: 0;
       font-size: 1.2rem;
@@ -208,18 +263,23 @@
   }
 
   // Item styles
-  .menu-item-base, .category-item, .sub-category-item, .panel-items li a {
+  .menu-item-base,
+  .category-item,
+  .sub-category-item,
+  .panel-items li a {
     justify-content: center;
     padding: 0.75rem 0.5rem;
     background: transparent !important; // Force transparent to avoid "blue box"
     box-shadow: none !important;
-    
+
     &:hover {
       background: var(--panel-hover) !important; // Restore hover color
       color: #ffffff;
     }
-    
-    .item-label, .sub-arrow {
+
+    .item-label,
+    .sub-arrow,
+    .menu-badge {
       display: none;
     }
 
@@ -231,7 +291,8 @@
   }
 
   // Hide sub-items in collapsed mode to avoid mess
-  .sub-items, .sub-sub-items {
+  .sub-items,
+  .sub-sub-items {
     display: none !important;
   }
 }

@@ -1,0 +1,236 @@
+<div class="container">
+  <div class="header">
+    <h1>MagaryUpload</h1>
+    <p>
+      Componente avanzado de carga de archivos con soporte drag & drop, carga
+      múltiple y validaciones.
+    </p>
+  </div>
+
+  <!-- Import Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu módulo o componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic Example Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Básico</h2>
+      <p>Uso simple con botón de selección.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Basic</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-upload
+                mode="basic"
+                chooseLabel="Select File"
+                (onSelect)="onSelect($event)"
+              ></magary-upload>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="exampleBasic" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advanced Example Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Avanzado</h2>
+      <p>Drag & drop, múltiples archivos y validaciones.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Advanced</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem">
+              <magary-upload
+                mode="advanced"
+                [multiple]="true"
+                accept="image/*"
+                [maxFileSize]="1000000"
+                (onUpload)="onUpload($event)"
+                (onSelect)="onSelect($event)"
+                (onError)="onError($event)"
+              ></magary-upload>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="exampleAdvanced" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual Upload Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Carga Manual</h2>
+      <p>Control total sobre el proceso de carga usando eventos.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="exampleManual" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inputs Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Valor por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>mode</code></td>
+              <td><code>'basic' | 'advanced'</code></td>
+              <td><code>'basic'</code></td>
+              <td>Modo de visualización del componente.</td>
+            </tr>
+            <tr>
+              <td><code>multiple</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Permite seleccionar múltiples archivos.</td>
+            </tr>
+            <tr>
+              <td><code>accept</code></td>
+              <td><code>string</code></td>
+              <td><code>'*'</code></td>
+              <td>Tipos de archivo permitidos (ej: 'image/*').</td>
+            </tr>
+            <tr>
+              <td><code>maxFileSize</code></td>
+              <td><code>number</code></td>
+              <td><code>null</code></td>
+              <td>Tamaño máximo de archivo en bytes.</td>
+            </tr>
+            <tr>
+              <td><code>url</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>URL del endpoint de carga (opcional).</td>
+            </tr>
+            <tr>
+              <td><code>name</code></td>
+              <td><code>string</code></td>
+              <td><code>'file'</code></td>
+              <td>Nombre del campo en el FormData.</td>
+            </tr>
+            <tr>
+              <td><code>withCredentials</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Enviar cookies y headers de autenticación.</td>
+            </tr>
+            <tr>
+              <td><code>chooseLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>'Choose'</code></td>
+              <td>Texto del botón de selección.</td>
+            </tr>
+            <tr>
+              <td><code>uploadLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>'Upload'</code></td>
+              <td>Texto del botón de carga (modo avanzado).</td>
+            </tr>
+            <tr>
+              <td><code>cancelLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>'Cancel'</code></td>
+              <td>Texto del botón de cancelar (modo avanzado).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outputs Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos emitidos por el componente.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>onSelect</code></td>
+              <td><code>EventEmitter&lt;UploadEvent&gt;</code></td>
+              <td>Se emite cuando se seleccionan archivos.</td>
+            </tr>
+            <tr>
+              <td><code>onUpload</code></td>
+              <td><code>EventEmitter&lt;UploadEvent&gt;</code></td>
+              <td>Se emite cuando la carga se completa exitosamente.</td>
+            </tr>
+            <tr>
+              <td><code>onError</code></td>
+              <td>
+                <code
+                  >EventEmitter&lt;{{ "{" }} error: string {{ "}" }}&gt;</code
+                >
+              </td>
+              <td>Se emite cuando ocurre un error (ej: tamaño excedido).</td>
+            </tr>
+            <tr>
+              <td><code>onClear</code></td>
+              <td><code>EventEmitter&lt;void&gt;</code></td>
+              <td>Se emite cuando se limpia la lista de archivos.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

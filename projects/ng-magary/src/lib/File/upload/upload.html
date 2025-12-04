@@ -1,0 +1,161 @@
+<div
+  class="magary-upload"
+  [ngClass]="{
+    'mode-basic': mode() === 'basic',
+    'mode-advanced': mode() === 'advanced',
+  }"
+>
+  <input
+    #fileInput
+    type="file"
+    [accept]="accept()"
+    [multiple]="multiple()"
+    (change)="onFileSelect($event)"
+  />
+
+  @if (mode() === "basic") {
+    @if (files().length === 0) {
+      <magary-button
+        [label]="chooseLabel()"
+        [icon]="chooseIcon()"
+        (buttonClick)="fileInput.click()"
+        [disabled]="uploading()"
+      ></magary-button>
+    } @else {
+      @for (file of files(); track file.file.name) {
+        <div class="basic-file-item">
+          <div class="file-info">
+            <i class="fas fa-file file-icon"></i>
+            <div class="file-details">
+              <span class="file-name">{{ file.file.name }}</span>
+              <span class="file-size">{{ formatSize(file.file.size) }}</span>
+            </div>
+          </div>
+
+          @if (file.status === "uploading") {
+            <div class="basic-progress">
+              <div class="progress-bar" [style.width.%]="file.progress"></div>
+            </div>
+          }
+
+          <div class="file-actions">
+            @if (file.status === "pending" || file.status === "error") {
+              <magary-button
+                icon="fas fa-upload"
+                severity="success"
+                variant="text"
+                (buttonClick)="upload()"
+                [disabled]="uploading()"
+              ></magary-button>
+            }
+            @if (file.status === "completed") {
+              <i class="fas fa-check-circle status-icon success"></i>
+            }
+
+            <magary-button
+              icon="fas fa-times"
+              severity="danger"
+              variant="text"
+              (buttonClick)="removeFile(file)"
+              [disabled]="uploading()"
+            ></magary-button>
+          </div>
+        </div>
+      }
+    }
+  }
+
+  @if (mode() === "advanced") {
+    <div
+      class="upload-content"
+      [class.highlight]="isDragOver"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+    >
+      <i class="fas fa-cloud-upload-alt upload-icon"></i>
+      <div class="upload-text">Drag and drop files here to upload.</div>
+      <magary-button
+        [label]="chooseLabel()"
+        [icon]="chooseIcon()"
+        (buttonClick)="fileInput.click()"
+        [disabled]="uploading()"
+      ></magary-button>
+    </div>
+
+    @if (files().length > 0) {
+      <div class="upload-files">
+        <!-- @if (uploading()) {
+          <div class="overall-progress">
+            <div class="progress-bar" [style.width.%]="progress()"></div>
+          </div>
+        } -->
+
+        @for (file of files(); track file.file.name) {
+          <div
+            class="file-item"
+            [class.completed]="file.status === 'completed'"
+          >
+            <div class="file-info">
+              @if (isImage(file.file)) {
+                <img [src]="file.objectURL" class="file-preview" />
+              } @else {
+                <i class="fas fa-file file-preview-icon"></i>
+              }
+              <div class="file-details">
+                <span class="file-name">{{ file.file.name }}</span>
+                <span class="file-size">{{ formatSize(file.file.size) }}</span>
+                @if (file.status === "uploading") {
+                  <div class="file-progress">
+                    <div
+                      class="progress-bar"
+                      [style.width.%]="file.progress"
+                    ></div>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="file-actions">
+              @if (file.status === "completed") {
+                <i class="fas fa-check-circle status-icon success"></i>
+              } @else if (file.status === "error") {
+                <i class="fas fa-exclamation-circle status-icon error"></i>
+              } @else if (file.status === "uploading") {
+                <span class="upload-percentage"
+                  >{{ file.progress | number: "1.0-0" }}%</span
+                >
+              }
+
+              <magary-button
+                icon="fas fa-times"
+                severity="danger"
+                variant="text"
+                (buttonClick)="removeFile(file)"
+                [disabled]="uploading()"
+              ></magary-button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="upload-actions">
+        <magary-button
+          [label]="uploadLabel()"
+          [icon]="uploadIcon()"
+          severity="success"
+          (buttonClick)="upload()"
+          [disabled]="files().length === 0 || uploading()"
+          [loading]="uploading()"
+        ></magary-button>
+        <magary-button
+          [label]="cancelLabel()"
+          [icon]="cancelIcon()"
+          severity="danger"
+          (buttonClick)="clear()"
+          [disabled]="files().length === 0 || uploading()"
+        ></magary-button>
+      </div>
+    }
+  }
+</div>
