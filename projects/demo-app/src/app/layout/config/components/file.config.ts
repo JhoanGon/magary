@@ -9,5 +9,12 @@ export const FILE_CONFIG: NavigationItem = {
       route: '/installation',
       icon: '',
     },
+    {
+      label: 'Upload',
+      route: 'components/Upload',
+      icon: 'fas fa-upload',
+      badge: 'Premium',
+      badgeSeverity: 'contrast',
+    },
   ],
 };

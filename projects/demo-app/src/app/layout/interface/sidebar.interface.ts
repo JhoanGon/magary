@@ -11,6 +11,8 @@ export interface NavigationItem {
   icon?: string;
   isCategory?: boolean;
   children?: NavigationItem[];
+  badge?: string;
+  badgeSeverity?: 'success' | 'info' | 'warning' | 'danger' | 'contrast';
 }
 
 export interface SidebarSection {

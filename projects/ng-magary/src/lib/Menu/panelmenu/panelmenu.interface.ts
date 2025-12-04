@@ -3,6 +3,8 @@ export interface MenuItem {
   route?: string;
   icon?: string;
   children?: MenuItem[];
+  badge?: string;
+  badgeSeverity?: 'success' | 'info' | 'warning' | 'danger' | 'contrast';
 }
 export interface NavigationItem {
   label: string;

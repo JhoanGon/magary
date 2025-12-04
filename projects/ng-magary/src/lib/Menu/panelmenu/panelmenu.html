@@ -39,6 +39,13 @@
               <i [class]="item.icon" class="item-icon"></i>
             }
             <span class="item-label">{{ item.label }}</span>
+            @if (item.badge) {
+              <span
+                class="menu-badge"
+                [class]="'badge-' + (item.badgeSeverity || 'info')"
+                >{{ item.badge }}</span
+              >
+            }
             <span
               class="sub-arrow"
               [class.expanded]="isSubItemExpanded(getUniqueItemKey(item))"
@@ -203,6 +210,13 @@
                         <i [class]="subItem.icon" class="item-icon"></i>
                       }
                       <span class="item-label">{{ subItem.label }}</span>
+                      @if (subItem.badge) {
+                        <span
+                          class="menu-badge"
+                          [class]="'badge-' + (subItem.badgeSeverity || 'info')"
+                          >{{ subItem.badge }}</span
+                        >
+                      }
                     </a>
                   } @else {
                     <div
@@ -244,6 +258,13 @@
                 <i [class]="item.icon" class="item-icon"></i>
               }
               <span class="item-label">{{ item.label }}</span>
+              @if (item.badge) {
+                <span
+                  class="menu-badge"
+                  [class]="'badge-' + (item.badgeSeverity || 'info')"
+                  >{{ item.badge }}</span
+                >
+              }
             </a>
           } @else {
             <div

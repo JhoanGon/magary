@@ -9,7 +9,7 @@ export * from './Data/table/table';
 export * from './Data/table/table.module';
 
 // 📂 File //
-// (por ahora vacío)
+export * from './File/upload/upload';
 
 // 📝 Form //
 export * from './Form/cascade-select/cascade-select';
