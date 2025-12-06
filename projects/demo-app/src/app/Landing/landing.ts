@@ -6,7 +6,7 @@ import { ThemeSwitcherComponent } from '../components/theme-switcher/theme-switc
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, ThemeSwitcherComponent, NgOptimizedImage],
+  imports: [ThemeSwitcherComponent, NgOptimizedImage],
   templateUrl: './landing.html',
   styleUrl: './landing.scss',
 })

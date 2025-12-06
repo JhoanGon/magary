@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
+$fa-font-path: "@fortawesome/fontawesome-free/webfonts";
+$fa-font-display: swap;
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
+
 :root {
   /* Vibrant Primary Palette (Cyan/Blue) */
   --primary-50: #ecfeff;
