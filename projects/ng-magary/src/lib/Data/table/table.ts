@@ -1,8 +1,5 @@
 import {
   Component,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
   Output,
   EventEmitter,
   input,
@@ -15,7 +12,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MagaryAvatar } from '../../Misc/avatar/avatar';
 import { MagaryInput } from '../../Form/input/input';
-import { MagaryButton } from '../../Button/button/button';
 import { MagarySkeleton } from '../../Misc/skeleton/skeleton';
 
 export interface MagaryTableColumn {
@@ -34,7 +30,6 @@ export interface MagaryTableColumn {
     FormsModule,
     MagaryAvatar,
     MagaryInput,
-    MagaryButton,
     MagarySkeleton,
   ],
   templateUrl: './table.html',

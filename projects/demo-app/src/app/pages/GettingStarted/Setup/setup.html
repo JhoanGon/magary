@@ -1,0 +1,102 @@
+<div class="setup-container fade-in">
+  <div class="header">
+    <h1>Configuración</h1>
+    <p>Guía paso a paso para configurar ng-magary en tu proyecto.</p>
+  </div>
+
+  <div class="steps-grid">
+    <!-- Step 1: Estilos y Tema -->
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+      [border]="'1px solid var(--surface-200)'"
+      class="step-card"
+    >
+      <div slot="header">
+        <div class="step-header">
+          <span class="step-number">1</span>
+          <h3>Estilos y Tema</h3>
+        </div>
+      </div>
+      <div class="step-content">
+        <p>
+          ng-magary utiliza variables CSS nativas para el theming y
+          Glassmorphism. Copia el siguiente bloque de variables en tu archivo
+          <code>styles.scss</code> global para habilitar el diseño premium.
+        </p>
+        <div class="code-block">
+          <pre><code [highlight]="cssVariables" language="css"></code></pre>
+        </div>
+      </div>
+    </magary-card>
+
+    <!-- Step 2: Iconos -->
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+      [border]="'1px solid var(--surface-200)'"
+      class="step-card"
+    >
+      <div slot="header">
+        <div class="step-header">
+          <span class="step-number">2</span>
+          <h3>Iconos</h3>
+        </div>
+      </div>
+      <div class="step-content">
+        <p>
+          La librería utiliza <b>FontAwesome</b> para los iconos. Instálalo en
+          tu proyecto usando npm y luego agrégalo a tu
+          <code>angular.json</code> en la sección de styles.
+        </p>
+        <div
+          style="
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+          "
+        >
+          <div class="code-block">
+            <pre><code [highlight]="iconInstall" language="bash"></code></pre>
+          </div>
+          <div class="code-block">
+            <pre><code [highlight]="angularJsonConfig" language="json"></code></pre>
+          </div>
+        </div>
+      </div>
+    </magary-card>
+
+    <!-- Step 3: Animaciones -->
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+      [border]="'1px solid var(--surface-200)'"
+      class="step-card"
+    >
+      <div slot="header">
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <h3>Animaciones</h3>
+        </div>
+      </div>
+      <div class="step-content">
+        <p>
+          Para que las animaciones (como ripples y transiciones) funcionen,
+          asegúrate de proveer el módulo de animaciones en tu
+          <code>app.config.ts</code> (Standalone) o <code>app.module.ts</code>.
+        </p>
+        <div class="code-block">
+          <pre><code [highlight]="animationsConfig" language="typescript"></code></pre>
+        </div>
+      </div>
+    </magary-card>
+  </div>
+</div>
