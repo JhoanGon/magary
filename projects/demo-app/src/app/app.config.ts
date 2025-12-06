@@ -20,7 +20,15 @@ export const appConfig: ApplicationConfig = {
       }),
     ),
     provideHighlightOptions({
-      fullLibraryLoader: () => import('highlight.js'),
+      coreLibraryLoader: () => import('highlight.js/lib/core'),
+      languages: {
+        typescript: () => import('highlight.js/lib/languages/typescript'),
+        css: () => import('highlight.js/lib/languages/css'),
+        scss: () => import('highlight.js/lib/languages/scss'),
+        xml: () => import('highlight.js/lib/languages/xml'),
+        json: () => import('highlight.js/lib/languages/json'),
+        bash: () => import('highlight.js/lib/languages/bash'),
+      },
     }),
   ],
 };
