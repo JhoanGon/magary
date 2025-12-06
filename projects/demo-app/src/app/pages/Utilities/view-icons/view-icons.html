@@ -1,0 +1,71 @@
+<div class="icons-container fade-in">
+  <div class="header">
+    <h1>Iconografía</h1>
+    <p>
+      ng-magary está diseñado para funcionar perfectamente con
+      <b>FontAwesome</b>. Aquí tienes una guía rápida de uso y los iconos más
+      comunes.
+    </p>
+  </div>
+
+  <div class="content-grid">
+    <!-- Usage Guide -->
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+      class="usage-card"
+    >
+      <div slot="header" style="padding: 1.5rem 1.5rem 0">
+        <h3>¿Cómo usar iconos?</h3>
+      </div>
+      <div style="padding: 1.5rem">
+        <p style="margin-bottom: 1rem; color: var(--text-secondary)">
+          Simplemente pasa la clase del icono (ej: <code>fas fa-home</code>) a
+          la propiedad <code>icon</code> de los componentes como Botones o
+          Inputs.
+        </p>
+        <div class="code-block">
+          <pre><code [highlight]="iconUsage" language="html"></code></pre>
+        </div>
+      </div>
+    </magary-card>
+
+    <!-- Common Icons Gallery -->
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+    >
+      <div slot="header" style="padding: 1.5rem 1.5rem 0">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <h3>Iconos Comunes</h3>
+          <a
+            href="https://fontawesome.com/search?o=r&m=free"
+            target="_blank"
+            class="external-link"
+          >
+            Ver todos en FontAwesome <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+      <div style="padding: 1.5rem">
+        <div class="icons-grid">
+          <div *ngFor="let icon of commonIcons" class="icon-item">
+            <i [class]="icon.class"></i>
+            <span>{{ icon.name }}</span>
+            <span class="icon-class">{{ icon.class }}</span>
+          </div>
+        </div>
+      </div>
+    </magary-card>
+  </div>
+</div>

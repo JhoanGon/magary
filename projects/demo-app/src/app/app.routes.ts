@@ -10,9 +10,14 @@ export const routes: Routes = [
       {
         path: 'installation',
         loadComponent: () =>
-          import('./pages/Installation/installation').then(
+          import('./pages/GettingStarted/Installation/installation').then(
             (m) => m.Installation,
           ),
+      },
+      {
+        path: 'setup',
+        loadComponent: () =>
+          import('./pages/GettingStarted/Setup/setup').then((m) => m.Setup),
       },
       {
         path: 'components',
