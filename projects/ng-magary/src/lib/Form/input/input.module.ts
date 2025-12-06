@@ -6,4 +6,4 @@ import { MagaryInput } from './input';
   imports: [CommonModule, MagaryInput],
   exports: [MagaryInput],
 })
-export class InputModule {}
+export class MagaryInputModule {}

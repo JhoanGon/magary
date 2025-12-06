@@ -6,4 +6,4 @@ export * from './avatar';
   imports: [CommonModule, MagaryAvatar],
   exports: [MagaryAvatar],
 })
-export class AvatarModule {}
+export class MagaryAvatarModule {}

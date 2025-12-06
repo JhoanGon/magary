@@ -5,4 +5,4 @@ import { MagarySpeedDial } from './speed-dial';
   imports: [CommonModule, MagarySpeedDial],
   exports: [MagarySpeedDial],
 })
-export class SpeedDialModule {}
+export class MagarySpeedDialModule {}

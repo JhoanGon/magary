@@ -7,4 +7,4 @@ import { MagaryTab } from './tab/tab';
   imports: [CommonModule, MagaryTabs, MagaryTab],
   exports: [MagaryTabs, MagaryTab],
 })
-export class TabsModule {}
+export class MagaryTabsModule {}

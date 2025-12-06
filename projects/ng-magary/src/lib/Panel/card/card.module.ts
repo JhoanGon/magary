@@ -6,4 +6,4 @@ import { MagaryCard } from './card';
   imports: [CommonModule, MagaryCard],
   exports: [MagaryCard],
 })
-export class CardModule {}
+export class MagaryCardModule {}

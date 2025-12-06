@@ -4,8 +4,8 @@ import {
   MagaryCard,
   MagaryTab,
   MagaryTabs,
-  MagaryToast,
   MagaryToastService,
+  MagaryToast,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 const CODE_EXAMPLES = {
@@ -59,7 +59,7 @@ const CODE_EXAMPLES = {
   styleUrl: './view-card.scss',
 })
 export class ViewCard {
-  private toastService = inject(MagaryToastService);
+  private toastService: MagaryToastService = inject(MagaryToastService);
   lastClickedCard = '';
   showAlert = false;
   alertMessage = '';
@@ -270,7 +270,7 @@ export class ViewCard {
       this.lastClickedCard = `Card clickeada a las ${new Date().toLocaleTimeString()}`;
       this.showToastNotification('¡Card clickeada exitosamente!');
       this.showNotificationIfAllowed();
-    } catch (error) {
+    } catch (error: any) {
       console.warn('Error handling card click:', error);
       this.showToastNotification('Error al procesar el click', 'error');
     }

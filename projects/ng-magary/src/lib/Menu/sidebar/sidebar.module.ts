@@ -6,4 +6,4 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, Sidebar, RouterModule],
   exports: [Sidebar],
 })
-export class SidebarModule {}
+export class MagarySidebarModule {}

@@ -5,4 +5,4 @@ import { MagaryCascadeSelect } from './cascade-select';
   imports: [CommonModule, MagaryCascadeSelect],
   exports: [MagaryCascadeSelect],
 })
-export class CascadeSelectModule {}
+export class MagaryCascadeSelectModule {}

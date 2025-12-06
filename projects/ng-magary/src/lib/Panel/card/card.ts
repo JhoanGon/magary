@@ -15,6 +15,10 @@ type CardVariant = 'elevated' | 'outlined' | 'filled';
   templateUrl: './card.html',
   styleUrl: './card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[style.width]': 'width()',
+    '[style.height]': 'height()',
+  },
 })
 export class MagaryCard {
   readonly img = input<string>();

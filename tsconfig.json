@@ -9,7 +9,7 @@
     "noImplicitReturns": true,
     "paths": {
       "ng-magary": [
-        "./dist/ng-magary"
+        "./projects/ng-magary/src/public-api.ts"
       ]
     },
     "noFallthroughCasesInSwitch": true,

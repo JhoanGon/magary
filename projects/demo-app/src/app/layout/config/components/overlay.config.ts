@@ -5,9 +5,9 @@ export const OVERLAY_CONFIG: NavigationItem = {
   icon: 'fas fa-layer-group',
   children: [
     {
-      label: 'EmptyState',
-      route: '/installation',
-      icon: '',
+      label: 'Dialog',
+      route: '/components/dialog',
+      icon: 'fas fa-window-maximize',
     },
   ],
 };
