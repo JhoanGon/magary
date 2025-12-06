@@ -67,7 +67,9 @@ export class MagaryUpload {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  private sanitizer = inject(DomSanitizer);
+
+  constructor() {}
 
   onFileSelect(event: Event) {
     const input = event.target as HTMLInputElement;

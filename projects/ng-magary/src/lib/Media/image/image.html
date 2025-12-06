@@ -1,12 +1,12 @@
-<div class="magary-image-content" [ngStyle]="{ width: width }">
+<div class="magary-image-content" [ngStyle]="{ width: width() }">
   <img
-    [src]="src"
-    [alt]="alt"
-    [width]="width"
-    [height]="height"
+    [src]="src()"
+    [alt]="alt()"
+    [width]="width()"
+    [height]="height()"
     (load)="onImageLoad($event)"
     (error)="onImageError($event)"
-    [ngStyle]="preview ? { cursor: 'pointer' } : {}"
+    [ngStyle]="preview() ? { cursor: 'pointer' } : {}"
     (click)="onPreviewImageClick($event)"
   />
 </div>
@@ -38,8 +38,8 @@
       (click)="$event.stopPropagation()"
     >
       <img
-        [src]="src"
-        [alt]="alt"
+        [src]="src()"
+        [alt]="alt()"
         [ngStyle]="imagePreviewStyle()"
         class="preview-image"
       />

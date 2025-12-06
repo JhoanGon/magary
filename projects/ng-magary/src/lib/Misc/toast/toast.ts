@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
+import { Component, input, ViewEncapsulation, inject } from '@angular/core';
 import { MagaryToastItem } from './toast-item';
 import { MagaryToastService } from './toast.service';
 import {
@@ -38,15 +38,16 @@ import {
 export class MagaryToast {
   private toastService = inject(MagaryToastService);
 
-  @Input() position:
+  position = input<
     | 'top-right'
     | 'top-left'
     | 'bottom-right'
     | 'bottom-left'
     | 'top-center'
     | 'bottom-center'
-    | 'center' = 'top-right';
-  @Input() baseZIndex: number = 1000;
+    | 'center'
+  >('top-right');
+  baseZIndex = input<number>(1000);
 
   get toasts() {
     return this.toastService.toasts();

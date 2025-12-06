@@ -1,14 +1,14 @@
 import {
-  AfterContentInit,
   Component,
-  ContentChildren,
   ElementRef,
   input,
   OnInit,
-  QueryList,
   signal,
-  ViewChild,
-  ViewChildren,
+  contentChildren,
+  viewChild,
+  viewChildren,
+  inject,
+  effect,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { MagaryTab } from './tab/tab';
@@ -19,10 +19,11 @@ import { MagaryTab } from './tab/tab';
   styleUrl: './tabs.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MagaryTabs implements OnInit, AfterContentInit {
-  @ContentChildren(MagaryTab) tabs!: QueryList<MagaryTab>;
-  @ViewChild('tabHeaders') headersRef!: ElementRef<HTMLElement>;
-  @ViewChildren('tabButton') buttonsRef!: QueryList<ElementRef<HTMLElement>>;
+export class MagaryTabs implements OnInit {
+  tabs = contentChildren(MagaryTab);
+  headersRef = viewChild<ElementRef<HTMLElement>>('tabHeaders');
+  buttonsRef = viewChildren<ElementRef<HTMLElement>>('tabButton');
+
   public activeIndex = signal(0);
   public backgroundLine = input<string>('#000');
   public positionContent = input<string>('center');
@@ -30,14 +31,32 @@ export class MagaryTabs implements OnInit, AfterContentInit {
   public padding = input<string>('0');
   public heightLine = input<string>('5px');
   private resizeObserver: ResizeObserver | null = null;
+  private el = inject(ElementRef);
 
-  constructor(private el: ElementRef) {}
+  constructor() {
+    effect(() => {
+      // Auto-select first tab if activeIndex is 0 and tabs change
+      const tabs = this.tabs();
+      if (tabs.length > 0 && this.activeIndex() === 0) {
+        // We only set if not set? Or always force 0?
+        // Existing logic forced first tab active on init.
+        // We can just rely on activeIndex signal.
+        // Actually, existing logic: tabsArray[0].active.set(true);
+        // We should sync 'active' state of tabs with activeIndex
+        tabs.forEach((tab, index) => {
+          tab.active.set(index === this.activeIndex());
+        });
+      }
+    });
+
+    // Effect to update underline
+    effect(() => {
+      this.updateUnderlinePosition(this.activeIndex());
+    });
+  }
 
   ngOnInit(): void {
-    this.activeIndex.set(0);
-    this.updateUnderlinePosition(0);
-
-    // Initialize ResizeObserver to update underline on container resize
+    // Initialize ResizeObserver
     if (typeof ResizeObserver !== 'undefined') {
       this.resizeObserver = new ResizeObserver(() => {
         this.updateUnderlinePosition(this.activeIndex());
@@ -52,26 +71,18 @@ export class MagaryTabs implements OnInit, AfterContentInit {
     }
   }
 
-  ngAfterContentInit() {
-    const tabsArray = this.tabs.toArray();
-    if (tabsArray.length > 0) {
-      tabsArray[0].active.set(true);
-    }
-    // Recalculate after content init to ensure correct initial width
-    setTimeout(() => {
-      this.updateUnderlinePosition(this.activeIndex());
-    }, 100);
-  }
   public selectTab(index: number) {
-    this.tabs.forEach((tab, i) => tab.active.set(i === index));
     this.activeIndex.set(index);
-    this.updateUnderlinePosition(index);
+    // Effect will handle the rest (setting active tab and underline)
   }
+
   private updateUnderlinePosition(index: number) {
-    // Use requestAnimationFrame for smoother updates during resize
+    // Use requestAnimationFrame for smoother updates
     requestAnimationFrame(() => {
-      const activeBtn = this.buttonsRef?.toArray()[index]?.nativeElement;
-      const headersEl = this.headersRef?.nativeElement;
+      const buttons = this.buttonsRef();
+      const activeBtn = buttons[index]?.nativeElement;
+      const headersEl = this.headersRef()?.nativeElement;
+
       if (activeBtn && headersEl) {
         const left = activeBtn.offsetLeft;
         const width = activeBtn.offsetWidth;

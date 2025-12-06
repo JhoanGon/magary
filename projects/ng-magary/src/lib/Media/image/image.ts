@@ -1,8 +1,7 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
+  input,
+  output,
   ViewEncapsulation,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -22,19 +21,19 @@ import { CommonModule, NgStyle } from '@angular/common';
   },
 })
 export class MagaryImage {
-  @Input() src: string | undefined;
+  src = input<string | undefined>(undefined);
 
-  @Input() alt: string | undefined;
+  alt = input<string | undefined>(undefined);
 
-  @Input() width: string | undefined;
+  width = input<string | undefined>(undefined);
 
-  @Input() height: string | undefined;
+  height = input<string | undefined>(undefined);
 
-  @Input() preview: boolean = false;
+  preview = input<boolean>(false);
 
-  @Output() onLoad: EventEmitter<Event> = new EventEmitter();
+  onLoad = output<Event>();
 
-  @Output() onError: EventEmitter<Event> = new EventEmitter();
+  onError = output<Event>();
 
   loaded: boolean = false;
 
@@ -58,7 +57,7 @@ export class MagaryImage {
 
   onPreviewImageClick(event: Event) {
     event.stopPropagation();
-    if (this.preview) {
+    if (this.preview()) {
       this.previewVisible = true;
     }
   }
@@ -88,10 +87,11 @@ export class MagaryImage {
   }
 
   download() {
-    if (this.src) {
+    const src = this.src();
+    if (src) {
       const link = document.createElement('a');
-      link.href = this.src;
-      link.download = this.alt || 'image';
+      link.href = src;
+      link.download = this.alt() || 'image';
       link.click();
     }
   }

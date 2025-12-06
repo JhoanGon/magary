@@ -1,24 +1,24 @@
 @if (visible()) {
   <div
-    [class]="'magary-dialog-mask magary-dialog-' + position"
-    [class.magary-dialog-mask-scrollblocker]="modal"
-    [class.magary-dialog-mask-transparent]="!modal"
-    [class.magary-dialog-absolute]="appendTo === 'local'"
-    [class.magary-dialog-glass-effect]="glass"
+    [class]="'magary-dialog-mask magary-dialog-' + position()"
+    [class.magary-dialog-mask-scrollblocker]="modal()"
+    [class.magary-dialog-mask-transparent]="!modal()"
+    [class.magary-dialog-absolute]="appendTo() === 'local'"
+    [class.magary-dialog-glass-effect]="glass()"
     [@maskAnimation]
     (click)="onMaskClick($event)"
   >
     <div
       #container
       class="magary-dialog"
-      [ngClass]="styleClass"
+      [ngClass]="styleClass()"
       [class.magary-dialog-maximized]="maximized()"
       [class.magary-dialog-dragging]="dragging()"
-      [class.magary-dialog-glass]="glass"
-      [style.width]="width"
-      [style.height]="height"
-      [style.background-color]="backgroundColor"
-      [ngStyle]="style"
+      [class.magary-dialog-glass]="glass()"
+      [style.width]="width()"
+      [style.height]="height()"
+      [style.background-color]="backgroundColor()"
+      [ngStyle]="style()"
       [@dialogAnimation]
       (@dialogAnimation.start)="onShow.emit($event)"
       (@dialogAnimation.done)="onHide.emit($event)"
@@ -26,11 +26,11 @@
       aria-modal="true"
     >
       <!-- Header -->
-      @if (header) {
+      @if (header()) {
         <div class="magary-dialog-header" (mousedown)="initDrag($event)">
-          <span class="magary-dialog-title">{{ header }}</span>
+          <span class="magary-dialog-title">{{ header() }}</span>
           <div class="magary-dialog-header-icons">
-            @if (maximizable) {
+            @if (maximizable()) {
               <button
                 type="button"
                 class="magary-dialog-header-icon"
@@ -57,7 +57,7 @@
       }
 
       <!-- Content -->
-      <div #content class="magary-dialog-content" [ngStyle]="contentStyle">
+      <div #content class="magary-dialog-content" [ngStyle]="contentStyle()">
         <ng-content></ng-content>
       </div>
 
@@ -69,7 +69,7 @@
       </div>
 
       <!-- Resizer -->
-      @if (resizable && !maximized()) {
+      @if (resizable() && !maximized()) {
         <div
           class="magary-dialog-resizer"
           (mousedown)="initResize($event)"

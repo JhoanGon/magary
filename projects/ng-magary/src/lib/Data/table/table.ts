@@ -1,7 +1,6 @@
 import {
   Component,
-  Output,
-  EventEmitter,
+  output,
   input,
   signal,
   computed,
@@ -47,7 +46,7 @@ export class MagaryTable {
   loading = input<boolean>(false);
   responsiveLayout = input<boolean>(true);
 
-  @Output() onPageChange = new EventEmitter<any>();
+  onPageChange = output<any>();
 
   // Internal State
   first = signal<number>(0);
