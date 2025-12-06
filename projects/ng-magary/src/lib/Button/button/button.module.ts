@@ -6,4 +6,4 @@ import { MagaryButton } from './button';
   imports: [CommonModule, MagaryButton],
   exports: [MagaryButton],
 })
-export class ButtonModule {}
+export class MagaryButtonModule {}

@@ -1,0 +1,24 @@
+<div
+  class="magary-message"
+  [ngClass]="'magary-message-' + severity"
+  role="alert"
+  *ngIf="visible"
+  [@messageAnimation]
+>
+  <div class="magary-message-wrapper">
+    <span class="magary-message-icon" [ngClass]="iconClass"></span>
+    <div class="magary-message-text">
+      <span class="magary-message-summary" *ngIf="text">{{ text }}</span>
+      <span class="magary-message-detail" *ngIf="detail">{{ detail }}</span>
+    </div>
+    <button
+      type="button"
+      class="magary-message-close"
+      *ngIf="closable"
+      (click)="close($event)"
+      aria-label="Close"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>

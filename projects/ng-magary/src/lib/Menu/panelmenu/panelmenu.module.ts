@@ -6,4 +6,4 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, MagaryPanelmenu, RouterModule],
   exports: [MagaryPanelmenu],
 })
-export class PanelmenuModule {}
+export class MagaryPanelMenuModule {}

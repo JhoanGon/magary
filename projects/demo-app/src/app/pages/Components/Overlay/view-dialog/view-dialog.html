@@ -1,0 +1,524 @@
+<div class="container">
+  <div class="header">
+    <h1>MagaryDialog</h1>
+    <p class="subtitle">
+      Componente de superposición premium con soporte para Glassmorphism,
+      animaciones y control total.
+    </p>
+  </div>
+
+  <!-- Import -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu módulo o componente standalone</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Básico</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Basic Dialog</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                (buttonClick)="visible = true"
+                label="Show Basic Dialog"
+              ></magary-button>
+            </div>
+          </magary-card>
+
+          <magary-dialog
+            header="Basic Dialog"
+            [(visible)]="visible"
+            width="50vw"
+            [dismissableMask]="true"
+            [resizable]="true"
+            [draggable]="false"
+          >
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <div slot="footer">
+              <magary-button
+                (buttonClick)="visible = false"
+                label="Cancel"
+                severity="secondary"
+                variant="text"
+              ></magary-button>
+              <magary-button
+                (buttonClick)="visible = false"
+                label="Ok"
+                severity="primary"
+              ></magary-button>
+            </div>
+          </magary-dialog>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="exampleBasic" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Modal</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Modal Dialog</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                (buttonClick)="visibleModal = true"
+                label="Show Modal Dialog"
+                severity="info"
+              ></magary-button>
+            </div>
+          </magary-card>
+
+          <magary-dialog
+            header="Modal Dialog"
+            [(visible)]="visibleModal"
+            [modal]="true"
+            width="50vw"
+            [dismissableMask]="false"
+            [modal]="true"
+            [draggable]="false"
+          >
+            <p>
+              Este es un diálogo modal. El fondo está bloqueado. No se cierra al
+              hacer clic fuera.
+            </p>
+          </magary-dialog>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="exampleModal" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Draggable & Resizable Features -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Características Avanzadas</h2>
+      <p>Ejemplos de arrastre, redimensionamiento y posicionamiento.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Draggable</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                (buttonClick)="visibleDrag = true"
+                label="Draggable"
+                severity="warning"
+                icon="fas fa-arrows-alt"
+              ></magary-button>
+            </div>
+          </magary-card>
+
+          <magary-dialog
+            header="Arrastrame"
+            [(visible)]="visibleDrag"
+            [draggable]="true"
+            [modal]="false"
+            width="30vw"
+          >
+            <p>
+              Este diálogo se puede arrastrar desde el encabezado. Nota que
+              [modal]="false" permite interactuar con el fondo.
+            </p>
+          </magary-dialog>
+        </div>
+
+        <div class="demo-item">
+          <h4>Resizable</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                (buttonClick)="visibleResize = true"
+                label="Resizable"
+                severity="success"
+                icon="fas fa-expand-alt"
+              ></magary-button>
+            </div>
+          </magary-card>
+
+          <magary-dialog
+            header="Redimensioname"
+            [(visible)]="visibleResize"
+            [resizable]="true"
+            width="50vw"
+            [style]="{ minHeight: '300px' }"
+            [draggable]="false"
+          >
+            <p>
+              Este diálogo tiene un manejador en la esquina inferior derecha.
+            </p>
+          </magary-dialog>
+        </div>
+
+        <div class="demo-item">
+          <h4>Custom Position</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                (buttonClick)="visiblePos = true"
+                label="Right"
+                severity="help"
+                icon="fas fa-map-marker-alt"
+              ></magary-button>
+            </div>
+          </magary-card>
+
+          <magary-dialog
+            header="Posición Personalizada & Glass"
+            [(visible)]="visiblePos"
+            position="right"
+            width="30vw"
+            [draggable]="false"
+            [glass]="true"
+          >
+            <p>
+              Este diálogo usa <b>position="right"</b> y <b>glass="true"</b>. Ya
+              no necesitas estilos CSS manuales complejos.
+            </p>
+          </magary-dialog>
+        </div>
+
+        <div class="demo-item">
+          <h4>Glass Effect</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                (buttonClick)="visibleGlass = true"
+                label="Glass Effect"
+                severity="help"
+                icon="fas fa-magic"
+              ></magary-button>
+            </div>
+          </magary-card>
+
+          <magary-dialog
+            header="Glassmorphism Premium"
+            [(visible)]="visibleGlass"
+            [glass]="true"
+            width="40vw"
+            [draggable]="false"
+          >
+            <p>
+              Este diálogo utiliza el efecto <b>Glass</b> nativo. Combina
+              desenfoque de fondo con transparencia ajustada.
+            </p>
+          </magary-dialog>
+        </div>
+      </div>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="Draggable">
+            <pre><code [highlight]="exampleDraggable" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="Resizable">
+            <pre><code [highlight]="exampleResizable" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="Positioning">
+            <pre><code [highlight]="examplePosition" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="Glass Effect">
+            <pre><code [highlight]="exampleGlass" language="html"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Maximizable (Container) -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Maximizable (Container)</h2>
+      <p>
+        El diálogo se renderiza dentro de este contenedor y se maximiza solo
+        aquí (usando <code>appendTo="local"</code>).
+      </p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Container Dialog</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+            [padding]="'0'"
+          >
+            <div
+              class="container-demo-box"
+              style="
+                position: relative;
+                height: 500px;
+                overflow: hidden;
+                background: var(--surface-50);
+                border-radius: 12px;
+              "
+            >
+              <div
+                class="flex align-items-center justify-content-center h-full w-full"
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 100%;
+                  height: 100%;
+                  background: var(--surface-0);
+                "
+              >
+                <magary-button
+                  (buttonClick)="visibleInteractive = true"
+                  label="Show Maximizable"
+                  icon="fas fa-expand"
+                ></magary-button>
+              </div>
+
+              <magary-dialog
+                [(visible)]="visibleInteractive"
+                header="Container Dialog"
+                [draggable]="true"
+                [resizable]="true"
+                [maximizable]="true"
+                [modal]="false"
+                appendTo="local"
+                width="300px"
+                styleClass="absolute-dialog-demo"
+                [draggable]="false"
+              >
+                <p>Soy libre, pero solo dentro de este contenedor.</p>
+                <div
+                  slot="footer"
+                  style="display: flex; justify-content: center; width: 100%"
+                >
+                  <magary-button
+                    (buttonClick)="visibleInteractive = false"
+                    label="Close"
+                    severity="info"
+                  ></magary-button>
+                </div>
+              </magary-dialog>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="exampleInteractive" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="'visibleInteractive = false;'" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Properties API -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Valor por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>header</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Título del diálogo.</td>
+            </tr>
+            <tr>
+              <td><code>visible</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>
+                Controla la visibilidad. <b>Importante:</b> Usar
+                <code>[(visible)]="var"</code> para que la variable se actualice
+                a <code>false</code> al cerrar. Si usas solo
+                <code>[visible]</code>, la variable quedará en
+                <code>true</code> desincronizada.
+              </td>
+            </tr>
+            <tr>
+              <td><code>modal</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Si es true, muestra una máscara que bloquea el fondo.</td>
+            </tr>
+            <tr>
+              <td><code>maximizable</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Habilita el botón y la funcionalidad de maximizar.</td>
+            </tr>
+            <tr>
+              <td><code>dismissableMask</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Si es true, cierra el diálogo al hacer click fuera.</td>
+            </tr>
+            <tr>
+              <td><code>draggable</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Habilita el arrastre del diálogo desde el encabezado.</td>
+            </tr>
+            <tr>
+              <td><code>resizable</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Habilita el redimensionamiento del diálogo.</td>
+            </tr>
+            <tr>
+              <td><code>appendTo</code></td>
+              <td><code>'body' | 'local'</code></td>
+              <td><code>'body'</code></td>
+              <td>
+                Define dónde se adjunta el diálogo. 'local' permite restringirlo
+                a un contenedor relativo.
+              </td>
+            </tr>
+            <tr>
+              <td><code>position</code></td>
+              <td><code>string</code></td>
+              <td><code>'center'</code></td>
+              <td>
+                Posición del diálogo: 'center', 'top', 'bottom', 'left',
+                'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'.
+              </td>
+            </tr>
+            <tr>
+              <td><code>width</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Ancho del diálogo (ej. '50vw', '300px').</td>
+            </tr>
+            <tr>
+              <td><code>height</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Alto del diálogo (ej. '50vh', 'auto').</td>
+            </tr>
+            <tr>
+              <td><code>backgroundColor</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Color de fondo personalizado del diálogo.</td>
+            </tr>
+            <tr>
+              <td><code>glass</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>
+                Aplica un efecto de Glassmorphism (desenfoque y transparencia)
+                al diálogo.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

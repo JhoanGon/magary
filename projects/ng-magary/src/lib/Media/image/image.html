@@ -1,0 +1,48 @@
+<div class="magary-image-content" [ngStyle]="{ width: width }">
+  <img
+    [src]="src"
+    [alt]="alt"
+    [width]="width"
+    [height]="height"
+    (load)="onImageLoad($event)"
+    (error)="onImageError($event)"
+    [ngStyle]="preview ? { cursor: 'pointer' } : {}"
+    (click)="onPreviewImageClick($event)"
+  />
+</div>
+
+@if (previewVisible) {
+  <div class="magary-image-preview-mask" (click)="closePreview()">
+    <div class="magary-image-toolbar" (click)="$event.stopPropagation()">
+      <button class="magary-image-action" (click)="zoomOut()">
+        <i class="fas fa-search-minus"></i>
+      </button>
+      <button class="magary-image-action" (click)="zoomIn()">
+        <i class="fas fa-search-plus"></i>
+      </button>
+      <button class="magary-image-action" (click)="rotateLeft()">
+        <i class="fas fa-undo"></i>
+      </button>
+      <button class="magary-image-action" (click)="rotateRight()">
+        <i class="fas fa-redo"></i>
+      </button>
+      <button class="magary-image-action" (click)="download()">
+        <i class="fas fa-download"></i>
+      </button>
+      <button class="magary-image-action" (click)="closePreview()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div
+      class="magary-image-preview-content"
+      (click)="$event.stopPropagation()"
+    >
+      <img
+        [src]="src"
+        [alt]="alt"
+        [ngStyle]="imagePreviewStyle()"
+        class="preview-image"
+      />
+    </div>
+  </div>
+}

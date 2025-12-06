@@ -1,0 +1,228 @@
+<div class="container">
+  <div class="header">
+    <h1>MagaryImage</h1>
+    <p>
+      Componente para mostrar imágenes con funcionalidades avanzadas como
+      previsualización, zoom y rotación.
+    </p>
+  </div>
+
+  <!-- Import Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu módulo o componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic Example Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Básico</h2>
+      <p>Visualización simple de una imagen.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Basic</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+            [hoverEffect]="false"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-image
+                src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
+                alt="Basic Image"
+                width="250"
+                [preview]="true"
+              >
+              </magary-image>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="exampleBasic" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="importExample" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Previsualización (Premium)</h2>
+      <p>
+        Habilita la previsualización a pantalla completa con zoom, rotación y
+        descarga.
+      </p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Preview Mode</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+            [hoverEffect]="false"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-image
+                src="https://primefaces.org/cdn/primeng/images/galleria/galleria12.jpg"
+                alt="Preview Image"
+                width="250"
+                [preview]="true"
+              >
+              </magary-image>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="examplePreview" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="importExample" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inputs Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Valor por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>src</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>URL de la imagen.</td>
+            </tr>
+            <tr>
+              <td><code>alt</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Texto alternativo para la imagen.</td>
+            </tr>
+            <tr>
+              <td><code>width</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Ancho de la imagen (ej: '100%', '250px').</td>
+            </tr>
+            <tr>
+              <td><code>height</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Alto de la imagen.</td>
+            </tr>
+            <tr>
+              <td><code>preview</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Habilita el modo de previsualización al hacer click.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outputs Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos emitidos por el componente.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>onLoad</code></td>
+              <td><code>EventEmitter&lt;Event&gt;</code></td>
+              <td>Se emite cuando la imagen se carga exitosamente.</td>
+            </tr>
+            <tr>
+              <td><code>onError</code></td>
+              <td><code>EventEmitter&lt;Event&gt;</code></td>
+              <td>Se emite si ocurre un error al cargar la imagen.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessibility Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Accesibilidad</h2>
+      <p>Consideraciones para lectores de pantalla y navegación por teclado.</p>
+    </div>
+    <div class="section-content">
+      <ul class="accessibility-list">
+        <li>
+          <strong>Texto Alternativo:</strong> Utiliza siempre la propiedad
+          <code>alt</code> para describir la imagen.
+        </li>
+        <li>
+          <strong>Teclado:</strong> En modo previsualización, los controles de
+          zoom y rotación son accesibles por teclado.
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

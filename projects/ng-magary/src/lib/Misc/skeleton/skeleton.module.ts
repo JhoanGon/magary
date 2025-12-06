@@ -6,4 +6,4 @@ import { MagarySkeleton } from './skeleton';
   imports: [CommonModule, MagarySkeleton],
   exports: [MagarySkeleton],
 })
-export class SkeletonModule {}
+export class MagarySkeletonModule {}

@@ -5,8 +5,8 @@ export const MEDIA_CONFIG: NavigationItem = {
   icon: 'fas fa-image',
   children: [
     {
-      label: 'EmptyState',
-      route: '/installation',
+      label: 'Image',
+      route: '/components/image',
       icon: '',
     },
   ],

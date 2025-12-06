@@ -5,9 +5,9 @@ export const MESSAGES_CONFIG: NavigationItem = {
   icon: 'fas fa-comment-alt',
   children: [
     {
-      label: 'EmptyState',
-      route: '/installation',
-      icon: '',
+      label: 'Message',
+      route: '/components/message',
+      icon: 'fas fa-comment-alt',
     },
   ],
 };
