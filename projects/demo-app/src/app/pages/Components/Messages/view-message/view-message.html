@@ -160,12 +160,13 @@
           class="demo-item"
           style="width: 100%; max-width: 600px; min-height: 150px"
         >
-          <magary-message
-            *ngFor="let msg of msgs"
-            [severity]="msg.severity"
-            [text]="msg.text"
-            [detail]="msg.detail"
-          ></magary-message>
+          @for (msg of msgs; track $index) {
+            <magary-message
+              [severity]="msg.severity"
+              [text]="msg.text"
+              [detail]="msg.detail"
+            ></magary-message>
+          }
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@
     [alt]="alt()"
     [width]="width()"
     [height]="height()"
+    [loading]="loading()"
     (load)="onImageLoad($event)"
     (error)="onImageError($event)"
     [ngStyle]="preview() ? { cursor: 'pointer' } : {}"

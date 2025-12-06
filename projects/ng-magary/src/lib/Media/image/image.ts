@@ -29,6 +29,8 @@ export class MagaryImage {
 
   height = input<string | undefined>(undefined);
 
+  loading = input<'lazy' | 'eager'>('lazy');
+
   preview = input<boolean>(false);
 
   onLoad = output<Event>();
