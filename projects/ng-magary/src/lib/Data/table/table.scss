@@ -32,6 +32,29 @@
       overflow-y: visible;
     }
   }
+  // Custom Scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--surface-100);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--surface-400); // Visible grey
+    border-radius: 4px;
+    
+    &:hover {
+      background: var(--surface-500); // Darker on hover
+    }
+  }
+
+  // Firefox support
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-400) var(--surface-100);
 }
 
 // Header
@@ -42,6 +65,13 @@
   align-items: center;
   border-bottom: 1px solid var(--surface-200);
   background: var(--surface-50);
+  gap: 1rem; // Add gap for wrapping
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem; // Reduce padding on mobile
+  }
 
   .table-title {
     font-size: 1.25rem;
@@ -51,6 +81,16 @@
 
   .search-wrapper {
     position: relative;
+    
+    @media (max-width: 768px) {
+      width: 100%;
+      
+      // Target the component to force full width
+      magary-input {
+        width: 100% !important;
+        display: block; // Ensure it behaves like a block
+      }
+    }
   }
 }
 
@@ -237,6 +277,67 @@
           color: white;
           box-shadow: var(--shadow-md);
           transform: translateY(-1px);
+        }
+      }
+    }
+  }
+}
+
+// Responsive Stacked Layout
+@media (max-width: 768px) {
+  .magary-table {
+    display: block;
+
+    thead {
+      display: none;
+    }
+
+    tbody {
+      display: block;
+      
+      tr.table-row {
+        display: flex;
+        flex-direction: column;
+        background: var(--surface-0);
+        border: 1px solid var(--surface-200);
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        box-shadow: var(--shadow-sm);
+
+        td {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.75rem 0;
+          border: none;
+          border-bottom: 1px solid var(--surface-100);
+          text-align: right;
+          width: 100%;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          &::before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-right: auto;
+            padding-right: 1rem;
+          }
+        }
+      }
+
+      // Hide empty state column span issues
+      .empty-row td {
+        display: block;
+        text-align: center;
+        
+        &::before {
+          display: none;
         }
       }
     }

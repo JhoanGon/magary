@@ -250,7 +250,7 @@ export class ViewCard {
   <!-- Uso con MagaryButton dentro de Cards -->
   <magary-card [clickable]="true" (cardClick)="onCardClick($event)">
     <div slot="header">
-      <h3>✅ Success Actions</h3>
+      <h3>Success Actions</h3>
     </div>
     <p>Estas acciones muestran notificaciones de éxito cuando se completan correctamente.</p>
     <div slot="footer">
