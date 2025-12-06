@@ -18,11 +18,17 @@
       } @else {
         <!-- If toggle hidden but collapsed, show logo icon? -->
         @if (showLogo()) {
-          <img [src]="logoSrc()" alt="Logo" class="logo collapsed-logo" />
+          <img
+            [src]="logoSrc()"
+            alt="Logo"
+            class="logo collapsed-logo"
+            routerLink="/"
+            style="cursor: pointer"
+          />
         }
       }
     } @else {
-      <div class="header-brand">
+      <div class="header-brand" routerLink="/" style="cursor: pointer">
         @if (showLogo()) {
           <img [src]="logoSrc()" alt="Logo" class="logo" />
         }
