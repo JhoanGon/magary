@@ -4,6 +4,7 @@ import {
   input,
   output,
   signal,
+  inject,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
@@ -100,7 +101,9 @@ export class Sidebar {
   logout() {
     this.Logout.emit();
   }
-  constructor(private router: Router) {
+  private router = inject(Router);
+
+  constructor() {
     this.router.events.subscribe(() => {
       this.closeMobileSidebar();
     });

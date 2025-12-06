@@ -5,6 +5,8 @@ import {
   input,
   output,
   signal,
+  model,
+  linkedSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +32,7 @@ export type InputVariant = 'filled' | 'outlined' | 'underlined';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MagaryInput {
-  value = input<string>('');
+  value = model<string>('');
   placeholder = input<string>('');
   type = input<InputType>('text');
   size = input<InputSize>('normal');
@@ -53,13 +55,18 @@ export class MagaryInput {
   width = input<string>('100%');
   maxLength = input<number | undefined>(undefined);
 
-  valueChange = output<string>();
   inputFocus = output<Event>();
   inputBlur = output<Event>();
   iconClick = output<'prefix' | 'suffix'>();
 
   private focused = signal(false);
-  private showPassword = signal(false);
+
+  // Use linkedSignal to reset password visibility when type changes
+  private showPassword = linkedSignal({
+    source: this.type,
+    computation: () => false,
+  });
+
   private readonly uniqueId = `magary-input-${Math.random().toString(36).substr(2, 9)}`;
 
   inputClasses = computed(() => {
@@ -103,7 +110,7 @@ export class MagaryInput {
 
   onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
-    this.valueChange.emit(target.value);
+    this.value.set(target.value);
   }
 
   onFocus(event: Event): void {

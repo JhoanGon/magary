@@ -1,11 +1,7 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  Output,
   Renderer2,
-  ViewChild,
   ViewEncapsulation,
   ChangeDetectionStrategy,
   computed,
@@ -13,6 +9,10 @@ import {
   effect,
   model,
   booleanAttribute,
+  input,
+  output,
+  viewChild,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -64,22 +64,22 @@ export class MagaryDialog {
   visible = model<boolean>(false);
 
   // Inputs
-  @Input() header?: string;
-  @Input({ transform: booleanAttribute }) draggable: boolean = true;
-  @Input({ transform: booleanAttribute }) resizable: boolean = false;
-  @Input({ transform: booleanAttribute }) modal: boolean = true;
-  @Input({ transform: booleanAttribute }) closeOnEscape: boolean = true;
-  @Input({ transform: booleanAttribute }) dismissableMask: boolean = false;
-  @Input({ transform: booleanAttribute }) maximizable: boolean = false;
-  @Input() style: any;
-  @Input() contentStyle: any;
-  @Input() styleClass?: string;
-  @Input() appendTo: 'body' | 'local' = 'body';
+  header = input<string | undefined>(undefined);
+  draggable = input(true, { transform: booleanAttribute });
+  resizable = input(false, { transform: booleanAttribute });
+  modal = input(true, { transform: booleanAttribute });
+  closeOnEscape = input(true, { transform: booleanAttribute });
+  dismissableMask = input(false, { transform: booleanAttribute });
+  maximizable = input(false, { transform: booleanAttribute });
+  style = input<any>(null);
+  contentStyle = input<any>(null);
+  styleClass = input<string | undefined>(undefined);
+  appendTo = input<'body' | 'local'>('body');
 
   // Aesthetic Inputs
-  @Input() width?: string;
-  @Input() height?: string;
-  @Input() position:
+  width = input<string | undefined>(undefined);
+  height = input<string | undefined>(undefined);
+  position = input<
     | 'center'
     | 'top'
     | 'bottom'
@@ -88,18 +88,21 @@ export class MagaryDialog {
     | 'top-left'
     | 'top-right'
     | 'bottom-left'
-    | 'bottom-right' = 'center';
-  @Input() backgroundColor?: string;
-  @Input({ transform: booleanAttribute }) glass: boolean = false;
+    | 'bottom-right'
+  >('center');
+  backgroundColor = input<string | undefined>(undefined);
+  glass = input(false, { transform: booleanAttribute });
 
   // Outputs
-  @Output() onShow = new EventEmitter<AnimationEvent>();
-  @Output() onHide = new EventEmitter<AnimationEvent>();
+  onShow = output<AnimationEvent>();
+  onHide = output<AnimationEvent>();
 
   // ViewChild
-  @ViewChild('container') containerViewChild!: ElementRef<HTMLDivElement>;
-  @ViewChild('content') contentViewChild!: ElementRef<HTMLDivElement>;
-  @ViewChild('headerElement') headerViewChild!: ElementRef<HTMLDivElement>;
+  containerViewChild =
+    viewChild.required<ElementRef<HTMLDivElement>>('container');
+  contentViewChild = viewChild.required<ElementRef<HTMLDivElement>>('content');
+  headerViewChild =
+    viewChild.required<ElementRef<HTMLDivElement>>('headerElement');
 
   // Internal State
   maximized = signal(false);
@@ -118,13 +121,13 @@ export class MagaryDialog {
   private documentMouseMoveListener: (() => void) | null = null;
   private documentMouseUpListener: (() => void) | null = null;
 
-  constructor(
-    public el: ElementRef,
-    public renderer: Renderer2,
-  ) {
+  public el = inject(ElementRef);
+  public renderer = inject(Renderer2);
+
+  constructor() {
     // Effect to handle body scroll locking when modal is visible
     effect(() => {
-      if (this.visible() && this.modal) {
+      if (this.visible() && this.modal()) {
         this.blockBodyScroll();
       } else {
         this.unblockBodyScroll();
@@ -142,7 +145,7 @@ export class MagaryDialog {
   }
 
   maximize(event: Event) {
-    if (this.maximizable) {
+    if (this.maximizable()) {
       this.maximized.update((v) => !v);
       event.preventDefault();
     }
@@ -154,8 +157,8 @@ export class MagaryDialog {
     }
 
     if (
-      this.dismissableMask &&
-      this.modal &&
+      this.dismissableMask() &&
+      this.modal() &&
       this.visible() &&
       event.target === event.currentTarget
     ) {
@@ -166,12 +169,12 @@ export class MagaryDialog {
   // --- Dragging Logic ---
 
   initDrag(event: MouseEvent) {
-    if (this.draggable && !this.maximized()) {
+    if (this.draggable() && !this.maximized()) {
       this.dragging.set(true);
       this.lastPageX = event.pageX;
       this.lastPageY = event.pageY;
 
-      const container = this.containerViewChild.nativeElement;
+      const container = this.containerViewChild().nativeElement;
       const rect = container.getBoundingClientRect();
       this.startX = rect.left;
       this.startY = rect.top;
@@ -191,7 +194,7 @@ export class MagaryDialog {
       const deltaX = event.pageX - this.lastPageX;
       const deltaY = event.pageY - this.lastPageY;
 
-      const container = this.containerViewChild.nativeElement;
+      const container = this.containerViewChild().nativeElement;
 
       // We rely on transform for smoother performance
       // Get current transform
@@ -225,12 +228,12 @@ export class MagaryDialog {
   // --- Resizing Logic ---
 
   initResize(event: MouseEvent) {
-    if (this.resizable && !this.maximized()) {
+    if (this.resizable() && !this.maximized()) {
       this.resizing.set(true);
       this.lastPageX = event.pageX;
       this.lastPageY = event.pageY;
 
-      const container = this.containerViewChild.nativeElement;
+      const container = this.containerViewChild().nativeElement;
       this.startWidth = container.offsetWidth;
       this.startHeight = container.offsetHeight;
 
@@ -245,7 +248,7 @@ export class MagaryDialog {
       const deltaX = event.pageX - this.lastPageX;
       const deltaY = event.pageY - this.lastPageY;
 
-      const container = this.containerViewChild.nativeElement;
+      const container = this.containerViewChild().nativeElement;
       const newWidth = Math.max(this.startWidth + deltaX, 300); // Min width constraint
       const newHeight = Math.max(this.startHeight + deltaY, 150); // Min height constraint
 

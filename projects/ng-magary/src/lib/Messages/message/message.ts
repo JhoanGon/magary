@@ -1,8 +1,7 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
+  input,
+  output,
   ChangeDetectionStrategy,
   ViewEncapsulation,
 } from '@angular/core';
@@ -80,42 +79,40 @@ import {
   ],
 })
 export class MagaryMessage {
-  @Input() severity:
-    | 'success'
-    | 'info'
-    | 'warn'
-    | 'error'
-    | 'secondary'
-    | 'contrast' = 'info';
+  severity = input<
+    'success' | 'info' | 'warn' | 'error' | 'secondary' | 'contrast'
+  >('info');
 
-  @Input() text: string | undefined;
+  text = input<string | undefined>(undefined);
 
-  @Input() detail: string | undefined;
+  detail = input<string | undefined>(undefined);
 
-  @Input() icon: string | undefined;
+  icon = input<string | undefined>(undefined);
 
-  @Input() closable: boolean = false;
+  closable = input<boolean>(false);
 
-  @Input() life: number | undefined;
+  life = input<number | undefined>(undefined);
 
-  @Output() onClose = new EventEmitter<Event>();
+  onClose = output<Event>();
 
   visible: boolean = true;
 
   ngOnInit() {
-    if (this.life) {
+    const life = this.life();
+    if (life) {
       setTimeout(() => {
         this.close(null);
-      }, this.life);
+      }, life);
     }
   }
 
   get iconClass(): string {
-    if (this.icon) {
-      return this.icon;
+    const icon = this.icon();
+    if (icon) {
+      return icon;
     }
 
-    switch (this.severity) {
+    switch (this.severity()) {
       case 'success':
         return 'fas fa-check-circle';
       case 'info':

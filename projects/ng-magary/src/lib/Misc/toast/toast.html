@@ -1,7 +1,7 @@
 <div
   class="magary-toast-container"
-  [ngClass]="position"
-  [style.zIndex]="baseZIndex"
+  [ngClass]="position()"
+  [style.zIndex]="baseZIndex()"
 >
   @for (toast of toasts; track toast.id) {
     <magary-toast-item

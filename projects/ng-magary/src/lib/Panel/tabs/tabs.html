@@ -5,7 +5,7 @@
     [style.--background-color-line]="backgroundLine()"
     [style.--height-line]="heightLine()"
   >
-    @for (tab of tabs.toArray(); track $index) {
+    @for (tab of tabs(); track $index) {
       <button
         #tabButton
         (click)="selectTab($index)"
