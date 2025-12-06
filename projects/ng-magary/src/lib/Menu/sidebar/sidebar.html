@@ -19,18 +19,27 @@
         <!-- If toggle hidden but collapsed, show logo icon? -->
         @if (showLogo()) {
           <img
-            [src]="logoSrc()"
+            [ngSrc]="logoSrc()"
             alt="Logo"
             class="logo collapsed-logo"
             routerLink="/"
             style="cursor: pointer"
+            [width]="logoWidth()"
+            [height]="logoHeight()"
           />
         }
       }
     } @else {
       <div class="header-brand" routerLink="/" style="cursor: pointer">
         @if (showLogo()) {
-          <img [src]="logoSrc()" alt="Logo" class="logo" />
+          <img
+            [ngSrc]="logoSrc()"
+            alt="Logo"
+            class="logo"
+            [width]="logoWidth()"
+            [height]="logoHeight()"
+            priority
+          />
         }
         <span
           class="title"
@@ -53,7 +62,13 @@
   <div class="sidebar-content">
     @if (showBrandLogo() && brandLogoPosition() === "top") {
       <div class="brand-logo-container top" [class.collapsed]="isCollapsed()">
-        <img [src]="brandLogoSrc()" alt="Brand Logo" class="brand-logo" />
+        <img
+          [ngSrc]="brandLogoSrc()"
+          alt="Brand Logo"
+          class="brand-logo"
+          [width]="brandLogoWidth()"
+          [height]="brandLogoHeight()"
+        />
       </div>
     }
     <div class="menu-container">
@@ -94,7 +109,13 @@
         class="brand-logo-container bottom"
         [class.collapsed]="isCollapsed()"
       >
-        <img [src]="brandLogoSrc()" alt="Brand Logo" class="brand-logo" />
+        <img
+          [ngSrc]="brandLogoSrc()"
+          alt="Brand Logo"
+          class="brand-logo"
+          [width]="brandLogoWidth()"
+          [height]="brandLogoHeight()"
+        />
       </div>
     }
     @if (showUserSection()) {
@@ -158,7 +179,13 @@
   </div>
   @if (showBrandLogo() && brandLogoPosition() === "center") {
     <div class="brand-logo-container center" [class.collapsed]="isCollapsed()">
-      <img [src]="brandLogoSrc()" alt="Brand Logo" class="brand-logo" />
+      <img
+        [ngSrc]="brandLogoSrc()"
+        alt="Brand Logo"
+        class="brand-logo"
+        [width]="brandLogoWidth()"
+        [height]="brandLogoHeight()"
+      />
     </div>
   }
 </div>

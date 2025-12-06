@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   Component,
   input,
@@ -41,7 +41,13 @@ interface AvatarConfig {
 
 @Component({
   selector: 'magary-sidebar',
-  imports: [CommonModule, RouterModule, MagaryPanelmenu, MagaryAvatar],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MagaryPanelmenu,
+    MagaryAvatar,
+    NgOptimizedImage,
+  ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -73,6 +79,10 @@ export class Sidebar {
   public showBrandLogo = input<boolean>(false);
   public brandLogoSrc = input<string>('');
   public brandLogoPosition = input<'top' | 'bottom' | 'center'>('bottom');
+  public logoWidth = input<number>(32);
+  public logoHeight = input<number>(32);
+  public brandLogoWidth = input<number>(200);
+  public brandLogoHeight = input<number>(100);
 
   public isMobileOpen = signal(false);
   public isCollapsed = signal(false);

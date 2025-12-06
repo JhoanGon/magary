@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
 import { ThemeSwitcherComponent } from '../components/theme-switcher/theme-switcher.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, ThemeSwitcherComponent],
+  imports: [CommonModule, ThemeSwitcherComponent, NgOptimizedImage],
   templateUrl: './landing.html',
   styleUrl: './landing.scss',
 })

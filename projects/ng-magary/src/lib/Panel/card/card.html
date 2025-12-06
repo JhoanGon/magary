@@ -20,11 +20,10 @@
     <div class="card-image-container">
       <img
         class="card-img"
-        [src]="img()"
+        [ngSrc]="img() || ''"
         [ngStyle]="imageStyles()"
         [alt]="altText()"
-        loading="lazy"
-        decoding="async"
+        fill
       />
     </div>
   }
