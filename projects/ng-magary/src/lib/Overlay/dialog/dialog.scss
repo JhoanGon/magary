@@ -145,12 +145,19 @@
     }
   }
 
+  // Responsive: Full width on mobile
+  @media (max-width: 768px) {
+    width: 90vw;
+    max-height: 95vh;
+  }
+
   &.magary-dialog-dragging {
     user-select: none;
     transition: none !important; // Disable transitions during drag for performance
   }
 
   &.magary-dialog-glass {
+    --magary-dialog-bg: transparent;
     background: rgba(255, 255, 255, 0.7); // Semi-transparent white
     backdrop-filter: blur(16px); // Heavy frosted glass on the content itself
     border: 1px solid rgba(255, 255, 255, 0.5);
@@ -164,9 +171,6 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: white;
     }
-
-    // Override standard variables validation
-    --magary-dialog-bg: transparent;
   }
 }
 

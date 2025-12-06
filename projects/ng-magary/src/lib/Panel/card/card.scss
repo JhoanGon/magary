@@ -31,6 +31,8 @@
   transition: all 0.2s ease-in-out;
   height: 100%;
   box-sizing: border-box;
+  text-align: left; // Prevent inheritance of center alignment from containers
+  max-width: 100%; // Ensure card never overflows its container
 
   // Shadow variants
   &.shadow-0 { box-shadow: none; }
@@ -207,12 +209,19 @@
   @media (max-width: 768px) {
     &.layout-left, &.layout-right {
       flex-direction: column;
+      width: 100% !important;        // Use available space up to max
+      max-width: 300px !important;   // Enforce your 300px limit
+      margin: 12px auto !important;  // Center the card
       
       .card-image-container {
         width: 100%;
         height: var(--img-size);
       }
     }
+    
+    // Force full width on mobile if responsive mode is enabled, overriding inline styles
+    width: 100% !important;
+    max-width: 100%;
   }
 }
 

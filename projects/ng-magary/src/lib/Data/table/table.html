@@ -44,7 +44,7 @@
         @for (row of paginatedData(); track row) {
           <tr class="table-row">
             @for (col of columns(); track col.field) {
-              <td>
+              <td [attr.data-label]="col.header">
                 <!-- Content Switch -->
                 @switch (col.type) {
                   @case ("avatar") {

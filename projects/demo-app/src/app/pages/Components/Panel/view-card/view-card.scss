@@ -242,9 +242,19 @@
     
     h1 { font-size: 2rem; }
   }
+  .demo-item {
+    max-width: 300px;
+  }
 
   .demo-grid {
     grid-template-columns: 1fr;
+    gap: 2rem; // Increased gap for better visual separation on mobile
+  }
+
+  .section-content {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      // Keep vertical padding or adjust if needed
   }
 
   .accessibility-list li {
