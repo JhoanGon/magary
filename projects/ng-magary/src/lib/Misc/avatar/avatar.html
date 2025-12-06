@@ -16,10 +16,12 @@
   } @else {
     @if (shouldShowImage()) {
       <img
-        [src]="image()"
+        [ngSrc]="image() || ''"
         [alt]="alt()"
         class="avatar-img"
         [ngClass]="shape()"
+        [width]="sizePixels()"
+        [height]="sizePixels()"
         (error)="onImageError()"
         (load)="onImageLoad()"
       />

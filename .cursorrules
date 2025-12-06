@@ -1,0 +1,54 @@
+# General Behavior
+
+- Responses should be in Spanish unless requested otherwise.
+- Be concise and focus on the code.
+- Avoid verbose explanations.
+
+# Angular Best Practices
+
+- Use **Standalone Components** for all new components.
+- Prefer **Signals** for state management where appropriate.
+- Use `inject()` for dependency injection instead of constructor injection.
+- Use `@for` and `@if` control flow syntax instead of `*ngFor` and `*ngIf`.
+- Ensure all components have strictly typed inputs and outputs.
+
+# TypeScript
+
+- Use strict typing. Avoid `any`.
+- Use `const` over `let` whenever possible.
+
+# File Structure
+
+- Follow the existing project structure: `projects/demo-app` for the app, `projects/ng-magary` for the library.
+
+# User Custom Rules (Performance & SEO)
+
+- **Performance de Imágenes**:
+  - Priorizar `NgOptimizedImage` (ngSrc) sobre `src` estándar para imágenes.
+  - Usar siempre formatos de próxima generación (WebP).
+  - Para recursos grandes que no sean imágenes manejadas por Angular, usar Intersection Observer.
+  - El atributo `loading` debe ser 'lazy' por defecto. SOLO usar 'eager' o `fetchpriority='high'` para el Largest Contentful Paint (LCP), marcándolo explícitamente.
+- **SEO & Layout**:
+  - Componentes de layout/sección deben incluir campos para `<title>` y `<meta description>` en el nivel más alto.
+  - NUNCA omitir niveles de encabezado. Jerarquía estricta: h1 -> h2 -> h3.
+  - `alt text` es OBLIGATORIO y debe ser validado en todas las imágenes no decorativas.
+- **Angular Core**:
+  - Adherirse estrictamente a sintaxis y APIs de Angular v21.
+  - Standalone components por defecto.
+
+# Quality Assurance & Styles
+
+- **Testing**: Todo nuevo componente o servicio debe incluir su archivo `.spec.ts` básico para evitar deuda técnica.
+- **Estilos**: Usar variables CSS/SCSS del tema global en lugar de colores hardcodeados (hex/rgb). Esto es vital para el soporte de temas.
+- **Manejo de Errores**: No usar `console.log` en producción. Usar servicios de logging o manejo de errores adecuado.
+
+# Responsive Design & UI
+
+- **Enfoque Mobile-First**: Diseñar primero para pantallas pequeñas y usar `@media (min-width)` para escalar.
+- **Unidades Relativas**: Usar `rem` para fuentes y espaciados, y `%` o `vw/vh` para contenedores. Evitar `px` para layouts.
+- **Touch Targets**: Asegurar que botones y enlaces tengan un área clickable mínima de 44px en móviles.
+
+# Documentación
+
+- **JSDoc**: Todo Input, Output, y método público en la librería debe tener un comentario JSDoc breve.
+- **Ejemplos**: Al crear componentes nuevos, sugerir siempre un ejemplo de uso básico.

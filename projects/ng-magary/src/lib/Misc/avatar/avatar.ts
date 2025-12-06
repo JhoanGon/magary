@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   Component,
   input,
@@ -16,7 +16,7 @@ export interface AvatarClickEvent {
 }
 @Component({
   selector: 'magary-avatar',
-  imports: [CommonModule],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './avatar.html',
   styleUrl: './avatar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +27,21 @@ export class MagaryAvatar {
   public icon = input<string>();
   public shape = input<AvatarShape>('square');
   public size = input<AvatarSize>('normal');
+
+  public sizePixels = computed(() => {
+    switch (this.size()) {
+      case 'xsmall':
+        return 24;
+      case 'small':
+        return 28;
+      case 'large':
+        return 48;
+      case 'xlarge':
+        return 64;
+      default:
+        return 32; // normal
+    }
+  });
   public badgeValue = input<string | number>();
   public badgeSeverity = input<BadgeSeverity>('danger');
   public customStyle = input<Record<string, any>>();
