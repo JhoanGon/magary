@@ -59,11 +59,13 @@
       </div>
       <div style="padding: 1.5rem">
         <div class="icons-grid">
-          <div *ngFor="let icon of commonIcons" class="icon-item">
-            <i [class]="icon.class"></i>
-            <span>{{ icon.name }}</span>
-            <span class="icon-class">{{ icon.class }}</span>
-          </div>
+          @for (icon of commonIcons; track icon.name) {
+            <div class="icon-item">
+              <i [class]="icon.class"></i>
+              <span>{{ icon.name }}</span>
+              <span class="icon-class">{{ icon.class }}</span>
+            </div>
+          }
         </div>
       </div>
     </magary-card>

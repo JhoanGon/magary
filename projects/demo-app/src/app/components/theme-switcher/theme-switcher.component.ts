@@ -8,19 +8,19 @@ import { MagaryThemeService, Theme } from 'ng-magary';
   imports: [CommonModule],
   template: `
     <div class="theme-options">
-      <button
-        *ngFor="let theme of themes"
-        class="theme-btn"
-        [class.active]="themeService.currentTheme() === theme.id"
-        [style.background-color]="theme.color"
-        [title]="theme.label"
-        (click)="setTheme(theme.id)"
-      >
-        <i
-          *ngIf="themeService.currentTheme() === theme.id"
-          class="fas fa-check"
-        ></i>
-      </button>
+      @for (theme of themes; track theme.id) {
+        <button
+          class="theme-btn"
+          [class.active]="themeService.currentTheme() === theme.id"
+          [style.background-color]="theme.color"
+          [title]="theme.label"
+          (click)="setTheme(theme.id)"
+        >
+          @if (themeService.currentTheme() === theme.id) {
+            <i class="fas fa-check"></i>
+          }
+        </button>
+      }
     </div>
   `,
   styles: [
@@ -74,10 +74,6 @@ import { MagaryThemeService, Theme } from 'ng-magary';
 })
 export class ThemeSwitcherComponent {
   themeService = inject(MagaryThemeService);
-
-  constructor() {
-    console.log('ThemeSwitcherComponent initialized');
-  }
 
   themes: { id: Theme; label: string; color: string }[] = [
     { id: 'light', label: 'Light', color: '#ffffff' },

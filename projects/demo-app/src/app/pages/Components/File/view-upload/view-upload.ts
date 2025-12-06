@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryUpload, UploadEvent } from 'ng-magary';
 import { MagaryToastService } from 'ng-magary';
@@ -49,7 +49,7 @@ export class ViewUpload {
   readonly exampleAdvanced = CODE_EXAMPLES.advanced;
   readonly exampleManual = CODE_EXAMPLES.manual;
 
-  constructor(private toastService: MagaryToastService) {}
+  private toastService = inject(MagaryToastService);
 
   onUpload(event: UploadEvent) {
     this.toastService.add({
