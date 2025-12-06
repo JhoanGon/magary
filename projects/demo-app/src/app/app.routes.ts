@@ -4,9 +4,13 @@ import { Layout } from './layout/layout';
 export const routes: Routes = [
   {
     path: '',
+    loadComponent: () => import('./Landing/landing').then((m) => m.Landing),
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: Layout,
     children: [
-      { path: '', redirectTo: 'installation', pathMatch: 'full' },
       {
         path: 'installation',
         loadComponent: () =>
@@ -42,5 +46,6 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '**', redirectTo: 'installation' },
+  // Redirección de rutas no encontradas al Landing
+  { path: '**', redirectTo: '' },
 ];

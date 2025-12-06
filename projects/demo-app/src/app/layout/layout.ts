@@ -7,7 +7,12 @@ import {
   AfterViewInit,
   inject,
 } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import {
+  RouterOutlet,
+  Router,
+  NavigationEnd,
+  RouterLink,
+} from '@angular/router';
 import { Sidebar, MagaryToast, MAGARY_VERSION } from 'ng-magary';
 import { ThemeSwitcherComponent } from '../components/theme-switcher/theme-switcher.component';
 import { SIDEBAR_SECTIONS } from './config/sidebar.config';
@@ -21,6 +26,7 @@ import { filter } from 'rxjs/operators';
     RouterOutlet,
     MagaryToast,
     ThemeSwitcherComponent,
+    RouterLink,
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
