@@ -7,6 +7,7 @@
   background-color: var(--surface-50);
   overflow: hidden;
   position: relative;
+  contain: paint; // Optimization: Limit paint scope
 }
 
 .content {
@@ -21,7 +22,10 @@
 .logo-container {
   position: relative;
   margin-bottom: 2rem;
-  animation: float 6s ease-in-out infinite, scaleIn 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform; // Optimization
+  animation:
+    float 6s ease-in-out infinite,
+    scaleIn 1s cubic-bezier(0.2, 0.8, 0.2, 1);
 
   .logo-img {
     width: 180px;
@@ -38,7 +42,11 @@
     transform: translate(-50%, -50%);
     width: 220px;
     height: 220px;
-    background: radial-gradient(circle, rgba(6, 182, 212, 0.4) 0%, transparent 70%);
+    background: radial-gradient(
+      circle,
+      rgba(6, 182, 212, 0.4) 0%,
+      transparent 70%
+    );
     z-index: 1;
     animation: glow 3s ease-in-out infinite alternate;
   }
@@ -80,7 +88,7 @@
 .theme-toggle-container {
   opacity: 0.8;
   transition: opacity 0.2s;
-  
+
   &:hover {
     opacity: 1;
   }
@@ -109,7 +117,7 @@
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
     border-color: var(--primary-300);
-    
+
     i {
       transform: translateX(4px);
     }
@@ -142,6 +150,7 @@
     width: 50vw;
     height: 50vw;
     background: var(--primary-300);
+    will-change: transform; // Optimization
     animation: moveBlob1 20s infinite alternate;
   }
 
@@ -151,37 +160,69 @@
     width: 60vw;
     height: 60vw;
     background: var(--accent-300);
+    will-change: transform; // Optimization
     animation: moveBlob2 25s infinite alternate;
   }
 }
 
 // Keyframes
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
 }
 
 @keyframes glow {
-  from { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  from {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
 }
 
 @keyframes scaleIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes moveBlob1 {
-  from { transform: translate(0, 0); }
-  to { transform: translate(100px, 100px); }
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(100px, 100px);
+  }
 }
 
 @keyframes moveBlob2 {
-  from { transform: translate(0, 0); }
-  to { transform: translate(-100px, -100px); }
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-100px, -100px);
+  }
 }
