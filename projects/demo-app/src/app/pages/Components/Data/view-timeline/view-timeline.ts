@@ -102,7 +102,7 @@ export class ViewTimeline {
         { status: 'Shipped', date: '15/10/2020 16:15', icon: 'box', color: '#FF9800' },
         { status: 'Delivered', date: '16/10/2020 10:00', icon: 'check', color: '#607D8B' }
     ];
-    ];
+
 }
 `;
 
