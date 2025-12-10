@@ -16,9 +16,9 @@ export interface MenuItem {
   children?: MenuItem[];
   disabled?: boolean;
   metadata?: any;
-  badge?: string;
   badgeSeverity?: 'success' | 'info' | 'warning' | 'danger' | 'contrast';
   iconSize?: number;
+  styleClass?: string;
 }
 export interface MenuItemClickEvent {
   item: MenuItem;

@@ -4,6 +4,7 @@ export interface MenuItem {
   icon?: string;
   children?: MenuItem[];
   iconSize?: number;
+  styleClass?: string;
 }
 
 export interface NavigationItem {
@@ -15,6 +16,7 @@ export interface NavigationItem {
   badge?: string;
   badgeSeverity?: 'success' | 'info' | 'warning' | 'danger' | 'contrast';
   iconSize?: number;
+  styleClass?: string;
 }
 
 export interface SidebarSection {
