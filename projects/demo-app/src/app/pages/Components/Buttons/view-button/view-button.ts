@@ -6,8 +6,8 @@ import { Highlight } from 'ngx-highlightjs';
 const CODE_EXAMPLES = {
   import: `import { MagaryButton } from 'ng-magary';`,
   basic: `    <magary-button label="Button"></magary-button>
-    <magary-button label="Home" icon="fas fa-home"></magary-button>
-    <magary-button icon="fas fa-heart"></magary-button>
+    <magary-button label="Home" icon="house"></magary-button>
+    <magary-button icon="heart"></magary-button>
     <magary-button label="Loading..." [loading]="true"></magary-button>`,
   severity: `<magary-button label="Primary" severity="primary"></magary-button>
 <magary-button label="Secondary" severity="secondary"></magary-button>
@@ -24,7 +24,8 @@ const CODE_EXAMPLES = {
 <magary-button label="Text" variant="text" severity="primary"></magary-button>`,
   custom: `<magary-button label="Shadow 1" [shadow]="1"></magary-button>
 <magary-button label="Shadow 3" [shadow]="3"></magary-button>
-<magary-button label="Rounded" [rounded]="true"></magary-button>`,
+<magary-button label="Rounded" [rounded]="true"></magary-button>
+<magary-button label="32px Icon" icon="heart" [iconSize]="32"></magary-button>`,
   states: `<magary-button label="Normal"></magary-button>
 <magary-button label="Disabled" [disabled]="true"></magary-button>
 <magary-button label="Loading..." [loading]="true"></magary-button>`,

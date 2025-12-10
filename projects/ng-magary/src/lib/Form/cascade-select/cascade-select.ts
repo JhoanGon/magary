@@ -12,10 +12,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'magary-cascade-select',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './cascade-select.html',
   styleUrl: './cascade-select.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

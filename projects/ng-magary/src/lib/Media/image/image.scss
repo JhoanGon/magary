@@ -5,12 +5,19 @@
     .magary-image-content {
         position: relative;
         line-height: 0;
+        width: 100%;  /* Ensure it fills host */
+        height: 100%; /* Ensure it fills host */
+        display: flex; /* Remove inline-block spacing issues */
 
         img {
-            max-width: 100%;
-            height: auto;
+            // max-width: 100%; // Removed to allow full stretch
+            // height: auto;    // Removed to allow exact height control via input/style
             border-radius: 6px;
             transition: transform 0.3s ease;
+            
+            /* Default to filling the content wrapper, controlled by object-fit via inline style */
+            width: 100%;
+            height: 100%;
         }
 
         &:hover::after {
@@ -44,27 +51,49 @@
     opacity: 1;
 }
 
-.magary-image-preview-mask {
+.magary-image-preview-dialog {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.95); /* Slightly darker for better contrast */
-    display: flex;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0 !important;
+    
+    // Dialog native override
+    &::backdrop {
+        background-color: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(5px);
+    }
+    
+    // Flex Layout (Default hidden)
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 9999; /* Ensure high z-index to stay on top */
+    
+    // Ensure it's on top
+    z-index: 10000;
+
+    /* Dialog open state styling */
+    &[open] {
+       display: flex; 
+    }
 }
 
 .magary-image-toolbar {
     position: absolute;
-    top: 6rem;
+    top: 2rem;
     right: 2rem;
     display: flex;
     gap: 0.75rem;
-    z-index: 10000;
+    z-index: 10001;
     background: rgba(255, 255, 255, 0.15);
     padding: 0.75rem;
     border-radius: 999px;
@@ -123,7 +152,7 @@
 
 @keyframes magary-image-scale-in {
     0% {
-        transform: scale(0.5);
+        transform: scale(0.8);
         opacity: 0;
     }
     100% {

@@ -2,27 +2,27 @@ import { NavigationItem } from '../../interface/sidebar.interface';
 
 export const FORM_CONFIG: NavigationItem = {
   label: 'Form',
-  icon: 'fas fa-edit',
+  icon: 'pencil',
   children: [
     {
       label: 'Cascade Select',
       route: 'components/Cascade-Select',
-      icon: 'fas fa-list-ul',
+      icon: 'list',
     },
     {
       label: 'Checkbox',
       route: 'components/Checkbox',
-      icon: 'fas fa-check-square',
+      icon: 'square-check',
     },
     {
       label: 'Input',
       route: 'components/Input',
-      icon: 'fas fa-keyboard',
+      icon: 'keyboard',
     },
     {
       label: 'Switch',
       route: 'components/Switch',
-      icon: 'fas fa-toggle-on',
+      icon: 'toggle-right',
     },
   ],
 };

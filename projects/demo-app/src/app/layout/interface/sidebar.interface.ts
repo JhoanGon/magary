@@ -3,6 +3,7 @@ export interface MenuItem {
   route?: string;
   icon?: string;
   children?: MenuItem[];
+  iconSize?: number;
 }
 
 export interface NavigationItem {
@@ -13,6 +14,7 @@ export interface NavigationItem {
   children?: NavigationItem[];
   badge?: string;
   badgeSeverity?: 'success' | 'info' | 'warning' | 'danger' | 'contrast';
+  iconSize?: number;
 }
 
 export interface SidebarSection {

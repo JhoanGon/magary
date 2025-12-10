@@ -24,7 +24,7 @@ const CODE_EXAMPLES = {
   custom: `<magary-message 
   severity="secondary" 
   text="Custom Icon" 
-  icon="fas fa-cog">
+  icon="settings">
 </magary-message>`,
   contrast: `<magary-message severity="contrast" text="Contrast" detail="High contrast message"></magary-message>`,
 };

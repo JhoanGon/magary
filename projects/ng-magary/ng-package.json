@@ -3,5 +3,6 @@
   "dest": "../../dist/ng-magary",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": ["lucide-angular", "lucide"]
 }

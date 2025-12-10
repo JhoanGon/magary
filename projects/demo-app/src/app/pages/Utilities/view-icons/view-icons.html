@@ -2,8 +2,8 @@
   <div class="header">
     <h1>Iconografía</h1>
     <p>
-      ng-magary está diseñado para funcionar perfectamente con
-      <b>FontAwesome</b>. Aquí tienes una guía rápida de uso y los iconos más
+      ng-magary utiliza <b>Lucide Icons</b> por defecto para una apariencia
+      moderna y consistente. Aquí tienes una guía rápida de uso y los iconos más
       comunes.
     </p>
   </div>
@@ -22,8 +22,8 @@
       </div>
       <div style="padding: 1.5rem">
         <p style="margin-bottom: 1rem; color: var(--text-secondary)">
-          Simplemente pasa la clase del icono (ej: <code>fas fa-home</code>) a
-          la propiedad <code>icon</code> de los componentes como Botones o
+          Simplemente pasa el nombre del icono Lucide (ej: <code>'house'</code>)
+          a la propiedad <code>icon</code> de los componentes como Botones o
           Inputs.
         </p>
         <div class="code-block">
@@ -49,11 +49,12 @@
         >
           <h3>Iconos Comunes</h3>
           <a
-            href="https://fontawesome.com/search?o=r&m=free"
+            href="https://lucide.dev/icons"
             target="_blank"
             class="external-link"
           >
-            Ver todos en FontAwesome <i class="fas fa-external-link-alt"></i>
+            Ver todos en Lucide.dev
+            <lucide-icon name="external-link" size="16"></lucide-icon>
           </a>
         </div>
       </div>
@@ -61,9 +62,8 @@
         <div class="icons-grid">
           @for (icon of commonIcons; track icon.name) {
             <div class="icon-item">
-              <i [class]="icon.class"></i>
+              <lucide-icon [name]="icon.name"></lucide-icon>
               <span>{{ icon.name }}</span>
-              <span class="icon-class">{{ icon.class }}</span>
             </div>
           }
         </div>

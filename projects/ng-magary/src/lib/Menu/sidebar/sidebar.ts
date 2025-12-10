@@ -39,6 +39,7 @@ interface AvatarConfig {
   badgeSeverity?: BadgeSeverity | undefined;
 }
 
+import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'magary-sidebar',
   imports: [
@@ -47,6 +48,7 @@ interface AvatarConfig {
     MagaryPanelmenu,
     MagaryAvatar,
     NgOptimizedImage,
+    LucideAngularModule,
   ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',

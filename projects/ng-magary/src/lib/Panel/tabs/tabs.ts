@@ -37,12 +37,7 @@ export class MagaryTabs implements OnInit {
     effect(() => {
       // Auto-select first tab if activeIndex is 0 and tabs change
       const tabs = this.tabs();
-      if (tabs.length > 0 && this.activeIndex() === 0) {
-        // We only set if not set? Or always force 0?
-        // Existing logic forced first tab active on init.
-        // We can just rely on activeIndex signal.
-        // Actually, existing logic: tabsArray[0].active.set(true);
-        // We should sync 'active' state of tabs with activeIndex
+      if (tabs.length > 0) {
         tabs.forEach((tab, index) => {
           tab.active.set(index === this.activeIndex());
         });

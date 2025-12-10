@@ -2,11 +2,18 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Highlight } from 'ngx-highlightjs';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-view-theming',
   standalone: true,
-  imports: [CommonModule, Highlight, MagaryTabs, MagaryTab],
+  imports: [
+    CommonModule,
+    Highlight,
+    MagaryTabs,
+    MagaryTab,
+    LucideAngularModule,
+  ],
   templateUrl: './view-theming.html',
   styleUrl: './view-theming.scss',
 })

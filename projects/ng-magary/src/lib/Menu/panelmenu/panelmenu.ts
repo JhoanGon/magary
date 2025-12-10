@@ -7,6 +7,7 @@ import {
   computed,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 import { RouterModule } from '@angular/router';
 export interface MenuItem {
   label: string;
@@ -17,6 +18,7 @@ export interface MenuItem {
   metadata?: any;
   badge?: string;
   badgeSeverity?: 'success' | 'info' | 'warning' | 'danger' | 'contrast';
+  iconSize?: number;
 }
 export interface MenuItemClickEvent {
   item: MenuItem;
@@ -29,7 +31,7 @@ export interface MenuToggleEvent {
 }
 @Component({
   selector: 'magary-panelmenu',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LucideAngularModule],
   templateUrl: './panelmenu.html',
   styleUrl: './panelmenu.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

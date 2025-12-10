@@ -4,11 +4,11 @@ export const UTILITIES_ITEMS_CONFIG: NavigationItem[] = [
   {
     label: 'Theming',
     route: '/theming',
-    icon: 'fas fa-paint-brush',
+    icon: 'palette',
   },
   {
     label: 'Iconos',
     route: '/icons',
-    icon: 'fas fa-icons',
+    icon: 'shapes',
   },
 ];

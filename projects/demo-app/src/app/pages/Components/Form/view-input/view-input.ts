@@ -28,9 +28,9 @@ const CODE_EXAMPLES = {
   validation: `<magary-input [label]="'Error'" [error]="'Mensaje de error'" [value]="'Invalido'"></magary-input>
 <magary-input [label]="'Éxito'" [success]="true" [value]="'Valido'"></magary-input>
 <magary-input [label]="'Requerido'" [required]="true" [placeholder]="'Campo obligatorio'"></magary-input>`,
-  icons: `<magary-input [label]="'Prefijo'" [prefixIcon]="'fas fa-user'" [placeholder]="'Usuario'"></magary-input>
-<magary-input [label]="'Sufijo'" [suffixIcon]="'fas fa-search'" [placeholder]="'Buscar'"></magary-input>
-<magary-input [label]="'Ambos'" [prefixIcon]="'fas fa-envelope'" [suffixIcon]="'fas fa-check'" [placeholder]="'Email'"></magary-input>
+  icons: `<magary-input [label]="'Prefijo'" [prefixIcon]="'user'" [placeholder]="'Usuario'"></magary-input>
+<magary-input [label]="'Sufijo'" [suffixIcon]="'search'" [placeholder]="'Buscar'"></magary-input>
+<magary-input [label]="'Ambos'" [prefixIcon]="'mail'" [suffixIcon]="'check'" [placeholder]="'Email'"></magary-input>
 <magary-input [label]="'Loading'" [loading]="true" [placeholder]="'Cargando...'"></magary-input>`,
   states: `<magary-input [label]="'Normal'" [placeholder]="'Normal'"></magary-input>
 <magary-input [label]="'Deshabilitado'" [disabled]="true" [value]="'Deshabilitado'"></magary-input>

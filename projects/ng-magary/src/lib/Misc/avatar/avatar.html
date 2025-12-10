@@ -11,7 +11,7 @@
 >
   @if (loading()) {
     <div class="avatar-loading">
-      <i class="fas fa-spinner fa-spin"></i>
+      <lucide-icon name="loader" class="spin"></lucide-icon>
     </div>
   } @else {
     @if (shouldShowImage()) {
@@ -27,7 +27,7 @@
       />
     }
     @if (shouldShowIcon()) {
-      <i [class]="'fas fa-' + icon()" class="avatar-icon"></i>
+      <lucide-icon [name]="icon() || 'user'" class="avatar-icon"></lucide-icon>
     }
     @if (shouldShowLabel()) {
       <span class="avatar-label">{{ displayLabel() }}</span>

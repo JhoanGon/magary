@@ -7,6 +7,7 @@ import {
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 type ButtonSeverity =
   | 'primary'
   | 'secondary'
@@ -21,7 +22,7 @@ type IconPosition = 'left' | 'right';
 type ShadowLevel = 0 | 1 | 2 | 3 | 4 | 5;
 @Component({
   selector: 'magary-button',
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './button.html',
   styleUrl: './button.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +35,7 @@ export class MagaryButton {
   readonly customBackgroundColor = input<string>();
   readonly iconPos = input<IconPosition>('left');
   readonly severity = input<ButtonSeverity>();
+  readonly iconSize = input<number>();
   readonly loading = input<boolean>(false);
   readonly disabled = input<boolean>(false);
   readonly variant = input<ButtonVariant>('solid');

@@ -20,53 +20,53 @@ export class ViewPanelMenu {
   menuItems: MenuItem[] = [
     {
       label: 'Dashboard',
-      icon: 'fas fa-home',
+      icon: 'house',
     },
     {
       label: 'Usuarios',
-      icon: 'fas fa-users',
+      icon: 'users',
       children: [
-        { label: 'Lista', icon: 'fas fa-list' },
-        { label: 'Crear', icon: 'fas fa-plus' },
-        { label: 'Reportes', disabled: true, icon: 'fas fa-chart-bar' },
+        { label: 'Lista', icon: 'list' },
+        { label: 'Crear', icon: 'plus' },
+        { label: 'Reportes', disabled: true, icon: 'bar-chart-2' },
       ],
     },
     {
       label: 'Ajustes',
-      icon: 'fas fa-cogs',
+      icon: 'settings',
       children: [
         {
           label: 'General',
-          icon: 'fas fa-sliders-h',
+          icon: 'sliders',
           children: [
             {
               label: 'Perfil',
-              icon: 'fas fa-user',
+              icon: 'user',
             },
             {
               label: 'Preferencias',
-              icon: 'fas fa-heart',
+              icon: 'heart',
             },
             {
               label: 'Seguridad',
               disabled: true,
-              icon: 'fas fa-shield-alt',
+              icon: 'shield',
             },
           ],
         },
         {
           label: 'Notificaciones',
-          icon: 'fas fa-bell',
+          icon: 'bell',
         },
       ],
     },
     {
       label: 'Ayuda',
-      icon: 'fas fa-question-circle',
+      icon: 'circle-help',
     },
   ];
   lastClickedItem: string = 'Ninguno';
-  lastToggleState: string = 'Abierto'; 
+  lastToggleState: string = 'Abierto';
   lastExpandedItem: string = 'Ninguno';
   exampleMenuItemsHtml = `
     <magary-panelmenu
@@ -83,11 +83,11 @@ export class ViewPanelMenu {
       {
         label: 'Dashboard',
         route: '/dashboard',
-        icon: 'fas fa-home'
+        icon: 'house'
       },
       {
         label: 'Usuarios',
-        icon: 'fas fa-users',
+        icon: 'users',
         children: [
           { label: 'Lista', route: '/users/list' },
           { label: 'Crear', route: '/users/create' }
@@ -108,10 +108,10 @@ export class ViewPanelMenu {
     menuItems: MenuItem[] = [
       {
         label: 'Usuarios',
-        icon: 'fas fa-users',
+        icon: 'users',
         children: [
-          { label: 'Lista', route: '/users/list', icon: 'fas fa-list' },
-          { label: 'Reportes', disabled: true, icon: 'fas fa-chart-bar' }
+          { label: 'Lista', route: '/users/list', icon: 'list' },
+          { label: 'Reportes', disabled: true, icon: 'bar-chart-2' }
         ]
       }
     ];`;

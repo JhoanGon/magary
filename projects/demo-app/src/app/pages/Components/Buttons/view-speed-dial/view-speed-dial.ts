@@ -223,14 +223,14 @@ export class ViewSpeedDial {
           {
             name: 'icon',
             type: 'string',
-            default: "'fas fa-plus'",
+            default: "'plus'",
             description:
               'Clase CSS del icono a mostrar en el botón principal cuando el menú está cerrado.',
           },
           {
             name: 'activeIcon',
             type: 'string',
-            default: "'fas fa-times'",
+            default: "'x'",
             description:
               'Clase CSS del icono a mostrar en el botón principal cuando el menú está desplegado.',
           },
@@ -315,66 +315,66 @@ export class ViewSpeedDial {
   importExample = "import { MagarySpeedDial } from 'ng-magary';";
   actionItems: SpeedDialItem[] = [
     {
-      icon: 'fas fa-pencil',
+      icon: 'pencil',
       tooltip: 'Editar',
       command: () => console.log('Editar'),
     },
     {
-      icon: 'fas fa-trash',
+      icon: 'trash',
       tooltip: 'Eliminar',
       command: () => console.log('Eliminar'),
     },
     {
-      icon: 'fas fa-share-alt',
+      icon: 'share-2',
       tooltip: 'Compartir',
       command: () => console.log('Compartir'),
     },
   ];
   actionItemsTooltip: SpeedDialItem[] = [
     {
-      icon: 'fas fa-pencil',
+      icon: 'pencil',
       tooltip: 'Editar',
       command: () => console.log('Editar'),
     },
     {
-      icon: 'fas fa-trash',
+      icon: 'trash',
       command: () => console.log('Eliminar'),
     },
     {
-      icon: 'fas fa-share-alt',
+      icon: 'share-2',
       tooltip: '',
       command: () => console.log('Compartir'),
     },
   ];
   exampleTs = `actionItems: SpeedDialItem[] = [
     {
-      icon: 'fas fa-pencil',
+      icon: 'pencil',
       tooltip: 'Editar',
       command: () => console.log('Editar'),
     },
     {
-      icon: 'fas fa-trash',
+      icon: 'trash',
       tooltip: 'Eliminar',
       command: () => console.log('Eliminar'),
     },
     {
-      icon: 'fas fa-share-alt',
+      icon: 'share-2',
       tooltip: 'Compartir',
       command: () => console.log('Compartir'),
     },
   ];`;
   exampleTooltipTs = `actionItems: SpeedDialItem[] = [
     {
-      icon: 'fas fa-pencil',
+      icon: 'pencil',
       tooltip: 'Editar',
       command: () => console.log('Editar'),
     },
     {
-      icon: 'fas fa-trash',
+      icon: 'trash',
       command: () => console.log('Eliminar'),
     },
     {
-      icon: 'fas fa-share-alt',
+      icon: 'share-2',
       tooltip: '',
       command: () => console.log('Compartir'),
     },
@@ -408,7 +408,7 @@ export class ViewSpeedDial {
   exampleCommand: string = `
   items = [
     {
-      icon: 'fas fa-plus',
+      icon: 'plus',
       tooltip: 'Crear',
       command: (e) => console.log('Crear', e)
     }
@@ -417,9 +417,9 @@ export class ViewSpeedDial {
   <div class="relative-container">
     <magary-speed-dial
       [items]="[
-        { icon: 'fas fa-plus', tooltip: 'Nuevo', command: create },
-        { icon: 'fas fa-edit', tooltip: 'Editar', command: edit },
-        { icon: 'fas fa-trash', tooltip: 'Eliminar', command: remove }
+        { icon: 'plus', tooltip: 'Nuevo', command: create },
+        { icon: 'pencil', tooltip: 'Editar', command: edit },
+        { icon: 'trash', tooltip: 'Eliminar', command: remove }
       ]"
       [type]="'circle'"
       [background]="'#0d6efd'"

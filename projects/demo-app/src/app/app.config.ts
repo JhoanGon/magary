@@ -2,17 +2,31 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
+  importProvidersFrom,
 } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { LucideAngularModule, icons } from 'lucide-angular';
+
+const kebabCase = (str: string) =>
+  str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+const lucideIcons = Object.entries(icons).reduce(
+  (acc, [key, icon]) => {
+    acc[key] = icon;
+    acc[kebabCase(key)] = icon;
+    return acc;
+  },
+  {} as Record<string, any>,
+);
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideAnimations(),
+    importProvidersFrom(LucideAngularModule.pick(lucideIcons)),
     provideRouter(
       routes,
       withInMemoryScrolling({

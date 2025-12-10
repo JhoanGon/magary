@@ -9,7 +9,7 @@
     <span class="select-label" [class.placeholder]="!value()">
       {{ selectedLabel() }}
     </span>
-    <i class="fas fa-chevron-down select-icon"></i>
+    <lucide-icon name="chevron-down" class="select-icon"></lucide-icon>
   </div>
 
   @if (isOpen()) {
@@ -26,7 +26,10 @@
               <div class="item-content">
                 <span>{{ getOptionLabel(option) }}</span>
                 @if (isOptionGroup(option)) {
-                  <i class="fas fa-chevron-right group-icon"></i>
+                  <lucide-icon
+                    name="chevron-right"
+                    class="group-icon"
+                  ></lucide-icon>
                 }
               </div>
 

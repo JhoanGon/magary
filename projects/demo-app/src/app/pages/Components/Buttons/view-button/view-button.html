@@ -42,8 +42,12 @@
               "
             >
               <magary-button label="Button"></magary-button>
-              <magary-button label="Home" icon="fas fa-home"></magary-button>
-              <magary-button icon="fas fa-heart"></magary-button>
+              <magary-button
+                label="Home"
+                icon="house"
+                [iconSize]="15"
+              ></magary-button>
+              <magary-button icon="heart" [iconSize]="15"></magary-button>
               <magary-button
                 label="Loading..."
                 [loading]="true"
@@ -288,6 +292,25 @@
             </div>
           </magary-card>
         </div>
+        <div class="demo-item">
+          <h4>Icon Size</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-button
+                label="32px Icon"
+                icon="heart"
+                [iconSize]="32"
+              ></magary-button>
+            </div>
+          </magary-card>
+        </div>
       </div>
       <div class="code-block">
         <pre><code [highlight]="exampleCustom" language="html"></code></pre>
@@ -386,7 +409,7 @@
               <td><code>icon</code></td>
               <td><code>string</code></td>
               <td><code>undefined</code></td>
-              <td>Clase del icono (ej: 'fas fa-home').</td>
+              <td>Clase del icono (ej: 'house').</td>
             </tr>
             <tr>
               <td><code>iconPos</code></td>
@@ -440,6 +463,12 @@
               <td><code>number</code></td>
               <td><code>0</code></td>
               <td>Nivel de sombra (1-5).</td>
+            </tr>
+            <tr>
+              <td><code>iconSize</code></td>
+              <td><code>number</code></td>
+              <td><code>undefined</code></td>
+              <td>Tamaño del icono en píxeles.</td>
             </tr>
           </tbody>
         </table>

@@ -2,22 +2,22 @@ import { NavigationItem } from '../../interface/sidebar.interface';
 
 export const MISC_CONFIG: NavigationItem = {
   label: 'Misc',
-  icon: 'fas fa-cube',
+  icon: 'box',
   children: [
     {
       label: 'Avatar',
       route: 'components/Avatar',
-      icon: 'fas fa-user-circle',
+      icon: 'circle-user',
     },
     {
       label: 'Toast',
       route: 'components/Toast',
-      icon: 'fas fa-bell',
+      icon: 'bell',
     },
     {
       label: 'Skeleton',
       route: 'components/Skeleton',
-      icon: 'fas fa-spinner',
+      icon: 'loader',
     },
   ],
 };

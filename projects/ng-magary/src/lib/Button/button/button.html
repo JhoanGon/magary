@@ -9,14 +9,21 @@
   (click)="onButtonClick($event)"
 >
   @if (loading()) {
-    <span
-      class="p-button-loading-icon fas fa-spinner fa-spin"
+    <lucide-icon
+      name="loader"
+      class="p-button-loading-icon spin"
       aria-hidden="true"
-    >
-    </span>
+      [size]="iconSize()"
+      [style.width.px]="iconSize()"
+    ></lucide-icon>
   }
   @if (icon() && !loading() && iconPos() === "left") {
-    <span class="p-button-icon" [ngClass]="icon()" aria-hidden="true"> </span>
+    <lucide-icon
+      [name]="icon()"
+      class="p-button-icon"
+      [size]="iconSize()"
+      [style.width.px]="iconSize()"
+    ></lucide-icon>
   }
   @if (label()) {
     <span class="p-button-label">{{ label() }}</span>
@@ -24,6 +31,11 @@
     <span class="p-button-label">&nbsp;</span>
   }
   @if (icon() && !loading() && iconPos() === "right") {
-    <span class="p-button-icon" [ngClass]="icon()" aria-hidden="true"> </span>
+    <lucide-icon
+      [name]="icon()"
+      class="p-button-icon"
+      [size]="iconSize()"
+      [style.width.px]="iconSize()"
+    ></lucide-icon>
   }
 </button>

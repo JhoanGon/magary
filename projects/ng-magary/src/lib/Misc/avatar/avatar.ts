@@ -14,9 +14,10 @@ export interface AvatarClickEvent {
   type: 'avatar' | 'badge';
   data?: any;
 }
+import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'magary-avatar',
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [CommonModule, NgOptimizedImage, LucideAngularModule],
   templateUrl: './avatar.html',
   styleUrl: './avatar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

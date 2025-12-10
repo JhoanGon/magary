@@ -2,17 +2,17 @@ import { NavigationItem } from '../../interface/sidebar.interface';
 
 export const MENU_CONFIG: NavigationItem = {
   label: 'Menu',
-  icon: 'fas fa-bars',
+  icon: 'menu',
   children: [
     {
       label: 'Panel Menu',
       route: 'components/Panel-Menu',
-      icon: 'fas fa-list-alt',
+      icon: 'list',
     },
     {
       label: 'Sidebar',
       route: 'components/Sidebar',
-      icon: 'fas fa-columns',
+      icon: 'panel-left-dashed',
     },
   ],
 };

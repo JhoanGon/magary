@@ -1,0 +1,12 @@
+// Import Gridstack styles
+@import 'gridstack/dist/gridstack.min.css';
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.grid-stack {
+  background: var(--surface-50);
+  border-radius: var(--border-radius);
+}
