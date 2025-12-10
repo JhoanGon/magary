@@ -181,7 +181,5 @@ countries = [
     return parts.length > 0 ? parts.join(' → ') : 'Ninguno';
   }
 
-  onCityChange(event: any) {
-    console.log('Demo: selectedCity changed:', event);
-  }
+  onCityChange(event: any) {}
 }

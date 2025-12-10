@@ -127,14 +127,11 @@ export class ViewPanelMenu {
     }`;
   onMenuToggle(event: MenuToggleEvent): void {
     this.lastToggleState = event.isOpen ? 'Abierto' : 'Cerrado';
-    console.log('Menu toggle:', event);
   }
   onItemClick(event: MenuItemClickEvent): void {
     this.lastClickedItem = `${event.item.label} (Nivel ${event.level})`;
-    console.log('Item clicked:', event);
   }
   onItemExpand(event: { item: MenuItem; expanded: boolean }): void {
     this.lastExpandedItem = `${event.item.label} - ${event.expanded ? 'Expandido' : 'Contraído'}`;
-    console.log('Item expand:', event);
   }
 }

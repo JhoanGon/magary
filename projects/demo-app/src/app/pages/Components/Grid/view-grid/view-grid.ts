@@ -336,9 +336,7 @@ export class ViewGrid {
     },
   ];
 
-  onGridChange(event: any) {
-    console.log('Grid changed:', event);
-  }
+  onGridChange(event: any) {}
 
   // Table config
   tableColumns = [

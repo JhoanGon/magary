@@ -317,33 +317,33 @@ export class ViewSpeedDial {
     {
       icon: 'pencil',
       tooltip: 'Editar',
-      command: () => console.log('Editar'),
+      command: () => {},
     },
     {
       icon: 'trash',
       tooltip: 'Eliminar',
-      command: () => console.log('Eliminar'),
+      command: () => {},
     },
     {
       icon: 'share-2',
       tooltip: 'Compartir',
-      command: () => console.log('Compartir'),
+      command: () => {},
     },
   ];
   actionItemsTooltip: SpeedDialItem[] = [
     {
       icon: 'pencil',
       tooltip: 'Editar',
-      command: () => console.log('Editar'),
+      command: () => {},
     },
     {
       icon: 'trash',
-      command: () => console.log('Eliminar'),
+      command: () => {},
     },
     {
       icon: 'share-2',
       tooltip: '',
-      command: () => console.log('Compartir'),
+      command: () => {},
     },
   ];
   exampleTs = `actionItems: SpeedDialItem[] = [

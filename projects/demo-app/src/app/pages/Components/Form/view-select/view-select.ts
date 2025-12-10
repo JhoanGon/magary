@@ -33,9 +33,7 @@ export class ViewSelect {
     return this.users.find((u) => u.id === this.selectedUserId);
   }
 
-  onUserChange(val: any) {
-    console.log('User selected:', val);
-  }
+  onUserChange(val: any) {}
 
   // Code Examples
   importRef = `import { MagarySelect } from 'ng-magary';`;
