@@ -1,0 +1,229 @@
+<div class="container fade-in">
+  <!-- Header -->
+  <div class="header">
+    <h1>Magary Radio Button</h1>
+    <p>Componente de selección única estilizado y accesible.</p>
+  </div>
+
+  <!-- Import -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Importación</h2>
+      <p>Importa el módulo en tu componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importRef" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic Usage -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Uso Básico</h2>
+      <p>Selección de opciones simples.</p>
+    </div>
+    <div class="section-content">
+      <div class="radio-group-demo">
+        <div class="radio-row">
+          <magary-radio
+            name="city"
+            value="NY"
+            label="New York"
+            [(ngModel)]="city"
+            inputId="r1"
+          >
+          </magary-radio>
+
+          <magary-radio
+            name="city"
+            value="LDN"
+            label="London"
+            [(ngModel)]="city"
+            inputId="r2"
+          >
+          </magary-radio>
+
+          <magary-radio
+            name="city"
+            value="PAR"
+            label="Paris (Disabled)"
+            [(ngModel)]="city"
+            inputId="r3"
+            disabled
+          >
+          </magary-radio>
+        </div>
+
+        <p>
+          Selected City: <strong>{{ city || "None" }}</strong>
+        </p>
+      </div>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="basicHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="basicTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Radio Group Usage -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Radio Group</h2>
+      <p>
+        Genera opciones dinámicamente desde un Array. Simplifica el código y
+        permite alternar fácilmente entre layout <code>vertical</code> u
+        <code>horizontal</code>.
+      </p>
+    </div>
+    <div class="section-content">
+      <div class="radio-group-demo">
+        <label style="margin-bottom: 0.5rem; display: block; font-weight: 500"
+          >Payment Method</label
+        >
+        <magary-radio-group
+          [options]="paymentOptions"
+          [(ngModel)]="paymentMethod"
+          name="payment"
+          layout="horizontal"
+          optionLabel="label"
+          optionValue="value"
+        >
+        </magary-radio-group>
+
+        <p style="margin-top: 1rem">
+          Selected Method: <strong>{{ paymentMethod }}</strong>
+        </p>
+      </div>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="groupHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="groupTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Table Group -->
+  <div class="api-table section">
+    <div class="section-header">
+      <h2>API Reference (Group)</h2>
+      <p>Inputs para <code>magary-radio-group</code>.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Default</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>options</code></td>
+              <td><code>any[]</code></td>
+              <td><code>[]</code></td>
+              <td>Lista de opciones.</td>
+            </tr>
+            <tr>
+              <td><code>layout</code></td>
+              <td><code>'vertical' | 'horizontal'</code></td>
+              <td><code>vertical</code></td>
+              <td>Orientación del grupo.</td>
+            </tr>
+            <tr>
+              <td><code>optionLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>Propiedad para etiqueta.</td>
+            </tr>
+            <tr>
+              <td><code>optionValue</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>Propiedad para valor.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Table -->
+  <div class="api-table section">
+    <div class="section-header">
+      <h2>API Reference</h2>
+      <p>Inputs para <code>magary-radio</code>.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Default</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>value</code></td>
+              <td><code>any</code></td>
+              <td><code>-</code></td>
+              <td>Valor del radio button.</td>
+            </tr>
+            <tr>
+              <td><code>name</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>Nombre del grupo de radios (atributo HTML).</td>
+            </tr>
+            <tr>
+              <td><code>label</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>Texto descriptivo opcional.</td>
+            </tr>
+            <tr>
+              <td><code>inputId</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>ID del input interno (para labels).</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Deshabilita el radio button (soporta atributo HTML).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

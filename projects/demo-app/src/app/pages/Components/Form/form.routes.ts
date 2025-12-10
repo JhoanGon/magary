@@ -23,4 +23,24 @@ export const FORM_ROUTES: Routes = [
         (m) => m.ViewCascadeSelect,
       ),
   },
+  {
+    path: 'Select',
+    loadComponent: () =>
+      import('./view-select/view-select').then((m) => m.ViewSelect),
+  },
+  {
+    path: 'Radio',
+    loadComponent: () =>
+      import('./view-radio/view-radio').then((m) => m.ViewRadio),
+  },
+  {
+    path: 'TextArea',
+    loadComponent: () =>
+      import('./view-textarea/view-textarea').then((m) => m.ViewTextArea),
+  },
+  {
+    path: 'DatePicker',
+    loadComponent: () =>
+      import('./view-datepicker/view-datepicker').then((m) => m.ViewDatePicker),
+  },
 ];

@@ -1,0 +1,157 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1>Magary TextArea</h1>
+    <p>Area de texto con autoredimensionamiento y soporte CVA.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Importación</h2>
+      <p>Importa el módulo en tu componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importRef" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Uso Básico</h2>
+      <p>Textarea simple y con AutoResize.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <div class="field">
+          <label>Basic</label>
+          <magary-textarea placeholder="Type something..."></magary-textarea>
+        </div>
+
+        <div class="field">
+          <label>Auto Resize</label>
+          <magary-textarea
+            [autoResize]="true"
+            [rows]="1"
+            placeholder="Type and watch me grow..."
+          ></magary-textarea>
+        </div>
+
+        <div class="field">
+          <label>Disabled</label>
+          <magary-textarea
+            [disabled]="true"
+            placeholder="Disabled"
+          ></magary-textarea>
+        </div>
+      </div>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="basicHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="basicTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Character Counter</h2>
+      <p>Contador de carácteres y límite de input.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <div class="field">
+          <label>With MaxLength (20)</label>
+          <magary-textarea
+            [rows]="5"
+            [cols]="30"
+            placeholder="Max 20 chars"
+            [maxlength]="20"
+            showCounter
+          >
+          </magary-textarea>
+        </div>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <pre><code [highlight]="counterHTML" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="api-table section">
+    <div class="section-header">
+      <h2>API Reference</h2>
+      <p>Inputs para <code>magary-textarea</code>.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Default</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>rows</code></td>
+              <td><code>number</code></td>
+              <td><code>3</code></td>
+              <td>Filas iniciales.</td>
+            </tr>
+            <tr>
+              <td><code>cols</code></td>
+              <td><code>number</code></td>
+              <td><code>20</code></td>
+              <td>Columnas iniciales.</td>
+            </tr>
+            <tr>
+              <td><code>placeholder</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>Texto de ayuda.</td>
+            </tr>
+            <tr>
+              <td><code>autoResize</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>
+                Si es true, la altura se ajusta automáticamente al contenido.
+              </td>
+            </tr>
+            <tr>
+              <td><code>maxlength</code></td>
+              <td><code>number</code></td>
+              <td><code>-</code></td>
+              <td>Límite de caracteres.</td>
+            </tr>
+            <tr>
+              <td><code>showCounter</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Muestra el contador `current / max`.</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Deshabilita el textarea.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

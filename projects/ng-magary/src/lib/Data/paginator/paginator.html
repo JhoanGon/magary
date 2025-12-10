@@ -1,0 +1,130 @@
+<div class="magary-paginator" [class.hidden]="totalRecords === 0">
+  <div class="magary-paginator-left-content">
+    <!-- Optional content projection for left side -->
+    <ng-content select=".left-content"></ng-content>
+  </div>
+
+  <div class="magary-paginator-pages">
+    <button
+      type="button"
+      class="magary-paginator-element magary-paginator-first"
+      (click)="changePageToFirst($event)"
+      [disabled]="isFirstPage()"
+      [attr.aria-label]="'First Page'"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="11 17 6 12 11 7"></polyline>
+        <polyline points="18 17 13 12 18 7"></polyline>
+      </svg>
+    </button>
+
+    <button
+      type="button"
+      class="magary-paginator-element magary-paginator-prev"
+      (click)="changePageToPrev($event)"
+      [disabled]="isFirstPage()"
+      [attr.aria-label]="'Previous Page'"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <span class="magary-paginator-pages-container" *ngIf="showPageLinks">
+      <button
+        type="button"
+        *ngFor="let pageLink of getPageLinks()"
+        class="magary-paginator-page magary-paginator-element"
+        [class.magary-paginator-page-active]="pageLink - 1 === getPage()"
+        (click)="onPageLinkClick($event, pageLink)"
+      >
+        {{ pageLink }}
+      </button>
+    </span>
+
+    <button
+      type="button"
+      class="magary-paginator-element magary-paginator-next"
+      (click)="changePageToNext($event)"
+      [disabled]="isLastPage()"
+      [attr.aria-label]="'Next Page'"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+    <button
+      type="button"
+      class="magary-paginator-element magary-paginator-last"
+      (click)="changePageToLast($event)"
+      [disabled]="isLastPage()"
+      [attr.aria-label]="'Last Page'"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="13 17 18 12 13 7"></polyline>
+        <polyline points="6 17 11 12 6 7"></polyline>
+      </svg>
+    </button>
+
+    <div
+      class="magary-paginator-rpp-options"
+      *ngIf="rowsPerPageOptions.length > 0"
+    >
+      <select
+        [ngModel]="rows"
+        (change)="onRppChange($event)"
+        class="magary-paginator-rpp-dropdown"
+      >
+        <option *ngFor="let opt of rowsPerPageOptions" [value]="opt">
+          {{ opt }} / page
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="magary-paginator-right-content">
+    <!-- Optional content projection for right side -->
+    <ng-content select=".right-content"></ng-content>
+  </div>
+</div>

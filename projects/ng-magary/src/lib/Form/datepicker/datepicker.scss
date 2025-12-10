@@ -1,0 +1,239 @@
+:host {
+  display: inline-block;
+  width: 100%;
+}
+
+.magary-datepicker {
+  position: relative;
+  width: 100%;
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--surface-300);
+  border-radius: var(--border-radius);
+  background: var(--surface-0);
+  transition: all 0.2s;
+  overflow: hidden;
+
+  &:focus-within {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 2px var(--primary-100);
+  }
+
+  .datepicker-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .datepicker-trigger {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: var(--text-primary);
+    }
+  }
+}
+
+.datepicker-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  background: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  padding: 1rem;
+  z-index: 1000;
+  width: 280px;
+
+  &.fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  .view-switch-btn {
+    background: transparent;
+    border: none;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--surface-100);
+    }
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background: var(--surface-100);
+      color: var(--text-primary);
+    }
+  }
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+
+  .weekday {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .day {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border-radius: 50%;
+    color: var(--text-primary);
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
+    &:hover:not(.selected):not(.empty):not(.disabled) {
+      background: var(--surface-100);
+    }
+
+    &.selected {
+      background: var(--primary-500);
+      color: white;
+    }
+
+    // Range Styles
+    &.in-range {
+      background: var(--primary-100);
+      color: var(--primary-900); // Dark text for contrast against light background
+      font-weight: 500;
+      border-radius: 0;
+      
+      // Ensure pseudo-element or margin doesn't break the flow
+      // The connected look relies on 0 border radius between
+
+      &.range-start {
+          background: var(--primary-500);
+          color: white;
+          border-radius: 50% 0 0 50%;
+          position: relative;
+          z-index: 1;
+      }
+      
+      &.range-end {
+          background: var(--primary-500);
+          color: white;
+          border-radius: 0 50% 50% 0;
+          position: relative;
+          z-index: 1;
+      }
+
+      // Single day range (start == end)
+       &.range-start.range-end {
+         border-radius: 50%;
+       }
+    }
+
+    &.range-start:not(.in-range) { // Start selected but no end yet
+       background: var(--primary-500);
+       color: white;
+       border-radius: 50%; // Keep circle until range forms
+    }
+
+    &.today {
+      color: var(--primary-500);
+      font-weight: 700;
+    }
+    
+    &.today.selected {
+      color: white;
+    }
+
+    &.empty {
+      pointer-events: none;
+    }
+
+    &.disabled {
+      color: var(--text-secondary);
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+}
+
+.month-grid, .year-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+
+  .month-item, .year-item {
+    padding: 0.75rem 0;
+    text-align: center;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--surface-100);
+    }
+
+    &.current {
+      color: var(--primary-500);
+      font-weight: 700;
+    }
+  }
+}
