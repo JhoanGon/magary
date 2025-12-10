@@ -268,12 +268,10 @@ export class ViewCard {
   onCardClick(event: Event): void {
     try {
       const customEvent = event as CustomEvent;
-      console.log('Card clicked!', customEvent.detail);
       this.lastClickedCard = `Card clickeada a las ${new Date().toLocaleTimeString()}`;
       this.showToastNotification('¡Card clickeada exitosamente!');
       this.showNotificationIfAllowed();
     } catch (error: any) {
-      console.warn('Error handling card click:', error);
       this.showToastNotification('Error al procesar el click', 'error');
     }
   }

@@ -55,6 +55,5 @@ export class ViewAvatar {
         alert(`Tienes ${event.data.value} mensajes nuevos`);
       }
     }
-    console.log('Avatar click event:', event);
   }
 }

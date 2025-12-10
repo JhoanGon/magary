@@ -77,7 +77,5 @@ export class ViewMessage {
     this.msgs = [];
   }
 
-  onClose(event: Event) {
-    console.log('Message closed', event);
-  }
+  onClose(event: Event) {}
 }

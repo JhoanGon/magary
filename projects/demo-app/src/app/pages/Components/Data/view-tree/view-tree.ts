@@ -141,13 +141,9 @@ export class ViewTree {
   selectedFile: MagaryTreeNode | null = null;
   selectedFiles: MagaryTreeNode[] = [];
 
-  onNodeSelect(event: any) {
-    console.log('Node Selected:', event.node.label);
-  }
+  onNodeSelect(event: any) {}
 
-  onNodeUnselect(event: any) {
-    console.log('Node Unselected:', event.node.label);
-  }
+  onNodeUnselect(event: any) {}
 
   exampleHTML = `
 <magary-tree 

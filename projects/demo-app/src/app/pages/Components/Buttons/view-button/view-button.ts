@@ -49,7 +49,5 @@ export class ViewButton {
   readonly exampleState = CODE_EXAMPLES.states;
   readonly exampleEventClick = CODE_EXAMPLES.events;
 
-  handleClick(event: Event) {
-    console.log('Button clicked!', event);
-  }
+  handleClick(event: Event) {}
 }

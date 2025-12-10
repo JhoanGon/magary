@@ -47,11 +47,7 @@ export class ViewImage {
   readonly exampleSizes = CODE_EXAMPLES.sizes;
   readonly exampleEvents = CODE_EXAMPLES.events;
 
-  handleLoad(event: Event) {
-    console.log('Image Loaded', event);
-  }
+  handleLoad(event: Event) {}
 
-  handleError(event: Event) {
-    console.error('Image Error', event);
-  }
+  handleError(event: Event) {}
 }
