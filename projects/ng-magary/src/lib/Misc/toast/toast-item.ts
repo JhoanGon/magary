@@ -6,11 +6,12 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 import { Toast } from './toast.service';
 
 @Component({
   selector: 'magary-toast-item',
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './toast-item.html',
   styleUrl: './toast-item.scss',
   encapsulation: ViewEncapsulation.None,
@@ -24,15 +25,15 @@ export class MagaryToastItem {
 
     switch (this.toast.type) {
       case 'success':
-        return 'fas fa-check-circle';
+        return 'circle-check';
       case 'error':
-        return 'fas fa-times-circle';
+        return 'circle-x';
       case 'warning':
-        return 'fas fa-exclamation-triangle';
+        return 'triangle-alert';
       case 'info':
-        return 'fas fa-info-circle';
+        return 'info';
       default:
-        return 'fas fa-info-circle';
+        return 'info';
     }
   }
 

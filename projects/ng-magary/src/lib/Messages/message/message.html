@@ -6,7 +6,7 @@
 >
   @if (visible) {
     <div class="magary-message-wrapper">
-      <span class="magary-message-icon" [ngClass]="iconClass"></span>
+      <lucide-icon [name]="iconClass" class="magary-message-icon"></lucide-icon>
       <div class="magary-message-text">
         @if (text()) {
           <span class="magary-message-summary">{{ text() }}</span>
@@ -22,7 +22,7 @@
           (click)="close($event)"
           aria-label="Close"
         >
-          <i class="fas fa-times"></i>
+          <lucide-icon name="x"></lucide-icon>
         </button>
       }
     </div>

@@ -4,14 +4,19 @@ import {
   output,
   ViewEncapsulation,
   ChangeDetectionStrategy,
+  OnDestroy,
+  signal,
+  computed,
 } from '@angular/core';
 
 import { CommonModule, NgStyle } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
+import { ElementRef, viewChild } from '@angular/core';
 
 @Component({
   selector: 'magary-image',
   standalone: true,
-  imports: [CommonModule, NgStyle],
+  imports: [CommonModule, NgStyle, LucideAngularModule],
   templateUrl: './image.html',
   styleUrls: ['./image.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -20,7 +25,9 @@ import { CommonModule, NgStyle } from '@angular/common';
     class: 'magary-image',
   },
 })
-export class MagaryImage {
+export class MagaryImage implements OnDestroy {
+  private dialog = viewChild<ElementRef<HTMLDialogElement>>('previewDialog');
+
   src = input<string | undefined>(undefined);
 
   alt = input<string | undefined>(undefined);
@@ -28,6 +35,10 @@ export class MagaryImage {
   width = input<string | undefined>(undefined);
 
   height = input<string | undefined>(undefined);
+
+  objectFit = input<'cover' | 'contain' | 'fill' | 'none' | 'scale-down'>(
+    'cover',
+  );
 
   loading = input<'lazy' | 'eager'>('lazy');
 
@@ -41,8 +52,6 @@ export class MagaryImage {
 
   error: boolean = false;
 
-  previewVisible: boolean = false;
-
   onImageLoad(event: Event) {
     this.loaded = true;
     this.onLoad.emit(event);
@@ -53,39 +62,45 @@ export class MagaryImage {
     this.onError.emit(event);
   }
 
-  rotate: number = 0;
+  rotate = signal<number>(0);
 
-  scale: number = 1;
+  scale = signal<number>(1);
 
   onPreviewImageClick(event: Event) {
     event.stopPropagation();
     if (this.preview()) {
-      this.previewVisible = true;
+      this.dialog()?.nativeElement.showModal();
     }
   }
 
   closePreview() {
-    this.previewVisible = false;
-    this.rotate = 0;
-    this.scale = 1;
+    this.dialog()?.nativeElement.close();
+    this.rotate.set(0);
+    this.scale.set(1);
+  }
+
+  ngOnDestroy() {
+    if (this.dialog()?.nativeElement?.open) {
+      this.dialog()?.nativeElement.close();
+    }
   }
 
   zoomIn() {
-    this.scale = this.scale + 0.1;
+    this.scale.update((s) => s + 0.1);
   }
 
   zoomOut() {
-    if (this.scale > 0.5) {
-      this.scale = this.scale - 0.1;
+    if (this.scale() > 0.5) {
+      this.scale.update((s) => s - 0.1);
     }
   }
 
   rotateRight() {
-    this.rotate = this.rotate + 90;
+    this.rotate.update((r) => r + 90);
   }
 
   rotateLeft() {
-    this.rotate = this.rotate - 90;
+    this.rotate.update((r) => r - 90);
   }
 
   download() {
@@ -98,9 +113,7 @@ export class MagaryImage {
     }
   }
 
-  imagePreviewStyle() {
-    return {
-      transform: 'rotate(' + this.rotate + 'deg) scale(' + this.scale + ')',
-    };
-  }
+  imagePreviewStyle = computed(() => ({
+    transform: `rotate(${this.rotate()}deg) scale(${this.scale()})`,
+  }));
 }

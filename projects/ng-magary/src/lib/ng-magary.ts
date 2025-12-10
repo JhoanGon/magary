@@ -60,3 +60,7 @@ export * from './Panel/tabs/tab/tab';
 
 // 🛠️ Services //
 export * from './Services/theme.service';
+
+// 📐 Grid //
+export * from './Grid/grid/grid';
+export * from './Grid/grid-item/grid-item';

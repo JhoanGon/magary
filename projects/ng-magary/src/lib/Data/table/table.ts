@@ -13,6 +13,7 @@ import { MagaryAvatar } from '../../Misc/avatar/avatar';
 import { MagaryInput } from '../../Form/input/input';
 import { MagarySkeleton } from '../../Misc/skeleton/skeleton';
 
+import { LucideAngularModule } from 'lucide-angular';
 export interface MagaryTableColumn {
   field: string;
   header: string;
@@ -20,7 +21,6 @@ export interface MagaryTableColumn {
   sortable?: boolean;
   width?: string;
 }
-
 @Component({
   selector: 'magary-table',
   standalone: true,
@@ -30,6 +30,7 @@ export interface MagaryTableColumn {
     MagaryAvatar,
     MagaryInput,
     MagarySkeleton,
+    LucideAngularModule,
   ],
   templateUrl: './table.html',
   styleUrls: ['./table.scss'],

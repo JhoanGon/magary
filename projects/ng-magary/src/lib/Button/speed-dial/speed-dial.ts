@@ -7,9 +7,10 @@ import {
   signal,
   ElementRef,
   HostListener,
-  inject,
   ChangeDetectionStrategy,
+  inject,
 } from '@angular/core';
+import { LucideAngularModule } from 'lucide-angular';
 import { SpeedDialItem } from './speed-dial-item.interface';
 type SpeedDialType = 'linear' | 'circle' | 'semicircle' | 'quartercircle';
 type SpeedDialDirection =
@@ -23,7 +24,7 @@ type SpeedDialDirection =
   | 'down-right';
 @Component({
   selector: 'magary-speed-dial',
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './speed-dial.html',
   styleUrl: './speed-dial.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,8 +32,8 @@ type SpeedDialDirection =
 export class MagarySpeedDial {
   private readonly elementRef = inject(ElementRef);
   readonly items = input.required<SpeedDialItem[]>();
-  readonly icon = input<string>('fas fa-plus');
-  readonly activeIcon = input<string>('fas fa-times');
+  readonly icon = input<string>('plus');
+  readonly activeIcon = input<string>('x');
   readonly type = input<SpeedDialType>('linear');
   readonly direction = input<SpeedDialDirection>();
   readonly radius = input<number>(80);

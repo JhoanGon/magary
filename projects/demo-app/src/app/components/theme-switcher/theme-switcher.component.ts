@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryThemeService, Theme } from 'ng-magary';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-theme-switcher',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   template: `
     <div class="theme-options">
       @for (theme of themes; track theme.id) {
@@ -17,7 +18,11 @@ import { MagaryThemeService, Theme } from 'ng-magary';
           (click)="setTheme(theme.id)"
         >
           @if (themeService.currentTheme() === theme.id) {
-            <i class="fas fa-check"></i>
+            <lucide-icon
+              name="check"
+              [size]="12"
+              [strokeWidth]="3"
+            ></lucide-icon>
           }
         </button>
       }

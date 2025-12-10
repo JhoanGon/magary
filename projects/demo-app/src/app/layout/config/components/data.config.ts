@@ -2,12 +2,12 @@ import { NavigationItem } from '../../interface/sidebar.interface';
 
 export const DATA_CONFIG: NavigationItem = {
   label: 'Data',
-  icon: 'fas fa-database',
+  icon: 'database',
   children: [
     {
       label: 'Table',
       route: 'components/Table',
-      icon: 'fas fa-table',
+      icon: 'table',
     },
   ],
 };

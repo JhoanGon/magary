@@ -31,9 +31,10 @@ interface UploadedFile {
   progress?: number;
 }
 
+import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'magary-upload',
-  imports: [CommonModule, MagaryButton],
+  imports: [CommonModule, MagaryButton, LucideAngularModule],
   templateUrl: './upload.html',
   styleUrl: './upload.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,11 +47,11 @@ export class MagaryUpload {
   url = input<string>('');
   name = input<string>('file');
   chooseLabel = input<string>('Choose');
-  chooseIcon = input<string>('fas fa-plus');
+  chooseIcon = input<string>('plus');
   uploadLabel = input<string>('Upload');
-  uploadIcon = input<string>('fas fa-upload');
+  uploadIcon = input<string>('upload');
   cancelLabel = input<string>('Cancel');
-  cancelIcon = input<string>('fas fa-times');
+  cancelIcon = input<string>('x');
   withCredentials = input<boolean>(false);
 
   onUpload = output<UploadEvent>();

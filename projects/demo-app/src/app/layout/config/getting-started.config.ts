@@ -4,11 +4,11 @@ export const GETTING_STARTED_ITEMS_CONFIG: NavigationItem[] = [
   {
     label: 'Instalación',
     route: '/installation',
-    icon: 'fas fa-download',
+    icon: 'download',
   },
   {
     label: 'Configuración',
     route: '/setup',
-    icon: 'fas fa-cog',
+    icon: 'settings',
   },
 ];

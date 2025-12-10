@@ -13,11 +13,11 @@
     (mouseleave)="onHeaderHover(false)"
   >
     @if (icon()) {
-      <i [class]="icon()" class="header-icon"></i>
+      <lucide-icon [name]="icon()" class="header-icon"></lucide-icon>
     }
     <span class="header-title">{{ title() }}</span>
     <span class="arrow" [class.open]="isOpen()">
-      <i class="fas fa-chevron-down"></i>
+      <lucide-icon name="chevron-down"></lucide-icon>
     </span>
   </div>
   <ul class="panel-items" [class.expanded]="isOpen()">
@@ -36,7 +36,12 @@
             (mouseleave)="onItemLeave()"
           >
             @if (item.icon) {
-              <i [class]="item.icon" class="item-icon"></i>
+              <lucide-icon
+                [name]="item.icon"
+                class="item-icon"
+                [size]="item.iconSize || 15"
+                [style.width.px]="item.iconSize || 15"
+              ></lucide-icon>
             }
             <span class="item-label">{{ item.label }}</span>
             @if (item.badge) {
@@ -50,14 +55,11 @@
               class="sub-arrow"
               [class.expanded]="isSubItemExpanded(getUniqueItemKey(item))"
             >
-              <i
-                class="fas"
-                [ngClass]="
-                  isSubItemExpanded(getUniqueItemKey(item))
-                    ? 'fa-minus'
-                    : 'fa-plus'
+              <lucide-icon
+                [name]="
+                  isSubItemExpanded(getUniqueItemKey(item)) ? 'minus' : 'plus'
                 "
-              ></i>
+              ></lucide-icon>
             </span>
           </div>
           <ul
@@ -87,7 +89,12 @@
                     (mouseleave)="onItemLeave()"
                   >
                     @if (subItem.icon) {
-                      <i [class]="subItem.icon" class="item-icon"></i>
+                      <lucide-icon
+                        [name]="subItem.icon"
+                        class="item-icon"
+                        [size]="subItem.iconSize || 15"
+                        [style.width.px]="subItem.iconSize || 15"
+                      ></lucide-icon>
                     }
                     <span class="item-label">{{ subItem.label }}</span>
                     <span
@@ -98,16 +105,15 @@
                         )
                       "
                     >
-                      <i
-                        class="fas"
-                        [ngClass]="
+                      <lucide-icon
+                        [name]="
                           isSubItemExpanded(
                             getUniqueItemKey(subItem, getUniqueItemKey(item))
                           )
-                            ? 'fa-minus'
-                            : 'fa-plus'
+                            ? 'minus'
+                            : 'plus'
                         "
-                      ></i>
+                      ></lucide-icon>
                     </span>
                   </div>
                   <ul
@@ -146,10 +152,12 @@
                             (mouseleave)="onItemLeave()"
                           >
                             @if (subSubItem.icon) {
-                              <i
-                                [class]="subSubItem.icon"
+                              <lucide-icon
+                                [name]="subSubItem.icon"
                                 class="item-icon"
-                              ></i>
+                                [size]="subSubItem.iconSize || 15"
+                                [style.width.px]="subSubItem.iconSize || 15"
+                              ></lucide-icon>
                             }
                             <span class="item-label">{{
                               subSubItem.label
@@ -179,10 +187,12 @@
                             (mouseleave)="onItemLeave()"
                           >
                             @if (subSubItem.icon) {
-                              <i
-                                [class]="subSubItem.icon"
+                              <lucide-icon
+                                [name]="subSubItem.icon"
                                 class="item-icon"
-                              ></i>
+                                [size]="subSubItem.iconSize || 15"
+                                [style.width.px]="subSubItem.iconSize || 15"
+                              ></lucide-icon>
                             }
                             <span class="item-label">{{
                               subSubItem.label
@@ -207,7 +217,12 @@
                       (mouseleave)="onItemLeave()"
                     >
                       @if (subItem.icon) {
-                        <i [class]="subItem.icon" class="item-icon"></i>
+                        <lucide-icon
+                          [name]="subItem.icon"
+                          class="item-icon"
+                          [size]="subItem.iconSize || 15"
+                          [style.width.px]="subItem.iconSize || 15"
+                        ></lucide-icon>
                       }
                       <span class="item-label">{{ subItem.label }}</span>
                       @if (subItem.badge) {
@@ -235,7 +250,12 @@
                       (mouseleave)="onItemLeave()"
                     >
                       @if (subItem.icon) {
-                        <i [class]="subItem.icon" class="item-icon"></i>
+                        <lucide-icon
+                          [name]="subItem.icon"
+                          class="item-icon"
+                          [size]="subItem.iconSize || 15"
+                          [style.width.px]="subItem.iconSize || 15"
+                        ></lucide-icon>
                       }
                       <span class="item-label">{{ subItem.label }}</span>
                     </div>
@@ -255,7 +275,12 @@
               (mouseleave)="onItemLeave()"
             >
               @if (item.icon) {
-                <i [class]="item.icon" class="item-icon"></i>
+                <lucide-icon
+                  [name]="item.icon"
+                  class="item-icon"
+                  [size]="item.iconSize || 15"
+                  [style.width.px]="item.iconSize || 15"
+                ></lucide-icon>
               }
               <span class="item-label">{{ item.label }}</span>
               @if (item.badge) {
@@ -276,7 +301,12 @@
               (mouseleave)="onItemLeave()"
             >
               @if (item.icon) {
-                <i [class]="item.icon" class="item-icon"></i>
+                <lucide-icon
+                  [name]="item.icon"
+                  class="item-icon"
+                  [size]="item.iconSize || 15"
+                  [style.width.px]="item.iconSize || 15"
+                ></lucide-icon>
               }
               <span class="item-label">{{ item.label }}</span>
             </div>

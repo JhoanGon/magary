@@ -1,0 +1,410 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1>Magary Grid</h1>
+    <p>
+      Sistema de layout dinámico Drag & Drop impulsado por Gridstack.js. Crea
+      dashboards, galerías y paneles interactivos.
+    </p>
+  </div>
+
+  <!-- Import Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Importación</h2>
+      <p>Importa el módulo en tu componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic Usage Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Uso Básico</h2>
+      <p>Grid simple con widgets estáticos o bloqueados.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <magary-grid [options]="basicOptions">
+          @for (item of basicWidgets; track $index) {
+            <magary-grid-item
+              [x]="item.x"
+              [y]="item.y"
+              [w]="item.w"
+              [h]="item.h"
+              [noResize]="item.noResize"
+              [noMove]="item.noMove"
+              [locked]="item.locked"
+            >
+              <div class="basic-item" style="background: var(--primary-500)">
+                {{ item.content }}
+              </div>
+            </magary-grid-item>
+          }
+        </magary-grid>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="basicExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="basicTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Example -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Dashboard Interactivo</h2>
+      <p>
+        Ejemplo avanzado integrando <code>magary-card</code>,
+        <code>magary-button</code>, <code>magary-avatar</code> y más. Ideal para
+        paneles de administración.
+      </p>
+    </div>
+
+    <div class="section-content">
+      <div class="demo-content">
+        <div
+          style="
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+          "
+        >
+          <magary-button
+            label="Card"
+            icon="layout-grid"
+            severity="info"
+            (buttonClick)="addWidget('card')"
+          ></magary-button>
+          <magary-button
+            label="Table"
+            icon="table"
+            severity="info"
+            (buttonClick)="addWidget('table')"
+          ></magary-button>
+          <magary-button
+            label="Image"
+            icon="image"
+            severity="info"
+            (buttonClick)="addWidget('image')"
+          ></magary-button>
+        </div>
+
+        <magary-grid
+          [options]="dashboardOptions"
+          (change)="onGridChange($event)"
+        >
+          @for (widget of dashboardWidgets(); track widget.id) {
+            <magary-grid-item
+              [id]="widget.id"
+              [x]="widget.x"
+              [y]="widget.y"
+              [w]="widget.w"
+              [h]="widget.h"
+            >
+              <magary-card
+                [shadow]="2"
+                class="widget-card"
+                width="100%"
+                height="100%"
+                [padding]="
+                  widget.type === 'image' || widget.type === 'media'
+                    ? '0'
+                    : '1rem'
+                "
+              >
+                <!-- Stats Widget (Legacy) -->
+                @if (widget.type === "stats") {
+                  <div class="stats-widget">
+                    <div class="stats-info">
+                      <span class="stats-title">{{ widget.title }}</span>
+                      <span class="stats-value">{{ widget.value }}</span>
+                      <span
+                        class="stats-trend"
+                        [style.color]="'var(--' + widget.color + '-600)'"
+                        [style.background]="'var(--' + widget.color + '-50)'"
+                      >
+                        {{ widget.trend }}
+                      </span>
+                    </div>
+                    <magary-avatar
+                      [icon]="widget.icon"
+                      size="large"
+                      [customStyle]="{
+                        'background-color': 'var(--' + widget.color + '-100)',
+                        color: 'var(--' + widget.color + '-600)',
+                      }"
+                    >
+                    </magary-avatar>
+                  </div>
+                }
+
+                <!-- Generic Card Widget -->
+                @if (widget.type === "card") {
+                  <div
+                    class="profile-widget"
+                    style="
+                      align-items: flex-start;
+                      text-align: left;
+                      padding: 1rem;
+                    "
+                  >
+                    <h3>{{ widget.title }}</h3>
+                    <p>{{ widget.content }}</p>
+                    <magary-button
+                      label="Action"
+                      size="small"
+                      style="margin-top: auto"
+                    ></magary-button>
+                  </div>
+                }
+
+                <!-- Table Widget -->
+                @if (widget.type === "table") {
+                  <div
+                    style="
+                      height: 100%;
+                      overflow: hidden;
+                      display: flex;
+                      flex-direction: column;
+                    "
+                  >
+                    <h4 style="margin: 0 0 1rem 0">{{ widget.title }}</h4>
+                    <div style="flex: 1; overflow: auto; min-height: 0">
+                      <magary-table
+                        [value]="widget.data"
+                        [columns]="tableColumns"
+                        [paginator]="false"
+                        [rows]="5"
+                      >
+                      </magary-table>
+                    </div>
+                  </div>
+                }
+
+                <!-- Image Widget (Single) -->
+                @if (widget.type === "image") {
+                  <div
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      display: flex;
+                      flex-direction: column;
+                    "
+                  >
+                    <h4 style="margin: 0; padding: 1rem 1rem 0.5rem 1rem">
+                      {{ widget.title }}
+                    </h4>
+                    <div style="flex: 1; min-height: 0; overflow: hidden">
+                      <magary-image
+                        [src]="widget.src"
+                        [preview]="true"
+                        width="100%"
+                        height="100%"
+                        [objectFit]="'cover'"
+                        style="width: 100%; height: 100%"
+                      >
+                      </magary-image>
+                    </div>
+                  </div>
+                }
+
+                <!-- Legacy Widgets (Actions, Media, Profile) -->
+                @if (widget.type === "actions") {
+                  <div class="actions-widget">
+                    <h4>{{ widget.title }}</h4>
+                    <div class="action-buttons">
+                      <magary-button
+                        label="Option 1"
+                        icon="check"
+                        size="small"
+                      ></magary-button>
+                      <magary-button
+                        label="Option 2"
+                        icon="x"
+                        severity="secondary"
+                        size="small"
+                      ></magary-button>
+                    </div>
+                  </div>
+                }
+
+                @if (widget.type === "media") {
+                  <div class="media-widget">
+                    <h4>{{ widget.title }}</h4>
+                    <div class="media-grid">
+                      @for (img of widget.images; track img) {
+                        <div class="media-item">
+                          <magary-image
+                            [src]="img"
+                            [preview]="true"
+                            width="100%"
+                            height="100%"
+                          ></magary-image>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                }
+
+                @if (widget.type === "profile") {
+                  <div class="profile-widget">
+                    <magary-avatar
+                      image="https://i.pravatar.cc/150"
+                      size="xlarge"
+                      shape="circle"
+                    ></magary-avatar>
+                    <div class="profile-info">
+                      <h3>{{ widget.name }}</h3>
+                      <p>{{ widget.role }}</p>
+                    </div>
+                  </div>
+                }
+              </magary-card>
+            </magary-grid-item>
+          }
+        </magary-grid>
+      </div>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="dashboardExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="dashboardTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Gallery Example -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Galería Reordenable</h2>
+      <p>
+        Grid de imágenes usando <code>magary-image</code>. ¡Arrástralas para
+        cambiar el orden!
+      </p>
+    </div>
+
+    <div class="section-content">
+      <div class="demo-content">
+        <magary-grid [options]="galleryOptions">
+          @for (img of galleryImages; track img.id) {
+            <magary-grid-item [x]="img.x" [y]="img.y" [w]="img.w" [h]="img.h">
+              <div class="gallery-item">
+                <magary-image
+                  [src]="img.src"
+                  [alt]="img.alt"
+                  [preview]="true"
+                  width="100%"
+                  height="100%"
+                >
+                </magary-image>
+              </div>
+            </magary-grid-item>
+          }
+        </magary-grid>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="galleryHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="galleryTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- API Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>API Reference</h2>
+      <p>
+        Inputs y Outputs disponibles para <code>magary-grid</code> y
+        <code>magary-grid-item</code>.
+      </p>
+    </div>
+
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Componente</th>
+              <th>Propiedad</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>magary-grid</code></td>
+              <td><code>options</code></td>
+              <td><code>GridStackOptions</code></td>
+              <td>Opciones de configuración de Gridstack.js.</td>
+            </tr>
+            <tr>
+              <td><code>magary-grid</code></td>
+              <td><code>change</code></td>
+              <td><code>EventEmitter</code></td>
+              <td>Evento emitido cuando cambia el layout.</td>
+            </tr>
+            <tr>
+              <td><code>magary-grid-item</code></td>
+              <td><code>x, y, w, h</code></td>
+              <td><code>number</code></td>
+              <td>Coordenadas y dimensiones del item.</td>
+            </tr>
+            <tr>
+              <td><code>magary-grid-item</code></td>
+              <td><code>noResize</code></td>
+              <td><code>boolean</code></td>
+              <td>Deshabilita el redimensionamiento del item.</td>
+            </tr>
+            <tr>
+              <td><code>magary-grid-item</code></td>
+              <td><code>noMove</code></td>
+              <td><code>boolean</code></td>
+              <td>Deshabilita el movimiento del item.</td>
+            </tr>
+            <tr>
+              <td><code>magary-grid-item</code></td>
+              <td><code>locked</code></td>
+              <td><code>boolean</code></td>
+              <td>Bloquea completamente el item.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

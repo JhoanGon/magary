@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LucideAngularModule } from 'lucide-angular';
 
 export type InputType =
   | 'text'
@@ -26,7 +27,7 @@ export type InputVariant = 'filled' | 'outlined' | 'underlined';
 
 @Component({
   selector: 'magary-input',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LucideAngularModule],
   templateUrl: './input.html',
   styleUrl: './input.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,6 +60,10 @@ export class MagaryInput {
   inputBlur = output<Event>();
   iconClick = output<'prefix' | 'suffix'>();
 
+  private _internalError = signal<string>('');
+
+  effectiveError = computed(() => this.error() || this._internalError());
+
   private focused = signal(false);
 
   // Use linkedSignal to reset password visibility when type changes
@@ -76,7 +81,7 @@ export class MagaryInput {
 
     if (this.disabled()) classes.push('input-disabled');
     if (this.readonly()) classes.push('input-readonly');
-    if (this.error()) classes.push('input-error');
+    if (this.effectiveError()) classes.push('input-error');
     if (this.success()) classes.push('input-success');
     if (this.focused()) classes.push('input-focused');
     if (this.loading()) classes.push('input-loading');
@@ -105,12 +110,16 @@ export class MagaryInput {
   });
 
   passwordIcon = computed(() => {
-    return this.showPassword() ? 'fas fa-eye-slash' : 'fas fa-eye';
+    return this.showPassword() ? 'eye-off' : 'eye';
   });
 
   onInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     this.value.set(target.value);
+
+    if (this._internalError()) {
+      this._internalError.set('');
+    }
   }
 
   onFocus(event: Event): void {
@@ -120,7 +129,17 @@ export class MagaryInput {
 
   onBlur(event: Event): void {
     this.focused.set(false);
+    this.validateEmail();
     this.inputBlur.emit(event);
+  }
+
+  private validateEmail(): void {
+    if (this.type() === 'email' && this.value()) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(this.value())) {
+        this._internalError.set('Email inválido');
+      }
+    }
   }
 
   onPrefixIconClick(): void {

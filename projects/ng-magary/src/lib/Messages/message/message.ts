@@ -14,10 +14,11 @@ import {
   animate,
 } from '@angular/animations';
 
+import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'magary-message',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './message.html',
   styleUrls: ['./message.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -114,15 +115,15 @@ export class MagaryMessage {
 
     switch (this.severity()) {
       case 'success':
-        return 'fas fa-check-circle';
+        return 'circle-check';
       case 'info':
-        return 'fas fa-info-circle';
+        return 'info';
       case 'warn':
-        return 'fas fa-exclamation-triangle';
+        return 'triangle-alert';
       case 'error':
-        return 'fas fa-times-circle';
+        return 'circle-x';
       default:
-        return 'fas fa-info-circle';
+        return 'info';
     }
   }
 

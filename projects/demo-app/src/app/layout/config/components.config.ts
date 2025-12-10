@@ -9,6 +9,7 @@ import { MESSAGES_CONFIG } from './components/messages.config';
 import { MISC_CONFIG } from './components/misc.config';
 import { OVERLAY_CONFIG } from './components/overlay.config';
 import { PANEL_CONFIG } from './components/panel.config';
+import { GRID_CONFIG } from './components/grid.config';
 
 export const COMPONENTS_ITEMS_CONFIG: NavigationItem[] = [
   BUTTONS_CONFIG,
@@ -21,4 +22,5 @@ export const COMPONENTS_ITEMS_CONFIG: NavigationItem[] = [
   MISC_CONFIG,
   OVERLAY_CONFIG,
   PANEL_CONFIG,
+  GRID_CONFIG,
 ];

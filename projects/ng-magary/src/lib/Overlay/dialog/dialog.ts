@@ -15,6 +15,7 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
 import {
   trigger,
   state,
@@ -27,7 +28,7 @@ import {
 @Component({
   selector: 'magary-dialog',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './dialog.html',
   styleUrls: ['./dialog.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

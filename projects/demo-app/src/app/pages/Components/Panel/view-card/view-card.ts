@@ -8,6 +8,7 @@ import {
   MagaryToast,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { LucideAngularModule } from 'lucide-angular';
 const CODE_EXAMPLES = {
   BASIC_CARD: `
   <magary-card
@@ -54,6 +55,7 @@ const CODE_EXAMPLES = {
     MagaryTab,
     Highlight,
     MagaryToast,
+    LucideAngularModule,
   ],
   templateUrl: './view-card.html',
   styleUrl: './view-card.scss',

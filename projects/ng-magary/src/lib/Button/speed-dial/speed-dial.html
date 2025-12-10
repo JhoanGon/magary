@@ -39,7 +39,7 @@
           [style.background-color]="item.backgroundColor"
           (click)="onItemClick($event, item)"
         >
-          <i [ngClass]="item.icon" aria-hidden="true"> </i>
+          <lucide-icon [name]="item.icon" aria-hidden="true"></lucide-icon>
         </button>
       </li>
     }
@@ -52,6 +52,6 @@
     [attr.aria-haspopup]="'menu'"
     (click)="toggleSpeedDial($event)"
   >
-    <i [ngClass]="currentIcon()" aria-hidden="true"> </i>
+    <lucide-icon [name]="currentIcon()" aria-hidden="true"></lucide-icon>
   </button>
 </div>

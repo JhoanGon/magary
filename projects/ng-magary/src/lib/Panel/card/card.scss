@@ -146,6 +146,7 @@
   flex-direction: column;
   gap: var(--card-gap);
   flex: 1;
+  overflow: auto; // Allow content to scroll if it exceeds height
 }
 
 .card-header, .card-footer {

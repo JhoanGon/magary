@@ -21,12 +21,24 @@
         </div>
       </div>
       <div class="step-content">
-        <p>
-          ng-magary utiliza variables CSS nativas para el theming y
-          Glassmorphism. Copia el siguiente bloque de variables en tu archivo
-          <code>styles.scss</code> global para habilitar el diseño premium.
-        </p>
+        <div class="step-text">
+          <p>
+            ng-magary utiliza variables CSS nativas para el theming y
+            Glassmorphism.
+          </p>
+          <magary-button
+            label="Ver Guía de Temas y Variables"
+            icon="palette"
+            severity="info"
+            variant="outlined"
+            (buttonClick)="navigateToTheming()"
+            [iconSize]="16"
+          ></magary-button>
+        </div>
         <div class="code-block">
+          <p class="text-secondary text-sm" style="margin-left: 1rem">
+            Ejemplo resumido de variables requeridas:
+          </p>
           <pre><code [highlight]="cssVariables" language="css"></code></pre>
         </div>
       </div>
@@ -49,9 +61,9 @@
       </div>
       <div class="step-content">
         <p>
-          La librería utiliza <b>FontAwesome</b> para los iconos. Instálalo en
-          tu proyecto usando npm y luego agrégalo a tu
-          <code>angular.json</code> en la sección de styles.
+          La librería utiliza <b>Lucide Icons</b>. Instálalo en tu proyecto
+          usando npm y luego configura los iconos que necesites en tu
+          <code>app.config.ts</code>.
         </p>
         <div
           style="
@@ -65,8 +77,13 @@
           <div class="code-block">
             <pre><code [highlight]="iconInstall" language="bash"></code></pre>
           </div>
+          <h4>Standalone (AppConfig)</h4>
           <div class="code-block">
-            <pre><code [highlight]="angularJsonConfig" language="json"></code></pre>
+            <pre><code [highlight]="angularJsonConfig" language="typescript"></code></pre>
+          </div>
+          <h4>Módulos (AppModule)</h4>
+          <div class="code-block">
+            <pre><code [highlight]="moduleConfig" language="typescript"></code></pre>
           </div>
         </div>
       </div>
@@ -93,8 +110,83 @@
           asegúrate de proveer el módulo de animaciones en tu
           <code>app.config.ts</code> (Standalone) o <code>app.module.ts</code>.
         </p>
-        <div class="code-block">
-          <pre><code [highlight]="animationsConfig" language="typescript"></code></pre>
+        <div
+          style="
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+          "
+        >
+          <h4>Standalone (AppConfig)</h4>
+          <div class="code-block">
+            <pre><code [highlight]="animationsConfig" language="typescript"></code></pre>
+          </div>
+          <h4>Módulos (AppModule)</h4>
+          <div class="code-block">
+            <pre><code [highlight]="moduleAnimationsConfig" language="typescript"></code></pre>
+          </div>
+        </div>
+      </div>
+    </magary-card>
+
+    <!-- Attribution -->
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+      [border]="'1px solid var(--surface-200)'"
+      class="step-card"
+    >
+      <div slot="header">
+        <div class="step-header">
+          <lucide-icon name="heart-handshake" class="step-icon"></lucide-icon>
+          <h3>Créditos y Atribuciones</h3>
+        </div>
+      </div>
+      <div class="step-content-attribution">
+        <p>
+          Este proyecto utiliza y agradece el trabajo de las siguientes
+          librerías open-source:
+        </p>
+        <div class="attribution-list">
+          <div class="attribution-item">
+            <div class="attribution-icon">
+              <lucide-icon name="layout-grid" [size]="24"></lucide-icon>
+            </div>
+            <div class="attribution-details">
+              <h4>Gridstack.js</h4>
+              <p>Funcionalidad de Grid y Drag & Drop.</p>
+              <a
+                href="https://gridstackjs.com/"
+                target="_blank"
+                class="attribution-link"
+              >
+                gridstackjs.com
+              </a>
+              <span class="license-badge">MIT License</span>
+            </div>
+          </div>
+
+          <div class="attribution-item">
+            <div class="attribution-icon">
+              <lucide-icon name="image" [size]="24"></lucide-icon>
+            </div>
+            <div class="attribution-details">
+              <h4>Lucide Icons</h4>
+              <p>Set de iconos flexible y moderno.</p>
+              <a
+                href="https://lucide.dev/"
+                target="_blank"
+                class="attribution-link"
+              >
+                lucide.dev
+              </a>
+              <span class="license-badge">ISC License</span>
+            </div>
+          </div>
         </div>
       </div>
     </magary-card>

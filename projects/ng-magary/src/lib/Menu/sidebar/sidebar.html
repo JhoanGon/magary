@@ -1,5 +1,5 @@
 <button class="hamburger-button" (click)="toggleMobileSidebar()">
-  <i class="fas fa-bars"></i>
+  <lucide-icon name="menu"></lucide-icon>
 </button>
 @if (isMobileOpen()) {
   <div class="sidebar-backdrop" (click)="closeMobileSidebar()"></div>
@@ -13,7 +13,7 @@
     @if (isCollapsed()) {
       @if (showToggle() && collapsible()) {
         <button class="header-toggle collapsed" (click)="toggleCollapse()">
-          <i class="fas fa-bars"></i>
+          <lucide-icon name="menu"></lucide-icon>
         </button>
       } @else {
         <!-- If toggle hidden but collapsed, show logo icon? -->
@@ -51,12 +51,12 @@
       </div>
       @if (showToggle() && collapsible()) {
         <button class="header-toggle expanded" (click)="toggleCollapse()">
-          <i class="fas fa-chevron-left"></i>
+          <lucide-icon name="chevron-left"></lucide-icon>
         </button>
       }
     }
     <button class="close-button" (click)="closeMobileSidebar()">
-      <i class="fas fa-times"></i>
+      <lucide-icon name="x"></lucide-icon>
     </button>
   </div>
   <div class="sidebar-content">
@@ -162,7 +162,7 @@
         </div>
         @if (!isCollapsed()) {
           <button class="logout-button" (click)="logout()">
-            <i class="fas fa-sign-out-alt"></i>
+            <lucide-icon name="log-out"></lucide-icon>
             Cerrar sesión
           </button>
         } @else {
@@ -171,7 +171,7 @@
             (click)="logout()"
             title="Cerrar sesión"
           >
-            <i class="fas fa-sign-out-alt"></i>
+            <lucide-icon name="log-out"></lucide-icon>
           </button>
         }
       </div>

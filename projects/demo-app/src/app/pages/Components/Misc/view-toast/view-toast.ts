@@ -132,8 +132,7 @@ export class ViewToast {
             name: 'icon',
             type: 'string',
             default: '-',
-            description:
-              'Clase CSS para icono personalizado (ej. "fas fa-user").',
+            description: 'Clase CSS para icono personalizado (ej. "user").',
           },
           {
             name: 'id',
@@ -229,7 +228,7 @@ export class MyComponent {
       title: 'Hola Mundo',
       message: 'Esta es una notificación completa.',
       duration: 5000,  // Duración personalizada (ms)
-      icon: 'fas fa-rocket', // Icono personalizado
+      icon: 'rocket', // Icono personalizado
       sticky: false,   // Auto-dismiss
     });
   }

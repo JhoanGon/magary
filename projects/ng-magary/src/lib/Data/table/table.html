@@ -15,7 +15,7 @@
           <div class="search-wrapper">
             <magary-input
               placeholder="Search..."
-              prefixIcon="fa-solid fa-search"
+              prefixIcon="search"
               (valueChange)="onSearch($event)"
               width="250px"
               size="small"
@@ -107,7 +107,7 @@
           <tr class="empty-row">
             <td [attr.colspan]="columns().length">
               <div class="empty-state">
-                <i class="fa-solid fa-inbox"></i>
+                <lucide-icon name="inbox" [size]="48"></lucide-icon>
                 <p>No records found</p>
               </div>
             </td>
@@ -130,7 +130,7 @@
           [disabled]="currentPage() === 1"
           (click)="changePage(currentPage() - 1)"
         >
-          <i class="fa-solid fa-chevron-left"></i>
+          <lucide-icon name="chevron-left" [size]="16"></lucide-icon>
         </button>
 
         @for (page of pagesArray(); track page) {
@@ -148,7 +148,7 @@
           [disabled]="currentPage() === totalPages()"
           (click)="changePage(currentPage() + 1)"
         >
-          <i class="fa-solid fa-chevron-right"></i>
+          <lucide-icon name="chevron-right" [size]="16"></lucide-icon>
         </button>
       </div>
     </div>

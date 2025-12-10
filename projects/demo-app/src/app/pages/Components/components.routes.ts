@@ -46,4 +46,8 @@ export const COMPONENT_ROUTES: Routes = [
     loadChildren: () =>
       import('./Panel/panel.routes').then((m) => m.PANEL_ROUTES),
   },
+  {
+    path: '',
+    loadChildren: () => import('./Grid/grid.routes').then((m) => m.GRID_ROUTES),
+  },
 ];

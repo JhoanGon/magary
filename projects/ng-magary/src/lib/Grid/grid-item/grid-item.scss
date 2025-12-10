@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.grid-stack-item-content {
+  background: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-radius: var(--border-radius);
+  /* padding: 1rem;  Let user decide padding */
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  /* height: 100%; Removed to respect Gridstack top/bottom margins */
+}

@@ -38,9 +38,9 @@
                 tabindex="-1"
                 [attr.aria-label]="maximized() ? 'Restore' : 'Maximize'"
               >
-                <span
-                  [class]="maximized() ? 'fas fa-compress' : 'fas fa-expand'"
-                ></span>
+                <lucide-icon
+                  [name]="maximized() ? 'minimize-2' : 'maximize-2'"
+                ></lucide-icon>
               </button>
             }
             <button
@@ -50,7 +50,7 @@
               tabindex="-1"
               aria-label="Close"
             >
-              <span class="fas fa-times"></span>
+              <lucide-icon name="x"></lucide-icon>
             </button>
           </div>
         </div>
