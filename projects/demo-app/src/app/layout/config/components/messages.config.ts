@@ -9,5 +9,10 @@ export const MESSAGES_CONFIG: NavigationItem = {
       route: '/components/message',
       icon: 'message-square',
     },
+    {
+      label: 'Toast',
+      route: 'components/Toast',
+      icon: 'bell',
+    },
   ],
 };

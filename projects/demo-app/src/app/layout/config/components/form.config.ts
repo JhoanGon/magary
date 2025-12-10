@@ -24,5 +24,25 @@ export const FORM_CONFIG: NavigationItem = {
       route: 'components/Switch',
       icon: 'toggle-right',
     },
+    {
+      label: 'Select',
+      route: 'components/Select',
+      icon: 'mouse-pointer-2',
+    },
+    {
+      label: 'Radio',
+      route: 'components/Radio',
+      icon: 'circle-dot',
+    },
+    {
+      label: 'TextArea',
+      route: 'components/TextArea',
+      icon: 'text-align-justify',
+    },
+    {
+      label: 'DatePicker',
+      route: 'components/DatePicker',
+      icon: 'calendar',
+    },
   ],
 };

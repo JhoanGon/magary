@@ -1,0 +1,22 @@
+<div class="magary-textarea-wrapper">
+  <textarea
+    #textarea
+    [attr.rows]="rows()"
+    [attr.cols]="cols()"
+    [attr.placeholder]="placeholder()"
+    [attr.maxlength]="maxlength()"
+    [disabled]="disabled()"
+    [class.magary-textarea]="true"
+    [class.disabled]="disabled()"
+    [class.auto-resize]="autoResize()"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+    (focus)="onFocus()"
+  ></textarea>
+
+  @if (showCounter() || maxlength()) {
+    <div class="character-counter">
+      {{ length() }} {{ maxlength() ? "/ " + maxlength() : "" }}
+    </div>
+  }
+</div>

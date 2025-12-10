@@ -10,11 +10,6 @@ export const MISC_CONFIG: NavigationItem = {
       icon: 'circle-user',
     },
     {
-      label: 'Toast',
-      route: 'components/Toast',
-      icon: 'bell',
-    },
-    {
       label: 'Skeleton',
       route: 'components/Skeleton',
       icon: 'loader',

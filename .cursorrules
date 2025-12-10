@@ -11,6 +11,7 @@
 - Use `inject()` for dependency injection instead of constructor injection.
 - Use `@for` and `@if` control flow syntax instead of `*ngFor` and `*ngIf`.
 - Ensure all components have strictly typed inputs and outputs.
+- Use `{ transform: booleanAttribute }` for boolean inputs to enable HTML-style attributes (e.g. `<comp disabled>`).
 
 # TypeScript
 
@@ -52,3 +53,110 @@
 
 - **JSDoc**: Todo Input, Output, y método público en la librería debe tener un comentario JSDoc breve.
 - **Ejemplos**: Al crear componentes nuevos, sugerir siempre un ejemplo de uso básico.
+
+# Component Roadmap
+
+- **Fase 1: Forms (Prioridad Alta)**: Select, Radio Button, TextArea, DatePicker.
+- **Fase 2: Data**: Paginator, Tree, Timeline. (Skeleton ya existe en Misc).
+- **Fase 3: Menu & Structure**: Breadcrumb, Steps, Accordion, Divider.
+- **Fase 4: Overlay & Feedback**: Tooltip, ConfirmDialog, Tag.
+
+# Component Creation Workflow
+
+1. **Definir API**: Inputs (Signals), Outputs, y modelo de datos.
+2. **Implementar Librería**: Crear componente en `projects/ng-magary` (Standalone) Y su `NgModule` correspondiente para compatibilidad (ej: `magary-select.module.ts`).
+3. **Exportar**: Agregar a `ng-magary.ts`.
+4. **Demo Page**: Crear ruta y vista en `projects/demo-app/src/app/pages/Components`.
+5. **Config**: Registrar en `components.config.ts` y su archivo config específico.
+6. **Doc**: Incluir tabla de API y ejemplos de código (HTML/TS) con `magary-tabs`.
+
+# Component Quality & Reusability
+
+# General Behavior
+
+- Responses should be in Spanish unless requested otherwise.
+- Be concise and focus on the code.
+- Avoid verbose explanations.
+
+# Angular Best Practices
+
+- Use **Standalone Components** for all new components.
+- Prefer **Signals** for state management where appropriate.
+- Use `inject()` for dependency injection instead of constructor injection.
+- Use `@for` and `@if` control flow syntax instead of `*ngFor` and `*ngIf`.
+- Ensure all components have strictly typed inputs and outputs.
+- Use `{ transform: booleanAttribute }` for boolean inputs to enable HTML-style attributes (e.g. `<comp disabled>`).
+
+# TypeScript
+
+- Use strict typing. Avoid `any`.
+- Use `const` over `let` whenever possible.
+
+# File Structure
+
+- Follow the existing project structure: `projects/demo-app` for the app, `projects/ng-magary` for the library.
+
+# User Custom Rules (Performance & SEO)
+
+- **Performance de Imágenes**:
+  - Priorizar `NgOptimizedImage` (ngSrc) sobre `src` estándar para imágenes.
+  - Usar siempre formatos de próxima generación (WebP).
+  - Para recursos grandes que no sean imágenes manejadas por Angular, usar Intersection Observer.
+  - El atributo `loading` debe ser 'lazy' por defecto. SOLO usar 'eager' o `fetchpriority='high'` para el Largest Contentful Paint (LCP), marcándolo explícitamente.
+- **SEO & Layout**:
+  - Componentes de layout/sección deben incluir campos para `<title>` y `<meta description>` en el nivel más alto.
+  - NUNCA omitir niveles de encabezado. Jerarquía estricta: h1 -> h2 -> h3.
+  - `alt text` es OBLIGATORIO y debe ser validado en todas las imágenes no decorativas.
+- **Angular Core**:
+  - Adherirse estrictamente a sintaxis y APIs de Angular v21.
+  - Standalone components por defecto.
+
+# Quality Assurance & Styles
+
+- **Testing**: Todo nuevo componente o servicio debe incluir su archivo `.spec.ts` básico para evitar deuda técnica.
+- **Estilos**: Usar variables CSS/SCSS del tema global en lugar de colores hardcodeados (hex/rgb). Esto es vital para el soporte de temas.
+- **Manejo de Errores**: No usar `console.log` en producción. Usar servicios de logging o manejo de errores adecuado.
+
+# Responsive Design & UI
+
+- **Enfoque Mobile-First**: Diseñar primero para pantallas pequeñas y usar `@media (min-width)` para escalar.
+- **Unidades Relativas**: Usar `rem` para fuentes y espaciados, y `%` o `vw/vh` para contenedores. Evitar `px` para layouts.
+- **Touch Targets**: Asegurar que botones y enlaces tengan un área clickable mínima de 44px en móviles.
+
+# Documentación
+
+- **JSDoc**: Todo Input, Output, y método público en la librería debe tener un comentario JSDoc breve.
+- **Ejemplos**: Al crear componentes nuevos, sugerir siempre un ejemplo de uso básico.
+
+# Component Roadmap
+
+- **Fase 1: Forms (Prioridad Alta)**: Select, Radio Button, TextArea, DatePicker.
+- **Fase 2: Data**: Paginator, Tree, Timeline. (Skeleton ya existe en Misc).
+- **Fase 3: Menu & Structure**: Breadcrumb, Steps, Accordion, Divider.
+- **Fase 4: Overlay & Feedback**: Tooltip, ConfirmDialog, Tag.
+
+# Component Creation Workflow
+
+1. **Definir API**: Inputs (Signals), Outputs, y modelo de datos.
+2. **Implementar Librería**: Crear componente en `projects/ng-magary` (Standalone) Y su `NgModule` correspondiente para compatibilidad (ej: `magary-select.module.ts`).
+3. **Exportar**: Agregar a `ng-magary.ts`.
+4. **Demo Page**: Crear ruta y vista en `projects/demo-app/src/app/pages/Components`.
+5. **Config**: Registrar en `components.config.ts` y su archivo config específico.
+6. **Doc**: Incluir tabla de API y ejemplos de código (HTML/TS) con `magary-tabs`.
+
+# Component Quality & Reusability
+
+- **Forms Integration**: Todo componente tipo Input (Select, Radio, etc.) **debe** implementar `ControlValueAccessor` para soportar `[(ngModel)]` y Reactive Forms.
+- **Accesibilidad**: Asegurar navegación por teclado (Tab, Enter, Flechas) y roles ARIA.
+- **Reusabilidad Interna**: NUNCA reinventar la rueda. Si el componente necesita un botón, icono o input, **usar** `magary-button`, `lucide-icon` o `magary-input` en lugar de elementos nativos.
+
+# Demo App Standards (Visual)
+
+- **Archivos Obligatorios**: SIEMPRE crear `view-[name].ts`, `.html` y **`.scss`**. NUNCA usar estilos inline (`styles: [...]`) para la estructura de la página.
+- **Estilos Base**: El archivo `.scss` **debe** incluir los estilos estándar (`.container`, `.header`, `.section`, `.api-table`) copiados de una referencia (ej: `view-card.scss`) para garantizar consistencia en animaciones y sombras.
+- **Layout Obligatorio (HTML)**: Todas las páginas deben usar la estructura estándar:
+  1. **Contenedor**: `.container.fade-in`.
+  2. **Encabezado**: `.header` con `h1` y `p` descriptivo.
+  3. **Secciones**: Divs con clase `.section` que contengan `.section-header` (título del ejemplo) y `.section-content`.
+  4. **Código**: Los ejemplos de código deben ir siempre dentro de `magary-tabs` (pestañas HTML y TypeScript).
+  5. **API**: Al final, una tabla con clase `.api-table` listando Inputs y Outputs.

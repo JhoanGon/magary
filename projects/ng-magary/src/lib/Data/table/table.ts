@@ -12,6 +12,11 @@ import { FormsModule } from '@angular/forms';
 import { MagaryAvatar } from '../../Misc/avatar/avatar';
 import { MagaryInput } from '../../Form/input/input';
 import { MagarySkeleton } from '../../Misc/skeleton/skeleton';
+// Import MagaryPaginator
+import {
+  MagaryPaginator,
+  PaginatorState,
+} from '../../Data/paginator/paginator';
 
 import { LucideAngularModule } from 'lucide-angular';
 export interface MagaryTableColumn {
@@ -31,6 +36,7 @@ export interface MagaryTableColumn {
     MagaryInput,
     MagarySkeleton,
     LucideAngularModule,
+    MagaryPaginator, // Add to imports
   ],
   templateUrl: './table.html',
   styleUrls: ['./table.scss'],
@@ -47,12 +53,17 @@ export class MagaryTable {
   loading = input<boolean>(false);
   responsiveLayout = input<boolean>(true);
 
+  // New input for Paginator options
+  rowsPerPageOptions = input<number[]>([]);
+
   onPageChange = output<any>();
 
   // Internal State
   first = signal<number>(0);
-  currentPage = signal<number>(1);
   searchTerm = signal<string>('');
+
+  // Track specific rows state if it changes via paginator
+  currentRows = signal<number>(5);
 
   // Computed State
   processedData = computed(() => {
@@ -73,27 +84,15 @@ export class MagaryTable {
 
   totalRecords = computed(() => this.processedData().length);
 
-  totalPages = computed(() => {
-    const rows = this.rows();
-    if (rows <= 0) return 0;
-    return Math.ceil(this.totalRecords() / rows);
-  });
-
   paginatedData = computed(() => {
     const data = this.processedData();
     if (this.paginator()) {
-      const start = (this.currentPage() - 1) * this.rows();
-      const end = start + this.rows();
+      const start = this.first();
+      const end = start + this.currentRows();
       return data.slice(start, end);
     } else {
       return data;
     }
-  });
-
-  pagesArray = computed(() => {
-    return Array(this.totalPages())
-      .fill(0)
-      .map((x, i) => i + 1);
   });
 
   constructor() {
@@ -102,9 +101,16 @@ export class MagaryTable {
       () => {
         // Dependency tracking
         this.searchTerm();
-        // Action (using untracked if needed, but here we want to reset on search change)
+        // Action
         this.first.set(0);
-        this.currentPage.set(1);
+      },
+      { allowSignalWrites: true },
+    );
+
+    // Sync initial rows input with internal state
+    effect(
+      () => {
+        this.currentRows.set(this.rows());
       },
       { allowSignalWrites: true },
     );
@@ -114,18 +120,12 @@ export class MagaryTable {
     this.searchTerm.set(value);
   }
 
-  changePage(page: number) {
-    if (page >= 1 && page <= this.totalPages()) {
-      this.currentPage.set(page);
-      this.first.set((this.currentPage() - 1) * this.rows());
+  // Handle event from MagaryPaginator
+  onPaginatorChange(event: PaginatorState) {
+    this.first.set(event.first);
+    this.currentRows.set(event.rows);
 
-      this.onPageChange.emit({
-        first: this.first(),
-        rows: this.rows(),
-        page: this.currentPage(),
-        pageCount: this.totalPages(),
-      });
-    }
+    this.onPageChange.emit(event);
   }
 
   resolveFieldData(data: any, field: string): any {

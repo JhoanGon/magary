@@ -1,0 +1,189 @@
+.magary-timeline {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+
+    .magary-timeline-event {
+        display: flex;
+        position: relative;
+        min-height: 70px;
+
+        &:last-child {
+            min-height: 0;
+        }
+    }
+
+    .magary-timeline-event-opposite {
+        flex: 1;
+        padding: 0 1rem;
+        display: block;
+        text-align: right;
+    }
+
+    .magary-timeline-event-content {
+        flex: 1;
+        padding: 0 1rem;
+        display: block;
+        text-align: left;
+    }
+
+    .magary-timeline-event-separator {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .magary-timeline-event-marker {
+        display: flex;
+        align-self: flex-start; // Align to top
+        margin-top: 0.25rem; // Slight offset to align with text baseline? No, let's try just flex-start first or small margin if needed. Let's add small margin.
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        border: 2px solid var(--primary-500);
+        background: var(--surface-0);
+        z-index: 10; // Ensure marker is above connector
+    }
+
+    .magary-timeline-event-connector {
+        flex-grow: 1;
+        width: 2px;
+        background-color: #cbd5e1;
+    }
+
+    // Vertical Layout
+    &.magary-timeline-vertical {
+        &.magary-timeline-left {
+            .magary-timeline-event-opposite {
+                text-align: right;
+            }
+            .magary-timeline-event-content {
+                text-align: left;
+            }
+        }
+
+        &.magary-timeline-right {
+           .magary-timeline-event {
+                flex-direction: row-reverse;
+           }
+           .magary-timeline-event-opposite {
+                text-align: left;
+           }
+           .magary-timeline-event-content {
+                text-align: right;
+           }
+        }
+        
+        &.magary-timeline-alternate {
+            .magary-timeline-event {
+                &:nth-child(even) {
+                    flex-direction: row-reverse;
+                    
+                    .magary-timeline-event-content {
+                        text-align: right;
+                    }
+                    .magary-timeline-event-opposite {
+                         text-align: left;
+                    }
+                }
+                
+                 &:nth-child(odd) {
+                    .magary-timeline-event-content {
+                        text-align: left;
+                    }
+                    .magary-timeline-event-opposite {
+                         text-align: right;
+                    }
+                }
+            }
+        }       
+    }
+
+    // Horizontal Layout
+    &.magary-timeline-horizontal {
+        flex-direction: row;
+
+        .magary-timeline-event {
+            flex-direction: column;
+            flex: 1;
+            min-height: auto; 
+
+             &:last-child {
+                flex: 0 0 auto; // Don't stretch last item unnecessarily
+                 .magary-timeline-event-connector {
+                     display: none; // No connector after last item horizontally in this structure if logic dictates
+                 }
+            }
+        }
+
+        .magary-timeline-event-separator {
+            flex-direction: row;
+        }
+
+        .magary-timeline-event-connector {
+            width: 100%;
+            height: 2px;
+        }
+
+        .magary-timeline-event-opposite,
+        .magary-timeline-event-content {
+            padding: 1rem 0;
+            text-align: start;
+        }
+
+        &.magary-timeline-top {
+            .magary-timeline-event {
+                flex-direction: column-reverse;
+            }
+        }
+        
+        &.magary-timeline-bottom {
+             .magary-timeline-event {
+                flex-direction: column;
+            }
+        }
+        
+        &.magary-timeline-alternate {
+             .magary-timeline-event {
+                &:nth-child(even) {
+                    flex-direction: column-reverse;
+                }
+                &:nth-child(odd) {
+                    flex-direction: column;
+                }
+            }
+        }
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 960px) {
+        &.magary-timeline-vertical {
+            &.magary-timeline-alternate,
+            &.magary-timeline-right {
+                .magary-timeline-event {
+                    flex-direction: row !important;
+                }
+
+                .magary-timeline-event-content {
+                    text-align: left !important;
+                }
+
+                .magary-timeline-event-opposite {
+                    text-align: right !important;
+                }
+                
+                .magary-timeline-event:nth-child(even) {
+                    flex-direction: row !important;
+                    
+                    .magary-timeline-event-content {
+                        text-align: left !important;
+                    }
+                    .magary-timeline-event-opposite {
+                        text-align: right !important;
+                    }
+                }
+            }
+        }
+    }
+}

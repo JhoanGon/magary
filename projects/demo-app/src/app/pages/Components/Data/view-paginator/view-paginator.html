@@ -1,0 +1,232 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1>MagaryPaginator</h1>
+    <p>Componente genérico para visualizar contenido en formato paginado.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Básico</h2>
+      <p>Paginador simple con control de filas por página.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem">
+              <!-- Data Display -->
+              <div
+                class="data-list-container"
+                style="
+                  margin-bottom: 1.5rem;
+                  display: grid;
+                  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                  gap: 1rem;
+                "
+              >
+                <div
+                  *ngFor="let item of visibleItems"
+                  class="data-item fade-in"
+                  style="
+                    background: var(--surface-card);
+                    padding: 1rem;
+                    border-radius: 0.5rem;
+                    border: 1px solid var(--surface-border);
+                    text-align: center;
+                    font-weight: 500;
+                  "
+                >
+                  {{ item }}
+                </div>
+              </div>
+
+              <div
+                style="
+                  border-top: 1px solid var(--surface-border);
+                  padding-top: 1rem;
+                "
+              >
+                <magary-paginator
+                  [first]="first"
+                  [rows]="rows"
+                  [totalRecords]="items.length"
+                  (onPageChange)="onPageChange($event)"
+                  [rowsPerPageOptions]="[10, 20, 30]"
+                >
+                </magary-paginator>
+              </div>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+
+      <div class="code-block" style="width: 100%; margin-top: 2rem">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="exampleHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Tamaño de Página Personalizado</h2>
+      <p>Ejemplo con un tamaño de página de 5 ítems.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem">
+              <!-- Data Display -->
+              <div
+                class="data-list-container"
+                style="
+                  margin-bottom: 1.5rem;
+                  display: grid;
+                  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                  gap: 1rem;
+                "
+              >
+                <div
+                  *ngFor="let item of visibleItems2"
+                  class="data-item fade-in"
+                  style="
+                    background: var(--surface-card);
+                    padding: 1rem;
+                    border-radius: 0.5rem;
+                    border: 1px solid var(--surface-border);
+                    text-align: center;
+                    font-weight: 500;
+                  "
+                >
+                  {{ item }}
+                </div>
+              </div>
+
+              <div
+                style="
+                  border-top: 1px solid var(--surface-border);
+                  padding-top: 1rem;
+                "
+              >
+                <magary-paginator
+                  [first]="first2"
+                  [rows]="rows2"
+                  [totalRecords]="items2.length"
+                  (onPageChange)="onPageChange2($event)"
+                >
+                </magary-paginator>
+              </div>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Valor por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>totalRecords</code></td>
+              <td><code>number</code></td>
+              <td><code>0</code></td>
+              <td>Total de registros a paginar.</td>
+            </tr>
+            <tr>
+              <td><code>rows</code></td>
+              <td><code>number</code></td>
+              <td><code>10</code></td>
+              <td>Número de filas a mostrar por página.</td>
+            </tr>
+            <tr>
+              <td><code>first</code></td>
+              <td><code>number</code></td>
+              <td><code>0</code></td>
+              <td>Índice del primer registro a mostrar.</td>
+            </tr>
+            <tr>
+              <td><code>rowsPerPageOptions</code></td>
+              <td><code>number[]</code></td>
+              <td><code>[]</code></td>
+              <td>Array de opciones para el selector de filas por página.</td>
+            </tr>
+            <tr>
+              <td><code>pageLinkSize</code></td>
+              <td><code>number</code></td>
+              <td><code>5</code></td>
+              <td>Número de enlaces a páginas a mostrar.</td>
+            </tr>
+            <tr>
+              <td><code>showPageLinks</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Si se deben mostrar los enlaces a páginas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos emitidos por el componente</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>onPageChange</code></td>
+              <td><code>EventEmitter&lt;PaginatorState&gt;</code></td>
+              <td>Callback que se invoca cuando cambia la página.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,5 +9,20 @@ export const DATA_CONFIG: NavigationItem = {
       route: 'components/Table',
       icon: 'table',
     },
+    {
+      label: 'Paginator',
+      route: 'components/paginator',
+      icon: 'list-minus',
+    },
+    {
+      label: 'Tree',
+      route: 'components/tree',
+      icon: 'folder-tree',
+    },
+    {
+      label: 'Timeline',
+      route: 'components/timeline',
+      icon: 'logs',
+    },
   ],
 };

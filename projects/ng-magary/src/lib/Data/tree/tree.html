@@ -1,0 +1,21 @@
+<div class="magary-tree-container">
+  <ul class="magary-tree-root-children" *ngIf="value() && value().length">
+    <magary-uitree-node
+      *ngFor="let node of value()"
+      [node]="node"
+      [selectionMode]="selectionMode()"
+      [selection]="selection()"
+      (nodeSelect)="handleNodeSelect($event)"
+      (nodeUnselect)="handleNodeUnselect($event)"
+      (nodeExpand)="handleNodeExpand($event)"
+      (nodeCollapse)="handleNodeCollapse($event)"
+    >
+    </magary-uitree-node>
+  </ul>
+  <div
+    class="magary-tree-empty-message"
+    *ngIf="!value() || value().length === 0"
+  >
+    No records found
+  </div>
+</div>

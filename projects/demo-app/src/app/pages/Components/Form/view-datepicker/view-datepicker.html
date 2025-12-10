@@ -1,0 +1,198 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1>Magary DatePicker</h1>
+    <p>Selector de fecha intuitivo con calendario popup.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Importación</h2>
+      <p>Importa el módulo en tu componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importRef" language="typescript"></code></pre>
+        <p class="note">
+          Asegúrate de importar también <code>FormsModule</code> para usar
+          <code>[(ngModel)]</code>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Uso Básico</h2>
+      <p>Selección de fecha simple.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <div class="field">
+          <label>Date</label>
+          <magary-datepicker
+            [(ngModel)]="date"
+            placeholder="Select a date"
+          ></magary-datepicker>
+          <p>Selected: {{ date | date: "fullDate" }}</p>
+        </div>
+
+        <div class="field">
+          <label>Disabled</label>
+          <magary-datepicker
+            [disabled]="true"
+            placeholder="Disabled"
+          ></magary-datepicker>
+        </div>
+      </div>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="basicHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="basicTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Advanced Features</h2>
+      <p>Navegación inteligente (Año/Mes), Input manual y Rangos.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <div class="field">
+          <label>Min & Max Date (Next 7 Days)</label>
+          <magary-datepicker
+            [(ngModel)]="date"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            placeholder="Try manual input too!"
+          ></magary-datepicker>
+        </div>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="minMaxHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="minMaxTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Range Selection</h2>
+      <p>Selecciona un rango de fechas (Inicio y Fin).</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <div class="field">
+          <label
+            >Date Range ({{
+              rangeDates
+                ? (rangeDates[0] | date: "shortDate") +
+                  " - " +
+                  (rangeDates[1] | date: "shortDate")
+                : "None"
+            }})</label
+          >
+          <magary-datepicker
+            [(ngModel)]="rangeDates"
+            selectionMode="range"
+            placeholder="Select range"
+          ></magary-datepicker>
+        </div>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="rangeHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="rangeTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="api-table section">
+    <div class="section-header">
+      <h2>API Reference</h2>
+      <p>Inputs para <code>magary-datepicker</code>.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Default</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>ngModel</code></td>
+              <td><code>Date | Date[]</code></td>
+              <td><code>null</code></td>
+              <td>Vincula el valor de la fecha o rango.</td>
+            </tr>
+            <tr>
+              <td><code>selectionMode</code></td>
+              <td><code>'single' | 'range'</code></td>
+              <td><code>single</code></td>
+              <td>Modo de selección.</td>
+            </tr>
+            <tr>
+              <td><code>minDate</code></td>
+              <td><code>Date</code></td>
+              <td><code>-</code></td>
+              <td>Fecha mínima permitida.</td>
+            </tr>
+            <tr>
+              <td><code>maxDate</code></td>
+              <td><code>Date</code></td>
+              <td><code>-</code></td>
+              <td>Fecha máxima permitida.</td>
+            </tr>
+            <tr>
+              <td><code>placeholder</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>Texto de ayuda.</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Deshabilita el selector.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,215 @@
+// Tree Styles
+:host {
+    display: block;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+}
+
+.magary-tree-container {
+    // Variables local to tree if needed
+    --tree-node-padding: 0.5rem;
+    --tree-indent: 1.5rem;
+    
+    // background: var(--surface-0);
+    // border-radius: var(--border-radius);
+    // border: 1px solid var(--surface-200);
+    // padding: 0.5rem;
+    background: transparent;
+    border: none;
+    padding: 0;
+    overflow-y: auto;
+    max-height: 100%; // Let parent control height
+
+    // Custom Scrollbar
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--surface-100);
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--surface-400);
+        border-radius: 4px;
+        
+        &:hover {
+            background: var(--surface-500);
+        }
+    }
+
+    // Firefox support
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-400) var(--surface-100);
+}
+
+ul.magary-tree-root-children,
+ul.magary-treenode-children {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.magary-treenode-children {
+    padding-left: var(--tree-indent);
+}
+
+.magary-treenode-content {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    cursor: default;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s, color 0.2s;
+    color: var(--text-color);
+    margin-bottom: 2px; // Tiny gap between nodes
+
+    &.magary-treenode-selectable:hover {
+        background-color: var(--surface-hover);
+        cursor: pointer;
+    }
+
+    &.magary-treenode-selected {
+        background-color: var(--primary-50);
+        color: var(--primary-700);
+        
+        // Ensure icon color changes too if needed
+        lucide-icon {
+            color: var(--primary-700);
+        }
+
+        .magary-treenode-icon {
+            color: var(--primary-700);
+        }
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--primary-500);
+        outline-offset: -2px;
+    }
+}
+
+.magary-tree-toggler {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    border-radius: 50%;
+    margin-right: 0.25rem;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover {
+        background-color: var(--surface-100);
+        color: var(--text-color);
+    }
+    
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--primary-200);
+    }
+
+    &.expanded {
+        transform: rotate(90deg);
+        color: var(--text-color);
+    }
+}
+
+.magary-tree-toggler-placeholder {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.25rem;
+    display: inline-block;
+}
+
+.magary-treenode-icon {
+    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+}
+
+.magary-treenode-label {
+    // Font styles
+    font-weight: 500;
+}
+
+// Checkbox Styles
+.magary-treenode-checkbox {
+    margin-right: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: var(--surface-100);
+    }
+}
+
+.magary-checkbox-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--surface-300);
+    border-radius: 6px;
+    background: var(--surface-0);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; // Check icon color usually white on active
+
+    &.highlight {
+        border-color: var(--primary-color);
+        background: var(--primary-color);
+    }
+
+    &:hover:not(.highlight) {
+        border-color: var(--primary-500);
+    }
+}
+
+// Loading Skeletons
+.magary-tree-loading-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+
+    .magary-skeleton-node {
+        height: 2rem;
+        background: var(--surface-100);
+        border-radius: 4px;
+        animation: pulse 1.5s infinite;
+        
+        &:nth-child(1) { width: 60%; }
+        &:nth-child(2) { width: 80%; margin-left: 1.5rem; }
+        &:nth-child(3) { width: 70%; margin-left: 1.5rem; }
+        &:nth-child(4) { width: 50%; margin-left: 3rem; }
+    }
+}
+
+// Empty State
+.magary-tree-empty-message {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}

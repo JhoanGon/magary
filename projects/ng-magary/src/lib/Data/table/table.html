@@ -118,39 +118,16 @@
   </div>
 
   <!-- Paginator -->
-  @if (paginator() && totalPages() > 1) {
-    <div class="magary-paginator">
-      <div class="paginator-info">
-        Showing {{ first() + 1 }} to {{ first() + paginatedData().length }} of
-        {{ totalRecords() }} entries
-      </div>
-      <div class="paginator-pages">
-        <button
-          class="page-btn nav-btn"
-          [disabled]="currentPage() === 1"
-          (click)="changePage(currentPage() - 1)"
-        >
-          <lucide-icon name="chevron-left" [size]="16"></lucide-icon>
-        </button>
-
-        @for (page of pagesArray(); track page) {
-          <button
-            class="page-btn number-btn"
-            [class.active]="page === currentPage()"
-            (click)="changePage(page)"
-          >
-            {{ page }}
-          </button>
-        }
-
-        <button
-          class="page-btn nav-btn"
-          [disabled]="currentPage() === totalPages()"
-          (click)="changePage(currentPage() + 1)"
-        >
-          <lucide-icon name="chevron-right" [size]="16"></lucide-icon>
-        </button>
-      </div>
+  @if (paginator()) {
+    <div class="magary-table-paginator-wrapper">
+      <magary-paginator
+        [first]="first()"
+        [rows]="currentRows()"
+        [totalRecords]="totalRecords()"
+        [rowsPerPageOptions]="rowsPerPageOptions()"
+        (onPageChange)="onPaginatorChange($event)"
+      >
+      </magary-paginator>
     </div>
   }
 </div>

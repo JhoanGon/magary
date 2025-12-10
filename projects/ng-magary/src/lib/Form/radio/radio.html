@@ -1,0 +1,34 @@
+<div
+  class="magary-radio-container"
+  [class.disabled]="disabled()"
+  [class.checked]="checked()"
+  (click)="select($event)"
+>
+  <div class="radio-box" [class.focused]="focused()">
+    <div class="radio-icon"></div>
+    <input
+      #inputElement
+      type="radio"
+      class="hidden-input"
+      [attr.id]="inputId()"
+      [attr.name]="name()"
+      [attr.aria-label]="label()"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+      (change)="onInputChange($event)"
+      tabindex="0"
+    />
+  </div>
+
+  @if (label()) {
+    <label
+      [attr.for]="inputId()"
+      class="radio-label"
+      [class.disabled]="disabled()"
+    >
+      {{ label() }}
+    </label>
+  }
+</div>
