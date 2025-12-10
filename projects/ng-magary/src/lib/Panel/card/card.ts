@@ -65,7 +65,9 @@ export class MagaryCard {
   readonly cardStyles = computed(() => {
     const userBg = this.backgroundColor();
     const defaultBg =
-      this.variant() === 'filled' ? 'var(--surface-100, #f3f4f6)' : '#fff';
+      this.variant() === 'filled'
+        ? 'var(--surface-100, #f3f4f6)'
+        : 'var(--surface-0, #fff)';
 
     return {
       width: this.width(),
