@@ -2,13 +2,14 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
-  importProvidersFrom,
+  importProvidersFrom, isDevMode,
 } from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { LucideAngularModule, icons } from 'lucide-angular';
+import { provideServiceWorker } from '@angular/service-worker';
 
 const kebabCase = (str: string) =>
   str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -43,6 +44,9 @@ export const appConfig: ApplicationConfig = {
         json: () => import('highlight.js/lib/languages/json'),
         bash: () => import('highlight.js/lib/languages/bash'),
       },
-    }),
+    }), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 };

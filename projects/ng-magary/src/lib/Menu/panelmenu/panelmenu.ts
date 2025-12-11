@@ -19,6 +19,7 @@ export interface MenuItem {
   badgeSeverity?: 'success' | 'info' | 'warning' | 'danger' | 'contrast';
   iconSize?: number;
   styleClass?: string;
+  iconClass?: string;
 }
 export interface MenuItemClickEvent {
   item: MenuItem;
@@ -38,7 +39,8 @@ export interface MenuToggleEvent {
 })
 export class MagaryPanelmenu {
   public title = input<string>('Panel Menu');
-  public icon = input<string>('');
+  public icon = input<string>();
+  public iconClass = input<string>('');
   public items = input<MenuItem[]>([]);
   public backgroundColor = input<string>('#f9fafb');
   public textColor = input<string>('#1f2937');
@@ -158,6 +160,10 @@ export class MagaryPanelmenu {
   isItemHovered(itemId: string): boolean {
     return this.hoveredItem() === itemId;
   }
+  getIconName(icon: string | undefined | null): any {
+    return icon;
+  }
+
   isItemDisabled(item: MenuItem): boolean {
     return item.disabled === true;
   }

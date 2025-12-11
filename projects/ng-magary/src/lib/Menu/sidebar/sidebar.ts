@@ -24,6 +24,7 @@ interface SidebarSection {
   backgroundColor?: string;
   textColor?: string;
   hoverColor?: string;
+  iconClass?: string;
 }
 
 type AvatarType = 'image' | 'label' | 'icon';

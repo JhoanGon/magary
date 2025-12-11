@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square70x70logo src="/icons/magary_logo_72x72.png"/>
+      <square150x150logo src="/icons/magary_logo_144x144.png"/>
+      <square310x310logo src="/icons/magary_logo_512x512.png"/>
+      <TileColor>#ffffff</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig>

@@ -13,10 +13,11 @@ import {
   NavigationEnd,
   RouterLink,
 } from '@angular/router';
-import { Sidebar, MagaryToast, MAGARY_VERSION } from 'ng-magary';
+import { Sidebar, MagaryToast, MagaryButton, MAGARY_VERSION } from 'ng-magary';
 import { ThemeSwitcherComponent } from '../components/theme-switcher/theme-switcher.component';
 import { SIDEBAR_SECTIONS } from './config/sidebar.config';
 import { filter } from 'rxjs/operators';
+import { PwaService } from './service/pwa.service';
 
 @Component({
   selector: 'magary-layout',
@@ -25,6 +26,7 @@ import { filter } from 'rxjs/operators';
     Sidebar,
     RouterOutlet,
     MagaryToast,
+    MagaryButton,
     ThemeSwitcherComponent,
     RouterLink,
   ],
@@ -34,6 +36,7 @@ import { filter } from 'rxjs/operators';
 export class Layout implements AfterViewInit {
   @ViewChild('contentWrapper') contentWrapper!: ElementRef<HTMLElement>;
   private router = inject(Router);
+  public pwaService = inject(PwaService);
 
   version = MAGARY_VERSION;
   sidebarSections = SIDEBAR_SECTIONS;
