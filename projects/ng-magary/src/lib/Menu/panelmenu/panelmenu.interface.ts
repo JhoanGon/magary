@@ -7,6 +7,7 @@ export interface MenuItem {
   badgeSeverity?: 'success' | 'info' | 'warning' | 'danger' | 'contrast';
   iconSize?: number;
   styleClass?: string;
+  iconClass?: string;
 }
 export interface NavigationItem {
   label: string;

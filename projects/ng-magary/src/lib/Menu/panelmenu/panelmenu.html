@@ -13,7 +13,9 @@
     (mouseleave)="onHeaderHover(false)"
   >
     @if (icon()) {
-      <lucide-icon [name]="icon()" class="header-icon"></lucide-icon>
+      <span class="header-icon {{ iconClass() || '' }}">
+        <lucide-icon [name]="icon()"></lucide-icon>
+      </span>
     }
     <span class="header-title">{{ title() }}</span>
     <span class="arrow" [class.open]="isOpen()">
@@ -36,12 +38,12 @@
             (mouseleave)="onItemLeave()"
           >
             @if (item.icon) {
-              <lucide-icon
-                [name]="item.icon"
-                class="item-icon"
-                [size]="item.iconSize || 15"
-                [style.width.px]="item.iconSize || 15"
-              ></lucide-icon>
+              <span class="item-icon {{ item.iconClass || '' }}">
+                <lucide-icon
+                  [name]="item.icon"
+                  [size]="item.iconSize || 15"
+                ></lucide-icon>
+              </span>
             }
             <span class="item-label">{{ item.label }}</span>
             @if (item.badgeSeverity) {
@@ -89,12 +91,12 @@
                     (mouseleave)="onItemLeave()"
                   >
                     @if (subItem.icon) {
-                      <lucide-icon
-                        [name]="subItem.icon"
-                        class="item-icon"
-                        [size]="subItem.iconSize || 15"
-                        [style.width.px]="subItem.iconSize || 15"
-                      ></lucide-icon>
+                      <span class="item-icon {{ subItem.iconClass || '' }}">
+                        <lucide-icon
+                          [name]="subItem.icon"
+                          [size]="subItem.iconSize || 15"
+                        ></lucide-icon>
+                      </span>
                     }
                     <span class="item-label">{{ subItem.label }}</span>
                     <span
@@ -152,12 +154,16 @@
                             (mouseleave)="onItemLeave()"
                           >
                             @if (subSubItem.icon) {
-                              <lucide-icon
-                                [name]="subSubItem.icon"
-                                class="item-icon"
-                                [size]="subSubItem.iconSize || 15"
-                                [style.width.px]="subSubItem.iconSize || 15"
-                              ></lucide-icon>
+                              <span
+                                class="item-icon {{
+                                  subSubItem.iconClass || ''
+                                }}"
+                              >
+                                <lucide-icon
+                                  [name]="subSubItem.icon"
+                                  [size]="subSubItem.iconSize || 15"
+                                ></lucide-icon>
+                              </span>
                             }
                             <span class="item-label">{{
                               subSubItem.label
@@ -187,12 +193,16 @@
                             (mouseleave)="onItemLeave()"
                           >
                             @if (subSubItem.icon) {
-                              <lucide-icon
-                                [name]="subSubItem.icon"
-                                class="item-icon"
-                                [size]="subSubItem.iconSize || 15"
-                                [style.width.px]="subSubItem.iconSize || 15"
-                              ></lucide-icon>
+                              <span
+                                class="item-icon {{
+                                  subSubItem.iconClass || ''
+                                }}"
+                              >
+                                <lucide-icon
+                                  [name]="subSubItem.icon"
+                                  [size]="subSubItem.iconSize || 15"
+                                ></lucide-icon>
+                              </span>
                             }
                             <span class="item-label">{{
                               subSubItem.label
@@ -217,12 +227,12 @@
                       (mouseleave)="onItemLeave()"
                     >
                       @if (subItem.icon) {
-                        <lucide-icon
-                          [name]="subItem.icon"
-                          class="item-icon"
-                          [size]="subItem.iconSize || 15"
-                          [style.width.px]="subItem.iconSize || 15"
-                        ></lucide-icon>
+                        <span class="item-icon {{ subItem.iconClass || '' }}">
+                          <lucide-icon
+                            [name]="subItem.icon"
+                            [size]="subItem.iconSize || 15"
+                          ></lucide-icon>
+                        </span>
                       }
                       <span class="item-label">{{ subItem.label }}</span>
                       @if (subItem.badgeSeverity) {
@@ -250,12 +260,12 @@
                       (mouseleave)="onItemLeave()"
                     >
                       @if (subItem.icon) {
-                        <lucide-icon
-                          [name]="subItem.icon"
-                          class="item-icon"
-                          [size]="subItem.iconSize || 15"
-                          [style.width.px]="subItem.iconSize || 15"
-                        ></lucide-icon>
+                        <span class="item-icon {{ subItem.iconClass || '' }}">
+                          <lucide-icon
+                            [name]="subItem.icon"
+                            [size]="subItem.iconSize || 15"
+                          ></lucide-icon>
+                        </span>
                       }
                       <span class="item-label">{{ subItem.label }}</span>
                     </div>
@@ -275,12 +285,12 @@
               (mouseleave)="onItemLeave()"
             >
               @if (item.icon) {
-                <lucide-icon
-                  [name]="item.icon"
-                  class="item-icon"
-                  [size]="item.iconSize || 15"
-                  [style.width.px]="item.iconSize || 15"
-                ></lucide-icon>
+                <span class="item-icon {{ item.iconClass || '' }}">
+                  <lucide-icon
+                    [name]="item.icon"
+                    [size]="item.iconSize || 15"
+                  ></lucide-icon>
+                </span>
               }
               <span class="item-label">{{ item.label }}</span>
               @if (item.badgeSeverity) {
@@ -301,12 +311,12 @@
               (mouseleave)="onItemLeave()"
             >
               @if (item.icon) {
-                <lucide-icon
-                  [name]="item.icon"
-                  class="item-icon"
-                  [size]="item.iconSize || 15"
-                  [style.width.px]="item.iconSize || 15"
-                ></lucide-icon>
+                <span class="item-icon {{ item.iconClass || '' }}">
+                  <lucide-icon
+                    [name]="item.icon"
+                    [size]="item.iconSize || 15"
+                  ></lucide-icon>
+                </span>
               }
               <span class="item-label">{{ item.label }}</span>
             </div>

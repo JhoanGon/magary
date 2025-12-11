@@ -5,10 +5,12 @@ export const GETTING_STARTED_ITEMS_CONFIG: NavigationItem[] = [
     label: 'Instalación',
     route: '/installation',
     icon: 'download',
+    iconClass: 'lucide-bounce',
   },
   {
     label: 'Configuración',
     route: '/setup',
     icon: 'settings',
+    iconClass: 'lucide-spin',
   },
 ];

@@ -28,6 +28,18 @@
       </div>
 
       <div class="top-actions">
+        @if (pwaService.installable()) {
+          <magary-button
+            icon="download"
+            label="Instalar App"
+            severity="info"
+            variant="outlined"
+            [rounded]="true"
+            [iconSize]="17"
+            (buttonClick)="pwaService.install()"
+            styleClass="pwa-install-btn"
+          ></magary-button>
+        }
         <app-theme-switcher></app-theme-switcher>
       </div>
     </header>
