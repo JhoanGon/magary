@@ -15,13 +15,19 @@ export class PwaService {
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
+      // Check if running in standalone mode (already installed)
+      const isStandalone = window.matchMedia(
+        '(display-mode: standalone)',
+      ).matches;
+
       // Check for iOS
       this.isIos.set(
         /iPad|iPhone|iPod/.test(navigator.userAgent) &&
           !(window as any).MSStream,
       );
 
-      if (this.isIos()) {
+      // Only show install button if NOT standalone and (is iOS OR generic installable logic pending)
+      if (this.isIos() && !isStandalone) {
         this.installable.set(true);
       }
 
