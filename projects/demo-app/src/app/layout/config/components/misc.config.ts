@@ -14,5 +14,10 @@ export const MISC_CONFIG: NavigationItem = {
       route: 'components/Skeleton',
       icon: 'loader',
     },
+    {
+      label: 'Divider',
+      route: 'components/Divider',
+      icon: 'minus',
+    },
   ],
 };

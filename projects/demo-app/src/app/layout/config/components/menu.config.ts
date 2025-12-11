@@ -5,6 +5,16 @@ export const MENU_CONFIG: NavigationItem = {
   icon: 'menu',
   children: [
     {
+      label: 'Breadcrumb',
+      route: 'components/Breadcrumb',
+      icon: 'chevron-right',
+    },
+    {
+      label: 'Steps',
+      route: 'components/Steps',
+      icon: 'list-ordered',
+    },
+    {
       label: 'Panel Menu',
       route: 'components/Panel-Menu',
       icon: 'list',

@@ -1,0 +1,26 @@
+<div [ngClass]="rootClass()" [ngStyle]="style() || {}">
+  <ng-container *ngFor="let item of model(); let i = index; let last = last">
+    <!-- Step Item -->
+    <div
+      [class.magary-steps-item-active]="i === activeIndex()"
+      [class.magary-steps-item-visited]="i < activeIndex()"
+      [class.magary-steps-item-disabled]="
+        item.disabled || (readonly() && i !== activeIndex())
+      "
+      class="magary-steps-item"
+      (click)="onItemClick($event, item, i)"
+    >
+      <button class="magary-steps-action" tabindex="-1">
+        <span class="magary-steps-number">{{ i + 1 }}</span>
+        <span class="magary-steps-title">{{ item.label }}</span>
+      </button>
+    </div>
+
+    <!-- Separator (Line) -->
+    <div
+      *ngIf="!last"
+      class="magary-steps-separator"
+      [class.magary-steps-separator-active]="i < activeIndex()"
+    ></div>
+  </ng-container>
+</div>

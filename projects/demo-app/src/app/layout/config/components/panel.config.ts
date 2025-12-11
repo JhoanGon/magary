@@ -14,5 +14,10 @@ export const PANEL_CONFIG: NavigationItem = {
       route: 'components/Tabs',
       icon: 'folder',
     },
+    {
+      label: 'Accordion',
+      route: 'components/Accordion',
+      icon: 'list',
+    },
   ],
 };
