@@ -19,5 +19,10 @@ export const MISC_CONFIG: NavigationItem = {
       route: 'components/Divider',
       icon: 'minus',
     },
+    {
+      label: 'Tag',
+      route: 'components/Tag',
+      icon: 'tag',
+    },
   ],
 };

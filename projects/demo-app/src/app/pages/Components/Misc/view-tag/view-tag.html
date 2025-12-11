@@ -1,0 +1,157 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1 class="fade-in">MagaryTag</h1>
+    <p class="fade-in">
+      Etiquetas para categorizar contenido o indicar estado.
+    </p>
+  </div>
+
+  <div class="content">
+    <div class="components-grid">
+      <!-- Example 1: Basic & Severities -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Estados & Severidad</h2>
+          <p>
+            Varios estados predefinidos para comunicar semántica (éxito, error,
+            info, etc.).
+          </p>
+        </div>
+        <div class="section-content">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 2rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                align-items: center;
+              "
+            >
+              <magary-tag value="Primary"></magary-tag>
+              <magary-tag severity="secondary" value="Secondary"></magary-tag>
+              <magary-tag severity="success" value="Success"></magary-tag>
+              <magary-tag severity="info" value="Info"></magary-tag>
+              <magary-tag severity="warning" value="Warning"></magary-tag>
+              <magary-tag severity="danger" value="Danger"></magary-tag>
+              <magary-tag severity="contrast" value="Contrast"></magary-tag>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+
+      <!-- Example 2: Rounded & Icons -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Redondeado & Iconos</h2>
+          <p>
+            Opcionalmente bordes completamente redondeados (píldoras) e iconos
+            integrados.
+          </p>
+        </div>
+        <div class="section-content">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 2rem;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                align-items: center;
+              "
+            >
+              <magary-tag value="Rounded" [rounded]="true"></magary-tag>
+              <magary-tag
+                severity="success"
+                value="Score Top"
+                [rounded]="true"
+              ></magary-tag>
+
+              <magary-tag
+                severity="warning"
+                value="Pending"
+                [rounded]="true"
+                icon="clock"
+              ></magary-tag>
+            </div>
+          </magary-card>
+
+          <div class="code-block" style="margin-top: 2rem">
+            <magary-tabs
+              [backgroundLine]="tabsConfig.backgroundLine"
+              [positionContent]="tabsConfig.positionContent"
+              [background]="tabsConfig.background"
+            >
+              <magary-tab label="HTML">
+                <pre><code [highlight]="exampleHTML" language="html"></code></pre>
+              </magary-tab>
+            </magary-tabs>
+          </div>
+        </div>
+      </div>
+
+      <!-- API Inputs -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Propiedades (Inputs)</h2>
+          <p>Configuración del componente Tag.</p>
+        </div>
+        <div class="section-content">
+          <div class="table-wrapper">
+            <table class="api-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Defecto</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>value</code></td>
+                  <td><code>string</code></td>
+                  <td><code>undefined</code></td>
+                  <td>Texto a mostrar.</td>
+                </tr>
+                <tr>
+                  <td><code>severity</code></td>
+                  <td>
+                    <code
+                      >"success" | "info" | "warning" | "danger" | "secondary" |
+                      "contrast"</code
+                    >
+                  </td>
+                  <td><code>"info"</code></td>
+                  <td>Color semántico de la etiqueta.</td>
+                </tr>
+                <tr>
+                  <td><code>rounded</code></td>
+                  <td><code>boolean</code></td>
+                  <td><code>false</code></td>
+                  <td>Si es verdadero, redondea completamente los bordes.</td>
+                </tr>
+                <tr>
+                  <td><code>icon</code></td>
+                  <td><code>string</code></td>
+                  <td><code>undefined</code></td>
+                  <td>Clase del icono a mostrar.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

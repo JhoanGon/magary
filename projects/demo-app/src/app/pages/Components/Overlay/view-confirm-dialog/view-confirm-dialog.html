@@ -1,0 +1,139 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1 class="fade-in">ConfirmDialog</h1>
+    <p class="fade-in">
+      Diálogo de confirmación avanzado con integración de servicios.
+    </p>
+  </div>
+
+  <div class="content">
+    <div class="components-grid">
+      <!-- Import -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Importar</h2>
+          <p>Módulos necesarios.</p>
+        </div>
+        <div class="section-content">
+          <div class="code-block">
+            <pre><code [highlight]="'import { MagaryConfirmDialog, MagaryConfirmationService } from \'ng-magary\';'" language="typescript"></code></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example 1: Basic -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Básico</h2>
+          <p>Uso básico con el servicio de confirmación.</p>
+        </div>
+        <div class="section-content">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 2rem;
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+              "
+            >
+              <magary-confirm-dialog></magary-confirm-dialog>
+              <magary-button
+                (buttonClick)="confirm1()"
+                label="Confirmar Acción"
+                icon="circle-check"
+              ></magary-button>
+              <magary-button
+                (buttonClick)="confirm2()"
+                label="Eliminar"
+                severity="danger"
+                icon="trash-2"
+              ></magary-button>
+            </div>
+          </magary-card>
+
+          <div class="code-block" style="margin-top: 2rem">
+            <magary-tabs
+              [backgroundLine]="tabsConfig.backgroundLine"
+              [positionContent]="tabsConfig.positionContent"
+              [background]="tabsConfig.background"
+            >
+              <magary-tab label="HTML">
+                <pre><code [highlight]="exampleHTML" language="html"></code></pre>
+              </magary-tab>
+              <magary-tab label="TS">
+                <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
+              </magary-tab>
+            </magary-tabs>
+          </div>
+        </div>
+      </div>
+
+      <!-- API -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Confirmation Object (Service)</h2>
+          <p>
+            Propiedades del objeto pasado a
+            <code>confirmationService.confirm()</code>.
+          </p>
+        </div>
+        <div class="section-content">
+          <div class="table-wrapper">
+            <table class="api-table">
+              <thead>
+                <tr>
+                  <th>Propiedad</th>
+                  <th>Tipo</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>header</td>
+                  <td>string</td>
+                  <td>Título del diálogo.</td>
+                </tr>
+                <tr>
+                  <td>message</td>
+                  <td>string</td>
+                  <td>Mensaje principal.</td>
+                </tr>
+                <tr>
+                  <td>icon</td>
+                  <td>string</td>
+                  <td>Icono a mostrar (Lucide).</td>
+                </tr>
+                <tr>
+                  <td>accept</td>
+                  <td>Function</td>
+                  <td>Callback al aceptar.</td>
+                </tr>
+                <tr>
+                  <td>reject</td>
+                  <td>Function</td>
+                  <td>Callback al rechazar.</td>
+                </tr>
+                <tr>
+                  <td>acceptLabel</td>
+                  <td>string</td>
+                  <td>Texto botón aceptar.</td>
+                </tr>
+                <tr>
+                  <td>rejectLabel</td>
+                  <td>string</td>
+                  <td>Texto botón cancelar.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

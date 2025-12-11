@@ -1,0 +1,159 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1 class="fade-in">MagaryTooltip</h1>
+    <p class="fade-in">
+      Directiva para mostrar información contextual flotante.
+    </p>
+  </div>
+
+  <div class="content">
+    <div class="components-grid">
+      <!-- Import -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Importar</h2>
+          <p>Módulos necesarios para utilizar este componente.</p>
+        </div>
+        <div class="section-content">
+          <div class="code-block">
+            <pre><code [highlight]="importRef" language="typescript"></code></pre>
+          </div>
+          <div
+            class="note"
+            style="
+              margin-top: 1rem;
+              background: var(--surface-100);
+              padding: 1rem;
+              border-radius: 0.5rem;
+              font-size: 0.9rem;
+            "
+          >
+            <p style="margin: 0; color: var(--text-secondary)">
+              <strong>Nota:</strong> Para que el Tooltip se visualice
+              correctamente, debes agregar los estilos globales en tu
+              <code>angular.json</code> bajo la propiedad <code>styles</code>:
+            </p>
+            <div class="code-block" style="margin-top: 0.5rem">
+              <pre><code [highlight]="'node_modules/ng-magary/lib/Overlay/tooltip/tooltip.scss'" language="json"></code></pre>
+            </div>
+            <p style="margin-top: 0.5rem; color: var(--text-secondary)">
+              O importarlo en tu <code>styles.scss</code> global.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example 1: Positions -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Posicionamiento</h2>
+          <p>
+            Soporta las 4 direcciones principales: top, bottom, left, right.
+          </p>
+        </div>
+        <div class="section-content">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 2rem;
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                align-items: center;
+              "
+            >
+              <magary-input
+                placeholder="Hover Input!"
+                magaryTooltip="Username required"
+                style="max-width: 250px"
+              ></magary-input>
+
+              <div
+                style="
+                  display: flex;
+                  gap: 1rem;
+                  flex-wrap: wrap;
+                  justify-content: center;
+                "
+              >
+                <magary-button
+                  label="Top"
+                  magaryTooltip="Tooltip on Top"
+                  tooltipPosition="top"
+                ></magary-button>
+                <magary-button
+                  label="Bottom"
+                  magaryTooltip="Tooltip on Bottom"
+                  tooltipPosition="bottom"
+                ></magary-button>
+                <magary-button
+                  label="Left"
+                  magaryTooltip="Tooltip on Left"
+                  tooltipPosition="left"
+                ></magary-button>
+                <magary-button
+                  label="Right"
+                  magaryTooltip="Tooltip on Right"
+                  tooltipPosition="right"
+                ></magary-button>
+              </div>
+            </div>
+          </magary-card>
+
+          <div class="code-block" style="margin-top: 2rem">
+            <magary-tabs
+              [backgroundLine]="tabsConfig.backgroundLine"
+              [positionContent]="tabsConfig.positionContent"
+              [background]="tabsConfig.background"
+            >
+              <magary-tab label="HTML">
+                <pre><code [highlight]="exampleHTML" language="html"></code></pre>
+              </magary-tab>
+            </magary-tabs>
+          </div>
+        </div>
+      </div>
+
+      <!-- API Inputs -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Propiedades (Inputs)</h2>
+          <p>Configuración de la directiva.</p>
+        </div>
+        <div class="section-content">
+          <div class="table-wrapper">
+            <table class="api-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Defecto</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>magaryTooltip</code></td>
+                  <td><code>string</code></td>
+                  <td><code>undefined</code></td>
+                  <td>Texto a mostrar en el tooltip.</td>
+                </tr>
+                <tr>
+                  <td><code>tooltipPosition</code></td>
+                  <td><code>"top" | "bottom" | "left" | "right"</code></td>
+                  <td><code>"top"</code></td>
+                  <td>Posición relativa al elemento.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

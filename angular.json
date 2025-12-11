@@ -63,6 +63,7 @@
             ],
             "styles": [
               "projects/demo-app/src/styles.scss",
+              "projects/ng-magary/src/lib/Overlay/tooltip/tooltip.scss",
               "node_modules/highlight.js/styles/atom-one-dark.css"
             ]
           },

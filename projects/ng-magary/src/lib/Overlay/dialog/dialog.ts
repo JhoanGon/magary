@@ -138,6 +138,22 @@ export class MagaryDialog {
     // Effect to handle focus trap or other side effects if needed
   }
 
+  ngAfterViewInit() {
+    if (this.appendTo() === 'body') {
+      this.renderer.appendChild(document.body, this.el.nativeElement);
+    }
+  }
+
+  ngOnDestroy() {
+    // If we moved it to body, Angular should usually handle removal,
+    // but to be safe and cleaner we can ensure cleanup if needed.
+    // In standard Angular, removing the component destroys the view and removes the host.
+    // However, since we moved it, let's explicitely check if we need to remove, though Angular usually tracks the node.
+    // Actually, simpler: if we moved it, we leave it to Angular to remove.
+    // But we should unblock scroll just in case.
+    this.unblockBodyScroll();
+  }
+
   // --- Public Methods ---
 
   close(event: Event) {

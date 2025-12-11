@@ -1,0 +1,33 @@
+.magary-confirm-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 0 1.5rem 0;
+    color: var(--text-primary);
+}
+
+.magary-confirm-icon {
+    color: var(--primary-500);
+    flex-shrink: 0;
+}
+
+.magary-confirm-message {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.magary-confirm-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 640px) {
+    .magary-confirm-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+}

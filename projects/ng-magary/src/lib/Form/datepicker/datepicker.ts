@@ -70,10 +70,6 @@ export class MagaryDatePicker
       this.onChange(null);
       return;
     }
-
-    // Range input parsing not yet supported via text for simplicity in this step
-    // Only basic single date parsing kept for now.
-    // Ideally we'd parse "dd/mm/yyyy - dd/mm/yyyy"
   }
 
   // Computed
