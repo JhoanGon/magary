@@ -1,5 +1,5 @@
-// Variables - Override these in your theme or root
-:root {
+// Variables moved to mask to inherit theme from body
+.magary-dialog-mask {
   --magary-dialog-mask-bg: rgba(0, 0, 0, 0.45);
   // Use global surface/text variables for automatic theming
   --magary-dialog-bg: var(--surface-0, #ffffff);
@@ -12,9 +12,7 @@
   --magary-dialog-content-padding: 0 1.5rem 1.5rem 1.5rem;
   --magary-dialog-footer-padding: 1rem 1.5rem;
   --magary-dialog-transition-duration: 0.2s;
-}
 
-.magary-dialog-mask {
   position: fixed;
   top: 0;
   left: 0;

@@ -6,8 +6,18 @@ export const OVERLAY_CONFIG: NavigationItem = {
   children: [
     {
       label: 'Dialog',
-      route: '/components/dialog',
+      route: '/components/Dialog',
       icon: 'maximize-2',
+    },
+    {
+      label: 'Tooltip',
+      route: '/components/Tooltip',
+      icon: 'message-square',
+    },
+    {
+      label: 'ConfirmDialog',
+      route: '/components/ConfirmDialog',
+      icon: 'triangle-alert',
     },
   ],
 };

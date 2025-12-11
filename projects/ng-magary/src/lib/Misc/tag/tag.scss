@@ -1,0 +1,55 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-200);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--border-radius);
+  gap: 0.25rem;
+
+  // Icon styling
+  ::ng-deep lucide-icon.magary-tag-icon {
+    margin-right: 0.25rem;
+    display: flex;
+    align-items: center;
+  }
+
+  // Rounded Override
+  &.magary-tag-rounded {
+    border-radius: 0.75rem;
+  }
+
+  // Severities
+  &.magary-tag-success {
+    background: var(--green-100);
+    color: var(--green-700);
+  }
+
+  &.magary-tag-info {
+    background: var(--blue-100);
+    color: var(--blue-700);
+  }
+
+  &.magary-tag-warning {
+    background: var(--orange-100);
+    color: var(--orange-700);
+  }
+
+  &.magary-tag-danger {
+    background: var(--red-100);
+    color: var(--red-700);
+  }
+
+  &.magary-tag-secondary {
+    background: var(--surface-200);
+    color: var(--text-secondary);
+  }
+
+  &.magary-tag-contrast {
+    background: var(--surface-900);
+    color: var(--surface-0);
+  }
+}

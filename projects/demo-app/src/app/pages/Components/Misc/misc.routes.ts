@@ -16,4 +16,8 @@ export const MISC_ROUTES: Routes = [
     loadComponent: () =>
       import('./view-divider/view-divider').then((m) => m.ViewDivider),
   },
+  {
+    path: 'Tag',
+    loadComponent: () => import('./view-tag/view-tag').then((m) => m.ViewTag),
+  },
 ];

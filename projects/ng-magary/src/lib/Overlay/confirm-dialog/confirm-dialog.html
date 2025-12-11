@@ -1,0 +1,43 @@
+<magary-dialog
+  [(visible)]="visible"
+  [header]="effectiveHeader()"
+  [modal]="true"
+  [dismissableMask]="dismissableMask()"
+  [closeOnEscape]="closeOnEscape()"
+  [width]="'450px'"
+  styleClass="magary-confirm-dialog"
+>
+  <!-- Content -->
+  <div class="magary-confirm-content">
+    <lucide-icon
+      *ngIf="effectiveIcon()"
+      [name]="effectiveIcon()!"
+      class="magary-confirm-icon"
+      [size]="32"
+    ></lucide-icon>
+    <span class="magary-confirm-message">{{ effectiveMessage() }}</span>
+  </div>
+
+  <!-- Footer -->
+  <div class="magary-confirm-footer">
+    <magary-button
+      *ngIf="effectiveRejectVisible()"
+      [label]="effectiveRejectLabel()"
+      (buttonClick)="reject()"
+      [icon]="rejectIcon()"
+      variant="text"
+      severity="secondary"
+      class="magary-confirm-btn-reject"
+    ></magary-button>
+
+    <magary-button
+      *ngIf="effectiveAcceptVisible()"
+      [label]="effectiveAcceptLabel()"
+      (buttonClick)="accept()"
+      [icon]="acceptIcon()"
+      severity="primary"
+      class="magary-confirm-btn-accept"
+      [shadow]="2"
+    ></magary-button>
+  </div>
+</magary-dialog>

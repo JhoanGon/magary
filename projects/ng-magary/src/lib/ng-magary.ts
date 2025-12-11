@@ -61,11 +61,18 @@ export * from './Misc/avatar/avatar.module';
 export * from './Misc/skeleton/skeleton';
 export * from './Misc/skeleton/skeleton.module';
 export * from './Misc/divider/divider';
+export * from './Misc/tag/tag';
 
 // 🗂️ Overlay //
-// 🗂️ Overlay //
+export * from './Overlay/tooltip/tooltip';
+export * from './Overlay/tooltip/tooltip.module';
 export * from './Overlay/dialog/dialog';
 export * from './Overlay/dialog/dialog.module';
+
+// ConfirmDialog
+export * from './Overlay/confirm-dialog/confirm-dialog';
+export * from './Overlay/confirm-dialog/confirm-dialog.module';
+export * from './Overlay/confirm-dialog/confirmation.service';
 
 // 📦 Panel //
 export * from './Panel/card/card';
