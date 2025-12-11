@@ -1,0 +1,92 @@
+:host {
+    display: flex;
+    position: relative;
+    
+    // Default Colors
+    --divider-color: var(--surface-300); // Slightly darker for better visibility
+    --divider-text: var(--text-secondary);
+    
+    .magary-divider-content {
+        background-color: var(--surface-0);
+        color: var(--divider-text);
+        z-index: 1;
+        padding: 0 0.5rem;
+    }
+
+    // Horizontal
+    &.magary-divider-horizontal {
+        width: 100%;
+        align-items: center;
+        margin: 1rem 0;
+        
+        // Line via before pseudo-element
+        &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            top: 50%;
+            border-top: 1px solid var(--divider-color);
+        }
+        
+        &.magary-divider-solid::before { border-top-style: solid; }
+        &.magary-divider-dashed::before { border-top-style: dashed; }
+        &.magary-divider-dotted::before { border-top-style: dotted; }
+        
+        // Alignments (Flexbox justification)
+        &.magary-divider-left {
+            justify-content: flex-start;
+            &::before { width: 100%; }
+            .magary-divider-content { margin-left: 1rem; }
+        }
+        
+        &.magary-divider-right {
+            justify-content: flex-end;
+            .magary-divider-content { margin-right: 1rem; }
+        }
+        
+        &.magary-divider-center {
+            justify-content: center;
+        }
+    }
+    
+    // Vertical
+    &.magary-divider-vertical {
+        display: inline-flex;
+        min-height: 100%;
+        margin: 0 1rem;
+        flex-direction: column;
+        justify-content: center; 
+        
+        &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            height: 100%;
+            left: 50%;
+            border-left: 1px solid var(--divider-color);
+        }
+        
+        &.magary-divider-solid::before { border-left-style: solid; }
+        &.magary-divider-dashed::before { border-left-style: dashed; }
+        &.magary-divider-dotted::before { border-left-style: dotted; }
+        
+        .magary-divider-content {
+            padding: 0.5rem 0;
+        }
+
+        &.magary-divider-top {
+            justify-content: flex-start;
+            .magary-divider-content { margin-top: 0.5rem; }
+        }
+        
+        &.magary-divider-bottom {
+            justify-content: flex-end;
+            .magary-divider-content { margin-bottom: 0.5rem; }
+        }
+        
+        &.magary-divider-center {
+            justify-content: center;
+        }
+    }
+}

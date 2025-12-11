@@ -10,4 +10,9 @@ export const PANEL_ROUTES: Routes = [
     path: 'Tabs',
     loadComponent: () => import('./view-tab/view-tab').then((m) => m.ViewTab),
   },
+  {
+    path: 'Accordion',
+    loadComponent: () =>
+      import('./view-accordion/view-accordion').then((m) => m.ViewAccordion),
+  },
 ];

@@ -1,0 +1,80 @@
+.magary-breadcrumb {
+    margin: 0;
+    padding: 1rem;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--surface-card);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+    
+    .magary-breadcrumb-home {
+        display: flex;
+        align-items: center;
+    }
+
+    .magary-breadcrumb-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .magary-breadcrumb-chevron {
+        margin: 0 0.5rem;
+        display: flex;
+        align-items: center;
+        color: var(--text-secondary);
+    }
+    
+    .magary-menuitem-link, .magary-menuitem-text {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-secondary);
+        transition: color 0.2s;
+        cursor: pointer;
+        border-radius: var(--border-radius);
+        padding: 0.25rem 0.5rem;
+
+        &:hover {
+            color: var(--text-primary);
+            background: var(--surface-hover);
+        }
+
+        &.magary-menuitem-link-active {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        &.magary-disabled {
+             opacity: 0.6;
+             pointer-events: none;
+             cursor: default;
+        }
+    }
+
+    @media screen and (max-width: 640px) {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 0.75rem;
+        
+        // Show scrollbar for better UX
+        &::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: var(--surface-300);
+            border-radius: 4px;
+        }
+
+        .magary-menuitem-text {
+            font-size: 0.875rem;
+        }
+    }
+}
