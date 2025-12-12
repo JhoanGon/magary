@@ -19,5 +19,10 @@ export const OVERLAY_CONFIG: NavigationItem = {
       route: '/components/ConfirmDialog',
       icon: 'triangle-alert',
     },
+    {
+      label: 'OverlayPanel',
+      route: '/components/OverlayPanel',
+      icon: 'credit-card',
+    },
   ],
 };

@@ -10,6 +10,11 @@ export const DATA_CONFIG: NavigationItem = {
       icon: 'table',
     },
     {
+      label: 'DataView',
+      route: '/components/view-dataview',
+      icon: 'list',
+    },
+    {
       label: 'Paginator',
       route: 'components/paginator',
       icon: 'list-minus',

@@ -1,0 +1,68 @@
+.magary-dataview {
+    border: 1px solid var(--surface-200, #e5e7eb);
+    background: var(--surface-0, #ffffff);
+    color: var(--text-primary, #495057);
+    border-radius: 6px;
+
+    .magary-dataview-header,
+    .magary-dataview-footer {
+        padding: 1rem;
+        background: var(--surface-50, #f9fafb);
+        border-bottom: 1px solid var(--surface-200, #e5e7eb);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .magary-dataview-footer {
+        border-bottom: none;
+        border-top: 1px solid var(--surface-200, #e5e7eb);
+    }
+
+    .magary-dataview-content {
+        padding: 0;
+    }
+
+    .magary-grid {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &.magary-dataview-list {
+        .magary-grid {
+            flex-direction: column;
+        }
+    }
+
+    &.magary-dataview-grid {
+        .magary-grid {
+            margin: -0.5rem; // compensation for padding
+        }
+    }
+
+    .magary-dataview-empty {
+        padding: 1rem;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+// Helper grid classes for demos (can be overridden or used in item templates)
+.col-12 { width: 100%; padding: 0.5rem; }
+.col-6 { width: 50%; padding: 0.5rem; }
+.col-4 { width: 33.333%; padding: 0.5rem; }
+.col-3 { width: 25%; padding: 0.5rem; }
+
+// Responsive grid support
+@media screen and (max-width: 768px) {
+    .magary-dataview-grid .col-4,
+    .magary-dataview-grid .col-3 {
+        width: 50%;
+    }
+}
+@media screen and (max-width: 576px) {
+    .magary-dataview-grid .col-4,
+    .magary-dataview-grid .col-3,
+    .magary-dataview-grid .col-6 {
+        width: 100%;
+    }
+}

@@ -1,0 +1,82 @@
+.magary-fieldset {
+    border: 1px solid var(--surface-300, #e5e7eb);
+    background: var(--surface-0, #ffffff);
+    color: var(--text-primary, #374151);
+    border-radius: 6px;
+    margin: 0 0 1rem 0;
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    min-width: 0; // Fix internal overflow issues
+    transition: all 0.2s;
+
+    .magary-fieldset-legend {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--surface-300, #e5e7eb);
+        color: var(--text-primary, #374151);
+        background: var(--surface-50, #f9fafb);
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        width: auto;
+        display: flex;
+        align-items: center;
+        margin-left: -0.75rem; // Adjust for fieldset default padding if needed, though standard legend positioning handles this.
+        // Actually, fieldset legend positioning is tricky. Let's rely on standard <legend> flow but style it nicely.
+        // To make it look "on border" properly, native fieldset does this.
+    }
+
+    &.magary-fieldset-toggleable {
+        .magary-fieldset-legend {
+            padding: 0;
+            border: none;
+            background: transparent;
+            
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.5rem 0.75rem;
+                border: 1px solid var(--surface-300, #e5e7eb);
+                color: var(--text-primary, #374151);
+                background: var(--surface-50, #f9fafb);
+                border-radius: 6px;
+                cursor: pointer;
+                text-decoration: none;
+                transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+                user-select: none;
+                gap: 0.5rem;
+
+                &:hover {
+                    background: var(--surface-100, #f3f4f6);
+                    color: var(--text-primary, #1f2937);
+                }
+
+                &:focus-visible {
+                    outline: 0 none;
+                    box-shadow: 0 0 0 2px var(--primary-200, #bfdbfe);
+                }
+            }
+        }
+    }
+    
+    .magary-fieldset-content-wrapper {
+        overflow: hidden; // Required for animation
+    }
+    
+    .magary-fieldset-content {
+        padding-top: 0.5rem;
+    }
+
+    &.magary-fieldset-collapsed {
+        // Reduced bottom padding when collapsed?
+        // Actually, animation handles height, but padding might remain on parent fieldset if not careful.
+        // Standard fieldset wraps content. If content is handled via animation in wrapper, fieldset should shrink.
+        // We might need to adjust fieldset padding-bottom when collapsed.
+        // But native fieldset is weird.
+        // Let's rely on wrapper animation. If visual issues arise, we can fix.
+    }
+}
+
+// Dark theme overrides handled via vars, but listing for check
+// --surface-300 #e5e7eb (light) -> #4b5563 (dark)
+// --surface-0 #ffffff -> #1f2937
+// --surface-50 #f9fafb -> #111827

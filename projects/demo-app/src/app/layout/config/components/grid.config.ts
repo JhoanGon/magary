@@ -8,6 +8,7 @@ export const GRID_CONFIG: NavigationItem = {
     {
       label: 'View Grid',
       route: '/components/view-grid',
+      icon: 'rows-3',
     },
   ],
 };

@@ -49,5 +49,15 @@ export const FORM_CONFIG: NavigationItem = {
       route: 'components/InputNumber',
       icon: 'hash',
     },
+    {
+      label: 'Slider',
+      route: 'components/Slider',
+      icon: 'sliders-horizontal',
+    },
+    {
+      label: 'Rating',
+      route: 'components/Rating',
+      icon: 'star',
+    },
   ],
 };

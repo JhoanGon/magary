@@ -34,6 +34,11 @@ export const DATA_ROUTES: Routes = [
       import('./view-pick-list/view-pick-list').then((m) => m.ViewPickList),
   },
   {
+    path: 'view-dataview',
+    loadComponent: () =>
+      import('./view-dataview/view-dataview').then((m) => m.ViewDataView),
+  },
+  {
     path: 'order-list',
     loadComponent: () =>
       import('./view-order-list/view-order-list').then((m) => m.ViewOrderList),

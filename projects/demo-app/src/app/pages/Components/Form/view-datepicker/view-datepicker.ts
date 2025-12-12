@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MagaryDatePicker, MagaryTabsModule } from 'ng-magary';
+import { MagaryDatePicker, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
 @Component({
@@ -11,7 +11,8 @@ import { Highlight } from 'ngx-highlightjs';
     CommonModule,
     FormsModule,
     MagaryDatePicker,
-    MagaryTabsModule,
+    MagaryTabs,
+    MagaryTab,
     Highlight,
   ],
   templateUrl: './view-datepicker.html',

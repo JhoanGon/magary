@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MagarySelect, MagaryTabsModule } from 'ng-magary';
+import { MagarySelect, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
 @Component({
@@ -11,7 +11,8 @@ import { Highlight } from 'ngx-highlightjs';
     CommonModule,
     FormsModule,
     MagarySelect,
-    MagaryTabsModule,
+    MagaryTabs,
+    MagaryTab,
     Highlight,
   ],
   templateUrl: './view-select.html',

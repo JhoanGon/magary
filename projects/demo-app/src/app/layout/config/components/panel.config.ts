@@ -6,17 +6,27 @@ export const PANEL_CONFIG: NavigationItem = {
   children: [
     {
       label: 'Card',
-      route: 'components/Card',
       icon: 'id-card',
+      route: '/components/card',
     },
     {
-      label: 'Tabs',
-      route: 'components/Tabs',
+      label: 'Fieldset',
+      icon: 'credit-card',
+      route: '/components/fieldset',
+    },
+    {
+      label: 'Toolbar',
+      icon: 'minus',
+      route: '/components/toolbar',
+    },
+    {
+      label: 'TabView',
+      route: '/components/tabview',
       icon: 'folder',
     },
     {
       label: 'Accordion',
-      route: 'components/Accordion',
+      route: '/components/Accordion',
       icon: 'list',
     },
   ],
