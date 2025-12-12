@@ -1,0 +1,121 @@
+/* Menubar SCSS */
+.magary-menubar {
+  padding: 0.5rem;
+  background: var(--surface-0);
+  color: var(--text-primary);
+  border: 1px solid var(--surface-200);
+  border-radius: var(--border-radius);
+
+  .magary-menubar-root-list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.25rem;
+  }
+}
+
+.magary-menuitem {
+  position: relative;
+  list-style: none;
+
+  /* Separator */
+  &.magary-menu-separator {
+    border-top: 1px solid var(--surface-200);
+    margin: 0.25rem 0;
+  }
+}
+
+.magary-menuitem-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s;
+  user-select: none;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--surface-100);
+    color: var(--text-primary);
+  }
+
+  &.magary-disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .magary-menuitem-icon {
+    margin-right: 0.5rem;
+    color: var(--text-secondary);
+  }
+
+  .magary-menuitem-text {
+    margin-right: 0.5rem;
+  }
+
+  .magary-submenu-icon {
+    margin-left: auto;
+    color: var(--text-secondary);
+  }
+}
+
+.magary-menuitem-active > .magary-menuitem-content > .magary-menuitem-link {
+  background: var(--surface-100);
+  color: var(--text-primary);
+
+  .magary-submenu-icon {
+    color: var(--text-primary);
+  }
+}
+
+/* Submenus */
+.magary-submenu-container {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+
+  &.magary-submenu-visible {
+    display: block;
+  }
+}
+
+/* Root level submenus (dropdowns) */
+.magary-menubar-root-list > .magary-menuitem {
+  > .magary-submenu-container {
+    top: 100%;
+    left: 0;
+    padding-top: 0.25rem; /* spacing for mouse movement? */
+  }
+}
+
+/* Nested submenus (flyouts) */
+.magary-submenu-container .magary-menuitem {
+  > .magary-submenu-container {
+    top: 0;
+    left: 100%;
+    margin-left: 0.25rem;
+  }
+}
+
+.magary-submenu {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  background: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-radius: var(--border-radius);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  min-width: 12.5rem;
+
+  .magary-menuitem-link {
+    padding: 0.5rem 1rem;
+  }
+}

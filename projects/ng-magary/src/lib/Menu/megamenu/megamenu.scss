@@ -1,0 +1,171 @@
+/* MegaMenu SCSS */
+.magary-megamenu {
+    padding: 0.5rem;
+    background: var(--surface-0);
+    color: var(--text-primary);
+    border: 1px solid var(--surface-200);
+    border-radius: var(--border-radius);
+    position: relative;
+    
+    .magary-megamenu-root-list {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        gap: 0.25rem;
+    }
+    
+    &.magary-megamenu-vertical {
+        .magary-megamenu-root-list {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .magary-megamenu-panel {
+            top: 0;
+            left: 100%;
+            min-width: 20rem; /* Vertical menu needs panel to the side */
+        }
+    }
+}
+
+.magary-menuitem {
+    position: relative;
+    
+    &.magary-menuitem-active {
+        > .magary-menuitem-link {
+            background: var(--surface-100);
+            color: var(--text-primary);
+        }
+    }
+}
+
+.magary-menuitem-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s;
+    user-select: none;
+    white-space: nowrap;
+    justify-content: space-between;
+
+    &:hover {
+        background: var(--surface-100);
+        color: var(--text-primary);
+    }
+    
+    &.magary-disabled {
+        opacity: 0.5;
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .magary-menuitem-icon {
+        margin-right: 0.5rem;
+        color: var(--text-secondary);
+    }
+    
+    .magary-submenu-icon {
+        margin-left: 0.5rem;
+        color: var(--text-secondary);
+    }
+}
+
+/* Mega Panel */
+.magary-megamenu-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    min-width: 100%; /* At least full width of menu */
+    background: var(--surface-0);
+    border: 1px solid var(--surface-200);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 1rem;
+    margin-top: 0.25rem;
+    width: auto; /* Can be wider than container */
+    max-width: 90vw;
+}
+
+.magary-megamenu-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.magary-megamenu-col {
+    flex: 1;
+    min-width: 200px;
+}
+
+.magary-megamenu-submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    .magary-megamenu-submenu-header {
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .header-icon {
+            color: var(--primary-500);
+        }
+    }
+    
+    .magary-menuitem-link.sublink {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        
+        &:hover {
+            color: var(--text-primary);
+            background: var(--surface-50);
+        }
+    }
+}
+
+/* Responsive adjustment */
+@media screen and (max-width: 960px) {
+    .magary-megamenu {
+        .magary-megamenu-root-list {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .magary-megamenu-panel {
+            position: static;
+            width: 100%;
+            max-width: 100%;
+            border: none;
+            box-shadow: none;
+            padding-left: 1rem;
+            margin-top: 0;
+            background: transparent;
+        }
+
+        .magary-megamenu-grid {
+             flex-direction: column;
+             gap: 1rem;
+        }
+
+        .magary-megamenu-col {
+             min-width: 100%;
+        }
+
+        .magary-menuitem {
+            width: 100%;
+        }
+    }
+}

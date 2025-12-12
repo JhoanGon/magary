@@ -1,0 +1,135 @@
+$contextmenu-bg: var(--surface-0);
+$contextmenu-border: 1px solid var(--surface-200);
+$contextmenu-shadow: var(--shadow-lg);
+$contextmenu-radius: 12px;
+$contextmenu-item-hover: var(--surface-100);
+$contextmenu-item-text: var(--text-primary);
+$contextmenu-item-icon: var(--text-secondary);
+$contextmenu-zindex: 1000;
+
+:host {
+  display: block;
+}
+
+.magary-contextmenu {
+  padding: 0.5rem;
+  background: $contextmenu-bg;
+  color: $contextmenu-item-text;
+  border: $contextmenu-border;
+  border-radius: $contextmenu-radius;
+  box-shadow: $contextmenu-shadow;
+  min-width: 12rem;
+  width: auto;
+  position: absolute;
+  display: none;
+  z-index: $contextmenu-zindex;
+
+  &.magary-contextmenu-visible {
+    display: block;
+    // Animation
+    animation: fadeIn 0.1s ease-out;
+  }
+
+  .magary-contextmenu-root-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    outline: none;
+  }
+
+  .magary-menuitem {
+    position: relative;
+
+    &.magary-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .magary-menuitem-content {
+      // Wrapper
+    }
+
+    .magary-menuitem-link {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        overflow: hidden;
+        position: relative;
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        color: inherit;
+        transition: background-color 0.2s;
+        outline: none;
+  
+        &:hover {
+          background-color: $contextmenu-item-hover;
+        }
+  
+        &:focus {
+          background-color: $contextmenu-item-hover;
+        }
+
+      .magary-menuitem-icon {
+        margin-right: 0.75rem;
+        color: $contextmenu-item-icon;
+        width: 1rem;
+        height: 1rem;
+        display: flex; // Center icon
+        align-items: center;
+        justify-content: center;
+      }
+
+      .magary-menuitem-text {
+        line-height: 1;
+        flex: 1;
+      }
+
+      .magary-submenu-icon {
+        margin-left: auto;
+        color: $contextmenu-item-icon;
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+
+    // Active state (submenu open)
+    &.magary-menuitem-active {
+        > .magary-menuitem-content > .magary-menuitem-link {
+          background-color: $contextmenu-item-hover;
+        }
+      }
+  }
+
+  // Nested Submenu
+  .magary-submenu {
+    margin: 0;
+    padding: 0.5rem;
+    list-style: none;
+    position: absolute;
+    top: 0;
+    left: 100%; // Opens to the right
+    min-width: 12rem;
+    z-index: 1;
+    background: $contextmenu-bg;
+    border: $contextmenu-border;
+    border-radius: $contextmenu-radius;
+    box-shadow: $contextmenu-shadow;
+    display: none; // Hidden by default, shown by directive logic
+  }
+
+  .magary-menuitem.magary-menuitem-active > .magary-submenu {
+    display: block;
+  }
+
+  // Separator
+  .magary-menu-separator {
+    border-top: 1px solid var(--surface-200);
+    margin: 0.5rem 0;
+  }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}

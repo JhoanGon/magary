@@ -1,0 +1,155 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1>Magary InputNumber</h1>
+    <p>
+      Componente de entrada para valores numéricos con formato y validación.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Importación</h2>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importRef" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplos</h2>
+      <p>Diferentes configuraciones de formato y layout.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <div class="form-grid">
+          <!-- Basic -->
+          <div class="field">
+            <label>Básico</label>
+            <magary-input-number
+              [(value)]="val1"
+              mode="decimal"
+              [showButtons]="true"
+              inputId="minmax"
+              [min]="0"
+              [max]="100"
+              placeholder="0-100"
+            ></magary-input-number>
+          </div>
+
+          <!-- Currency -->
+          <div class="field">
+            <label>Moneda (USD)</label>
+            <magary-input-number
+              [(value)]="val3"
+              mode="currency"
+              currency="USD"
+              locale="en-US"
+              placeholder="USD"
+            ></magary-input-number>
+          </div>
+
+          <!-- Horizontal Buttons -->
+          <div class="field">
+            <label>Botones Horizontales</label>
+            <magary-input-number
+              [(value)]="val9"
+              [showButtons]="true"
+              buttonLayout="horizontal"
+              inputId="horizontal"
+              incrementButtonIcon="plus"
+              decrementButtonIcon="minus"
+            ></magary-input-number>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="basicHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="basicTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (input of inputs; track input.name) {
+              <tr>
+                <td>
+                  <code>{{ input.name }}</code>
+                </td>
+                <td>
+                  <code>{{ input.type }}</code>
+                </td>
+                <td>
+                  <code>{{ input.default }}</code>
+                </td>
+                <td>{{ input.description }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="api-table section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos emitidos por el componente</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (output of outputs; track output.name) {
+              <tr>
+                <td>
+                  <code>{{ output.name }}</code>
+                </td>
+                <td>
+                  <code>{{ output.type }}</code>
+                </td>
+                <td>{{ output.description }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

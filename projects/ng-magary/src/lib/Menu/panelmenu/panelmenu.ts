@@ -9,19 +9,8 @@ import {
 } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
 import { RouterModule } from '@angular/router';
-export interface MenuItem {
-  label: string;
-  route?: string;
-  icon?: string;
-  children?: MenuItem[];
-  disabled?: boolean;
-  metadata?: any;
-  badgeSeverity?: 'success' | 'info' | 'warning' | 'danger' | 'contrast';
-  iconSize?: number;
-  styleClass?: string;
-  iconClass?: string;
-  command?: (event?: any) => void;
-}
+import { MenuItem } from '../api/menu.interface';
+
 export interface MenuItemClickEvent {
   item: MenuItem;
   level: number;
@@ -131,7 +120,7 @@ export class MagaryPanelmenu {
     this.itemClick.emit({
       item,
       level,
-      path: [...path, item.label],
+      path: [...path, item.label || ''],
     });
   }
   isSubItemExpanded(itemKey: string): boolean {
@@ -151,12 +140,12 @@ export class MagaryPanelmenu {
   }
   getItemId(item: MenuItem, index: number, parentPath: string = ''): string {
     const path = parentPath
-      ? `${parentPath}-${item.label}-${index}`
-      : `${item.label}-${index}`;
+      ? `${parentPath}-${item.label || ''}-${index}`
+      : `${item.label || ''}-${index}`;
     return path;
   }
   getUniqueItemKey(item: MenuItem, parentPath: string = ''): string {
-    return parentPath ? `${parentPath}/${item.label}` : item.label;
+    return parentPath ? `${parentPath}/${item.label || ''}` : item.label || '';
   }
   isItemHovered(itemId: string): boolean {
     return this.hoveredItem() === itemId;

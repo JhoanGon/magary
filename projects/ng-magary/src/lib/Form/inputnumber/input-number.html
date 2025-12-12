@@ -1,0 +1,103 @@
+<!-- ============================================
+     HTML Template - InputNumber Component
+     ============================================ -->
+
+<span
+  class="magary-inputnumber"
+  [ngClass]="{
+    'magary-inputnumber-buttons-stacked':
+      showButtons() && buttonLayout() === 'stacked',
+    'magary-inputnumber-buttons-horizontal':
+      showButtons() && buttonLayout() === 'horizontal',
+    'magary-inputnumber-focused': focused(),
+    'magary-disabled': disabled(),
+  }"
+  [style]="style()"
+  [attr.data-mode]="buttonLayout()"
+>
+  <input
+    #input
+    type="text"
+    [attr.id]="inputId()"
+    [attr.name]="name()"
+    [attr.placeholder]="placeholder()"
+    [attr.size]="size()"
+    [attr.maxlength]="maxlength()"
+    [attr.tabindex]="tabindex()"
+    [disabled]="disabled()"
+    [readonly]="readonly()"
+    [value]="formattedValue()"
+    (input)="onUserInput($event)"
+    (focus)="onInputFocus($event)"
+    (blur)="onInputBlur($event)"
+    (keydown)="onInputKeyDown($event)"
+    class="magary-inputnumber-input"
+    [ngClass]="inputStyleClass()"
+    [ngStyle]="inputStyle()"
+  />
+
+  <!-- Stacked Layout: Botones verticales dentro del input -->
+  @if (showButtons() && buttonLayout() === "stacked") {
+    <span class="magary-inputnumber-button-group">
+      <button
+        type="button"
+        class="magary-inputnumber-button magary-inputnumber-button-up"
+        [ngClass]="incrementButtonClass()"
+        [disabled]="disabled() || (max() !== null && value()! >= max()!)"
+        (click)="spin($event, 1)"
+        tabindex="-1"
+      >
+        <i-lucide
+          [name]="incrementButtonIcon() || 'chevron-up'"
+          class="magary-icon"
+        ></i-lucide>
+      </button>
+      <button
+        type="button"
+        class="magary-inputnumber-button magary-inputnumber-button-down"
+        [ngClass]="decrementButtonClass()"
+        [disabled]="disabled() || (min() !== null && value()! <= min()!)"
+        (click)="spin($event, -1)"
+        tabindex="-1"
+      >
+        <i-lucide
+          [name]="decrementButtonIcon() || 'chevron-down'"
+          class="magary-icon"
+        ></i-lucide>
+      </button>
+    </span>
+  }
+
+  <!-- Horizontal Layout: Botones a los lados del input -->
+  @if (showButtons() && buttonLayout() === "horizontal") {
+    <!-- Botón Decrementar (Izquierda) -->
+    <button
+      type="button"
+      class="magary-inputnumber-button magary-inputnumber-button-down"
+      [ngClass]="decrementButtonClass()"
+      [disabled]="disabled() || (min() !== null && value()! <= min()!)"
+      (click)="spin($event, -1)"
+      tabindex="-1"
+    >
+      <i-lucide
+        [name]="decrementButtonIcon() || 'minus'"
+        class="magary-icon"
+      ></i-lucide>
+    </button>
+
+    <!-- Botón Incrementar (Derecha) -->
+    <button
+      type="button"
+      class="magary-inputnumber-button magary-inputnumber-button-up"
+      [ngClass]="incrementButtonClass()"
+      [disabled]="disabled() || (max() !== null && value()! >= max()!)"
+      (click)="spin($event, 1)"
+      tabindex="-1"
+    >
+      <i-lucide
+        [name]="incrementButtonIcon() || 'plus'"
+        class="magary-icon"
+      ></i-lucide>
+    </button>
+  }
+</span>

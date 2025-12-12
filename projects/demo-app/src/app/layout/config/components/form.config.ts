@@ -44,5 +44,10 @@ export const FORM_CONFIG: NavigationItem = {
       route: 'components/DatePicker',
       icon: 'calendar',
     },
+    {
+      label: 'InputNumber',
+      route: 'components/InputNumber',
+      icon: 'hash',
+    },
   ],
 };

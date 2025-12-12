@@ -1,0 +1,126 @@
+<div class="container">
+  <div class="header">
+    <h1>Context Menu</h1>
+    <p>ContextMenu muestra un menú al hacer clic derecho.</p>
+  </div>
+
+  <magary-toast position="top-right"></magary-toast>
+
+  <!-- TARGET EXAMPLE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Básico</h2>
+      <p>Haz clic derecho en el cuadro a continuación para abrir el menú.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="target-area flex align-items-center justify-content-center">
+          <span style="color: var(--text-secondary)">Haz Clic Derecho</span>
+        </div>
+        <!-- Target via selector string -->
+        <magary-context-menu [target]="'.target-area'" [model]="items()" />
+      </div>
+
+      <magary-tabs
+        [backgroundLine]="'#ed2c44'"
+        [positionContent]="'flex-start'"
+        [background]="'#282c34'"
+      >
+        <magary-tab label="HTML">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleTargetHTML" language="xml"></code></pre>
+          </div>
+        </magary-tab>
+        <magary-tab label="TypeScript">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
+          </div>
+        </magary-tab>
+      </magary-tabs>
+    </div>
+  </div>
+
+  <!-- Inputs Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Inputs</h2>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (prop of inputs; track prop.name) {
+              <tr>
+                <td>
+                  <code>{{ prop.name }}</code>
+                </td>
+                <td>
+                  <code>{{ prop.type }}</code>
+                </td>
+                <td>
+                  <code>{{ prop.default }}</code>
+                </td>
+                <td>{{ prop.description }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Events Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos</h2>
+    </div>
+    <div class="section-content">
+      <p style="margin: 0; color: var(--text-secondary)">
+        Este componente no emite eventos. La interacción del usuario se maneja a
+        través de la propiedad <code>command</code> de <code>MenuItem</code>.
+      </p>
+    </div>
+  </div>
+
+  <!-- MenuItem API -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Interfaz MenuItem</h2>
+      <p>Propiedades para los elementos en el array <code>model</code>.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Propiedad</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (prop of menuItemConfig; track prop.name) {
+              <tr>
+                <td>
+                  <code>{{ prop.name }}</code>
+                </td>
+                <td>
+                  <code>{{ prop.type }}</code>
+                </td>
+                <td>{{ prop.description }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

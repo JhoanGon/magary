@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MagaryPanelmenu } from '../panelmenu/panelmenu';
-import { MenuItem } from '../panelmenu/panelmenu.interface';
+import { MenuItem } from '../api/menu.interface';
 import {
   MagaryAvatar,
   BadgeSeverity,

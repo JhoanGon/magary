@@ -1,0 +1,125 @@
+<div [ngClass]="containerClass()" [style]="style()">
+  <ul class="magary-menubar-root-list">
+    <ng-template ngFor let-item [ngForOf]="processedModel()">
+      <li
+        appMenubarItem
+        [item]="item"
+        [parent]="this"
+        class="magary-menuitem"
+        [ngClass]="{
+          'magary-menuitem-active': item.expanded,
+          'magary-menu-separator': item.separator,
+        }"
+      >
+        @if (item.separator) {
+          <!-- Separator -->
+        } @else {
+          <div class="magary-menuitem-content">
+            <a
+              class="magary-menuitem-link"
+              [href]="item.url || '#'"
+              [attr.target]="item.target"
+              (click)="onItemClick($event, item)"
+              [class.magary-disabled]="item.disabled"
+            >
+              @if (item.icon) {
+                <lucide-icon
+                  [name]="item.icon"
+                  class="magary-menuitem-icon"
+                  [size]="16"
+                ></lucide-icon>
+              }
+              <span class="magary-menuitem-text">{{ item.label }}</span>
+              @if (item.items && item.items.length > 0) {
+                <lucide-icon
+                  name="chevron-down"
+                  class="magary-submenu-icon"
+                  [size]="14"
+                ></lucide-icon>
+              }
+            </a>
+          </div>
+
+          <!-- Submenu -->
+          @if (item.items && item.items.length > 0) {
+            <div
+              class="magary-submenu-container"
+              [class.magary-submenu-visible]="item.expanded"
+            >
+              <ul class="magary-submenu">
+                <ng-container
+                  *ngTemplateOutlet="
+                    submenuTemplate;
+                    context: { $implicit: item.items }
+                  "
+                ></ng-container>
+              </ul>
+            </div>
+          }
+        }
+      </li>
+    </ng-template>
+  </ul>
+</div>
+
+<!-- Recursive Template for Submenus -->
+<ng-template #submenuTemplate let-items>
+  <ng-template ngFor let-child [ngForOf]="items">
+    <li
+      appMenubarItem
+      [item]="child"
+      [parent]="this"
+      class="magary-menuitem"
+      [ngClass]="{
+        'magary-menuitem-active': child.expanded,
+        'magary-menu-separator': child.separator,
+      }"
+    >
+      @if (child.separator) {
+        <!-- Separator styled via class -->
+      } @else {
+        <div class="magary-menuitem-content">
+          <a
+            class="magary-menuitem-link"
+            [href]="child.url || '#'"
+            [attr.target]="child.target"
+            (click)="onItemClick($event, child)"
+            [class.magary-disabled]="child.disabled"
+          >
+            @if (child.icon) {
+              <lucide-icon
+                [name]="child.icon"
+                class="magary-menuitem-icon"
+                [size]="16"
+              ></lucide-icon>
+            }
+            <span class="magary-menuitem-text">{{ child.label }}</span>
+            @if (child.items && child.items.length > 0) {
+              <lucide-icon
+                name="chevron-right"
+                class="magary-submenu-icon"
+                [size]="14"
+              ></lucide-icon>
+            }
+          </a>
+        </div>
+
+        @if (child.items && child.items.length > 0) {
+          <div
+            class="magary-submenu-container"
+            [class.magary-submenu-visible]="child.expanded"
+          >
+            <ul class="magary-submenu">
+              <ng-container
+                *ngTemplateOutlet="
+                  submenuTemplate;
+                  context: { $implicit: child.items }
+                "
+              ></ng-container>
+            </ul>
+          </div>
+        }
+      }
+    </li>
+  </ng-template>
+</ng-template>
