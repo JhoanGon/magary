@@ -1,5 +1,6 @@
 export interface MagaryTreeNode {
   label?: string;
+  header?: string;
   data?: any;
   icon?: string;
   expandedIcon?: string;

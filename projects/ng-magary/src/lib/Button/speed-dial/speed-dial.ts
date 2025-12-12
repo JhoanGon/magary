@@ -38,7 +38,7 @@ export class MagarySpeedDial {
   readonly direction = input<SpeedDialDirection>();
   readonly radius = input<number>(80);
   readonly showMask = input<boolean>(false);
-  readonly background = input<string>('#007bff');
+  readonly background = input<string | null>(null);
   readonly ariaLabel = input<string>('Speed dial menu');
   readonly isOpen = signal(false);
   readonly speedDialToggle = output<boolean>();
@@ -52,9 +52,9 @@ export class MagarySpeedDial {
       this.direction() ? `direction-${this.direction()}` : '',
     ].filter(Boolean),
   );
-  readonly triggerStyles = computed(() => ({
-    '--trigger-bg': this.background(),
-  }));
+  readonly triggerStyles = computed(() =>
+    this.background() ? { '--trigger-bg': this.background() } : null,
+  );
   readonly itemsStyles = computed(() => ({
     '--item-count': this.itemCount().toString(),
     '--radius': `${this.radius()}px`,

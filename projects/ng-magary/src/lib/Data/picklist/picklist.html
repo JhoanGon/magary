@@ -1,0 +1,84 @@
+<div class="picklist-list-wrapper source-wrapper">
+  <div class="picklist-header" *ngIf="sourceHeader">{{ sourceHeader }}</div>
+  <ul class="picklist-list" [ngStyle]="sourceStyle" tabindex="0">
+    <li
+      *ngFor="let item of source()"
+      class="picklist-item"
+      [class.selected]="selectedSource().includes(item)"
+      (click)="onSourceItemClick($event, item)"
+    >
+      <ng-container
+        *ngTemplateOutlet="
+          itemTemplate() || defaultTemplate;
+          context: { $implicit: item }
+        "
+      ></ng-container>
+    </li>
+  </ul>
+</div>
+
+<div class="picklist-buttons">
+  <magary-button
+    type="button"
+    icon="chevrons-right"
+    severity="secondary"
+    size="small"
+    [iconSize]="16"
+    (buttonClick)="moveAllRight()"
+    [disabled]="source().length === 0"
+  >
+  </magary-button>
+  <magary-button
+    type="button"
+    icon="chevron-right"
+    (buttonClick)="moveRight()"
+    [disabled]="selectedSource().length === 0"
+    severity="secondary"
+    size="small"
+    [iconSize]="16"
+  >
+  </magary-button>
+  <magary-button
+    type="button"
+    icon="chevron-left"
+    (buttonClick)="moveLeft()"
+    [disabled]="selectedTarget().length === 0"
+    severity="secondary"
+    size="small"
+    [iconSize]="16"
+  >
+  </magary-button>
+  <magary-button
+    type="button"
+    icon="chevrons-left"
+    (buttonClick)="moveAllLeft()"
+    [disabled]="target().length === 0"
+    severity="secondary"
+    size="small"
+    [iconSize]="16"
+  >
+  </magary-button>
+</div>
+
+<div class="picklist-list-wrapper target-wrapper">
+  <div class="picklist-header" *ngIf="targetHeader">{{ targetHeader }}</div>
+  <ul class="picklist-list" [ngStyle]="targetStyle" tabindex="0">
+    <li
+      *ngFor="let item of target()"
+      class="picklist-item"
+      [class.selected]="selectedTarget().includes(item)"
+      (click)="onTargetItemClick($event, item)"
+    >
+      <ng-container
+        *ngTemplateOutlet="
+          itemTemplate() || defaultTemplate;
+          context: { $implicit: item }
+        "
+      ></ng-container>
+    </li>
+  </ul>
+</div>
+
+<ng-template #defaultTemplate let-item>
+  {{ item.label || item }}
+</ng-template>

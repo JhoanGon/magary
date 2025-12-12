@@ -45,6 +45,49 @@
     scrollbar-color: var(--surface-400) var(--surface-100);
 }
 
+.magary-tree-filter {
+    padding: 0.5rem 0;
+    margin-bottom: 0.25rem;
+    position: relative;
+    
+    .magary-tree-filter-icon {
+        position: absolute;
+        left: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+        z-index: 1;
+        pointer-events: none;
+    }
+    
+    .magary-tree-filter-input {
+        width: 100%;
+        padding: 0.5rem 0.5rem 0.5rem 2.25rem;
+        border: 1px solid var(--surface-300);
+        border-radius: var(--border-radius);
+        background: var(--surface-0);
+        color: var(--text-color);
+        font-family: inherit;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        
+        &:hover {
+            border-color: var(--surface-400);
+        }
+
+        &:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 1px var(--primary-500);
+        }
+        
+        &::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+    }
+}
+
 ul.magary-tree-root-children,
 ul.magary-treenode-children {
     list-style-type: none;
@@ -54,6 +97,7 @@ ul.magary-treenode-children {
 
 ul.magary-treenode-children {
     padding-left: var(--tree-indent);
+    min-height: 5px; /* Allow dropping into empty opened folders */
 }
 
 .magary-treenode-content {

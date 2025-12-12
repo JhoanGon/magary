@@ -4,6 +4,7 @@ import { MagaryTree, MagaryTreeNode } from 'ng-magary';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
 import { MagaryCard } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'view-tree',
@@ -145,6 +146,28 @@ export class ViewTree {
 
   onNodeUnselect(event: any) {}
 
+  onNodeDrop(event: any) {
+    const cdkEvent = event.originalEvent;
+
+    if (cdkEvent.previousContainer === cdkEvent.container) {
+      moveItemInArray(
+        cdkEvent.container.data,
+        cdkEvent.previousIndex,
+        cdkEvent.currentIndex,
+      );
+    } else {
+      transferArrayItem(
+        cdkEvent.previousContainer.data,
+        cdkEvent.container.data,
+        cdkEvent.previousIndex,
+        cdkEvent.currentIndex,
+      );
+    }
+  }
+
+  // Clone for DnD to avoid affecting other examples
+  filesDnD: MagaryTreeNode[] = JSON.parse(JSON.stringify(this.files));
+
   exampleHTML = `
 <magary-tree 
     [value]="files" 
@@ -152,18 +175,52 @@ export class ViewTree {
     [(selection)]="selectedFile"
     (onNodeSelect)="onNodeSelect($event)">
 </magary-tree>
-    `;
+`;
+
+  exampleFilterHTML = `
+<magary-tree 
+    [value]="files" 
+    [filter]="true" 
+    filterPlaceholder="Search documents..."
+    selectionMode="single">
+</magary-tree>
+`;
+
+  exampleDnDHTML = `
+<magary-tree 
+    [value]="files" 
+    [draggable]="true" 
+    [droppable]="true"
+    (onNodeDrop)="onNodeDrop($event)">
+</magary-tree>
+`;
 
   exampleTS = `
 import { MagaryTree, MagaryTreeNode } from 'ng-magary';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 export class MyComponent {
-    files: MagaryTreeNode[] = [...]; // Data structure
-    selectedFile: MagaryTreeNode | null = null;
-
-    onNodeSelect(event: any) {
-        console.log('Selected', event.node.label);
+    files: MagaryTreeNode[] = [...]; 
+    
+    // For DnD
+    onNodeDrop(event: any) {
+        const cdkEvent = event.originalEvent;
+    
+        if (cdkEvent.previousContainer === cdkEvent.container) {
+          moveItemInArray(
+            cdkEvent.container.data,
+            cdkEvent.previousIndex,
+            cdkEvent.currentIndex
+          );
+        } else {
+          transferArrayItem(
+            cdkEvent.previousContainer.data,
+            cdkEvent.container.data,
+            cdkEvent.previousIndex,
+            cdkEvent.currentIndex
+          );
+        }
     }
 }
-    `;
+`;
 }

@@ -1,0 +1,110 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1 class="fade-in">Organization Chart</h1>
+    <p class="fade-in">
+      Visualización de datos jerárquicos en estructura de árbol.
+    </p>
+  </div>
+
+  <div class="content">
+    <div class="components-grid">
+      <!-- Example 1: Basic -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Básico</h2>
+          <p>Ejemplo básico con estructura jerárquica y selección.</p>
+        </div>
+        <div class="section-content">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 2rem; overflow-x: auto">
+              <magary-organization-chart
+                [value]="data1"
+                selectionMode="single"
+                [selection]="selectedNode"
+                [collapsible]="true"
+                (onNodeSelect)="
+                  selectedNode = $event.node; onNodeSelect($event)
+                "
+                (onNodeUnselect)="selectedNode = null"
+              ></magary-organization-chart>
+
+              <div
+                style="
+                  margin-top: 1rem;
+                  padding: 0.5rem;
+                  background: var(--surface-hover);
+                  border-radius: 4px;
+                  text-align: center;
+                "
+                *ngIf="selectedNode"
+              >
+                Seleccionado: <strong>{{ selectedNode.label }}</strong>
+              </div>
+            </div>
+          </magary-card>
+
+          <div class="code-block" style="margin-top: 2rem">
+            <magary-tabs
+              [backgroundLine]="tabsConfig.backgroundLine"
+              [positionContent]="tabsConfig.positionContent"
+              [background]="tabsConfig.background"
+            >
+              <magary-tab label="HTML">
+                <pre><code [highlight]="exampleHTML" language="html"></code></pre>
+              </magary-tab>
+              <magary-tab label="TS">
+                <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
+              </magary-tab>
+            </magary-tabs>
+          </div>
+        </div>
+      </div>
+
+      <!-- API Inputs -->
+      <div class="section">
+        <div class="section-header">
+          <h2>Propiedades (Inputs)</h2>
+        </div>
+        <div class="section-content">
+          <div class="table-wrapper">
+            <table class="api-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Tipo</th>
+                  <th>Default</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>value</code></td>
+                  <td><code>TreeNode[]</code></td>
+                  <td><code>null</code></td>
+                  <td>Array de nodos raíz.</td>
+                </tr>
+                <tr>
+                  <td><code>selectionMode</code></td>
+                  <td><code>'single' | 'multiple'</code></td>
+                  <td><code>null</code></td>
+                  <td>Modo de selección.</td>
+                </tr>
+                <tr>
+                  <td><code>collapsible</code></td>
+                  <td><code>boolean</code></td>
+                  <td><code>false</code></td>
+                  <td>Permite colapsar ramas.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

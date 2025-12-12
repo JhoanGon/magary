@@ -1,12 +1,12 @@
 @use 'sass:list';
 $button-variants: (
-  primary: (#020617, #3b3c3d),
-  secondary: (#d2d3d4, #d8dbdd),
-  success: (#22c55e, #54cc80),
-  danger: (#ef4444, #ce3c3c),
-  info: (#0ea5e9, #3d97c0),
-  warning: (#e7c52d, #c4aa3a),
-  help: (#a855f7, #854dbd),
+  primary: (var(--primary-500), var(--primary-600), #ffffff),
+  secondary: (#64748b, #475569, #ffffff),
+  success: (#22c55e, #54cc80, #ffffff),
+  danger: (#ef4444, #ce3c3c, #ffffff),
+  info: (#0ea5e9, #3d97c0, #ffffff),
+  warning: (#e7c52d, #c4aa3a, #1f2937),
+  help: (#a855f7, #854dbd, #ffffff),
 );
 .p-button {
   display: inline-flex;
@@ -156,9 +156,10 @@ $button-variants: (
   @each $name, $colors in $button-variants {
     $bg: list.nth($colors, 1);
     $hover: list.nth($colors, 2);
+    $text: list.nth($colors, 3);
     &.p-button-#{$name} {
       background-color: $bg;
-      color: #ffffff;
+      color: $text;
       &:hover {
         background-color: $hover;
       }

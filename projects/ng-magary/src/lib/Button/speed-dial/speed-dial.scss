@@ -1,28 +1,36 @@
 :host {
-  --speed-dial-trigger-size: 56px;
-  --speed-dial-item-size: 40px;
-  --speed-dial-item-gap: 55px;
-  --speed-dial-transition: 0.3s ease;
-  --speed-dial-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  --speed-dial-shadow-item: 0 2px 8px rgba(0, 0, 0, 0.2);
-  --speed-dial-mask-bg: rgba(0, 0, 0, 0.4);
+  --speed-dial-trigger-size: 3.5rem; // 56px default but let's stick to rem for scalability, or maybe reduce to 3rem (48px) for 'sleeker'
+  --speed-dial-item-size: 2.5rem; // 40px
+  --speed-dial-item-gap: 4rem; // Slight adjustment
+  --speed-dial-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --speed-dial-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1); // Softer shadow
+  --speed-dial-shadow-item: 0 2px 8px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --speed-dial-mask-bg: rgba(0, 0, 0, 0.3); // Lighter mask
   background: transparent;
   display: inline-block;
+  z-index: 1000;
 }
+
 .speed-dial-container {
   position: relative;
   display: inline-block;
   background: transparent;
+  z-index: 1000;
+
   &.is-open .trigger-button {
     transform: rotate(45deg);
+    background-color: var(--surface-800); // Change color on open? Optional.
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   }
 }
+
 .trigger-button {
   width: var(--speed-dial-trigger-size);
   height: var(--speed-dial-trigger-size);
   border-radius: 50%;
-  background-color: var(--trigger-bg, #007bff);
-  color: white;
+  // Fallback to surface-700 if --trigger-bg is not set (matching action buttons)
+  background-color: var(--trigger-bg, var(--surface-700));
+  color: var(--surface-0);
   border: none;
   box-shadow: var(--speed-dial-shadow);
   cursor: pointer;
@@ -31,217 +39,235 @@
   justify-content: center;
   font-size: 1.5rem;
   z-index: 1001;
-  transition: transform var(--speed-dial-transition), box-shadow var(--speed-dial-transition);
-  min-height: 44px;
+  transition: var(--speed-dial-transition);
+  outline: none;
+  position: relative;
+  line-height: 0; // Fix alignment
+  
+  // Ripple effect simulation or hover state
   &:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    // Darken slightly on hover if using default
+    background-color: var(--trigger-bg, var(--surface-600));
   }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
   &:focus-visible {
-    outline: 2px solid #0066cc;
-    outline-offset: 2px;
+     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  }
+
+  lucide-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex; /* Ensures SVG is flex-centered if needed */
+    line-height: 1;
   }
 }
+
 .speed-dial-mask {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   background: var(--speed-dial-mask-bg);
-  z-index: 999;
-  cursor: pointer;
+  z-index: 998;
+  backdrop-filter: blur(2px); // Glassmorphism touch
+  transition: opacity 0.3s;
 }
+
 .speed-dial-items {
   list-style: none;
   padding: 0;
   margin: 0;
   position: absolute;
-  top: 20%;
-  left: 16%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  // Center is handled via transform in LI mostly for directions, but let's ensure base
+  width: 0;
+  height: 0;
+  z-index: 999;
+  pointer-events: none; // Passed through when closed
+
   li {
     position: absolute;
     top: 0;
     left: 0;
-    transform-origin: center;
-    transition: transform var(--speed-dial-transition),
-                opacity var(--speed-dial-transition);
-    opacity: 0;
-  }
-  .action-button {
     width: var(--speed-dial-item-size);
     height: var(--speed-dial-item-size);
+    /* 
+       We need to center the items relative to the 0x0 container which is at the center of the trigger.
+       The items should be centered on their own coordinate. 
+       Margin negative half to center.
+    */
+    margin-top: calc(var(--speed-dial-item-size) * -0.5);
+    margin-left: calc(var(--speed-dial-item-size) * -0.5);
+
+    transform-origin: center;
+    transition: transform var(--speed-dial-transition), opacity var(--speed-dial-transition);
+    opacity: 0;
+    transform: scale(0); // Start scaled down
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .action-button {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    background-color: #6c757d;
-    color: white;
+    // surface-700 provides high contrast: Dark in light mode, Light in dark/colored modes.
+    background-color: var(--surface-700); 
+    // surface-0 provides the opposing contrast: Light in light mode, Dark in dark/colored modes.
+    color: var(--surface-0);
     border: none;
     box-shadow: var(--speed-dial-shadow-item);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
-    transition: background-color 0.2s, transform 0.2s;
-    min-height: 44px; 
-    min-width: 44px;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    outline: none;
+    line-height: 0;
+
     &:hover:not(:disabled) {
-      background-color: #5a6268;
+      // Use surface-600 for hover (slightly lighter/darker depending on theme direction)
+      background-color: var(--surface-600);
       transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    &:focus-visible {
-      outline: 2px solid #0066cc;
-      outline-offset: 2px;
-    }
+    
     &:disabled {
-      opacity: 0.4;
+      opacity: 0.5;
       cursor: not-allowed;
-      background-color: #adb5bd;
-      &:hover {
-        transform: none;
-        background-color: #adb5bd;
-      }
+      filter: grayscale(1);
+    }
+    
+    lucide-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        display: flex;
     }
   }
+
+  // Tooltip
   .action-tooltip {
     position: absolute;
-    background-color: #333;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    background-color: var(--surface-900, #1f2937);
+    color: var(--text-color, #fff);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
     white-space: nowrap;
     opacity: 0;
-    transition: opacity 0.2s;
+    visibility: hidden;
+    transition: opacity 0.2s, transform 0.2s;
     pointer-events: none;
-    right: 120%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    
+    // Positioning depends on direction, handled simpler:
+    // Default to left for vertical lists? Or dynamic?
+    // For now, keep it simplistic or use the direction attribute if possible.
+    // Let's assume right side for vertical lists, top for horizontal... 
+    // Actually, generic positioning:
     top: 50%;
-    transform: translateY(-50%);
-    z-index: 1002;
-    &::after {
-      content: '';
-      position: absolute;
-      left: 100%;
-      top: 50%;
-      transform: translateY(-50%);
-      border: 4px solid transparent;
-      border-left-color: #333;
-    }
+    left: auto; 
+    right: 125%; // Left of the button
+    transform: translateY(-50%) translateX(10px);
   }
+
   li:hover .action-tooltip {
     opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
   }
 }
+
+// Open State
 .is-open .speed-dial-items {
   pointer-events: auto;
+
   li {
     opacity: 1;
+    // Transform is set by inline styles/classes per direction, 
+    // BUT we need to ensure scale is 1
+    // The specific transforms below overwrite scale(0).
+    // We must include scale(1) in the calculated transforms.
   }
+
+  // WE NEED TO UPDATE THE TRANSFORMS TO INCLUDE SCALE(1)
+  
   &[data-direction="up"] li {
-    transform: translateY(calc(var(--speed-dial-item-gap) * (var(--i) + 1) * -1));
+    transform: translateY(calc(var(--speed-dial-item-gap) * (var(--i) + 1) * -1)) scale(1);
   }
   &[data-direction="down"] li {
-    transform: translateY(calc(var(--speed-dial-item-gap) * (var(--i) + 1)));
+    transform: translateY(calc(var(--speed-dial-item-gap) * (var(--i) + 1))) scale(1);
   }
   &[data-direction="left"] li {
-    transform: translateX(calc(var(--speed-dial-item-gap) * (var(--i) + 1) * -1));
+    transform: translateX(calc(var(--speed-dial-item-gap) * (var(--i) + 1) * -1)) scale(1);
   }
   &[data-direction="right"] li {
-    transform: translateX(calc(var(--speed-dial-item-gap) * (var(--i) + 1)));
+    transform: translateX(calc(var(--speed-dial-item-gap) * (var(--i) + 1))) scale(1);
   }
+
+  // Circle / Semicircle logic
+  // Just append scale(1) to existing logic
+  
   .item-circle {
     --angle: calc(var(--i) * (360deg / var(--item-count)));
-    transform: rotate(var(--angle))
-               translateY(calc(var(--radius) * -1))
-               rotate(calc(var(--angle) * -1));
+    transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1);
   }
+
   &[data-direction="left"] .item-semicircle {
-    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
-    transform: rotate(calc(var(--angle) - 180deg))
-               translateY(calc(var(--radius) * -1))
-               rotate(calc((var(--angle) - 180deg) * -1));
+     --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+     transform: rotate(calc(var(--angle) - 180deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) - 180deg) * -1)) scale(1);
   }
+  
   &[data-direction="right"] .item-semicircle {
-    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
-    transform: rotate(var(--angle))
-               translateY(calc(var(--radius) * -1))
-               rotate(calc(var(--angle) * -1));
+     --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+     transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1);
   }
+  
   &[data-direction="down"] .item-semicircle {
-    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
-    transform: rotate(calc(var(--angle) + 90deg))
-               translateY(calc(var(--radius) * -1))
-               rotate(calc((var(--angle) + 90deg) * -1));
+     --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+     transform: rotate(calc(var(--angle) + 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 90deg) * -1)) scale(1);
   }
+  
   &[data-direction="up"] .item-semicircle {
-    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
-    transform: rotate(calc(var(--angle) - 90deg))
-               translateY(calc(var(--radius) * -1))
-               rotate(calc((var(--angle) - 90deg) * -1));
+     --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+     transform: rotate(calc(var(--angle) - 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) - 90deg) * -1)) scale(1);
   }
+
+  // Quarter circle
   &[data-direction="up-right"] .item-quartercircle {
     --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
-    transform: rotate(var(--angle))
-               translateY(calc(var(--radius) * -1))
-               rotate(calc(var(--angle) * -1));
+    transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1);
   }
   &[data-direction="down-right"] .item-quartercircle {
     --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
-    transform: rotate(calc(var(--angle) + 90deg))
-               translateY(calc(var(--radius) * -1))
-               rotate(calc((var(--angle) + 90deg) * -1));
+    transform: rotate(calc(var(--angle) + 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 90deg) * -1)) scale(1);
   }
   &[data-direction="down-left"] .item-quartercircle {
     --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
-    transform: rotate(calc(var(--angle) + 180deg))
-               translateY(calc(var(--radius) * -1))
-               rotate(calc((var(--angle) + 180deg) * -1));
+    transform: rotate(calc(var(--angle) + 180deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 180deg) * -1)) scale(1);
   }
   &[data-direction="up-left"] .item-quartercircle {
     --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
-    transform: rotate(calc(var(--angle) + 270deg))
-               translateY(calc(var(--radius) * -1))
-               rotate(calc((var(--angle) + 270deg) * -1));
+    transform: rotate(calc(var(--angle) + 270deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 270deg) * -1)) scale(1);
   }
 }
+
+// Media Queries for Responsiveness
 @media (max-width: 768px) {
   :host {
-    --speed-dial-trigger-size: 52px;
-    --speed-dial-item-size: 36px;
-    --speed-dial-item-gap: 48px;
+    --speed-dial-trigger-size: 3rem; // 48px
+    --speed-dial-item-size: 2.25rem; // 36px
+    --speed-dial-item-gap: 3.5rem;
   }
-  .trigger-button {
-    font-size: 1.25rem;
-  }
-  .speed-dial-items .action-button {
-    font-size: 0.9rem;
-  }
-  .speed-dial-items .action-tooltip {
-    font-size: 0.75rem;
-    padding: 3px 6px;
-  }
-}
-@media (max-width: 480px) {
-  :host {
-    --speed-dial-trigger-size: 48px;
-    --speed-dial-item-size: 32px;
-    --speed-dial-item-gap: 44px;
-  }
-  .trigger-button {
-    font-size: 1.1rem;
-  }
-  .speed-dial-items .action-button {
-    font-size: 0.8rem;
-  }
-  .speed-dial-items .action-tooltip {
-    font-size: 0.7rem;
-    padding: 2px 4px;
-  }
-}
-@media (min-width: 1200px) {
-  .speed-dial-items .action-tooltip {
-    font-size: 0.85rem;
-    padding: 6px 10px;
-  }
+  .trigger-button { font-size: 1.25rem; }
+  .speed-dial-items .action-button { font-size: 0.9rem; }
 }

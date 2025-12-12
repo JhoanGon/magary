@@ -11,8 +11,22 @@
       (click)="onItemClick($event, item, i)"
     >
       <button class="magary-steps-action" tabindex="-1">
-        <span class="magary-steps-number">{{ i + 1 }}</span>
-        <span class="magary-steps-title">{{ item.label }}</span>
+        <ng-container *ngIf="template(); else defaultContent">
+          <ng-container
+            *ngTemplateOutlet="
+              template();
+              context: {
+                $implicit: item,
+                index: i,
+                active: i === activeIndex(),
+              }
+            "
+          ></ng-container>
+        </ng-container>
+        <ng-template #defaultContent>
+          <span class="magary-steps-number">{{ i + 1 }}</span>
+          <span class="magary-steps-title">{{ item.label }}</span>
+        </ng-template>
       </button>
     </div>
 

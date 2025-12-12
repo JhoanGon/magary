@@ -1,0 +1,141 @@
+<div class="container">
+  <div class="header">
+    <h1>PickList</h1>
+    <p>Componente para reordenar y transferir elementos entre dos listas.</p>
+  </div>
+
+  <!-- Import -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Importar</h2>
+      <p>Importa el componente en tu módulo o componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importCode" language="typescript"></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Basic Usage -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Uso Básico</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <magary-card
+          [width]="'100%'"
+          [shadow]="2"
+          [borderRadius]="'1rem'"
+          [backgroundColor]="'var(--surface-0)'"
+        >
+          <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <magary-pick-list
+              [source]="sourceProducts()"
+              [target]="targetProducts()"
+              sourceHeader="Disponibles"
+              targetHeader="Seleccionados"
+              [sourceStyle]="{ height: '20rem' }"
+              [targetStyle]="{ height: '20rem' }"
+            >
+              <ng-template #itemTemplate let-product>
+                <div class="product-item">
+                  <div style="display: flex; flex-direction: column">
+                    <span class="font-bold">{{ product.name }}</span>
+                    <span class="text-sm text-secondary">{{
+                      product.category
+                    }}</span>
+                  </div>
+                  <span class="font-bold">\${{ product.price }}</span>
+                </div>
+              </ng-template>
+            </magary-pick-list>
+          </div>
+        </magary-card>
+      </div>
+
+      <magary-tabs
+        [backgroundLine]="'#ed2c44'"
+        [positionContent]="'flex-start'"
+        [background]="'#282c34'"
+      >
+        <magary-tab label="HTML">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleHTML" language="xml"></code></pre>
+          </div>
+        </magary-tab>
+        <magary-tab label="TS">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
+          </div>
+        </magary-tab>
+      </magary-tabs>
+    </div>
+  </div>
+
+  <!-- API -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Default</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of inputsConfig">
+              <td>
+                <code>{{ item.name }}</code>
+              </td>
+              <td>
+                <code>{{ item.type }}</code>
+              </td>
+              <td>
+                <code>{{ item.default }}</code>
+              </td>
+              <td>{{ item.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of outputsConfig">
+              <td>
+                <code>{{ item.name }}</code>
+              </td>
+              <td>
+                <code>{{ item.type }}</code>
+              </td>
+              <td>{{ item.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

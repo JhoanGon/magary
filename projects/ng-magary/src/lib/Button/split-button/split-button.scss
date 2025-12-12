@@ -1,0 +1,164 @@
+:host {
+  display: inline-block;
+  position: relative;
+  font-family: var(--font-family, inherit);
+  vertical-align: middle;
+}
+
+.magary-split-button {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: var(--border-radius, 6px);
+  background-color: var(--primary-500, #3b82f6);
+  color: #fff;
+  transition: all 0.2s;
+  border: 1px solid transparent; // For outlined support later if needed, or to match sizing
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  // Severities
+  &.p-button-secondary { background-color: var(--surface-500, #64748b); }
+  &.p-button-success { background-color: var(--success, #10b981); }
+  &.p-button-info { background-color: var(--info, #3b82f6); } // Usually same as primary but explicit
+  &.p-button-warning { background-color: var(--warning, #f59e0b); }
+  &.p-button-help { background-color: var(--help, #8b5cf6); }
+  &.p-button-danger { background-color: var(--danger, #ef4444); }
+
+  // Sizes
+  &.p-button-sm {
+    .default-button, .dropdown-trigger {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
+    .default-button .button-icon, .dropdown-trigger lucide-icon {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+
+  &.p-button-lg {
+    .default-button, .dropdown-trigger {
+      padding: 1rem 1.25rem;
+      font-size: 1.25rem;
+    }
+    .default-button .button-icon, .dropdown-trigger lucide-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+.default-button, .dropdown-trigger {
+  border: none;
+  background: transparent; // Parent has bg
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  outline: none;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 0 0 4px var(--primary-500);
+    z-index: 1;
+  }
+}
+
+.default-button {
+  border-top-left-radius: var(--border-radius, 6px);
+  border-bottom-left-radius: var(--border-radius, 6px);
+  border-right: 1px solid rgba(255, 255, 255, 0.2); // Separator
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .button-icon {
+    margin-right: 0.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.dropdown-trigger {
+  border-top-right-radius: var(--border-radius, 6px);
+  border-bottom-right-radius: var(--border-radius, 6px);
+  padding: 0.75rem;
+  
+  &:hover, &.active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  lucide-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+// Menu Dropdown
+.split-button-menu {
+  position: absolute;
+  top: 100%;
+  right: 0; // Align right or left? Usually left or matching width, let's try right for now or left. 
+  left: 0;
+  margin-top: 0.5rem;
+  min-width: 12rem; // Ensure it's not too small
+  background: var(--surface-0, #fff);
+  color: var(--text-primary, #333);
+  border-radius: var(--border-radius, 6px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1000;
+  overflow: hidden;
+  animation: scaleIn 0.15s ease-out forwards;
+  transform-origin: top left;
+  border: 1px solid var(--surface-200, #e5e7eb);
+
+  ul {
+    list-style: none;
+    padding: 0.25rem 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 0.75rem 1.25rem; // More space/breathable
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+    font-size: 0.95rem;
+
+    &:hover {
+      background-color: var(--surface-100, #f3f4f6);
+    }
+    
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .menu-item-icon {
+      margin-right: 1rem;
+      // Dimensions controlled by [size] input
+      color: var(--text-secondary, #6b7280);
+    }
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scaleY(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}

@@ -10,7 +10,8 @@ import { Highlight } from 'ngx-highlightjs';
   styleUrl: './installation.scss',
 })
 export class Installation {
-  readonly installCommand = 'npm install ng-magary';
+  readonly installCommand =
+    'npm install ng-magary @angular/cdk gridstack lucide-angular';
   readonly stylesImport = `@import 'ng-magary/styles/theme.css';
 @import 'ng-magary/styles/core.css';`;
   readonly componentImport = `import { MagaryCard, MagaryButton } from 'ng-magary';

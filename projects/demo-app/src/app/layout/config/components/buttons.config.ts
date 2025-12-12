@@ -14,5 +14,10 @@ export const BUTTONS_CONFIG: NavigationItem = {
       route: 'components/SpeedDial',
       icon: 'ellipsis-vertical',
     },
+    {
+      label: 'SplitButton',
+      route: 'components/SplitButton',
+      icon: 'mouse-pointer-click',
+    },
   ],
 };

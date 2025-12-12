@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
+import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { MagaryTreeNode } from './tree-node.interface';
 
 @Component({
@@ -16,10 +17,18 @@ import { MagaryTreeNode } from './tree-node.interface';
   imports: [
     CommonModule,
     LucideAngularModule,
+    DragDropModule,
     forwardRef(() => MagaryUITreeNode),
   ],
   template: `
-    <li class="magary-treenode" [ngClass]="node().styleClass || ''">
+    <li
+      class="magary-treenode"
+      [ngClass]="node().styleClass || ''"
+      cdkDrag
+      [cdkDragData]="node()"
+      [cdkDragDisabled]="!draggable()"
+    >
+      <div class="magary-tree-custom-placeholder" *cdkDragPlaceholder></div>
       <div
         class="magary-treenode-content"
         [class.magary-treenode-selectable]="selectionMode() !== null"
@@ -76,17 +85,24 @@ import { MagaryTreeNode } from './tree-node.interface';
       <!-- Children (Recursion) -->
       <ul
         class="magary-treenode-children"
-        *ngIf="isExpanded && node().children && node().children!.length"
+        *ngIf="isExpanded && !isLeaf"
+        cdkDropList
+        [cdkDropListDisabled]="!droppable()"
+        [cdkDropListData]="node().children || []"
+        (cdkDropListDropped)="onDrop($event)"
       >
         <magary-uitree-node
           *ngFor="let childNode of node().children"
           [node]="childNode"
           [selectionMode]="selectionMode()"
           [selection]="selection()"
+          [draggable]="draggable()"
+          [droppable]="droppable()"
           (nodeSelect)="nodeSelect.emit($event)"
           (nodeUnselect)="nodeUnselect.emit($event)"
           (nodeExpand)="nodeExpand.emit($event)"
           (nodeCollapse)="nodeCollapse.emit($event)"
+          (nodeDrop)="nodeDrop.emit($event)"
         >
         </magary-uitree-node>
       </ul>
@@ -99,13 +115,16 @@ import { MagaryTreeNode } from './tree-node.interface';
 export class MagaryUITreeNode {
   node = input.required<MagaryTreeNode>();
   selectionMode = input<string | null>(null);
-  selection = input<any>(null); // Passed down selection state/signal if needed or handled via service/parent
+  selection = input<any>(null);
+  draggable = input<boolean>(false);
+  droppable = input<boolean>(false);
 
   // Outputs to bubble up events
   nodeSelect = output<any>();
   nodeUnselect = output<any>();
   nodeExpand = output<any>();
   nodeCollapse = output<any>();
+  nodeDrop = output<any>();
 
   get isExpanded() {
     return this.node().expanded;
@@ -165,5 +184,15 @@ export class MagaryUITreeNode {
     } else {
       this.nodeSelect.emit({ originalEvent: event, node: this.node() });
     }
+  }
+
+  onDrop(event: CdkDragDrop<MagaryTreeNode[]>) {
+    event.event.stopPropagation(); // Stop bubbling immediately?
+    // Actually we want to notify parent
+    this.nodeDrop.emit({
+      originalEvent: event,
+      parent: this.node(), // The drop happened in this node's children list
+      dragNode: event.item.data,
+    });
   }
 }

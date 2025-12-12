@@ -9,6 +9,7 @@ import {
   MagaryButton,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'view-steps',
@@ -21,6 +22,7 @@ import { Highlight } from 'ngx-highlightjs';
     MagaryTab,
     Highlight,
     MagaryButton,
+    LucideAngularModule,
   ],
   templateUrl: './view-steps.html',
   styleUrls: ['./view-steps.scss'],
@@ -38,10 +40,10 @@ export class ViewSteps implements OnInit {
 
   ngOnInit() {
     this.items = [
-      { label: 'Personal' },
-      { label: 'Seat' },
-      { label: 'Payment' },
-      { label: 'Confirmation' },
+      { label: 'Personal', icon: 'user' },
+      { label: 'Seat', icon: 'monitor' },
+      { label: 'Payment', icon: 'credit-card' },
+      { label: 'Confirmation', icon: 'check-circle' },
     ];
   }
 
@@ -61,7 +63,14 @@ export class ViewSteps implements OnInit {
   }
 
   exampleHTML = `
-<magary-steps [model]="items" [activeIndex]="activeIndex" [readonly]="false" (activeIndexChange)="onActiveIndexChange($event)"></magary-steps>
+<magary-steps [model]="items" [activeIndex]="activeIndex" [readonly]="false" (activeIndexChange)="onActiveIndexChange($event)">
+    <ng-template let-item>
+        <div class="flex flex-column align-items-center gap-2">
+            <lucide-icon [name]="item.icon" [size]="20"></lucide-icon>
+            <span>{{ item.label }}</span>
+        </div>
+    </ng-template>
+</magary-steps>
 `;
 
   exampleTS = `
@@ -73,10 +82,10 @@ export class ViewSteps implements OnInit {
 
     ngOnInit() {
         this.items = [
-            { label: 'Personal' },
-            { label: 'Seat' },
-            { label: 'Payment' },
-            { label: 'Confirmation' }
+            { label: 'Personal', icon: 'user' },
+            { label: 'Seat', icon: 'monitor' },
+            { label: 'Payment', icon: 'credit-card' },
+            { label: 'Confirmation', icon: 'check-circle' }
         ];
     }
 
