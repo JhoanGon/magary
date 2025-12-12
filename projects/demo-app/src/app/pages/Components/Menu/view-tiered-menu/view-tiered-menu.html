@@ -1,0 +1,159 @@
+<div class="container">
+  <div class="header">
+    <h1>Tiered Menu</h1>
+    <p>TieredMenu displays submenus in nested layers.</p>
+  </div>
+
+  <magary-toast position="top-right"></magary-toast>
+
+  <!-- INLINE EXAMPLE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Inline</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="card flex justify-center">
+          <magary-tiered-menu [model]="items()" />
+        </div>
+      </div>
+      <magary-tabs
+        [backgroundLine]="'#ed2c44'"
+        [positionContent]="'flex-start'"
+        [background]="'#282c34'"
+      >
+        <magary-tab label="HTML">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleInlineHTML" language="xml"></code></pre>
+          </div>
+        </magary-tab>
+        <magary-tab label="TypeScript">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
+          </div>
+        </magary-tab>
+      </magary-tabs>
+    </div>
+  </div>
+
+  <!-- POPUP EXAMPLE -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Popup</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="card flex justify-center gap-2">
+          <magary-button
+            (buttonClick)="menu.toggle($event)"
+            label="Show Menu"
+            icon="chevron-down"
+            iconPos="right"
+          ></magary-button>
+          <magary-tiered-menu #menu [model]="items()" [popup]="true" />
+        </div>
+      </div>
+      <magary-tabs
+        [backgroundLine]="'#ed2c44'"
+        [positionContent]="'flex-start'"
+        [background]="'#282c34'"
+      >
+        <magary-tab label="HTML">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="examplePopupHTML" language="xml"></code></pre>
+          </div>
+        </magary-tab>
+        <magary-tab label="TypeScript">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
+          </div>
+        </magary-tab>
+      </magary-tabs>
+    </div>
+  </div>
+
+  <!-- API DOCS -->
+  <!-- Inputs Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Inputs</h2>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (prop of inputs; track prop.name) {
+              <tr>
+                <td>
+                  <code>{{ prop.name }}</code>
+                </td>
+                <td>
+                  <code>{{ prop.type }}</code>
+                </td>
+                <td>
+                  <code>{{ prop.default }}</code>
+                </td>
+                <td>{{ prop.description }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Events Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Events</h2>
+    </div>
+    <div class="section-content">
+      <p style="margin: 0; color: var(--text-secondary)">
+        This component does not emit events. User interaction is handled via the
+        <code>MenuItem</code> command property.
+      </p>
+    </div>
+  </div>
+
+  <!-- MenuItem API -->
+  <div class="section">
+    <div class="section-header">
+      <h2>MenuItem Interface</h2>
+      <p>Properties for the items in the <code>model</code> array.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (prop of menuItemConfig; track prop.name) {
+              <tr>
+                <td>
+                  <code>{{ prop.name }}</code>
+                </td>
+                <td>
+                  <code>{{ prop.type }}</code>
+                </td>
+                <td>{{ prop.description }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

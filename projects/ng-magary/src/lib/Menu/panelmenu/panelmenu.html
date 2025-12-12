@@ -142,8 +142,8 @@
                             [class.disabled]="isItemDisabled(subSubItem)"
                             (click)="
                               onItemClick(subSubItem, 2, [
-                                item.label,
-                                subItem.label,
+                                item.label || '',
+                                subItem.label || '',
                               ])
                             "
                             (mouseenter)="
@@ -181,8 +181,8 @@
                             (click)="
                               !isItemDisabled(subSubItem) &&
                                 onItemClick(subSubItem, 2, [
-                                  item.label,
-                                  subItem.label,
+                                  item.label || '',
+                                  subItem.label || '',
                                 ])
                             "
                             (mouseenter)="
@@ -220,7 +220,7 @@
                         isItemHovered(subItem.label + '-sub-' + $index)
                       "
                       [class.disabled]="isItemDisabled(subItem)"
-                      (click)="onItemClick(subItem, 1, [item.label])"
+                      (click)="onItemClick(subItem, 1, [item.label || ''])"
                       (mouseenter)="
                         onItemHover(subItem.label + '-sub-' + $index)
                       "
@@ -252,7 +252,7 @@
                       [class.disabled]="isItemDisabled(subItem)"
                       (click)="
                         !isItemDisabled(subItem) &&
-                          onItemClick(subItem, 1, [item.label])
+                          onItemClick(subItem, 1, [item.label || ''])
                       "
                       (mouseenter)="
                         onItemHover(subItem.label + '-sub-' + $index)

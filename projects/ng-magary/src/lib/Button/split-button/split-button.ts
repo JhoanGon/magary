@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
-import { MenuItem } from '../../Menu/panelmenu/panelmenu'; // Use MenuItem or specific interface? MenuItem is common.
+import { MenuItem } from '../../Menu/api/menu.interface'; // Use api interface
 
 @Component({
   selector: 'magary-split-button',

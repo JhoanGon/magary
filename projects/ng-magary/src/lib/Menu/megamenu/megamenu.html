@@ -1,0 +1,84 @@
+<div [ngClass]="containerClass()" [style]="style()">
+  <ul class="magary-megamenu-root-list">
+    <ng-template ngFor let-category [ngForOf]="processedModel()">
+      <li
+        appMegaMenuItem
+        [item]="category"
+        [parent]="this"
+        class="magary-menuitem"
+        [ngClass]="{ 'magary-menuitem-active': category.expanded }"
+      >
+        <a
+          class="magary-menuitem-link"
+          [href]="category.url || '#'"
+          [attr.target]="category.target"
+          (click)="onItemClick($event, category)"
+          [class.magary-disabled]="category.disabled"
+        >
+          @if (category.icon) {
+            <lucide-icon
+              [name]="category.icon"
+              class="magary-menuitem-icon"
+              [size]="16"
+            ></lucide-icon>
+          }
+          <span class="magary-menuitem-text">{{ category.label }}</span>
+          @if (category.items) {
+            <lucide-icon
+              name="chevron-down"
+              class="magary-submenu-icon"
+              [size]="14"
+            ></lucide-icon>
+          }
+        </a>
+
+        @if (category.items && category.expanded) {
+          <div class="magary-megamenu-panel">
+            <div class="magary-megamenu-grid">
+              @for (column of category.items; track column.label) {
+                <div class="magary-megamenu-col">
+                  <ul class="magary-megamenu-submenu">
+                    <li class="magary-megamenu-submenu-header">
+                      @if (column.icon) {
+                        <lucide-icon
+                          [name]="column.icon"
+                          [size]="16"
+                          class="header-icon"
+                        ></lucide-icon>
+                      }
+                      <span>{{ column.label }}</span>
+                    </li>
+
+                    @if (column.items) {
+                      @for (sublink of column.items; track sublink.label) {
+                        <li class="magary-menuitem">
+                          <a
+                            class="magary-menuitem-link sublink"
+                            [href]="sublink.url || '#'"
+                            [attr.target]="sublink.target"
+                            (click)="onItemClick($event, sublink)"
+                          >
+                            @if (sublink.icon) {
+                              <lucide-icon
+                                [name]="sublink.icon"
+                                class="magary-menuitem-icon"
+                                [size]="14"
+                              ></lucide-icon>
+                            }
+                            <span class="magary-menuitem-text">{{
+                              sublink.label
+                            }}</span>
+                          </a>
+                        </li>
+                      }
+                    }
+                  </ul>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </li>
+    </ng-template>
+  </ul>
+</div>

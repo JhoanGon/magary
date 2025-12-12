@@ -21,4 +21,33 @@ export const MENU_ROUTES: Routes = [
     loadComponent: () =>
       import('./view-sidebar/view-sidebar').then((m) => m.ViewSidebar),
   },
+  {
+    path: 'ContextMenu',
+    loadComponent: () =>
+      import('./view-context-menu/view-context-menu').then(
+        (m) => m.ViewContextMenu,
+      ),
+  },
+  {
+    path: 'TieredMenu',
+    loadComponent: () =>
+      import('./view-tiered-menu/view-tiered-menu').then(
+        (m) => m.ViewTieredMenu,
+      ),
+  },
+  {
+    path: 'Menubar',
+    loadComponent: () =>
+      import('./view-menubar/view-menubar').then((m) => m.ViewMenubar),
+  },
+  {
+    path: 'MegaMenu',
+    loadComponent: () =>
+      import('./view-megamenu/view-megamenu').then((m) => m.ViewMegaMenu),
+  },
+  {
+    path: 'SlideMenu',
+    loadComponent: () =>
+      import('./view-slidemenu/view-slidemenu').then((m) => m.ViewSlideMenu),
+  },
 ];

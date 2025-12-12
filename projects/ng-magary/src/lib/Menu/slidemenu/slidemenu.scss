@@ -1,0 +1,101 @@
+/* SlideMenu SCSS */
+.magary-slidemenu {
+    background: var(--surface-0);
+    border: 1px solid var(--surface-200);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.magary-slidemenu-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.magary-slidemenu-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-0); /* Prevent transparency */
+}
+
+.magary-slidemenu-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--surface-200);
+    background: var(--surface-50);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: background-color 0.2s, color 0.2s;
+    user-select: none;
+    
+    &:hover {
+        background: var(--surface-100);
+        color: var(--text-primary);
+    }
+    
+    .back-label {
+        font-size: 0.875rem;
+        margin-left: 0.25rem;
+        margin-right: auto;
+    }
+    
+    .current-label {
+        font-size: 0.875rem;
+        color: var(--text-primary);
+        font-weight: 700;
+    }
+    
+    &.root-header {
+        cursor: default;
+        justify-content: center;
+    }
+}
+
+.magary-slidemenu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.magary-menuitem-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s;
+    user-select: none;
+
+    &:hover {
+        background: var(--surface-100);
+    }
+    
+    &.magary-disabled {
+        opacity: 0.5;
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .magary-menuitem-icon {
+        margin-right: 0.75rem;
+        color: var(--text-secondary);
+    }
+    
+    .magary-menuitem-text {
+        flex: 1;
+    }
+    
+    .magary-submenu-icon {
+        color: var(--text-secondary);
+    }
+}

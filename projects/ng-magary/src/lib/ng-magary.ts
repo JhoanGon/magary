@@ -41,6 +41,7 @@ export * from './Form/textarea/textarea';
 export * from './Form/textarea/textarea.module';
 export * from './Form/datepicker/datepicker';
 export * from './Form/datepicker/datepicker.module';
+export * from './Form/inputnumber/input-number';
 
 // 🖼️ Media //
 export * from './Media/image/image';
@@ -53,6 +54,13 @@ export * from './Menu/sidebar/sidebar';
 export * from './Menu/sidebar/sidebar.module';
 export * from './Menu/breadcrumb/breadcrumb';
 export * from './Menu/steps/steps';
+export * from './Menu/tieredmenu/tiered-menu';
+export * from './Menu/tieredmenu/tiered-menu';
+export * from './Menu/contextmenu/context-menu';
+export * from './Menu/menubar/menubar';
+export * from './Menu/megamenu/megamenu';
+export * from './Menu/slidemenu/slidemenu';
+export * from './Menu/api/menu.interface';
 
 // 💬 Messages //
 export * from './Misc/toast/toast';

@@ -1,0 +1,53 @@
+<div
+  class="magary-slidemenu"
+  [ngClass]="styleClass()"
+  [ngStyle]="containerStyle()"
+>
+  <div class="magary-slidemenu-wrapper" [@slideAnimation]="currentIndex()">
+    @for (view of [currentIndex()]; track view) {
+      <div class="magary-slidemenu-content">
+        <!-- Header for Back Navigation -->
+        @if (currentIndex() > 0) {
+          <div class="magary-slidemenu-header" (click)="goBack()">
+            <lucide-icon name="chevron-left" [size]="16"></lucide-icon>
+            <span class="back-label">Back</span>
+            <span class="current-label">{{ currentHeader }}</span>
+          </div>
+        } @else {
+          <!-- Optional Root Header -->
+        }
+
+        <ul class="magary-slidemenu-list">
+          @for (item of currentItems; track item.label) {
+            <li class="magary-menuitem">
+              <a
+                [href]="item.url || '#'"
+                class="magary-menuitem-link"
+                [class.magary-disabled]="item.disabled"
+                [attr.target]="item.target"
+                (click)="onItemClick($event, item)"
+              >
+                @if (item.icon) {
+                  <lucide-icon
+                    [name]="item.icon"
+                    class="magary-menuitem-icon"
+                    [size]="16"
+                  ></lucide-icon>
+                }
+                <span class="magary-menuitem-text">{{ item.label }}</span>
+
+                @if (item.items) {
+                  <lucide-icon
+                    name="chevron-right"
+                    class="magary-submenu-icon"
+                    [size]="16"
+                  ></lucide-icon>
+                }
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+</div>

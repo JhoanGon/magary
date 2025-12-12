@@ -1,0 +1,125 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1>Magary MegaMenu</h1>
+    <p>Menú de navegación avanzado que muestra submenús en columnas.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Importación</h2>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importRef" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Horizontal</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <magary-toast position="top-right"></magary-toast>
+        <magary-megamenu [model]="items"></magary-megamenu>
+      </div>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="htmlCode" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Todas las propiedades disponibles del componente</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>model</code></td>
+              <td><code>MenuItem[]</code></td>
+              <td><code>[]</code></td>
+              <td>Array de objetos MenuItem. La estructura define columnas.</td>
+            </tr>
+            <tr>
+              <td><code>orientation</code></td>
+              <td><code>'horizontal' | 'vertical'</code></td>
+              <td><code>'horizontal'</code></td>
+              <td>Orientación del menú.</td>
+            </tr>
+            <tr>
+              <td><code>style</code></td>
+              <td><code>object</code></td>
+              <td><code>null</code></td>
+              <td>Estilos en línea.</td>
+            </tr>
+            <tr>
+              <td><code>styleClass</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>Clase CSS personalizada.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos gestionados a través del modelo <code>MenuItem</code></p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>command</code></td>
+              <td>
+                <code
+                  >(event: &#123; originalEvent: Event, item: MenuItem &#125;)
+                  => void</code
+                >
+              </td>
+              <td>
+                Callback en <code>MenuItem</code> que se ejecuta al hacer click.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

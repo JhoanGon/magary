@@ -43,4 +43,11 @@ export const FORM_ROUTES: Routes = [
     loadComponent: () =>
       import('./view-datepicker/view-datepicker').then((m) => m.ViewDatePicker),
   },
+  {
+    path: 'InputNumber',
+    loadComponent: () =>
+      import('./view-input-number/view-input-number').then(
+        (m) => m.ViewInputNumber,
+      ),
+  },
 ];
