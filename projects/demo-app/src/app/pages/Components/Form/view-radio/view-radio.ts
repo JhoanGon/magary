@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MagaryRadioButton,
   MagaryRadioGroup,
-  MagaryTabsModule,
+  MagaryTabs,
+  MagaryTab,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
@@ -14,9 +15,11 @@ import { Highlight } from 'ngx-highlightjs';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MagaryRadioButton,
     MagaryRadioGroup,
-    MagaryTabsModule,
+    MagaryTabs,
+    MagaryTab,
     Highlight,
   ],
   templateUrl: './view-radio.html',

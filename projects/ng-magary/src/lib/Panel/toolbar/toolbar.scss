@@ -1,0 +1,23 @@
+.magary-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background: var(--surface-0, #ffffff);
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    border: 1px solid var(--surface-200, #e5e7eb);
+    gap: 0.5rem;
+    
+    .magary-toolbar-group-start,
+    .magary-toolbar-group-center,
+    .magary-toolbar-group-end {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .magary-toolbar-group-center {
+        margin: 0 auto;
+    }
+}

@@ -1,0 +1,171 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1>Magary Rating</h1>
+    <p>Componente de calificación con estrellas.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Importación</h2>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importRef" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Básico</h2>
+      <p>Configuración por defecto con 5 estrellas y opción de cancelar.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <h3>Valor: {{ val1 }}</h3>
+        <magary-rating [(ngModel)]="val1"></magary-rating>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeBasic" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Sin Cancelar</h2>
+      <p>Deshabilita la opción de cancelar la selección.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <h3>Valor: {{ val2 }}</h3>
+        <magary-rating [(ngModel)]="val2" [cancel]="false"></magary-rating>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeNoCancel" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Solo Lectura</h2>
+      <p>Modo de visualización sin interacción.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <h3>Valor: {{ val3 }}</h3>
+        <magary-rating [(ngModel)]="val3" [readonly]="true"></magary-rating>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeReadOnly" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Estrellas Personalizadas</h2>
+      <p>Define el número de estrellas con <code>stars</code>.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <h3>Valor: {{ val4 }}</h3>
+        <magary-rating [(ngModel)]="val4" [stars]="10"></magary-rating>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeCustomStars" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>stars</code></td>
+              <td><code>number</code></td>
+              <td><code>5</code></td>
+              <td>Número de estrellas.</td>
+            </tr>
+            <tr>
+              <td><code>cancel</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Muestra el icono de cancelar.</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Deshabilita el componente.</td>
+            </tr>
+            <tr>
+              <td><code>readonly</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Modo solo lectura.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,7 @@ export * from './Data/organizationchart/organizationchart';
 export * from './Data/organizationchart/organizationchart-node';
 export * from './Data/picklist/picklist';
 export * from './Data/orderlist/orderlist';
+export * from './Data/dataview/dataview';
 
 // 📂 File //
 export * from './File/upload/upload';
@@ -42,6 +43,8 @@ export * from './Form/textarea/textarea.module';
 export * from './Form/datepicker/datepicker';
 export * from './Form/datepicker/datepicker.module';
 export * from './Form/inputnumber/input-number';
+export * from './Form/slider/slider';
+export * from './Form/rating/rating';
 
 // 🖼️ Media //
 export * from './Media/image/image';
@@ -83,6 +86,7 @@ export * from './Overlay/tooltip/tooltip';
 export * from './Overlay/tooltip/tooltip.module';
 export * from './Overlay/dialog/dialog';
 export * from './Overlay/dialog/dialog.module';
+export * from './Overlay/overlaypanel/overlaypanel';
 
 // ConfirmDialog
 export * from './Overlay/confirm-dialog/confirm-dialog';
@@ -91,10 +95,10 @@ export * from './Overlay/confirm-dialog/confirmation.service';
 
 // 📦 Panel //
 export * from './Panel/card/card';
-export * from './Panel/card/card.module';
+export * from './Panel/fieldset/fieldset';
 export * from './Panel/tabs/tabs';
-export * from './Panel/tabs/tabs.module';
 export * from './Panel/tabs/tab/tab';
+export * from './Panel/toolbar/toolbar';
 export * from './Panel/accordion/accordion';
 export * from './Panel/accordion/accordion-tab';
 

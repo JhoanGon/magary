@@ -1,0 +1,47 @@
+<div class="magary-slider-rail" (click)="onBarClick($event)">
+  <div
+    class="magary-slider-range"
+    [ngStyle]="
+      orientation() === 'horizontal'
+        ? { left: rangeStartPos() + '%', width: rangeWidth() + '%' }
+        : { bottom: rangeStartPos() + '%', height: rangeWidth() + '%' }
+    "
+  ></div>
+
+  @if (!range()) {
+    <span
+      #sliderHandle
+      class="magary-slider-handle"
+      [ngStyle]="
+        orientation() === 'horizontal'
+          ? { left: handle1Pos() + '%' }
+          : { bottom: handle1Pos() + '%' }
+      "
+      (mousedown)="onMouseDown($event, 0)"
+    >
+    </span>
+  } @else {
+    <span
+      #sliderHandleStart
+      class="magary-slider-handle"
+      [ngStyle]="
+        orientation() === 'horizontal'
+          ? { left: handle1Pos() + '%' }
+          : { bottom: handle1Pos() + '%' }
+      "
+      (mousedown)="onMouseDown($event, 0)"
+    >
+    </span>
+    <span
+      #sliderHandleEnd
+      class="magary-slider-handle"
+      [ngStyle]="
+        orientation() === 'horizontal'
+          ? { left: handle2Pos() + '%' }
+          : { bottom: handle2Pos() + '%' }
+      "
+      (mousedown)="onMouseDown($event, 1)"
+    >
+    </span>
+  }
+</div>

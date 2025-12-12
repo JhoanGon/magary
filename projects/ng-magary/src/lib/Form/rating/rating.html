@@ -1,0 +1,31 @@
+@if (cancel() && !readonly()) {
+  <div
+    class="magary-rating-item magary-rating-cancel"
+    (click)="clear($event)"
+    [class.magary-hidden]="disabled()"
+  >
+    <lucide-icon [name]="iconCancel()" [size]="20"></lucide-icon>
+  </div>
+}
+
+@for (i of starsArray; track i) {
+  <div
+    class="magary-rating-item"
+    [class.magary-rating-item-active]="(value() || 0) >= i"
+    (click)="rate($event, i)"
+  >
+    <!-- We toggle fill vs outline based on active state or always use star icon with class modification? -->
+    <!-- Let's assume we use the same icon name but css handles fill? Or we swap icons? -->
+    <!-- Simplest: Icon name is passed. If we want filled star vs empty star: -->
+    <!-- Lucide 'star' is outline. filled is different? No, Lucide 'star' can be filled via fill attribute in SVG or class. -->
+    <!-- But lucide-angular component doesn't easily expose fill prop dynamically inside icon? -->
+    <!-- We can use class to fill the svg path. -->
+
+    <lucide-icon
+      [name]="(value() || 0) >= i ? iconOn() : iconOff()"
+      [class.filled-star]="(value() || 0) >= i"
+      [size]="20"
+    >
+    </lucide-icon>
+  </div>
+}

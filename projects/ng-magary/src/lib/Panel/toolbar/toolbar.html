@@ -1,0 +1,17 @@
+<div
+  class="magary-toolbar"
+  [ngClass]="styleClass"
+  [ngStyle]="style"
+  role="toolbar"
+>
+  <div class="magary-toolbar-group-start">
+    <ng-content select="[start]"></ng-content>
+  </div>
+  <div class="magary-toolbar-group-center">
+    <ng-content select="[center]"></ng-content>
+  </div>
+  <div class="magary-toolbar-group-end">
+    <ng-content select="[end]"></ng-content>
+  </div>
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,201 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1>Magary Slider</h1>
+    <p>
+      Componente de entrada para seleccionar un valor o rango arrastrando un
+      control.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Importación</h2>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importRef" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Básico</h2>
+      <p>Configuración por defecto de selección de valor único.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <h3>Valor: {{ val1 }}</h3>
+        <magary-slider [(ngModel)]="val1"></magary-slider>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeBasic" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Steps</h2>
+      <p>Incrementos definidos por la propiedad <code>step</code>.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <h3>Valor: {{ val3 }}</h3>
+        <magary-slider [(ngModel)]="val3" [step]="20"></magary-slider>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeSteps" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Rango</h2>
+      <p>Selección de un rango de valores (inicio y fin).</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <h3>Rango: {{ val4[0] }} - {{ val4[1] }}</h3>
+        <magary-slider [(ngModel)]="val4" [range]="true"></magary-slider>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeRange" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Vertical</h2>
+      <p>Orientación vertical del slider.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <h3>Vertical: {{ val5 }}</h3>
+        <div
+          style="
+            height: 200px;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <magary-slider
+            [(ngModel)]="val5"
+            orientation="vertical"
+          ></magary-slider>
+        </div>
+      </div>
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeVertical" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Por Defecto</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>min</code></td>
+              <td><code>number</code></td>
+              <td><code>0</code></td>
+              <td>Valor mínimo.</td>
+            </tr>
+            <tr>
+              <td><code>max</code></td>
+              <td><code>number</code></td>
+              <td><code>100</code></td>
+              <td>Valor máximo.</td>
+            </tr>
+            <tr>
+              <td><code>step</code></td>
+              <td><code>number</code></td>
+              <td><code>1</code></td>
+              <td>Incremento del valor.</td>
+            </tr>
+            <tr>
+              <td><code>range</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>
+                Si es verdadero, permite seleccionar un rango (inicio, fin).
+              </td>
+            </tr>
+            <tr>
+              <td><code>orientation</code></td>
+              <td><code>'horizontal' | 'vertical'</code></td>
+              <td><code>'horizontal'</code></td>
+              <td>Orientación del slider.</td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Deshabilita el componente.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+@if (visible()) {
+  <div
+    #container
+    class="magary-overlaypanel p-component"
+    [@animation]
+    (click)="$event.stopPropagation()"
+  >
+    <div class="magary-overlaypanel-content">
+      <ng-content></ng-content>
+    </div>
+    @if (showCloseIcon()) {
+      <button
+        class="magary-overlaypanel-close"
+        (click)="hide()"
+        aria-label="Close"
+      >
+        <lucide-icon name="x" [size]="16"></lucide-icon>
+      </button>
+    }
+  </div>
+}

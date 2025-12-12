@@ -18,4 +18,11 @@ export const OVERLAY_ROUTES: Routes = [
         (m) => m.ViewConfirmDialog,
       ),
   },
+  {
+    path: 'OverlayPanel',
+    loadComponent: () =>
+      import('./view-overlaypanel/view-overlaypanel').then(
+        (m) => m.ViewOverlayPanel,
+      ),
+  },
 ];

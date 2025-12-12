@@ -1,0 +1,46 @@
+.magary-overlaypanel {
+    background: var(--surface-0, #ffffff);
+    color: var(--text-primary, #495057);
+    border: 1px solid var(--surface-200, #dee2e6);
+    border-radius: 6px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); // Shadow MD
+    position: absolute;
+    z-index: 1000;
+    min-width: 15rem; // Default min width
+    
+    // Make sure we are in a positioning context if not appended to body
+    // If we append to body, valid. If inline, needs considering.
+    // For now we assume inline but absolute positioned relative to page (since we calculate scrollY).
+}
+
+.magary-overlaypanel-content {
+    padding: 1.25rem;
+}
+
+.magary-overlaypanel-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    color: var(--text-secondary);
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: var(--surface-hover);
+        color: var(--text-primary);
+    }
+    
+    &:focus-visible {
+        outline: 0 none;
+        box-shadow: 0 0 0 1px var(--primary-color);
+    }
+}

@@ -50,4 +50,14 @@ export const FORM_ROUTES: Routes = [
         (m) => m.ViewInputNumber,
       ),
   },
+  {
+    path: 'Slider',
+    loadComponent: () =>
+      import('./view-slider/view-slider').then((m) => m.ViewSlider),
+  },
+  {
+    path: 'Rating',
+    loadComponent: () =>
+      import('./view-rating/view-rating').then((m) => m.ViewRating),
+  },
 ];
