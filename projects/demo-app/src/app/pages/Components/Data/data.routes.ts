@@ -21,4 +21,21 @@ export const DATA_ROUTES: Routes = [
     loadComponent: () =>
       import('./view-timeline/view-timeline').then((m) => m.ViewTimeline),
   },
+  {
+    path: 'organization-chart',
+    loadComponent: () =>
+      import('./view-organizationchart/view-organizationchart').then(
+        (m) => m.ViewOrganizationChart,
+      ),
+  },
+  {
+    path: 'pick-list',
+    loadComponent: () =>
+      import('./view-pick-list/view-pick-list').then((m) => m.ViewPickList),
+  },
+  {
+    path: 'order-list',
+    loadComponent: () =>
+      import('./view-order-list/view-order-list').then((m) => m.ViewOrderList),
+  },
 ];

@@ -101,7 +101,21 @@
                 [activeIndex]="activeIndex"
                 [readonly]="false"
                 (activeIndexChange)="onActiveIndexChange($event)"
-              ></magary-steps>
+              >
+                <ng-template let-item>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 0.5rem;
+                    "
+                  >
+                    <lucide-icon [name]="item.icon" [size]="20"></lucide-icon>
+                    <span>{{ item.label }}</span>
+                  </div>
+                </ng-template>
+              </magary-steps>
             </div>
           </magary-card>
 

@@ -13,6 +13,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { MagaryAccordionTab } from './accordion-tab';
 
+import { OnDestroy } from '@angular/core';
+
 @Component({
   selector: 'magary-accordion',
   standalone: true,
@@ -25,13 +27,15 @@ import { MagaryAccordionTab } from './accordion-tab';
     class: 'magary-accordion',
   },
 })
-export class MagaryAccordion implements AfterContentInit {
+export class MagaryAccordion implements AfterContentInit, OnDestroy {
   @Input({ transform: booleanAttribute }) multiple: boolean = false;
 
   @ContentChildren(MagaryAccordionTab) tabs!: QueryList<MagaryAccordionTab>;
 
   @Output() onClose = new EventEmitter<any>();
   @Output() onOpen = new EventEmitter<any>();
+
+  private subscriptions: any[] = [];
 
   ngAfterContentInit() {
     this.tabs.changes.subscribe(() => {
@@ -41,18 +45,20 @@ export class MagaryAccordion implements AfterContentInit {
   }
 
   initTabs() {
-    this.tabs.forEach((tab) => {
-      // Clean up old subscriptions if any (basic implementation)
-      if ((tab as any).toggleSubscription) {
-        (tab as any).toggleSubscription.unsubscribe();
-      }
+    // Clear old subscriptions
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.subscriptions = [];
 
-      (tab as any).toggleSubscription = tab.selectedChange.subscribe(
-        (selected: boolean) => {
-          this.handleTabChange(tab, selected);
-        },
-      );
+    this.tabs.forEach((tab) => {
+      const sub = tab.selectedChange.subscribe((selected: boolean) => {
+        this.handleTabChange(tab, selected);
+      });
+      this.subscriptions.push(sub);
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   handleTabChange(changedTab: MagaryAccordionTab, isSelected: boolean) {

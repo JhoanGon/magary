@@ -74,9 +74,10 @@
   }
 
   &.input-filled {
-    border: none;
-    background: var(--surface-50, #f8f9fa);
-    border-bottom: 2px solid var(--input-border);
+    color: var(--text-color);
+    background: var(--surface-0);
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--surface-300);
     border-radius: var(--input-radius) var(--input-radius) 0 0;
   }
 

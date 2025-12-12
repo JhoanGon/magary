@@ -1,20 +1,45 @@
-<div class="magary-tree-container">
-  <ul class="magary-tree-root-children" *ngIf="value() && value().length">
+<div class="magary-tree-container" cdkDropListGroup>
+  <!-- Filter Section -->
+  <div class="magary-tree-filter" *ngIf="filter()">
+    <lucide-icon
+      name="search"
+      [size]="16"
+      class="magary-tree-filter-icon"
+    ></lucide-icon>
+    <input
+      type="text"
+      class="magary-tree-filter-input"
+      [placeholder]="filterPlaceholder()"
+      (input)="onFilterInput($event)"
+    />
+  </div>
+
+  <ul
+    class="magary-tree-root-children"
+    *ngIf="filteredValue() && filteredValue().length"
+    cdkDropList
+    [cdkDropListDisabled]="!droppable()"
+    [cdkDropListData]="filteredValue() || []"
+    (cdkDropListDropped)="handleDrop($event, null)"
+  >
     <magary-uitree-node
-      *ngFor="let node of value()"
+      *ngFor="let node of filteredValue()"
       [node]="node"
       [selectionMode]="selectionMode()"
       [selection]="selection()"
+      [draggable]="draggable()"
+      [droppable]="droppable()"
       (nodeSelect)="handleNodeSelect($event)"
       (nodeUnselect)="handleNodeUnselect($event)"
       (nodeExpand)="handleNodeExpand($event)"
       (nodeCollapse)="handleNodeCollapse($event)"
+      (nodeDrop)="onNodeDrop.emit($event)"
     >
     </magary-uitree-node>
   </ul>
   <div
     class="magary-tree-empty-message"
-    *ngIf="!value() || value().length === 0"
+    *ngIf="!filteredValue() || filteredValue().length === 0"
   >
     No records found
   </div>

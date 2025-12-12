@@ -1,0 +1,312 @@
+<div class="container">
+  <div class="header">
+    <h1>SplitButton</h1>
+    <p>Botón que agrupa una acción por defecto y un menú desplegable.</p>
+  </div>
+
+  <magary-toast position="top-right"></magary-toast>
+
+  <!-- Import -->
+  <section class="section">
+    <div class="section-header">
+      <h2>Importar</h2>
+      <p>Importa el componente en tu módulo o componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importCode" language="typescript"></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Basic Example Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Uso Básico</h2>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Por Defecto</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 1.5rem;
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+              "
+            >
+              <magary-split-button
+                label="Guardar"
+                icon="save"
+                [model]="saveItems"
+                (onClick)="onSave()"
+              >
+              </magary-split-button>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+
+      <magary-tabs
+        [backgroundLine]="'#ed2c44'"
+        [positionContent]="'flex-start'"
+        [background]="'#282c34'"
+      >
+        <magary-tab label="HTML">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="basicUsageCode" language="xml"></code></pre>
+          </div>
+        </magary-tab>
+        <magary-tab label="TS">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="tsCode" language="typescript"></code></pre>
+          </div>
+        </magary-tab>
+      </magary-tabs>
+    </div>
+  </div>
+
+  <!-- Severities Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Severidades</h2>
+      <p>Colores semánticos para diferentes acciones.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Colores</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 1.5rem;
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+              "
+            >
+              <magary-split-button
+                label="Secondary"
+                [model]="saveItems"
+                styleClass="p-button-secondary"
+              ></magary-split-button>
+              <magary-split-button
+                label="Success"
+                icon="check"
+                [model]="saveItems"
+                styleClass="p-button-success"
+              ></magary-split-button>
+              <magary-split-button
+                label="Info"
+                icon="info"
+                [model]="saveItems"
+                styleClass="p-button-info"
+              ></magary-split-button>
+              <magary-split-button
+                label="Warning"
+                icon="triangle-alert"
+                [model]="saveItems"
+                styleClass="p-button-warning"
+              ></magary-split-button>
+              <magary-split-button
+                label="Danger"
+                icon="x"
+                [model]="saveItems"
+                styleClass="p-button-danger"
+              ></magary-split-button>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="severityCode" language="xml"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sizes Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Tamaños</h2>
+      <p>Diferentes tamaños disponibles.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Pequeño</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-split-button
+                label="Small"
+                icon="minimize"
+                [model]="saveItems"
+                styleClass="p-button-sm"
+              ></magary-split-button>
+            </div>
+          </magary-card>
+        </div>
+        <div class="demo-item">
+          <h4>Normal</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-split-button
+                label="Normal"
+                icon="layout-template"
+                [model]="saveItems"
+              ></magary-split-button>
+            </div>
+          </magary-card>
+        </div>
+        <div class="demo-item">
+          <h4>Grande</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
+              <magary-split-button
+                label="Large"
+                icon="maximize"
+                [model]="saveItems"
+                styleClass="p-button-lg"
+              ></magary-split-button>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="sizesCode" language="xml"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Inputs Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Default</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of itemsConfig">
+              <td>
+                <code>{{ item.name }}</code>
+              </td>
+              <td>
+                <code>{{ item.type }}</code>
+              </td>
+              <td>
+                <code>{{ item.default }}</code>
+              </td>
+              <td>{{ item.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outputs Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of eventsConfig">
+              <td>
+                <code>{{ item.name }}</code>
+              </td>
+              <td>
+                <code>{{ item.type }}</code>
+              </td>
+              <td>{{ item.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MenuItem API -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Interfaz MenuItem</h2>
+      <p>Propiedades para los elementos en el array <code>model</code>.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Propiedad</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of menuItemConfig">
+              <td>
+                <code>{{ item.name }}</code>
+              </td>
+              <td>
+                <code>{{ item.type }}</code>
+              </td>
+              <td>{{ item.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

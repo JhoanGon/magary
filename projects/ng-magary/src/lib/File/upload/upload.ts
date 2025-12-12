@@ -32,6 +32,8 @@ interface UploadedFile {
 }
 
 import { LucideAngularModule } from 'lucide-angular';
+import { OnDestroy } from '@angular/core';
+
 @Component({
   selector: 'magary-upload',
   imports: [CommonModule, MagaryButton, LucideAngularModule],
@@ -39,7 +41,7 @@ import { LucideAngularModule } from 'lucide-angular';
   styleUrl: './upload.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MagaryUpload {
+export class MagaryUpload implements OnDestroy {
   mode = input<'basic' | 'advanced'>('basic');
   multiple = input<boolean>(false);
   accept = input<string>('*');
@@ -170,6 +172,50 @@ export class MagaryUpload {
     }
   }
 
+  private intervalId: any;
+  private uploadSubscription: any;
+
+  ngOnDestroy() {
+    this.clearUploadState();
+  }
+
+  private clearUploadState() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+
+    if (this.uploadSubscription) {
+      this.uploadSubscription.unsubscribe();
+      this.uploadSubscription = null;
+    }
+  }
+
+  // Modified simulateUpload to track interval
+  private simulateUpload() {
+    this.clearUploadState(); // Clear any previous
+    this.intervalId = setInterval(() => {
+      this.progress.update((p) => {
+        const newProgress = Math.min(p + Math.random() * 10, 100);
+
+        this.updateFilesProgress(newProgress);
+
+        if (newProgress >= 100) {
+          this.clearUploadState();
+          this.uploading.set(false);
+          this.markFilesAsCompleted();
+
+          this.onUpload.emit({
+            originalEvent: new Event('upload'),
+            files: this.files().map((f) => f.file),
+          });
+        }
+        return newProgress;
+      });
+    }, 200);
+  }
+
+  // Modified uploadWithHttp to track subscription
   private uploadWithHttp() {
     if (!this.http) {
       console.error('HttpClient is required for upload but was not provided.');
@@ -190,7 +236,8 @@ export class MagaryUpload {
       withCredentials: this.withCredentials(),
     });
 
-    this.http.request(req).subscribe({
+    this.clearUploadState(); // Clear any previous
+    this.uploadSubscription = this.http.request(req).subscribe({
       next: (event) => {
         if (event.type === HttpEventType.UploadProgress) {
           if (event.total) {
@@ -215,28 +262,6 @@ export class MagaryUpload {
         });
       },
     });
-  }
-
-  private simulateUpload() {
-    const interval = setInterval(() => {
-      this.progress.update((p) => {
-        const newProgress = Math.min(p + Math.random() * 10, 100);
-
-        this.updateFilesProgress(newProgress);
-
-        if (newProgress >= 100) {
-          clearInterval(interval);
-          this.uploading.set(false);
-          this.markFilesAsCompleted();
-
-          this.onUpload.emit({
-            originalEvent: new Event('upload'),
-            files: this.files().map((f) => f.file),
-          });
-        }
-        return newProgress;
-      });
-    }, 200);
   }
 
   private updateFilesProgress(percent: number) {

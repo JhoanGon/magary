@@ -3,6 +3,8 @@ export * from './Button/button/button';
 export * from './Button/button/button.module';
 export * from './Button/speed-dial/speed-dial';
 export * from './Button/speed-dial/speed-dial.module';
+export * from './Button/speed-dial/speed-dial-item.interface';
+export * from './Button/split-button/split-button';
 
 // 🗄️ Data //
 export * from './Data/table/table';
@@ -10,7 +12,12 @@ export * from './Data/table/table.module';
 export * from './Data/paginator/paginator';
 export * from './Data/tree/tree';
 export * from './Data/tree/tree-node.interface';
+export * from './Data/tree/uitree-node';
 export * from './Data/timeline/timeline';
+export * from './Data/organizationchart/organizationchart';
+export * from './Data/organizationchart/organizationchart-node';
+export * from './Data/picklist/picklist';
+export * from './Data/orderlist/orderlist';
 
 // 📂 File //
 export * from './File/upload/upload';

@@ -41,6 +41,8 @@ interface AvatarConfig {
 }
 
 import { LucideAngularModule } from 'lucide-angular';
+import { OnDestroy } from '@angular/core';
+
 @Component({
   selector: 'magary-sidebar',
   imports: [
@@ -55,7 +57,7 @@ import { LucideAngularModule } from 'lucide-angular';
   styleUrl: './sidebar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Sidebar {
+export class Sidebar implements OnDestroy {
   public sections = input<SidebarSection[]>([]);
   public menu = input<MenuItem[]>([]);
   public menuTitle = input<string>('Menu');
@@ -115,10 +117,17 @@ export class Sidebar {
     this.Logout.emit();
   }
   private router = inject(Router);
+  private routerSubscription: any;
 
   constructor() {
-    this.router.events.subscribe(() => {
+    this.routerSubscription = this.router.events.subscribe(() => {
       this.closeMobileSidebar();
     });
+  }
+
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 }

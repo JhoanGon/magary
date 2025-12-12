@@ -20,6 +20,7 @@ export interface MenuItem {
   iconSize?: number;
   styleClass?: string;
   iconClass?: string;
+  command?: (event?: any) => void;
 }
 export interface MenuItemClickEvent {
   item: MenuItem;

@@ -1,0 +1,61 @@
+<div class="orderlist-controls">
+  <magary-button
+    type="button"
+    icon="chevrons-up"
+    (buttonClick)="moveTop()"
+    severity="secondary"
+    size="small"
+    [iconSize]="16"
+  >
+  </magary-button>
+  <magary-button
+    type="button"
+    icon="chevron-up"
+    (buttonClick)="moveUp()"
+    severity="secondary"
+    size="small"
+    [iconSize]="16"
+  >
+  </magary-button>
+  <magary-button
+    type="button"
+    icon="chevron-down"
+    (buttonClick)="moveDown()"
+    severity="secondary"
+    size="small"
+    [iconSize]="16"
+  >
+  </magary-button>
+  <magary-button
+    type="button"
+    icon="chevrons-down"
+    (buttonClick)="moveBottom()"
+    severity="secondary"
+    size="small"
+    [iconSize]="16"
+  >
+  </magary-button>
+</div>
+
+<div class="orderlist-list-wrapper">
+  <div class="orderlist-header" *ngIf="header">{{ header }}</div>
+  <ul class="orderlist-list" [ngStyle]="listStyle">
+    <li
+      *ngFor="let item of value(); let i = index"
+      class="orderlist-item"
+      [class.selected]="selection().includes(item)"
+      (click)="onItemClick($event, item, i)"
+    >
+      <ng-container
+        *ngTemplateOutlet="
+          itemTemplate() || defaultTemplate;
+          context: { $implicit: item }
+        "
+      ></ng-container>
+    </li>
+  </ul>
+</div>
+
+<ng-template #defaultTemplate let-item>
+  {{ item.label || item }}
+</ng-template>

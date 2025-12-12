@@ -222,19 +222,20 @@
   white-space: nowrap;
 
   &.badge-info {
-    background-color: #3b82f6;
+    background-color: var(--info);
   }
   &.badge-success {
-    background-color: #22c55e;
+    background-color: var(--success);
   }
   &.badge-warning {
-    background-color: #f59e0b;
+    background-color: var(--warning);
   }
   &.badge-danger {
-    background-color: #ef4444;
+    background-color: var(--danger);
   }
   &.badge-contrast {
-    background-color: #1f2937;
+    background-color: var(--surface-900);
+    color: var(--surface-0);
   }
 }
 

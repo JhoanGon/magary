@@ -24,5 +24,20 @@ export const DATA_CONFIG: NavigationItem = {
       route: 'components/timeline',
       icon: 'logs',
     },
+    {
+      label: 'Organization Chart',
+      route: 'components/organization-chart',
+      icon: 'network',
+    },
+    {
+      label: 'PickList',
+      route: 'components/pick-list',
+      icon: 'arrow-right-left',
+    },
+    {
+      label: 'OrderList',
+      route: 'components/order-list',
+      icon: 'list-ordered',
+    },
   ],
 };

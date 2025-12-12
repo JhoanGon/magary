@@ -6,6 +6,8 @@ import {
   input,
   output,
   computed,
+  contentChild,
+  TemplateRef,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
@@ -44,6 +46,9 @@ export class MagarySteps {
   readonly style = input<{ [klass: string]: any } | null | undefined>(null);
   readonly styleClass = input<string | undefined>(undefined);
   readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
+
+  // Content Template
+  readonly template = contentChild(TemplateRef);
 
   readonly activeIndexChange = output<number>();
 
