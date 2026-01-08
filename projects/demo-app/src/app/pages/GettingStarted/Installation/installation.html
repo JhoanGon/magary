@@ -75,6 +75,32 @@
             <div slot="header">
               <div class="step-header">
                 <span class="step-number">3</span>
+                <h3>Configurar Iconos</h3>
+              </div>
+            </div>
+            <div class="step-content">
+              <p>
+                Para que los componentes puedan renderizar los iconos
+                correctamente, añade el proveedor global en tu
+                <code>app.config.ts</code>.
+              </p>
+              <div class="code-block">
+                <pre><code [highlight]="iconsConfig" language="typescript"></code></pre>
+              </div>
+            </div>
+          </magary-card>
+
+          <magary-card
+            [width]="'100%'"
+            [shadow]="3"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+            [border]="'1px solid var(--surface-200)'"
+            class="step-card"
+          >
+            <div slot="header">
+              <div class="step-header">
+                <span class="step-number">4</span>
                 <h3>Usar componentes</h3>
               </div>
             </div>
