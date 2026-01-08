@@ -22,14 +22,4 @@ export class Installation {
   // ...
 })
 export class MyComponent {}`;
-  readonly iconsConfig = `// app.config.ts
-import { ApplicationConfig } from '@angular/core';
-import { LucideIconProvider, LUCIDE_ICONS, icons } from 'lucide-angular';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    // ...
-    { provide: LUCIDE_ICONS, useValue: new LucideIconProvider(icons) }
-  ]
-};`;
 }
