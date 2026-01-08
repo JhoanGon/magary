@@ -18,21 +18,23 @@ export class Setup {
     this._router.navigate(['/theming']);
   }
   readonly iconInstall = `npm install lucide-angular lucide`;
-  readonly angularJsonConfig = `// app.config.ts (Standalone)
-import { LucideAngularModule, Home, User, Settings } from 'lucide-angular';
+  readonly angularJsonConfig = `// app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { LucideIconProvider, LUCIDE_ICONS, icons } from 'lucide-angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(LucideAngularModule.pick({ Home, User, Settings }))
+    // ...
+    { provide: LUCIDE_ICONS, useValue: new LucideIconProvider(icons) }
   ]
 };`;
-  readonly moduleConfig = `// app.module.ts (Modules / Angular 14-16)
+  readonly moduleConfig = `// app.module.ts (Modules)
 import { NgModule } from '@angular/core';
-import { LucideAngularModule, Home, User, Settings } from 'lucide-angular';
+import { LucideIconProvider, LUCIDE_ICONS, icons } from 'lucide-angular';
 
 @NgModule({
-  imports: [
-    LucideAngularModule.pick({ Home, User, Settings })
+  providers: [
+    { provide: LUCIDE_ICONS, useValue: new LucideIconProvider(icons) }
   ]
 })
 export class AppModule { }`;
