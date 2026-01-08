@@ -8,7 +8,7 @@
   (mouseleave)="onMouseLeave()"
 >
   <ul class="magary-tieredmenu-root-list">
-    <ng-template ngFor let-item [ngForOf]="processedModel()">
+    @for (item of processedModel(); track item.label) {
       <li
         appTieredMenuItem
         [item]="item"
@@ -51,72 +51,25 @@
           <!-- Recursive Submenu -->
           @if (item.items && item.items.length > 0) {
             <ul class="magary-submenu">
-              <ng-template ngFor let-child [ngForOf]="item.items">
-                <li
-                  appTieredMenuItem
-                  [item]="child"
-                  [parent]="this"
-                  class="magary-menuitem"
-                  [ngClass]="{
-                    'magary-menuitem-active': child.expanded,
-                    'magary-menu-separator': child.separator,
-                  }"
-                >
-                  @if (child.separator) {
-                  } @else {
-                    <div class="magary-menuitem-content">
-                      <a
-                        class="magary-menuitem-link"
-                        [href]="child.url || '#'"
-                        [attr.target]="child.target"
-                        (click)="onItemClick($event, child)"
-                        [class.magary-disabled]="child.disabled"
-                      >
-                        @if (child.icon) {
-                          <lucide-icon
-                            [name]="child.icon"
-                            class="magary-menuitem-icon"
-                            [size]="16"
-                          ></lucide-icon>
-                        }
-                        <span class="magary-menuitem-text">{{
-                          child.label
-                        }}</span>
-                        @if (child.items && child.items.length > 0) {
-                          <lucide-icon
-                            name="chevron-right"
-                            class="magary-submenu-icon"
-                            [size]="14"
-                          ></lucide-icon>
-                        }
-                      </a>
-                    </div>
-                    @if (child.items && child.items.length > 0) {
-                      <!-- Handled recursively by directive or template? 
-                                  Template recursion is cleaner for N levels. 
-                                  Let's use a template reference. -->
-                      <ng-container
-                        *ngTemplateOutlet="
-                          submenuTemplate;
-                          context: { $implicit: child.items }
-                        "
-                      ></ng-container>
-                    }
-                  }
-                </li>
-              </ng-template>
+              <!-- Inline recursion or use template outlet? Template usage is already cleaner here -->
+              <ng-container
+                *ngTemplateOutlet="
+                  submenuTemplate;
+                  context: { $implicit: item.items }
+                "
+              ></ng-container>
             </ul>
           }
         }
       </li>
-    </ng-template>
+    }
   </ul>
 </div>
 
 <!-- Reusable Recursive Template -->
 <ng-template #submenuTemplate let-items>
   <ul class="magary-submenu">
-    <ng-template ngFor let-child [ngForOf]="items">
+    @for (child of items; track child.label) {
       <li
         appTieredMenuItem
         [item]="child"
@@ -161,6 +114,6 @@
           }
         }
       </li>
-    </ng-template>
+    }
   </ul>
 </ng-template>

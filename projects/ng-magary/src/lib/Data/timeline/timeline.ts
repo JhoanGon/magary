@@ -1,7 +1,7 @@
 import {
   Component,
-  Input,
-  ContentChild,
+  input,
+  contentChild,
   TemplateRef,
   ViewEncapsulation,
   ChangeDetectionStrategy,
@@ -17,43 +17,46 @@ import { CommonModule } from '@angular/common';
     <div
       [class]="
         'magary-timeline magary-timeline-' +
-        layout +
+        layout() +
         ' magary-timeline-' +
-        align
+        align()
       "
     >
-      <div
-        *ngFor="let item of value; let i = index; let last = last"
-        class="magary-timeline-event"
-      >
-        <div class="magary-timeline-event-opposite">
-          <ng-container
-            *ngTemplateOutlet="
-              oppositeTemplate || null;
-              context: { $implicit: item }
-            "
-          ></ng-container>
-        </div>
-        <div class="magary-timeline-event-separator">
-          <ng-container *ngIf="markerTemplate; else defaultMarker">
+      @for (item of value(); track $index; let i = $index; let last = $last) {
+        <div class="magary-timeline-event">
+          <div class="magary-timeline-event-opposite">
             <ng-container
-              *ngTemplateOutlet="markerTemplate; context: { $implicit: item }"
+              *ngTemplateOutlet="
+                oppositeTemplate() || null;
+                context: { $implicit: item }
+              "
             ></ng-container>
-          </ng-container>
-          <ng-template #defaultMarker>
-            <div class="magary-timeline-event-marker"></div>
-          </ng-template>
-          <div *ngIf="!last" class="magary-timeline-event-connector"></div>
+          </div>
+          <div class="magary-timeline-event-separator">
+            @if (markerTemplate()) {
+              <ng-container
+                *ngTemplateOutlet="
+                  markerTemplate();
+                  context: { $implicit: item }
+                "
+              ></ng-container>
+            } @else {
+              <div class="magary-timeline-event-marker"></div>
+            }
+            @if (!last) {
+              <div class="magary-timeline-event-connector"></div>
+            }
+          </div>
+          <div class="magary-timeline-event-content">
+            <ng-container
+              *ngTemplateOutlet="
+                contentTemplate() || null;
+                context: { $implicit: item }
+              "
+            ></ng-container>
+          </div>
         </div>
-        <div class="magary-timeline-event-content">
-          <ng-container
-            *ngTemplateOutlet="
-              contentTemplate || null;
-              context: { $implicit: item }
-            "
-          ></ng-container>
-        </div>
-      </div>
+      }
     </div>
   `,
   styleUrls: ['./timeline.scss'],
@@ -64,11 +67,11 @@ import { CommonModule } from '@angular/common';
   },
 })
 export class MagaryTimeline {
-  @Input() value: any[] = [];
-  @Input() layout: 'vertical' | 'horizontal' = 'vertical';
-  @Input() align: 'left' | 'right' | 'top' | 'bottom' | 'alternate' = 'left';
+  value = input<any[]>([]);
+  layout = input<'vertical' | 'horizontal'>('vertical');
+  align = input<'left' | 'right' | 'top' | 'bottom' | 'alternate'>('left');
 
-  @ContentChild('content') contentTemplate: TemplateRef<any> | null = null;
-  @ContentChild('opposite') oppositeTemplate: TemplateRef<any> | null = null;
-  @ContentChild('marker') markerTemplate: TemplateRef<any> | null = null;
+  contentTemplate = contentChild<TemplateRef<any>>('content');
+  oppositeTemplate = contentChild<TemplateRef<any>>('opposite');
+  markerTemplate = contentChild<TemplateRef<any>>('marker');
 }

@@ -92,14 +92,16 @@
                       </div>
 
                       <!-- Image if exists -->
-                      <div *ngIf="event.image" style="margin-top: 0.5rem">
-                        <magary-image
-                          [src]="event.image"
-                          [alt]="event.status"
-                          width="200"
-                          class="shadow-2 border-round"
-                        ></magary-image>
-                      </div>
+                      @if (event.image) {
+                        <div style="margin-top: 0.5rem">
+                          <magary-image
+                            [src]="event.image"
+                            [alt]="event.status"
+                            width="200"
+                            class="shadow-2 border-round"
+                          ></magary-image>
+                        </div>
+                      }
 
                       <!-- Description -->
                       <p style="margin: 0; color: var(--text-color-secondary)">

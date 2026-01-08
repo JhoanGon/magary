@@ -33,18 +33,19 @@
                 (onNodeUnselect)="selectedNode = null"
               ></magary-organization-chart>
 
-              <div
-                style="
-                  margin-top: 1rem;
-                  padding: 0.5rem;
-                  background: var(--surface-hover);
-                  border-radius: 4px;
-                  text-align: center;
-                "
-                *ngIf="selectedNode"
-              >
-                Seleccionado: <strong>{{ selectedNode.label }}</strong>
-              </div>
+              @if (selectedNode) {
+                <div
+                  style="
+                    margin-top: 1rem;
+                    padding: 0.5rem;
+                    background: var(--surface-hover);
+                    border-radius: 4px;
+                    text-align: center;
+                  "
+                >
+                  Seleccionado: <strong>{{ selectedNode.label }}</strong>
+                </div>
+              }
             </div>
           </magary-card>
 

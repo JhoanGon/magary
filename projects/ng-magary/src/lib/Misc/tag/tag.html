@@ -1,8 +1,11 @@
-<!-- <lucide-icon
-  *ngIf="icon"
-  [name]="icon"
-  [size]="12"
-  class="magary-tag-icon"
-></lucide-icon> -->
-<span class="magary-tag-value" *ngIf="value">{{ value }}</span>
+<!-- @if (icon()) {
+  <lucide-icon
+    [name]="icon()"
+    [size]="12"
+    class="magary-tag-icon"
+  ></lucide-icon>
+} -->
+@if (value()) {
+  <span class="magary-tag-value">{{ value() }}</span>
+}
 <ng-content></ng-content>

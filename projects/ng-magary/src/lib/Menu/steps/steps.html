@@ -1,5 +1,5 @@
 <div [ngClass]="rootClass()" [ngStyle]="style() || {}">
-  <ng-container *ngFor="let item of model(); let i = index; let last = last">
+  @for (item of model(); track item.label; let i = $index; let last = $last) {
     <!-- Step Item -->
     <div
       [class.magary-steps-item-active]="i === activeIndex()"
@@ -11,7 +11,7 @@
       (click)="onItemClick($event, item, i)"
     >
       <button class="magary-steps-action" tabindex="-1">
-        <ng-container *ngIf="template(); else defaultContent">
+        @if (template()) {
           <ng-container
             *ngTemplateOutlet="
               template();
@@ -22,19 +22,19 @@
               }
             "
           ></ng-container>
-        </ng-container>
-        <ng-template #defaultContent>
+        } @else {
           <span class="magary-steps-number">{{ i + 1 }}</span>
           <span class="magary-steps-title">{{ item.label }}</span>
-        </ng-template>
+        }
       </button>
     </div>
 
     <!-- Separator (Line) -->
-    <div
-      *ngIf="!last"
-      class="magary-steps-separator"
-      [class.magary-steps-separator-active]="i < activeIndex()"
-    ></div>
-  </ng-container>
+    @if (!last) {
+      <div
+        class="magary-steps-separator"
+        [class.magary-steps-separator-active]="i < activeIndex()"
+      ></div>
+    }
+  }
 </div>

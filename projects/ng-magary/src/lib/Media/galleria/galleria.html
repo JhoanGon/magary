@@ -1,0 +1,394 @@
+<div #galleriaContainer class="galleria-container" [ngStyle]="containerStyle()">
+  <!-- Main Item Display -->
+  <div
+    class="galleria-item-wrapper"
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()"
+    (touchstart)="onTouchStart($event)"
+    (touchmove)="onTouchMove($event)"
+    (touchend)="onTouchEnd($event)"
+  >
+    <!-- Progress Bar -->
+    @if (showProgressBar() && isPlaying()) {
+      <div class="galleria-progress">
+        <div
+          class="galleria-progress-bar"
+          [style.width.%]="progressValue()"
+        ></div>
+      </div>
+    }
+
+    <!-- Image Counter -->
+    @if (showImageCounter() && !presentationMode()) {
+      <div class="galleria-counter">
+        {{ imageCounter() }}
+      </div>
+    }
+
+    <!-- Control Buttons -->
+    @if (!presentationMode()) {
+      <div class="galleria-controls">
+        <!-- Play/Pause -->
+        @if (showPlayPauseButton() && autoPlay()) {
+          <button
+            class="galleria-control-button"
+            [class.playing]="isPlaying()"
+            (click)="togglePlayPause()"
+            [attr.aria-label]="isPlaying() ? 'Pause' : 'Play'"
+          >
+            @if (isPlaying()) {
+              <lucide-icon name="pause"></lucide-icon>
+            }
+            @if (!isPlaying()) {
+              <lucide-icon name="play"></lucide-icon>
+            }
+          </button>
+        }
+
+        <!-- Presentation Mode -->
+        @if (allowPresentationMode()) {
+          <button
+            class="galleria-control-button"
+            (click)="togglePresentationMode()"
+            aria-label="Presentation mode"
+            title="Presentation mode (P)"
+          >
+            <lucide-icon name="monitor-play"></lucide-icon>
+          </button>
+        }
+
+        <!-- Share -->
+        @if (showShareButton()) {
+          <button
+            class="galleria-control-button"
+            (click)="shareImage()"
+            aria-label="Share"
+            title="Share image"
+          >
+            <lucide-icon name="share-2"></lucide-icon>
+          </button>
+        }
+
+        <!-- Download -->
+        @if (showDownloadButton()) {
+          <button
+            class="galleria-control-button"
+            (click)="downloadImage()"
+            aria-label="Download"
+            title="Download image"
+          >
+            <lucide-icon name="download"></lucide-icon>
+          </button>
+        }
+
+        <!-- Fullscreen -->
+        @if (showFullScreenButton()) {
+          <button
+            class="galleria-control-button"
+            (click)="toggleFullScreen()"
+            [attr.aria-label]="
+              isFullscreen() ? 'Exit fullscreen' : 'Fullscreen'
+            "
+            title="Fullscreen (F)"
+          >
+            @if (isFullscreen()) {
+              <lucide-icon name="minimize"></lucide-icon>
+            }
+            @if (!isFullscreen()) {
+              <lucide-icon name="maximize"></lucide-icon>
+            }
+          </button>
+        }
+      </div>
+    }
+
+    <!-- Zoom Controls -->
+    @if (enableZoom() && isZoomed()) {
+      <div class="galleria-zoom-controls">
+        <button
+          class="galleria-control-button"
+          (click)="zoomIn()"
+          [disabled]="zoomLevel() >= maxZoomLevel()"
+          aria-label="Zoom in"
+          title="Zoom in (+)"
+        >
+          <lucide-icon name="zoom-in"></lucide-icon>
+        </button>
+        <button
+          class="galleria-control-button"
+          (click)="zoomOut()"
+          [disabled]="zoomLevel() <= 1"
+          aria-label="Zoom out"
+          title="Zoom out (-)"
+        >
+          <lucide-icon name="zoom-out"></lucide-icon>
+        </button>
+        <button
+          class="galleria-control-button"
+          (click)="resetZoom()"
+          aria-label="Reset zoom"
+          title="Reset zoom (0)"
+        >
+          <lucide-icon name="rotate-ccw"></lucide-icon>
+        </button>
+      </div>
+    }
+
+    <!-- Item Container -->
+    <div class="galleria-item-container">
+      <!-- Loading Spinner -->
+      @if (isLoading()) {
+        <div class="galleria-loading"></div>
+      }
+
+      <!-- Navigation Buttons -->
+      @if (
+        showItemNavigators() && (!showItemNavigatorsOnHover() || isHovering())
+      ) {
+        <button
+          class="galleria-item-nav galleria-item-prev"
+          (click)="prev()"
+          [disabled]="!canGoPrev()"
+          aria-label="Previous"
+        >
+          <lucide-icon name="chevron-left"></lucide-icon>
+        </button>
+      }
+
+      @if (
+        showItemNavigators() && (!showItemNavigatorsOnHover() || isHovering())
+      ) {
+        <button
+          class="galleria-item-nav galleria-item-next"
+          (click)="next()"
+          [disabled]="!canGoNext()"
+          aria-label="Next"
+        >
+          <lucide-icon name="chevron-right"></lucide-icon>
+        </button>
+      }
+
+      <!-- Active Item Display -->
+      <div
+        class="galleria-item"
+        [class.transition-fade]="transitionEffect() === 'fade'"
+        [class.transition-slide]="transitionEffect() === 'slide'"
+        [class.transition-zoom]="transitionEffect() === 'zoom'"
+        [class.transition-flip]="transitionEffect() === 'flip'"
+      >
+        <!-- Custom Template -->
+        @if (itemTemplateRef()) {
+          <ng-container
+            *ngTemplateOutlet="
+              itemTemplateRef();
+              context: { $implicit: activeItem(), index: activeIndex() }
+            "
+          ></ng-container>
+        }
+
+        <!-- Default Image/Video Display -->
+        @if (!itemTemplateRef() && activeItem()) {
+          <ng-container>
+            <!-- Image -->
+            @if (!activeItem()?.type || activeItem()?.type === "image") {
+              <img
+                #currentImage
+                [src]="activeItem()?.src"
+                [alt]="
+                  activeItem()?.alt || activeItem()?.title || 'Gallery image'
+                "
+                [class.zoomed]="isZoomed()"
+                [style.transform]="transformStyle()"
+                (click)="onItemClick(activeItem())"
+                (dblclick)="onImageDoubleClick()"
+                (mousedown)="onMouseDown($event)"
+                (load)="onImageLoadSuccess(activeIndex())"
+                (error)="onImageLoadError(activeIndex())"
+                draggable="false"
+              />
+            }
+
+            <!-- Video -->
+            @if (activeItem()?.type === "video") {
+              <video
+                [src]="activeItem()?.videoUrl || activeItem()?.src"
+                controls
+                [poster]="activeItem()?.thumbnail || activeItem()?.src"
+                (loadeddata)="onImageLoadSuccess(activeIndex())"
+                (error)="onImageLoadError(activeIndex())"
+              ></video>
+            }
+          </ng-container>
+        }
+      </div>
+
+      <!-- Caption Overlay -->
+      <!-- Complex condition simplified logic: activeItem is verified -->
+      @if (
+        showCaption() &&
+        activeItem() &&
+        (activeItem()?.title || activeItem()?.description) &&
+        captionPosition() !== "outside"
+      ) {
+        <div
+          class="galleria-caption"
+          [class.caption-overlay]="captionPosition() === 'overlay'"
+        >
+          @if (captionTemplateRef()) {
+            <ng-container
+              *ngTemplateOutlet="
+                captionTemplateRef();
+                context: { $implicit: activeItem(), index: activeIndex() }
+              "
+            ></ng-container>
+          }
+
+          @if (!captionTemplateRef()) {
+            <ng-container>
+              @if (activeItem()?.title) {
+                <div class="caption-title">
+                  {{ activeItem()?.title }}
+                </div>
+              }
+              @if (activeItem()?.description) {
+                <div class="caption-description">
+                  {{ activeItem()?.description }}
+                </div>
+              }
+            </ng-container>
+          }
+        </div>
+      }
+
+      <!-- Indicators on Item -->
+      @if (showIndicators() && showIndicatorsOnItem()) {
+        <ul class="galleria-indicators">
+          @for (item of value(); track $index; let i = $index) {
+            <li
+              [class.galleria-indicator-active]="i === activeIndex()"
+              (click)="onIndicatorClick(i)"
+              (mouseenter)="
+                changeItemOnIndicatorHover() ? onIndicatorClick(i) : null
+              "
+            >
+              <button
+                class="galleria-indicator-button"
+                [attr.aria-label]="'Go to image ' + (i + 1)"
+                [attr.aria-current]="i === activeIndex() ? 'true' : 'false'"
+              ></button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <!-- Caption Outside -->
+    @if (
+      showCaption() &&
+      activeItem() &&
+      (activeItem()?.title || activeItem()?.description) &&
+      captionPosition() === "outside"
+    ) {
+      <div class="galleria-caption caption-outside">
+        @if (captionTemplateRef()) {
+          <ng-container
+            *ngTemplateOutlet="
+              captionTemplateRef();
+              context: { $implicit: activeItem(), index: activeIndex() }
+            "
+          ></ng-container>
+        }
+
+        @if (!captionTemplateRef()) {
+          <ng-container>
+            @if (activeItem()?.title) {
+              <div class="caption-title">
+                {{ activeItem()?.title }}
+              </div>
+            }
+            @if (activeItem()?.description) {
+              <div class="caption-description">
+                {{ activeItem()?.description }}
+              </div>
+            }
+          </ng-container>
+        }
+      </div>
+    }
+
+    <!-- Indicators Below Item -->
+    @if (showIndicators() && !showIndicatorsOnItem()) {
+      <ul
+        class="galleria-indicators"
+        [style.position]="'relative'"
+        [style.bottom]="'auto'"
+        [style.padding]="'1rem'"
+        [style.background]="'var(--surface-50, #f9fafb)'"
+      >
+        @for (item of value(); track $index; let i = $index) {
+          <li
+            [class.galleria-indicator-active]="i === activeIndex()"
+            (click)="onIndicatorClick(i)"
+            (mouseenter)="
+              changeItemOnIndicatorHover() ? onIndicatorClick(i) : null
+            "
+          >
+            <button
+              class="galleria-indicator-button"
+              [attr.aria-label]="'Go to image ' + (i + 1)"
+              [attr.aria-current]="i === activeIndex() ? 'true' : 'false'"
+            ></button>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+
+  <!-- Thumbnails -->
+  @if (showThumbnails() && value() && value().length > 1) {
+    <div class="galleria-thumbnail-wrapper">
+      <div class="galleria-thumbnail-container">
+        <div class="galleria-thumbnail-items">
+          @for (item of value(); track $index; let i = $index) {
+            <div
+              class="galleria-thumbnail-item"
+              [class.galleria-thumbnail-item-active]="i === activeIndex()"
+              (click)="onThumbnailClick(i)"
+              [attr.aria-label]="'Thumbnail ' + (i + 1)"
+              [attr.aria-current]="i === activeIndex() ? 'true' : 'false'"
+            >
+              @if (thumbnailTemplateRef()) {
+                <ng-container
+                  *ngTemplateOutlet="
+                    thumbnailTemplateRef();
+                    context: { $implicit: item, index: i }
+                  "
+                ></ng-container>
+              }
+
+              @if (!thumbnailTemplateRef()) {
+                <div class="galleria-thumbnail-content">
+                  @if (
+                    shouldLoadImage(i) && (!item.type || item.type === "image")
+                  ) {
+                    <img
+                      [src]="item.thumbnail || item.src"
+                      [alt]="item.alt || item.title || 'Thumbnail ' + (i + 1)"
+                      draggable="false"
+                    />
+                  }
+                  @if (shouldLoadImage(i) && item.type === "video") {
+                    <video
+                      [poster]="item.thumbnail || item.src"
+                      draggable="false"
+                    ></video>
+                  }
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

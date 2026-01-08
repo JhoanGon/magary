@@ -1,46 +1,48 @@
 <div class="magary-tree-container" cdkDropListGroup>
   <!-- Filter Section -->
-  <div class="magary-tree-filter" *ngIf="filter()">
-    <lucide-icon
-      name="search"
-      [size]="16"
-      class="magary-tree-filter-icon"
-    ></lucide-icon>
-    <input
-      type="text"
-      class="magary-tree-filter-input"
-      [placeholder]="filterPlaceholder()"
-      (input)="onFilterInput($event)"
-    />
-  </div>
+  @if (filter()) {
+    <div class="magary-tree-filter">
+      <lucide-icon
+        name="search"
+        [size]="16"
+        class="magary-tree-filter-icon"
+      ></lucide-icon>
+      <input
+        type="text"
+        class="magary-tree-filter-input"
+        [placeholder]="filterPlaceholder()"
+        (input)="onFilterInput($event)"
+      />
+    </div>
+  }
 
-  <ul
-    class="magary-tree-root-children"
-    *ngIf="filteredValue() && filteredValue().length"
-    cdkDropList
-    [cdkDropListDisabled]="!droppable()"
-    [cdkDropListData]="filteredValue() || []"
-    (cdkDropListDropped)="handleDrop($event, null)"
-  >
-    <magary-uitree-node
-      *ngFor="let node of filteredValue()"
-      [node]="node"
-      [selectionMode]="selectionMode()"
-      [selection]="selection()"
-      [draggable]="draggable()"
-      [droppable]="droppable()"
-      (nodeSelect)="handleNodeSelect($event)"
-      (nodeUnselect)="handleNodeUnselect($event)"
-      (nodeExpand)="handleNodeExpand($event)"
-      (nodeCollapse)="handleNodeCollapse($event)"
-      (nodeDrop)="onNodeDrop.emit($event)"
+  @if (filteredValue() && filteredValue().length) {
+    <ul
+      class="magary-tree-root-children"
+      cdkDropList
+      [cdkDropListDisabled]="!droppable()"
+      [cdkDropListData]="filteredValue() || []"
+      (cdkDropListDropped)="handleDrop($event, null)"
     >
-    </magary-uitree-node>
-  </ul>
-  <div
-    class="magary-tree-empty-message"
-    *ngIf="!filteredValue() || filteredValue().length === 0"
-  >
-    No records found
-  </div>
+      @for (node of filteredValue(); track node.key || node.label) {
+        <magary-uitree-node
+          [node]="node"
+          [selectionMode]="selectionMode()"
+          [selection]="selection()"
+          [draggable]="draggable()"
+          [droppable]="droppable()"
+          (nodeSelect)="handleNodeSelect($event)"
+          (nodeUnselect)="handleNodeUnselect($event)"
+          (nodeExpand)="handleNodeExpand($event)"
+          (nodeCollapse)="handleNodeCollapse($event)"
+          (nodeDrop)="onNodeDrop.emit($event)"
+        >
+        </magary-uitree-node>
+      }
+    </ul>
+  }
+
+  @if (!filteredValue() || filteredValue().length === 0) {
+    <div class="magary-tree-empty-message">No records found</div>
+  }
 </div>

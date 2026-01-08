@@ -96,29 +96,28 @@
         </div>
 
         <magary-overlaypanel #op2 [showCloseIcon]="true">
-          <div
-            *ngIf="selectedProduct"
-            style="text-align: center; padding: 1rem"
-          >
-            <img
-              [src]="
-                'https://primefaces.org/cdn/primeng/images/demo/product/' +
-                selectedProduct.image
-              "
-              [alt]="selectedProduct.name"
-              style="
-                width: 100px;
-                display: block;
-                margin: 0 auto 1rem auto;
-                border-radius: 4px;
-                box-shadow: var(--shadow-sm);
-              "
-            />
-            <span class="font-bold block">{{ selectedProduct.name }}</span>
-            <span class="block text-secondary" style="margin-top: 0.5rem"
-              >{{ selectedProduct.price }} USD</span
-            >
-          </div>
+          @if (selectedProduct) {
+            <div style="text-align: center; padding: 1rem">
+              <img
+                [src]="
+                  'https://primefaces.org/cdn/primeng/images/demo/product/' +
+                  selectedProduct.image
+                "
+                [alt]="selectedProduct.name"
+                style="
+                  width: 100px;
+                  display: block;
+                  margin: 0 auto 1rem auto;
+                  border-radius: 4px;
+                  box-shadow: var(--shadow-sm);
+                "
+              />
+              <span class="font-bold block">{{ selectedProduct.name }}</span>
+              <span class="block text-secondary" style="margin-top: 0.5rem"
+                >{{ selectedProduct.price }} USD</span
+              >
+            </div>
+          }
         </magary-overlaypanel>
       </div>
       <div class="code-block" style="margin-top: 1rem">

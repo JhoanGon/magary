@@ -67,28 +67,32 @@ export class ViewOverlayPanel {
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let product of products" class="border-bottom-1 surface-border">
-                <td class="p-2">{{product.name}}</td>
-                <td class="p-2 text-center">
-                    <magary-button icon="image" 
-                                 variant="text" 
-                                 (buttonClick)="selectProduct($event, product, op2)">
-                    </magary-button>
-                </td>
-                <td class="p-2 text-right">{{product.price}}</td>
-            </tr>
+            @for (product of products; track product.id) {
+                <tr class="border-bottom-1 surface-border">
+                    <td class="p-2">{{product.name}}</td>
+                    <td class="p-2 text-center">
+                        <magary-button icon="image" 
+                                     variant="text" 
+                                     (buttonClick)="selectProduct($event, product, op2)">
+                        </magary-button>
+                    </td>
+                    <td class="p-2 text-right">{{product.price}}</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
 
 <magary-overlaypanel #op2 [showCloseIcon]="true">
-    <div *ngIf="selectedProduct" class="p-3 text-center">
-        <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + selectedProduct.image" 
-             [alt]="selectedProduct.name" 
-             style="width: 100px; display: block; margin: 0 auto 1rem auto;">
-        <span class="font-bold block mb-2">{{selectedProduct.name}}</span>
-        <span class="text-secondary">{{product.price}}</span>
-    </div>
+    @if (selectedProduct) {
+        <div class="p-3 text-center">
+            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + selectedProduct.image" 
+                 [alt]="selectedProduct.name" 
+                 style="width: 100px; display: block; margin: 0 auto 1rem auto;">
+            <span class="font-bold block mb-2">{{selectedProduct.name}}</span>
+            <span class="text-secondary">{{product.price}}</span>
+        </div>
+    }
 </magary-overlaypanel>`;
 
   tsCode = `export class ViewOverlayPanel {

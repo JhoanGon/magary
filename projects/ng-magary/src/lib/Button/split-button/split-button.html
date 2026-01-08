@@ -9,12 +9,13 @@
     [disabled]="disabled()"
     (click)="onDefaultClick($event)"
   >
-    <lucide-icon
-      *ngIf="icon()"
-      [name]="icon()"
-      [size]="iconSize()"
-      class="button-icon"
-    ></lucide-icon>
+    @if (icon()) {
+      <lucide-icon
+        [name]="icon()"
+        [size]="iconSize()"
+        class="button-icon"
+      ></lucide-icon>
+    }
     <span class="button-label">{{ label() }}</span>
   </button>
 
@@ -28,23 +29,26 @@
     <lucide-icon name="chevron-down"></lucide-icon>
   </button>
 
-  <div class="split-button-menu" *ngIf="isOpen()">
-    <ul role="menu">
-      <ng-container *ngFor="let item of model()">
-        <li
-          role="menuitem"
-          [class.disabled]="item.disabled"
-          (click)="onItemClick($event, item)"
-        >
-          <lucide-icon
-            *ngIf="item.icon"
-            [name]="item.icon"
-            [size]="iconSize()"
-            class="menu-item-icon"
-          ></lucide-icon>
-          <span class="menu-item-label">{{ item.label }}</span>
-        </li>
-      </ng-container>
-    </ul>
-  </div>
+  @if (isOpen()) {
+    <div class="split-button-menu">
+      <ul role="menu">
+        @for (item of model(); track item.label || $index) {
+          <li
+            role="menuitem"
+            [class.disabled]="item.disabled"
+            (click)="onItemClick($event, item)"
+          >
+            @if (item.icon) {
+              <lucide-icon
+                [name]="item.icon"
+                [size]="iconSize()"
+                class="menu-item-icon"
+              ></lucide-icon>
+            }
+            <span class="menu-item-label">{{ item.label }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  }
 </div>

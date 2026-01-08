@@ -1,86 +1,93 @@
 <nav [ngClass]="styleClass()" [ngStyle]="style() || {}">
   <ol class="magary-breadcrumb">
-    <li class="magary-breadcrumb-home" *ngIf="home() as homeItem">
-      <a
-        [href]="homeItem.url || null"
-        [routerLink]="homeItem.routerLink"
-        [queryParams]="homeItem.queryParams"
-        [routerLinkActive]="'magary-menuitem-link-active'"
-        [routerLinkActiveOptions]="
-          homeItem.routerLinkActiveOptions || { exact: false }
-        "
-        [target]="homeItem.target"
-        [fragment]="homeItem.fragment"
-        [preserveFragment]="homeItem.preserveFragment"
-        [skipLocationChange]="homeItem.skipLocationChange"
-        [replaceUrl]="homeItem.replaceUrl"
-        [state]="homeItem.state"
-        class="magary-menuitem-link"
-        (click)="itemClick($event, homeItem)"
-        [ngClass]="{ 'magary-disabled': homeItem.disabled }"
-        [attr.tabindex]="homeItem.disabled ? null : '0'"
-      >
-        <lucide-icon
-          *ngIf="homeItem.icon"
-          [name]="homeItem.icon!"
-          [size]="16"
-        ></lucide-icon>
-      </a>
-      <span class="magary-breadcrumb-chevron" *ngIf="model().length > 0">
-        <lucide-icon name="chevron-right" [size]="14"></lucide-icon>
-      </span>
-    </li>
+    @if (home(); as homeItem) {
+      <li class="magary-breadcrumb-home">
+        <a
+          [href]="homeItem.url || null"
+          [routerLink]="homeItem.routerLink"
+          [queryParams]="homeItem.queryParams"
+          [routerLinkActive]="'magary-menuitem-link-active'"
+          [routerLinkActiveOptions]="
+            homeItem.routerLinkActiveOptions || { exact: false }
+          "
+          [target]="homeItem.target"
+          [fragment]="homeItem.fragment"
+          [preserveFragment]="homeItem.preserveFragment"
+          [skipLocationChange]="homeItem.skipLocationChange"
+          [replaceUrl]="homeItem.replaceUrl"
+          [state]="homeItem.state"
+          class="magary-menuitem-link"
+          (click)="itemClick($event, homeItem)"
+          [ngClass]="{ 'magary-disabled': homeItem.disabled }"
+          [attr.tabindex]="homeItem.disabled ? null : '0'"
+        >
+          @if (homeItem.icon) {
+            <lucide-icon [name]="homeItem.icon!" [size]="16"></lucide-icon>
+          }
+        </a>
+        @if (model().length > 0) {
+          <span class="magary-breadcrumb-chevron">
+            <lucide-icon name="chevron-right" [size]="14"></lucide-icon>
+          </span>
+        }
+      </li>
+    }
 
-    <ng-template ngFor let-item let-end="last" [ngForOf]="model()">
+    @for (item of model(); track item.label; let last = $last) {
       <li class="magary-breadcrumb-item">
-        <ng-container *ngIf="!item.routerLink && !item.url">
+        @if (!item.routerLink && !item.url) {
           <span
             class="magary-menuitem-text"
             (click)="itemClick($event, item)"
             [ngClass]="{ 'magary-disabled': item.disabled }"
           >
-            <lucide-icon
-              *ngIf="item.icon"
-              [name]="item.icon!"
-              [size]="16"
-              style="margin-right: 0.5rem"
-            ></lucide-icon>
+            @if (item.icon) {
+              <lucide-icon
+                [name]="item.icon!"
+                [size]="16"
+                style="margin-right: 0.5rem"
+              ></lucide-icon>
+            }
             {{ item.label }}
           </span>
-        </ng-container>
+        }
 
-        <a
-          *ngIf="item.routerLink || item.url"
-          [href]="item.url || null"
-          [routerLink]="item.routerLink"
-          [queryParams]="item.queryParams"
-          [routerLinkActive]="'magary-menuitem-link-active'"
-          [routerLinkActiveOptions]="
-            item.routerLinkActiveOptions || { exact: false }
-          "
-          [target]="item.target"
-          [fragment]="item.fragment"
-          [preserveFragment]="item.preserveFragment"
-          [skipLocationChange]="item.skipLocationChange"
-          [replaceUrl]="item.replaceUrl"
-          [state]="item.state"
-          class="magary-menuitem-link"
-          (click)="itemClick($event, item)"
-          [ngClass]="{ 'magary-disabled': item.disabled }"
-          [attr.tabindex]="item.disabled ? null : '0'"
-        >
-          <lucide-icon
-            *ngIf="item.icon"
-            [name]="item.icon!"
-            [size]="16"
-            style="margin-right: 0.5rem"
-          ></lucide-icon>
-          <span class="magary-menuitem-text">{{ item.label }}</span>
-        </a>
+        @if (item.routerLink || item.url) {
+          <a
+            [href]="item.url || null"
+            [routerLink]="item.routerLink"
+            [queryParams]="item.queryParams"
+            [routerLinkActive]="'magary-menuitem-link-active'"
+            [routerLinkActiveOptions]="
+              item.routerLinkActiveOptions || { exact: false }
+            "
+            [target]="item.target"
+            [fragment]="item.fragment"
+            [preserveFragment]="item.preserveFragment"
+            [skipLocationChange]="item.skipLocationChange"
+            [replaceUrl]="item.replaceUrl"
+            [state]="item.state"
+            class="magary-menuitem-link"
+            (click)="itemClick($event, item)"
+            [ngClass]="{ 'magary-disabled': item.disabled }"
+            [attr.tabindex]="item.disabled ? null : '0'"
+          >
+            @if (item.icon) {
+              <lucide-icon
+                [name]="item.icon!"
+                [size]="16"
+                style="margin-right: 0.5rem"
+              ></lucide-icon>
+            }
+            <span class="magary-menuitem-text">{{ item.label }}</span>
+          </a>
+        }
       </li>
-      <li class="magary-breadcrumb-chevron" *ngIf="!end">
-        <lucide-icon name="chevron-right" [size]="14"></lucide-icon>
-      </li>
-    </ng-template>
+      @if (!last) {
+        <li class="magary-breadcrumb-chevron">
+          <lucide-icon name="chevron-right" [size]="14"></lucide-icon>
+        </li>
+      }
+    }
   </ol>
 </nav>

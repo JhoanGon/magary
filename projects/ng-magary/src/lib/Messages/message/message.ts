@@ -4,6 +4,9 @@ import {
   output,
   ChangeDetectionStrategy,
   ViewEncapsulation,
+  signal,
+  computed,
+  OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -79,7 +82,7 @@ import { LucideAngularModule } from 'lucide-angular';
     ]),
   ],
 })
-export class MagaryMessage {
+export class MagaryMessage implements OnInit {
   severity = input<
     'success' | 'info' | 'warn' | 'error' | 'secondary' | 'contrast'
   >('info');
@@ -96,7 +99,7 @@ export class MagaryMessage {
 
   onClose = output<Event>();
 
-  visible: boolean = true;
+  visible = signal(true);
 
   ngOnInit() {
     const life = this.life();
@@ -107,7 +110,7 @@ export class MagaryMessage {
     }
   }
 
-  get iconClass(): string {
+  iconClass = computed(() => {
     const icon = this.icon();
     if (icon) {
       return icon;
@@ -125,10 +128,10 @@ export class MagaryMessage {
       default:
         return 'info';
     }
-  }
+  });
 
   close(event: Event | null) {
-    this.visible = false;
+    this.visible.set(false);
     if (event) {
       this.onClose.emit(event);
       event.preventDefault();

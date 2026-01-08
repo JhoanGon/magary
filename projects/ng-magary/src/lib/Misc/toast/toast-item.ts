@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
-  EventEmitter,
-  Input,
-  Output,
+  computed,
+  input,
+  output,
   ViewEncapsulation,
 } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
@@ -17,13 +17,14 @@ import { Toast } from './toast.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class MagaryToastItem {
-  @Input({ required: true }) toast!: Toast;
-  @Output() onClose = new EventEmitter<string>();
+  toast = input.required<Toast>();
+  onClose = output<string>();
 
-  get iconClass(): string {
-    if (this.toast.icon) return this.toast.icon;
+  iconClass = computed(() => {
+    const t = this.toast();
+    if (t.icon) return t.icon;
 
-    switch (this.toast.type) {
+    switch (t.type) {
       case 'success':
         return 'circle-check';
       case 'error':
@@ -35,11 +36,12 @@ export class MagaryToastItem {
       default:
         return 'info';
     }
-  }
+  });
 
   close() {
-    if (this.toast.id) {
-      this.onClose.emit(this.toast.id);
+    const t = this.toast();
+    if (t.id) {
+      this.onClose.emit(t.id);
     }
   }
 }

@@ -1,13 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
-  Output,
-  EventEmitter,
+  output,
   inject,
   signal,
   ViewEncapsulation,
   ElementRef,
+  input,
+  model,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
@@ -55,19 +55,16 @@ import {
   ],
 })
 export class MagaryFieldset {
-  @Input() legend: string = '';
-  @Input() toggleable: boolean = false;
+  legend = input<string>('');
+  toggleable = input<boolean>(false);
 
-  collapsed = signal(false);
-  @Input('collapsed') set _collapsed(val: boolean) {
-    this.collapsed.set(val);
-  }
+  collapsed = model(false);
 
-  @Output() onBeforeToggle = new EventEmitter<any>();
-  @Output() onAfterToggle = new EventEmitter<any>();
+  onBeforeToggle = output<any>();
+  onAfterToggle = output<any>();
 
   toggle(event: Event) {
-    if (this.toggleable) {
+    if (this.toggleable()) {
       event.preventDefault();
 
       const collapsed = this.collapsed();
@@ -80,13 +77,13 @@ export class MagaryFieldset {
   }
 
   expand(event: Event) {
-    if (this.toggleable && this.collapsed()) {
+    if (this.toggleable() && this.collapsed()) {
       this.toggle(event);
     }
   }
 
   collapse(event: Event) {
-    if (this.toggleable && !this.collapsed()) {
+    if (this.toggleable() && !this.collapsed()) {
       this.toggle(event);
     }
   }
