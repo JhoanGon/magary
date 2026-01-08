@@ -1,0 +1,400 @@
+<div class="container">
+  <div class="header">
+    <h1>Carousel</h1>
+    <p>A powerful, enterprise-grade carousel component.</p>
+  </div>
+
+  <!-- Hero Carousel - Full Width Showcase -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Hero Carousel</h2>
+      <p>
+        Full-width carousel with autoplay, progress bar, and inside indicators -
+        perfect for landing pages.
+      </p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <magary-carousel
+          [value]="products"
+          [numVisible]="1"
+          [numScroll]="1"
+          [circular]="true"
+          [autoplayInterval]="4000"
+          [showProgress]="true"
+          [progressStyle]="'bar'"
+          [indicatorStyle]="'dots'"
+          [indicatorPosition]="'inside'"
+          [showNavigators]="true"
+        >
+          <ng-template #item let-product>
+            <div class="hero-slide">
+              <div class="hero-slide-image">
+                <img [src]="product.image" [alt]="product.name" />
+              </div>
+              <div class="hero-slide-content">
+                <span class="hero-category">{{ product.category }}</span>
+                <h2 class="hero-title">{{ product.name }}</h2>
+                <p class="hero-price">${{ product.price }}</p>
+                <div class="hero-actions">
+                  <magary-button
+                    label="Shop Now"
+                    icon="shopping-cart"
+                    [rounded]="true"
+                  ></magary-button>
+                  <magary-button
+                    icon="heart"
+                    severity="secondary"
+                    variant="outlined"
+                    [rounded]="true"
+                  ></magary-button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </magary-carousel>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic / Responsive Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Basic & Responsive</h2>
+      <p>
+        Carousel with responsive configuration and premium card presentation.
+      </p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <magary-carousel
+          [value]="products"
+          [numVisible]="3"
+          [numScroll]="3"
+          [circular]="false"
+          [spaceBetween]="24"
+          [responsiveOptions]="responsiveOptions"
+        >
+          <ng-template #item let-product>
+            <div class="h-full">
+              <magary-card
+                [img]="product.image"
+                [altText]="product.name"
+                [width]="'100%'"
+                [shadow]="0"
+                class="border-1 surface-border border-round surface-card"
+                style="display: block; overflow: hidden"
+              >
+                <!-- PrimeNG-like Badge -->
+                <div class="absolute top-0 left-0 m-3 z-1">
+                  <magary-tag
+                    [value]="product.inventoryStatus"
+                    [severity]="getSeverity(product.inventoryStatus)"
+                  ></magary-tag>
+                </div>
+
+                <div slot="header">
+                  <!-- Image already handled by card -->
+                </div>
+
+                <div class="flex flex-column gap-3 p-2">
+                  <div class="flex justify-content-between align-items-center">
+                    <h4 class="m-0 text-lg font-bold">{{ product.name }}</h4>
+                  </div>
+
+                  <div class="flex justify-content-between align-items-center">
+                    <span class="text-xl font-bold text-900"
+                      >${{ product.price }}</span
+                    >
+                    <div class="flex gap-2">
+                      <magary-button
+                        icon="heart"
+                        severity="secondary"
+                        [rounded]="true"
+                        variant="outlined"
+                      ></magary-button>
+                      <magary-button
+                        icon="shopping-cart"
+                        [rounded]="true"
+                      ></magary-button>
+                    </div>
+                  </div>
+                </div>
+              </magary-card>
+            </div>
+          </ng-template>
+        </magary-carousel>
+      </div>
+
+      <div class="code-block mt-4">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeHTMLBasic" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="codeTSBasic" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Circular & AutoPlay -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Circular & AutoPlay</h2>
+      <p>Infinite scrolling with autoplay and progress indicators.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <magary-carousel
+          [value]="products"
+          [numVisible]="3"
+          [numScroll]="1"
+          [circular]="true"
+          [spaceBetween]="24"
+          [autoplayInterval]="3000"
+          [responsiveOptions]="responsiveOptions"
+        >
+          <ng-template #item let-product>
+            <div class="h-full">
+              <magary-card
+                [img]="product.image"
+                [altText]="product.name"
+                [width]="'100%'"
+                [shadow]="1"
+              >
+                <!-- PrimeNG-like Badge -->
+                <div class="absolute top-0 left-0 m-3 z-1">
+                  <magary-tag
+                    [value]="product.inventoryStatus"
+                    [severity]="getSeverity(product.inventoryStatus)"
+                  ></magary-tag>
+                </div>
+                <div slot="header">
+                  <h4 class="m-0 text-lg font-bold">{{ product.name }}</h4>
+                </div>
+                <div class="mt-2">
+                  <span class="text-lg font-semibold"
+                    >\${{ product.price }}</span
+                  >
+                </div>
+              </magary-card>
+            </div>
+          </ng-template>
+        </magary-carousel>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vertical Orientation -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Vertical Orientation</h2>
+      <p>Vertical layout with custom height.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content flex justify-content-center">
+        <div style="width: 600px; max-width: 100%">
+          <magary-carousel
+            [value]="products"
+            [orientation]="'vertical'"
+            [verticalViewPortHeight]="'450px'"
+            [numVisible]="1"
+            [numScroll]="1"
+            [spaceBetween]="24"
+            [responsiveOptions]="verticalResponsiveOptions"
+          >
+            <ng-template #item let-product>
+              <div class="h-full" style="width: 100%; display: block">
+                <magary-card
+                  [img]="product.image"
+                  [altText]="product.name"
+                  [width]="'100%'"
+                  [shadow]="1"
+                >
+                  <div class="absolute top-0 left-0 m-3 z-1">
+                    <magary-tag
+                      [value]="product.inventoryStatus"
+                      [severity]="getSeverity(product.inventoryStatus)"
+                    ></magary-tag>
+                  </div>
+                  <div slot="header">
+                    <h4 class="m-0 text-lg font-bold">{{ product.name }}</h4>
+                  </div>
+                  <div
+                    class="flex justify-content-between align-items-center mt-3"
+                  >
+                    <span class="text-xl font-bold text-900"
+                      >\${{ product.price }}</span
+                    >
+                    <div class="flex gap-2">
+                      <magary-button
+                        icon="heart"
+                        severity="secondary"
+                        [rounded]="true"
+                        variant="outlined"
+                      ></magary-button>
+                      <magary-button
+                        icon="shopping-cart"
+                        [rounded]="true"
+                      ></magary-button>
+                    </div>
+                  </div>
+                </magary-card>
+              </div>
+            </ng-template>
+          </magary-carousel>
+        </div>
+      </div>
+    </div>
+
+    <!-- Effects -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Transition Effects</h2>
+        <p>
+          Support for multiple transition effects including Coverflow, Cards,
+          and Cube.
+        </p>
+      </div>
+      <div class="section-content">
+        <div class="flex gap-2 mb-4 flex-wrap justify-content-center">
+          @for (effect of effects; track effect) {
+            <magary-button
+              [label]="effect"
+              [severity]="currentEffect() === effect ? 'primary' : 'secondary'"
+              (buttonClick)="currentEffect.set(effect)"
+              [rounded]="true"
+              size="small"
+            ></magary-button>
+          }
+        </div>
+
+        <div
+          class="demo-content py-4"
+          style="overflow: hidden; min-height: 400px"
+        >
+          <magary-carousel
+            [value]="products"
+            [numVisible]="3"
+            [numScroll]="1"
+            [circular]="true"
+            [spaceBetween]="24"
+            [effect]="currentEffect()"
+            [responsiveOptions]="responsiveOptions"
+          >
+            <ng-template #item let-product>
+              <div class="h-full">
+                <magary-card
+                  [img]="product.image"
+                  [altText]="product.name"
+                  [width]="'100%'"
+                  [shadow]="4"
+                >
+                  <div slot="header" class="text-center">
+                    <h4 class="m-0">{{ product.name }}</h4>
+                    <p class="text-sm text-500 m-0 mt-1">
+                      {{ product.category }}
+                    </p>
+                  </div>
+                </magary-card>
+              </div>
+            </ng-template>
+          </magary-carousel>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indicators & Navigation -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Indicators & Navigation</h2>
+        <p>Customize navigation buttons and pagination indicators.</p>
+      </div>
+      <div class="section-content">
+        <div class="grid formgrid mb-4">
+          <div class="col-12 md:col-6">
+            <h4 class="mb-2">Indicator Style</h4>
+            <div class="flex gap-2 flex-wrap">
+              @for (style of indicatorStyles; track style) {
+                <magary-button
+                  [label]="style"
+                  [severity]="
+                    currentIndicatorStyle() === style ? 'primary' : 'secondary'
+                  "
+                  (buttonClick)="currentIndicatorStyle.set(style)"
+                  [rounded]="true"
+                  [variant]="
+                    currentIndicatorStyle() !== style ? 'text' : 'solid'
+                  "
+                  size="small"
+                ></magary-button>
+              }
+            </div>
+          </div>
+          <div class="col-12 md:col-6">
+            <h4 class="mb-2">Nav Position</h4>
+            <div class="flex gap-2 flex-wrap">
+              @for (pos of navPositions; track pos) {
+                <magary-button
+                  [label]="pos"
+                  [severity]="
+                    currentNavPosition() === pos ? 'primary' : 'secondary'
+                  "
+                  (buttonClick)="currentNavPosition.set(pos)"
+                  [rounded]="true"
+                  [variant]="currentNavPosition() !== pos ? 'text' : 'solid'"
+                  size="small"
+                ></magary-button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-content py-4">
+          <magary-carousel
+            [value]="products"
+            [numVisible]="3"
+            [numScroll]="3"
+            [circular]="false"
+            [responsiveOptions]="responsiveOptions"
+            [indicatorStyle]="currentIndicatorStyle()"
+            [navPosition]="currentNavPosition()"
+            [spaceBetween]="24"
+            [showNavigators]="true"
+            [showIndicators]="true"
+          >
+            <ng-template #item let-product>
+              <div class="h-full">
+                <magary-card
+                  [img]="product.image"
+                  [altText]="product.name"
+                  [width]="'100%'"
+                  [shadow]="1"
+                >
+                  <!-- PrimeNG-like Badge -->
+                  <div class="absolute top-0 left-0 m-3 z-1">
+                    <magary-tag
+                      [value]="product.inventoryStatus"
+                      [severity]="getSeverity(product.inventoryStatus)"
+                    ></magary-tag>
+                  </div>
+                  <div slot="header">
+                    <h4 class="m-0 text-base font-semibold">
+                      {{ product.name }}
+                    </h4>
+                  </div>
+                </magary-card>
+              </div>
+            </ng-template>
+          </magary-carousel>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

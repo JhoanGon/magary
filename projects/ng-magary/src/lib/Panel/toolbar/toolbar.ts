@@ -1,8 +1,8 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  Input,
   ViewEncapsulation,
+  input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -16,6 +16,6 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None,
 })
 export class MagaryToolbar {
-  @Input() style: any;
-  @Input() styleClass: string = '';
+  style = input<any>();
+  styleClass = input<string>('');
 }

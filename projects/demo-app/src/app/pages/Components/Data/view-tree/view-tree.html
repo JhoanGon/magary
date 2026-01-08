@@ -33,17 +33,18 @@
               >
               </magary-tree>
 
-              <div
-                style="
-                  margin-top: 1rem;
-                  padding: 0.5rem;
-                  background: var(--surface-hover);
-                  border-radius: 4px;
-                "
-                *ngIf="selectedFile"
-              >
-                Seleccionado: <strong>{{ selectedFile.label }}</strong>
-              </div>
+              @if (selectedFile) {
+                <div
+                  style="
+                    margin-top: 1rem;
+                    padding: 0.5rem;
+                    background: var(--surface-hover);
+                    border-radius: 4px;
+                  "
+                >
+                  Seleccionado: <strong>{{ selectedFile.label }}</strong>
+                </div>
+              }
             </div>
           </magary-card>
 

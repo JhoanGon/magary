@@ -1,0 +1,259 @@
+<div class="container">
+  <div class="header">
+    <h1>Galleria</h1>
+    <p>
+      Componente avanzado para mostrar galerías de imágenes con thumbnails y
+      navegación.
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Importación</h2>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="'import { MagaryGalleria } from \'ng-magary\';'" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Básico (Thumbnails Abajo)</h2>
+      <p>Configuración estándar con tira de imágenes en la parte inferior.</p>
+    </div>
+    <div class="section-content">
+      <div
+        class="demo-content flex justify-content-center flex-column align-items-center gap-4"
+      >
+        <ng-template #itemTemplate let-item>
+          <img
+            [src]="item.itemImageSrc"
+            [alt]="item.alt"
+            style="width: 100%; display: block"
+          />
+        </ng-template>
+        <ng-template #thumbnailTemplate let-item>
+          <img
+            [src]="item.thumbnailImageSrc"
+            [alt]="item.alt"
+            style="display: block"
+          />
+        </ng-template>
+
+        <magary-galleria
+          [value]="images"
+          [showThumbnails]="true"
+          [showIndicators]="false"
+          [itemTemplateRef]="itemTemplate"
+          [thumbnailTemplateRef]="thumbnailTemplate"
+          [width]="'640px'"
+        >
+        </magary-galleria>
+      </div>
+
+      <div
+        class="code-block mt-4"
+        style="width: 100%; max-width: 640px; margin: 0 auto"
+      >
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeHTMLBasic" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="codeTSBasic" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Thumbnails a la Izquierda</h2>
+      <p>La tira de imágenes se posiciona verticalmente a la izquierda.</p>
+    </div>
+    <div class="section-content">
+      <div
+        class="demo-content flex justify-content-center flex-column align-items-center gap-4"
+      >
+        <magary-galleria
+          [value]="images"
+          [showThumbnails]="true"
+          [thumbnailsPosition]="'left'"
+          [itemTemplateRef]="itemTemplate"
+          [thumbnailTemplateRef]="thumbnailTemplate"
+          [width]="'700px'"
+        >
+        </magary-galleria>
+      </div>
+
+      <div
+        class="code-block mt-4"
+        style="width: 100%; max-width: 700px; margin: 0 auto"
+      >
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeHTMLLeft" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="codeTSLeft" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Indicadores (Sin Thumbnails)</h2>
+      <p>Navegación mediante indicadores circulares superpuestos.</p>
+    </div>
+    <div class="section-content">
+      <div
+        class="demo-content flex justify-content-center flex-column align-items-center gap-4"
+      >
+        <magary-galleria
+          [value]="images"
+          [showThumbnails]="false"
+          [showIndicators]="true"
+          [itemTemplateRef]="itemTemplate"
+          [thumbnailTemplateRef]="thumbnailTemplate"
+          [width]="'640px'"
+        >
+        </magary-galleria>
+      </div>
+
+      <div
+        class="code-block mt-4"
+        style="width: 100%; max-width: 640px; margin: 0 auto"
+      >
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeHTMLIndicators" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="codeTSIndicators" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>AutoPlay & Circular</h2>
+      <p>Pase de diapositivas automático con bucle infinito.</p>
+    </div>
+    <div class="section-content">
+      <div
+        class="demo-content flex justify-content-center flex-column align-items-center gap-4"
+      >
+        <magary-galleria
+          [value]="images"
+          [showThumbnails]="true"
+          [circular]="true"
+          [autoPlay]="true"
+          [transitionInterval]="2000"
+          [itemTemplateRef]="itemTemplate"
+          [thumbnailTemplateRef]="thumbnailTemplate"
+          [width]="'640px'"
+        >
+        </magary-galleria>
+      </div>
+
+      <div
+        class="code-block mt-4"
+        style="width: 100%; max-width: 640px; margin: 0 auto"
+      >
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeHTMLAutoPlay" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="codeTSAutoPlay" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+    </div>
+    <div class="table-wrapper">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Predeterminado</th>
+            <th>Descripción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>value</code></td>
+            <td><code>any[]</code></td>
+            <td><code>[]</code></td>
+            <td>Array de objetos a mostrar.</td>
+          </tr>
+          <tr>
+            <td><code>showThumbnails</code></td>
+            <td><code>boolean</code></td>
+            <td><code>true</code></td>
+            <td>Muestra la cinta de miniaturas.</td>
+          </tr>
+          <tr>
+            <td><code>showIndicators</code></td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>Muestra los indicadores de página.</td>
+          </tr>
+          <tr>
+            <td><code>autoPlay</code></td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>Inicia el pase de diapositivas automáticamente.</td>
+          </tr>
+          <tr>
+            <td><code>itemTemplateRef</code></td>
+            <td><code>TemplateRef</code></td>
+            <td><code>null</code></td>
+            <td>Referencia a la plantilla del item principal.</td>
+          </tr>
+          <tr>
+            <td><code>thumbnailTemplateRef</code></td>
+            <td><code>TemplateRef</code></td>
+            <td><code>null</code></td>
+            <td>Referencia a la plantilla de la miniatura.</td>
+          </tr>
+          <tr>
+            <td><code>width</code></td>
+            <td><code>string</code></td>
+            <td><code>100%</code></td>
+            <td>Ancho máximo del componente (ej. '640px').</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

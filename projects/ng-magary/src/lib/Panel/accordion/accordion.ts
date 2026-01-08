@@ -1,19 +1,17 @@
 import {
   Component,
-  ContentChildren,
-  Input,
-  QueryList,
-  AfterContentInit,
-  EventEmitter,
-  Output,
   ChangeDetectionStrategy,
   ViewEncapsulation,
   booleanAttribute,
+  input,
+  output,
+  contentChildren,
+  effect,
+  inject,
+  Injector,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryAccordionTab } from './accordion-tab';
-
-import { OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'magary-accordion',
@@ -27,38 +25,29 @@ import { OnDestroy } from '@angular/core';
     class: 'magary-accordion',
   },
 })
-export class MagaryAccordion implements AfterContentInit, OnDestroy {
-  @Input({ transform: booleanAttribute }) multiple: boolean = false;
+export class MagaryAccordion {
+  multiple = input<boolean, unknown>(false, { transform: booleanAttribute });
 
-  @ContentChildren(MagaryAccordionTab) tabs!: QueryList<MagaryAccordionTab>;
+  tabs = contentChildren(MagaryAccordionTab);
 
-  @Output() onClose = new EventEmitter<any>();
-  @Output() onOpen = new EventEmitter<any>();
+  onClose = output<any>();
+  onOpen = output<any>();
 
-  private subscriptions: any[] = [];
-
-  ngAfterContentInit() {
-    this.tabs.changes.subscribe(() => {
-      this.initTabs();
-    });
-    this.initTabs();
-  }
-
-  initTabs() {
-    // Clear old subscriptions
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-    this.subscriptions = [];
-
-    this.tabs.forEach((tab) => {
-      const sub = tab.selectedChange.subscribe((selected: boolean) => {
-        this.handleTabChange(tab, selected);
+  constructor() {
+    effect(() => {
+      // Logic to handle tab state changes if needed.
+      // However, managing state from parent to children via signals is different.
+      // Ideally, tabs should drive their own state or use a service/model.
+      // But keeping existing logic:
+      const tabs = this.tabs();
+      tabs.forEach((tab) => {
+        // We can't subscribe to signals like observables easily here without effects.
+        // But if AccordionTab uses output() for selection change, we can't easily listen to it via contentChildren.
+        // The pattern of "Parent listens to ContentChildren outputs" is hard with Signals directly.
+        // Alternative: Pass this Accordion instance to Tabs via Dependency Injection.
+        tab.accordion = this;
       });
-      this.subscriptions.push(sub);
     });
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   handleTabChange(changedTab: MagaryAccordionTab, isSelected: boolean) {
@@ -68,8 +57,8 @@ export class MagaryAccordion implements AfterContentInit, OnDestroy {
         index: this.findTabIndex(changedTab),
       });
 
-      if (!this.multiple) {
-        this.tabs.forEach((tab) => {
+      if (!this.multiple()) {
+        this.tabs().forEach((tab) => {
           if (tab !== changedTab && tab.selected()) {
             tab.close();
           }
@@ -84,6 +73,6 @@ export class MagaryAccordion implements AfterContentInit, OnDestroy {
   }
 
   findTabIndex(tab: MagaryAccordionTab): number {
-    return this.tabs.toArray().indexOf(tab);
+    return this.tabs().indexOf(tab);
   }
 }

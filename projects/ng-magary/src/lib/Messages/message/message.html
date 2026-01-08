@@ -4,9 +4,12 @@
   role="alert"
   [@messageAnimation]
 >
-  @if (visible) {
+  @if (visible()) {
     <div class="magary-message-wrapper">
-      <lucide-icon [name]="iconClass" class="magary-message-icon"></lucide-icon>
+      <lucide-icon
+        [name]="iconClass()"
+        class="magary-message-icon"
+      ></lucide-icon>
       <div class="magary-message-text">
         @if (text()) {
           <span class="magary-message-summary">{{ text() }}</span>

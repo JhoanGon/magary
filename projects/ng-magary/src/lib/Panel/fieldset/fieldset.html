@@ -1,37 +1,38 @@
 <fieldset
   class="magary-fieldset"
   [ngClass]="{
-    'magary-fieldset-toggleable': toggleable,
+    'magary-fieldset-toggleable': toggleable(),
     'magary-fieldset-collapsed': collapsed(),
   }"
 >
-  <legend class="magary-fieldset-legend" *ngIf="legend">
-    <ng-container *ngIf="toggleable; else staticLegend">
-      <a
-        href="#"
-        (click)="toggle($event)"
-        class="magary-fieldset-toggler"
-        [attr.aria-expanded]="!collapsed()"
-        [attr.aria-label]="legend"
-        tabindex="0"
-      >
-        <lucide-icon
-          [name]="collapsed() ? 'plus' : 'minus'"
-          class="magary-fieldset-toggler-icon"
-          [size]="16"
-        ></lucide-icon>
-        <span class="magary-fieldset-legend-text">{{ legend }}</span>
-      </a>
-    </ng-container>
-    <ng-template #staticLegend>
-      <span class="magary-fieldset-legend-text">{{ legend }}</span>
-    </ng-template>
-  </legend>
+  @if (legend()) {
+    <legend class="magary-fieldset-legend">
+      @if (toggleable()) {
+        <a
+          href="#"
+          (click)="toggle($event)"
+          class="magary-fieldset-toggler"
+          [attr.aria-expanded]="!collapsed()"
+          [attr.aria-label]="legend()"
+          tabindex="0"
+        >
+          <lucide-icon
+            [name]="collapsed() ? 'plus' : 'minus'"
+            class="magary-fieldset-toggler-icon"
+            [size]="16"
+          ></lucide-icon>
+          <span class="magary-fieldset-legend-text">{{ legend() }}</span>
+        </a>
+      } @else {
+        <span class="magary-fieldset-legend-text">{{ legend() }}</span>
+      }
+    </legend>
+  }
   <div
     class="magary-fieldset-content-wrapper"
     [@fieldsetContent]="collapsed() ? 'hidden' : 'visible'"
     role="region"
-    [attr.aria-labelledby]="legend"
+    [attr.aria-labelledby]="legend()"
   >
     <div class="magary-fieldset-content">
       <ng-content></ng-content>

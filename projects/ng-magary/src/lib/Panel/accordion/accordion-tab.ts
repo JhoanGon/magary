@@ -1,13 +1,12 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
   ViewEncapsulation,
   signal,
   computed,
   booleanAttribute,
+  input,
+  model,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -18,6 +17,7 @@ import {
   animate,
 } from '@angular/animations';
 import { LucideAngularModule } from 'lucide-angular';
+import { MagaryAccordion } from './accordion';
 
 @Component({
   selector: 'magary-accordion-tab',
@@ -56,36 +56,30 @@ import { LucideAngularModule } from 'lucide-angular';
   ],
 })
 export class MagaryAccordionTab {
-  @Input() header: string | undefined;
-  @Input({ transform: booleanAttribute }) disabled: boolean = false;
+  header = input<string>();
+  disabled = input(false, { transform: booleanAttribute });
+  selected = model(false);
 
-  // Using signals for internal state
-  readonly selected = signal<boolean>(false);
-
-  @Input('selected') set _selected(val: boolean) {
-    this.selected.set(val);
-  }
-
-  @Output() selectedChange = new EventEmitter<boolean>();
+  accordion: MagaryAccordion | undefined;
 
   toggle(event: Event) {
-    if (this.disabled) {
+    if (this.disabled()) {
       event.preventDefault();
       return;
     }
 
     const newState = !this.selected();
     this.selected.set(newState);
-    this.selectedChange.emit(newState);
+
+    // Notify parent
+    if (this.accordion) {
+      this.accordion.handleTabChange(this, newState);
+    }
 
     event.preventDefault();
   }
 
   close() {
     this.selected.set(false);
-    // We don't emit selectedChange here to avoid infinite loops if parent triggered it,
-    // but if parent triggered it via logic, we might need to.
-    // Current parent logic calls this.close(), so we shouldn't emit back to parent
-    // for the same event loop.
   }
 }

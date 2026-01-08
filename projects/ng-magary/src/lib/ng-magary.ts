@@ -47,8 +47,12 @@ export * from './Form/slider/slider';
 export * from './Form/rating/rating';
 
 // 🖼️ Media //
+// 🖼️ Media //
 export * from './Media/image/image';
 export * from './Media/image/image.module';
+export * from './Media/galleria/galleria';
+export * from './Media/carousel/carousel';
+export { MagaryCarouselComponent as MagaryCarousel } from './Media/carousel/carousel';
 
 // 📋 Menu //
 export * from './Menu/panelmenu/panelmenu';

@@ -211,7 +211,7 @@
     &.layout-left, &.layout-right {
       flex-direction: column;
       width: 100% !important;        // Use available space up to max
-      max-width: 300px !important;   // Enforce your 300px limit
+      // max-width: 300px !important;   // Enforce your 300px limit - REMOVED for professional look
       margin: 12px auto !important;  // Center the card
       
       .card-image-container {

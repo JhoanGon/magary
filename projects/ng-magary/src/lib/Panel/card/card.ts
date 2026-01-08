@@ -24,7 +24,7 @@ export class MagaryCard {
   readonly img = input<string>();
   readonly positionImage = input<ImagePosition>('top');
   readonly shadow = input<ShadowLevel>(1);
-  readonly width = input<string>('250px');
+  readonly width = input<string>('100%');
   readonly height = input<string>('auto');
   readonly padding = input<string>('1rem');
   readonly gap = input<string>('1rem');

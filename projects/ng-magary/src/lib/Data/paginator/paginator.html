@@ -1,4 +1,4 @@
-<div class="magary-paginator" [class.hidden]="totalRecords === 0">
+<div class="magary-paginator" [class.hidden]="totalRecords() === 0">
   <div class="magary-paginator-left-content">
     <!-- Optional content projection for left side -->
     <ng-content select=".left-content"></ng-content>
@@ -50,17 +50,20 @@
       </svg>
     </button>
 
-    <span class="magary-paginator-pages-container" *ngIf="showPageLinks">
-      <button
-        type="button"
-        *ngFor="let pageLink of getPageLinks()"
-        class="magary-paginator-page magary-paginator-element"
-        [class.magary-paginator-page-active]="pageLink - 1 === getPage()"
-        (click)="onPageLinkClick($event, pageLink)"
-      >
-        {{ pageLink }}
-      </button>
-    </span>
+    @if (showPageLinks()) {
+      <span class="magary-paginator-pages-container">
+        @for (pageLink of getPageLinks(); track pageLink) {
+          <button
+            type="button"
+            class="magary-paginator-page magary-paginator-element"
+            [class.magary-paginator-page-active]="pageLink - 1 === getPage()"
+            (click)="onPageLinkClick($event, pageLink)"
+          >
+            {{ pageLink }}
+          </button>
+        }
+      </span>
+    }
 
     <button
       type="button"
@@ -107,20 +110,19 @@
       </svg>
     </button>
 
-    <div
-      class="magary-paginator-rpp-options"
-      *ngIf="rowsPerPageOptions.length > 0"
-    >
-      <select
-        [ngModel]="rows"
-        (change)="onRppChange($event)"
-        class="magary-paginator-rpp-dropdown"
-      >
-        <option *ngFor="let opt of rowsPerPageOptions" [value]="opt">
-          {{ opt }} / page
-        </option>
-      </select>
-    </div>
+    @if (rowsPerPageOptions().length > 0) {
+      <div class="magary-paginator-rpp-options">
+        <select
+          [ngModel]="rows()"
+          (change)="onRppChange($event)"
+          class="magary-paginator-rpp-dropdown"
+        >
+          @for (opt of rowsPerPageOptions(); track opt) {
+            <option [value]="opt">{{ opt }} / page</option>
+          }
+        </select>
+      </div>
+    }
   </div>
 
   <div class="magary-paginator-right-content">

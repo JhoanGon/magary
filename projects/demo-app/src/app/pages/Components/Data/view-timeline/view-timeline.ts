@@ -112,9 +112,11 @@ export class ViewTimeline {
         <magary-card [width]="'100%'" [shadow]="1" [borderRadius]="'0.5rem'" [style]="{'margin-bottom': '1rem'}">
             <div style="padding: 1rem">
                 <strong>{{event.status}}</strong>
-                <div *ngIf="event.image" style="margin-top: 0.5rem">
-                    <small>Image Placeholder</small>
-                </div>
+                @if (event.image) {
+                    <div style="margin-top: 0.5rem">
+                        <small>Image Placeholder</small>
+                    </div>
+                }
             </div>
         </magary-card>
     </ng-template>

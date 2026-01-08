@@ -22,6 +22,7 @@ type IconPosition = 'left' | 'right';
 type ShadowLevel = 0 | 1 | 2 | 3 | 4 | 5;
 @Component({
   selector: 'magary-button',
+  standalone: true,
   imports: [CommonModule, LucideAngularModule],
   templateUrl: './button.html',
   styleUrl: './button.scss',

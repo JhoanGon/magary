@@ -1,0 +1,373 @@
+<div
+  #carouselWrapper
+  class="magary-carousel-wrapper"
+  [ngClass]="contentClass()"
+  [attr.aria-live]="autoplayInterval() > 0 ? 'off' : 'polite'"
+  [attr.tabindex]="0"
+>
+  <!-- Header Template -->
+  @if (headerTemplate()) {
+    <div class="magary-carousel-header">
+      <ng-container *ngTemplateOutlet="headerTemplate()!" />
+    </div>
+  }
+
+  <!-- Main Carousel Content -->
+  <div
+    class="magary-carousel-content"
+    [class.magary-carousel-content-vertical]="isVertical()"
+    [style.height]="isVertical() ? verticalViewPortHeight() : 'auto'"
+  >
+    <!-- Loading State -->
+    @if (isEmpty() && loadingTemplate()) {
+      <div class="magary-carousel-loading">
+        <ng-container *ngTemplateOutlet="loadingTemplate()!" />
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (isEmpty() && !loadingTemplate() && emptyTemplate()) {
+      <div class="magary-carousel-empty">
+        <ng-container *ngTemplateOutlet="emptyTemplate()!" />
+      </div>
+    }
+
+    <!-- Items Wrapper -->
+    @if (!isEmpty()) {
+      <div
+        class="magary-carousel-items-wrapper"
+        [class.has-navigators]="showNavigators() && totalPages() > 1"
+        [attr.data-nav-position]="navPosition()"
+      >
+        <!-- Previous Button -->
+        @if (showNavigators() && totalPages() > 1) {
+          <div
+            [class]="
+              'magary-carousel-nav magary-carousel-nav-prev ' +
+              prevButtonClass()
+            "
+          >
+            @if (prevButtonTemplate()) {
+              <ng-container *ngTemplateOutlet="prevButtonTemplate()!" />
+            } @else {
+              <magary-button
+                [variant]="navStyle() === 'minimal' ? 'text' : 'solid'"
+                [severity]="'secondary'"
+                [rounded]="true"
+                [size]="navStyle() === 'large' ? 'large' : 'normal'"
+                [icon]="
+                  isVertical()
+                    ? 'chevron-up'
+                    : isRTL()
+                      ? 'chevron-right'
+                      : 'chevron-left'
+                "
+                [disabled]="!canNavigateBackward()"
+                [attr.aria-label]="
+                  isVertical() ? 'Previous slide (Up)' : 'Previous slide'
+                "
+                (buttonClick)="previous($event)"
+              ></magary-button>
+            }
+          </div>
+        }
+
+        <!-- Viewport Container -->
+        <div
+          #itemsContainer
+          class="magary-carousel-viewport"
+          [class.magary-carousel-viewport-center]="centerMode()"
+          [class.magary-carousel-viewport-peek]="peekMode()"
+          [attr.aria-label]="
+            'Slide ' + (_currentPage() + 1) + ' of ' + totalPages()
+          "
+        >
+          <!-- Track (Slides Container) -->
+          <div
+            #trackElement
+            class="magary-carousel-track"
+            [ngStyle]="transformStyle()"
+            [class.is-dragging]="_isDragging()"
+            [style.gap]="_activeSpaceBetween() + 'px'"
+            [attr.role]="'group'"
+            [attr.aria-roledescription]="'slide'"
+          >
+            <!-- Individual Items -->
+            @for (item of value(); track trackByIndex($index)) {
+              @if (shouldRenderItem($index)) {
+                <div
+                  #carouselItem
+                  class="magary-carousel-item"
+                  [class.is-active]="isItemActive($index)"
+                  [class.is-zoomed]="_zoomedIndex() === $index"
+                  [style.flex-basis]="
+                    effect() === 'fade'
+                      ? '100%'
+                      : 'calc((100% - ' +
+                        (effectiveNumVisible() - 1) * _activeSpaceBetween() +
+                        'px) / ' +
+                        effectiveNumVisible() +
+                        ')'
+                  "
+                  [style.min-width]="
+                    !isVertical() && effect() !== 'fade'
+                      ? 'calc((100% - ' +
+                        (effectiveNumVisible() - 1) * _activeSpaceBetween() +
+                        'px) / ' +
+                        effectiveNumVisible() +
+                        ')'
+                      : 'auto'
+                  "
+                  [style.width]="
+                    isVertical() || effect() === 'fade' ? '100%' : null
+                  "
+                  [style.min-height]="
+                    isVertical() && effect() !== 'fade'
+                      ? 'calc((100% - ' +
+                        (effectiveNumVisible() - 1) * _activeSpaceBetween() +
+                        'px) / ' +
+                        effectiveNumVisible() +
+                        ')'
+                      : 'auto'
+                  "
+                  [attr.aria-hidden]="!isItemActive($index)"
+                  [attr.data-index]="$index"
+                  (click)="onItemClick(item, $index, $event)"
+                >
+                  <!-- Custom Item Template -->
+                  @if (itemTemplate()) {
+                    <ng-container
+                      *ngTemplateOutlet="
+                        itemTemplate()!;
+                        context: getItemContext(item, $index)
+                      "
+                    />
+                  } @else {
+                    <!-- Default Item Rendering -->
+                    <div class="magary-carousel-item-default">
+                      {{ item }}
+                    </div>
+                  }
+                </div>
+              }
+            }
+          </div>
+
+          <!-- Autoplay Progress Bar -->
+          @if (
+            showProgress() &&
+            autoplayInterval() > 0 &&
+            progressStyle() === "bar"
+          ) {
+            <div class="magary-carousel-progress-bar">
+              <div
+                class="magary-carousel-progress-bar-fill"
+                [style.width]="_autoplayProgress() + '%'"
+              ></div>
+            </div>
+          }
+        </div>
+
+        <!-- Next Button -->
+        @if (showNavigators() && totalPages() > 1) {
+          <div
+            [class]="
+              'magary-carousel-nav magary-carousel-nav-next ' +
+              nextButtonClass()
+            "
+          >
+            @if (nextButtonTemplate()) {
+              <ng-container *ngTemplateOutlet="nextButtonTemplate()!" />
+            } @else {
+              <magary-button
+                [variant]="navStyle() === 'minimal' ? 'text' : 'solid'"
+                [severity]="'secondary'"
+                [rounded]="true"
+                [size]="navStyle() === 'large' ? 'large' : 'normal'"
+                [icon]="
+                  isVertical()
+                    ? 'chevron-down'
+                    : isRTL()
+                      ? 'chevron-left'
+                      : 'chevron-right'
+                "
+                [disabled]="!canNavigateForward()"
+                [attr.aria-label]="
+                  isVertical() ? 'Next slide (Down)' : 'Next slide'
+                "
+                (buttonClick)="next($event)"
+              ></magary-button>
+            }
+          </div>
+        }
+
+        <!-- Circular Progress (Alternative) -->
+        @if (
+          showProgress() &&
+          autoplayInterval() > 0 &&
+          progressStyle() === "circular"
+        ) {
+          <div class="magary-carousel-progress-circular">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path
+                class="circle-bg"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                class="circle"
+                [attr.stroke-dasharray]="_autoplayProgress() + ', 100'"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+          </div>
+        }
+      </div>
+
+      <!-- Indicators -->
+      @if (showIndicators() && totalPages() > 1) {
+        <div
+          class="magary-carousel-indicators"
+          [ngClass]="indicatorsContentClass()"
+          [attr.data-style]="indicatorStyle()"
+          [attr.data-position]="indicatorPosition()"
+          role="tablist"
+          [attr.aria-label]="'Carousel pagination'"
+        >
+          <!-- Dots Style -->
+          @if (indicatorStyle() === "dots") {
+            @for (pageIndex of pages(); track $index) {
+              @if (indicatorTemplate()) {
+                <ng-container
+                  *ngTemplateOutlet="
+                    indicatorTemplate()!;
+                    context: {
+                      index: $index,
+                      active: _currentPage() === $index,
+                    }
+                  "
+                />
+              } @else {
+                <button
+                  type="button"
+                  class="magary-carousel-indicator"
+                  [class.magary-carousel-indicator-active]="
+                    _currentPage() === $index
+                  "
+                  [attr.aria-label]="'Go to slide ' + ($index + 1)"
+                  [attr.aria-selected]="_currentPage() === $index"
+                  [attr.aria-current]="
+                    _currentPage() === $index ? 'true' : 'false'
+                  "
+                  [attr.role]="'tab'"
+                  (click)="goToPage($index)"
+                ></button>
+              }
+            }
+          }
+
+          <!-- Lines Style -->
+          @if (indicatorStyle() === "lines") {
+            @for (pageIndex of pages(); track $index) {
+              <button
+                type="button"
+                class="magary-carousel-indicator magary-carousel-indicator-line"
+                [class.magary-carousel-indicator-active]="
+                  _currentPage() === $index
+                "
+                [attr.aria-label]="'Go to slide ' + ($index + 1)"
+                [attr.aria-selected]="_currentPage() === $index"
+                (click)="goToPage($index)"
+              ></button>
+            }
+          }
+
+          <!-- Fraction Style -->
+          @if (indicatorStyle() === "fraction") {
+            <div class="magary-carousel-indicator-fraction">
+              <span class="current">{{ _currentPage() + 1 }}</span>
+              <span class="separator">/</span>
+              <span class="total">{{ totalPages() }}</span>
+            </div>
+          }
+
+          <!-- Progress Bar Style -->
+          @if (indicatorStyle() === "progress") {
+            <div class="magary-carousel-indicator-progress">
+              <div
+                class="magary-carousel-indicator-progress-bar"
+                [style.width]="
+                  ((_currentPage() + 1) / totalPages()) * 100 + '%'
+                "
+              ></div>
+            </div>
+          }
+
+          <!-- Thumbnails Style -->
+          @if (indicatorStyle() === "thumbnails" && itemTemplate()) {
+            <div class="magary-carousel-indicator-thumbnails">
+              @for (item of value(); track trackByIndex($index)) {
+                <button
+                  type="button"
+                  class="magary-carousel-indicator-thumbnail"
+                  [class.is-active]="
+                    _currentPage() === Math.floor($index / _activeNumScroll())
+                  "
+                  [attr.aria-label]="
+                    'Go to slide ' +
+                    (Math.floor($index / _activeNumScroll()) + 1)
+                  "
+                  (click)="goToPage(Math.floor($index / _activeNumScroll()))"
+                >
+                  <div class="thumbnail-preview">
+                    <ng-container
+                      *ngTemplateOutlet="
+                        itemTemplate()!;
+                        context: getItemContext(item, $index)
+                      "
+                    />
+                  </div>
+                </button>
+              }
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Footer Template -->
+  @if (footerTemplate()) {
+    <div class="magary-carousel-footer">
+      <ng-container *ngTemplateOutlet="footerTemplate()!" />
+    </div>
+  }
+
+  <!-- Custom Progress Template -->
+  @if (progressTemplate() && showProgress() && autoplayInterval() > 0) {
+    <div class="magary-carousel-progress-custom">
+      <ng-container
+        *ngTemplateOutlet="
+          progressTemplate()!;
+          context: { progress: _autoplayProgress() }
+        "
+      />
+    </div>
+  }
+
+  <!-- Accessibility Live Region -->
+  <div
+    class="magary-carousel-live-region"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+    style="
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    "
+  >
+    Slide {{ _currentPage() + 1 }} of {{ totalPages() }}
+  </div>
+</div>

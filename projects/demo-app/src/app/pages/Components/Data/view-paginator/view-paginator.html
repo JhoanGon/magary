@@ -29,20 +29,21 @@
                   gap: 1rem;
                 "
               >
-                <div
-                  *ngFor="let item of visibleItems"
-                  class="data-item fade-in"
-                  style="
-                    background: var(--surface-card);
-                    padding: 1rem;
-                    border-radius: 0.5rem;
-                    border: 1px solid var(--surface-border);
-                    text-align: center;
-                    font-weight: 500;
-                  "
-                >
-                  {{ item }}
-                </div>
+                @for (item of visibleItems; track item) {
+                  <div
+                    class="data-item fade-in"
+                    style="
+                      background: var(--surface-card);
+                      padding: 1rem;
+                      border-radius: 0.5rem;
+                      border: 1px solid var(--surface-border);
+                      text-align: center;
+                      font-weight: 500;
+                    "
+                  >
+                    {{ item }}
+                  </div>
+                }
               </div>
 
               <div
@@ -107,20 +108,21 @@
                   gap: 1rem;
                 "
               >
-                <div
-                  *ngFor="let item of visibleItems2"
-                  class="data-item fade-in"
-                  style="
-                    background: var(--surface-card);
-                    padding: 1rem;
-                    border-radius: 0.5rem;
-                    border: 1px solid var(--surface-border);
-                    text-align: center;
-                    font-weight: 500;
-                  "
-                >
-                  {{ item }}
-                </div>
+                @for (item of visibleItems2; track item) {
+                  <div
+                    class="data-item fade-in"
+                    style="
+                      background: var(--surface-card);
+                      padding: 1rem;
+                      border-radius: 0.5rem;
+                      border: 1px solid var(--surface-border);
+                      text-align: center;
+                      font-weight: 500;
+                    "
+                  >
+                    {{ item }}
+                  </div>
+                }
               </div>
 
               <div

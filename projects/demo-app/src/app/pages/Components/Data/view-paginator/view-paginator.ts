@@ -64,9 +64,11 @@ export class ViewPaginator {
   exampleHTML = `
 <!-- Display paginated items -->
 <div class="item-list">
-    <div *ngFor="let item of visibleItems" class="list-item">
-        {{ item }}
-    </div>
+    @for (item of visibleItems; track item) {
+        <div class="list-item">
+            {{ item }}
+        </div>
+    }
 </div>
 
 <magary-paginator 

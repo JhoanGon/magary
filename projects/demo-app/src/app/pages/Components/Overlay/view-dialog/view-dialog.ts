@@ -34,9 +34,11 @@ const CODE_EXAMPLES = {
     <p>
         Haz clic en el icono de expandir en la cabecera para ver el efecto.
     </p>
-    <p *ngFor="let item of [1, 2, 3, 4, 5]">
-        Contenido de relleno para demostrar el scroll y layout...
-    </p>
+    @for (item of [1, 2, 3, 4, 5]; track $index) {
+        <p>
+            Contenido de relleno para demostrar el scroll y layout...
+        </p>
+    }
 </magary-dialog>`,
 };
 

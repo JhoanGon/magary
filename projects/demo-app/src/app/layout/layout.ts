@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   signal,
-  ViewChild,
+  viewChild,
   ElementRef,
   AfterViewInit,
   inject,
@@ -34,7 +34,7 @@ import { PwaService } from './service/pwa.service';
   styleUrl: './layout.scss',
 })
 export class Layout implements AfterViewInit {
-  @ViewChild('contentWrapper') contentWrapper!: ElementRef<HTMLElement>;
+  contentWrapper = viewChild<ElementRef<HTMLElement>>('contentWrapper');
   private router = inject(Router);
   public pwaService = inject(PwaService);
 
@@ -46,8 +46,9 @@ export class Layout implements AfterViewInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        if (this.contentWrapper?.nativeElement) {
-          this.contentWrapper.nativeElement.scrollTop = 0;
+        const wrapper = this.contentWrapper();
+        if (wrapper?.nativeElement) {
+          wrapper.nativeElement.scrollTop = 0;
         }
       });
   }

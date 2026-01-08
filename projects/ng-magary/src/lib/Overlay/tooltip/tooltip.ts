@@ -2,21 +2,21 @@ import {
   Directive,
   ElementRef,
   HostListener,
-  Input,
+  input,
   OnDestroy,
   Renderer2,
   Inject,
-  DOCUMENT,
   NgZone,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Directive({
   selector: '[magaryTooltip]',
   standalone: true,
 })
 export class MagaryTooltip implements OnDestroy {
-  @Input('magaryTooltip') text: string | undefined;
-  @Input() tooltipPosition: 'top' | 'bottom' | 'left' | 'right' = 'top';
+  text = input<string | undefined>(undefined, { alias: 'magaryTooltip' });
+  tooltipPosition = input<'top' | 'bottom' | 'left' | 'right'>('top');
 
   private tooltipElement: HTMLElement | null = null;
   private scrollUnlisten: (() => void) | null = null;
@@ -31,7 +31,7 @@ export class MagaryTooltip implements OnDestroy {
 
   @HostListener('mouseenter')
   onMouseEnter() {
-    if (!this.text) return;
+    if (!this.text()) return;
     this.show();
   }
 
@@ -42,7 +42,7 @@ export class MagaryTooltip implements OnDestroy {
 
   @HostListener('focus')
   onFocus() {
-    if (!this.text) return;
+    if (!this.text()) return;
     this.show();
   }
 
@@ -77,10 +77,10 @@ export class MagaryTooltip implements OnDestroy {
     this.renderer.addClass(this.tooltipElement, 'magary-tooltip');
     this.renderer.addClass(
       this.tooltipElement,
-      `magary-tooltip-${this.tooltipPosition}`,
+      `magary-tooltip-${this.tooltipPosition()}`,
     );
 
-    const textNode = this.renderer.createText(this.text!);
+    const textNode = this.renderer.createText(this.text()!);
     this.renderer.appendChild(this.tooltipElement, textNode);
 
     this.renderer.appendChild(this.document.body, this.tooltipElement);
@@ -103,7 +103,7 @@ export class MagaryTooltip implements OnDestroy {
     let left = 0;
     const offset = 8; // gap
 
-    switch (this.tooltipPosition) {
+    switch (this.tooltipPosition()) {
       case 'top':
         top = hostRect.top - tooltipRect.height - offset;
         left = hostRect.left + (hostRect.width - tooltipRect.width) / 2;

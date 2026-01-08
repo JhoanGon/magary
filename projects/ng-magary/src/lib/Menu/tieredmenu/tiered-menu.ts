@@ -4,7 +4,6 @@ import {
   Directive,
   ElementRef,
   HostListener,
-  Input,
   OnDestroy,
   Renderer2,
   ViewChild,
@@ -26,8 +25,8 @@ import { MenuItem } from '../api/menu.interface';
   standalone: true,
 })
 export class TieredMenuItemDirective {
-  @Input() item!: MenuItem;
-  @Input() parent!: MagaryTieredMenu;
+  item = input.required<MenuItem>();
+  parent = input.required<MagaryTieredMenu>();
 
   constructor(
     private el: ElementRef,
@@ -36,8 +35,8 @@ export class TieredMenuItemDirective {
 
   @HostListener('mouseenter')
   onMouseEnter() {
-    if (this.item.disabled) return;
-    this.parent.onItemHover(this.item);
+    if (this.item().disabled) return;
+    this.parent().onItemHover(this.item());
   }
 }
 

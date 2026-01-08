@@ -1,6 +1,6 @@
 <div [ngClass]="containerClass()" [style]="style()">
   <ul class="magary-menubar-root-list">
-    <ng-template ngFor let-item [ngForOf]="processedModel()">
+    @for (item of processedModel(); track item.label) {
       <li
         appMenubarItem
         [item]="item"
@@ -58,13 +58,13 @@
           }
         }
       </li>
-    </ng-template>
+    }
   </ul>
 </div>
 
 <!-- Recursive Template for Submenus -->
 <ng-template #submenuTemplate let-items>
-  <ng-template ngFor let-child [ngForOf]="items">
+  @for (child of items; track child.label) {
     <li
       appMenubarItem
       [item]="child"
@@ -121,5 +121,5 @@
         }
       }
     </li>
-  </ng-template>
+  }
 </ng-template>

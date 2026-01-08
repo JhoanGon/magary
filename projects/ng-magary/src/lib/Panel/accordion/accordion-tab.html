@@ -2,7 +2,7 @@
   class="magary-accordion-item"
   [ngClass]="{
     'magary-accordion-item-active': selected(),
-    'magary-accordion-item-disabled': disabled,
+    'magary-accordion-item-disabled': disabled(),
   }"
 >
   <div class="magary-accordion-header">
@@ -11,7 +11,7 @@
       class="magary-accordion-header-link"
       (click)="toggle($event)"
       [attr.aria-expanded]="selected()"
-      [attr.tabindex]="disabled ? -1 : 0"
+      [attr.tabindex]="disabled() ? -1 : 0"
     >
       <span class="magary-accordion-toggle-icon">
         <!-- Using Lucide icon for chevron -->
@@ -24,9 +24,9 @@
         </lucide-icon>
       </span>
 
-      <span class="magary-accordion-header-text" *ngIf="header">{{
-        header
-      }}</span>
+      @if (header()) {
+        <span class="magary-accordion-header-text">{{ header() }}</span>
+      }
       <ng-content select="[header]"></ng-content>
     </button>
   </div>

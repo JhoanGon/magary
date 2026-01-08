@@ -1,6 +1,6 @@
 <div [ngClass]="containerClass()" [style]="style()">
   <ul class="magary-megamenu-root-list">
-    <ng-template ngFor let-category [ngForOf]="processedModel()">
+    @for (category of processedModel(); track category.label) {
       <li
         appMegaMenuItem
         [item]="category"
@@ -79,6 +79,6 @@
           </div>
         }
       </li>
-    </ng-template>
+    }
   </ul>
 </div>

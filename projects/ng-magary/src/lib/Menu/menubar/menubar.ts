@@ -4,7 +4,6 @@ import {
   Directive,
   ElementRef,
   HostListener,
-  Input,
   OnDestroy,
   Renderer2,
   ViewChild,
@@ -25,15 +24,15 @@ import { MenuItem } from '../api/menu.interface';
   standalone: true,
 })
 export class MenubarItemDirective {
-  @Input() item!: MenuItem;
-  @Input() parent!: MagaryMenubar;
+  item = input.required<MenuItem>();
+  parent = input.required<MagaryMenubar>();
 
   constructor(private el: ElementRef) {}
 
   @HostListener('mouseenter')
   onMouseEnter() {
-    if (this.item.disabled) return;
-    this.parent.onItemHover(this.item);
+    if (this.item().disabled) return;
+    this.parent().onItemHover(this.item());
   }
 }
 

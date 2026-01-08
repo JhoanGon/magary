@@ -26,7 +26,7 @@ export const PANEL_CONFIG: NavigationItem = {
     },
     {
       label: 'Accordion',
-      route: '/components/Accordion',
+      route: '/components/accordion',
       icon: 'list',
     },
   ],

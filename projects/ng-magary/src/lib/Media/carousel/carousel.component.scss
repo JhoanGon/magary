@@ -1,0 +1,921 @@
+// =============================================================================
+// MAGARY CAROUSEL V2.0 - ENTERPRISE DESIGN SYSTEM
+// =============================================================================
+
+// =============================================================================
+// CSS VARIABLES (Theming Support)
+// =============================================================================
+
+:host {
+  // Layout
+  --carousel-width: 100%;
+  --carousel-height: auto;
+  --carousel-gap: 0; // Handled by spaceBetween input
+  --carousel-padding: 0;
+  
+  // Navigation
+  --carousel-nav-size: 2.5rem; // Medium size standard
+  --carousel-nav-offset: 1rem;
+  --carousel-nav-color: var(--text-color, #374151);
+  --carousel-nav-bg: var(--element-bg, #ffffff);
+  --carousel-nav-hover-bg: var(--nav-hover-bg, #f9fafb);
+  --carousel-nav-disabled-opacity: 0.5;
+  --carousel-nav-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0,0,0,0.02);
+  --carousel-nav-border-radius: 50%;
+  
+  // Indicators
+  --carousel-indicator-size: 0.5rem; // 8px
+  --carousel-indicator-gap: 0.5rem;
+  --carousel-indicator-color: var(--surface-300, #d1d5db);
+  --carousel-indicator-active-color: var(--primary-color, #3b82f6);
+  --carousel-indicator-active-width: 1.5rem; // Pill expand effect
+  --carousel-indicator-opacity: 1;
+  --carousel-indicator-active-opacity: 1;
+  --carousel-indicator-radius: 1rem;
+  
+  // Progress
+  --carousel-progress-height: 0.25rem;
+  --carousel-progress-bg: var(--surface-200, #e5e7eb);
+  --carousel-progress-color: var(--primary-color, #3b82f6);
+  
+  // Transitions
+  --carousel-transition-duration: 400ms;
+  --carousel-transition-timing: cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+  // Effects
+  --carousel-item-scale: 1;
+  --carousel-item-opacity: 1;
+  --carousel-item-blur: 0;
+  
+  display: block;
+  position: relative;
+  width: var(--carousel-width);
+  
+  // Performance optimization
+  contain: layout style paint;
+}
+
+// Global element selector for CSS variables (ViewEncapsulation.None workaround)
+// This ensures the variables are also available on the custom element tag itself
+magary-carousel {
+  --carousel-nav-size: 2.5rem;
+  --carousel-width: 100%;
+}
+
+// =============================================================================
+// DARK MODE
+// =============================================================================
+
+:host-context(.dark),
+:host-context([data-theme="dark"]) {
+  --carousel-nav-color: var(--text-color, #e5e7eb);
+  --carousel-nav-bg: var(--element-bg, #1f2937);
+  --carousel-nav-hover-bg: var(--element-bg, #374151);
+  --carousel-nav-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.05);
+  --carousel-indicator-color: var(--surface-700, #374151);
+  --carousel-progress-bg: var(--surface-700, #374151);
+  --nav-hover-bg: #374151;
+}
+
+// =============================================================================
+// THEME VARIANTS
+// =============================================================================
+
+// Minimal Theme
+:host([data-theme="minimal"]) {
+  --carousel-nav-bg: transparent;
+  --carousel-nav-shadow: none;
+  --carousel-indicator-size: 0.375rem;
+  --carousel-indicator-active-width: 0.375rem; // Dots only
+  --nav-hover-bg: rgba(0,0,0,0.05);
+}
+
+// iOS Theme
+:host([data-theme="ios"]) {
+  --carousel-nav-size: 2.75rem;
+  --carousel-nav-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  --carousel-indicator-size: 0.4375rem;
+}
+
+// Material Theme
+:host([data-theme="material"]) {
+  --carousel-nav-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --carousel-indicator-active-width: 1.75rem;
+  --carousel-nav-border-radius: 4px; // Rounded rect
+}
+
+// =============================================================================
+// BASE LAYOUT
+// =============================================================================
+
+.magary-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  height: var(--carousel-height);
+  padding: var(--carousel-padding);
+}
+
+.magary-carousel-content {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  
+  &.magary-carousel-content-vertical {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// =============================================================================
+// ITEMS WRAPPER & NAVIGATION
+// =============================================================================
+
+.magary-carousel-items-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--carousel-nav-offset);
+  
+  // Default padding for navigation buttons
+  // Refined: We use a calculation that respects the button size + a small offset
+  // to prevent buttons from overlapping the first/last items too much if not desired.
+  &.has-navigators {
+    padding: 0 calc(var(--carousel-nav-size) + var(--carousel-nav-offset));
+    
+    // On smaller screens, tighter padding
+    @media (max-width: 768px) {
+       padding: 0 calc(var(--carousel-nav-size) + 0.5rem);
+    }
+  }
+  
+  // Vertical layout
+  .magary-carousel-vertical & {
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    
+    &.has-navigators {
+      padding: calc(var(--carousel-nav-size) + var(--carousel-nav-offset)) 0;
+    }
+  }
+  
+  // Outside navigation position
+  &[data-nav-position="outside"] {
+    &.has-navigators {
+      padding: 0;
+      gap: 1rem;
+    }
+  }
+}
+
+// =============================================================================
+// NAVIGATION BUTTONS
+// =============================================================================
+
+.magary-carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  // Prevent text selection
+  user-select: none;
+  
+  // Targeting buttons inside
+  magary-button,
+  button {
+    width: var(--carousel-nav-size);
+    height: var(--carousel-nav-size);
+    min-width: var(--carousel-nav-size);
+    border-radius: var(--carousel-nav-border-radius);
+    background: var(--carousel-nav-bg);
+    color: var(--carousel-nav-color);
+    box-shadow: var(--carousel-nav-shadow);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    &:hover:not(:disabled) {
+      background: var(--carousel-nav-hover-bg);
+      transform: scale(1.05);
+      color: var(--primary-color, #3b82f6);
+    }
+    
+    &:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+    
+    &:disabled {
+      opacity: var(--carousel-nav-disabled-opacity);
+      cursor: default;
+      box-shadow: none;
+      background: rgba(0,0,0,0.05);
+    }
+
+    // Ensure icon centering
+    ::ng-deep svg, ::ng-deep i {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+  
+  &.magary-carousel-nav-prev {
+    left: 1rem;
+    right: auto;
+  }
+  
+  &.magary-carousel-nav-next {
+    right: 1rem;
+    left: auto;
+  }
+  
+  // Vertical orientation
+  .magary-carousel-vertical & {
+    position: absolute;
+    top: auto;
+    bottom: auto;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    right: auto;
+    z-index: 30;
+    
+    magary-button,
+    button {
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      min-width: 2.5rem;
+      min-height: 2.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    &.magary-carousel-nav-prev {
+      top: 0.75rem;
+      bottom: auto;
+    }
+    
+    &.magary-carousel-nav-next {
+      top: auto;
+      bottom: 0.75rem;
+    }
+  }
+}
+
+// Positioning override for 'outside'
+:host([data-nav-style="outside"]) {
+  .magary-carousel-items-wrapper.has-navigators {
+    padding: 0;
+  }
+  
+  .magary-carousel-nav {
+    &.magary-carousel-nav-prev {
+      left: calc(-1 * var(--carousel-nav-size) - 1rem);
+    }
+    
+    &.magary-carousel-nav-next {
+      right: calc(-1 * var(--carousel-nav-size) - 1rem);
+    }
+  }
+}
+
+// =============================================================================
+// VIEWPORT & TRACK
+// =============================================================================
+
+.magary-carousel-viewport {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  z-index: 1;
+  
+  // Center mode
+  &.magary-carousel-viewport-center {
+    display: flex;
+    justify-content: center;
+  }
+  
+  // Peek mode
+  &.magary-carousel-viewport-peek {
+    overflow: visible;
+  }
+}
+
+.magary-carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  gap: var(--carousel-gap); // Handled explicitly if set via style
+  
+  transition-property: transform;
+  // transition-duration is set dynamically via style binding in TS for precision
+  
+  // Vertical layout
+  .magary-carousel-vertical & {
+    flex-direction: column;
+  }
+  
+  // Dragging state
+  &.is-dragging {
+    transition-duration: 0ms !important;
+    cursor: grabbing;
+  }
+}
+
+// Grab cursor
+.magary-carousel-grab-cursor {
+  .magary-carousel-viewport {
+    cursor: grab;
+    
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}
+
+// =============================================================================
+// CAROUSEL ITEMS
+// =============================================================================
+
+.magary-carousel-item {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  box-sizing: border-box;
+  
+  // Animation props
+  transform: scale(var(--carousel-item-scale));
+  opacity: var(--carousel-item-opacity);
+  filter: blur(var(--carousel-item-blur));
+  
+  transition: 
+    transform var(--carousel-transition-duration) var(--carousel-transition-timing),
+    opacity var(--carousel-transition-duration) var(--carousel-transition-timing),
+    filter var(--carousel-transition-duration) var(--carousel-transition-timing);
+  
+  // Active state
+  &.is-active {
+    --carousel-item-scale: 1;
+    --carousel-item-opacity: 1;
+    --carousel-item-blur: 0;
+    z-index: 2;
+  }
+  
+  // Hidden items
+  &[aria-hidden="true"] {
+    visibility: hidden;
+  }
+  
+  // Zoomed Item (special mode)
+  &.is-zoomed {
+    z-index: 100;
+    transform: scale(var(--carousel-zoom-scale, 1.5));
+  }
+}
+
+// Default item styling (fallback)
+.magary-carousel-item-default {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-100, #f3f4f6);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  color: var(--text-secondary, #374151);
+  font-weight: 500;
+}
+
+// =============================================================================
+// TRANSITION EFFECTS
+// =============================================================================
+
+// Fade Effect
+:host([data-effect="fade"]) {
+  .magary-carousel-track {
+    transform: none !important;
+    display: grid !important; 
+    grid-template-areas: "stack";
+  }
+  
+  .magary-carousel-item {
+    grid-area: stack;
+    position: relative !important;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s;
+    z-index: 0;
+    
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 10;
+    }
+  }
+}
+
+// Card/Stack Effect
+:host([data-effect="cards"]) {
+  .magary-carousel-track {
+    position: relative;
+    perspective: 1200px;
+  }
+  
+  .magary-carousel-item {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%) scale(0.85);
+    opacity: 0.4;
+    transition: all 0.5s var(--carousel-transition-timing);
+    z-index: 0;
+    
+    &.is-active {
+      position: relative;
+      left: auto;
+      transform: translateX(0) scale(1);
+      opacity: 1;
+      z-index: 10;
+    }
+  }
+}
+
+// Coverflow Effect
+:host([data-effect="coverflow"]) {
+  .magary-carousel-track {
+    perspective: 1200px;
+  }
+  
+  .magary-carousel-item {
+    transition: transform 0.5s var(--carousel-transition-timing),
+                opacity 0.5s var(--carousel-transition-timing);
+    transform-style: preserve-3d;
+    
+    &:not(.is-active) {
+      opacity: 0.7;
+      transform: scale(0.9) rotateY(-15deg);
+    }
+    
+    &.is-active {
+      transform: scale(1) rotateY(0deg);
+      z-index: 10;
+    }
+    
+    &.is-active ~ .magary-carousel-item {
+      transform: scale(0.9) rotateY(15deg);
+    }
+  }
+}
+
+// Cube Effect
+:host([data-effect="cube"]) {
+  .magary-carousel-viewport {
+    perspective: 1200px;
+    overflow: visible;
+  }
+  
+  .magary-carousel-track {
+    transform-style: preserve-3d;
+    display: grid !important;
+    grid-template-areas: "stack";
+  }
+  
+  .magary-carousel-item {
+    grid-area: stack;
+    backface-visibility: hidden;
+    opacity: 0;
+    transform: rotateY(90deg) translateZ(50%);
+    transition: transform 0.6s var(--carousel-transition-timing),
+                opacity 0.6s var(--carousel-transition-timing);
+    
+    &.is-active {
+      opacity: 1;
+      transform: rotateY(0deg) translateZ(0);
+    }
+  }
+}
+
+// Flip Effect
+:host([data-effect="flip"]) {
+  .magary-carousel-viewport {
+    perspective: 1200px;
+  }
+  
+  .magary-carousel-track {
+    transform-style: preserve-3d;
+    display: grid !important;
+    grid-template-areas: "stack";
+  }
+  
+  .magary-carousel-item {
+    grid-area: stack;
+    backface-visibility: hidden;
+    opacity: 0;
+    transform: rotateX(90deg);
+    transition: transform 0.6s var(--carousel-transition-timing),
+                opacity 0.6s var(--carousel-transition-timing);
+    
+    &.is-active {
+      opacity: 1;
+      transform: rotateX(0deg);
+    }
+  }
+}
+
+// =============================================================================
+// NAV POSITION VARIANTS
+// Note: Using element selectors directly because :host() with ViewEncapsulation.None
+// compiles to .magary-carousel which doesn't match the custom element tag name.
+// =============================================================================
+
+// These rules are now at the end of the file using direct element selectors.
+// See "GLOBAL NAV POSITION OVERRIDES" section at end of file.
+
+// =============================================================================
+// INDICATORS
+// =============================================================================
+
+.magary-carousel-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--carousel-indicator-gap);
+  padding: 1rem 0;
+  margin: 0;
+  list-style: none;
+  position: relative;
+  z-index: 10;
+  
+  // Position variants
+  &[data-position="top"] {
+    order: -1;
+    padding-bottom: 1rem;
+    padding-top: 0;
+  }
+  
+  &[data-position="inside"] {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 0.75rem;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    border-radius: 2rem;
+    
+    // Adjust colors for contrast
+    --carousel-indicator-color: rgba(255,255,255, 0.5);
+    --carousel-indicator-active-color: #ffffff;
+    --carousel-indicator-size: 0.375rem;
+  }
+  
+  &[data-position="left"] {
+     flex-direction: column;
+     position: absolute;
+     left: 1rem;
+     top: 50%;
+     transform: translateY(-50%);
+  }
+  
+  &[data-position="right"] {
+     flex-direction: column;
+     position: absolute;
+     right: 1rem;
+     top: 50%;
+     transform: translateY(-50%);
+  }
+}
+
+// Dots Style - Refined
+.magary-carousel-indicator {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem; // Larger touch target
+  height: 1.5rem; // Larger touch target
+  
+  // The visual dot
+  &::after {
+    content: '';
+    display: block;
+    width: 0.625rem; // 10px - more visible
+    height: 0.625rem;
+    border-radius: 50%;
+    background-color: #9ca3af; // More visible gray
+    opacity: 1;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  
+  &:hover::after {
+    background-color: #6b7280;
+    transform: scale(1.2);
+  }
+  
+  &.magary-carousel-indicator-active::after {
+    width: 1.5rem; // Pill shape when active
+    border-radius: 0.5rem;
+    background-color: var(--primary-color, #3b82f6);
+  }
+  
+  &:focus-visible {
+    outline: none;
+    &::after {
+      box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary-color, #3b82f6);
+    }
+  }
+}
+
+// Lines Style
+.magary-carousel-indicator-line {
+  width: 3rem;
+  height: 1.5rem;
+  
+  &::after {
+    width: 2rem;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #9ca3af;
+  }
+  
+  &:hover::after {
+    background-color: #6b7280;
+  }
+  
+  &.magary-carousel-indicator-active::after {
+    width: 3rem;
+    background-color: var(--primary-color, #3b82f6);
+    border-radius: 2px;
+  }
+}
+
+// Fraction Style
+.magary-carousel-indicator-fraction {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-color);
+  background: var(--element-bg);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  
+  .current {
+    color: var(--primary-color, #3b82f6);
+    font-weight: 700;
+  }
+  
+  .separator {
+    opacity: 0.5;
+  }
+}
+
+// Progress Bar Style (Indicator)
+.magary-carousel-indicator-progress {
+  width: 100%;
+  max-width: 200px;
+  height: 6px;
+  background: #e5e7eb; // Explicit gray for visibility
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.magary-carousel-indicator-progress-bar {
+  height: 100%;
+  background: #3b82f6; // Explicit blue for visibility
+  transition: width 0.3s linear;
+  border-radius: 3px;
+}
+
+// Thumbnails Style
+.magary-carousel-indicator-thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  justify-content: center;
+  
+  .magary-carousel-indicator-thumbnail {
+    flex-shrink: 0;
+    width: 60px;
+    height: 45px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 0.25rem;
+    background: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    
+    .thumbnail-preview {
+      width: 100%;
+      height: 100%;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    
+    &.is-active {
+      border-color: var(--primary-color, #3b82f6);
+      .thumbnail-preview { opacity: 1; }
+    }
+  }
+}
+
+// =============================================================================
+// PROGRESS (Line at bottom)
+// =============================================================================
+
+.magary-carousel-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--carousel-progress-height);
+  background: var(--carousel-progress-bg);
+  overflow: hidden;
+  z-index: 5;
+}
+
+.magary-carousel-progress-bar-fill {
+  height: 100%;
+  background: var(--carousel-progress-color);
+  transition: width 0.016s linear;
+}
+
+// Circular progress
+.magary-carousel-progress-circular {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  z-index: 10;
+  
+  .circular-chart {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  
+  .circle-bg {
+    fill: none;
+    stroke: rgba(0,0,0,0.1);
+    stroke-width: 3;
+  }
+  
+  .circle {
+    fill: none;
+    stroke: var(--primary-color, #3b82f6);
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.1s linear;
+  }
+}
+
+// =============================================================================
+// ANIMATION KEYFRAMES
+// =============================================================================
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.magary-carousel-wrapper {
+  animation: fadeIn 0.4s ease-out;
+}
+
+// =============================================================================
+// ACCESSIBILITY
+// =============================================================================
+
+.magary-carousel-live-region {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+// Focus visible styles
+button:focus-visible,
+.magary-carousel-indicator:focus-visible {
+  outline: 2px solid var(--primary-color, #3b82f6);
+  outline-offset: 2px;
+}
+
+// =============================================================================
+// VERTICAL CAROUSEL ENHANCEMENTS
+// =============================================================================
+
+.magary-carousel-vertical {
+  // Ensure full width for vertical layout
+  width: 100%;
+  
+  .magary-carousel-wrapper {
+    width: 100%;
+  }
+  
+  .magary-carousel-content {
+    width: 100%;
+  }
+  
+  .magary-carousel-items-wrapper {
+    width: 100%;
+    align-items: stretch;
+  }
+  
+  .magary-carousel-viewport {
+    width: 100%;
+  }
+  
+  .magary-carousel-track {
+    width: 100%;
+    align-items: stretch;
+  }
+  
+  .magary-carousel-item {
+    width: 100% !important;
+    min-width: 100% !important;
+    flex-basis: auto !important;
+    
+    // Ensure content inside also takes full width
+    > * {
+      width: 100%;
+    }
+  }
+}
+
+// =============================================================================
+// GLOBAL NAV POSITION OVERRIDES (ViewEncapsulation.None)
+// These rules use class selector because Angular compiles :host to .magary-carousel
+// Using fixed values since CSS variables from :host may not be available
+// =============================================================================
+
+// Nav Position: Outside - Arrows outside the content area
+.magary-carousel[data-nav-position="outside"] {
+  padding-left: 4rem !important;
+  padding-right: 4rem !important;
+  box-sizing: border-box !important;
+  
+  .magary-carousel-items-wrapper {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .magary-carousel-nav {
+    &.magary-carousel-nav-prev {
+      left: 0.5rem !important;
+    }
+    
+    &.magary-carousel-nav-next {
+      right: 0.5rem !important;
+    }
+  }
+}
+
+// Nav Position: Top - Arrows at the top
+.magary-carousel[data-nav-position="top"] {
+  .magary-carousel-nav {
+    top: 1rem !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+}
+
+// Nav Position: Bottom - Arrows at the bottom
+.magary-carousel[data-nav-position="bottom"] {
+  .magary-carousel-nav {
+    top: auto !important;
+    bottom: 3rem !important;
+    transform: none !important;
+  }
+}
+
+// Nav Position: Default/Center - Arrows vertically centered
+.magary-carousel:not([data-nav-position="top"]):not([data-nav-position="bottom"]):not([data-nav-position="outside"]) {
+  .magary-carousel-nav {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
