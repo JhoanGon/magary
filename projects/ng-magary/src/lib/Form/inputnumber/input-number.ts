@@ -117,6 +117,8 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
 
   // --- Formatting ---
 
+  // --- Formatting ---
+
   getFormatter(): Intl.NumberFormat {
     const options: Intl.NumberFormatOptions = {
       localeMatcher: this.localeMatcher(),
@@ -142,7 +144,11 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
     let formatted = '';
     if (val != null) {
       if (this.format()) {
-        formatted = this.getFormatter().format(val);
+        try {
+          formatted = this.getFormatter().format(val);
+        } catch (e) {
+          formatted = val.toString();
+        }
       } else {
         formatted = val.toString();
       }
@@ -169,45 +175,45 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
       cleanText = cleanText.replace(this.suffix(), '');
     }
 
-    // This is a simplified parser. Robust parsing needs more defined regex based on locale.
-    // For now, assuming standard decimals or simple currency usage.
-    // We remove all non-numeric characters except '.', '-', and ',' if locale uses comma.
-
-    // Simplest approach: remove currency symbols and group separators.
-    // NOTE: This will fail for advanced locale parsing without a library.
-    // We will assume standard input behavior: user types raw numbers, we format on blur.
-
-    // Or we bind to an unformatted value internally?
-    // Let's rely on standard parseFloat for now, stripping grouping separators.
-
     cleanText = cleanText.trim();
     if (cleanText.length === 0) {
       return null;
     }
 
-    // Remove group separators (usually ,)
-    // TODO: Improve locale detection for separators
+    // 1. Remove currency symbols (keep digits, minus, dot, comma)
+    // We assume the user might type currency symbols but we don't need them for parsing.
+    // Regex matches anything that is NOT a digit, minus sign, dot, or comma.
+    // This effectively strips $, €, text, etc.
+    cleanText = cleanText.replace(/[^\d.,-]/g, '');
+
+    // 2. Handle group separators based on locale
     const isCommaDecimal = this.getDecimalSeparator() === ',';
 
     if (isCommaDecimal) {
-      cleanText = cleanText.replace(/\./g, ''); // remove group
-      cleanText = cleanText.replace(/,/g, '.'); // replace decimal
+      // European format: 1.000,50 -> 1000.50
+      cleanText = cleanText.replace(/\./g, ''); // remove group dots
+      cleanText = cleanText.replace(/,/g, '.'); // replace decimal comma
     } else {
-      cleanText = cleanText.replace(/,/g, ''); // remove group
+      // US format: 1,000.50 -> 1000.50
+      cleanText = cleanText.replace(/,/g, ''); // remove group commas
     }
 
-    // Remove currency symbols (regex for non-digit/dot/minus)
-    cleanText = cleanText.replace(/[^\d.-]/g, '');
-
+    // 3. Final Parse
+    // Remove any remaining characters that aren't valid for parseFloat (e.g. multiple dots?)
+    // A simple parseFloat is usually enough now.
     const parsed = parseFloat(cleanText);
     return isNaN(parsed) ? null : parsed;
   }
 
   getDecimalSeparator(): string {
-    const formatter = new Intl.NumberFormat(this.locale());
-    const parts = formatter.formatToParts(1.1);
-    const part = parts.find((p) => p.type === 'decimal');
-    return part ? part.value : '.';
+    try {
+      const formatter = new Intl.NumberFormat(this.locale());
+      const parts = formatter.formatToParts(1.1);
+      const part = parts.find((p) => p.type === 'decimal');
+      return part ? part.value : '.';
+    } catch (e) {
+      return '.';
+    }
   }
 
   // --- Event Handlers ---
@@ -228,6 +234,11 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
     // Usually formatting interferes with typing (caret jumps).
     // Let's parse but NOT re-format the view value while typing.
     const parsed = this.parseValue(inputVal);
+
+    // We update the model but we do NOT clamp strictly while typing to allow intermediate states
+    // However, if we want strict min/max enforcement even while typing (e.g. prevent > max),
+    // we could do it here. But usually it's better UX to clamp on blur.
+
     this.value.set(parsed);
     this.onModelChange(parsed);
     this.onInput.emit(event);
@@ -242,14 +253,58 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
     this.focused.set(false);
     this.onModelTouched();
 
+    let currentVal = this.value();
+
+    // Min/Max Validation on Blur
+    if (currentVal !== null) {
+      if (this.min() !== null && currentVal < this.min()!) {
+        currentVal = this.min()!;
+      }
+      if (this.max() !== null && currentVal > this.max()!) {
+        currentVal = this.max()!;
+      }
+    }
+
+    // Update model with clamped value if it changed
+    if (currentVal !== this.value()) {
+      this.updateModel(currentVal);
+    }
+
     // Re-format on blur
-    const currentVal = this.value();
     this.updateInput(currentVal, true);
 
     this.onBlur.emit(event);
   }
 
   onInputKeyDown(event: KeyboardEvent) {
+    // Allow special keys: Backspace, Tab, End, Home, Delete, Arrows
+    const specialKeys = [
+      'Backspace',
+      'Tab',
+      'End',
+      'Home',
+      'Delete',
+      'ArrowLeft',
+      'ArrowRight',
+      'Enter',
+      'Escape',
+    ];
+    if (specialKeys.indexOf(event.key) !== -1) {
+      this.onKeyDown.emit(event);
+      return;
+    }
+
+    // Allow ctrl+a, ctrl+c, ctrl+v, etc.
+    if (event.ctrlKey || event.metaKey) {
+      this.onKeyDown.emit(event);
+      return;
+    }
+
+    // Filter invalid chars if desired?
+    // For now we allow everything and parse later,
+    // but blocking non-numeric keys helps prevent invalid input for number fields.
+    // However, for currency we need to allow '$' etc. if user types them.
+
     this.onKeyDown.emit(event);
 
     if (event.key === 'ArrowUp') {
