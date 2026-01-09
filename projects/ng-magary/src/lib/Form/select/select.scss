@@ -55,20 +55,23 @@
 }
 
 // Overlay
+// Overlay - CDK Handles positioning
 .select-overlay {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
+  // position: absolute; // Handled by CDK
+  // top: ... // Handled by CDK
+  // left: ... // Handled by CDK
   width: 100%;
   background: var(--surface-0);
   border: 1px solid var(--surface-200);
   border-radius: var(--border-radius, 0.5rem);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  z-index: 1000;
+  // z-index: 1000; // Handled by CDK
   max-height: 200px;
   overflow-y: auto;
   padding: 0.25rem;
+  margin-top: 4px; // Spacing explicitly handled here or via offsetY
 }
+
 
 .select-list {
   list-style: none;
