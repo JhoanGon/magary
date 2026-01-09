@@ -6,6 +6,9 @@ import {
   computed,
   effect,
   ChangeDetectionStrategy,
+  ContentChildren,
+  QueryList,
+  TemplateRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,6 +20,7 @@ import {
   MagaryPaginator,
   PaginatorState,
 } from '../../Data/paginator/paginator';
+import { MagaryTemplate } from './table-templates';
 
 import { LucideAngularModule } from 'lucide-angular';
 export interface MagaryTableColumn {
@@ -57,6 +61,31 @@ export class MagaryTable {
   rowsPerPageOptions = input<number[]>([]);
 
   onPageChange = output<any>();
+
+  // Templates
+  @ContentChildren(MagaryTemplate) templates!: QueryList<MagaryTemplate>;
+
+  headerTemplate: TemplateRef<any> | null = null;
+  bodyTemplate: TemplateRef<any> | null = null;
+  captionTemplate: TemplateRef<any> | null = null;
+
+  ngAfterContentInit() {
+    this.templates.forEach((item) => {
+      switch (item.getType()) {
+        case 'caption':
+          this.captionTemplate = item.template;
+          break;
+
+        case 'header':
+          this.headerTemplate = item.template;
+          break;
+
+        case 'body':
+          this.bodyTemplate = item.template;
+          break;
+      }
+    });
+  }
 
   // Internal State
   first = signal<number>(0);

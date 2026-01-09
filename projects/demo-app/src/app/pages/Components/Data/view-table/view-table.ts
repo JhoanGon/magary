@@ -6,8 +6,12 @@ import {
   MagaryTableColumn,
   MagaryTabs,
   MagaryTab,
+  MagaryTemplate,
+  MagaryInput,
+  MagaryButton,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { FormsModule } from '@angular/forms';
 
 const CODE_EXAMPLES = {
   import: `import { MagaryTable } from 'ng-magary';`,
@@ -48,6 +52,27 @@ const CODE_EXAMPLES = {
     [loading]="true"
     title="Loading State">
 </magary-table>`,
+  template: `
+<magary-table [value]="products" [columns]="cols">
+  <ng-template magaryTemplate="header">
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template magaryTemplate="body" let-product>
+    <tr>
+      <td>{{product.name}}</td>
+      <td>
+        <magary-input [(value)]="product.price" type="number" prefixIcon="dollar-sign"></magary-input>
+      </td>
+      <td>
+        <magary-button icon="trash" severity="danger" variant="text"></magary-button>
+      </td>
+    </tr>
+  </ng-template>
+</magary-table>`,
   ts: `
   cols: MagaryTableColumn[] = [
     { field: 'name', header: 'Name', type: 'text', width: '25%' },
@@ -75,6 +100,10 @@ const CODE_EXAMPLES = {
     Highlight,
     MagaryTabs,
     MagaryTab,
+    MagaryTemplate,
+    MagaryInput,
+    MagaryButton,
+    FormsModule,
   ],
   templateUrl: './view-table.html',
   styleUrls: ['./view-table.scss'],
@@ -93,6 +122,7 @@ export class ViewTable {
   readonly filterResponsiveExample = CODE_EXAMPLES.filterResponsive;
   readonly fixedLayoutExample = CODE_EXAMPLES.fixed;
   readonly loadingExample = CODE_EXAMPLES.loading;
+  readonly templateExample = CODE_EXAMPLES.template;
   readonly tsExample = CODE_EXAMPLES.ts;
 
   cols: MagaryTableColumn[] = [

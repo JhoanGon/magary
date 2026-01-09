@@ -230,6 +230,76 @@
     </div>
   </div>
 
+  <!-- Template / Inline Editing Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Templates & Inline Editing</h2>
+      <p>
+        Uso de <code>ng-template</code> para personalizar celdas y filas (inline
+        editing).
+      </p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item" style="width: 100%">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem">
+              <magary-table [value]="products" [columns]="cols">
+                <!-- Header Template -->
+                <ng-template magaryTemplate="header">
+                  <tr>
+                    <th>Name</th>
+                    <th>Price (Edit)</th>
+                    <th>Actions</th>
+                  </tr>
+                </ng-template>
+                <!-- Body Template -->
+                <ng-template magaryTemplate="body" let-product>
+                  <tr class="table-row">
+                    <td>{{ product.name }}</td>
+                    <td>
+                      <magary-input
+                        [(value)]="product.price"
+                        type="number"
+                        prefixIcon="dollar-sign"
+                      ></magary-input>
+                    </td>
+                    <td>
+                      <magary-button
+                        icon="trash"
+                        severity="danger"
+                        variant="text"
+                      ></magary-button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </magary-table>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="templateExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="tsExample" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
   <!-- API Section -->
   <div class="section">
     <div class="section-header">
