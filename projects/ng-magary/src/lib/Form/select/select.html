@@ -1,4 +1,7 @@
 <div
+  #trigger
+  cdkOverlayOrigin
+  #origin="cdkOverlayOrigin"
   class="magary-select-container"
   [class.disabled]="disabled()"
   [class.focused]="focused()"
@@ -30,8 +33,17 @@
     }
   </div>
 
-  <!-- Overlay (Dropdown) -->
-  @if (isOpen()) {
+  <!-- CDK Overlay Template -->
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="origin"
+    [cdkConnectedOverlayOpen]="isOpen()"
+    [cdkConnectedOverlayHasBackdrop]="true"
+    [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+    [cdkConnectedOverlayMinWidth]="trigger.offsetWidth"
+    [cdkConnectedOverlayOffsetY]="4"
+    (backdropClick)="close()"
+  >
     <div
       class="select-overlay fade-in"
       (click)="$event.stopPropagation()"
@@ -62,7 +74,7 @@
             [class.selected]="isSelected(option)"
             role="option"
             [attr.aria-selected]="isSelected(option)"
-            (click)="selectOption(option); $event.stopPropagation()"
+            (click)="selectOption(option)"
           >
             {{ getLabel(option) }}
             @if (isSelected(option)) {
@@ -79,5 +91,5 @@
         }
       </ul>
     </div>
-  }
+  </ng-template>
 </div>

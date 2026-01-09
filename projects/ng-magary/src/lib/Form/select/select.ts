@@ -1,22 +1,22 @@
 import {
   Component,
   ElementRef,
-  HostListener,
   booleanAttribute,
   computed,
   forwardRef,
   input,
   signal,
+  viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { LucideAngularModule } from 'lucide-angular';
-import { MagaryButton } from '../../Button/button/button';
 
 @Component({
   selector: 'magary-select',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule], // Internal reuse rule
+  imports: [CommonModule, OverlayModule, LucideAngularModule],
   templateUrl: './select.html',
   styleUrl: './select.scss',
   providers: [
@@ -28,7 +28,7 @@ import { MagaryButton } from '../../Button/button/button';
   ],
 })
 export class MagarySelect implements ControlValueAccessor {
-  // Signal Inputs based on Rules
+  // Signal Inputs
   readonly options = input<any[]>([]);
   readonly optionLabel = input<string>();
   readonly optionValue = input<string>();
@@ -41,14 +41,15 @@ export class MagarySelect implements ControlValueAccessor {
   // Internal State
   readonly isOpen = signal(false);
   readonly focused = signal(false);
-  readonly value = signal<any>(null); // Actual value of the selection
+  readonly value = signal<any>(null);
   readonly filterValue = signal('');
+
+  // Element Reference for Overlay Width
+  readonly trigger = viewChild.required<ElementRef>('trigger');
 
   // CVA Callbacks
   private onChange: (value: any) => void = () => {};
   private onTouched: () => void = () => {};
-
-  constructor(private elementRef: ElementRef) {}
 
   // Computed Helpers
   readonly visibleOptions = computed(() => {
@@ -67,7 +68,6 @@ export class MagarySelect implements ControlValueAccessor {
     if (!val) return '';
     const opts = this.options();
 
-    // Find option that matches value
     const selectedOption = opts.find((opt) => this.getValue(opt) === val);
     return selectedOption ? this.getLabel(selectedOption) : '';
   });
@@ -86,22 +86,27 @@ export class MagarySelect implements ControlValueAccessor {
       this.focused.set(true);
     } else {
       this.onTouched();
+      this.focused.set(false);
     }
+  }
+
+  close() {
+    this.isOpen.set(false);
+    this.focused.set(false);
+    this.onTouched();
   }
 
   selectOption(option: any) {
     const val = this.getValue(option);
     this.value.set(val);
     this.onChange(val);
-    this.isOpen.set(false);
-    this.focused.set(true); // Keep focus style
+    this.close();
   }
 
   isSelected(option: any): boolean {
     return this.getValue(option) === this.value();
   }
 
-  // Utilities to handle Object vs Primitive options
   getLabel(option: any): string {
     const labelProp = this.optionLabel();
     return labelProp ? option[labelProp] : option;
@@ -124,16 +129,6 @@ export class MagarySelect implements ControlValueAccessor {
     this.onTouched();
   }
 
-  // Click Outside Listener
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.isOpen.set(false);
-      this.focused.set(false);
-      this.onTouched();
-    }
-  }
-
   // CVA Implementation
   writeValue(obj: any): void {
     this.value.set(obj);
@@ -148,12 +143,6 @@ export class MagarySelect implements ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    // We can't write to a signal input, but the CVA contract implies managing disabled state.
-    // In signal-input paradigm, the parent should bind [disabled].
-    // However, CVA setDisabledState is usually called by reactive forms.
-    // We might need a separate signal if we want to support both.
-    // effectively merging input disabled + form disabled.
-    // For now, we rely on the input, assuming correct usage.
-    // Ideally we would merge: effectiveDisabled = computed(() => this.disabled() || this.formDisabled())
+    // Handled by signal input usually, but we could update a local signal if needed
   }
 }
