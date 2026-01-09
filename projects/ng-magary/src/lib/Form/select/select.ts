@@ -46,6 +46,7 @@ export class MagarySelect implements ControlValueAccessor {
 
   // Element Reference for Overlay Width
   readonly trigger = viewChild.required<ElementRef>('trigger');
+  readonly triggerWidth = signal<number | string>('auto');
 
   // CVA Callbacks
   private onChange: (value: any) => void = () => {};
@@ -81,6 +82,13 @@ export class MagarySelect implements ControlValueAccessor {
 
   toggleOverlay() {
     if (this.disabled() || this.loading()) return;
+
+    // Update width before opening
+    if (!this.isOpen()) {
+      const width = this.trigger().nativeElement.getBoundingClientRect().width;
+      this.triggerWidth.set(width);
+    }
+
     this.isOpen.update((v) => !v);
     if (this.isOpen()) {
       this.focused.set(true);
