@@ -15,6 +15,7 @@ import {
   computed,
   input,
   model,
+  effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -113,6 +114,16 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
     if (this.value() != null) {
       this.updateInput(this.value(), false);
     }
+  }
+
+  constructor() {
+    effect(() => {
+      const val = this.value();
+      // Only update the view if NOT focused to allow typing without jumps
+      if (!this.focused()) {
+        this.updateInput(val, true);
+      }
+    });
   }
 
   // --- Formatting ---
