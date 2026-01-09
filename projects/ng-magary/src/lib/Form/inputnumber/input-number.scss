@@ -1,64 +1,48 @@
 :host {
-  display: inline-block;
-  --input-primary: var(--primary-500, #007bff);
-  --input-success: var(--success, #28a745);
-  --input-error: var(--danger, #dc3545);
-  --input-border: var(--surface-200, #ced4da);
-  --input-bg: var(--surface-0, #ffffff);
-  --input-text: var(--text-primary, #495057);
-  --input-placeholder: var(--text-secondary, #6c757d);
-  --input-radius: var(--border-radius, 6px);
-  --input-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    display: inline-block;
 }
 
 .magary-inputnumber {
-  display: inline-flex;
-  position: relative;
-
-  .magary-inputnumber-input {
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--input-text);
-    background: var(--input-bg);
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--input-border);
-    transition: all 0.15s ease-in-out;
-    appearance: none;
-    border-radius: var(--input-radius);
-    width: 100%;
-    line-height: normal; /* Fix height issue */
-
-    &:enabled:hover {
-      border-color: var(--surface-400); /* Slightly darker than border */
+    display: inline-flex;
+    position: relative;
+    
+    .magary-inputnumber-input {
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        background: var(--surface-0);
+        padding: 0.5rem 1rem; /* Fixed padding: 8px 16px */
+        border: 1.5px solid var(--surface-300);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        appearance: none;
+        border-radius: var(--border-radius, 8px);
+        width: 100%;
+        line-height: 1.5;
+        
+        &:enabled:hover {
+            border-color: var(--surface-400);
+        }
+        
+        &:enabled:focus {
+            outline: 0 none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px var(--primary-100);
+            background: var(--surface-0);
+        }
+        
+        &:disabled {
+            opacity: 0.6;
+            background-color: var(--surface-100);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+        
+        &::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
     }
-
-    &:enabled:focus {
-      outline: 0 none;
-      border-color: var(--input-primary);
-      box-shadow: var(--input-shadow);
-      background: var(--input-bg);
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      background-color: var(--surface-100);
-      color: var(--text-secondary);
-      cursor: not-allowed;
-    }
-
-    &::placeholder {
-      color: var(--input-placeholder);
-      opacity: 1;
-    }
-
-    &.ng-invalid.ng-dirty {
-      border-color: var(--input-error);
-      &:focus {
-        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
-      }
-    }
-  }
 }
 
 /* ============================================
@@ -156,7 +140,7 @@
     border: 0 none;
     border-radius: calc(var(--border-radius, 8px) - 4px);
     text-align: center;
-    padding: 0.75rem 0.5rem;
+    padding: 0.5rem 1rem; /* Standard consistency */
     font-weight: 600;
     min-width: 70px;
     background: transparent;
