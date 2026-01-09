@@ -40,7 +40,7 @@
     [cdkConnectedOverlayOpen]="isOpen()"
     [cdkConnectedOverlayHasBackdrop]="true"
     [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
-    [cdkConnectedOverlayMinWidth]="trigger.offsetWidth"
+    [cdkConnectedOverlayMinWidth]="triggerWidth()"
     [cdkConnectedOverlayOffsetY]="4"
     (backdropClick)="close()"
   >
