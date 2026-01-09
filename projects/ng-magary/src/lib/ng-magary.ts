@@ -8,6 +8,7 @@ export * from './Button/split-button/split-button';
 
 // 🗄️ Data //
 export * from './Data/table/table';
+export * from './Data/table/table-templates';
 
 export * from './Data/paginator/paginator';
 export * from './Data/tree/tree';
