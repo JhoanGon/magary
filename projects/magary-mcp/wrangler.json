@@ -1,0 +1,8 @@
+{
+  "name": "magary-mcp",
+  "main": "src/worker.ts",
+  "compatibility_date": "2025-01-09",
+  "observability": {
+    "enabled": true
+  }
+}
