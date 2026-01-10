@@ -6,6 +6,7 @@
   "main": "build/index.js",
   "scripts": {
     "build": "pnpm tsx scripts/generate-catalog.ts && tsc && copyfiles -f src/catalog.json build/",
+    "deploy": "pnpm run build && wrangler deploy",
     "start": "node build/index.js",
     "dev": "ts-node src/index.ts"
   },
@@ -19,6 +20,7 @@
     "copyfiles": "^2.4.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.58.0"
   }
 }
