@@ -2,20 +2,23 @@
   "name": "magary-mcp",
   "version": "1.0.0",
   "description": "MCP Server for ng-magary library",
+  "type": "module",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "pnpm tsx scripts/generate-catalog.ts && tsc && copyfiles -f src/catalog.json build/",
     "start": "node build/index.js",
     "dev": "ts-node src/index.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.6.0",
     "glob": "^10.3.10",
-    "typescript": "^5.0.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",
-    "ts-node": "^10.9.2"
+    "copyfiles": "^2.4.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }
