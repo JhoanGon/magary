@@ -1,5 +1,4 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 import {
   ListResourcesRequestSchema,
   ListPromptsRequestSchema,
@@ -8,11 +7,75 @@ import {
   ErrorCode,
   McpError,
 } from '@modelcontextprotocol/sdk/types.js';
+import { JSONRPCMessage } from '@modelcontextprotocol/sdk/types.js';
 import catalog from './catalog.json';
 
-// Define the component docs interface locally since we can't easily import from other files in simple workers without bundling
-// But since we are bundling with tsc/rollup or just relying on wrangler, we can try importing.
-// For safety/simplicity in this file, we'll just use 'any' or the implicit type of the JSON.
+// Simple types for implicit imports
+type CatalogItem = {
+  name: string;
+  selector: string;
+  description: string;
+  inputs: any[];
+  outputs: any[];
+};
+
+/**
+ * Custom Transport for Cloudflare Workers (SSE)
+ * Adapts the MCP Transport interface to Cloudflare's TransformStream
+ */
+class CloudflareSSETransport {
+  private writer: WritableStreamDefaultWriter<any> | null = null;
+
+  // Callback provided by the Server/Client to receive messages from us
+  onmessage?: (message: JSONRPCMessage) => void;
+  onclose?: () => void;
+  onerror?: (error: Error) => void;
+
+  // We can expose a method to efficiently manually feed messages from POST requests
+  async handlePostMessage(message: JSONRPCMessage) {
+    if (this.onmessage) {
+      this.onmessage(message);
+    }
+  }
+
+  // Called by Server when it wants to send a message to the client
+  async send(message: JSONRPCMessage): Promise<void> {
+    if (!this.writer) return; // Client not connected yet or disconnected
+
+    try {
+      const event = `event: message\ndata: ${JSON.stringify(message)}\n\n`;
+      await this.writer.write(new TextEncoder().encode(event));
+    } catch (error) {
+      console.error('Failed to write to SSE stream', error);
+      if (this.onerror) this.onerror(error as Error);
+    }
+  }
+
+  // Called by Server to start the transport (we don't need to do much here, just mark ready)
+  async start(): Promise<void> {
+    // We are ready to accept messages once the writer is assigned
+    // In the Cloudflare model, handleSSE assigns the writer.
+  }
+
+  async close(): Promise<void> {
+    if (this.writer) {
+      try {
+        await this.writer.close();
+      } catch (e) {}
+      this.writer = null;
+    }
+    if (this.onclose) this.onclose();
+  }
+
+  // Custom method to attach the Web Standard WritableStream writer
+  setWriter(writer: WritableStreamDefaultWriter<any>) {
+    this.writer = writer;
+    // Send initial endpoint event as expected by MCP clients
+    // The endpoint is absolute or relative. Since we are in the worker, relative /messages works.
+    const endpointEvent = `event: endpoint\ndata: /messages\n\n`;
+    this.writer.write(new TextEncoder().encode(endpointEvent));
+  }
+}
 
 export default {
   async fetch(request: Request, env: any, ctx: any): Promise<Response> {
@@ -32,14 +95,14 @@ export default {
   },
 };
 
-// Global server instance (in memory, effective for warm workers)
+// Singleton Server & Transport (Warm Worker pattern)
 let server: Server | null = null;
-let transport: SSEServerTransport | null = null;
+let transport: CloudflareSSETransport | null = null;
 
 async function getInitializedServer() {
-  if (server) return { server, transport };
+  if (server && transport) return { server, transport };
 
-  transport = new SSEServerTransport('/messages', new Response());
+  transport = new CloudflareSSETransport();
   server = new Server(
     {
       name: 'magary-mcp-server-worker',
@@ -53,8 +116,7 @@ async function getInitializedServer() {
     },
   );
 
-  // Setup Handlers (Duplicated logic from index.ts but adapted for worker context if needed)
-  // Resources
+  // Setup Handlers
   server.setRequestHandler(ListResourcesRequestSchema, async () => {
     return {
       resources: [
@@ -64,7 +126,7 @@ async function getInitializedServer() {
           mimeType: 'application/json',
           description: 'List of all available Magary UI components',
         },
-        ...catalog.map((comp: any) => ({
+        ...(catalog as CatalogItem[]).map((comp) => ({
           uri: `magary://component/${comp.selector}`,
           name: `Component: ${comp.name}`,
           mimeType: 'application/json',
@@ -89,7 +151,9 @@ async function getInitializedServer() {
     }
     if (uri.startsWith('magary://component/')) {
       const selector = uri.split('/').pop();
-      const component = catalog.find((c: any) => c.selector === selector);
+      const component = (catalog as CatalogItem[]).find(
+        (c) => c.selector === selector,
+      );
       if (!component)
         throw new McpError(
           ErrorCode.InvalidRequest,
@@ -108,7 +172,6 @@ async function getInitializedServer() {
     throw new McpError(ErrorCode.InvalidRequest, `Unknown resource: ${uri}`);
   });
 
-  // Prompts
   server.setRequestHandler(ListPromptsRequestSchema, async () => {
     return {
       prompts: [
@@ -143,7 +206,7 @@ async function getInitializedServer() {
 5. If you need an icon, use <i-lucide name="..."> via LucideAngularModule.
 
 Catalog of available components:
-${catalog.map((c: any) => `- <${c.selector}>: ${c.name}`).join('\n')}
+${(catalog as CatalogItem[]).map((c) => `- <${c.selector}>: ${c.name}`).join('\n')}
 `,
           },
         },
@@ -158,49 +221,23 @@ ${catalog.map((c: any) => `- <${c.selector}>: ${c.name}`).join('\n')}
 async function handleSSE(request: Request): Promise<Response> {
   const { transport } = await getInitializedServer();
 
-  // SSEServerTransport in the SDK expects specific node-like handling or manual start
-  // We need to manually construct the SSE response compatible with Cloudflare
-  // The SDK's SSEServerTransport usually handles 'res.write', which we can't do natively here the same way without a stream.
-  // However, for MCP specifically, the transport abstraction helps.
-  // NOTE: The official Node SDK SSEServerTransport is tied to Node's http.ServerResponse.
-  // For Cloudflare, it is easier to implement a simple manual SSE handshake.
+  // Create a TransformStream for the SSE connection
+  const stream = new TransformStream();
+  const writer = stream.writable.getWriter();
 
-  // Changing strategy: We will just return the transport's sessionId and let client post messages.
-  // Actually, let's try to reuse the transport's internal logic if possible, IF NOT, we stream manually.
+  // Attach the writer to our transport so it can push events
+  transport!.setWriter(writer);
 
-  // The SDK SSEServerTransport.start(req, res) uses res.writeHead/write.
-  // We mock these for the worker environment.
+  // Keep connection alive helper (optional heartbeat)
+  // Cloudflare might drop idle connections, MCP clients ideally ping or we send comments.
+  // For now simple implem.
 
-  const { readable, writable } = new TransformStream();
-  const writer = writable.getWriter();
-  const encoder = new TextEncoder();
-
-  // Hacky adapter to make Node SDK happy
-  const mockRes = {
-    writeHead: (status: number, headers: any) => {},
-    write: (chunk: string) => {
-      writer.write(encoder.encode(chunk));
-    },
-    end: () => {
-      writer.close();
-    },
-  } as any;
-
-  const mockReq = {
-    url: request.url,
-  } as any;
-
-  // Start the transport (sends connection initialized event)
-  await transport!.start(mockReq, mockRes);
-
-  // Send the endpoint URL for POST messages (the client needs to know where to send subsequent POSTs)
-  // The SDK sends "endpoint: /messages" usually.
-
-  return new Response(readable, {
+  return new Response(stream.readable, {
     headers: {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
       Connection: 'keep-alive',
+      'Access-Control-Allow-Origin': '*', // Helpful for web clients
     },
   });
 }
@@ -208,17 +245,12 @@ async function handleSSE(request: Request): Promise<Response> {
 async function handleMessages(request: Request): Promise<Response> {
   const { transport } = await getInitializedServer();
 
-  // Parse JSON body
-  const body = await request.json(); // as JSON-RPC message
-
-  // Feed it to the transport
-  await transport!.handlePostMessage(
-    {
-      url: request.url,
-      body: body,
-    } as any,
-    {} as any,
-  ); // Req, Res - SDK doesn't strictly use Res for handlePostMessage if we look at source, it processes and sends via SSE channel.
-
-  return new Response('Accepted', { status: 202 });
+  try {
+    const body = (await request.json()) as JSONRPCMessage;
+    await transport!.handlePostMessage(body);
+    return new Response('Accepted', { status: 202 });
+  } catch (e) {
+    console.error(e);
+    return new Response('Error processing message', { status: 500 });
+  }
 }
