@@ -3,11 +3,18 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Router } from '@angular/router';
 import { ThemeSwitcherComponent } from '../components/theme-switcher/theme-switcher.component';
 import { LucideAngularModule } from 'lucide-angular';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [ThemeSwitcherComponent, NgOptimizedImage, LucideAngularModule],
+  imports: [
+    CommonModule,
+    LucideAngularModule,
+    FormsModule,
+    ThemeSwitcherComponent,
+    NgOptimizedImage,
+  ],
   templateUrl: './landing.html',
   styleUrl: './landing.scss',
 })

@@ -1,32 +1,51 @@
-<div class="landing-container">
-  <div class="background-effects">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+<div class="landing-showcase">
+  <!-- Background Layers -->
+  <div class="ambient-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
   </div>
+  <div class="bg-texture"></div>
+  <!-- Noise & Grid -->
 
-  <div class="content">
-    <div class="logo-container">
-      <img
-        ngSrc="/assets/magary_logo.webp"
-        alt="Magary Logo"
-        class="logo-img"
-        width="180"
-        height="180"
-        priority
-      />
-      <div class="logo-glow"></div>
+  <div class="main-content">
+    <!-- HEADER -->
+    <div class="header">
+      <h1 class="main-title">Magary</h1>
+      <p class="subtitle">Componentes Modernos para Angular</p>
     </div>
 
-    <h1 class="title">Magary</h1>
-    <p class="subtitle">Componentes Modernos para Angular</p>
+    <!-- LOGO (Fixed Glamour Mode) -->
+    <div class="logo-display">
+      <div class="logo-wrapper glamorous">
+        <!-- Eclipse Aura -->
+        <div class="logo-aura"></div>
 
-    <div class="actions">
-      <button class="enter-btn" (click)="enterApp()">
+        <!-- Inner container for Sheen -->
+        <div class="logo-inner">
+          <img
+            ngSrc="/assets/magary_logo.webp"
+            alt="Magary Logo"
+            class="logo-img"
+            width="220"
+            height="220"
+            priority
+          />
+
+          <!-- Sheen Effect -->
+          <div class="sheen-layer"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions-area">
+      <button class="enter-app-btn" (click)="enterApp()">
         <span>Ingresar</span>
-        <lucide-icon name="arrow-right"></lucide-icon>
+        <lucide-icon name="arrow-right" size="18"></lucide-icon>
       </button>
 
-      <div class="theme-toggle-container">
+      <div class="footer-theme">
         <app-theme-switcher></app-theme-switcher>
       </div>
     </div>
