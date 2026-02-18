@@ -13,6 +13,7 @@ import {
   TemplateRef,
   signal,
   output,
+  OnInit,
 } from '@angular/core';
 import {
   trigger,
@@ -159,7 +160,7 @@ import { LucideAngularModule } from 'lucide-angular';
     ]),
   ],
 })
-export class MagaryOrganizationChartNode {
+export class MagaryOrganizationChartNode implements OnInit {
   readonly node = input.required<MagaryTreeNode>();
   readonly selectionMode = input<string | null>(null);
   readonly selection = input<any>(null);

@@ -92,7 +92,7 @@ export class Sidebar implements OnDestroy {
   public isMobileOpen = signal(false);
   public isCollapsed = signal(false);
 
-  Logout = output<void>();
+  onLogout = output<void>();
   closeSidebar = output<void>();
 
   toggleMobileSidebar() {
@@ -114,7 +114,7 @@ export class Sidebar implements OnDestroy {
   }
 
   logout() {
-    this.Logout.emit();
+    this.onLogout.emit();
   }
   private router = inject(Router);
   private routerSubscription: any;

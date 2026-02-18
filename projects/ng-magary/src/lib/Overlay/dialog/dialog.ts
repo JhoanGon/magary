@@ -13,6 +13,8 @@ import {
   output,
   viewChild,
   inject,
+  AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
@@ -60,7 +62,7 @@ import {
     ]),
   ],
 })
-export class MagaryDialog {
+export class MagaryDialog implements AfterViewInit, OnDestroy {
   // Model for two-way binding of visibility
   visible = model<boolean>(false);
 

@@ -10,7 +10,7 @@
       "prefix": "magary",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/ng-magary/tsconfig.lib.json",
             "project": "projects/ng-magary/ng-package.json"
@@ -22,10 +22,11 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/ng-magary/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"]
+            "buildTarget": "ng-magary:build",
+            "runner": "vitest"
           }
         }
       },
@@ -108,17 +109,11 @@
           "builder": "@angular/build:extract-i18n"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/demo-app/tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/demo-app/public"
-              }
-            ],
-            "styles": ["projects/demo-app/src/styles.scss"]
+            "setupFiles": ["projects/demo-app/src/test-setup.ts"],
+            "runner": "vitest"
           }
         }
       }

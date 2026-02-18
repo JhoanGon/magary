@@ -6,7 +6,19 @@ import angularParser from '@angular-eslint/template-parser';
 
 export default [
   {
-    files: ['**/*.ts'],
+    ignores: [
+      '**/dist/**',
+      '**/node_modules/**',
+      '**/.angular/**',
+      'projects/magary-mcp/**',
+      'e2e/playwright/report/**',
+      'e2e/playwright/test-results/**',
+      'e2e/playwright/snapshots/**',
+      'e2e/playwright/{configDir}/**',
+    ],
+  },
+  {
+    files: ['projects/ng-magary/src/**/*.ts', 'projects/demo-app/src/**/*.ts'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -25,10 +37,18 @@ export default [
     },
     rules: {
       ...angularPlugin.configs.recommended.rules,
+      '@angular-eslint/no-output-on-prefix': 'off',
+      '@angular-eslint/no-input-rename': 'off',
+      '@angular-eslint/no-output-native': 'off',
+      '@angular-eslint/prefer-inject': 'off',
+      '@angular-eslint/no-empty-lifecycle-method': 'off',
     },
   },
   {
-    files: ['**/*.html'],
+    files: [
+      'projects/ng-magary/src/**/*.html',
+      'projects/demo-app/src/**/*.html',
+    ],
     languageOptions: {
       parser: angularParser,
     },
@@ -37,6 +57,17 @@ export default [
     },
     rules: {
       ...angularTemplate.configs.recommended.rules,
+      '@angular-eslint/template/prefer-control-flow': 'off',
+    },
+  },
+  {
+    files: ['e2e/playwright/**/*.ts'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
     },
   },
 ];

@@ -9,6 +9,7 @@ import {
   ContentChildren,
   QueryList,
   TemplateRef,
+  AfterContentInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -46,7 +47,7 @@ export interface MagaryTableColumn {
   styleUrls: ['./table.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MagaryTable {
+export class MagaryTable implements AfterContentInit {
   // Inputs as Signals
   value = input<any[]>([]);
   columns = input<MagaryTableColumn[]>([]);
