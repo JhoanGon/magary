@@ -3,6 +3,7 @@ import {
   ElementRef,
   input,
   OnInit,
+  OnDestroy,
   signal,
   contentChildren,
   viewChild,
@@ -19,7 +20,7 @@ import { MagaryTab } from './tab/tab';
   styleUrl: './tabs.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MagaryTabs implements OnInit {
+export class MagaryTabs implements OnInit, OnDestroy {
   tabs = contentChildren(MagaryTab);
   headersRef = viewChild<ElementRef<HTMLElement>>('tabHeaders');
   buttonsRef = viewChildren<ElementRef<HTMLElement>>('tabButton');

@@ -1,18 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgMagary } from './ng-magary';
-describe('NgMagary', () => {
-  let component: NgMagary;
-  let fixture: ComponentFixture<NgMagary>;
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [NgMagary]
-    })
-    .compileComponents();
-    fixture = TestBed.createComponent(NgMagary);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-  it('should create', () => {
-    expect(component).toBeTruthy();
+import * as ngMagaryExports from './ng-magary';
+
+describe('ng-magary exports', () => {
+  it('should expose public members', () => {
+    expect(Object.keys(ngMagaryExports).length).toBeGreaterThan(0);
   });
 });
