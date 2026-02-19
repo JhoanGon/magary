@@ -127,23 +127,17 @@ export class MagaryTable implements AfterContentInit {
 
   constructor() {
     // Reset pagination when filter changes
-    effect(
-      () => {
-        // Dependency tracking
-        this.searchTerm();
-        // Action
-        this.first.set(0);
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      // Dependency tracking
+      this.searchTerm();
+      // Action
+      this.first.set(0);
+    });
 
     // Sync initial rows input with internal state
-    effect(
-      () => {
-        this.currentRows.set(this.rows());
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      this.currentRows.set(this.rows());
+    });
   }
 
   onSearch(value: string) {
@@ -180,5 +174,15 @@ export class MagaryTable implements AfterContentInit {
   getAvatarLabel(row: any): string {
     const val = this.resolveFieldData(row, 'name');
     return val ? String(val).slice(0, 1).toUpperCase() : '';
+  }
+
+  trackByRow(index: number, row: any): string | number {
+    if (row && typeof row === 'object') {
+      const keyed = row.id ?? row.key ?? row.code ?? row.name;
+      if (keyed !== undefined && keyed !== null) {
+        return keyed;
+      }
+    }
+    return index;
   }
 }

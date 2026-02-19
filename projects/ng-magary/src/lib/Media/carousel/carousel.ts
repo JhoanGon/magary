@@ -743,40 +743,28 @@ export class MagaryCarouselComponent<T>
 
   constructor() {
     // Sync page input with model
-    effect(
-      () => {
-        const inputPage = this.page();
-        untracked(() => {
-          if (inputPage !== this._currentPage() && inputPage >= 0) {
-            this.goToPage(inputPage, false);
-          }
-        });
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      const inputPage = this.page();
+      untracked(() => {
+        if (inputPage !== this._currentPage() && inputPage >= 0) {
+          this.goToPage(inputPage, false);
+        }
+      });
+    });
 
     // Sync configuration inputs
-    effect(
-      () => {
-        this._activeNumVisible.set(Math.max(1, this.numVisible()));
-        this._activeNumScroll.set(Math.max(1, this.numScroll()));
-        this._activeSpaceBetween.set(this.spaceBetween());
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      this._activeNumVisible.set(Math.max(1, this.numVisible()));
+      this._activeNumScroll.set(Math.max(1, this.numScroll()));
+      this._activeSpaceBetween.set(this.spaceBetween());
+    });
 
     // Responsive options
-    effect(
-      () => {
-        if (
-          isPlatformBrowser(this.platformId) &&
-          this.responsiveOptions().length > 0
-        ) {
-          this.applyResponsiveOptions();
-        }
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      if (isPlatformBrowser(this.platformId) && this.responsiveOptions().length > 0) {
+        this.applyResponsiveOptions();
+      }
+    });
 
     // Autoplay management
     effect(() => {

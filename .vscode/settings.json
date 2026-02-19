@@ -1,9 +1,11 @@
 {
+  "npm.packageManager": "pnpm",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.fixAll.eslint": "always"
   },
+  "testing.automaticallyOpenTestResults": "neverOpen",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

@@ -1,1 +1,359 @@
-<p>view-sidebar works!</p>
+<div class="container">
+  <div class="header">
+    <h1>MagarySidebar</h1>
+    <p>Sidebar para navegacion con secciones, colapso y bloque de usuario.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Import</h2>
+      <p>Importa el componente en tu modulo o componente standalone.</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Ejemplo Interactivo</h2>
+      <p>Dos configuraciones comunes del sidebar en un layout real de app.</p>
+    </div>
+    <div class="section-content">
+      <div class="event-status">
+        <div class="status-item">
+          <strong>onLogout count:</strong> {{ logoutCount }}
+        </div>
+        <div class="status-item">
+          <strong>Ultimo modo:</strong> {{ lastLogoutMode }}
+        </div>
+      </div>
+
+      <magary-tabs
+        [backgroundLine]="'#ed2c44'"
+        [positionContent]="'flex-start'"
+        [background]="'#282c34'"
+      >
+        <magary-tab label="Modo secciones">
+          <div class="preview-scroll">
+            <div class="sidebar-shell">
+              <magary-sidebar
+                [sections]="sectionsDemo"
+                [showLogo]="true"
+                [logoSrc]="'assets/magary_logo.png'"
+                [appTitle]="'Magary Docs'"
+                [appTitleStyle]="appTitleStyle"
+                [showUserSection]="true"
+                [userName]="'Juan Perez'"
+                [userEmail]="'juan@empresa.com'"
+                [avatarConfig]="{
+                  type: 'label',
+                  label: 'JP',
+                  size: 'normal',
+                  shape: 'circle',
+                  badgeSeverity: 'success',
+                }"
+                (onLogout)="onLogout('sections')"
+              ></magary-sidebar>
+              <div class="shell-content">
+                <h3>Dashboard</h3>
+                <p>
+                  Area de contenido para validar la convivencia del sidebar con
+                  la app principal.
+                </p>
+                <div class="content-cards">
+                  <article class="content-card">
+                    <h4>Ventas</h4>
+                    <p>+12.4% vs semana anterior</p>
+                  </article>
+                  <article class="content-card">
+                    <h4>Usuarios activos</h4>
+                    <p>1,248 en las ultimas 24h</p>
+                  </article>
+                  <article class="content-card">
+                    <h4>Estado sistema</h4>
+                    <p>Operativo sin incidencias.</p>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </magary-tab>
+        <magary-tab label="Menu unico + brand">
+          <div class="preview-scroll">
+            <div class="sidebar-shell">
+              <magary-sidebar
+                [menu]="menuDemo"
+                [menuTitle]="'Navegacion'"
+                [showLogo]="true"
+                [logoSrc]="'assets/magary_logo.png'"
+                [appTitle]="'Menu Unico'"
+                [appTitleStyle]="appTitleStyle"
+                [collapsible]="false"
+                [showToggle]="false"
+                [showBrandLogo]="true"
+                [brandLogoSrc]="'assets/magary_logo.png'"
+                [brandLogoPosition]="'bottom'"
+                [showUserSection]="true"
+                [userName]="'Cliente Demo'"
+                [userEmail]="'demo@empresa.com'"
+                [avatarConfig]="{
+                  type: 'icon',
+                  icon: 'user',
+                  size: 'normal',
+                  shape: 'circle',
+                }"
+                [menuBackgroundColor]="'var(--surface-0)'"
+                [menuHoverColor]="'var(--surface-100)'"
+                (onLogout)="onLogout('menu')"
+              ></magary-sidebar>
+              <div class="shell-content">
+                <h3>Vista Catalogo</h3>
+                <p>
+                  Esta variante usa <code>menu</code> + <code>menuTitle</code>
+                  en lugar de <code>sections</code>. En este demo lo dejamos
+                  sin colapso para que el patron de navegacion se entienda
+                  mejor.
+                </p>
+                <ul class="content-list">
+                  <li>Modo compacto para apps administrativas.</li>
+                  <li>Logo de marca configurable por posicion.</li>
+                  <li>Bloque de usuario reutilizable.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </magary-tab>
+      </magary-tabs>
+
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML (secciones)">
+            <pre><code [highlight]="sectionsHtmlExample" language="xml"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS (secciones)">
+            <pre><code [highlight]="sectionsTsExample" language="typescript"></code></pre>
+          </magary-tab>
+          <magary-tab label="HTML (menu)">
+            <pre><code [highlight]="menuHtmlExample" language="xml"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS (menu)">
+            <pre><code [highlight]="menuTsExample" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Inputs principales para configurar comportamiento y look & feel.</p>
+    </div>
+    <div class="section-content">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Default</th>
+            <th>Descripcion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>sections</code></td>
+            <td><code>SidebarSection[]</code></td>
+            <td><code>[]</code></td>
+            <td>Modo por secciones (usa paneles independientes).</td>
+          </tr>
+          <tr>
+            <td><code>menu</code></td>
+            <td><code>MenuItem[]</code></td>
+            <td><code>[]</code></td>
+            <td>Modo menu unico cuando <code>sections</code> esta vacio.</td>
+          </tr>
+          <tr>
+            <td><code>menuTitle</code></td>
+            <td><code>string</code></td>
+            <td><code>'Menu'</code></td>
+            <td>Titulo para el modo <code>menu</code>.</td>
+          </tr>
+          <tr>
+            <td><code>showUserSection</code></td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>Muestra bloque inferior con avatar y logout.</td>
+          </tr>
+          <tr>
+            <td><code>userName</code></td>
+            <td><code>string</code></td>
+            <td><code>'John Doe'</code></td>
+            <td>Nombre mostrado en el bloque de usuario.</td>
+          </tr>
+          <tr>
+            <td><code>userEmail</code></td>
+            <td><code>string</code></td>
+            <td><code>'user@example.com'</code></td>
+            <td>Email mostrado en el bloque de usuario.</td>
+          </tr>
+          <tr>
+            <td><code>avatarConfig</code></td>
+            <td><code>AvatarConfig</code></td>
+            <td><code>{{ '{' }} type: 'label' {{ '}' }}</code></td>
+            <td>Configura avatar (tipo, shape, size, badge, etc).</td>
+          </tr>
+          <tr>
+            <td><code>showLogo</code></td>
+            <td><code>boolean</code></td>
+            <td><code>true</code></td>
+            <td>Muestra logo principal en header.</td>
+          </tr>
+          <tr>
+            <td><code>logoSrc</code></td>
+            <td><code>string</code></td>
+            <td><code>'assets/logo.svg'</code></td>
+            <td>Ruta del logo principal.</td>
+          </tr>
+          <tr>
+            <td><code>appTitle</code></td>
+            <td><code>string</code></td>
+            <td><code>'PRIMENG'</code></td>
+            <td>Titulo de la aplicacion en header.</td>
+          </tr>
+          <tr>
+            <td><code>showBrandLogo</code></td>
+            <td><code>boolean</code></td>
+            <td><code>false</code></td>
+            <td>Muestra logo de marca en top/bottom/center.</td>
+          </tr>
+          <tr>
+            <td><code>brandLogoPosition</code></td>
+            <td><code>'top' | 'bottom' | 'center'</code></td>
+            <td><code>'bottom'</code></td>
+            <td>Posicion del logo de marca.</td>
+          </tr>
+          <tr>
+            <td><code>menuBackgroundColor</code></td>
+            <td><code>string</code></td>
+            <td><code>'var(--surface-50)'</code></td>
+            <td>Fondo de los paneles de menu.</td>
+          </tr>
+          <tr>
+            <td><code>menuTextColor</code></td>
+            <td><code>string</code></td>
+            <td><code>'var(--text-primary)'</code></td>
+            <td>Color de texto de items y titulos.</td>
+          </tr>
+          <tr>
+            <td><code>menuHoverColor</code></td>
+            <td><code>string</code></td>
+            <td><code>'var(--surface-100)'</code></td>
+            <td>Color hover para items interactivos.</td>
+          </tr>
+          <tr>
+            <td><code>collapsible</code></td>
+            <td><code>boolean</code></td>
+            <td><code>true</code></td>
+            <td>Permite colapsar/expandir sidebar en desktop.</td>
+          </tr>
+          <tr>
+            <td><code>showToggle</code></td>
+            <td><code>boolean</code></td>
+            <td><code>true</code></td>
+            <td>Muestra boton de toggle en header.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos emitidos por el componente.</p>
+    </div>
+    <div class="section-content">
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Descripcion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>onLogout</code></td>
+            <td><code>void</code></td>
+            <td>Se emite cuando el usuario pulsa "Cerrar sesion".</td>
+          </tr>
+          <tr>
+            <td><code>closeSidebar</code></td>
+            <td><code>void</code></td>
+            <td>
+              Output disponible para integrar cierre externo (actualmente no se
+              emite desde la plantilla interna).
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Estructura Esperada</h2>
+      <p>Tipos utiles para poblar el sidebar correctamente.</p>
+    </div>
+    <div class="section-content">
+      <ul>
+        <li>
+          <code>SidebarSection</code>: <code>title</code>, <code>icon</code>,
+          <code>items</code> y overrides opcionales de color.
+        </li>
+        <li>
+          <code>MenuItem</code>: <code>label</code>, <code>icon</code>,
+          <code>route</code>, <code>children</code>, <code>disabled</code>.
+        </li>
+        <li>
+          <code>AvatarConfig</code>: <code>type</code> (<code>image</code>,
+          <code>label</code>, <code>icon</code>) mas size/shape/badge.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Accesibilidad y Responsive</h2>
+      <p>Recomendaciones practicas para una UX solida.</p>
+    </div>
+    <div class="section-content">
+      <ul class="accessibility-list">
+        <li>
+          <strong>Mobile:</strong> usa el boton hamburguesa y backdrop para
+          cierre rapido.
+        </li>
+        <li>
+          <strong>Navegacion:</strong> define labels cortos y jerarquia clara
+          en cada seccion.
+        </li>
+        <li>
+          <strong>Contraste:</strong> valida colores de
+          <code>menuTextColor</code>/<code>menuHoverColor</code>.
+        </li>
+        <li>
+          <strong>Densidad:</strong> en sidebars largos combina secciones y
+          submenu para reducir scroll.
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

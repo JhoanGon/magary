@@ -108,14 +108,11 @@ export class MagarySlideMenu {
   private cdr = inject(ChangeDetectorRef);
 
   constructor() {
-    effect(
-      () => {
-        if (this.viewStack().length === 0 && this.model().length > 0) {
-          this.viewStack.set([this.model()]);
-        }
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      if (this.viewStack().length === 0 && this.model().length > 0) {
+        this.viewStack.set([this.model()]);
+      }
+    });
   }
 
   get currentItems() {

@@ -9,12 +9,14 @@
   border-bottom: 1px solid var(--surface-200);
   position: relative;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -1px;
     height: var(--height-line);
     background-color: var(--background-color-line);
-    transition: left 0.4s ease-in-out, width 0.4s ease-in-out;
+    transition:
+      left 0.4s ease-in-out,
+      width 0.4s ease-in-out;
     left: var(--underline-left, 0);
     width: var(--underline-width, 0);
   }
@@ -41,7 +43,7 @@
 }
 .tab-content {
   padding: var(--padding);
-  display: flex;
+  //display: flex;
   justify-content: var(--position-content);
   background: var(--background);
   &.animated {

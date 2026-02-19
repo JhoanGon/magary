@@ -24,6 +24,11 @@ export const routes: Routes = [
           import('./pages/GettingStarted/Setup/setup').then((m) => m.Setup),
       },
       {
+        path: 'mcp',
+        loadComponent: () =>
+          import('./pages/GettingStarted/Mcp/mcp').then((m) => m.Mcp),
+      },
+      {
         path: 'components',
         loadChildren: () =>
           import('./pages/Components/components.routes').then(

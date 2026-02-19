@@ -1,93 +1,128 @@
 <div class="installation-container fade-in">
+  <div class="header">
+    <h1>Instalacion</h1>
+    <p>Guia rapida para integrar Magary en tu proyecto Angular</p>
+  </div>
+
   <div class="steps-grid">
     <magary-card
       [width]="'100%'"
       [shadow]="3"
       [borderRadius]="'1rem'"
       [backgroundColor]="'var(--surface-0)'"
+      [border]="'1px solid var(--surface-200)'"
       class="step-card"
     >
-      <div class="installation-container fade-in">
-        <div class="header">
-          <h1>Instalación</h1>
-          <p>Guía rápida para integrar Magary en tu proyecto Angular</p>
+      <div slot="header">
+        <div class="step-header">
+          <span class="step-number">1</span>
+          <h3>Instalar paquete y dependencias</h3>
         </div>
+      </div>
+      <div class="step-content">
+        <p>Instala ng-magary junto con sus peer dependencies requeridas.</p>
+        <div
+          style="
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+          "
+        >
+          <div class="code-block">
+            <pre><code [highlight]="installCommandNpm" language="bash"></code></pre>
+          </div>
+          <div class="code-block">
+            <pre><code [highlight]="installCommandPnpm" language="bash"></code></pre>
+          </div>
+        </div>
+      </div>
+    </magary-card>
 
-        <div class="steps-grid">
-          <magary-card
-            [width]="'100%'"
-            [shadow]="3"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-            [border]="'1px solid var(--surface-200)'"
-            class="step-card"
-          >
-            <div slot="header">
-              <div class="step-header">
-                <span class="step-number">1</span>
-                <h3>Instalar el paquete</h3>
-              </div>
-            </div>
-            <div class="step-content">
-              <p>
-                Instala la librería y sus dependencias requeridas (CDK, Lucide,
-                GridStack).
-              </p>
-              <div class="code-block">
-                <pre><code [highlight]="installCommand" language="typescript"></code></pre>
-              </div>
-            </div>
-          </magary-card>
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+      [border]="'1px solid var(--surface-200)'"
+      class="step-card"
+    >
+      <div slot="header">
+        <div class="step-header">
+          <span class="step-number">2</span>
+          <h3>Configurar App (Iconos + Animaciones)</h3>
+        </div>
+      </div>
+      <div class="step-content">
+        <p>
+          Magary usa iconos Lucide y varios componentes con animaciones de
+          Angular. Configura ambos providers en tu app.config.ts.
+        </p>
+        <div
+          style="
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+          "
+        >
+          <div class="code-block">
+            <pre><code [highlight]="appConfigIcons" language="typescript"></code></pre>
+          </div>
+          <div class="code-block">
+            <pre><code [highlight]="appConfigAnimations" language="typescript"></code></pre>
+          </div>
+        </div>
+      </div>
+    </magary-card>
 
-          <magary-card
-            [width]="'100%'"
-            [shadow]="3"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-            [border]="'1px solid var(--surface-200)'"
-            class="step-card"
-          >
-            <div slot="header">
-              <div class="step-header">
-                <span class="step-number">2</span>
-                <h3>Importar estilos</h3>
-              </div>
-            </div>
-            <div class="step-content">
-              <p>
-                Añade los estilos base y el tema en tu archivo
-                <code>styles.scss</code>.
-              </p>
-              <div class="code-block">
-                <pre><code [highlight]="stylesImport" language="scss"></code></pre>
-              </div>
-            </div>
-          </magary-card>
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+      [border]="'1px solid var(--surface-200)'"
+      class="step-card"
+    >
+      <div slot="header">
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <h3>Estilos globales (solo Tooltip)</h3>
+        </div>
+      </div>
+      <div class="step-content">
+        <p>
+          Si usas magaryTooltip, agrega estas clases globales en styles.scss.
+        </p>
+        <div class="code-block">
+          <pre><code [highlight]="tooltipStyles" language="scss"></code></pre>
+        </div>
+      </div>
+    </magary-card>
 
-          <magary-card
-            [width]="'100%'"
-            [shadow]="3"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-            [border]="'1px solid var(--surface-200)'"
-            class="step-card"
-          >
-            <div slot="header">
-              <div class="step-header">
-                <span class="step-number">3</span>
-                <h3>Usar componentes</h3>
-              </div>
-            </div>
-            <div class="step-content">
-              <p>
-                Importa los componentes que necesites en tus archivos
-                standalone.
-              </p>
-              <div class="code-block">
-                <pre><code [highlight]="componentImport" language="typescript"></code></pre>
-              </div>
-            </div>
-          </magary-card>
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+      [border]="'1px solid var(--surface-200)'"
+      class="step-card"
+    >
+      <div slot="header">
+        <div class="step-header">
+          <span class="step-number">4</span>
+          <h3>Usar componentes</h3>
+        </div>
+      </div>
+      <div class="step-content">
+        <p>
+          Importa los componentes de ng-magary directamente en tus componentes
+          standalone.
+        </p>
+        <div class="code-block">
+          <pre><code [highlight]="componentImport" language="typescript"></code></pre>
         </div>
       </div>
     </magary-card>

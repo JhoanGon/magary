@@ -1,42 +1,67 @@
 {
-  // For more information, visit: https://go.microsoft.com/fwlink/?LinkId=733558
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "npm",
-      "script": "start",
+      "label": "dev:serve",
+      "type": "shell",
+      "command": "pnpm.cmd start",
       "isBackground": true,
       "problemMatcher": {
         "owner": "typescript",
         "pattern": "$tsc",
         "background": {
           "activeOnStart": true,
-          "beginsPattern": {
-            "regexp": "(.*?)"
-          },
-          "endsPattern": {
-            "regexp": "bundle generation complete"
-          }
+          "beginsPattern": "(.*?)",
+          "endsPattern": "Application bundle generation complete"
         }
       }
     },
     {
-      "type": "npm",
-      "script": "test",
-      "isBackground": true,
-      "problemMatcher": {
-        "owner": "typescript",
-        "pattern": "$tsc",
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": {
-            "regexp": "(.*?)"
-          },
-          "endsPattern": {
-            "regexp": "bundle generation complete"
-          }
-        }
-      }
+      "label": "qa:lint",
+      "type": "shell",
+      "command": "pnpm.cmd lint"
+    },
+    {
+      "label": "qa:build:lib",
+      "type": "shell",
+      "command": "pnpm.cmd run build:lib"
+    },
+    {
+      "label": "qa:build:demo",
+      "type": "shell",
+      "command": "pnpm.cmd run build:demo"
+    },
+    {
+      "label": "qa:test:ng-magary",
+      "type": "shell",
+      "command": "pnpm.cmd exec ng test ng-magary --watch=false"
+    },
+    {
+      "label": "qa:test:demo-app",
+      "type": "shell",
+      "command": "pnpm.cmd exec ng test demo-app --watch=false"
+    },
+    {
+      "label": "qa:test:visual",
+      "type": "shell",
+      "command": "pnpm.cmd run test:visual"
+    },
+    {
+      "label": "qa:test:visual:update",
+      "type": "shell",
+      "command": "pnpm.cmd run test:visual:update"
+    },
+    {
+      "label": "qa:test:all",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "qa:lint",
+        "qa:build:lib",
+        "qa:build:demo",
+        "qa:test:ng-magary",
+        "qa:test:demo-app",
+        "qa:test:visual"
+      ]
     }
   ]
 }
