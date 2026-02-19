@@ -10,9 +10,13 @@
     "build": "pnpm run build:lib && pnpm run build:demo",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:ng-magary": "ng test ng-magary --watch=false",
+    "test:demo-app": "ng test demo-app --watch=false",
+    "test:unit": "pnpm run test:ng-magary && pnpm run test:demo-app",
     "lint": "eslint . --ext .ts,.html",
     "test:visual": "playwright test -c e2e/playwright/playwright.config.ts",
-    "test:visual:update": "playwright test -c e2e/playwright/playwright.config.ts --update-snapshots"
+    "test:visual:update": "playwright test -c e2e/playwright/playwright.config.ts --update-snapshots",
+    "qa:all": "pnpm run lint && pnpm run build:lib && pnpm run build:demo && pnpm run test:unit && pnpm run test:visual"
   },
   "prettier": {
     "overrides": [
@@ -57,6 +61,7 @@
     "@playwright/test": "^1.58.2",
     "@typescript-eslint/eslint-plugin": "^8.38.0",
     "@typescript-eslint/parser": "^8.38.0",
+    "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.32.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsdoc": "^52.0.2",

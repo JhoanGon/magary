@@ -7,7 +7,6 @@ import {
   EventEmitter,
   computed,
   signal,
-  effect,
   ChangeDetectionStrategy,
   ViewEncapsulation,
 } from '@angular/core';
@@ -42,7 +41,14 @@ export class MagaryDataView {
   }
 
   @Input() paginator: boolean = false;
-  @Input() rows: number = 0;
+  @Input() set rows(val: number) {
+    const nextRows = val ?? 0;
+    this._rowsInput.set(nextRows);
+    this._rows.set(nextRows);
+  }
+  get rows() {
+    return this._rowsInput();
+  }
   @Input() totalRecords: number = 0;
   @Input() pageLinks: number = 5;
   @Input() rowsPerPageOptions: number[] = [];
@@ -59,16 +65,8 @@ export class MagaryDataView {
   _value = signal<any[]>([]);
   _layout = signal<'list' | 'grid'>('list');
   first = signal<number>(0);
+  _rowsInput = signal<number>(0);
   _rows = signal<number>(0);
-
-  constructor() {
-    effect(
-      () => {
-        this._rows.set(this.rows);
-      },
-      { allowSignalWrites: true },
-    );
-  }
 
   // Computed
   processedData = computed(() => {

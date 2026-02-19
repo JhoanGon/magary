@@ -13,4 +13,10 @@ export const GETTING_STARTED_ITEMS_CONFIG: NavigationItem[] = [
     icon: 'settings',
     iconClass: 'lucide-spin',
   },
+  {
+    label: 'MCP',
+    route: '/mcp',
+    icon: 'network',
+    iconClass: 'lucide-pulse',
+  },
 ];

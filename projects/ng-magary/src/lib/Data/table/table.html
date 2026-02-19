@@ -42,7 +42,7 @@
       <tbody>
         <!-- Data Rows -->
         @if (bodyTemplate) {
-          @for (row of paginatedData(); track row) {
+          @for (row of paginatedData(); track trackByRow($index, row)) {
             <ng-container
               [ngTemplateOutlet]="bodyTemplate"
               [ngTemplateOutletContext]="{
@@ -52,7 +52,7 @@
             ></ng-container>
           }
         } @else {
-          @for (row of paginatedData(); track row) {
+          @for (row of paginatedData(); track trackByRow($index, row)) {
             <tr class="table-row">
               @for (col of columns(); track col.field) {
                 <td [attr.data-label]="col.header">

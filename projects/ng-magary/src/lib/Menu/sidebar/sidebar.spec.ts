@@ -1,7 +1,141 @@
+import { importProvidersFrom } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { LucideAngularModule, icons } from 'lucide-angular';
+import { MenuItem } from '../api/menu.interface';
 import { Sidebar } from './sidebar';
 
-describe('Sidebar', () => {
-  it('should be defined', () => {
-    expect(Sidebar).toBeDefined();
+const kebabCase = (value: string) =>
+  value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+const lucideIcons = Object.entries(icons).reduce(
+  (acc, [key, icon]) => {
+    acc[key] = icon;
+    acc[kebabCase(key)] = icon;
+    return acc;
+  },
+  {} as Record<string, any>,
+);
+
+describe('Sidebar behavior', () => {
+  let fixture: ComponentFixture<Sidebar>;
+  let component: Sidebar;
+
+  const menu: MenuItem[] = [
+    { label: 'Dashboard', icon: 'house' },
+    {
+      label: 'Management',
+      icon: 'users',
+      children: [{ label: 'Users' }, { label: 'Teams' }],
+    },
+  ];
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [Sidebar],
+      providers: [
+        provideRouter([]),
+        importProvidersFrom(LucideAngularModule.pick(lucideIcons)),
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(Sidebar);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('showLogo', false);
+    fixture.componentRef.setInput('showUserSection', true);
+    fixture.componentRef.setInput('menu', menu);
+    fixture.detectChanges();
+  });
+
+  it('opens and closes mobile sidebar from hamburger and backdrop', () => {
+    const hamburger = fixture.nativeElement.querySelector(
+      '.hamburger-button',
+    ) as HTMLButtonElement;
+    hamburger.click();
+    fixture.detectChanges();
+
+    expect(component.isMobileOpen()).toBe(true);
+    expect(fixture.nativeElement.querySelector('.sidebar-backdrop')).toBeTruthy();
+
+    const backdrop = fixture.nativeElement.querySelector(
+      '.sidebar-backdrop',
+    ) as HTMLElement;
+    backdrop.click();
+    fixture.detectChanges();
+
+    expect(component.isMobileOpen()).toBe(false);
+    expect(fixture.nativeElement.querySelector('.sidebar-backdrop')).toBeNull();
+  });
+
+  it('toggles collapsed state only when collapsible is enabled', () => {
+    fixture.componentRef.setInput('collapsible', true);
+    fixture.detectChanges();
+
+    component.toggleCollapse();
+    expect(component.isCollapsed()).toBe(true);
+
+    fixture.componentRef.setInput('collapsible', false);
+    fixture.detectChanges();
+    component.toggleCollapse();
+    expect(component.isCollapsed()).toBe(true);
+
+    component.openSidebar();
+    expect(component.isCollapsed()).toBe(false);
+  });
+
+  it('emits logout event from user section button', () => {
+    let logoutCalls = 0;
+    component.onLogout.subscribe(() => {
+      logoutCalls += 1;
+    });
+
+    const logoutButton = fixture.nativeElement.querySelector(
+      '.logout-button',
+    ) as HTMLButtonElement;
+    logoutButton.click();
+    fixture.detectChanges();
+
+    expect(logoutCalls).toBe(1);
+  });
+
+  it('renders section menus with priority over fallback menu input', () => {
+    fixture.componentRef.setInput('sections', [
+      {
+        title: 'Section A',
+        icon: 'folder',
+        items: [{ label: 'Item A' }],
+      },
+      {
+        title: 'Section B',
+        icon: 'layers',
+        items: [{ label: 'Item B' }],
+      },
+    ]);
+    fixture.detectChanges();
+
+    let panelMenus = fixture.nativeElement.querySelectorAll(
+      'magary-panelmenu',
+    ) as NodeListOf<HTMLElement>;
+    expect(panelMenus).toHaveLength(2);
+
+    fixture.componentRef.setInput('sections', []);
+    fixture.detectChanges();
+    panelMenus = fixture.nativeElement.querySelectorAll(
+      'magary-panelmenu',
+    ) as NodeListOf<HTMLElement>;
+    expect(panelMenus).toHaveLength(1);
+  });
+
+  it('closes mobile sidebar with close button action', () => {
+    component.isMobileOpen.set(true);
+    fixture.detectChanges();
+
+    const closeButton = fixture.nativeElement.querySelector(
+      '.close-button',
+    ) as HTMLButtonElement;
+    closeButton.click();
+    fixture.detectChanges();
+
+    expect(component.isMobileOpen()).toBe(false);
   });
 });

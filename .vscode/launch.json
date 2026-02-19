@@ -1,20 +1,36 @@
 {
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "ng serve",
-      "type": "chrome",
+      "name": "Demo App (ng serve)",
+      "type": "pwa-chrome",
       "request": "launch",
-      "preLaunchTask": "npm: start",
+      "preLaunchTask": "dev:serve",
       "url": "http://localhost:4200/"
     },
     {
-      "name": "ng test",
-      "type": "chrome",
+      "name": "QA: Unit Tests (ng-magary)",
+      "type": "node-terminal",
       "request": "launch",
-      "preLaunchTask": "npm: test",
-      "url": "http://localhost:9876/debug.html"
+      "command": "pnpm.cmd exec ng test ng-magary --watch=false"
+    },
+    {
+      "name": "QA: Unit Tests (demo-app)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm.cmd exec ng test demo-app --watch=false"
+    },
+    {
+      "name": "QA: Playwright (visual + functional)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm.cmd run test:visual"
+    },
+    {
+      "name": "QA: Full Suite",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "pnpm.cmd lint && pnpm.cmd run build:lib && pnpm.cmd run build:demo && pnpm.cmd exec ng test ng-magary --watch=false && pnpm.cmd exec ng test demo-app --watch=false && pnpm.cmd run test:visual"
     }
   ]
 }
