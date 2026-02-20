@@ -156,18 +156,9 @@ sectionsDemo: SidebarSectionDemo[] = [
   [showBrandLogo]="true"
   [brandLogoSrc]="'assets/magary_logo.png'"
   [brandLogoPosition]="'bottom'"
-  [showUserSection]="true"
-  [userName]="'Cliente Demo'"
-  [userEmail]="'demo@empresa.com'"
-  [avatarConfig]="{
-    type: 'icon',
-    icon: 'user',
-    size: 'normal',
-    shape: 'circle'
-  }"
+  [showUserSection]="false"
   [menuBackgroundColor]="'var(--surface-0)'"
   [menuHoverColor]="'var(--surface-100)'"
-  (onLogout)="onLogout('menu')"
 ></magary-sidebar>`;
 
   menuTsExample = `
@@ -183,8 +174,32 @@ menuDemo: MenuItem[] = [
   }
 ];`;
 
-  onLogout(mode: 'sections' | 'menu'): void {
+  footerHtmlExample = `
+<magary-sidebar
+  [menu]="menuDemo"
+  [menuTitle]="'Cuenta'"
+  [showLogo]="true"
+  [logoSrc]="'assets/magary_logo.png'"
+  [appTitle]="'Perfil'"
+  [appTitleStyle]="appTitleStyle"
+  [collapsible]="false"
+  [showToggle]="false"
+  [showUserSection]="true"
+  [showUserAvatar]="false"
+  [showUserName]="false"
+  [showUserEmail]="false"
+  [showLogoutButton]="true"
+  (onLogout)="onLogout('footer')"
+></magary-sidebar>`;
+
+  footerTsExample = `
+onLogout(mode: 'sections' | 'footer'): void {
+  this.logoutCount += 1;
+  this.lastLogoutMode = mode === 'sections' ? 'Secciones' : 'Footer opcional';
+}`;
+
+  onLogout(mode: 'sections' | 'footer'): void {
     this.logoutCount += 1;
-    this.lastLogoutMode = mode === 'sections' ? 'Secciones' : 'Menu unico';
+    this.lastLogoutMode = mode === 'sections' ? 'Secciones' : 'Footer opcional';
   }
 }

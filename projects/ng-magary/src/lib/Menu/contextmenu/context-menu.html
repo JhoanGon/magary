@@ -22,7 +22,9 @@
           <div class="magary-menuitem-content">
             <a
               class="magary-menuitem-link"
-              [href]="item.url || '#'"
+              [href]="item.url || null"
+              [routerLink]="getRouterLink(item)"
+              [queryParams]="item.queryParams || undefined"
               [attr.target]="item.target"
               (click)="onItemClick($event, item)"
             >
@@ -77,7 +79,10 @@
         <div class="magary-menuitem-content">
           <a
             class="magary-menuitem-link"
-            [href]="child.url || '#'"
+            [href]="child.url || null"
+            [routerLink]="getRouterLink(child)"
+            [queryParams]="child.queryParams || undefined"
+            [attr.target]="child.target"
             (click)="onItemClick($event, child)"
           >
             @if (child.icon) {

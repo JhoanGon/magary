@@ -6,7 +6,8 @@ import {
   ViewEncapsulation,
   signal,
   computed,
-  OnInit,
+  OnDestroy,
+  effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -82,7 +83,7 @@ import { LucideAngularModule } from 'lucide-angular';
     ]),
   ],
 })
-export class MagaryMessage implements OnInit {
+export class MagaryMessage implements OnDestroy {
   severity = input<
     'success' | 'info' | 'warn' | 'error' | 'secondary' | 'contrast'
   >('info');
@@ -101,13 +102,21 @@ export class MagaryMessage implements OnInit {
 
   visible = signal(true);
 
-  ngOnInit() {
-    const life = this.life();
-    if (life) {
-      setTimeout(() => {
-        this.close(null);
-      }, life);
-    }
+  private lifeTimeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  constructor() {
+    effect(() => {
+      const life = this.life();
+      const isVisible = this.visible();
+
+      this.clearLifeTimeout();
+
+      if (isVisible && life && life > 0) {
+        this.lifeTimeoutId = setTimeout(() => {
+          this.close(null);
+        }, life);
+      }
+    });
   }
 
   iconClass = computed(() => {
@@ -131,10 +140,25 @@ export class MagaryMessage implements OnInit {
   });
 
   close(event: Event | null) {
+    if (!this.visible()) return;
+
     this.visible.set(false);
+    this.clearLifeTimeout();
+
     if (event) {
       this.onClose.emit(event);
       event.preventDefault();
+    }
+  }
+
+  ngOnDestroy() {
+    this.clearLifeTimeout();
+  }
+
+  private clearLifeTimeout() {
+    if (this.lifeTimeoutId) {
+      clearTimeout(this.lifeTimeoutId);
+      this.lifeTimeoutId = null;
     }
   }
 }

@@ -14,11 +14,10 @@ export const MEDIA_CONFIG: NavigationItem = {
       route: '/components/view-galleria',
       icon: 'images',
     },
-    // TODO: Carousel temporarily hidden due to pending bug fixes
-    // {
-    //   label: 'Carousel',
-    //   route: '/components/view-carousel',
-    //   icon: 'gallery-horizontal-end',
-    // },
+    {
+      label: 'Carousel',
+      route: '/components/view-carousel',
+      icon: 'gallery-horizontal-end',
+    },
   ],
 };

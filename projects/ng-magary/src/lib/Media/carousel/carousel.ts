@@ -19,8 +19,6 @@ import {
   afterNextRender,
   NgModule,
   untracked,
-  QueryList,
-  Renderer2,
   booleanAttribute,
   numberAttribute,
   AfterViewInit,
@@ -29,14 +27,8 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { fromEvent, merge, interval } from 'rxjs';
-import {
-  debounceTime,
-  filter,
-  switchMap,
-  map,
-  throttleTime,
-} from 'rxjs/operators';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, filter, map, throttleTime } from 'rxjs/operators';
 import {
   LucideAngularModule,
   ChevronLeft,
@@ -229,6 +221,8 @@ export interface CarouselSlideEvent<T> {
     '[class.magary-carousel-nav-outside]': 'navPosition() === "outside"',
     '[class.magary-carousel-nav-top]': 'navPosition() === "top"',
     '[class.magary-carousel-nav-bottom]': 'navPosition() === "bottom"',
+    '[class.magary-carousel-nav-default]':
+      'navPosition() === "default" || navPosition() === "center"',
     '[attr.data-effect]': 'effect()',
     '[attr.data-nav-style]': 'navStyle()',
     '[attr.data-indicator-style]': 'indicatorStyle()',
@@ -240,8 +234,6 @@ export interface CarouselSlideEvent<T> {
     '[attr.dir]': 'direction()',
     '[style.width]': '"100%"',
     '[style.max-width]': 'width()',
-    '[style.paddingLeft]': 'navPosition() === "outside" ? "4rem" : null',
-    '[style.paddingRight]': 'navPosition() === "outside" ? "4rem" : null',
     '(keydown)': 'onKeyDown($event)',
   },
 })
@@ -611,7 +603,6 @@ export class MagaryCarouselComponent<T>
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly elementRef = inject(ElementRef);
-  private readonly renderer = inject(Renderer2);
 
   // ============================================================================
   // COMPUTED SIGNALS
@@ -621,6 +612,15 @@ export class MagaryCarouselComponent<T>
   readonly isRTL = computed(() => this.direction() === 'rtl');
   readonly totalItems = computed(() => this.value()?.length ?? 0);
   readonly isEmpty = computed(() => this.totalItems() === 0);
+  readonly isStackedEffect = computed(() => {
+    const effect = this.effect();
+    return (
+      effect === 'fade' ||
+      effect === 'cube' ||
+      effect === 'flip' ||
+      effect === 'cards'
+    );
+  });
 
   readonly effectiveNumVisible = computed(() => {
     const num = this._activeNumVisible();
@@ -633,10 +633,13 @@ export class MagaryCarouselComponent<T>
 
     return Math.max(1, Math.min(num, total || 1));
   });
+  readonly effectiveVisibleForPaging = computed(() =>
+    this.isStackedEffect() ? 1 : this.effectiveNumVisible(),
+  );
 
   readonly totalPages = computed(() => {
     const items = this.totalItems();
-    const visible = this.effectiveNumVisible();
+    const visible = this.effectiveVisibleForPaging();
     const scroll = Math.max(1, this._activeNumScroll());
 
     if (items === 0 || visible === 0) return 0;
@@ -670,7 +673,7 @@ export class MagaryCarouselComponent<T>
   readonly currentSlideInfo = computed(() => {
     const page = this._currentPage();
     const scroll = this._activeNumScroll();
-    const visible = this.effectiveNumVisible();
+    const visible = this.effectiveVisibleForPaging();
     const total = this.totalItems();
 
     const startIndex = page * scroll;
@@ -686,8 +689,14 @@ export class MagaryCarouselComponent<T>
   });
 
   readonly transformStyle = computed(() => {
-    if (this.effect() === 'fade') {
-      return { transform: 'none' };
+    if (this.isStackedEffect()) {
+      return {
+        transform: 'none',
+        transitionDuration: this._isDragging()
+          ? '0ms'
+          : `${this.transitionDuration()}ms`,
+        transitionTimingFunction: this.transitionTimingFunction(),
+      };
     }
 
     const page = this._currentPage();
@@ -702,15 +711,16 @@ export class MagaryCarouselComponent<T>
     // Base calculation
     const percentagePerItem = 100 / visible;
     const itemsToShift = page * scroll;
+    const gapCompensationPerItem = visible > 0 ? spaceBetween / visible : 0;
 
     let translatePct = -(itemsToShift * percentagePerItem);
-    let translatePx = -(itemsToShift * spaceBetween);
+    let translatePx = -(itemsToShift * gapCompensationPerItem);
 
     // Center mode adjustment
     if (centerMode && visible > 1) {
       const centerOffset = (visible - 1) / 2;
       translatePct += centerOffset * percentagePerItem;
-      translatePx += centerOffset * spaceBetween;
+      translatePx += centerOffset * gapCompensationPerItem;
     }
 
     // RTL adjustment
@@ -742,6 +752,8 @@ export class MagaryCarouselComponent<T>
   // ============================================================================
 
   constructor() {
+    this.destroyRef.onDestroy(() => this.destroy());
+
     // Sync page input with model
     effect(() => {
       const inputPage = this.page();
@@ -754,8 +766,8 @@ export class MagaryCarouselComponent<T>
 
     // Sync configuration inputs
     effect(() => {
-      this._activeNumVisible.set(Math.max(1, this.numVisible()));
-      this._activeNumScroll.set(Math.max(1, this.numScroll()));
+      this._activeNumVisible.set(this.normalizeVisibleCount(this.numVisible()));
+      this._activeNumScroll.set(this.normalizeScrollCount(this.numScroll()));
       this._activeSpaceBetween.set(this.spaceBetween());
     });
 
@@ -828,21 +840,21 @@ export class MagaryCarouselComponent<T>
   /**
    * Navigate to next slide
    */
-  next(event?: Event): void {
+  next(event?: Event, source: 'user' | 'autoplay' = 'user'): void {
     event?.preventDefault();
     if (!this.canNavigateForward() || this._isAnimating()) return;
 
-    this.handleNavigation(true);
+    this.handleNavigation(true, source);
   }
 
   /**
    * Navigate to previous slide
    */
-  previous(event?: Event): void {
+  previous(event?: Event, source: 'user' | 'autoplay' = 'user'): void {
     event?.preventDefault();
     if (!this.canNavigateBackward() || this._isAnimating()) return;
 
-    this.handleNavigation(false);
+    this.handleNavigation(false, source);
   }
 
   /**
@@ -851,7 +863,12 @@ export class MagaryCarouselComponent<T>
    * @param emit Whether to emit events
    * @param speed Optional custom transition speed
    */
-  goToPage(pageIndex: number, emit: boolean = true, speed?: number): void {
+  goToPage(
+    pageIndex: number,
+    emit: boolean = true,
+    speed?: number,
+    source: 'user' | 'autoplay' = 'user',
+  ): void {
     const total = this.totalPages();
     if (total === 0) return;
 
@@ -870,6 +887,9 @@ export class MagaryCarouselComponent<T>
     const previousPage = this._currentPage();
     const direction: 'forward' | 'backward' =
       targetPage > previousPage ? 'forward' : 'backward';
+
+    // Always reset drag offset when navigation is committed.
+    this._dragOffset.set(0);
 
     // Emit before-change event
     if (emit) {
@@ -910,10 +930,18 @@ export class MagaryCarouselComponent<T>
     }
 
     // Reset autoplay
-    if (this.pauseOnInteraction()) {
+    if (source === 'autoplay') {
+      // Autoplay-driven navigation keeps the same timer running,
+      // but progress must restart for the next cycle.
+      if (this.showProgress() && this.autoplayTimer) {
+        this.startProgressAnimation();
+      }
+    } else if (!emit) {
+      // Programmatic updates should not change autoplay state.
+    } else if (this.autoplayInterval() > 0 && this.pauseOnInteraction()) {
       this.pauseAutoplay();
       this.scheduleAutoplayResume();
-    } else {
+    } else if (this.autoplayInterval() > 0) {
       this.resetAutoplay();
     }
 
@@ -1141,10 +1169,12 @@ export class MagaryCarouselComponent<T>
   // INTERNAL NAVIGATION LOGIC
   // ============================================================================
 
-  private handleNavigation(forward: boolean): void {
+  private handleNavigation(
+    forward: boolean,
+    source: 'user' | 'autoplay' = 'user',
+  ): void {
     const total = this.totalPages();
     const current = this._currentPage();
-    const direction = this.autoplayDirection();
 
     let next: number;
 
@@ -1162,7 +1192,7 @@ export class MagaryCarouselComponent<T>
       }
     }
 
-    this.goToPage(next);
+    this.goToPage(next, true, undefined, source);
   }
 
   private getItemAtPage(pageIndex: number): T | null {
@@ -1212,15 +1242,19 @@ export class MagaryCarouselComponent<T>
       // Navigate
       if (shouldGoForward) {
         if (this.canNavigateForward()) {
-          this.next();
+          this.next(undefined, 'autoplay');
         } else if (this.circular() || this.loop()) {
-          this.goToPage(0);
+          this.goToPage(0, true, undefined, 'autoplay');
+        } else {
+          this.stopAutoplay();
         }
       } else {
         if (this.canNavigateBackward()) {
-          this.previous();
+          this.previous(undefined, 'autoplay');
         } else if (this.circular() || this.loop()) {
-          this.goToPage(this.totalPages() - 1);
+          this.goToPage(this.totalPages() - 1, true, undefined, 'autoplay');
+        } else {
+          this.stopAutoplay();
         }
       }
     }, interval);
@@ -1313,11 +1347,22 @@ export class MagaryCarouselComponent<T>
   // RESPONSIVE
   // ============================================================================
 
+  private normalizeVisibleCount(value: number): number {
+    if (!Number.isFinite(value)) return 1;
+    if (value === -1) return -1;
+    return Math.max(1, Math.floor(value));
+  }
+
+  private normalizeScrollCount(value: number): number {
+    if (!Number.isFinite(value)) return 1;
+    return Math.max(1, Math.floor(value));
+  }
+
   private applyResponsiveOptions(): void {
     if (!this.responsiveOptions().length) {
       // Reset to defaults
-      this._activeNumVisible.set(this.numVisible());
-      this._activeNumScroll.set(this.numScroll());
+      this._activeNumVisible.set(this.normalizeVisibleCount(this.numVisible()));
+      this._activeNumScroll.set(this.normalizeScrollCount(this.numScroll()));
       this._activeSpaceBetween.set(this.spaceBetween());
       return;
     }
@@ -1350,18 +1395,22 @@ export class MagaryCarouselComponent<T>
 
     if (matchedOption) {
       if (matchedOption.numVisible !== undefined) {
-        this._activeNumVisible.set(matchedOption.numVisible);
+        this._activeNumVisible.set(
+          this.normalizeVisibleCount(matchedOption.numVisible),
+        );
       }
       if (matchedOption.numScroll !== undefined) {
-        this._activeNumScroll.set(matchedOption.numScroll);
+        this._activeNumScroll.set(
+          this.normalizeScrollCount(matchedOption.numScroll),
+        );
       }
       if (matchedOption.spaceBetween !== undefined) {
         this._activeSpaceBetween.set(matchedOption.spaceBetween);
       }
     } else {
       // No match, use defaults
-      this._activeNumVisible.set(this.numVisible());
-      this._activeNumScroll.set(this.numScroll());
+      this._activeNumVisible.set(this.normalizeVisibleCount(this.numVisible()));
+      this._activeNumScroll.set(this.normalizeScrollCount(this.numScroll()));
       this._activeSpaceBetween.set(this.spaceBetween());
     }
   }
@@ -1471,6 +1520,18 @@ export class MagaryCarouselComponent<T>
     // Prevent if disabled or already animating
     if (this.disabled || this._isAnimating()) return;
 
+    if (
+      'button' in event &&
+      typeof event.button === 'number' &&
+      event.button !== 0
+    ) {
+      return;
+    }
+
+    if (this.isInteractiveTarget(event.target)) {
+      return;
+    }
+
     const point = this.getEventPoint(event);
     if (!point) return;
 
@@ -1506,7 +1567,7 @@ export class MagaryCarouselComponent<T>
     const threshold = this.threshold();
 
     // Only prevent default if we've moved past threshold
-    if (Math.abs(diff) > 10 && event.cancelable) {
+    if (Math.abs(diff) > threshold && event.cancelable) {
       event.preventDefault();
     }
 
@@ -1517,24 +1578,24 @@ export class MagaryCarouselComponent<T>
     const containerSize = isVert
       ? container.nativeElement.offsetHeight
       : container.nativeElement.offsetWidth;
+    if (containerSize <= 0) return;
 
-    const visible = this.effectiveNumVisible();
     const touchRatio = this.touchRatio();
 
-    // Convert pixels to percentage based on visible items
-    const dragPercentage = (diff / containerSize) * 100 * touchRatio;
+    // Keep drag offset in pixels to match transformStyle math.
+    const dragOffsetPx = diff * touchRatio;
 
     // Apply resistance at boundaries
     const currentPage = this._currentPage();
     const totalPages = this.totalPages();
-    const atStart = currentPage === 0 && dragPercentage > 0;
-    const atEnd = currentPage === totalPages - 1 && dragPercentage < 0;
+    const atStart = currentPage === 0 && dragOffsetPx > 0;
+    const atEnd = currentPage === totalPages - 1 && dragOffsetPx < 0;
 
-    let finalOffset = dragPercentage;
+    let finalOffset = dragOffsetPx;
 
     if ((atStart || atEnd) && !this.loop() && !this.circular()) {
       const resistance = this.resistance();
-      finalOffset = dragPercentage * resistance;
+      finalOffset = dragOffsetPx * resistance;
     }
 
     this._dragOffset.set(finalOffset);
@@ -1545,7 +1606,13 @@ export class MagaryCarouselComponent<T>
     const start = this._touchStart();
     const current = this._touchCurrent();
 
-    if (!start || !current) return;
+    if (!start || !current) {
+      this._isDragging.set(false);
+      this._dragOffset.set(0);
+      this._touchStart.set(null);
+      this._touchCurrent.set(null);
+      return;
+    }
 
     this._isDragging.set(false);
 
@@ -1577,6 +1644,8 @@ export class MagaryCarouselComponent<T>
       // Navigate based on swipe
       const rtl = this.isRTL();
       const shouldGoNext = isVert ? diff < 0 : rtl ? diff > 0 : diff < 0;
+
+      this._dragOffset.set(0);
 
       if (shouldGoNext) {
         this.next();
@@ -1616,6 +1685,18 @@ export class MagaryCarouselComponent<T>
       return touch ? { x: touch.clientX, y: touch.clientY } : null;
     }
     return { x: event.clientX, y: event.clientY };
+  }
+
+  private isInteractiveTarget(target: EventTarget | null): boolean {
+    if (!(target instanceof Element)) {
+      return false;
+    }
+
+    return Boolean(
+      target.closest(
+        'button, a, input, textarea, select, label, [role="button"], [data-carousel-no-drag]',
+      ),
+    );
   }
 
   private applyMomentum(initialVelocity: number, forward: boolean): void {
@@ -1664,13 +1745,30 @@ export class MagaryCarouselComponent<T>
   private checkReducedMotion(): void {
     if (!this.respectReducedMotion()) return;
 
+    if (typeof window.matchMedia !== 'function') {
+      this._reducedMotion.set(false);
+      return;
+    }
+
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     this._reducedMotion.set(mediaQuery.matches);
 
     // Listen for changes
-    mediaQuery.addEventListener('change', (e) => {
+    const onChange = (e: MediaQueryListEvent) => {
       this._reducedMotion.set(e.matches);
-    });
+    };
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', onChange);
+      this.destroyRef.onDestroy(() => {
+        mediaQuery.removeEventListener('change', onChange);
+      });
+    } else {
+      mediaQuery.addListener(onChange);
+      this.destroyRef.onDestroy(() => {
+        mediaQuery.removeListener(onChange);
+      });
+    }
   }
 
   private announceSlideChange(pageIndex: number): void {

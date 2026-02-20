@@ -10,7 +10,9 @@
       >
         <a
           class="magary-menuitem-link"
-          [href]="category.url || '#'"
+          [href]="category.url || null"
+          [routerLink]="getRouterLink(category)"
+          [queryParams]="category.queryParams || undefined"
           [attr.target]="category.target"
           (click)="onItemClick($event, category)"
           [class.magary-disabled]="category.disabled"
@@ -54,7 +56,9 @@
                         <li class="magary-menuitem">
                           <a
                             class="magary-menuitem-link sublink"
-                            [href]="sublink.url || '#'"
+                            [href]="sublink.url || null"
+                            [routerLink]="getRouterLink(sublink)"
+                            [queryParams]="sublink.queryParams || undefined"
                             [attr.target]="sublink.target"
                             (click)="onItemClick($event, sublink)"
                           >

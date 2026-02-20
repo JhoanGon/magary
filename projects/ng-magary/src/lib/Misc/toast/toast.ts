@@ -47,7 +47,9 @@ export class MagaryToast {
     | 'bottom-center'
     | 'center'
   >('top-right');
-  baseZIndex = input<number>(1000);
+  baseZIndex = input<number>(1100);
+  offsetX = input<string>('1rem');
+  offsetY = input<string>('1rem');
 
   get toasts() {
     return this.toastService.toasts();

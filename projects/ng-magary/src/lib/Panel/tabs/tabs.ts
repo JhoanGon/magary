@@ -83,7 +83,40 @@ export class MagaryTabs implements OnInit, OnDestroy {
   }
 
   public selectTab(index: number): void {
-    this.activeIndex.set(index);
+    const total = this.tabs().length;
+    if (!total) return;
+
+    const safeIndex = Math.min(Math.max(index, 0), total - 1);
+    this.activeIndex.set(safeIndex);
+    this.scrollTabIntoView(safeIndex);
+  }
+
+  onTabKeydown(event: KeyboardEvent, index: number): void {
+    const total = this.tabs().length;
+    if (!total) return;
+
+    let nextIndex = index;
+
+    switch (event.key) {
+      case 'ArrowRight':
+        nextIndex = index + 1 > total - 1 ? 0 : index + 1;
+        break;
+      case 'ArrowLeft':
+        nextIndex = index - 1 < 0 ? total - 1 : index - 1;
+        break;
+      case 'Home':
+        nextIndex = 0;
+        break;
+      case 'End':
+        nextIndex = total - 1;
+        break;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    this.selectTab(nextIndex);
+    this.focusTab(nextIndex);
   }
 
   private updateUnderlinePosition(index: number): void {
@@ -114,5 +147,42 @@ export class MagaryTabs implements OnInit, OnDestroy {
       this.rafId = null;
       update();
     });
+  }
+
+  private scrollTabIntoView(index: number): void {
+    const headersEl = this.headersRef()?.nativeElement;
+    const button = this.buttonsRef()[index]?.nativeElement;
+
+    if (!headersEl || !button) {
+      return;
+    }
+
+    const hasHorizontalOverflow = headersEl.scrollWidth > headersEl.clientWidth + 1;
+    if (!hasHorizontalOverflow) {
+      return;
+    }
+
+    const buttonLeft = button.offsetLeft;
+    const buttonRight = buttonLeft + button.offsetWidth;
+    const visibleLeft = headersEl.scrollLeft;
+    const visibleRight = visibleLeft + headersEl.clientWidth;
+
+    let targetLeft = visibleLeft;
+
+    if (buttonLeft < visibleLeft) {
+      targetLeft = Math.max(0, buttonLeft - 12);
+    } else if (buttonRight > visibleRight) {
+      targetLeft = buttonRight - headersEl.clientWidth + 12;
+    }
+
+    headersEl.scrollTo({
+      left: targetLeft,
+      behavior: 'smooth',
+    });
+  }
+
+  private focusTab(index: number): void {
+    const button = this.buttonsRef()[index]?.nativeElement;
+    button?.focus?.();
   }
 }

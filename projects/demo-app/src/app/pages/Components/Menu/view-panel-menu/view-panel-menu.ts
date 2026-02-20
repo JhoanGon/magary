@@ -28,7 +28,7 @@ export class ViewPanelMenu {
       children: [
         { label: 'Lista', icon: 'list' },
         { label: 'Crear', icon: 'plus' },
-        { label: 'Reportes', disabled: true, icon: 'bar-chart-2' },
+        { label: 'Reportes', disabled: true, icon: 'chart-no-axes-column' },
       ],
     },
     {
@@ -37,7 +37,7 @@ export class ViewPanelMenu {
       children: [
         {
           label: 'General',
-          icon: 'sliders',
+          icon: 'sliders-vertical',
           children: [
             {
               label: 'Perfil',
@@ -62,7 +62,7 @@ export class ViewPanelMenu {
     },
     {
       label: 'Ayuda',
-      icon: 'circle-help',
+      icon: 'circle-question-mark',
     },
   ];
   lastClickedItem: string = 'Ninguno';
@@ -103,7 +103,7 @@ export class ViewPanelMenu {
       (menuToggle)="onMenuToggle($event)"
       (itemClick)="onItemClick($event)"
       (itemExpand)="onItemExpand($event)"
-    />`;
+    ></magary-panelmenu>`;
   advancedTsExample = `
     menuItems: MenuItem[] = [
       {
@@ -111,7 +111,7 @@ export class ViewPanelMenu {
         icon: 'users',
         children: [
           { label: 'Lista', route: '/users/list', icon: 'list' },
-          { label: 'Reportes', disabled: true, icon: 'bar-chart-2' }
+          { label: 'Reportes', disabled: true, icon: 'chart-no-axes-column' }
         ]
       }
     ];`;

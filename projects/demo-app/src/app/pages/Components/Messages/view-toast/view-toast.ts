@@ -163,8 +163,22 @@ export class ViewToast {
           {
             name: 'baseZIndex',
             type: 'number',
-            default: '1000',
+            default: '1100',
             description: 'Z-index base para el contenedor.',
+          },
+          {
+            name: 'offsetX',
+            type: 'string',
+            default: "'1rem'",
+            description:
+              'Separación horizontal desde el borde en posiciones left/right.',
+          },
+          {
+            name: 'offsetY',
+            type: 'string',
+            default: "'1rem'",
+            description:
+              'Separación vertical desde el borde en posiciones top/bottom.',
           },
         ],
       },
@@ -235,7 +249,7 @@ export class MyComponent {
 }`;
 
   exampleBasicHtml = `<!-- En tu layout principal (ej. app.component.html) -->
-<magary-toast position="top-right"></magary-toast>
+<magary-toast position="top-right" offsetY="5rem"></magary-toast>
 
 <!-- En tu template -->
 <magary-button (click)="showToast()" label="Mostrar Toast"></magary-button>`;

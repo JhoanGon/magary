@@ -21,7 +21,9 @@
           @for (item of currentItems; track item.label) {
             <li class="magary-menuitem">
               <a
-                [href]="item.url || '#'"
+                [href]="item.url || null"
+                [routerLink]="getRouterLink(item)"
+                [queryParams]="item.queryParams || undefined"
                 class="magary-menuitem-link"
                 [class.magary-disabled]="item.disabled"
                 [attr.target]="item.target"

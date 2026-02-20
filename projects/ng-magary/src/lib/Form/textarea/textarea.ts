@@ -35,6 +35,8 @@ export class MagaryTextArea implements ControlValueAccessor, AfterViewInit {
   readonly placeholder = input<string>();
   readonly autoResize = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
+  private readonly formDisabled = signal(false);
+  readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
 
   // Counter
   readonly maxlength = input<any, unknown>(undefined, {
@@ -81,7 +83,7 @@ export class MagaryTextArea implements ControlValueAccessor, AfterViewInit {
   }
 
   // CVA
-  writeValue(obj: any): void {
+  writeValue(obj: string | null): void {
     const val = obj || '';
     this.value.set(val);
     if (this.textarea) {
@@ -101,6 +103,6 @@ export class MagaryTextArea implements ControlValueAccessor, AfterViewInit {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    // handled by input binding
+    this.formDisabled.set(isDisabled);
   }
 }

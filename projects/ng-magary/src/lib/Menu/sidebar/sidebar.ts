@@ -62,6 +62,10 @@ export class Sidebar implements OnDestroy {
   public menu = input<MenuItem[]>([]);
   public menuTitle = input<string>('Menu');
   public showUserSection = input<boolean>(false);
+  public showUserAvatar = input<boolean>(true);
+  public showUserName = input<boolean>(true);
+  public showUserEmail = input<boolean>(true);
+  public showLogoutButton = input<boolean>(true);
   public userName = input<string>('John Doe');
   public userEmail = input<string>('user@example.com');
   public avatarConfig = input<SidebarAvatarConfig>({
@@ -125,6 +129,26 @@ export class Sidebar implements OnDestroy {
 
   logout() {
     this.onLogout.emit();
+  }
+
+  shouldRenderUserSection(): boolean {
+    return (
+      this.showUserSection() &&
+      (this.shouldShowUserInfo() || this.showLogoutButton())
+    );
+  }
+
+  shouldShowUserInfo(): boolean {
+    return this.showUserAvatar() || this.showUserName() || this.showUserEmail();
+  }
+
+  shouldShowUserDetails(): boolean {
+    return !this.isCollapsed() && (this.showUserName() || this.showUserEmail());
+  }
+
+  getAvatarFallbackLabel(): string {
+    const userName = this.userName().trim();
+    return userName ? userName.charAt(0).toUpperCase() : 'U';
   }
 
   private router = inject(Router);

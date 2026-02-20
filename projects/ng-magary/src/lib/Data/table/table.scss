@@ -105,6 +105,15 @@
   border-collapse: collapse;
   text-align: left;
 
+  .table-cell-value {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    max-width: 100%;
+    min-width: 0;
+  }
+
   thead {
     background: var(--surface-50);
     position: sticky;
@@ -285,6 +294,14 @@
 
 // Responsive Stacked Layout
 @media (max-width: 768px) {
+  .magary-table-container:not(.responsive-layout) {
+    height: auto;
+
+    .table-scroll-wrapper {
+      overflow-y: visible;
+    }
+  }
+
   .magary-table {
     display: block;
 
@@ -307,27 +324,35 @@
         box-shadow: var(--shadow-sm);
 
         td {
-          display: flex;
-          justify-content: space-between;
+          display: grid;
+          grid-template-columns: minmax(6.5rem, 42%) minmax(0, 1fr);
           align-items: center;
+          column-gap: 0.75rem;
           padding: 0.75rem 0;
           border: none;
           border-bottom: 1px solid var(--surface-100);
-          text-align: right;
+          text-align: left;
           width: 100%;
 
           &:last-child {
             border-bottom: none;
           }
 
-          &::before {
+          &[data-label]::before {
             content: attr(data-label);
             font-weight: 600;
             color: var(--text-secondary);
             font-size: 0.85rem;
             text-transform: uppercase;
-            margin-right: auto;
-            padding-right: 1rem;
+            min-width: 0;
+          }
+
+          .table-cell-value {
+            justify-self: end;
+            width: 100%;
+            text-align: right;
+            overflow-wrap: anywhere;
+            word-break: break-word;
           }
         }
       }

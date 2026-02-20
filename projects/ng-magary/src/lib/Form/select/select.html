@@ -3,9 +3,12 @@
   cdkOverlayOrigin
   #origin="cdkOverlayOrigin"
   class="magary-select-container"
-  [class.disabled]="disabled()"
+  [class.disabled]="isDisabled()"
   [class.focused]="focused()"
   [class.filled]="hasValue()"
+  role="combobox"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-disabled]="isDisabled()"
   (click)="toggleOverlay()"
 >
   <div class="selected-value">
@@ -17,7 +20,7 @@
   </div>
 
   <div class="icons-container">
-    @if (showClear() && hasValue() && !disabled()) {
+    @if (showClear() && hasValue() && !isDisabled()) {
       <lucide-icon
         name="x"
         [size]="16"

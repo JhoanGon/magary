@@ -107,10 +107,11 @@
 .split-button-menu {
   position: absolute;
   top: 100%;
-  right: 0; // Align right or left? Usually left or matching width, let's try right for now or left. 
+  right: auto;
   left: 0;
   margin-top: 0.5rem;
   min-width: 12rem; // Ensure it's not too small
+  max-width: min(90vw, 20rem);
   background: var(--surface-0, #fff);
   color: var(--text-primary, #333);
   border-radius: var(--border-radius, 6px);
@@ -128,27 +129,74 @@
   }
 
   li {
-    padding: 0.75rem 1.25rem; // More space/breathable
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.2s;
-    font-size: 0.95rem;
-
-    &:hover {
-      background-color: var(--surface-100, #f3f4f6);
-    }
+    padding: 0;
     
     &.disabled {
       opacity: 0.5;
-      pointer-events: none;
+    }
+  }
+
+  .menu-item-button {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.95rem;
+
+    &:hover:not(:disabled),
+    &:focus-visible {
+      background-color: var(--surface-100, #f3f4f6);
+      outline: none;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
     }
 
     .menu-item-icon {
       margin-right: 1rem;
-      // Dimensions controlled by [size] input
       color: var(--text-secondary, #6b7280);
+      flex-shrink: 0;
     }
+
+    .menu-item-label {
+      overflow-wrap: anywhere;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .magary-split-button {
+    max-width: 100%;
+  }
+
+  .default-button {
+    min-width: 0;
+
+    .button-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+  }
+
+  .split-button-menu {
+    width: max-content;
+    min-width: 100%;
+    max-width: min(92vw, 22rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .split-button-menu .menu-item-button {
+    padding: 0.75rem 1rem;
   }
 }
 

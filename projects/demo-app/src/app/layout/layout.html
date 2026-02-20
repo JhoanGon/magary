@@ -8,8 +8,16 @@
     [logoSrc]="'/assets/magary_logo.webp'"
     [showLogo]="true"
     [showBrandLogo]="true"
+    [showUserAvatar]="false"
+    [showUserName]="false"
+    [showUserEmail]="false"
+    [showLogoutButton]="false"
     [brandLogoSrc]="'/assets/magary_logo.webp'"
     [brandLogoPosition]="'center'"
+    [logoWidth]="414"
+    [logoHeight]="603"
+    [brandLogoWidth]="414"
+    [brandLogoHeight]="603"
     [appTitleStyle]="{
       background: 'var(--gradient-text)',
       '-webkit-background-clip': 'text',
@@ -50,5 +58,5 @@
       </div>
     </section>
   </main>
-  <magary-toast />
+  <magary-toast [offsetY]="'5rem'" />
 </div>

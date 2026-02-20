@@ -2,48 +2,47 @@
   position: fixed;
   width: auto;
   height: auto;
-  z-index: 1000;
+  z-index: 1100;
   pointer-events: none; // Allow clicks to pass through container
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 
   // Positioning
   &.top-right {
-    top: 0;
-    right: 0;
+    top: var(--magary-toast-offset-y, 1rem);
+    right: var(--magary-toast-offset-x, 1rem);
     align-items: flex-end;
   }
 
   &.top-left {
-    top: 0;
-    left: 0;
+    top: var(--magary-toast-offset-y, 1rem);
+    left: var(--magary-toast-offset-x, 1rem);
     align-items: flex-start;
   }
 
   &.bottom-right {
-    bottom: 0;
-    right: 0;
+    bottom: var(--magary-toast-offset-y, 1rem);
+    right: var(--magary-toast-offset-x, 1rem);
     align-items: flex-end;
     flex-direction: column-reverse; // Stack upwards
   }
 
   &.bottom-left {
-    bottom: 0;
-    left: 0;
+    bottom: var(--magary-toast-offset-y, 1rem);
+    left: var(--magary-toast-offset-x, 1rem);
     align-items: flex-start;
     flex-direction: column-reverse;
   }
 
   &.top-center {
-    top: 0;
+    top: var(--magary-toast-offset-y, 1rem);
     left: 50%;
     transform: translateX(-50%);
     align-items: center;
   }
 
   &.bottom-center {
-    bottom: 0;
+    bottom: var(--magary-toast-offset-y, 1rem);
     left: 50%;
     transform: translateX(-50%);
     align-items: center;

@@ -12,7 +12,7 @@ import { Highlight } from 'ngx-highlightjs';
 const CODE_EXAMPLES = {
   import: `import { MagaryDialog } from 'ng-magary';`,
   basic: `<magary-button (buttonClick)="visible = true" label="Mostrar"></magary-button>
-<magary-dialog header="Simple Dialog" [(visible)]="visible" width="50vw" [dismissableMask]="true" [resizable]="true" [draggable]="false">
+<magary-dialog header="Simple Dialog" [(visible)]="visible" width="min(90vw, 48rem)" [dismissableMask]="true" [resizable]="true" [draggable]="false">
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
@@ -23,14 +23,14 @@ const CODE_EXAMPLES = {
 </magary-dialog>`,
   modal: `<magary-button (buttonClick)="visibleModal = true" label="Mostrar Modal" severity="info"></magary-button>
 
-<magary-dialog header="Modal Dialog" [(visible)]="visibleModal" [modal]="true" width="50vw" [draggable]="false">
+<magary-dialog header="Modal Dialog" [(visible)]="visibleModal" [modal]="true" width="min(90vw, 48rem)" [draggable]="false">
     <p>
         Este es un diálogo modal. El fondo está bloqueado. No se cierra al hacer clic fuera (dismissableMask=false).
     </p>
 </magary-dialog>`,
   maximizable: `<magary-button (buttonClick)="visibleMax = true" label="Mostrar Maximizable" severity="help"></magary-button>
 
-<magary-dialog header="Maximizable Dialog" [(visible)]="visibleMax" [maximizable]="true" width="50vw" [draggable]="false">
+<magary-dialog header="Maximizable Dialog" [(visible)]="visibleMax" [maximizable]="true" width="min(90vw, 48rem)" [draggable]="false">
     <p>
         Haz clic en el icono de expandir en la cabecera para ver el efecto.
     </p>
@@ -79,7 +79,7 @@ export class ViewDialog {
     header="Glassmorphism Premium" 
     [(visible)]="visibleGlass" 
     [glass]="true" 
-    width="40vw">
+    width="min(92vw, 36rem)">
     <p>
         Este diálogo utiliza el efecto <b>Glass</b> nativo.
         Combina desenfoque de fondo con transparencia ajustada.
@@ -88,7 +88,7 @@ export class ViewDialog {
 
   readonly exampleDraggable = `<magary-button (buttonClick)="visibleDrag = true" label="Draggable Dialog" severity="warning"></magary-button>
 
-<magary-dialog header="Arrastrame" [(visible)]="visibleDrag" [draggable]="true" [modal]="false" width="30vw">
+<magary-dialog header="Arrastrame" [(visible)]="visibleDrag" [draggable]="true" [modal]="false" width="min(92vw, 32rem)">
     <p>
         Este diálogo se puede arrastrar desde el encabezado.
         Nota que [modal]="false" permite interactuar con el fondo.
@@ -97,7 +97,7 @@ export class ViewDialog {
 
   readonly exampleResizable = `<magary-button (buttonClick)="visibleResize = true" label="Resizable Dialog" severity="success"></magary-button>
 
-<magary-dialog header="Redimensioname" [(visible)]="visibleResize" [resizable]="true" width="50vw" [style]="{minHeight: '300px'}">
+<magary-dialog header="Redimensioname" [(visible)]="visibleResize" [resizable]="true" width="min(92vw, 40rem)" [style]="{minHeight: '300px'}">
     <p>
         Este diálogo tiene un manejador en la esquina inferior derecha.
         Intenta cambiar su tamaño.
@@ -110,7 +110,7 @@ export class ViewDialog {
     header="Posición & Glass" 
     [(visible)]="visiblePos" 
     position="top-right" 
-    width="30vw" 
+    width="min(92vw, 32rem)" 
     [glass]="true">
     <p>
         Este diálogo usa las nuevas propiedades:

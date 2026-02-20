@@ -3,6 +3,9 @@ import {
   Component,
   ElementRef,
   HostListener,
+  QueryList,
+  ViewChild,
+  ViewChildren,
   inject,
   input,
   output,
@@ -22,6 +25,10 @@ import { MenuItem } from '../../Menu/api/menu.interface'; // Use api interface
 })
 export class MagarySplitButton {
   private readonly elementRef = inject(ElementRef);
+  @ViewChild('dropdownTrigger')
+  private dropdownTriggerRef?: ElementRef<HTMLButtonElement>;
+  @ViewChildren('menuItemButton')
+  private menuItemButtonRefs?: QueryList<ElementRef<HTMLButtonElement>>;
 
   readonly label = input<string>('Save');
   readonly icon = input<string>();
@@ -39,13 +46,73 @@ export class MagarySplitButton {
   toggleDropdown(event: MouseEvent): void {
     if (this.disabled()) return;
     event.stopPropagation();
-    this.isOpen.update((v) => !v);
+    const nextState = !this.isOpen();
+    this.isOpen.set(nextState);
+    if (nextState) {
+      this.focusMenuItemByIndex(0, true);
+    }
     this.onDropdownClick.emit(event);
   }
 
   onDefaultClick(event: MouseEvent): void {
     if (this.disabled()) return;
     this.onClick.emit(event);
+  }
+
+  onTriggerKeydown(event: KeyboardEvent): void {
+    if (this.disabled()) return;
+
+    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (!this.isOpen()) {
+        this.isOpen.set(true);
+      }
+      this.focusMenuItemByIndex(0, true);
+      return;
+    }
+
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!this.isOpen()) {
+        this.isOpen.set(true);
+      }
+      this.focusMenuItemByIndex(this.getMenuButtons().length - 1, true);
+    }
+  }
+
+  onMenuItemKeydown(event: KeyboardEvent, index: number): void {
+    const buttons = this.getMenuButtons();
+    if (!buttons.length) {
+      return;
+    }
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        this.focusMenuItemByIndex(this.findEnabledIndex(buttons, index + 1, 1));
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.focusMenuItemByIndex(this.findEnabledIndex(buttons, index - 1, -1));
+        break;
+      case 'Home':
+        event.preventDefault();
+        this.focusMenuItemByIndex(this.findFirstEnabledIndex(buttons));
+        break;
+      case 'End':
+        event.preventDefault();
+        this.focusMenuItemByIndex(this.findLastEnabledIndex(buttons));
+        break;
+      case 'Escape':
+        event.preventDefault();
+        this.closeDropdown(true);
+        break;
+      case 'Tab':
+        this.closeDropdown();
+        break;
+      default:
+        break;
+    }
   }
 
   onItemClick(event: MouseEvent, item: MenuItem): void {
@@ -60,7 +127,7 @@ export class MagarySplitButton {
     }
 
     // Close dropdown
-    this.isOpen.set(false);
+    this.closeDropdown();
   }
 
   @HostListener('document:click', ['$event'])
@@ -69,14 +136,90 @@ export class MagarySplitButton {
       this.isOpen() &&
       !this.elementRef.nativeElement.contains(event.target)
     ) {
-      this.isOpen.set(false);
+      this.closeDropdown();
     }
   }
 
   @HostListener('document:keydown.escape')
   onEscape(): void {
     if (this.isOpen()) {
-      this.isOpen.set(false);
+      this.closeDropdown(true);
     }
+  }
+
+  private closeDropdown(focusTrigger = false): void {
+    this.isOpen.set(false);
+    if (focusTrigger) {
+      this.focusTrigger();
+    }
+  }
+
+  private focusTrigger(): void {
+    this.dropdownTriggerRef?.nativeElement.focus();
+  }
+
+  private getMenuButtons(): HTMLButtonElement[] {
+    return (
+      this.menuItemButtonRefs?.toArray().map((ref) => ref.nativeElement) ?? []
+    );
+  }
+
+  private focusMenuItemByIndex(index: number, defer = false): void {
+    const focus = () => {
+      const buttons = this.getMenuButtons();
+      if (!buttons.length) {
+        return;
+      }
+
+      const safeIndex = Math.min(Math.max(index, 0), buttons.length - 1);
+      const enabledIndex = this.findEnabledIndex(buttons, safeIndex, 1);
+      if (enabledIndex === -1) {
+        return;
+      }
+
+      buttons[enabledIndex].focus();
+    };
+
+    if (defer) {
+      setTimeout(focus);
+      return;
+    }
+
+    focus();
+  }
+
+  private findEnabledIndex(
+    buttons: HTMLButtonElement[],
+    startIndex: number,
+    direction: 1 | -1,
+  ): number {
+    const total = buttons.length;
+    if (!total) {
+      return -1;
+    }
+
+    let index = ((startIndex % total) + total) % total;
+    for (let i = 0; i < total; i++) {
+      const candidate = buttons[index];
+      if (!candidate.disabled) {
+        return index;
+      }
+      index = (index + direction + total) % total;
+    }
+
+    return -1;
+  }
+
+  private findFirstEnabledIndex(buttons: HTMLButtonElement[]): number {
+    return buttons.findIndex((button) => !button.disabled);
+  }
+
+  private findLastEnabledIndex(buttons: HTMLButtonElement[]): number {
+    for (let i = buttons.length - 1; i >= 0; i--) {
+      if (!buttons[i].disabled) {
+        return i;
+      }
+    }
+    return -1;
   }
 }

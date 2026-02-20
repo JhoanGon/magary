@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, signal } from '@angular/core';
+import { Component, OnInit, NgModule, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -62,12 +62,22 @@ export class ViewCarousel implements OnInit {
   // Effects Demo
   effects = ['slide', 'fade', 'cube', 'flip', 'coverflow', 'cards'];
   currentEffect = signal<any>('coverflow');
+  isStackedEffect = computed(() => {
+    const effect = this.currentEffect();
+    return (
+      effect === 'fade' ||
+      effect === 'cube' ||
+      effect === 'flip' ||
+      effect === 'cards'
+    );
+  });
 
   // Indicators Demo
   indicatorStyles = ['dots', 'lines', 'fraction', 'progress', 'thumbnails'];
   currentIndicatorStyle = signal<any>('dots');
 
-  navPositions = ['default', 'top', 'bottom', 'outside'];
+  // Navigation Demo Remove top, bottom
+  navPositions = ['default', 'outside'];
   currentNavPosition = signal<any>('outside');
 
   constructor() {}
@@ -304,7 +314,7 @@ export class ViewCarousel implements OnInit {
         }
     ];
   }
-  
+
   getSeverity(status: string) {
     switch (status) {
       case 'INSTOCK':
@@ -317,4 +327,92 @@ export class ViewCarousel implements OnInit {
         return '#3b82f6';
     }
   }`;
+
+  codeHTMLCircular = `<magary-carousel
+  [value]="products"
+  [numVisible]="3"
+  [numScroll]="1"
+  [circular]="true"
+  [autoplayInterval]="3000"
+  [spaceBetween]="24"
+  [responsiveOptions]="responsiveOptions"
+>
+  <ng-template #item let-product>
+    <magary-card [img]="product.image" [altText]="product.name" [width]="'100%'">
+      <div class="absolute top-0 left-0 m-3 z-1">
+        <magary-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></magary-tag>
+      </div>
+      <div slot="header">
+        <h4 class="m-0 text-lg font-bold">{{ product.name }}</h4>
+      </div>
+      <div class="mt-2">
+        <span class="text-lg font-semibold">\${{ product.price }}</span>
+      </div>
+    </magary-card>
+  </ng-template>
+</magary-carousel>`;
+
+  codeTSCircular = `responsiveOptions = [
+  { breakpoint: '1199px', numVisible: 3, numScroll: 1 },
+  { breakpoint: '991px', numVisible: 2, numScroll: 1 },
+  { breakpoint: '767px', numVisible: 1, numScroll: 1 },
+];`;
+
+  codeHTMLVertical = `<magary-carousel
+  [value]="products"
+  [orientation]="'vertical'"
+  [verticalViewPortHeight]="'360px'"
+  [numVisible]="1"
+  [numScroll]="1"
+  [spaceBetween]="24"
+  [responsiveOptions]="verticalResponsiveOptions"
+>
+  <ng-template #item let-product>
+    <magary-card [img]="product.image" [altText]="product.name" [width]="'100%'">
+      <div class="absolute top-0 left-0 m-3 z-1">
+        <magary-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></magary-tag>
+      </div>
+      <div slot="header">
+        <h4 class="m-0 text-lg font-bold">{{ product.name }}</h4>
+      </div>
+      <div class="mt-2">
+        <span class="text-lg font-semibold">\${{ product.price }}</span>
+      </div>
+    </magary-card>
+  </ng-template>
+</magary-carousel>`;
+
+  codeTSVertical = `verticalResponsiveOptions = [
+  { breakpoint: '991px', numVisible: 1, numScroll: 1 },
+  { breakpoint: '767px', numVisible: 1, numScroll: 1 },
+];`;
+
+  codeHTMLEffects = `<magary-carousel
+  [value]="products"
+  [numVisible]="isStackedEffect() ? 1 : 3"
+  [numScroll]="1"
+  [circular]="true"
+  [spaceBetween]="24"
+  [transitionDuration]="500"
+  [centerMode]="currentEffect() === 'coverflow'"
+  [effect]="currentEffect()"
+  [responsiveOptions]="isStackedEffect() ? [] : responsiveOptions"
+>
+  <ng-template #item let-product>
+    <magary-card [img]="product.image" [altText]="product.name" [width]="'100%'" [shadow]="4">
+      <div slot="header" class="text-center">
+        <h4 class="m-0">{{ product.name }}</h4>
+        <p class="text-sm text-500 m-0 mt-1">{{ product.category }}</p>
+      </div>
+    </magary-card>
+  </ng-template>
+</magary-carousel>`;
+
+  codeTSEffects = `effects = ['slide', 'fade', 'cube', 'flip', 'coverflow', 'cards'];
+currentEffect = signal<'slide' | 'fade' | 'cube' | 'flip' | 'coverflow' | 'cards'>('coverflow');
+
+isStackedEffect = computed(() => {
+  const effect = this.currentEffect();
+  return effect === 'fade' || effect === 'cube' || effect === 'flip' || effect === 'cards';
+});`;
 }

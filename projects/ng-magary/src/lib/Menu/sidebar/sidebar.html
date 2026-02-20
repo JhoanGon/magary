@@ -35,6 +35,7 @@
             style="cursor: pointer"
             [width]="logoWidth()"
             [height]="logoHeight()"
+            priority
           />
         }
       }
@@ -87,6 +88,7 @@
           class="brand-logo"
           [width]="brandLogoWidth()"
           [height]="brandLogoHeight()"
+          priority
         />
       </div>
     }
@@ -135,71 +137,82 @@
           class="brand-logo"
           [width]="brandLogoWidth()"
           [height]="brandLogoHeight()"
+          priority
         />
       </div>
     }
-    @if (showUserSection()) {
+    @if (shouldRenderUserSection()) {
       <div class="user-section">
-        <div class="user-info">
-          @switch (avatarConfig().type) {
-            @case ("image") {
-              <magary-avatar
-                [image]="avatarConfig().image || ''"
-                [size]="avatarConfig().size || 'normal'"
-                [shape]="avatarConfig().shape || 'circle'"
-                [badgeValue]="avatarConfig().badgeValue"
-                [badgeSeverity]="avatarConfig().badgeSeverity || 'danger'"
-                class="user-avatar"
-              />
+        @if (shouldShowUserInfo()) {
+          <div class="user-info">
+            @if (showUserAvatar()) {
+              @switch (avatarConfig().type) {
+                @case ("image") {
+                  <magary-avatar
+                    [image]="avatarConfig().image || ''"
+                    [size]="avatarConfig().size || 'normal'"
+                    [shape]="avatarConfig().shape || 'circle'"
+                    [badgeValue]="avatarConfig().badgeValue"
+                    [badgeSeverity]="avatarConfig().badgeSeverity || 'danger'"
+                    class="user-avatar"
+                  />
+                }
+                @case ("label") {
+                  <magary-avatar
+                    [label]="avatarConfig().label || getAvatarFallbackLabel()"
+                    [size]="avatarConfig().size || 'normal'"
+                    [shape]="avatarConfig().shape || 'circle'"
+                    [badgeValue]="avatarConfig().badgeValue"
+                    [badgeSeverity]="avatarConfig().badgeSeverity || 'danger'"
+                    class="user-avatar"
+                  />
+                }
+                @case ("icon") {
+                  <magary-avatar
+                    [icon]="avatarConfig().icon || 'user'"
+                    [size]="avatarConfig().size || 'normal'"
+                    [shape]="avatarConfig().shape || 'circle'"
+                    [badgeValue]="avatarConfig().badgeValue"
+                    [badgeSeverity]="avatarConfig().badgeSeverity || 'danger'"
+                    class="user-avatar"
+                  />
+                }
+              }
             }
-            @case ("label") {
-              <magary-avatar
-                [label]="avatarConfig().label || userName().charAt(0)"
-                [size]="avatarConfig().size || 'normal'"
-                [shape]="avatarConfig().shape || 'circle'"
-                [badgeValue]="avatarConfig().badgeValue"
-                [badgeSeverity]="avatarConfig().badgeSeverity || 'danger'"
-                class="user-avatar"
-              />
+            @if (shouldShowUserDetails()) {
+              <div class="user-details">
+                @if (showUserName()) {
+                  <div class="username">{{ userName() }}</div>
+                }
+                @if (showUserEmail()) {
+                  <div class="email">{{ userEmail() }}</div>
+                }
+              </div>
             }
-            @case ("icon") {
-              <magary-avatar
-                [icon]="avatarConfig().icon || 'user'"
-                [size]="avatarConfig().size || 'normal'"
-                [shape]="avatarConfig().shape || 'circle'"
-                [badgeValue]="avatarConfig().badgeValue"
-                [badgeSeverity]="avatarConfig().badgeSeverity || 'danger'"
-                class="user-avatar"
-              />
-            }
-          }
+          </div>
+        }
+        @if (showLogoutButton()) {
           @if (!isCollapsed()) {
-            <div class="user-details">
-              <div class="username">{{ userName() }}</div>
-              <div class="email">{{ userEmail() }}</div>
-            </div>
+            <button
+              class="logout-button"
+              type="button"
+              aria-label="Cerrar sesion"
+              (click)="logout()"
+            >
+              <lucide-icon name="log-out"></lucide-icon>
+              Cerrar sesion
+            </button>
+          } @else {
+            <button
+              class="logout-button"
+              type="button"
+              aria-label="Cerrar sesion"
+              (click)="logout()"
+              title="Cerrar sesion"
+            >
+              <lucide-icon name="log-out"></lucide-icon>
+            </button>
           }
-        </div>
-        @if (!isCollapsed()) {
-          <button
-            class="logout-button"
-            type="button"
-            aria-label="Cerrar sesion"
-            (click)="logout()"
-          >
-            <lucide-icon name="log-out"></lucide-icon>
-            Cerrar sesion
-          </button>
-        } @else {
-          <button
-            class="logout-button"
-            type="button"
-            aria-label="Cerrar sesion"
-            (click)="logout()"
-            title="Cerrar sesion"
-          >
-            <lucide-icon name="log-out"></lucide-icon>
-          </button>
         }
       </div>
     }
@@ -212,6 +225,7 @@
         class="brand-logo"
         [width]="brandLogoWidth()"
         [height]="brandLogoHeight()"
+        priority
       />
     </div>
   }

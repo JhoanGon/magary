@@ -48,7 +48,7 @@
           <magary-dialog
             header="Basic Dialog"
             [(visible)]="visible"
-            width="50vw"
+            width="min(90vw, 48rem)"
             [dismissableMask]="true"
             [resizable]="true"
             [draggable]="false"
@@ -117,7 +117,7 @@
             header="Modal Dialog"
             [(visible)]="visibleModal"
             [modal]="true"
-            width="50vw"
+            width="min(90vw, 48rem)"
             [dismissableMask]="false"
             [modal]="true"
             [draggable]="false"
@@ -176,7 +176,7 @@
             [(visible)]="visibleDrag"
             [draggable]="true"
             [modal]="false"
-            width="30vw"
+            width="min(92vw, 32rem)"
           >
             <p>
               Este diálogo se puede arrastrar desde el encabezado. Nota que
@@ -209,7 +209,7 @@
             header="Redimensioname"
             [(visible)]="visibleResize"
             [resizable]="true"
-            width="50vw"
+            width="min(92vw, 40rem)"
             [style]="{ minHeight: '300px' }"
             [draggable]="false"
           >
@@ -243,7 +243,7 @@
             header="Posición Personalizada & Glass"
             [(visible)]="visiblePos"
             position="right"
-            width="30vw"
+            width="min(92vw, 32rem)"
             [draggable]="false"
             [glass]="true"
           >
@@ -278,7 +278,7 @@
             header="Glassmorphism Premium"
             [(visible)]="visibleGlass"
             [glass]="true"
-            width="40vw"
+            width="min(92vw, 36rem)"
             [draggable]="false"
           >
             <p>

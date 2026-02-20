@@ -2,6 +2,8 @@
   class="magary-toast-container"
   [ngClass]="position()"
   [style.zIndex]="baseZIndex()"
+  [style.--magary-toast-offset-x]="offsetX()"
+  [style.--magary-toast-offset-y]="offsetY()"
 >
   @for (toast of toasts; track toast.id) {
     <magary-toast-item

@@ -4,7 +4,6 @@ import {
   Renderer2,
   ViewEncapsulation,
   ChangeDetectionStrategy,
-  computed,
   signal,
   effect,
   model,
@@ -15,6 +14,7 @@ import {
   inject,
   AfterViewInit,
   OnDestroy,
+  HostListener,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
@@ -113,16 +113,17 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
   dragging = signal(false);
 
   // Drag/Resize State
-  private lastPageX = 0;
-  private lastPageY = 0;
+  private lastClientX = 0;
+  private lastClientY = 0;
   private startWidth = 0;
   private startHeight = 0;
-  private startX = 0;
-  private startY = 0;
+  private activeDragPointerId: number | null = null;
+  private activeResizePointerId: number | null = null;
 
   // Listeners
-  private documentMouseMoveListener: (() => void) | null = null;
-  private documentMouseUpListener: (() => void) | null = null;
+  private documentPointerMoveListener: (() => void) | null = null;
+  private documentPointerUpListener: (() => void) | null = null;
+  private documentPointerCancelListener: (() => void) | null = null;
 
   public el = inject(ElementRef);
   public renderer = inject(Renderer2);
@@ -153,14 +154,18 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     // However, since we moved it, let's explicitely check if we need to remove, though Angular usually tracks the node.
     // Actually, simpler: if we moved it, we leave it to Angular to remove.
     // But we should unblock scroll just in case.
+    this.cancelInteractions();
     this.unblockBodyScroll();
   }
 
   // --- Public Methods ---
 
-  close(event: Event) {
+  close(event?: Event) {
+    if (!this.visible()) return;
+
+    this.cancelInteractions();
     this.visible.set(false);
-    event.preventDefault();
+    event?.preventDefault();
   }
 
   maximize(event: Event) {
@@ -185,141 +190,186 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     }
   }
 
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey(event: Event) {
+    if (!this.visible() || !this.closeOnEscape()) return;
+    this.close(event);
+  }
+
   // --- Dragging Logic ---
 
-  initDrag(event: MouseEvent) {
-    if (this.draggable() && !this.maximized()) {
-      this.dragging.set(true);
-      this.lastPageX = event.pageX;
-      this.lastPageY = event.pageY;
+  initDrag(event: PointerEvent) {
+    if (!this.draggable() || this.maximized()) return;
+    if (!this.isPrimaryPointer(event)) return;
+    if (this.activeDragPointerId !== null || this.resizing()) return;
+    if (this.isHeaderActionTarget(event.target)) return;
 
-      const container = this.containerViewChild().nativeElement;
-      const rect = container.getBoundingClientRect();
-      this.startX = rect.left;
-      this.startY = rect.top;
+    this.activeDragPointerId = event.pointerId;
+    this.dragging.set(true);
+    this.lastClientX = event.clientX;
+    this.lastClientY = event.clientY;
 
-      // Ensure absolute positioning for dragging if likely to move
-      // Note: Premium libraries often switch to fixed/absolute on first drag
-      // Here we assume the dialog container might need position styles applied
+    const currentTarget = event.currentTarget as HTMLElement | null;
+    currentTarget?.setPointerCapture?.(event.pointerId);
 
-      this.renderer.addClass(document.body, 'magary-dragging');
-      this.bindGlobalListeners('drag');
-      event.preventDefault();
-    }
+    this.renderer.addClass(document.body, 'magary-dragging');
+    this.bindGlobalListeners('drag');
+    event.preventDefault();
   }
 
-  onDrag(event: MouseEvent) {
-    if (this.dragging()) {
-      const deltaX = event.pageX - this.lastPageX;
-      const deltaY = event.pageY - this.lastPageY;
-
-      const container = this.containerViewChild().nativeElement;
-
-      // We rely on transform for smoother performance
-      // Get current transform
-      const computedStyle = getComputedStyle(container);
-      const matrix = new WebKitCSSMatrix(computedStyle.transform);
-      const currentX = matrix.m41;
-      const currentY = matrix.m42;
-
-      const newX = currentX + deltaX;
-      const newY = currentY + deltaY;
-
-      this.renderer.setStyle(
-        container,
-        'transform',
-        `translate3d(${newX}px, ${newY}px, 0)`,
-      );
-
-      this.lastPageX = event.pageX;
-      this.lastPageY = event.pageY;
+  onDrag(event: PointerEvent) {
+    if (!this.dragging()) return;
+    if (
+      this.activeDragPointerId !== null &&
+      event.pointerId !== this.activeDragPointerId
+    ) {
+      return;
     }
+
+    const deltaX = event.clientX - this.lastClientX;
+    const deltaY = event.clientY - this.lastClientY;
+
+    const container = this.containerViewChild().nativeElement;
+    const { x: currentX, y: currentY } = this.getCurrentTransform(container);
+    const newX = currentX + deltaX;
+    const newY = currentY + deltaY;
+
+    this.renderer.setStyle(
+      container,
+      'transform',
+      `translate3d(${newX}px, ${newY}px, 0)`,
+    );
+
+    this.lastClientX = event.clientX;
+    this.lastClientY = event.clientY;
+    event.preventDefault();
   }
 
-  endDrag() {
+  endDrag(event?: PointerEvent) {
+    if (
+      event &&
+      this.activeDragPointerId !== null &&
+      event.pointerId !== this.activeDragPointerId
+    ) {
+      return;
+    }
+
+    this.activeDragPointerId = null;
     this.renderer.removeClass(document.body, 'magary-dragging');
     this.unbindGlobalListeners();
-    setTimeout(() => {
-      this.dragging.set(false);
-    }, 50);
+    this.dragging.set(false);
   }
 
   // --- Resizing Logic ---
 
-  initResize(event: MouseEvent) {
-    if (this.resizable() && !this.maximized()) {
-      this.resizing.set(true);
-      this.lastPageX = event.pageX;
-      this.lastPageY = event.pageY;
+  initResize(event: PointerEvent) {
+    if (!this.resizable() || this.maximized()) return;
+    if (!this.isPrimaryPointer(event)) return;
+    if (this.activeResizePointerId !== null || this.dragging()) return;
 
-      const container = this.containerViewChild().nativeElement;
-      this.startWidth = container.offsetWidth;
-      this.startHeight = container.offsetHeight;
+    this.activeResizePointerId = event.pointerId;
+    this.resizing.set(true);
+    this.lastClientX = event.clientX;
+    this.lastClientY = event.clientY;
 
-      this.renderer.addClass(document.body, 'magary-resizing');
-      this.bindGlobalListeners('resize');
-      event.preventDefault();
-    }
+    const container = this.containerViewChild().nativeElement;
+    this.startWidth = container.offsetWidth;
+    this.startHeight = container.offsetHeight;
+
+    const currentTarget = event.currentTarget as HTMLElement | null;
+    currentTarget?.setPointerCapture?.(event.pointerId);
+
+    this.renderer.addClass(document.body, 'magary-resizing');
+    this.bindGlobalListeners('resize');
+    event.preventDefault();
   }
 
-  onResize(event: MouseEvent) {
-    if (this.resizing()) {
-      const deltaX = event.pageX - this.lastPageX;
-      const deltaY = event.pageY - this.lastPageY;
-
-      const container = this.containerViewChild().nativeElement;
-      const newWidth = Math.max(this.startWidth + deltaX, 300); // Min width constraint
-      const newHeight = Math.max(this.startHeight + deltaY, 150); // Min height constraint
-
-      this.renderer.setStyle(container, 'width', `${newWidth}px`);
-      this.renderer.setStyle(container, 'height', `${newHeight}px`);
+  onResize(event: PointerEvent) {
+    if (!this.resizing()) return;
+    if (
+      this.activeResizePointerId !== null &&
+      event.pointerId !== this.activeResizePointerId
+    ) {
+      return;
     }
+
+    const deltaX = event.clientX - this.lastClientX;
+    const deltaY = event.clientY - this.lastClientY;
+
+    const container = this.containerViewChild().nativeElement;
+    const newWidth = Math.max(this.startWidth + deltaX, 300); // Min width constraint
+    const newHeight = Math.max(this.startHeight + deltaY, 150); // Min height constraint
+
+    this.renderer.setStyle(container, 'width', `${newWidth}px`);
+    this.renderer.setStyle(container, 'height', `${newHeight}px`);
+    event.preventDefault();
   }
 
-  endResize() {
+  endResize(event?: PointerEvent) {
+    if (
+      event &&
+      this.activeResizePointerId !== null &&
+      event.pointerId !== this.activeResizePointerId
+    ) {
+      return;
+    }
+
+    this.activeResizePointerId = null;
     this.renderer.removeClass(document.body, 'magary-resizing');
     this.unbindGlobalListeners();
-    setTimeout(() => {
-      this.resizing.set(false);
-    }, 50);
+    this.resizing.set(false);
   }
 
   // --- Event Listeners Helpers ---
 
   private bindGlobalListeners(type: 'drag' | 'resize') {
     if (type === 'drag') {
-      this.documentMouseMoveListener = this.renderer.listen(
+      this.documentPointerMoveListener = this.renderer.listen(
         'document',
-        'mousemove',
+        'pointermove',
         (e) => this.onDrag(e),
       );
-      this.documentMouseUpListener = this.renderer.listen(
+      this.documentPointerUpListener = this.renderer.listen(
         'document',
-        'mouseup',
-        () => this.endDrag(),
+        'pointerup',
+        (e) => this.endDrag(e),
+      );
+      this.documentPointerCancelListener = this.renderer.listen(
+        'document',
+        'pointercancel',
+        (e) => this.endDrag(e),
       );
     } else {
-      this.documentMouseMoveListener = this.renderer.listen(
+      this.documentPointerMoveListener = this.renderer.listen(
         'document',
-        'mousemove',
+        'pointermove',
         (e) => this.onResize(e),
       );
-      this.documentMouseUpListener = this.renderer.listen(
+      this.documentPointerUpListener = this.renderer.listen(
         'document',
-        'mouseup',
-        () => this.endResize(),
+        'pointerup',
+        (e) => this.endResize(e),
+      );
+      this.documentPointerCancelListener = this.renderer.listen(
+        'document',
+        'pointercancel',
+        (e) => this.endResize(e),
       );
     }
   }
 
   private unbindGlobalListeners() {
-    if (this.documentMouseMoveListener) {
-      this.documentMouseMoveListener();
-      this.documentMouseMoveListener = null;
+    if (this.documentPointerMoveListener) {
+      this.documentPointerMoveListener();
+      this.documentPointerMoveListener = null;
     }
-    if (this.documentMouseUpListener) {
-      this.documentMouseUpListener();
-      this.documentMouseUpListener = null;
+    if (this.documentPointerUpListener) {
+      this.documentPointerUpListener();
+      this.documentPointerUpListener = null;
+    }
+    if (this.documentPointerCancelListener) {
+      this.documentPointerCancelListener();
+      this.documentPointerCancelListener = null;
     }
   }
 
@@ -331,5 +381,52 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
 
   private unblockBodyScroll() {
     this.renderer.removeClass(document.body, 'magary-overflow-hidden');
+  }
+
+  private cancelInteractions() {
+    this.activeDragPointerId = null;
+    this.activeResizePointerId = null;
+    this.unbindGlobalListeners();
+    this.renderer.removeClass(document.body, 'magary-dragging');
+    this.renderer.removeClass(document.body, 'magary-resizing');
+    this.dragging.set(false);
+    this.resizing.set(false);
+  }
+
+  private isPrimaryPointer(event: PointerEvent): boolean {
+    if (!event.isPrimary) return false;
+    if (event.pointerType === 'mouse') {
+      return event.button === 0;
+    }
+    return true;
+  }
+
+  private isHeaderActionTarget(target: EventTarget | null): boolean {
+    return (
+      target instanceof HTMLElement &&
+      !!target.closest('.magary-dialog-header-icon')
+    );
+  }
+
+  private getCurrentTransform(element: HTMLElement): { x: number; y: number } {
+    const transform = getComputedStyle(element).transform;
+
+    if (!transform || transform === 'none') {
+      return { x: 0, y: 0 };
+    }
+
+    try {
+      const matrix = new DOMMatrixReadOnly(transform);
+      return { x: matrix.m41, y: matrix.m42 };
+    } catch {
+      const match = transform.match(/matrix\(([^)]+)\)/);
+      if (!match) return { x: 0, y: 0 };
+
+      const values = match[1].split(',').map((v) => Number(v.trim()));
+      return {
+        x: values[4] || 0,
+        y: values[5] || 0,
+      };
+    }
   }
 }
