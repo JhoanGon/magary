@@ -69,7 +69,7 @@
             [class.expanded]="isSubItemExpanded(getUniqueItemKey(item))"
           >
             @for (
-              subItem of item.children;
+              subItem of getChildren(item);
               track subItem.label + "-" + $index
             ) {
               <li [ngClass]="subItem.styleClass">
@@ -127,13 +127,14 @@
                     "
                   >
                     @for (
-                      subSubItem of subItem.children;
+                      subSubItem of getChildren(subItem);
                       track subSubItem.label + "-" + $index
                     ) {
                       <li [ngClass]="subSubItem.styleClass">
-                        @if (subSubItem.route) {
+                        @if (hasRoute(subSubItem)) {
                           <a
-                            [routerLink]="subSubItem.route"
+                            [routerLink]="getRouterLink(subSubItem)"
+                            [queryParams]="subSubItem.queryParams || undefined"
                             [class.item-hovered]="
                               isItemHovered(
                                 subSubItem.label + '-subsub-' + $index
@@ -213,9 +214,10 @@
                     }
                   </ul>
                 } @else {
-                  @if (subItem.route) {
+                  @if (hasRoute(subItem)) {
                     <a
-                      [routerLink]="subItem.route"
+                      [routerLink]="getRouterLink(subItem)"
+                      [queryParams]="subItem.queryParams || undefined"
                       [class.item-hovered]="
                         isItemHovered(subItem.label + '-sub-' + $index)
                       "
@@ -275,9 +277,10 @@
             }
           </ul>
         } @else {
-          @if (item.route) {
+          @if (hasRoute(item)) {
             <a
-              [routerLink]="item.route"
+              [routerLink]="getRouterLink(item)"
+              [queryParams]="item.queryParams || undefined"
               [class.item-hovered]="isItemHovered(getItemId(item, $index))"
               [class.disabled]="isItemDisabled(item)"
               (click)="onItemClick(item, 0)"

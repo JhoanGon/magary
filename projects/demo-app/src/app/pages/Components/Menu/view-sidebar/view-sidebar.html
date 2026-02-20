@@ -35,6 +35,7 @@
         [backgroundLine]="'#ed2c44'"
         [positionContent]="'flex-start'"
         [background]="'#282c34'"
+        [panelWidth]="'full'"
       >
         <magary-tab label="Modo secciones">
           <div class="preview-scroll">
@@ -298,8 +299,8 @@
             <td><code>closeSidebar</code></td>
             <td><code>void</code></td>
             <td>
-              Output disponible para integrar cierre externo (actualmente no se
-              emite desde la plantilla interna).
+              Se emite cuando el sidebar mobile se cierra (backdrop, boton
+              close o cierre programatico).
             </td>
           </tr>
         </tbody>

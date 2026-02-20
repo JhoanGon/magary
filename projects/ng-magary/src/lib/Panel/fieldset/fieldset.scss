@@ -30,7 +30,7 @@
             border: none;
             background: transparent;
             
-            a {
+            .magary-fieldset-toggler {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -40,6 +40,7 @@
                 background: var(--surface-50, #f9fafb);
                 border-radius: 6px;
                 cursor: pointer;
+                font: inherit;
                 text-decoration: none;
                 transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
                 user-select: none;

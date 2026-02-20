@@ -16,6 +16,6 @@ import { CommonModule } from '@angular/common';
   encapsulation: ViewEncapsulation.None,
 })
 export class MagaryToolbar {
-  style = input<any>();
+  style = input<Record<string, string | number> | null>(null);
   styleClass = input<string>('');
 }

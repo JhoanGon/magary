@@ -28,7 +28,12 @@
   }
 
   <!-- Table Wrapper -->
-  <div class="table-scroll-wrapper">
+  <div
+    class="table-scroll-wrapper"
+    tabindex="0"
+    role="region"
+    [attr.aria-label]="title() ? title() + ' data region' : 'Table data region'"
+  >
     <table class="magary-table">
       <thead>
         <tr>

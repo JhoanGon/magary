@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   computed,
-  EventEmitter,
   input,
   output,
   ChangeDetectionStrategy,
@@ -19,7 +18,7 @@ type ButtonSeverity =
 type ButtonVariant = 'solid' | 'text' | 'outlined';
 type ButtonSize = 'small' | 'normal' | 'large';
 type IconPosition = 'left' | 'right';
-type ShadowLevel = 0 | 1 | 2 | 3 | 4 | 5;
+type ShadowLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 @Component({
   selector: 'magary-button',
   standalone: true,
@@ -66,9 +65,20 @@ export class MagaryButton {
     'border-radius': this.rounded() ? '22px' : '8px',
     background: this.customBackgroundColor() || undefined,
   }));
-  readonly effectiveAriaLabel = computed(
-    () => this.ariaLabel() || this.label() || 'Button',
-  );
+  readonly effectiveAriaLabel = computed(() => {
+    const customAriaLabel = this.ariaLabel()?.trim();
+    if (customAriaLabel) {
+      return customAriaLabel;
+    }
+
+    const textLabel = this.label()?.trim();
+    if (textLabel) {
+      return textLabel;
+    }
+
+    const iconName = this.icon()?.trim();
+    return iconName ? `${iconName.replace(/[-_]/g, ' ')} button` : 'Button';
+  });
   onButtonClick(event: Event): void {
     if (!this.isDisabled()) {
       this.buttonClick.emit(event);

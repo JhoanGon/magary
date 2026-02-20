@@ -103,11 +103,22 @@ export class MagaryCard {
 
   onCardClick(event: Event) {
     if (this.isInteractive()) {
+      const dispatchTarget =
+        event.currentTarget instanceof HTMLElement
+          ? event.currentTarget
+          : event.target instanceof HTMLElement
+            ? event.target
+            : null;
+
+      if (!dispatchTarget) {
+        return;
+      }
+
       const cardClickEvent = new CustomEvent('cardClick', {
         detail: { event },
         bubbles: true,
       });
-      (event.target as HTMLElement).dispatchEvent(cardClickEvent);
+      dispatchTarget.dispatchEvent(cardClickEvent);
     }
   }
 

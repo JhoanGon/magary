@@ -168,7 +168,7 @@ $button-variants: (
       background-color: transparent;
       color: $bg;
       &:hover {
-        background-color: rgba($bg, 0.1);
+        background-color: color-mix(in srgb, #{$bg} 10%, transparent);
       }
     }
     &.p-button-outlined.p-button-#{$name} {
@@ -176,7 +176,7 @@ $button-variants: (
       border-color: $bg;
       color: $bg;
       &:hover {
-        background-color: rgba($bg, 0.1);
+        background-color: color-mix(in srgb, #{$bg} 10%, transparent);
         color: $bg;
       }
     }
@@ -189,6 +189,9 @@ $button-variants: (
   100% {
     transform: rotate(360deg);
   }
+}
+.shadow-0 {
+  box-shadow: none;
 }
 @for $i from 1 through 7 {
   .shadow-#{$i} {

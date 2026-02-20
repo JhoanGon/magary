@@ -32,21 +32,17 @@
       {{ badge() }}
     </span>
   }
-  <div class="card-content" [attr.aria-label]="'Card content'">
+  <div class="card-content">
     <div class="card-body">
-      @if (true) {
-        <header class="card-header" role="banner">
-          <ng-content select="[slot='header']"></ng-content>
-        </header>
-      }
-      <main class="card-main" role="main">
+      <header class="card-header">
+        <ng-content select="[slot='header']"></ng-content>
+      </header>
+      <div class="card-main">
         <ng-content></ng-content>
-      </main>
-      @if (true) {
-        <footer class="card-footer" role="contentinfo">
-          <ng-content select="[slot='footer']"></ng-content>
-        </footer>
-      }
+      </div>
+      <footer class="card-footer">
+        <ng-content select="[slot='footer']"></ng-content>
+      </footer>
     </div>
   </div>
   @if (showLoadingOverlay()) {

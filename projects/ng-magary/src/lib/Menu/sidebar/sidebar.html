@@ -1,4 +1,9 @@
-<button class="hamburger-button" (click)="toggleMobileSidebar()">
+<button
+  class="hamburger-button"
+  type="button"
+  aria-label="Abrir menu lateral"
+  (click)="toggleMobileSidebar()"
+>
   <lucide-icon name="menu"></lucide-icon>
 </button>
 @if (isMobileOpen()) {
@@ -12,11 +17,15 @@
   <div class="sidebar-header" [class.collapsed-header]="isCollapsed()">
     @if (isCollapsed()) {
       @if (showToggle() && collapsible()) {
-        <button class="header-toggle collapsed" (click)="toggleCollapse()">
+        <button
+          class="header-toggle collapsed"
+          type="button"
+          aria-label="Expandir sidebar"
+          (click)="toggleCollapse()"
+        >
           <lucide-icon name="menu"></lucide-icon>
         </button>
       } @else {
-        <!-- If toggle hidden but collapsed, show logo icon? -->
         @if (showLogo()) {
           <img
             [ngSrc]="logoSrc()"
@@ -50,12 +59,22 @@
         </span>
       </div>
       @if (showToggle() && collapsible()) {
-        <button class="header-toggle expanded" (click)="toggleCollapse()">
+        <button
+          class="header-toggle expanded"
+          type="button"
+          aria-label="Colapsar sidebar"
+          (click)="toggleCollapse()"
+        >
           <lucide-icon name="chevron-left"></lucide-icon>
         </button>
       }
     }
-    <button class="close-button" (click)="closeMobileSidebar()">
+    <button
+      class="close-button"
+      type="button"
+      aria-label="Cerrar sidebar"
+      (click)="closeMobileSidebar()"
+    >
       <lucide-icon name="x"></lucide-icon>
     </button>
   </div>
@@ -162,15 +181,22 @@
           }
         </div>
         @if (!isCollapsed()) {
-          <button class="logout-button" (click)="logout()">
+          <button
+            class="logout-button"
+            type="button"
+            aria-label="Cerrar sesion"
+            (click)="logout()"
+          >
             <lucide-icon name="log-out"></lucide-icon>
-            Cerrar sesión
+            Cerrar sesion
           </button>
         } @else {
           <button
             class="logout-button"
+            type="button"
+            aria-label="Cerrar sesion"
             (click)="logout()"
-            title="Cerrar sesión"
+            title="Cerrar sesion"
           >
             <lucide-icon name="log-out"></lucide-icon>
           </button>

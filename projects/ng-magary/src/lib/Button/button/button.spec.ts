@@ -80,7 +80,7 @@ describe('MagaryButton behavior', () => {
     fixture.componentRef.setInput('variant', 'outlined');
     fixture.componentRef.setInput('size', 'large');
     fixture.componentRef.setInput('rounded', true);
-    fixture.componentRef.setInput('shadow', 3);
+    fixture.componentRef.setInput('shadow', 6);
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector(
@@ -92,7 +92,7 @@ describe('MagaryButton behavior', () => {
     expect(button.classList.contains('p-button-secondary')).toBe(true);
     expect(button.classList.contains('p-button-outlined')).toBe(true);
     expect(button.classList.contains('p-button-large')).toBe(true);
-    expect(button.classList.contains('shadow-3')).toBe(true);
+    expect(button.classList.contains('shadow-6')).toBe(true);
     expect(button.style.borderRadius).toBe('22px');
     expect(button.getAttribute('aria-label')).toBe('Action');
 
@@ -102,6 +102,10 @@ describe('MagaryButton behavior', () => {
 
     fixture.componentRef.setInput('label', undefined);
     fixture.componentRef.setInput('ariaLabel', undefined);
+    fixture.detectChanges();
+    expect(button.getAttribute('aria-label')).toBe('house button');
+
+    fixture.componentRef.setInput('icon', undefined);
     fixture.detectChanges();
     expect(button.getAttribute('aria-label')).toBe('Button');
   });

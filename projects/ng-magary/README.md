@@ -1,63 +1,127 @@
-# NgMagary
+# ng-magary
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.0.
+Libreria de componentes UI para Angular (standalone-first).
 
-## Code scaffolding
+## Compatibilidad
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Angular: `^17 || ^18 || ^19 || ^20 || ^21`
+- Requiere peer dependencies:
+  - `@angular/cdk`
+  - `@angular/animations`
+  - `lucide-angular`
+  - `lucide`
+  - `gridstack`
 
-```bash
-ng generate component component-name
-```
+## Instalacion
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the library, run:
+### npm
 
 ```bash
-ng build ng-magary
+npm install ng-magary @angular/cdk @angular/animations gridstack lucide-angular lucide
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
-
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/ng-magary
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with [Vitest](https://vitest.dev/), use the following command:
+### pnpm
 
 ```bash
-ng test
+pnpm add ng-magary @angular/cdk @angular/animations gridstack lucide-angular lucide
 ```
 
-## Running end-to-end tests
+## Configuracion minima recomendada
 
-For end-to-end (e2e) testing, run:
+### 1) Animaciones Angular
+
+```ts
+import { ApplicationConfig } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideAnimations()],
+};
+```
+
+### 2) Lucide icons
+
+```ts
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { LucideAngularModule, icons } from 'lucide-angular';
+
+const kebabCase = (value: string) =>
+  value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+const lucideIcons = Object.entries(icons).reduce(
+  (acc, [key, icon]) => {
+    acc[key] = icon;
+    acc[kebabCase(key)] = icon;
+    return acc;
+  },
+  {} as Record<string, unknown>,
+);
+
+export const appConfig: ApplicationConfig = {
+  providers: [importProvidersFrom(LucideAngularModule.pick(lucideIcons))],
+};
+```
+
+## Uso basico (standalone)
+
+```ts
+import { Component } from '@angular/core';
+import { MagaryButton, MagaryCard } from 'ng-magary';
+
+@Component({
+  standalone: true,
+  selector: 'app-home',
+  imports: [MagaryButton, MagaryCard],
+  template: `
+    <magary-card>
+      <h2 slot="header">Demo</h2>
+      <magary-button label="Accion" />
+    </magary-card>
+  `,
+})
+export class HomeComponent {}
+```
+
+## Estilos globales
+
+### Importante
+
+`ng-magary` no expone `theme.css` ni `core.css`.
+
+No agregues imports legacy como estos:
+
+```scss
+@import 'ng-magary/styles/theme.css';
+@import 'ng-magary/styles/core.css';
+```
+
+### Caso especial: Tooltip
+
+`magaryTooltip` renderiza overlays con clases globales. Agrega en tu `styles.scss`:
+
+```scss
+.magary-tooltip {
+  position: absolute;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #111827;
+  color: #ffffff;
+  font-size: 0.875rem;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.magary-tooltip.magary-tooltip-visible {
+  opacity: 1;
+}
+```
+
+## Desarrollo de la libreria
 
 ```bash
-ng e2e
+pnpm run build:lib
+pnpm run test:ng-magary
+pnpm run lint
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

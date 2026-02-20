@@ -13,6 +13,8 @@ import {
 import { Highlight } from 'ngx-highlightjs';
 import { FormsModule } from '@angular/forms';
 
+const STABLE_SAMPLE_DATE = new Date('2026-02-18T12:00:00.000Z');
+
 const CODE_EXAMPLES = {
   import: `import { MagaryTable } from 'ng-magary';`,
   basic: `<magary-table [value]="products" [columns]="cols"></magary-table>`,
@@ -141,7 +143,7 @@ export class ViewTable {
       price: 65,
       category: 'Accessories',
       status: 'INSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Black Watch',
@@ -149,7 +151,7 @@ export class ViewTable {
       price: 72,
       category: 'Accessories',
       status: 'OUTOFSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Blue Band',
@@ -157,7 +159,7 @@ export class ViewTable {
       price: 79,
       category: 'Fitness',
       status: 'LOWSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Blue T-Shirt',
@@ -165,7 +167,7 @@ export class ViewTable {
       price: 29,
       category: 'Clothing',
       status: 'INSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Bracelet',
@@ -173,7 +175,7 @@ export class ViewTable {
       price: 15,
       category: 'Accessories',
       status: 'INSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Brown Purse',
@@ -181,7 +183,7 @@ export class ViewTable {
       price: 120,
       category: 'Accessories',
       status: 'OUTOFSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Chakra Bracelet',
@@ -189,7 +191,7 @@ export class ViewTable {
       price: 32,
       category: 'Accessories',
       status: 'LOWSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Galaxy Earrings',
@@ -197,7 +199,7 @@ export class ViewTable {
       price: 34,
       category: 'Accessories',
       status: 'INSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Game Controller',
@@ -205,7 +207,7 @@ export class ViewTable {
       price: 99,
       category: 'Electronics',
       status: 'INSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Gaming Set',
@@ -213,7 +215,7 @@ export class ViewTable {
       price: 299,
       category: 'Electronics',
       status: 'INSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
     {
       name: 'Gold Phone Case',
@@ -221,7 +223,7 @@ export class ViewTable {
       price: 24,
       category: 'Accessories',
       status: 'LOWSTOCK',
-      date: new Date(),
+      date: STABLE_SAMPLE_DATE,
     },
   ];
 }

@@ -1,13 +1,16 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   Component,
+  ChangeDetectionStrategy,
+  OnDestroy,
   input,
   output,
   signal,
   inject,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { LucideAngularModule } from 'lucide-angular';
 import { MagaryPanelmenu } from '../panelmenu/panelmenu';
 import { MenuItem } from '../api/menu.interface';
 import {
@@ -17,7 +20,7 @@ import {
   AvatarShape,
 } from '../../Misc/avatar/avatar';
 
-interface SidebarSection {
+export interface SidebarSection {
   title: string;
   icon?: string;
   items: MenuItem[];
@@ -27,10 +30,10 @@ interface SidebarSection {
   iconClass?: string;
 }
 
-type AvatarType = 'image' | 'label' | 'icon';
+export type SidebarAvatarType = 'image' | 'label' | 'icon';
 
-interface AvatarConfig {
-  type: AvatarType;
+export interface SidebarAvatarConfig {
+  type: SidebarAvatarType;
   size?: AvatarSize;
   shape?: AvatarShape;
   image?: string;
@@ -39,9 +42,6 @@ interface AvatarConfig {
   badgeValue?: string;
   badgeSeverity?: BadgeSeverity | undefined;
 }
-
-import { LucideAngularModule } from 'lucide-angular';
-import { OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'magary-sidebar',
@@ -64,7 +64,7 @@ export class Sidebar implements OnDestroy {
   public showUserSection = input<boolean>(false);
   public userName = input<string>('John Doe');
   public userEmail = input<string>('user@example.com');
-  public avatarConfig = input<AvatarConfig>({
+  public avatarConfig = input<SidebarAvatarConfig>({
     type: 'label',
     label: 'U',
     size: 'normal',
@@ -96,7 +96,13 @@ export class Sidebar implements OnDestroy {
   closeSidebar = output<void>();
 
   toggleMobileSidebar() {
-    this.isMobileOpen.update((open) => !open);
+    this.isMobileOpen.update((open) => {
+      const next = !open;
+      if (!next) {
+        this.closeSidebar.emit();
+      }
+      return next;
+    });
   }
 
   toggleCollapse() {
@@ -110,14 +116,19 @@ export class Sidebar implements OnDestroy {
   }
 
   closeMobileSidebar() {
+    if (!this.isMobileOpen()) {
+      return;
+    }
     this.isMobileOpen.set(false);
+    this.closeSidebar.emit();
   }
 
   logout() {
     this.onLogout.emit();
   }
+
   private router = inject(Router);
-  private routerSubscription: any;
+  private routerSubscription?: Subscription;
 
   constructor() {
     this.routerSubscription = this.router.events.subscribe(() => {
@@ -126,8 +137,6 @@ export class Sidebar implements OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
-    }
+    this.routerSubscription?.unsubscribe();
   }
 }

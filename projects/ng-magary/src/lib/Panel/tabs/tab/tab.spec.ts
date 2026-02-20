@@ -28,16 +28,26 @@ describe('MagaryTab behavior', () => {
   });
 
   it('keeps projected content hidden while tab is inactive', () => {
+    const tabElement = fixture.nativeElement.querySelector(
+      'magary-tab',
+    ) as HTMLElement;
+
     expect(host.tab.label()).toBe('Profile');
     expect(host.tab.active()).toBe(false);
+    expect(tabElement.getAttribute('role')).toBe('tabpanel');
+    expect(tabElement.getAttribute('aria-hidden')).toBe('true');
     expect(fixture.nativeElement.textContent).not.toContain('Profile Content');
   });
 
   it('shows projected content when active signal is true', () => {
     host.tab.active.set(true);
     fixture.detectChanges();
+    const tabElement = fixture.nativeElement.querySelector(
+      'magary-tab',
+    ) as HTMLElement;
 
     expect(host.tab.active()).toBe(true);
+    expect(tabElement.getAttribute('aria-hidden')).toBe('false');
     expect(fixture.nativeElement.textContent).toContain('Profile Content');
   });
 });
