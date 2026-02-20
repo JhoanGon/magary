@@ -1,6 +1,23 @@
+import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryDialog } from './dialog';
+
+const kebabCase = (value: string) =>
+  value
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([a-zA-Z])([0-9])/g, '$1-$2')
+    .toLowerCase();
+
+const lucideIcons = Object.entries(icons).reduce(
+  (acc, [key, icon]) => {
+    acc[key] = icon;
+    acc[kebabCase(key)] = icon;
+    return acc;
+  },
+  {} as Record<string, any>,
+);
 
 describe('MagaryDialog behavior', () => {
   let fixture: ComponentFixture<MagaryDialog>;
@@ -9,7 +26,10 @@ describe('MagaryDialog behavior', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MagaryDialog],
-      providers: [provideNoopAnimations()],
+      providers: [
+        provideNoopAnimations(),
+        importProvidersFrom(LucideAngularModule.pick(lucideIcons)),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MagaryDialog);
@@ -19,6 +39,8 @@ describe('MagaryDialog behavior', () => {
 
   afterEach(() => {
     document.body.classList.remove('magary-overflow-hidden');
+    document.body.classList.remove('magary-dragging');
+    document.body.classList.remove('magary-resizing');
     fixture.destroy();
   });
 
@@ -100,5 +122,97 @@ describe('MagaryDialog behavior', () => {
 
     expect(component.visible()).toBe(false);
     expect(closeEvent.preventDefault).toHaveBeenCalledTimes(1);
+  });
+
+  it('closes on Escape when closeOnEscape is enabled', () => {
+    fixture.componentRef.setInput('closeOnEscape', true);
+    component.visible.set(true);
+    fixture.detectChanges();
+
+    const event = {
+      key: 'Escape',
+      preventDefault: vi.fn(),
+    } as unknown as KeyboardEvent;
+
+    component.onEscapeKey(event);
+
+    expect(component.visible()).toBe(false);
+    expect(event.preventDefault).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not close on Escape when closeOnEscape is disabled', () => {
+    fixture.componentRef.setInput('closeOnEscape', false);
+    component.visible.set(true);
+    fixture.detectChanges();
+
+    const event = {
+      key: 'Escape',
+      preventDefault: vi.fn(),
+    } as unknown as KeyboardEvent;
+
+    component.onEscapeKey(event);
+
+    expect(component.visible()).toBe(true);
+    expect(event.preventDefault).not.toHaveBeenCalled();
+  });
+
+  it('supports drag interactions through pointer events', () => {
+    fixture.componentRef.setInput('header', 'Drag me');
+    component.visible.set(true);
+    fixture.detectChanges();
+
+    const header = fixture.nativeElement.querySelector(
+      '.magary-dialog-header',
+    ) as HTMLElement;
+
+    const pointerDown = {
+      pointerId: 1,
+      pointerType: 'touch',
+      isPrimary: true,
+      button: 0,
+      clientX: 120,
+      clientY: 100,
+      target: header,
+      currentTarget: header,
+      preventDefault: vi.fn(),
+    } as unknown as PointerEvent;
+
+    component.initDrag(pointerDown);
+
+    expect(component.dragging()).toBe(true);
+    expect(pointerDown.preventDefault).toHaveBeenCalledTimes(1);
+
+    component.endDrag({ pointerId: 1 } as PointerEvent);
+    expect(component.dragging()).toBe(false);
+  });
+
+  it('supports resize interactions through pointer events', () => {
+    fixture.componentRef.setInput('resizable', true);
+    component.visible.set(true);
+    fixture.detectChanges();
+
+    const resizer = fixture.nativeElement.querySelector(
+      '.magary-dialog-resizer',
+    ) as HTMLElement;
+
+    const pointerDown = {
+      pointerId: 2,
+      pointerType: 'touch',
+      isPrimary: true,
+      button: 0,
+      clientX: 200,
+      clientY: 180,
+      target: resizer,
+      currentTarget: resizer,
+      preventDefault: vi.fn(),
+    } as unknown as PointerEvent;
+
+    component.initResize(pointerDown);
+
+    expect(component.resizing()).toBe(true);
+    expect(pointerDown.preventDefault).toHaveBeenCalledTimes(1);
+
+    component.endResize({ pointerId: 2 } as PointerEvent);
+    expect(component.resizing()).toBe(false);
   });
 });

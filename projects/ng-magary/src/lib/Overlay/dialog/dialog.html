@@ -27,13 +27,14 @@
     >
       <!-- Header -->
       @if (header()) {
-        <div class="magary-dialog-header" (mousedown)="initDrag($event)">
+        <div class="magary-dialog-header" (pointerdown)="initDrag($event)">
           <span class="magary-dialog-title">{{ header() }}</span>
           <div class="magary-dialog-header-icons">
             @if (maximizable()) {
               <button
                 type="button"
                 class="magary-dialog-header-icon"
+                (pointerdown)="$event.stopPropagation()"
                 (click)="maximize($event)"
                 tabindex="-1"
                 [attr.aria-label]="maximized() ? 'Restore' : 'Maximize'"
@@ -46,6 +47,7 @@
             <button
               type="button"
               class="magary-dialog-header-icon"
+              (pointerdown)="$event.stopPropagation()"
               (click)="close($event)"
               tabindex="-1"
               aria-label="Close"
@@ -72,7 +74,7 @@
       @if (resizable() && !maximized()) {
         <div
           class="magary-dialog-resizer"
-          (mousedown)="initResize($event)"
+          (pointerdown)="initResize($event)"
           (click)="$event.stopPropagation()"
         ></div>
       }

@@ -101,4 +101,20 @@ describe('MagaryMessage behavior', () => {
 
     expect(component.visible()).toBe(false);
   });
+
+  it('auto closes when life is set after initial render', () => {
+    vi.useFakeTimers();
+
+    fixture.componentRef.setInput('text', 'Deferred life');
+    fixture.detectChanges();
+    expect(component.visible()).toBe(true);
+
+    fixture.componentRef.setInput('life', 100);
+    fixture.detectChanges();
+
+    vi.advanceTimersByTime(100);
+    fixture.detectChanges();
+
+    expect(component.visible()).toBe(false);
+  });
 });

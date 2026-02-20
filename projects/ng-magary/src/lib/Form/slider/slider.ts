@@ -3,12 +3,10 @@ import {
   ElementRef,
   EventEmitter,
   forwardRef,
-  Input,
   Output,
   ViewChild,
   ViewEncapsulation,
   ChangeDetectionStrategy,
-  OnInit,
   OnDestroy,
   Renderer2,
   ChangeDetectorRef,
@@ -16,7 +14,6 @@ import {
   input,
   signal,
   computed,
-  effect,
   model,
 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
@@ -45,7 +42,7 @@ export const SLIDER_VALUE_ACCESSOR: any = {
     class: 'magary-slider',
     '[class.magary-slider-horizontal]': 'orientation() === "horizontal"',
     '[class.magary-slider-vertical]': 'orientation() === "vertical"',
-    '[class.magary-disabled]': 'disabled()',
+    '[class.magary-disabled]': 'isDisabled()',
   },
 })
 export class MagarySlider implements ControlValueAccessor, OnDestroy {
@@ -56,6 +53,8 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
   range = input<boolean>(false);
   orientation = input<'horizontal' | 'vertical'>('horizontal');
   disabled = input<boolean>(false);
+  private formDisabled = signal<boolean>(false);
+  isDisabled = computed(() => this.disabled() || this.formDisabled());
   style = input<{ [klass: string]: any } | null>(null);
   styleClass = input<string>('');
 
@@ -79,6 +78,9 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
 
   private dragListener: (() => void) | null = null;
   private upListener: (() => void) | null = null;
+  private touchMoveListener: (() => void) | null = null;
+  private touchEndListener: (() => void) | null = null;
+  private touchCancelListener: (() => void) | null = null;
 
   // Computed values for view
   handle1Pos = computed(() => {
@@ -129,7 +131,11 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
     return ((val - min) / (max - min)) * 100;
   }
 
-  updateValue(val: number, handleIdx: number = 0) {
+  updateValue(
+    val: number,
+    handleIdx: number = 0,
+    originalEvent?: MouseEvent | Event,
+  ) {
     if (this.range()) {
       let current = [
         ...((this.value() as number[]) || [this.min(), this.max()]),
@@ -145,11 +151,11 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
       current[handleIdx] = val;
       this.value.set(current);
       this.onModelChange(current);
-      this.onChange.emit({ originalEvent: event, value: current });
+      this.onChange.emit({ originalEvent, value: current });
     } else {
       this.value.set(val);
       this.onModelChange(val);
-      this.onChange.emit({ originalEvent: event, value: val });
+      this.onChange.emit({ originalEvent, value: val });
     }
   }
 
@@ -178,7 +184,7 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
 
   // Events
   onMouseDown(event: MouseEvent, index: number) {
-    if (this.disabled()) return;
+    if (this.isDisabled()) return;
 
     event.preventDefault(); // prevent selection
     this.dragging.set(true);
@@ -186,42 +192,35 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
     this.bindDragListeners();
   }
 
-  onBarClick(event: MouseEvent) {
-    if (this.disabled() || this.dragging()) return;
-    // Calculate clicked value
-    // Decide which handle to move if range
+  onTouchStart(event: TouchEvent, index: number): void {
+    if (this.isDisabled()) return;
 
-    const rect = this.el.nativeElement
-      .querySelector('.magary-slider-rail')
-      .getBoundingClientRect();
-    const vertical = this.orientation() === 'vertical';
-
-    let percent = vertical
-      ? (rect.bottom - event.clientY) / rect.height
-      : (event.clientX - rect.left) / rect.width;
-
-    const newVal = this.calculateValueFromPos(percent);
-
-    if (this.range()) {
-      const current = (this.value() as number[]) || [this.min(), this.max()];
-      const dist1 = Math.abs(current[0] - newVal);
-      const dist2 = Math.abs(current[1] - newVal);
-
-      if (dist1 < dist2) {
-        this.updateValue(newVal, 0);
-      } else if (dist2 < dist1) {
-        this.updateValue(newVal, 1);
-      } else {
-        // Equal distance, maybe move the nearest or start?
-        // Typically move the one that creates a valid range or user intent.
-        // Logic: if click is < v0, move v0. if click > v1, move v1. if in between, closest.
-        if (newVal < current[0]) this.updateValue(newVal, 0);
-        else if (newVal > current[1]) this.updateValue(newVal, 1);
-        else this.updateValue(newVal, 0); // Default to start?
-      }
-    } else {
-      this.updateValue(newVal, 0);
+    if (event.cancelable) {
+      event.preventDefault();
     }
+    event.stopPropagation();
+
+    this.dragging.set(true);
+    this.handleIndex.set(index);
+    this.bindTouchListeners();
+  }
+
+  onBarTouchStart(event: TouchEvent): void {
+    if (this.isDisabled() || this.dragging()) return;
+
+    const touch = event.touches[0];
+    if (!touch) return;
+
+    if (event.cancelable) {
+      event.preventDefault();
+    }
+
+    this.updateValueFromClientPosition(touch.clientX, touch.clientY, event);
+  }
+
+  onBarClick(event: MouseEvent) {
+    if (this.isDisabled() || this.dragging()) return;
+    this.updateValueFromClientPosition(event.clientX, event.clientY, event);
   }
 
   bindDragListeners() {
@@ -245,6 +244,36 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
     }
   }
 
+  bindTouchListeners(): void {
+    if (!this.touchMoveListener) {
+      this.touchMoveListener = this.renderer.listen(
+        this.document,
+        'touchmove',
+        (event) => {
+          this.onTouchMove(event);
+        },
+      );
+    }
+    if (!this.touchEndListener) {
+      this.touchEndListener = this.renderer.listen(
+        this.document,
+        'touchend',
+        (event) => {
+          this.onTouchEnd(event);
+        },
+      );
+    }
+    if (!this.touchCancelListener) {
+      this.touchCancelListener = this.renderer.listen(
+        this.document,
+        'touchcancel',
+        (event) => {
+          this.onTouchEnd(event);
+        },
+      );
+    }
+  }
+
   unbindDragListeners() {
     if (this.dragListener) {
       this.dragListener();
@@ -256,19 +285,24 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
     }
   }
 
+  unbindTouchListeners(): void {
+    if (this.touchMoveListener) {
+      this.touchMoveListener();
+      this.touchMoveListener = null;
+    }
+    if (this.touchEndListener) {
+      this.touchEndListener();
+      this.touchEndListener = null;
+    }
+    if (this.touchCancelListener) {
+      this.touchCancelListener();
+      this.touchCancelListener = null;
+    }
+  }
+
   onDrag(event: MouseEvent) {
     if (this.dragging()) {
-      const rect = this.el.nativeElement
-        .querySelector('.magary-slider-rail')
-        .getBoundingClientRect();
-      const vertical = this.orientation() === 'vertical';
-
-      let percent = vertical
-        ? (rect.bottom - event.clientY) / rect.height
-        : (event.clientX - rect.left) / rect.width;
-
-      const newVal = this.calculateValueFromPos(percent);
-      this.updateValue(newVal, this.handleIndex()!);
+      this.updateDragFromClientPosition(event.clientX, event.clientY, event);
     }
   }
 
@@ -279,6 +313,86 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
       this.unbindDragListeners();
       this.onSlideEnd.emit({ originalEvent: event, value: this.value() });
     }
+  }
+
+  onTouchMove(event: TouchEvent): void {
+    if (!this.dragging()) return;
+
+    const touch = event.touches[0];
+    if (!touch) return;
+
+    if (event.cancelable) {
+      event.preventDefault();
+    }
+
+    this.updateDragFromClientPosition(touch.clientX, touch.clientY, event);
+  }
+
+  onTouchEnd(event: TouchEvent): void {
+    if (this.dragging()) {
+      this.dragging.set(false);
+      this.handleIndex.set(null);
+      this.unbindTouchListeners();
+      this.onSlideEnd.emit({ originalEvent: event, value: this.value() });
+    }
+  }
+
+  private getRailRect(): DOMRect {
+    return this.el.nativeElement
+      .querySelector('.magary-slider-rail')
+      .getBoundingClientRect();
+  }
+
+  private calculatePercentFromPosition(
+    clientX: number,
+    clientY: number,
+    rect: DOMRect,
+  ): number {
+    return this.orientation() === 'vertical'
+      ? (rect.bottom - clientY) / rect.height
+      : (clientX - rect.left) / rect.width;
+  }
+
+  private updateValueFromClientPosition(
+    clientX: number,
+    clientY: number,
+    originalEvent?: Event,
+  ): void {
+    const rect = this.getRailRect();
+    const percent = this.calculatePercentFromPosition(clientX, clientY, rect);
+    const newVal = this.calculateValueFromPos(percent);
+
+    if (!this.range()) {
+      this.updateValue(newVal, 0, originalEvent);
+      return;
+    }
+
+    const current = (this.value() as number[]) || [this.min(), this.max()];
+    const dist1 = Math.abs(current[0] - newVal);
+    const dist2 = Math.abs(current[1] - newVal);
+
+    if (dist1 < dist2) {
+      this.updateValue(newVal, 0, originalEvent);
+    } else if (dist2 < dist1) {
+      this.updateValue(newVal, 1, originalEvent);
+    } else if (newVal < current[0]) {
+      this.updateValue(newVal, 0, originalEvent);
+    } else if (newVal > current[1]) {
+      this.updateValue(newVal, 1, originalEvent);
+    } else {
+      this.updateValue(newVal, 0, originalEvent);
+    }
+  }
+
+  private updateDragFromClientPosition(
+    clientX: number,
+    clientY: number,
+    originalEvent?: Event,
+  ): void {
+    const rect = this.getRailRect();
+    const percent = this.calculatePercentFromPosition(clientX, clientY, rect);
+    const newVal = this.calculateValueFromPos(percent);
+    this.updateValue(newVal, this.handleIndex()!, originalEvent);
   }
 
   // CVA
@@ -296,11 +410,11 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    // Input signal disabled could be updated if it wasn't readonly.
-    // But typically we rely on input binding `[disabled]`.
+    this.formDisabled.set(isDisabled);
   }
 
   ngOnDestroy() {
     this.unbindDragListeners();
+    this.unbindTouchListeners();
   }
 }

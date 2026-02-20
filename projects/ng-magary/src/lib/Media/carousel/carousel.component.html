@@ -16,7 +16,6 @@
   <div
     class="magary-carousel-content"
     [class.magary-carousel-content-vertical]="isVertical()"
-    [style.height]="isVertical() ? verticalViewPortHeight() : 'auto'"
   >
     <!-- Loading State -->
     @if (isEmpty() && loadingTemplate()) {
@@ -78,6 +77,7 @@
           class="magary-carousel-viewport"
           [class.magary-carousel-viewport-center]="centerMode()"
           [class.magary-carousel-viewport-peek]="peekMode()"
+          [style.height]="isVertical() ? verticalViewPortHeight() : null"
           [attr.aria-label]="
             'Slide ' + (_currentPage() + 1) + ' of ' + totalPages()
           "
@@ -101,7 +101,7 @@
                   [class.is-active]="isItemActive($index)"
                   [class.is-zoomed]="_zoomedIndex() === $index"
                   [style.flex-basis]="
-                    effect() === 'fade'
+                    isStackedEffect()
                       ? '100%'
                       : 'calc((100% - ' +
                         (effectiveNumVisible() - 1) * _activeSpaceBetween() +
@@ -110,7 +110,7 @@
                         ')'
                   "
                   [style.min-width]="
-                    !isVertical() && effect() !== 'fade'
+                    !isVertical() && !isStackedEffect()
                       ? 'calc((100% - ' +
                         (effectiveNumVisible() - 1) * _activeSpaceBetween() +
                         'px) / ' +
@@ -119,10 +119,10 @@
                       : 'auto'
                   "
                   [style.width]="
-                    isVertical() || effect() === 'fade' ? '100%' : null
+                    isVertical() || isStackedEffect() ? '100%' : null
                   "
                   [style.min-height]="
-                    isVertical() && effect() !== 'fade'
+                    isVertical() && !isStackedEffect()
                       ? 'calc((100% - ' +
                         (effectiveNumVisible() - 1) * _activeSpaceBetween() +
                         'px) / ' +

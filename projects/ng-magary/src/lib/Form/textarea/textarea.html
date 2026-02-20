@@ -1,13 +1,14 @@
 <div class="magary-textarea-wrapper">
   <textarea
     #textarea
+    [value]="value()"
     [attr.rows]="rows()"
     [attr.cols]="cols()"
     [attr.placeholder]="placeholder()"
     [attr.maxlength]="maxlength()"
-    [disabled]="disabled()"
+    [disabled]="isDisabled()"
     [class.magary-textarea]="true"
-    [class.disabled]="disabled()"
+    [class.disabled]="isDisabled()"
     [class.auto-resize]="autoResize()"
     (input)="onInput($event)"
     (blur)="onBlur()"

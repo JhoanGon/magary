@@ -11,10 +11,9 @@ export const MEDIA_ROUTES: Routes = [
     loadComponent: () =>
       import('./view-galleria/view-galleria').then((m) => m.ViewGalleria),
   },
-  // TODO: Carousel temporarily hidden due to pending bug fixes
-  // {
-  //   path: 'view-carousel',
-  //   loadComponent: () =>
-  //     import('./view-carousel/view-carousel').then((m) => m.ViewCarousel),
-  // },
+  {
+    path: 'view-carousel',
+    loadComponent: () =>
+      import('./view-carousel/view-carousel').then((m) => m.ViewCarousel),
+  },
 ];

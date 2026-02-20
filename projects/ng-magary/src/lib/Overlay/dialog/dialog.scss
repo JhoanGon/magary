@@ -124,6 +124,8 @@
   box-shadow: var(--magary-dialog-shadow);
   border: var(--magary-dialog-border);
   width: 50vw; // Default width
+  max-width: calc(100vw - 2rem);
+  min-width: min(18rem, calc(100vw - 2rem));
 
   // Hardware acceleration for smoother animations/drags
   will-change: transform, width, height;
@@ -145,7 +147,9 @@
 
   // Responsive: Full width on mobile
   @media (max-width: 768px) {
-    width: 90vw;
+    width: min(90vw, 36rem);
+    max-width: calc(100vw - 1rem);
+    min-width: min(18rem, calc(100vw - 1rem));
     max-height: 95vh;
   }
 
@@ -183,6 +187,7 @@
 
   // Drag handle cursor logic specific to header
   cursor: grab;
+  touch-action: none;
 
   &:active {
     cursor: grabbing;
@@ -192,6 +197,11 @@
     font-weight: 600;
     font-size: 1.25rem;
     letter-spacing: -0.025em; // Modern typography tweak
+    line-height: 1.2;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    padding-right: 0.5rem;
   }
 
   .magary-dialog-header-icons {
@@ -216,6 +226,7 @@
 
   // Prevent drag propagation from icons
   pointer-events: auto;
+  touch-action: manipulation;
 
   &:hover {
     background-color: var(--surface-hover, rgba(0, 0, 0, 0.05));
@@ -237,6 +248,8 @@
   padding: var(--magary-dialog-content-padding);
   flex-grow: 1;
   position: relative;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 
   // Custom scrollbar for premium feel
   &::-webkit-scrollbar {
@@ -253,6 +266,46 @@
 
     &:hover {
       background-color: rgba(156, 163, 175, 0.8);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .magary-dialog-mask {
+    &.magary-dialog-top {
+      padding-top: 0.75rem;
+    }
+
+    &.magary-dialog-bottom {
+      padding-bottom: 0.75rem;
+    }
+
+    &.magary-dialog-left {
+      padding-left: 0.75rem;
+    }
+
+    &.magary-dialog-right {
+      padding-right: 0.75rem;
+    }
+
+    &.magary-dialog-top-left {
+      padding-top: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    &.magary-dialog-top-right {
+      padding-top: 0.75rem;
+      padding-right: 0.75rem;
+    }
+
+    &.magary-dialog-bottom-left {
+      padding-bottom: 0.75rem;
+      padding-left: 0.75rem;
+    }
+
+    &.magary-dialog-bottom-right {
+      padding-bottom: 0.75rem;
+      padding-right: 0.75rem;
     }
   }
 }
@@ -276,6 +329,7 @@
   height: 16px;
   cursor: se-resize;
   z-index: 90;
+  touch-action: none;
 
   // Corner indicator
   &::after {

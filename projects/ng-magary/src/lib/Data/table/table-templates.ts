@@ -12,6 +12,7 @@ export class MagaryTemplate {
   constructor(public template: TemplateRef<any>) {}
 
   getType(): string {
-    return this.name!;
+    // Support both modern syntax `magaryTemplate="body"` and legacy `name="body"`.
+    return this.type ?? this.name ?? '';
   }
 }

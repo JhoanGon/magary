@@ -61,42 +61,48 @@
             <tr class="table-row">
               @for (col of columns(); track col.field) {
                 <td [attr.data-label]="col.header">
-                  <!-- Content Switch -->
-                  @switch (col.type) {
-                    @case ("avatar") {
-                      <magary-avatar
-                        [image]="resolveFieldData(row, col.field)"
-                        [label]="
-                          !resolveFieldData(row, col.field)
-                            ? getAvatarLabel(row)
-                            : ''
-                        "
-                        shape="circle"
-                        size="normal"
-                      >
-                      </magary-avatar>
-                    }
-                    @case ("badge") {
-                      <span
-                        class="magary-badge"
-                        [ngClass]="
-                          'status-' +
-                          resolveFieldData(row, col.field)?.toLowerCase()
-                        "
-                      >
+                  <span
+                    class="table-cell-value"
+                    [class.cell-avatar]="col.type === 'avatar'"
+                    [class.cell-badge]="col.type === 'badge'"
+                  >
+                    <!-- Content Switch -->
+                    @switch (col.type) {
+                      @case ("avatar") {
+                        <magary-avatar
+                          [image]="resolveFieldData(row, col.field)"
+                          [label]="
+                            !resolveFieldData(row, col.field)
+                              ? getAvatarLabel(row)
+                              : ''
+                          "
+                          shape="circle"
+                          size="normal"
+                        >
+                        </magary-avatar>
+                      }
+                      @case ("badge") {
+                        <span
+                          class="magary-badge"
+                          [ngClass]="
+                            'status-' +
+                            resolveFieldData(row, col.field)?.toLowerCase()
+                          "
+                        >
+                          {{ resolveFieldData(row, col.field) }}
+                        </span>
+                      }
+                      @case ("currency") {
+                        {{ resolveFieldData(row, col.field) | currency }}
+                      }
+                      @case ("date") {
+                        {{ resolveFieldData(row, col.field) | date }}
+                      }
+                      @default {
                         {{ resolveFieldData(row, col.field) }}
-                      </span>
+                      }
                     }
-                    @case ("currency") {
-                      {{ resolveFieldData(row, col.field) | currency }}
-                    }
-                    @case ("date") {
-                      {{ resolveFieldData(row, col.field) | date }}
-                    }
-                    @default {
-                      {{ resolveFieldData(row, col.field) }}
-                    }
-                  }
+                  </span>
                 </td>
               }
             </tr>

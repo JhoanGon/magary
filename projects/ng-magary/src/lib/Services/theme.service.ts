@@ -2,6 +2,7 @@ import { Injectable, signal, effect, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 export type Theme = 'light' | 'dark' | 'purple' | 'green';
+const SUPPORTED_THEMES: Theme[] = ['light', 'dark', 'purple', 'green'];
 
 @Injectable({
   providedIn: 'root',
@@ -22,23 +23,30 @@ export class MagaryThemeService {
       const theme = this.currentTheme();
       if (isPlatformBrowser(this.platformId)) {
         this.applyTheme(theme);
-        localStorage.setItem('magary-theme', theme);
+        try {
+          localStorage.setItem('magary-theme', theme);
+        } catch {
+          // Ignore storage access errors (private mode / blocked storage)
+        }
       }
     });
   }
 
   private initializeTheme() {
     // 1. Check local storage
-    const savedTheme = localStorage.getItem('magary-theme') as Theme;
-    if (savedTheme) {
-      this.currentTheme.set(savedTheme);
-      return;
+    try {
+      const savedTheme = localStorage.getItem('magary-theme');
+      if (this.isTheme(savedTheme)) {
+        this.currentTheme.set(savedTheme);
+        return;
+      }
+    } catch {
+      // Ignore storage access errors and continue with system preference
     }
 
     // 2. Check system preference
-    const prefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)',
-    ).matches;
+    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)')
+      .matches;
     this.currentTheme.set(prefersDark ? 'dark' : 'light');
   }
 
@@ -48,13 +56,17 @@ export class MagaryThemeService {
   }
 
   toggleTheme() {
-    const themes: Theme[] = ['light', 'dark', 'purple', 'green'];
-    const currentIndex = themes.indexOf(this.currentTheme());
-    const nextTheme = themes[(currentIndex + 1) % themes.length];
+    const currentIndex = SUPPORTED_THEMES.indexOf(this.currentTheme());
+    const nextTheme =
+      SUPPORTED_THEMES[(currentIndex + 1) % SUPPORTED_THEMES.length];
     this.setTheme(nextTheme);
   }
 
   setTheme(theme: Theme) {
     this.currentTheme.set(theme);
+  }
+
+  private isTheme(value: string | null): value is Theme {
+    return !!value && SUPPORTED_THEMES.includes(value as Theme);
   }
 }

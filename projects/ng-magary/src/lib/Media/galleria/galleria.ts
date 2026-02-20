@@ -571,25 +571,32 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onTouchMove(event: TouchEvent) {
-    if (
-      event.touches.length === 2 &&
-      this.enablePinchZoom() &&
-      this.isZoomed()
-    ) {
-      event.preventDefault();
-      const touch1 = event.touches[0];
-      const touch2 = event.touches[1];
-      const distance = Math.hypot(
-        touch2.clientX - touch1.clientX,
-        touch2.clientY - touch1.clientY,
-      );
+    if (event.touches.length !== 2 || !this.enablePinchZoom()) return;
+    if (this.pinchDistance <= 0) return;
 
-      const scale = distance / this.pinchDistance;
-      const newZoom = this.zoomLevel() * scale;
-      // maxZoomLevel()
-      this.zoomLevel.set(Math.max(1, Math.min(newZoom, this.maxZoomLevel())));
-      this.pinchDistance = distance;
+    event.preventDefault();
+
+    const touch1 = event.touches[0];
+    const touch2 = event.touches[1];
+    const distance = Math.hypot(
+      touch2.clientX - touch1.clientX,
+      touch2.clientY - touch1.clientY,
+    );
+
+    const scale = distance / this.pinchDistance;
+    const nextZoom = Math.max(
+      1,
+      Math.min(this.zoomLevel() * scale, this.maxZoomLevel()),
+    );
+
+    this.zoomLevel.set(nextZoom);
+    this.isZoomed.set(nextZoom > 1);
+
+    if (nextZoom === 1) {
+      this.resetPan();
     }
+
+    this.pinchDistance = distance;
   }
 
   onTouchEnd(event: TouchEvent) {

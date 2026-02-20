@@ -98,6 +98,46 @@ describe('Sidebar behavior', () => {
     expect(logoutCalls).toBe(1);
   });
 
+  it('supports granular visibility in user footer', () => {
+    fixture.componentRef.setInput('showUserAvatar', false);
+    fixture.componentRef.setInput('showUserName', true);
+    fixture.componentRef.setInput('showUserEmail', false);
+    fixture.componentRef.setInput('showLogoutButton', false);
+    fixture.componentRef.setInput('userName', 'Custom User');
+    fixture.detectChanges();
+
+    const avatar = fixture.nativeElement.querySelector(
+      '.user-info .user-avatar',
+    ) as HTMLElement | null;
+    const username = fixture.nativeElement.querySelector(
+      '.user-info .username',
+    ) as HTMLElement | null;
+    const email = fixture.nativeElement.querySelector(
+      '.user-info .email',
+    ) as HTMLElement | null;
+    const logoutButton = fixture.nativeElement.querySelector(
+      '.logout-button',
+    ) as HTMLButtonElement | null;
+
+    expect(avatar).toBeNull();
+    expect(username?.textContent?.trim()).toBe('Custom User');
+    expect(email).toBeNull();
+    expect(logoutButton).toBeNull();
+  });
+
+  it('does not render an empty user footer when all parts are hidden', () => {
+    fixture.componentRef.setInput('showUserAvatar', false);
+    fixture.componentRef.setInput('showUserName', false);
+    fixture.componentRef.setInput('showUserEmail', false);
+    fixture.componentRef.setInput('showLogoutButton', false);
+    fixture.detectChanges();
+
+    const userSection = fixture.nativeElement.querySelector(
+      '.user-section',
+    ) as HTMLElement | null;
+    expect(userSection).toBeNull();
+  });
+
   it('renders section menus with priority over fallback menu input', () => {
     fixture.componentRef.setInput('sections', [
       {

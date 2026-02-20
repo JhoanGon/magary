@@ -61,6 +61,8 @@ export class MagaryDatePicker
   readonly isOpen = signal(false);
   readonly viewDate = signal(new Date()); // Current month being viewed
   readonly currentView = signal<'day' | 'month' | 'year'>('day');
+  private readonly formDisabled = signal(false);
+  readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
 
   // Input Handling
   onInput(event: Event) {
@@ -139,7 +141,7 @@ export class MagaryDatePicker
 
   // Interaction
   toggle() {
-    if (this.disabled()) return;
+    if (this.isDisabled()) return;
     this.isOpen.update((v) => !v);
 
     if (!this.isOpen()) return;
@@ -154,7 +156,7 @@ export class MagaryDatePicker
   }
 
   open() {
-    if (!this.disabled() && !this.isOpen()) {
+    if (!this.isDisabled() && !this.isOpen()) {
       this.toggle(); // Reusing toggle logic for sync
     }
   }
@@ -361,6 +363,6 @@ export class MagaryDatePicker
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    // Handled by signal
+    this.formDisabled.set(isDisabled);
   }
 }

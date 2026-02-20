@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { CommonModule, NgTemplateOutlet, DOCUMENT } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
+import { RouterModule, type UrlTree } from '@angular/router';
 import { MenuItem } from '../api/menu.interface';
 // Actually, TieredMenuItemDirective is specific to TieredMenu interaction (mouseenter/leave).
 // ContextMenu items also behave like tiered menu items (hover to expand).
@@ -24,7 +25,7 @@ import { MenuItem } from '../api/menu.interface';
 @Component({
   selector: 'magary-context-menu',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, NgTemplateOutlet],
+  imports: [CommonModule, RouterModule, LucideAngularModule, NgTemplateOutlet],
   templateUrl: './context-menu.html',
   styleUrl: './context-menu.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -190,7 +191,7 @@ export class MagaryContextMenu implements AfterViewInit, OnDestroy {
       return;
     }
 
-    if (!item.url && !item.routerLink) {
+    if (!item.url && !this.getRouterLink(item)) {
       event.preventDefault();
     }
 
@@ -251,5 +252,9 @@ export class MagaryContextMenu implements AfterViewInit, OnDestroy {
   onMouseLeave() {
     // Optional: auto close? Standard context menus usually stay open until click.
     // But submenus should respond to hover.
+  }
+
+  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+    return item.route ?? item.routerLink ?? null;
   }
 }

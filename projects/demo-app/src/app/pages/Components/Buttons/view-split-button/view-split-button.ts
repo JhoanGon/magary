@@ -171,11 +171,11 @@ export class ViewSplitButton {
   severityCode = `<magary-split-button label="Secondary" [model]="saveItems" styleClass="p-button-secondary"></magary-split-button>
 <magary-split-button label="Success" icon="check" [model]="saveItems" styleClass="p-button-success"></magary-split-button>
 <magary-split-button label="Info" icon="info" [model]="saveItems" styleClass="p-button-info"></magary-split-button>
-<magary-split-button label="Warning" icon="alert-triangle" [model]="saveItems" styleClass="p-button-warning"></magary-split-button>
+<magary-split-button label="Warning" icon="triangle-alert" [model]="saveItems" styleClass="p-button-warning"></magary-split-button>
 <magary-split-button label="Danger" icon="x" [model]="saveItems" styleClass="p-button-danger"></magary-split-button>`;
 
   sizesCode = `<magary-split-button label="Small" icon="minimize" [model]="saveItems" styleClass="p-button-sm"></magary-split-button>
-<magary-split-button label="Normal" icon="layout" [model]="saveItems"></magary-split-button>
+<magary-split-button label="Normal" icon="layout-grid" [model]="saveItems"></magary-split-button>
 <magary-split-button label="Large" icon="maximize" [model]="saveItems" styleClass="p-button-lg"></magary-split-button>`;
 
   tsCode = `import { Component, inject } from '@angular/core';

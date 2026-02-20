@@ -12,7 +12,7 @@ import {
   effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, type UrlTree } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { MenuItem } from '../api/menu.interface';
 import {
@@ -133,7 +133,7 @@ export class MagarySlideMenu {
       return;
     }
 
-    if (!item.url && !item.routerLink) {
+    if (!item.url && !this.getRouterLink(item)) {
       event.preventDefault();
     }
 
@@ -174,5 +174,9 @@ export class MagarySlideMenu {
           : this.viewportHeight(),
       ...this.style(),
     };
+  }
+
+  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+    return item.route ?? item.routerLink ?? null;
   }
 }

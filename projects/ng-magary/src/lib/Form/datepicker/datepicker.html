@@ -1,6 +1,6 @@
 <div
   class="magary-datepicker"
-  [class.disabled]="disabled()"
+  [class.disabled]="isDisabled()"
   (click)="onContainerClick($event)"
 >
   <div class="input-group">
@@ -8,7 +8,7 @@
       type="text"
       [placeholder]="placeholder() || 'dd/mm/yyyy'"
       [value]="formattedValue()"
-      [disabled]="disabled()"
+      [disabled]="isDisabled()"
       (focus)="open()"
       (input)="onInput($event)"
       class="datepicker-input"
@@ -16,7 +16,7 @@
     <button
       type="button"
       class="datepicker-trigger"
-      [disabled]="disabled()"
+      [disabled]="isDisabled()"
       (click)="toggle()"
       tabindex="-1"
     >
@@ -27,10 +27,10 @@
   @if (isOpen()) {
     <div class="datepicker-panel fade-in">
       <div class="calendar-header">
-        <button class="nav-btn" (click)="prev()">
+        <button type="button" class="nav-btn" (click)="prev()">
           <lucide-icon name="chevron-left" [size]="16"></lucide-icon>
         </button>
-        <button class="view-switch-btn" (click)="switchView()">
+        <button type="button" class="view-switch-btn" (click)="switchView()">
           @if (currentView() === "day") {
             {{ currentMonthName() }} {{ currentYear() }}
           } @else if (currentView() === "month") {
@@ -39,7 +39,7 @@
             {{ years()[0] }} - {{ years()[10] }}
           }
         </button>
-        <button class="nav-btn" (click)="next()">
+        <button type="button" class="nav-btn" (click)="next()">
           <lucide-icon name="chevron-right" [size]="16"></lucide-icon>
         </button>
       </div>

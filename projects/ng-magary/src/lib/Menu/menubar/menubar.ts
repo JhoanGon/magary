@@ -14,7 +14,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, type UrlTree } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { MenuItem } from '../api/menu.interface';
 
@@ -72,7 +72,7 @@ export class MagaryMenubar implements OnDestroy {
       return;
     }
 
-    if (!item.url && !item.routerLink) {
+    if (!item.url && !this.getRouterLink(item)) {
       event.preventDefault();
     }
 
@@ -191,5 +191,9 @@ export class MagaryMenubar implements OnDestroy {
 
   ngOnDestroy() {
     this.unbindDocumentClickListener();
+  }
+
+  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+    return item.route ?? item.routerLink ?? null;
   }
 }

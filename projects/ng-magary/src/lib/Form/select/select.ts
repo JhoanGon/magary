@@ -7,6 +7,7 @@ import {
   input,
   signal,
   viewChild,
+  effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -38,6 +39,9 @@ export class MagarySelect implements ControlValueAccessor {
   readonly filter = input(false, { transform: booleanAttribute });
   readonly showClear = input(false, { transform: booleanAttribute });
 
+  private readonly formDisabled = signal(false);
+  readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
+
   // Internal State
   readonly isOpen = signal(false);
   readonly focused = signal(false);
@@ -66,7 +70,7 @@ export class MagarySelect implements ControlValueAccessor {
 
   readonly selectedLabel = computed(() => {
     const val = this.value();
-    if (!val) return '';
+    if (val === null || val === undefined || val === '') return '';
     const opts = this.options();
 
     const selectedOption = opts.find((opt) => this.getValue(opt) === val);
@@ -80,8 +84,16 @@ export class MagarySelect implements ControlValueAccessor {
       this.value() !== '',
   );
 
+  constructor() {
+    effect(() => {
+      if (this.isDisabled() && this.isOpen()) {
+        this.close();
+      }
+    });
+  }
+
   toggleOverlay() {
-    if (this.disabled() || this.loading()) return;
+    if (this.isDisabled() || this.loading()) return;
 
     // Update width before opening
     if (!this.isOpen()) {
@@ -131,6 +143,7 @@ export class MagarySelect implements ControlValueAccessor {
   }
 
   clear(event: Event) {
+    if (this.isDisabled()) return;
     event.stopPropagation();
     this.value.set(null);
     this.onChange(null);
@@ -151,6 +164,6 @@ export class MagarySelect implements ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    // Handled by signal input usually, but we could update a local signal if needed
+    this.formDisabled.set(isDisabled);
   }
 }

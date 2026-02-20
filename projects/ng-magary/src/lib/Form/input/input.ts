@@ -1,4 +1,4 @@
-import {
+﻿import {
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -137,7 +137,7 @@ export class MagaryInput {
     if (this.type() === 'email' && this.value()) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.value())) {
-        this._internalError.set('Email inválido');
+        this._internalError.set('Email invalido');
       }
     }
   }
@@ -164,3 +164,4 @@ export class MagaryInput {
     return this.uniqueId;
   }
 }
+

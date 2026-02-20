@@ -1,4 +1,8 @@
-<div class="magary-slider-rail" (click)="onBarClick($event)">
+<div
+  class="magary-slider-rail"
+  (click)="onBarClick($event)"
+  (touchstart)="onBarTouchStart($event)"
+>
   <div
     class="magary-slider-range"
     [ngStyle]="
@@ -18,6 +22,7 @@
           : { bottom: handle1Pos() + '%' }
       "
       (mousedown)="onMouseDown($event, 0)"
+      (touchstart)="onTouchStart($event, 0)"
     >
     </span>
   } @else {
@@ -30,6 +35,7 @@
           : { bottom: handle1Pos() + '%' }
       "
       (mousedown)="onMouseDown($event, 0)"
+      (touchstart)="onTouchStart($event, 0)"
     >
     </span>
     <span
@@ -41,6 +47,7 @@
           : { bottom: handle2Pos() + '%' }
       "
       (mousedown)="onMouseDown($event, 1)"
+      (touchstart)="onTouchStart($event, 1)"
     >
     </span>
   }

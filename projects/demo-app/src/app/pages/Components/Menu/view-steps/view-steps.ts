@@ -43,7 +43,7 @@ export class ViewSteps implements OnInit {
       { label: 'Personal', icon: 'user' },
       { label: 'Seat', icon: 'monitor' },
       { label: 'Payment', icon: 'credit-card' },
-      { label: 'Confirmation', icon: 'check-circle' },
+      { label: 'Confirmation', icon: 'circle-check' },
     ];
   }
 
@@ -85,7 +85,7 @@ export class ViewSteps implements OnInit {
             { label: 'Personal', icon: 'user' },
             { label: 'Seat', icon: 'monitor' },
             { label: 'Payment', icon: 'credit-card' },
-            { label: 'Confirmation', icon: 'check-circle' }
+            { label: 'Confirmation', icon: 'circle-check' }
         ];
     }
 

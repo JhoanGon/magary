@@ -1,9 +1,7 @@
 .magary-message {
   border-radius: var(--border-radius);
   margin-bottom: 1rem;
-  border-radius: var(--border-radius);
-  margin-bottom: 1rem;
-  overflow: hidden; // Ensure content doesn't spill during height animation
+  overflow: hidden;
 
   .magary-message-wrapper {
     display: flex;
