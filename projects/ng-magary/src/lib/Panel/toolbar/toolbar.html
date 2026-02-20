@@ -1,7 +1,7 @@
 <div
   class="magary-toolbar"
-  [ngClass]="styleClass"
-  [ngStyle]="style"
+  [ngClass]="styleClass()"
+  [ngStyle]="style() || {}"
   role="toolbar"
 >
   <div class="magary-toolbar-group-start">

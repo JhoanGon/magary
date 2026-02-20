@@ -138,4 +138,53 @@ describe('Sidebar behavior', () => {
 
     expect(component.isMobileOpen()).toBe(false);
   });
+
+  it('emits closeSidebar when mobile sidebar closes', () => {
+    let closeEvents = 0;
+    component.closeSidebar.subscribe(() => {
+      closeEvents += 1;
+    });
+
+    component.isMobileOpen.set(true);
+    fixture.detectChanges();
+
+    component.closeMobileSidebar();
+    fixture.detectChanges();
+
+    expect(component.isMobileOpen()).toBe(false);
+    expect(closeEvents).toBe(1);
+  });
+
+  it('provides accessible labels for icon-only controls', () => {
+    const hamburger = fixture.nativeElement.querySelector(
+      '.hamburger-button',
+    ) as HTMLButtonElement;
+    const closeButton = fixture.nativeElement.querySelector(
+      '.close-button',
+    ) as HTMLButtonElement;
+    const logoutButton = fixture.nativeElement.querySelector(
+      '.logout-button',
+    ) as HTMLButtonElement;
+
+    expect(hamburger.getAttribute('aria-label')).toBe('Abrir menu lateral');
+    expect(closeButton.getAttribute('aria-label')).toBe('Cerrar sidebar');
+    expect(logoutButton.getAttribute('aria-label')).toBe('Cerrar sesion');
+
+    fixture.componentRef.setInput('collapsible', true);
+    component.isCollapsed.set(true);
+    fixture.detectChanges();
+
+    const expandToggle = fixture.nativeElement.querySelector(
+      '.header-toggle.collapsed',
+    ) as HTMLButtonElement;
+    expect(expandToggle.getAttribute('aria-label')).toBe('Expandir sidebar');
+
+    component.isCollapsed.set(false);
+    fixture.detectChanges();
+
+    const collapseToggle = fixture.nativeElement.querySelector(
+      '.header-toggle.expanded',
+    ) as HTMLButtonElement;
+    expect(collapseToggle.getAttribute('aria-label')).toBe('Colapsar sidebar');
+  });
 });

@@ -2,8 +2,6 @@ import {
   Component,
   ChangeDetectionStrategy,
   ViewEncapsulation,
-  signal,
-  computed,
   booleanAttribute,
   input,
   model,
@@ -56,13 +54,19 @@ import { MagaryAccordion } from './accordion';
   ],
 })
 export class MagaryAccordionTab {
+  private static nextUniqueId = 0;
+  private readonly uid = MagaryAccordionTab.nextUniqueId++;
+
   header = input<string>();
   disabled = input(false, { transform: booleanAttribute });
   selected = model(false);
 
+  readonly headerId = `magary-accordion-header-${this.uid}`;
+  readonly contentId = `magary-accordion-content-${this.uid}`;
+
   accordion: MagaryAccordion | undefined;
 
-  toggle(event: Event) {
+  toggle(event: Event): void {
     if (this.disabled()) {
       event.preventDefault();
       return;
@@ -79,7 +83,7 @@ export class MagaryAccordionTab {
     event.preventDefault();
   }
 
-  close() {
+  close(): void {
     this.selected.set(false);
   }
 }

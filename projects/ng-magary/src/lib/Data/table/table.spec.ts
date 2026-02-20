@@ -135,4 +135,21 @@ describe('MagaryTable behavior', () => {
     expect(emptyStateText).toBeTruthy();
     expect(emptyStateText?.textContent).toContain('No records found');
   });
+
+  it('marks the scroll wrapper as a keyboard-focusable region', () => {
+    const scrollWrapper = fixture.nativeElement.querySelector(
+      '.table-scroll-wrapper',
+    ) as HTMLElement;
+
+    expect(scrollWrapper.getAttribute('tabindex')).toBe('0');
+    expect(scrollWrapper.getAttribute('role')).toBe('region');
+    expect(scrollWrapper.getAttribute('aria-label')).toBe('Table data region');
+
+    fixture.componentRef.setInput('title', 'Products');
+    fixture.detectChanges();
+
+    expect(scrollWrapper.getAttribute('aria-label')).toBe(
+      'Products data region',
+    );
+  });
 });

@@ -8,7 +8,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { RouterModule } from '@angular/router';
+import { RouterModule, type UrlTree } from '@angular/router';
 import { MenuItem } from '../api/menu.interface';
 
 export interface MenuItemClickEvent {
@@ -126,9 +126,23 @@ export class MagaryPanelmenu {
   isSubItemExpanded(itemKey: string): boolean {
     return this.expandedItems().has(itemKey);
   }
-  hasChildren(item: MenuItem): boolean {
-    return !!(item.children && item.children.length > 0);
+
+  getChildren(item: MenuItem): MenuItem[] {
+    return item.items ?? item.children ?? [];
   }
+
+  hasChildren(item: MenuItem): boolean {
+    return this.getChildren(item).length > 0;
+  }
+
+  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+    return item.route ?? item.routerLink ?? null;
+  }
+
+  hasRoute(item: MenuItem): boolean {
+    return this.getRouterLink(item) !== null;
+  }
+
   onItemHover(itemId: string): void {
     this.hoveredItem.set(itemId);
   }

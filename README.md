@@ -1,59 +1,49 @@
-# NgMagaryWorkspace
+# Magary Workspace
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.4.
+Monorepo de Magary UI con tres proyectos principales:
 
-## Development server
+- `projects/ng-magary`: libreria Angular publicada como `ng-magary`.
+- `projects/demo-app`: app demo/documentacion visual.
+- `projects/magary-mcp`: servidor MCP para discovery de componentes.
 
-To start a local development server, run:
+## Documentacion publica de la libreria
 
-```bash
-ng serve
-```
+La guia para consumidores del paquete esta en:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- `projects/ng-magary/README.md`
 
-## Code scaffolding
+Ese archivo es el que termina en `dist/ng-magary/README.md` al publicar npm.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Desarrollo local
 
 ```bash
-ng generate --help
+pnpm install
+pnpm run build
 ```
 
-## Building
-
-To build the project run:
+## Calidad (estado recomendado para PR)
 
 ```bash
-ng build
+pnpm run lint
+pnpm run build:lib
+pnpm run build:demo
+pnpm run test:unit
+pnpm run test:visual
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Comando consolidado:
 
 ```bash
-ng test
+pnpm run qa:all
 ```
 
-## Running end-to-end tests
+## Nota importante sobre estilos
 
-For end-to-end (e2e) testing, run:
+`ng-magary` no publica archivos globales `theme.css` ni `core.css`.
 
-```bash
-ng e2e
-```
+- Los estilos de componentes vienen encapsulados en la libreria.
+- `Tooltip` usa clases globales (`.magary-tooltip`) y requiere estilos globales en la app consumidora.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Para configuracion MCP y clientes IDE:
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `docs/MCP_SETUP.md`

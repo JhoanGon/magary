@@ -6,15 +6,15 @@
   }"
 >
   @if (legend()) {
-    <legend class="magary-fieldset-legend">
+    <legend class="magary-fieldset-legend" [attr.id]="legendId">
       @if (toggleable()) {
-        <a
-          href="#"
+        <button
+          type="button"
           (click)="toggle($event)"
           class="magary-fieldset-toggler"
+          [attr.aria-controls]="contentId"
           [attr.aria-expanded]="!collapsed()"
           [attr.aria-label]="legend()"
-          tabindex="0"
         >
           <lucide-icon
             [name]="collapsed() ? 'plus' : 'minus'"
@@ -22,17 +22,18 @@
             [size]="16"
           ></lucide-icon>
           <span class="magary-fieldset-legend-text">{{ legend() }}</span>
-        </a>
+        </button>
       } @else {
         <span class="magary-fieldset-legend-text">{{ legend() }}</span>
       }
     </legend>
   }
   <div
+    [attr.id]="contentId"
     class="magary-fieldset-content-wrapper"
     [@fieldsetContent]="collapsed() ? 'hidden' : 'visible'"
     role="region"
-    [attr.aria-labelledby]="legend()"
+    [attr.aria-labelledby]="legend() ? legendId : null"
   >
     <div class="magary-fieldset-content">
       <ng-content></ng-content>

@@ -31,21 +31,31 @@ export class MagaryTabs implements OnInit, OnDestroy {
   public background = input<string>('var(--surface-0)');
   public padding = input<string>('0');
   public heightLine = input<string>('5px');
+  public panelWidth = input<'auto' | 'full'>('full');
   private resizeObserver: ResizeObserver | null = null;
+  private rafId: number | null = null;
   private el = inject(ElementRef);
 
   constructor() {
     effect(() => {
-      // Auto-select first tab if activeIndex is 0 and tabs change
       const tabs = this.tabs();
-      if (tabs.length > 0) {
-        tabs.forEach((tab, index) => {
-          tab.active.set(index === this.activeIndex());
-        });
+      if (!tabs.length) {
+        return;
       }
+
+      const activeIndex = this.activeIndex();
+      const clampedIndex = Math.min(Math.max(activeIndex, 0), tabs.length - 1);
+
+      if (clampedIndex !== activeIndex) {
+        this.activeIndex.set(clampedIndex);
+        return;
+      }
+
+      tabs.forEach((tab, index) => {
+        tab.active.set(index === clampedIndex);
+      });
     });
 
-    // Effect to update underline
     effect(() => {
       this.updateUnderlinePosition(this.activeIndex());
     });
@@ -61,20 +71,23 @@ export class MagaryTabs implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+
+    if (this.rafId !== null && typeof cancelAnimationFrame !== 'undefined') {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
   }
 
-  public selectTab(index: number) {
+  public selectTab(index: number): void {
     this.activeIndex.set(index);
-    // Effect will handle the rest (setting active tab and underline)
   }
 
-  private updateUnderlinePosition(index: number) {
-    // Use requestAnimationFrame for smoother updates
-    requestAnimationFrame(() => {
+  private updateUnderlinePosition(index: number): void {
+    const update = () => {
       const buttons = this.buttonsRef();
       const activeBtn = buttons[index]?.nativeElement;
       const headersEl = this.headersRef()?.nativeElement;
@@ -85,6 +98,21 @@ export class MagaryTabs implements OnInit, OnDestroy {
         headersEl.style.setProperty('--underline-left', `${left}px`);
         headersEl.style.setProperty('--underline-width', `${width}px`);
       }
+    };
+
+    update();
+
+    if (typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+
+    if (this.rafId !== null && typeof cancelAnimationFrame !== 'undefined') {
+      cancelAnimationFrame(this.rafId);
+    }
+
+    this.rafId = requestAnimationFrame(() => {
+      this.rafId = null;
+      update();
     });
   }
 }

@@ -2,10 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   output,
-  inject,
-  signal,
   ViewEncapsulation,
-  ElementRef,
   input,
   model,
 } from '@angular/core';
@@ -55,6 +52,9 @@ import {
   ],
 })
 export class MagaryFieldset {
+  private static nextUniqueId = 0;
+  private readonly uid = MagaryFieldset.nextUniqueId++;
+
   legend = input<string>('');
   toggleable = input<boolean>(false);
 
@@ -63,7 +63,10 @@ export class MagaryFieldset {
   onBeforeToggle = output<any>();
   onAfterToggle = output<any>();
 
-  toggle(event: Event) {
+  readonly legendId = `magary-fieldset-legend-${this.uid}`;
+  readonly contentId = `magary-fieldset-content-${this.uid}`;
+
+  toggle(event: Event): void {
     if (this.toggleable()) {
       event.preventDefault();
 
@@ -76,13 +79,13 @@ export class MagaryFieldset {
     }
   }
 
-  expand(event: Event) {
+  expand(event: Event): void {
     if (this.toggleable() && this.collapsed()) {
       this.toggle(event);
     }
   }
 
-  collapse(event: Event) {
+  collapse(event: Event): void {
     if (this.toggleable() && !this.collapsed()) {
       this.toggle(event);
     }

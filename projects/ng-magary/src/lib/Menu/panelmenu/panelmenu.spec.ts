@@ -160,6 +160,57 @@ describe('MagaryPanelmenu behavior', () => {
     expect(clickEvents[0].item.label).toBe('Users');
   });
 
+  it('supports nested submenu data via items alias', () => {
+    const aliasItems: MenuItem[] = [
+      {
+        label: 'Catalog',
+        items: [{ label: 'Products' }],
+      },
+    ];
+
+    fixture.componentRef.setInput('items', aliasItems);
+    fixture.detectChanges();
+
+    getHeader().click();
+    fixture.detectChanges();
+
+    const category = fixture.nativeElement.querySelector(
+      '.category-item',
+    ) as HTMLElement;
+    expect(category.textContent).toContain('Catalog');
+
+    category.click();
+    fixture.detectChanges();
+
+    const subItems = fixture.nativeElement.querySelectorAll(
+      '.sub-items.expanded .menu-item-base',
+    ) as NodeListOf<HTMLElement>;
+    expect(subItems).toHaveLength(1);
+    expect(subItems[0].textContent).toContain('Products');
+  });
+
+  it('renders anchor links when routerLink is provided', () => {
+    const linkItems: MenuItem[] = [
+      {
+        label: 'Routed Item',
+        routerLink: '/routed',
+        queryParams: { mode: 'quick' },
+      },
+    ];
+
+    fixture.componentRef.setInput('items', linkItems);
+    fixture.detectChanges();
+
+    getHeader().click();
+    fixture.detectChanges();
+
+    const rootAnchors = fixture.nativeElement.querySelectorAll(
+      '.panel-items > .menu-item > a',
+    ) as NodeListOf<HTMLAnchorElement>;
+    expect(rootAnchors).toHaveLength(1);
+    expect(rootAnchors[0].textContent).toContain('Routed Item');
+  });
+
   it('blocks click events for disabled items', () => {
     getHeader().click();
     fixture.detectChanges();

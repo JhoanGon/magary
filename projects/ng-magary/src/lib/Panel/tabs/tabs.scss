@@ -42,10 +42,27 @@
   }
 }
 .tab-content {
+  width: 100%;
   padding: var(--padding);
-  //display: flex;
+  display: flex;
   justify-content: var(--position-content);
+  align-items: stretch;
+  min-width: 0;
   background: var(--background);
+
+  > * {
+    min-width: 0;
+  }
+
+  > :not(.magary-tab-active) {
+    display: none;
+  }
+
+  > .magary-tab-active {
+    display: block;
+    flex: 0 0 var(--tab-panel-width, 100%);
+  }
+
   &.animated {
     animation: slideIn 0.7s ease-out;
   }

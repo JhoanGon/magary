@@ -46,10 +46,35 @@ describe('MagaryTabs behavior', () => {
     expect(fixture.nativeElement.textContent).not.toContain('Settings Content');
   });
 
+  it('renders tab headers as non-submit buttons with aria-selected state', () => {
+    const tabButtons = fixture.nativeElement.querySelectorAll(
+      '.tab-headers button',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    expect(tabButtons[0].type).toBe('button');
+    expect(tabButtons[0].getAttribute('role')).toBe('tab');
+    expect(tabButtons[0].getAttribute('aria-selected')).toBe('true');
+    expect(tabButtons[1].getAttribute('aria-selected')).toBe('false');
+  });
+
+  it('uses full panel width by default to avoid content gaps', () => {
+    const tabContent = fixture.nativeElement.querySelector(
+      '.tab-content',
+    ) as HTMLElement;
+
+    expect(tabContent.style.getPropertyValue('--tab-panel-width')).toBe('100%');
+  });
+
   it('switches active tab and visible content on click', () => {
     const tabButtons = fixture.nativeElement.querySelectorAll(
       '.tab-headers button',
     ) as NodeListOf<HTMLButtonElement>;
+    const projectedTabs = fixture.nativeElement.querySelectorAll(
+      'magary-tab',
+    ) as NodeListOf<HTMLElement>;
+
+    expect(projectedTabs[0].classList.contains('magary-tab-active')).toBe(true);
+    expect(projectedTabs[1].classList.contains('magary-tab-active')).toBe(false);
 
     tabButtons[1].click();
     fixture.detectChanges();
@@ -58,8 +83,18 @@ describe('MagaryTabs behavior', () => {
     expect(host.tabsComponent.tabs()[1].active()).toBe(true);
     expect(host.tabsComponent.tabs()[0].active()).toBe(false);
     expect(tabButtons[1].classList.contains('active')).toBe(true);
+    expect(projectedTabs[1].classList.contains('magary-tab-active')).toBe(true);
+    expect(projectedTabs[0].classList.contains('magary-tab-active')).toBe(false);
     expect(fixture.nativeElement.textContent).toContain('Settings Content');
     expect(fixture.nativeElement.textContent).not.toContain('Overview Content');
+  });
+
+  it('clamps activeIndex when it exceeds available tabs', () => {
+    host.tabsComponent.activeIndex.set(99);
+    fixture.detectChanges();
+
+    expect(host.tabsComponent.activeIndex()).toBe(2);
+    expect(host.tabsComponent.tabs()[2].active()).toBe(true);
   });
 
   it('updates underline css variables for the selected tab', async () => {

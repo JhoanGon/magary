@@ -33,7 +33,14 @@ yarn-error.log
 .sass-cache/
 /connect.lock
 /coverage
-/e2e
+/e2e/*
+!/e2e/playwright/
+/e2e/playwright/*
+!/e2e/playwright/playwright.config.ts
+!/e2e/playwright/specs/
+/e2e/playwright/specs/*
+!/e2e/playwright/specs/ci-smoke.spec.ts
+!/e2e/playwright/specs/ci-a11y.spec.ts
 /docs
 /libpeerconnection.log
 testem.log

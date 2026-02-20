@@ -10,14 +10,16 @@
       type="button"
       class="magary-accordion-header-link"
       (click)="toggle($event)"
+      [attr.id]="headerId"
+      [attr.aria-controls]="contentId"
       [attr.aria-expanded]="selected()"
       [attr.tabindex]="disabled() ? -1 : 0"
     >
       <span class="magary-accordion-toggle-icon">
-        <!-- Using Lucide icon for chevron -->
         <lucide-icon
           [name]="'chevron-right'"
           [size]="16"
+          aria-hidden="true"
           [class.rotate-90]="selected()"
           style="transition: transform 0.3s"
         >
@@ -32,8 +34,11 @@
   </div>
 
   <div
+    [attr.id]="contentId"
     class="magary-accordion-content-wrapper"
     [@tabContent]="selected() ? 'visible' : 'hidden'"
+    role="region"
+    [attr.aria-labelledby]="headerId"
   >
     <div class="magary-accordion-content">
       <ng-content></ng-content>
