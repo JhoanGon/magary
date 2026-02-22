@@ -1,13 +1,13 @@
 <div
   class="magary-dataview"
   [ngClass]="{
-    'magary-dataview-list': layout === 'list',
-    'magary-dataview-grid': layout === 'grid',
-    'magary-dataview-loading': loading,
+    'magary-dataview-list': layout() === 'list',
+    'magary-dataview-grid': layout() === 'grid',
+    'magary-dataview-loading': loading(),
   }"
 >
-  <div class="magary-dataview-header" *ngIf="headerTemplate">
-    <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+  <div class="magary-dataview-header" *ngIf="headerTemplate()">
+    <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
   </div>
 
   <div class="magary-dataview-content">
@@ -17,11 +17,11 @@
         let-item
         let-index="index"
         [ngForOf]="dataToRender()"
-        [ngForTrackBy]="trackBy"
+        [ngForTrackBy]="trackBy()"
       >
         <ng-container
           *ngTemplateOutlet="
-            layout === 'list' ? listItemTemplate : gridItemTemplate;
+            layout() === 'list' ? listItemTemplate() : gridItemTemplate();
             context: { $implicit: item, index: index }
           "
         ></ng-container>
@@ -30,22 +30,22 @@
         *ngIf="!dataToRender() || dataToRender().length === 0"
         class="magary-dataview-empty"
       >
-        {{ emptyMessage }}
+        {{ emptyMessage() }}
       </div>
     </div>
   </div>
 
-  <div class="magary-dataview-footer" *ngIf="footerTemplate">
-    <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+  <div class="magary-dataview-footer" *ngIf="footerTemplate()">
+    <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
   </div>
 
   <magary-paginator
-    *ngIf="paginator"
-    [rows]="rows"
+    *ngIf="paginator()"
+    [rows]="rows()"
     [first]="first()"
     [totalRecords]="getTotalRecords()"
-    [pageLinkSize]="pageLinks"
-    [rowsPerPageOptions]="rowsPerPageOptions"
+    [pageLinkSize]="pageLinks()"
+    [rowsPerPageOptions]="rowsPerPageOptions()"
     (onPageChange)="onPageChange($event)"
   ></magary-paginator>
 </div>

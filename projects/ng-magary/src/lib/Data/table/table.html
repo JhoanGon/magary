@@ -70,36 +70,26 @@
                     @switch (col.type) {
                       @case ("avatar") {
                         <magary-avatar
-                          [image]="resolveFieldData(row, col.field)"
-                          [label]="
-                            !resolveFieldData(row, col.field)
-                              ? getAvatarLabel(row)
-                              : ''
-                          "
+                          [image]="getAvatarImage(row, col.field)"
+                          [label]="!getAvatarImage(row, col.field) ? getAvatarLabel(row) : ''"
                           shape="circle"
                           size="normal"
                         >
                         </magary-avatar>
                       }
                       @case ("badge") {
-                        <span
-                          class="magary-badge"
-                          [ngClass]="
-                            'status-' +
-                            resolveFieldData(row, col.field)?.toLowerCase()
-                          "
-                        >
-                          {{ resolveFieldData(row, col.field) }}
+                        <span class="magary-badge" [ngClass]="getBadgeClass(row, col.field)">
+                          {{ resolveFieldDataAsString(row, col.field) }}
                         </span>
                       }
                       @case ("currency") {
-                        {{ resolveFieldData(row, col.field) | currency }}
+                        {{ resolveFieldDataAsNumber(row, col.field) | currency }}
                       }
                       @case ("date") {
-                        {{ resolveFieldData(row, col.field) | date }}
+                        {{ resolveFieldDataAsDate(row, col.field) | date }}
                       }
                       @default {
-                        {{ resolveFieldData(row, col.field) }}
+                        {{ resolveFieldDataAsString(row, col.field) }}
                       }
                     }
                   </span>

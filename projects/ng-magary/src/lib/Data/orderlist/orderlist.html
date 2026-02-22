@@ -38,8 +38,8 @@
 </div>
 
 <div class="orderlist-list-wrapper">
-  <div class="orderlist-header" *ngIf="header">{{ header }}</div>
-  <ul class="orderlist-list" [ngStyle]="listStyle">
+  <div class="orderlist-header" *ngIf="header()">{{ header() }}</div>
+  <ul class="orderlist-list" [ngStyle]="listStyle()">
     <li
       *ngFor="let item of value(); let i = index"
       class="orderlist-item"
@@ -57,5 +57,5 @@
 </div>
 
 <ng-template #defaultTemplate let-item>
-  {{ item.label || item }}
+  {{ getItemLabel(item) }}
 </ng-template>

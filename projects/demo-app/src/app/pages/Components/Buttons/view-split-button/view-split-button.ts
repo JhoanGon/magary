@@ -4,7 +4,6 @@ import {
   MagarySplitButton,
   MenuItem,
   MagaryToastService,
-  MagaryToast,
 } from 'ng-magary';
 import { MagaryCard, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
@@ -16,7 +15,6 @@ import { Highlight } from 'ngx-highlightjs';
     CommonModule,
     MagarySplitButton,
     MagaryCard,
-    MagaryToast,
     MagaryTabs,
     MagaryTab,
     Highlight,

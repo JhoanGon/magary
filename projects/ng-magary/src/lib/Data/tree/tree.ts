@@ -10,7 +10,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { MagaryTreeNode } from './tree-node.interface';
+import {
+  MagaryTreeNode,
+  MagaryTreeNodeDropEvent,
+  MagaryTreeNodeSelectionEvent,
+} from './tree-node.interface';
 import { MagaryUITreeNode } from './uitree-node';
 
 @Component({
@@ -30,7 +34,7 @@ import { MagaryUITreeNode } from './uitree-node';
 export class MagaryTree {
   value = input<MagaryTreeNode[]>([]);
   selectionMode = input<'single' | 'multiple' | 'checkbox' | null>(null);
-  selection = input<any>(null);
+  selection = input<unknown>(null);
   filter = input<boolean>(false);
   filterPlaceholder = input<string>('Search...');
   filterMode = input<'lenient' | 'strict'>('lenient');
@@ -38,11 +42,11 @@ export class MagaryTree {
   droppable = input<boolean>(false);
   validateDrop = input<boolean>(false);
 
-  onNodeSelect = output<any>();
-  onNodeUnselect = output<any>();
-  onNodeExpand = output<any>();
-  onNodeCollapse = output<any>();
-  onNodeDrop = output<any>();
+  onNodeSelect = output<MagaryTreeNodeSelectionEvent>();
+  onNodeUnselect = output<MagaryTreeNodeSelectionEvent>();
+  onNodeExpand = output<MagaryTreeNode>();
+  onNodeCollapse = output<MagaryTreeNode>();
+  onNodeDrop = output<MagaryTreeNodeDropEvent>();
 
   // Internal state for filter value
   filterValue = signal<string>('');
@@ -98,16 +102,16 @@ export class MagaryTree {
   }
 
   // Pass through events
-  handleNodeSelect(event: any) {
+  handleNodeSelect(event: MagaryTreeNodeSelectionEvent) {
     this.onNodeSelect.emit(event);
   }
-  handleNodeUnselect(event: any) {
+  handleNodeUnselect(event: MagaryTreeNodeSelectionEvent) {
     this.onNodeUnselect.emit(event);
   }
-  handleNodeExpand(event: any) {
+  handleNodeExpand(event: MagaryTreeNode) {
     this.onNodeExpand.emit(event);
   }
-  handleNodeCollapse(event: any) {
+  handleNodeCollapse(event: MagaryTreeNode) {
     this.onNodeCollapse.emit(event);
   }
 
@@ -125,7 +129,7 @@ export class MagaryTree {
     this.onNodeDrop.emit({
       originalEvent: event,
       parent: parent,
-      dragNode: event.item.data,
+      dragNode: event.item.data as MagaryTreeNode,
     });
   }
 }

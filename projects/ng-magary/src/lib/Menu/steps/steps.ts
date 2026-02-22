@@ -11,6 +11,11 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
+import type { IsActiveMatchOptions, UrlTree } from '@angular/router';
+
+type RouterLinkTarget = string | readonly unknown[] | UrlTree | null;
+type NavStyleMap = Record<string, string | number | null | undefined>;
+type RouterLinkActiveOptions = { exact: boolean } | IsActiveMatchOptions;
 
 export interface StepsItem {
   label: string;
@@ -21,12 +26,12 @@ export interface StepsItem {
     index: number;
   }) => void;
   url?: string;
-  routerLink?: any;
-  queryParams?: { [k: string]: any };
+  routerLink?: RouterLinkTarget;
+  queryParams?: Record<string, unknown>;
   disabled?: boolean;
   target?: string;
-  routerLinkActiveOptions?: any;
-  style?: any;
+  routerLinkActiveOptions?: RouterLinkActiveOptions;
+  style?: NavStyleMap;
   styleClass?: string;
 }
 
@@ -43,7 +48,7 @@ export class MagarySteps {
   readonly model = input<StepsItem[]>([]);
   readonly activeIndex = input<number>(0);
   readonly readonly = input<boolean>(true);
-  readonly style = input<{ [klass: string]: any } | null | undefined>(null);
+  readonly style = input<NavStyleMap | null | undefined>(null);
   readonly styleClass = input<string | undefined>(undefined);
   readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
 

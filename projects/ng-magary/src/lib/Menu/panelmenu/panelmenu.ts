@@ -135,7 +135,7 @@ export class MagaryPanelmenu {
     return this.getChildren(item).length > 0;
   }
 
-  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+  getRouterLink(item: MenuItem): string | readonly unknown[] | UrlTree | null {
     return item.route ?? item.routerLink ?? null;
   }
 
@@ -164,7 +164,7 @@ export class MagaryPanelmenu {
   isItemHovered(itemId: string): boolean {
     return this.hoveredItem() === itemId;
   }
-  getIconName(icon: string | undefined | null): any {
+  getIconName(icon: string | undefined | null): string | undefined | null {
     return icon;
   }
 

@@ -11,6 +11,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { MagaryAccordionTab } from './accordion-tab';
 
+export interface MagaryAccordionTabChangeEvent {
+  originalEvent: Event | null;
+  index: number;
+}
+
 @Component({
   selector: 'magary-accordion',
   standalone: true,
@@ -28,8 +33,8 @@ export class MagaryAccordion {
 
   tabs = contentChildren(MagaryAccordionTab);
 
-  onClose = output<any>();
-  onOpen = output<any>();
+  onClose = output<MagaryAccordionTabChangeEvent>();
+  onOpen = output<MagaryAccordionTabChangeEvent>();
 
   constructor() {
     effect(() => {

@@ -56,7 +56,7 @@
               <!-- Inline recursion or use template outlet? Template usage is already cleaner here -->
               <ng-container
                 *ngTemplateOutlet="
-                  submenuTemplate;
+                  submenuItemsTemplate;
                   context: { $implicit: item.items }
                 "
               ></ng-container>
@@ -69,57 +69,58 @@
 </div>
 
 <!-- Reusable Recursive Template -->
-<ng-template #submenuTemplate let-items>
-  <ul class="magary-submenu">
-    @for (child of items; track child.label) {
-      <li
-        appTieredMenuItem
-        [item]="child"
-        [parent]="this"
-        class="magary-menuitem"
-        [ngClass]="{
-          'magary-menuitem-active': child.expanded,
-          'magary-menu-separator': child.separator,
-        }"
-      >
-        @if (!child.separator) {
-          <div class="magary-menuitem-content">
-            <a
-              class="magary-menuitem-link"
-              [href]="child.url || null"
-              [routerLink]="getRouterLink(child)"
-              [queryParams]="child.queryParams || undefined"
-              [attr.target]="child.target"
-              (click)="onItemClick($event, child)"
-              [class.magary-disabled]="child.disabled"
-            >
-              @if (child.icon) {
-                <lucide-icon
-                  [name]="child.icon"
-                  class="magary-menuitem-icon"
-                  [size]="16"
-                ></lucide-icon>
-              }
-              <span class="magary-menuitem-text">{{ child.label }}</span>
-              @if (child.items && child.items.length > 0) {
-                <lucide-icon
-                  name="chevron-right"
-                  class="magary-submenu-icon"
-                  [size]="14"
-                ></lucide-icon>
-              }
-            </a>
-          </div>
-          @if (child.items && child.items.length > 0) {
+<ng-template #submenuItemsTemplate let-items>
+  @for (child of items; track child.label) {
+    <li
+      appTieredMenuItem
+      [item]="child"
+      [parent]="this"
+      class="magary-menuitem"
+      [ngClass]="{
+        'magary-menuitem-active': child.expanded,
+        'magary-menu-separator': child.separator,
+      }"
+    >
+      @if (!child.separator) {
+        <div class="magary-menuitem-content">
+          <a
+            class="magary-menuitem-link"
+            [href]="child.url || null"
+            [routerLink]="getRouterLink(child)"
+            [queryParams]="child.queryParams || undefined"
+            [attr.target]="child.target"
+            (click)="onItemClick($event, child)"
+            [class.magary-disabled]="child.disabled"
+          >
+            @if (child.icon) {
+              <lucide-icon
+                [name]="child.icon"
+                class="magary-menuitem-icon"
+                [size]="16"
+              ></lucide-icon>
+            }
+            <span class="magary-menuitem-text">{{ child.label }}</span>
+            @if (child.items && child.items.length > 0) {
+              <lucide-icon
+                name="chevron-right"
+                class="magary-submenu-icon"
+                [size]="14"
+              ></lucide-icon>
+            }
+          </a>
+        </div>
+
+        @if (child.items && child.items.length > 0) {
+          <ul class="magary-submenu">
             <ng-container
               *ngTemplateOutlet="
-                submenuTemplate;
+                submenuItemsTemplate;
                 context: { $implicit: child.items }
               "
             ></ng-container>
-          }
+          </ul>
         }
-      </li>
-    }
-  </ul>
+      }
+    </li>
+  }
 </ng-template>

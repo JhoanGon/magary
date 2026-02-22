@@ -6,15 +6,15 @@ export interface Confirmation {
   key?: string;
   icon?: string;
   header?: string;
-  accept?: Function;
-  reject?: Function;
+  accept?: () => void;
+  reject?: () => void;
   acceptLabel?: string;
   rejectLabel?: string;
   acceptVisible?: boolean;
   rejectVisible?: boolean;
   acceptButtonStyleClass?: string;
   rejectButtonStyleClass?: string;
-  style?: any;
+  style?: Record<string, unknown> | null;
   styleClass?: string;
   defaultFocus?: 'accept' | 'reject' | 'none';
 }
@@ -23,8 +23,8 @@ export interface Confirmation {
   providedIn: 'root',
 })
 export class MagaryConfirmationService {
-  private requireConfirmationSource = new Subject<Confirmation>();
-  private acceptConfirmationSource = new Subject<Confirmation>();
+  private requireConfirmationSource = new Subject<Confirmation | null>();
+  private acceptConfirmationSource = new Subject<Confirmation | null>();
 
   requireConfirmation$ = this.requireConfirmationSource.asObservable();
   acceptConfirmation$ = this.acceptConfirmationSource.asObservable();
@@ -35,11 +35,11 @@ export class MagaryConfirmationService {
   }
 
   close() {
-    this.requireConfirmationSource.next(null as any);
+    this.requireConfirmationSource.next(null);
     return this;
   }
 
   onAccept() {
-    this.acceptConfirmationSource.next(null as any);
+    this.acceptConfirmationSource.next(null);
   }
 }

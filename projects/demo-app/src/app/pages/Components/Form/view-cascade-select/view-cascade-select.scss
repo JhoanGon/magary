@@ -205,7 +205,10 @@
   }
 }
 
-// Override card overflow for cascade select dropdown
-::ng-deep magary-card .card {
-  overflow: visible !important;
+// Allow cascade-select overlay/submenus to escape the fixed-height demo cards
+magary-card {
+  --card-overflow: visible;
+  --card-content-overflow: visible;
+  --card-body-overflow: visible;
+  --card-main-overflow: visible;
 }

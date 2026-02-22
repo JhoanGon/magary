@@ -1,7 +1,7 @@
 import {
   Component,
   ElementRef,
-  ViewChild,
+  viewChild,
   booleanAttribute,
   forwardRef,
   input,
@@ -28,7 +28,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class MagaryTextArea implements ControlValueAccessor, AfterViewInit {
-  @ViewChild('textarea') textarea!: ElementRef<HTMLTextAreaElement>;
+  textarea = viewChild<ElementRef<HTMLTextAreaElement>>('textarea');
 
   readonly rows = input(3, { transform: numberAttribute });
   readonly cols = input(20, { transform: numberAttribute });
@@ -39,7 +39,7 @@ export class MagaryTextArea implements ControlValueAccessor, AfterViewInit {
   readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
 
   // Counter
-  readonly maxlength = input<any, unknown>(undefined, {
+  readonly maxlength = input<number | null, unknown>(null, {
     transform: numberAttribute,
   });
   readonly showCounter = input(false, { transform: booleanAttribute });
@@ -77,7 +77,12 @@ export class MagaryTextArea implements ControlValueAccessor, AfterViewInit {
   }
 
   resize() {
-    const el = this.textarea.nativeElement;
+    const textarea = this.textarea();
+    if (!textarea) {
+      return;
+    }
+
+    const el = textarea.nativeElement;
     el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
   }
@@ -86,19 +91,20 @@ export class MagaryTextArea implements ControlValueAccessor, AfterViewInit {
   writeValue(obj: string | null): void {
     const val = obj || '';
     this.value.set(val);
-    if (this.textarea) {
-      this.textarea.nativeElement.value = val;
+    const textarea = this.textarea();
+    if (textarea) {
+      textarea.nativeElement.value = val;
       if (this.autoResize()) {
         setTimeout(() => this.resize(), 0); // Tick definition for direct value set
       }
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

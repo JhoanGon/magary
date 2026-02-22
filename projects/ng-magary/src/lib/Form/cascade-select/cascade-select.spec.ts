@@ -12,7 +12,7 @@ const lucideIcons = Object.entries(icons).reduce(
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, any>,
+  {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
 
 describe('MagaryCascadeSelect behavior', () => {
@@ -77,8 +77,8 @@ describe('MagaryCascadeSelect behavior', () => {
   });
 
   it('selects leaf option, updates value and emits CVA change', () => {
-    const changedValues: any[] = [];
-    component.registerOnChange((value: any) => changedValues.push(value));
+    const changedValues: unknown[] = [];
+    component.registerOnChange((value: unknown) => changedValues.push(value));
     component.isOpen.set(true);
 
     const event = { stopPropagation: vi.fn() } as unknown as Event;
@@ -93,8 +93,8 @@ describe('MagaryCascadeSelect behavior', () => {
   });
 
   it('blocks group selection by default and allows it when optionGroupSelectable is true', () => {
-    const changedValues: any[] = [];
-    component.registerOnChange((value: any) => changedValues.push(value));
+    const changedValues: unknown[] = [];
+    component.registerOnChange((value: unknown) => changedValues.push(value));
     const event = { stopPropagation: vi.fn() } as unknown as Event;
 
     component.selectOption(options[0], event);

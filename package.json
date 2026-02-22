@@ -13,12 +13,14 @@
     "test:ng-magary": "ng test ng-magary --watch=false",
     "test:demo-app": "ng test demo-app --watch=false",
     "test:unit": "pnpm run test:ng-magary && pnpm run test:demo-app",
+    "check:api-contract": "node tools/ci/check-api-contract.mjs",
+    "check:api-contract:update": "node tools/ci/check-api-contract.mjs --update-baseline",
     "lint": "eslint . --ext .ts,.html",
     "test:visual": "playwright test -c e2e/playwright/playwright.config.ts",
     "test:visual:smoke": "playwright test -c e2e/playwright/playwright.config.ts e2e/playwright/specs/ci-smoke.spec.ts",
     "test:a11y:smoke": "playwright test -c e2e/playwright/playwright.config.ts e2e/playwright/specs/ci-a11y.spec.ts",
     "test:visual:update": "playwright test -c e2e/playwright/playwright.config.ts --update-snapshots",
-    "qa:all": "pnpm run lint && pnpm run build:lib && pnpm run build:demo && pnpm run test:unit && pnpm run test:visual"
+    "qa:all": "pnpm run check:api-contract && pnpm run lint && pnpm run build:lib && pnpm run build:demo && pnpm run test:unit && pnpm run test:visual"
   },
   "prettier": {
     "overrides": [

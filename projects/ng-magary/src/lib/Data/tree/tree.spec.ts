@@ -1,11 +1,18 @@
 import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { LucideAngularModule, icons } from 'lucide-angular';
-import { MagaryTreeNode } from './tree-node.interface';
+import {
+  MagaryTreeNode,
+  MagaryTreeNodeDropEvent,
+  MagaryTreeNodeSelectionEvent,
+} from './tree-node.interface';
 import { MagaryTree } from './tree';
 
 const kebabCase = (value: string) =>
   value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+type LucideIconData = (typeof icons)[keyof typeof icons];
 
 const lucideIcons = Object.entries(icons).reduce(
   (acc, [key, icon]) => {
@@ -13,7 +20,7 @@ const lucideIcons = Object.entries(icons).reduce(
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, any>,
+  {} as Record<string, LucideIconData>,
 );
 
 describe('MagaryTree behavior', () => {
@@ -95,8 +102,8 @@ describe('MagaryTree behavior', () => {
     fixture.componentRef.setInput('selection', null);
     fixture.detectChanges();
 
-    const selectEvents: any[] = [];
-    const unselectEvents: any[] = [];
+    const selectEvents: MagaryTreeNodeSelectionEvent[] = [];
+    const unselectEvents: MagaryTreeNodeSelectionEvent[] = [];
     component.onNodeSelect.subscribe((event) => selectEvents.push(event));
     component.onNodeUnselect.subscribe((event) => unselectEvents.push(event));
 
@@ -120,8 +127,8 @@ describe('MagaryTree behavior', () => {
   });
 
   it('emits expand and collapse events from toggler click', () => {
-    const expandEvents: any[] = [];
-    const collapseEvents: any[] = [];
+    const expandEvents: MagaryTreeNode[] = [];
+    const collapseEvents: MagaryTreeNode[] = [];
     component.onNodeExpand.subscribe((event) => expandEvents.push(event));
     component.onNodeCollapse.subscribe((event) => collapseEvents.push(event));
 
@@ -142,14 +149,14 @@ describe('MagaryTree behavior', () => {
   });
 
   it('emits onNodeDrop payload from root drop handler', () => {
-    const dropEvents: any[] = [];
+    const dropEvents: MagaryTreeNodeDropEvent[] = [];
     component.onNodeDrop.subscribe((event) => dropEvents.push(event));
 
-    const mockDropEvent: any = {
+    const mockDropEvent = {
       item: {
         data: { key: 'drag-1', label: 'Dragged Node' },
       },
-    };
+    } as unknown as CdkDragDrop<MagaryTreeNode[]>;
 
     component.handleDrop(mockDropEvent, null);
 

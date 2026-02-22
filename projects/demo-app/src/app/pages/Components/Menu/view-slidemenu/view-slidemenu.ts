@@ -11,7 +11,6 @@ import {
   MagaryTabs,
   MagaryTab,
   MagaryToastService,
-  MagaryToast,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
@@ -24,7 +23,6 @@ import { Highlight } from 'ngx-highlightjs';
     MagaryTabs,
     MagaryTab,
     Highlight,
-    MagaryToast,
   ],
   templateUrl: './view-slidemenu.html',
   styleUrl: './view-slidemenu.scss',

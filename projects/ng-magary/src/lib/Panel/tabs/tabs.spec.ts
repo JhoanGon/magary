@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MagaryTabs } from './tabs';
 import { MagaryTab } from './tab/tab';
@@ -15,7 +15,7 @@ import { MagaryTab } from './tab/tab';
   `,
 })
 class TabsHostComponent {
-  @ViewChild('tabs', { static: true }) tabsComponent!: MagaryTabs;
+  tabsComponent = viewChild.required<MagaryTabs>('tabs');
 }
 
 describe('MagaryTabs behavior', () => {
@@ -38,9 +38,9 @@ describe('MagaryTabs behavior', () => {
     ) as NodeListOf<HTMLButtonElement>;
 
     expect(tabButtons).toHaveLength(3);
-    expect(host.tabsComponent.activeIndex()).toBe(0);
-    expect(host.tabsComponent.tabs()[0].active()).toBe(true);
-    expect(host.tabsComponent.tabs()[1].active()).toBe(false);
+    expect(host.tabsComponent().activeIndex()).toBe(0);
+    expect(host.tabsComponent().tabs()[0].active()).toBe(true);
+    expect(host.tabsComponent().tabs()[1].active()).toBe(false);
     expect(tabButtons[0].classList.contains('active')).toBe(true);
     expect(fixture.nativeElement.textContent).toContain('Overview Content');
     expect(fixture.nativeElement.textContent).not.toContain('Settings Content');
@@ -79,9 +79,9 @@ describe('MagaryTabs behavior', () => {
     tabButtons[1].click();
     fixture.detectChanges();
 
-    expect(host.tabsComponent.activeIndex()).toBe(1);
-    expect(host.tabsComponent.tabs()[1].active()).toBe(true);
-    expect(host.tabsComponent.tabs()[0].active()).toBe(false);
+    expect(host.tabsComponent().activeIndex()).toBe(1);
+    expect(host.tabsComponent().tabs()[1].active()).toBe(true);
+    expect(host.tabsComponent().tabs()[0].active()).toBe(false);
     expect(tabButtons[1].classList.contains('active')).toBe(true);
     expect(projectedTabs[1].classList.contains('magary-tab-active')).toBe(true);
     expect(projectedTabs[0].classList.contains('magary-tab-active')).toBe(false);
@@ -90,11 +90,11 @@ describe('MagaryTabs behavior', () => {
   });
 
   it('clamps activeIndex when it exceeds available tabs', () => {
-    host.tabsComponent.activeIndex.set(99);
+    host.tabsComponent().activeIndex.set(99);
     fixture.detectChanges();
 
-    expect(host.tabsComponent.activeIndex()).toBe(2);
-    expect(host.tabsComponent.tabs()[2].active()).toBe(true);
+    expect(host.tabsComponent().activeIndex()).toBe(2);
+    expect(host.tabsComponent().tabs()[2].active()).toBe(true);
   });
 
   it('updates underline css variables for the selected tab', async () => {
@@ -114,7 +114,7 @@ describe('MagaryTabs behavior', () => {
       get: () => 80,
     });
 
-    host.tabsComponent.selectTab(2);
+    host.tabsComponent().selectTab(2);
     fixture.detectChanges();
     await new Promise((resolve) => setTimeout(resolve, 0));
 

@@ -1,21 +1,17 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
   forwardRef,
-  Input,
-  Output,
-  ViewChild,
-  ChangeDetectorRef,
+  output,
+  viewChild,
   ViewEncapsulation,
   ChangeDetectionStrategy,
   OnInit,
-  Injector,
   signal,
-  computed,
   input,
   model,
   effect,
+  Provider,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -26,7 +22,7 @@ import {
 } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
-export const INPUTNUMBER_VALUE_ACCESSOR: any = {
+export const INPUTNUMBER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => MagaryInputNumber),
   multi: true,
@@ -81,9 +77,9 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
   max = input<number | null>(null);
   step = input<number>(1);
   allowEmpty = input<boolean>(true);
-  inputStyle = input<{ [klass: string]: any } | null>(null);
+  inputStyle = input<Record<string, unknown> | null>(null);
   inputStyleClass = input<string>('');
-  style = input<{ [klass: string]: any } | null>(null);
+  style = input<Record<string, unknown> | null>(null);
   styleClass = input<string>('');
   placeholder = input<string>('');
   size = input<number | null>(null);
@@ -94,20 +90,20 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
   name = input<string>('');
   inputId = input<string>('');
 
-  @Output() onInput = new EventEmitter<any>();
-  @Output() onFocus = new EventEmitter<any>();
-  @Output() onBlur = new EventEmitter<any>();
-  @Output() onKeyDown = new EventEmitter<any>();
+  onInput = output<Event>();
+  onFocus = output<FocusEvent>();
+  onBlur = output<FocusEvent>();
+  onKeyDown = output<KeyboardEvent>();
 
-  @ViewChild('input') inputElement!: ElementRef;
+  inputElement = viewChild<ElementRef<HTMLInputElement>>('input');
 
   focused = signal<boolean>(false);
 
   // Internal logic
   public formattedValue = signal<string>('');
 
-  onModelChange: Function = () => {};
-  onModelTouched: Function = () => {};
+  onModelChange: (value: number | null) => void = () => {};
+  onModelTouched: () => void = () => {};
 
   ngOnInit() {
     // initial format
@@ -210,7 +206,7 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
     }
 
     // 3. Final Parse
-    // Remove any remaining characters that aren't valid for parseFloat (e.g. multiple dots?)
+    // Remove remaining characters that aren't valid for parseFloat (e.g. multiple dots?)
     // A simple parseFloat is usually enough now.
     const parsed = parseFloat(cleanText);
     return isNaN(parsed) ? null : parsed;
@@ -355,28 +351,32 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
   updateInput(val: number | null, updateView: boolean) {
     if (val === null) {
       this.formattedValue.set('');
-      if (updateView && this.inputElement)
-        this.inputElement.nativeElement.value = '';
+      const inputElement = this.inputElement();
+      if (updateView && inputElement) {
+        inputElement.nativeElement.value = '';
+      }
     } else {
       const formatted = this.formatValue(val);
       this.formattedValue.set(formatted);
-      if (updateView && this.inputElement)
-        this.inputElement.nativeElement.value = formatted;
+      const inputElement = this.inputElement();
+      if (updateView && inputElement) {
+        inputElement.nativeElement.value = formatted;
+      }
     }
   }
 
   // --- CVA ---
 
-  writeValue(value: number): void {
+  writeValue(value: number | null): void {
     this.value.set(value);
     this.updateInput(value, true);
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: (value: number | null) => void): void {
     this.onModelChange = fn;
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: () => void): void {
     this.onModelTouched = fn;
   }
 

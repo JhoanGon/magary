@@ -15,7 +15,7 @@ const lucideIcons = Object.entries(icons).reduce(
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, any>,
+  {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
 
 describe('MagaryPickList behavior', () => {
@@ -39,8 +39,10 @@ describe('MagaryPickList behavior', () => {
   });
 
   it('moves selected source items to target and emits onMoveToTarget', () => {
-    const moved: any[] = [];
-    component.onMoveToTarget.subscribe((event) => moved.push(...event.items));
+    const moved: string[] = [];
+    component.onMoveToTarget.subscribe((event) =>
+      moved.push(...event.items.map((item) => String(item.label ?? ''))),
+    );
     component.selectedSource.set([sourceItems[1]]);
 
     component.moveRight();
@@ -49,13 +51,13 @@ describe('MagaryPickList behavior', () => {
     expect(component.source().map((item) => item.label)).toEqual(['A', 'C']);
     expect(component.target().map((item) => item.label)).toEqual(['X', 'B']);
     expect(component.selectedSource()).toEqual([]);
-    expect(moved.map((item) => item.label)).toEqual(['B']);
+    expect(moved).toEqual(['B']);
   });
 
   it('moves all source items to target and emits onMoveAllToTarget', () => {
     const movedAll: string[][] = [];
     component.onMoveAllToTarget.subscribe((event) =>
-      movedAll.push(event.items.map((item: any) => item.label)),
+      movedAll.push(event.items.map((item) => String(item.label ?? ''))),
     );
 
     component.moveAllRight();
@@ -72,8 +74,10 @@ describe('MagaryPickList behavior', () => {
   });
 
   it('moves selected target items back to source and emits onMoveToSource', () => {
-    const moved: any[] = [];
-    component.onMoveToSource.subscribe((event) => moved.push(...event.items));
+    const moved: string[] = [];
+    component.onMoveToSource.subscribe((event) =>
+      moved.push(...event.items.map((item) => String(item.label ?? ''))),
+    );
     component.selectedTarget.set([targetItems[0]]);
 
     component.moveLeft();
@@ -87,7 +91,7 @@ describe('MagaryPickList behavior', () => {
       'X',
     ]);
     expect(component.selectedTarget()).toEqual([]);
-    expect(moved.map((item) => item.label)).toEqual(['X']);
+    expect(moved).toEqual(['X']);
   });
 
   it('supports single and meta multi-selection in source list', () => {

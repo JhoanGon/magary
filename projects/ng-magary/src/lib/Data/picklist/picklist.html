@@ -1,6 +1,6 @@
 <div class="picklist-list-wrapper source-wrapper">
-  <div class="picklist-header" *ngIf="sourceHeader">{{ sourceHeader }}</div>
-  <ul class="picklist-list" [ngStyle]="sourceStyle" tabindex="0">
+  <div class="picklist-header" *ngIf="sourceHeader()">{{ sourceHeader() }}</div>
+  <ul class="picklist-list" [ngStyle]="sourceStyle()" tabindex="0">
     <li
       *ngFor="let item of source()"
       class="picklist-item"
@@ -61,8 +61,8 @@
 </div>
 
 <div class="picklist-list-wrapper target-wrapper">
-  <div class="picklist-header" *ngIf="targetHeader">{{ targetHeader }}</div>
-  <ul class="picklist-list" [ngStyle]="targetStyle" tabindex="0">
+  <div class="picklist-header" *ngIf="targetHeader()">{{ targetHeader() }}</div>
+  <ul class="picklist-list" [ngStyle]="targetStyle()" tabindex="0">
     <li
       *ngFor="let item of target()"
       class="picklist-item"
@@ -80,5 +80,5 @@
 </div>
 
 <ng-template #defaultTemplate let-item>
-  {{ item.label || item }}
+  {{ getItemLabel(item) }}
 </ng-template>

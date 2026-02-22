@@ -16,6 +16,11 @@ import {
   state,
 } from '@angular/animations';
 
+export interface MagaryFieldsetToggleEvent {
+  originalEvent: Event;
+  collapsed: boolean;
+}
+
 @Component({
   selector: 'magary-fieldset',
   standalone: true,
@@ -60,8 +65,8 @@ export class MagaryFieldset {
 
   collapsed = model(false);
 
-  onBeforeToggle = output<any>();
-  onAfterToggle = output<any>();
+  onBeforeToggle = output<MagaryFieldsetToggleEvent>();
+  onAfterToggle = output<MagaryFieldsetToggleEvent>();
 
   readonly legendId = `magary-fieldset-legend-${this.uid}`;
   readonly contentId = `magary-fieldset-content-${this.uid}`;

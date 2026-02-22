@@ -2,6 +2,7 @@ import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryTable, MagaryTableColumn } from './table';
+import { PaginatorState } from '../paginator/paginator';
 
 interface ProductRow {
   name: string;
@@ -35,7 +36,7 @@ describe('MagaryTable behavior', () => {
       acc[kebabCase(key)] = icon;
       return acc;
     },
-    {} as Record<string, any>,
+    {} as Record<string, (typeof icons)[keyof typeof icons]>,
   );
 
   beforeEach(async () => {
@@ -94,7 +95,7 @@ describe('MagaryTable behavior', () => {
     fixture.componentRef.setInput('rows', 2);
     fixture.detectChanges();
 
-    const emittedEvents: any[] = [];
+    const emittedEvents: PaginatorState[] = [];
     const subscription = component.onPageChange.subscribe((event) =>
       emittedEvents.push(event),
     );

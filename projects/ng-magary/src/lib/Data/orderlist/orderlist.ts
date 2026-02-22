@@ -2,17 +2,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   contentChild,
-  EventEmitter,
-  Input,
-  Output,
+  input,
+  output,
   TemplateRef,
   ViewEncapsulation,
-  signal,
   model,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { MagaryButton } from '../../Button/button/button';
+
+type MagaryOrderListItem = object & {
+  label?: unknown;
+};
 
 @Component({
   selector: 'magary-order-list',
@@ -27,21 +29,24 @@ import { MagaryButton } from '../../Button/button/button';
   },
 })
 export class MagaryOrderList {
-  @Input() header: string | null = null;
-  @Input() listStyle: { [klass: string]: any } | null = null;
+  header = input<string | null>(null);
+  listStyle = input<Record<string, string | number | null | undefined> | null>(
+    null,
+  );
 
   // Data
-  value = model<any[]>([]);
-  selection = model<any[]>([]);
+  value = model<MagaryOrderListItem[]>([]);
+  selection = model<MagaryOrderListItem[]>([]);
 
   // Templates
-  itemTemplate = contentChild<TemplateRef<any>>('itemTemplate');
+  itemTemplate =
+    contentChild<TemplateRef<{ $implicit: MagaryOrderListItem }>>('itemTemplate');
 
   // Outputs
-  @Output() onReorder = new EventEmitter<any>();
-  @Output() onSelectionChange = new EventEmitter<any>();
+  onReorder = output<MagaryOrderListItem[]>();
+  onSelectionChange = output<MagaryOrderListItem[]>();
 
-  onItemClick(event: MouseEvent, item: any, index: number) {
+  onItemClick(event: MouseEvent, item: MagaryOrderListItem, index: number) {
     const metaKey = event.metaKey || event.ctrlKey;
     let selected = [...this.selection()];
 
@@ -131,5 +136,21 @@ export class MagaryOrderList {
     }
     this.value.set(list);
     this.onReorder.emit(list);
+  }
+
+  getItemLabel(item: unknown): string {
+    if (typeof item === 'string' || typeof item === 'number') {
+      return String(item);
+    }
+
+    if (this.isRecord(item) && typeof item['label'] === 'string') {
+      return item['label'];
+    }
+
+    return String(item ?? '');
+  }
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
   }
 }

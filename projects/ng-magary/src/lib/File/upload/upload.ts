@@ -4,7 +4,7 @@ import {
   input,
   output,
   signal,
-  ViewChild,
+  viewChild,
   ElementRef,
   ChangeDetectionStrategy,
   inject,
@@ -18,6 +18,7 @@ import {
   HttpResponse,
   HttpErrorResponse,
 } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 export interface UploadEvent {
   originalEvent: Event;
@@ -68,7 +69,7 @@ export class MagaryUpload implements OnDestroy {
 
   private http = inject(HttpClient, { optional: true });
 
-  @ViewChild('fileInput') fileInput!: ElementRef;
+  fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
 
   private sanitizer = inject(DomSanitizer);
 
@@ -137,8 +138,9 @@ export class MagaryUpload implements OnDestroy {
 
   removeFile(file: UploadedFile) {
     this.files.update((current) => current.filter((f) => f !== file));
-    if (this.files().length === 0 && this.fileInput) {
-      this.fileInput.nativeElement.value = '';
+    const fileInput = this.fileInput();
+    if (this.files().length === 0 && fileInput) {
+      fileInput.nativeElement.value = '';
     }
   }
 
@@ -146,8 +148,9 @@ export class MagaryUpload implements OnDestroy {
     this.files.set([]);
     this.progress.set(0);
     this.uploading.set(false);
-    if (this.fileInput) {
-      this.fileInput.nativeElement.value = '';
+    const fileInput = this.fileInput();
+    if (fileInput) {
+      fileInput.nativeElement.value = '';
     }
     this.onClear.emit();
   }
@@ -172,8 +175,8 @@ export class MagaryUpload implements OnDestroy {
     }
   }
 
-  private intervalId: any;
-  private uploadSubscription: any;
+  private intervalId: ReturnType<typeof setInterval> | null = null;
+  private uploadSubscription: Subscription | null = null;
 
   ngOnDestroy() {
     this.clearUploadState();
@@ -193,7 +196,7 @@ export class MagaryUpload implements OnDestroy {
 
   // Modified simulateUpload to track interval
   private simulateUpload() {
-    this.clearUploadState(); // Clear any previous
+    this.clearUploadState(); // Clear previous state
     this.intervalId = setInterval(() => {
       this.progress.update((p) => {
         const newProgress = Math.min(p + Math.random() * 10, 100);
@@ -236,7 +239,7 @@ export class MagaryUpload implements OnDestroy {
       withCredentials: this.withCredentials(),
     });
 
-    this.clearUploadState(); // Clear any previous
+    this.clearUploadState(); // Clear previous state
     this.uploadSubscription = this.http.request(req).subscribe({
       next: (event) => {
         if (event.type === HttpEventType.UploadProgress) {

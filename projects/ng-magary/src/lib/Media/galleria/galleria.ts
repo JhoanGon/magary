@@ -53,6 +53,23 @@ export interface GalleriaResponsiveOptions {
   numVisible: number;
 }
 
+export interface GalleriaItemEvent {
+  item: GalleriaItem;
+  index: number;
+}
+
+export interface GalleriaImageLoadEvent {
+  item: GalleriaItem;
+  index: number;
+}
+
+type GalleriaContainerStyle = Record<string, string | number | null | undefined>;
+
+interface DocumentWithFullscreenFallback extends Document {
+  webkitExitFullscreen?: () => Promise<void> | void;
+  mozCancelFullScreen?: () => void;
+}
+
 @NgModule({
   imports: [
     LucideAngularModule.pick({
@@ -154,7 +171,7 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
   presentationAutoPlay = input<boolean>(true);
 
   // Styling
-  containerStyle = input<any>();
+  containerStyle = input<GalleriaContainerStyle | null>(null);
   containerClass = input<string | undefined>();
   theme = input<'light' | 'dark' | 'auto'>('dark');
   accentColor = input<string>('#3b82f6');
@@ -162,12 +179,12 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
 
   // Outputs
   // activeIndexChange is handled by model() signal `activeIndex`
-  onImageClick = output<any>();
+  onImageClick = output<GalleriaItemEvent>();
   onFullScreenChange = output<boolean>();
-  onImageLoad = output<any>();
-  onImageError = output<any>();
-  onShare = output<any>();
-  onDownload = output<any>();
+  onImageLoad = output<GalleriaImageLoadEvent>();
+  onImageError = output<GalleriaImageLoadEvent>();
+  onShare = output<GalleriaItemEvent>();
+  onDownload = output<GalleriaItemEvent>();
 
   // Queries
   templates = contentChildren(TemplateRef);
@@ -175,9 +192,9 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
   currentImageRef = viewChild<ElementRef>('currentImage');
 
   // Templates Inputs
-  itemTemplateRef = input<TemplateRef<any> | undefined>();
-  thumbnailTemplateRef = input<TemplateRef<any> | undefined>();
-  captionTemplateRef = input<TemplateRef<any> | undefined>();
+  itemTemplateRef = input<TemplateRef<unknown> | undefined>();
+  thumbnailTemplateRef = input<TemplateRef<unknown> | undefined>();
+  captionTemplateRef = input<TemplateRef<unknown> | undefined>();
 
   // Internal Signals
   isFullscreen = signal<boolean>(false);
@@ -206,8 +223,8 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
   private pinchDistance = 0;
 
   // Intervals
-  interval: any;
-  progressInterval: any;
+  interval: ReturnType<typeof setInterval> | null = null;
+  progressInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
@@ -303,7 +320,8 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onItemClick(item: any) {
+  onItemClick(item: GalleriaItem | undefined) {
+    if (!item) return;
     this.onImageClick.emit({ item, index: this.activeIndex() });
   }
 
@@ -377,10 +395,14 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
       } else {
         if (document.exitFullscreen) {
           document.exitFullscreen();
-        } else if ((document as any).webkitExitFullscreen) {
-          (document as any).webkitExitFullscreen();
-        } else if ((document as any).mozCancelFullScreen) {
-          (document as any).mozCancelFullScreen();
+        } else if (
+          (document as DocumentWithFullscreenFallback).webkitExitFullscreen
+        ) {
+          (document as DocumentWithFullscreenFallback).webkitExitFullscreen?.();
+        } else if (
+          (document as DocumentWithFullscreenFallback).mozCancelFullScreen
+        ) {
+          (document as DocumentWithFullscreenFallback).mozCancelFullScreen?.();
         }
       }
     }
@@ -630,9 +652,12 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
 
     this.onShare.emit({ item, index: this.activeIndex() });
 
-    if (isPlatformBrowser(this.platformId) && (navigator as any).share) {
+    if (
+      isPlatformBrowser(this.platformId) &&
+      typeof navigator.share === 'function'
+    ) {
       try {
-        await (navigator as any).share({
+        await navigator.share({
           title: item.title || 'Image',
           text: item.description || '',
           url: item.src,

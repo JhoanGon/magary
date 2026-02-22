@@ -14,6 +14,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { LucideAngularModule } from 'lucide-angular';
 
+type SelectObjectOption = Record<string, unknown>;
+type SelectOption = string | number | boolean | SelectObjectOption;
+
 @Component({
   selector: 'magary-select',
   standalone: true,
@@ -30,7 +33,7 @@ import { LucideAngularModule } from 'lucide-angular';
 })
 export class MagarySelect implements ControlValueAccessor {
   // Signal Inputs
-  readonly options = input<any[]>([]);
+  readonly options = input<SelectOption[]>([]);
   readonly optionLabel = input<string>();
   readonly optionValue = input<string>();
   readonly placeholder = input<string>('Select an option');
@@ -45,15 +48,15 @@ export class MagarySelect implements ControlValueAccessor {
   // Internal State
   readonly isOpen = signal(false);
   readonly focused = signal(false);
-  readonly value = signal<any>(null);
+  readonly value = signal<unknown>(null);
   readonly filterValue = signal('');
 
   // Element Reference for Overlay Width
-  readonly trigger = viewChild.required<ElementRef>('trigger');
+  readonly trigger = viewChild.required<ElementRef<HTMLElement>>('trigger');
   readonly triggerWidth = signal<number | string>('auto');
 
   // CVA Callbacks
-  private onChange: (value: any) => void = () => {};
+  private onChange: (value: unknown) => void = () => {};
   private onTouched: () => void = () => {};
 
   // Computed Helpers
@@ -64,7 +67,7 @@ export class MagarySelect implements ControlValueAccessor {
     if (!this.filter() || !search) return opts;
 
     return opts.filter((opt) =>
-      String(this.getLabel(opt)).toLowerCase().includes(search),
+      this.getLabel(opt).toLowerCase().includes(search),
     );
   });
 
@@ -116,25 +119,31 @@ export class MagarySelect implements ControlValueAccessor {
     this.onTouched();
   }
 
-  selectOption(option: any) {
+  selectOption(option: SelectOption) {
     const val = this.getValue(option);
     this.value.set(val);
     this.onChange(val);
     this.close();
   }
 
-  isSelected(option: any): boolean {
+  isSelected(option: SelectOption): boolean {
     return this.getValue(option) === this.value();
   }
 
-  getLabel(option: any): string {
+  getLabel(option: SelectOption): string {
     const labelProp = this.optionLabel();
-    return labelProp ? option[labelProp] : option;
+    if (labelProp && this.isObjectOption(option)) {
+      return String(option[labelProp] ?? '');
+    }
+    return String(option ?? '');
   }
 
-  getValue(option: any): any {
+  getValue(option: SelectOption): unknown {
     const valueProp = this.optionValue();
-    return valueProp ? option[valueProp] : option;
+    if (valueProp && this.isObjectOption(option)) {
+      return option[valueProp];
+    }
+    return option;
   }
 
   onFilterInput(event: Event) {
@@ -151,19 +160,23 @@ export class MagarySelect implements ControlValueAccessor {
   }
 
   // CVA Implementation
-  writeValue(obj: any): void {
+  writeValue(obj: unknown): void {
     this.value.set(obj);
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: unknown) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
   setDisabledState?(isDisabled: boolean): void {
     this.formDisabled.set(isDisabled);
+  }
+
+  private isObjectOption(option: SelectOption): option is SelectObjectOption {
+    return typeof option === 'object' && option !== null;
   }
 }

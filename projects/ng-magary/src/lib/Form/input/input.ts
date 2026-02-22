@@ -48,6 +48,7 @@ export class MagaryInput {
   success = input<boolean>(false);
 
   label = input<string>('');
+  ariaLabel = input<string>('');
   helpText = input<string>('');
 
   prefixIcon = input<string>('');
@@ -101,6 +102,22 @@ export class MagaryInput {
   inputStyles = computed(() => ({
     width: this.width(),
   }));
+
+  resolvedAriaLabel = computed(() => {
+    if (this.ariaLabel()) {
+      return this.ariaLabel();
+    }
+
+    if (this.label()) {
+      return this.label();
+    }
+
+    if (this.placeholder()) {
+      return this.placeholder();
+    }
+
+    return null;
+  });
 
   actualType = computed(() => {
     if (this.type() === 'password') {

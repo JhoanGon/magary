@@ -9,7 +9,7 @@ export interface Toast {
   duration?: number;
   life?: number; // alias for duration
   sticky?: boolean;
-  data?: any;
+  data?: unknown;
 }
 
 @Injectable({

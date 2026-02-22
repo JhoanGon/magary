@@ -13,7 +13,7 @@ export interface MenuItem {
   command?: (event?: unknown) => void;
   url?: string;
   target?: string;
-  routerLink?: string | readonly any[] | UrlTree | null;
+  routerLink?: string | readonly unknown[] | UrlTree | null;
   queryParams?: Record<string, unknown>;
   route?: string;
 

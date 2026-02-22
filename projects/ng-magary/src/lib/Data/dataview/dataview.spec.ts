@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MagaryDataView } from './dataview';
+import { PaginatorState } from '../paginator/paginator';
 
 describe('MagaryDataView behavior', () => {
   let fixture: ComponentFixture<MagaryDataView>;
@@ -81,7 +82,7 @@ describe('MagaryDataView behavior', () => {
     fixture.componentRef.setInput('rows', 2);
     fixture.detectChanges();
 
-    const pageEvents: any[] = [];
+    const pageEvents: PaginatorState[] = [];
     component.onPage.subscribe((event) => pageEvents.push(event));
 
     const nextButton = fixture.nativeElement.querySelector(

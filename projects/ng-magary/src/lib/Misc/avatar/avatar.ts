@@ -10,9 +10,16 @@ import {
 export type AvatarShape = 'circle' | 'square';
 export type AvatarSize = 'xsmall' | 'small' | 'normal' | 'large' | 'xlarge';
 export type BadgeSeverity = 'info' | 'success' | 'warning' | 'danger';
+export interface AvatarPayload {
+  label?: string;
+  image?: string;
+  icon?: string;
+  value?: string | number;
+  severity?: BadgeSeverity;
+}
 export interface AvatarClickEvent {
   type: 'avatar' | 'badge';
-  data?: any;
+  data?: AvatarPayload;
 }
 import { LucideAngularModule } from 'lucide-angular';
 @Component({
@@ -45,7 +52,7 @@ export class MagaryAvatar {
   });
   public badgeValue = input<string | number>();
   public badgeSeverity = input<BadgeSeverity>('danger');
-  public customStyle = input<Record<string, any>>();
+  public customStyle = input<Record<string, unknown>>();
   public alt = input<string>('Avatar');
   public clickable = input<boolean>(false);
   public loading = input<boolean>(false);

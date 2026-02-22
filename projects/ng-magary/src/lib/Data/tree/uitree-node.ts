@@ -9,7 +9,11 @@ import {
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { MagaryTreeNode } from './tree-node.interface';
+import {
+  MagaryTreeNode,
+  MagaryTreeNodeDropEvent,
+  MagaryTreeNodeSelectionEvent,
+} from './tree-node.interface';
 
 @Component({
   selector: 'magary-uitree-node',
@@ -115,16 +119,16 @@ import { MagaryTreeNode } from './tree-node.interface';
 export class MagaryUITreeNode {
   node = input.required<MagaryTreeNode>();
   selectionMode = input<string | null>(null);
-  selection = input<any>(null);
+  selection = input<unknown>(null);
   draggable = input<boolean>(false);
   droppable = input<boolean>(false);
 
   // Outputs to bubble up events
-  nodeSelect = output<any>();
-  nodeUnselect = output<any>();
-  nodeExpand = output<any>();
-  nodeCollapse = output<any>();
-  nodeDrop = output<any>();
+  nodeSelect = output<MagaryTreeNodeSelectionEvent>();
+  nodeUnselect = output<MagaryTreeNodeSelectionEvent>();
+  nodeExpand = output<MagaryTreeNode>();
+  nodeCollapse = output<MagaryTreeNode>();
+  nodeDrop = output<MagaryTreeNodeDropEvent>();
 
   get isExpanded() {
     return this.node().expanded;
@@ -192,7 +196,7 @@ export class MagaryUITreeNode {
     this.nodeDrop.emit({
       originalEvent: event,
       parent: this.node(), // The drop happened in this node's children list
-      dragNode: event.item.data,
+      dragNode: event.item.data as MagaryTreeNode,
     });
   }
 }

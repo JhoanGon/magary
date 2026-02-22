@@ -60,8 +60,8 @@ export class ComponentScanner {
                 required: true,
             });
         }
-        // Decorator: @Input() name: type = default
-        const decoratorInputRegex = /@Input\((?:['"](.*)['"])?\)\s*(\w+)(?:\s*:\s*(.+?))?(?:\s*=\s*(.+?))?;/g;
+        // Decorator-based input (legacy): decorator(alias?) name: type = default
+        const decoratorInputRegex = /@(?:Input|input)\((?:['"](.*)['"])?\)\s*(\w+)(?:\s*:\s*(.+?))?(?:\s*=\s*(.+?))?;/g;
         while ((match = decoratorInputRegex.exec(content)) !== null) {
             inputs.push({
                 name: match[1] || match[2],
@@ -71,8 +71,8 @@ export class ComponentScanner {
             });
         }
         // 4. Extract Outputs
-        // name = output<type>() or @Output() name
-        const outputRegex = /(?:@Output\(\)\s*)?(\w+)\s*=\s*(?:new EventEmitter|output)(?:<(.+?)>)?/g;
+        // name = output<type>() or legacy EventEmitter assignment
+        const outputRegex = /(?:@\w+\((?:['"][^'"]*['"])?\)\s*)?(\w+)\s*=\s*(?:new EventEmitter|output)(?:<(.+?)>)?/g;
         while ((match = outputRegex.exec(content)) !== null) {
             outputs.push({
                 name: match[1],

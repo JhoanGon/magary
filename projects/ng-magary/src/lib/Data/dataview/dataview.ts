@@ -1,17 +1,23 @@
 import {
   Component,
-  ContentChild,
+  contentChild,
   TemplateRef,
-  Input,
-  Output,
-  EventEmitter,
+  input,
+  output,
   computed,
+  effect,
   signal,
   ChangeDetectionStrategy,
   ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryPaginator, PaginatorState } from '../paginator/paginator';
+
+interface MagaryDataViewItem {
+  id?: unknown;
+  name?: unknown;
+  label?: unknown;
+}
 
 @Component({
   selector: 'magary-dataview',
@@ -24,60 +30,57 @@ import { MagaryPaginator, PaginatorState } from '../paginator/paginator';
 })
 export class MagaryDataView {
   // Content Templates
-  @ContentChild('listItem') listItemTemplate!: TemplateRef<any>;
-  @ContentChild('gridItem') gridItemTemplate!: TemplateRef<any>;
-  @ContentChild('header') headerTemplate!: TemplateRef<any>;
-  @ContentChild('footer') footerTemplate!: TemplateRef<any>;
+  listItemTemplate =
+    contentChild<TemplateRef<{ $implicit: MagaryDataViewItem; index: number }>>(
+      'listItem',
+    );
+  gridItemTemplate =
+    contentChild<TemplateRef<{ $implicit: MagaryDataViewItem; index: number }>>(
+      'gridItem',
+    );
+  headerTemplate = contentChild<TemplateRef<unknown>>('header');
+  footerTemplate = contentChild<TemplateRef<unknown>>('footer');
 
   // Inputs
-  @Input() set value(val: any[]) {
-    this._value.set(val);
-  }
-  @Input() set layout(val: 'list' | 'grid') {
-    this._layout.set(val);
-  }
-  get layout() {
-    return this._layout();
-  }
-
-  @Input() paginator: boolean = false;
-  @Input() set rows(val: number) {
-    const nextRows = val ?? 0;
-    this._rowsInput.set(nextRows);
-    this._rows.set(nextRows);
-  }
-  get rows() {
-    return this._rowsInput();
-  }
-  @Input() totalRecords: number = 0;
-  @Input() pageLinks: number = 5;
-  @Input() rowsPerPageOptions: number[] = [];
-  @Input() emptyMessage: string = 'No records found';
-  @Input() sortField: string | null = null;
-  @Input() sortOrder: number | null = null; // 1 or -1
-  @Input() loading: boolean = false;
-  @Input() trackBy: any = (index: number, item: any) => item;
+  value = input<MagaryDataViewItem[]>([]);
+  layout = input<'list' | 'grid'>('list');
+  paginator = input<boolean>(false);
+  rows = input<number>(0);
+  totalRecords = input<number>(0);
+  pageLinks = input<number>(5);
+  rowsPerPageOptions = input<number[]>([]);
+  emptyMessage = input<string>('No records found');
+  sortField = input<string | null>(null);
+  sortOrder = input<number | null>(null); // 1 or -1
+  loading = input<boolean>(false);
+  trackBy = input<(index: number, item: MagaryDataViewItem) => unknown>(
+    (index: number, item: MagaryDataViewItem) => item,
+  );
 
   // Outputs
-  @Output() onPage = new EventEmitter<PaginatorState>();
+  onPage = output<PaginatorState>();
 
   // Signals
-  _value = signal<any[]>([]);
-  _layout = signal<'list' | 'grid'>('list');
   first = signal<number>(0);
-  _rowsInput = signal<number>(0);
   _rows = signal<number>(0);
+
+  constructor() {
+    effect(() => {
+      const nextRows = this.rows() ?? 0;
+      this._rows.set(nextRows);
+    });
+  }
 
   // Computed
   processedData = computed(() => {
-    let data = this._value() || [];
+    let data = this.value() || [];
     // Optional: Sorting logic could go here if we implemented internal sorting
     return data;
   });
 
   dataToRender = computed(() => {
     const data = this.processedData();
-    if (this.paginator) {
+    if (this.paginator()) {
       const first = this.first();
       const rows = this._rows() || data.length; // fallback
       return data.slice(first, first + rows);
@@ -92,10 +95,10 @@ export class MagaryDataView {
   }
 
   getTotalRecords() {
-    return this.totalRecords
-      ? this.totalRecords
-      : this._value()
-        ? this._value().length
+    return this.totalRecords()
+      ? this.totalRecords()
+      : this.value()
+        ? this.value().length
         : 0;
   }
 }

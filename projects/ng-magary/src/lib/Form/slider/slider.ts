@@ -1,10 +1,9 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
   forwardRef,
-  Output,
-  ViewChild,
+  output,
+  viewChild,
   ViewEncapsulation,
   ChangeDetectionStrategy,
   OnDestroy,
@@ -15,6 +14,7 @@ import {
   signal,
   computed,
   model,
+  Provider,
 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {
@@ -23,7 +23,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 
-export const SLIDER_VALUE_ACCESSOR: any = {
+export const SLIDER_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => MagarySlider),
   multi: true,
@@ -55,15 +55,18 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
   disabled = input<boolean>(false);
   private formDisabled = signal<boolean>(false);
   isDisabled = computed(() => this.disabled() || this.formDisabled());
-  style = input<{ [klass: string]: any } | null>(null);
+  style = input<Record<string, unknown> | null>(null);
   styleClass = input<string>('');
 
-  @Output() onChange = new EventEmitter<any>();
-  @Output() onSlideEnd = new EventEmitter<any>();
+  onChange = output<{ originalEvent?: Event; value: number | number[] }>();
+  onSlideEnd = output<{
+    originalEvent?: Event;
+    value: number | number[] | null;
+  }>();
 
-  @ViewChild('sliderHandle') sliderHandle!: ElementRef;
-  @ViewChild('sliderHandleStart') sliderHandleStart!: ElementRef;
-  @ViewChild('sliderHandleEnd') sliderHandleEnd!: ElementRef;
+  sliderHandle = viewChild<ElementRef<HTMLElement>>('sliderHandle');
+  sliderHandleStart = viewChild<ElementRef<HTMLElement>>('sliderHandleStart');
+  sliderHandleEnd = viewChild<ElementRef<HTMLElement>>('sliderHandleEnd');
 
   value = model<number | number[] | null>(null);
 
@@ -118,8 +121,8 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
     return this.handle1Pos();
   });
 
-  onModelChange: Function = () => {};
-  onModelTouched: Function = () => {};
+  onModelChange: (value: number | number[] | null) => void = () => {};
+  onModelTouched: () => void = () => {};
 
   constructor() {}
 
@@ -396,16 +399,16 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
   }
 
   // CVA
-  writeValue(value: any): void {
+  writeValue(value: number | number[] | null): void {
     this.value.set(value);
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: (value: number | number[] | null) => void): void {
     this.onModelChange = fn;
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: () => void): void {
     this.onModelTouched = fn;
   }
 

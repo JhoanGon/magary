@@ -2,14 +2,12 @@ import {
   Component,
   output,
   input,
+  contentChildren,
   signal,
   computed,
   effect,
   ChangeDetectionStrategy,
-  ContentChildren,
-  QueryList,
   TemplateRef,
-  AfterContentInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -31,6 +29,14 @@ export interface MagaryTableColumn {
   sortable?: boolean;
   width?: string;
 }
+
+interface MagaryTableRow {
+  id?: unknown;
+  key?: unknown;
+  code?: unknown;
+  name?: unknown;
+}
+
 @Component({
   selector: 'magary-table',
   standalone: true,
@@ -47,9 +53,9 @@ export interface MagaryTableColumn {
   styleUrls: ['./table.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MagaryTable implements AfterContentInit {
+export class MagaryTable {
   // Inputs as Signals
-  value = input<any[]>([]);
+  value = input<MagaryTableRow[]>([]);
   columns = input<MagaryTableColumn[]>([]);
   paginator = input<boolean>(false);
   rows = input<number>(5);
@@ -61,32 +67,14 @@ export class MagaryTable implements AfterContentInit {
   // New input for Paginator options
   rowsPerPageOptions = input<number[]>([]);
 
-  onPageChange = output<any>();
+  onPageChange = output<PaginatorState>();
 
   // Templates
-  @ContentChildren(MagaryTemplate) templates!: QueryList<MagaryTemplate>;
+  templates = contentChildren(MagaryTemplate);
 
-  headerTemplate: TemplateRef<any> | null = null;
-  bodyTemplate: TemplateRef<any> | null = null;
-  captionTemplate: TemplateRef<any> | null = null;
-
-  ngAfterContentInit() {
-    this.templates.forEach((item) => {
-      switch (item.getType()) {
-        case 'caption':
-          this.captionTemplate = item.template;
-          break;
-
-        case 'header':
-          this.headerTemplate = item.template;
-          break;
-
-        case 'body':
-          this.bodyTemplate = item.template;
-          break;
-      }
-    });
-  }
+  headerTemplate: TemplateRef<unknown> | null = null;
+  bodyTemplate: TemplateRef<unknown> | null = null;
+  captionTemplate: TemplateRef<unknown> | null = null;
 
   // Internal State
   first = signal<number>(0);
@@ -138,6 +126,27 @@ export class MagaryTable implements AfterContentInit {
     effect(() => {
       this.currentRows.set(this.rows());
     });
+
+    // Resolve projected templates as content changes.
+    effect(() => {
+      this.headerTemplate = null;
+      this.bodyTemplate = null;
+      this.captionTemplate = null;
+
+      this.templates().forEach((item) => {
+        switch (item.getType()) {
+          case 'caption':
+            this.captionTemplate = item.template;
+            break;
+          case 'header':
+            this.headerTemplate = item.template;
+            break;
+          case 'body':
+            this.bodyTemplate = item.template;
+            break;
+        }
+      });
+    });
   }
 
   onSearch(value: string) {
@@ -152,37 +161,89 @@ export class MagaryTable implements AfterContentInit {
     this.onPageChange.emit(event);
   }
 
-  resolveFieldData(data: any, field: string): any {
-    if (data && field) {
-      if (field.indexOf('.') == -1) {
-        return data[field];
-      } else {
-        let fields: string[] = field.split('.');
-        let value = data;
-        for (let i = 0, len = fields.length; i < len; ++i) {
-          if (value == null) {
-            return null;
-          }
-          value = value[fields[i]];
-        }
+  resolveFieldData(data: unknown, field: string): unknown {
+    if (!field || !this.isRecord(data)) {
+      return null;
+    }
+
+    if (!field.includes('.')) {
+      return data[field];
+    }
+
+    const fields = field.split('.');
+    let value: unknown = data;
+
+    for (const fieldName of fields) {
+      if (!this.isRecord(value)) {
+        return null;
+      }
+      value = value[fieldName];
+      if (value == null) {
         return value;
       }
     }
+
+    return value;
+  }
+
+  resolveFieldDataAsString(data: unknown, field: string): string {
+    const value = this.resolveFieldData(data, field);
+    return value == null ? '' : String(value);
+  }
+
+  resolveFieldDataAsNumber(data: unknown, field: string): number | null {
+    const value = this.resolveFieldData(data, field);
+    if (typeof value === 'number' && Number.isFinite(value)) {
+      return value;
+    }
+
+    if (typeof value === 'string' && value.trim().length > 0) {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : null;
+    }
+
     return null;
   }
 
-  getAvatarLabel(row: any): string {
-    const val = this.resolveFieldData(row, 'name');
+  resolveFieldDataAsDate(data: unknown, field: string): Date | string | null {
+    const value = this.resolveFieldData(data, field);
+    if (value instanceof Date) {
+      return value;
+    }
+
+    if (typeof value === 'string') {
+      return value;
+    }
+
+    return null;
+  }
+
+  getAvatarImage(row: unknown, field: string): string {
+    const value = this.resolveFieldData(row, field);
+    return typeof value === 'string' ? value : '';
+  }
+
+  getBadgeClass(row: unknown, field: string): string {
+    const value = this.resolveFieldDataAsString(row, field).toLowerCase();
+    return value ? `status-${value}` : '';
+  }
+
+  getAvatarLabel(row: unknown): string {
+    const val = this.resolveFieldDataAsString(row, 'name');
     return val ? String(val).slice(0, 1).toUpperCase() : '';
   }
 
-  trackByRow(index: number, row: any): string | number {
-    if (row && typeof row === 'object') {
-      const keyed = row.id ?? row.key ?? row.code ?? row.name;
-      if (keyed !== undefined && keyed !== null) {
+  trackByRow(index: number, row: unknown): string | number {
+    if (this.isRecord(row)) {
+      const keyed = row['id'] ?? row['key'] ?? row['code'] ?? row['name'];
+      if (typeof keyed === 'string' || typeof keyed === 'number') {
         return keyed;
       }
     }
     return index;
+  }
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
   }
 }

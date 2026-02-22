@@ -98,7 +98,7 @@ import {
 })
 export class MagarySlideMenu {
   model = input<MenuItem[]>([]);
-  style = input<{ [klass: string]: any } | null>(null);
+  style = input<Record<string, unknown> | null>(null);
   styleClass = input<string>('');
   menuWidth = input<number | string>(300);
   viewportHeight = input<number | string>(400);
@@ -176,7 +176,7 @@ export class MagarySlideMenu {
     };
   }
 
-  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+  getRouterLink(item: MenuItem): string | readonly unknown[] | UrlTree | null {
     return item.route ?? item.routerLink ?? null;
   }
 }

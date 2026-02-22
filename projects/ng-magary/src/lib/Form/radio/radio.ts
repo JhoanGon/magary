@@ -1,7 +1,7 @@
 import {
   Component,
   ElementRef,
-  ViewChild,
+  viewChild,
   booleanAttribute,
   forwardRef,
   input,
@@ -26,10 +26,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ],
 })
 export class MagaryRadioButton implements ControlValueAccessor {
-  @ViewChild('inputElement') inputElement!: ElementRef;
+  inputElement = viewChild<ElementRef<HTMLInputElement>>('inputElement');
 
   // Signal Inputs
-  readonly value = input<any>();
+  readonly value = input<unknown>();
   readonly name = input<string>();
   readonly label = input<string>();
   readonly inputId = input<string>();
@@ -37,13 +37,13 @@ export class MagaryRadioButton implements ControlValueAccessor {
 
   // Internal State
   readonly focused = signal(false);
-  readonly modelValue = signal<any>(null);
+  readonly modelValue = signal<unknown>(null);
 
   // Computed
   readonly checked = computed(() => this.modelValue() === this.value());
 
   // CVA Callbacks
-  private onChange: (value: any) => void = () => {};
+  private onChange: (value: unknown) => void = () => {};
   private onTouched: () => void = () => {};
 
   select(event: Event) {
@@ -56,7 +56,7 @@ export class MagaryRadioButton implements ControlValueAccessor {
     // Only select if not already selected
     if (!this.checked()) {
       this.updateModel();
-      this.inputElement.nativeElement.focus(); // Ensure focus moves here
+      this.inputElement()?.nativeElement.focus(); // Ensure focus moves here
     }
   }
 
@@ -83,15 +83,15 @@ export class MagaryRadioButton implements ControlValueAccessor {
   }
 
   // CVA Impl
-  writeValue(value: any): void {
+  writeValue(value: unknown): void {
     this.modelValue.set(value);
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: unknown) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

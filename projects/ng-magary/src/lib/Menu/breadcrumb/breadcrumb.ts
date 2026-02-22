@@ -8,24 +8,29 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
+import type { IsActiveMatchOptions, UrlTree } from '@angular/router';
+
+type RouterLinkTarget = string | readonly unknown[] | UrlTree | null;
+type NavStyleMap = Record<string, string | number | null | undefined>;
+type RouterLinkActiveOptions = { exact: boolean } | IsActiveMatchOptions;
 
 export interface BreadcrumbItem {
   label?: string;
   icon?: string;
   command?: (event?: { originalEvent: Event; item: BreadcrumbItem }) => void;
   url?: string;
-  routerLink?: any;
-  queryParams?: { [k: string]: any };
+  routerLink?: RouterLinkTarget;
+  queryParams?: Record<string, unknown>;
   disabled?: boolean;
   target?: string;
-  routerLinkActiveOptions?: any;
-  style?: any;
+  routerLinkActiveOptions?: RouterLinkActiveOptions;
+  style?: NavStyleMap;
   styleClass?: string;
   fragment?: string;
   preserveFragment?: boolean;
   skipLocationChange?: boolean;
   replaceUrl?: boolean;
-  state?: any;
+  state?: Record<string, unknown>;
 }
 
 @Component({
@@ -40,7 +45,7 @@ export interface BreadcrumbItem {
 export class MagaryBreadcrumb {
   readonly model = input<BreadcrumbItem[]>([]);
   readonly home = input<BreadcrumbItem | undefined>(undefined);
-  readonly style = input<{ [klass: string]: any } | null | undefined>(null);
+  readonly style = input<NavStyleMap | null | undefined>(null);
   readonly styleClass = input<string | undefined>(undefined);
 
   readonly onItemClick = output<{

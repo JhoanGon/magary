@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryContextMenu } from 'ng-magary';
-import { MenuItem, MagaryToastService, MagaryToast } from 'ng-magary';
+import { MenuItem, MagaryToastService } from 'ng-magary';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
@@ -19,7 +19,6 @@ import { Highlight } from 'ngx-highlightjs';
     MagaryTabs,
     MagaryTab,
     Highlight,
-    MagaryToast,
   ],
   templateUrl: './view-context-menu.html',
   styleUrl: './view-context-menu.scss',

@@ -6,18 +6,24 @@ import { MagaryCarouselComponent } from './carousel';
 const kebabCase = (value: string) =>
   value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
+type LucideIconData = (typeof icons)[keyof typeof icons];
+type CarouselItem = {
+  id: number;
+  name: string;
+};
+
 const lucideIcons = Object.entries(icons).reduce(
   (acc, [key, icon]) => {
     acc[key] = icon;
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, any>,
+  {} as Record<string, LucideIconData>,
 );
 
 describe('MagaryCarouselComponent', () => {
-  let fixture: ComponentFixture<MagaryCarouselComponent<any>>;
-  let component: MagaryCarouselComponent<any>;
+  let fixture: ComponentFixture<MagaryCarouselComponent<CarouselItem>>;
+  let component: MagaryCarouselComponent<CarouselItem>;
 
   const items = Array.from({ length: 6 }, (_, index) => ({
     id: index + 1,
@@ -32,7 +38,9 @@ describe('MagaryCarouselComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MagaryCarouselComponent<any>);
+    fixture = TestBed.createComponent(
+      MagaryCarouselComponent<CarouselItem>,
+    );
     component = fixture.componentInstance;
     fixture.componentRef.setInput('value', items);
     fixture.componentRef.setInput('numVisible', 3);
@@ -47,8 +55,11 @@ describe('MagaryCarouselComponent', () => {
 
   it('navigates to requested page and updates two-way page model', () => {
     component.goToPage(2, false, 0);
+    const internal = component as unknown as {
+      _currentPage: () => number;
+    };
 
-    expect((component as any)._currentPage()).toBe(2);
+    expect(internal._currentPage()).toBe(2);
     expect(component.page()).toBe(2);
   });
 
@@ -58,15 +69,21 @@ describe('MagaryCarouselComponent', () => {
 
     component.goToPage(component.totalPages() - 1, false, 0);
     component.goToPage(component.totalPages(), false, 0);
+    const internal = component as unknown as {
+      _currentPage: () => number;
+    };
 
-    expect((component as any)._currentPage()).toBe(0);
+    expect(internal._currentPage()).toBe(0);
   });
 
   it('preserves auto mode for numVisible', () => {
     fixture.componentRef.setInput('numVisible', 'auto' as unknown as number);
     fixture.detectChanges();
+    const internal = component as unknown as {
+      _activeNumVisible: () => number;
+    };
 
-    expect((component as any)._activeNumVisible()).toBe(-1);
+    expect(internal._activeNumVisible()).toBe(-1);
     expect(component.effectiveNumVisible()).toBe(3);
   });
 

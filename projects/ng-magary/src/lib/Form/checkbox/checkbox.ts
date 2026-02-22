@@ -22,7 +22,7 @@ export class MagaryCheckbox {
   disabled = input<boolean>(false);
   required = input<boolean>(false);
   label = input<string>('');
-  value = input<any>(null);
+  value = input<unknown>(null);
 
   // Visual variants
   color = input<'primary' | 'success' | 'danger' | 'warning' | 'info'>(

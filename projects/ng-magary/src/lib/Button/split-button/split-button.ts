@@ -3,9 +3,8 @@ import {
   Component,
   ElementRef,
   HostListener,
-  QueryList,
-  ViewChild,
-  ViewChildren,
+  viewChild,
+  viewChildren,
   inject,
   input,
   output,
@@ -25,10 +24,10 @@ import { MenuItem } from '../../Menu/api/menu.interface'; // Use api interface
 })
 export class MagarySplitButton {
   private readonly elementRef = inject(ElementRef);
-  @ViewChild('dropdownTrigger')
-  private dropdownTriggerRef?: ElementRef<HTMLButtonElement>;
-  @ViewChildren('menuItemButton')
-  private menuItemButtonRefs?: QueryList<ElementRef<HTMLButtonElement>>;
+  private dropdownTriggerRef =
+    viewChild<ElementRef<HTMLButtonElement>>('dropdownTrigger');
+  private menuItemButtonRefs =
+    viewChildren<ElementRef<HTMLButtonElement>>('menuItemButton');
 
   readonly label = input<string>('Save');
   readonly icon = input<string>();
@@ -155,13 +154,11 @@ export class MagarySplitButton {
   }
 
   private focusTrigger(): void {
-    this.dropdownTriggerRef?.nativeElement.focus();
+    this.dropdownTriggerRef()?.nativeElement.focus();
   }
 
   private getMenuButtons(): HTMLButtonElement[] {
-    return (
-      this.menuItemButtonRefs?.toArray().map((ref) => ref.nativeElement) ?? []
-    );
+    return this.menuItemButtonRefs().map((ref) => ref.nativeElement);
   }
 
   private focusMenuItemByIndex(index: number, defer = false): void {

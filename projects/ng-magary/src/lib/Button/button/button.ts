@@ -41,6 +41,7 @@ export class MagaryButton {
   readonly variant = input<ButtonVariant>('solid');
   readonly size = input<ButtonSize>('normal');
   readonly ariaLabel = input<string>();
+  readonly onClick = output<Event>();
   readonly buttonClick = output<Event>();
   readonly isDisabled = computed(() => this.disabled() || this.loading());
   readonly buttonClasses = computed(() =>
@@ -81,6 +82,7 @@ export class MagaryButton {
   });
   onButtonClick(event: Event): void {
     if (!this.isDisabled()) {
+      this.onClick.emit(event);
       this.buttonClick.emit(event);
     }
   }

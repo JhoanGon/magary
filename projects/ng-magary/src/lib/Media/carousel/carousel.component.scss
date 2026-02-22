@@ -209,8 +209,8 @@ magary-carousel {
     }
 
     // Ensure icon centering
-    ::ng-deep svg,
-    ::ng-deep i {
+    svg,
+    i {
       width: 1.25rem;
       height: 1.25rem;
     }

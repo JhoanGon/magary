@@ -2,18 +2,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   contentChild,
-  EventEmitter,
-  Input,
-  Output,
+  input,
+  output,
   TemplateRef,
   ViewEncapsulation,
   signal,
-  computed,
   model,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { MagaryButton } from '../../Button/button/button';
+
+type MagaryPickListItem = object & {
+  label?: unknown;
+};
 
 @Component({
   selector: 'magary-pick-list',
@@ -29,29 +31,34 @@ import { MagaryButton } from '../../Button/button/button';
 })
 export class MagaryPickList {
   // Inputs
-  @Input() sourceHeader: string = 'Source';
-  @Input() targetHeader: string = 'Target';
-  @Input() sourceStyle: { [klass: string]: any } | null = null;
-  @Input() targetStyle: { [klass: string]: any } | null = null;
-  @Input() showSourceControls: boolean = true;
-  @Input() showTargetControls: boolean = true;
+  sourceHeader = input<string>('Source');
+  targetHeader = input<string>('Target');
+  sourceStyle = input<Record<string, string | number | null | undefined> | null>(
+    null,
+  );
+  targetStyle = input<Record<string, string | number | null | undefined> | null>(
+    null,
+  );
+  showSourceControls = input<boolean>(true);
+  showTargetControls = input<boolean>(true);
 
   // Data Models
-  source = model<any[]>([]);
-  target = model<any[]>([]);
+  source = model<MagaryPickListItem[]>([]);
+  target = model<MagaryPickListItem[]>([]);
 
   // Selection
-  selectedSource = signal<any[]>([]);
-  selectedTarget = signal<any[]>([]);
+  selectedSource = signal<MagaryPickListItem[]>([]);
+  selectedTarget = signal<MagaryPickListItem[]>([]);
 
   // Templates
-  itemTemplate = contentChild<TemplateRef<any>>('itemTemplate');
+  itemTemplate =
+    contentChild<TemplateRef<{ $implicit: MagaryPickListItem }>>('itemTemplate');
 
   // Outputs
-  @Output() onMoveToTarget = new EventEmitter<any>();
-  @Output() onMoveToSource = new EventEmitter<any>();
-  @Output() onMoveAllToTarget = new EventEmitter<any>();
-  @Output() onMoveAllToSource = new EventEmitter<any>();
+  onMoveToTarget = output<{ items: MagaryPickListItem[] }>();
+  onMoveToSource = output<{ items: MagaryPickListItem[] }>();
+  onMoveAllToTarget = output<{ items: MagaryPickListItem[] }>();
+  onMoveAllToSource = output<{ items: MagaryPickListItem[] }>();
 
   // Methods
   moveRight() {
@@ -116,7 +123,7 @@ export class MagaryPickList {
     this.onMoveAllToSource.emit({ items: target });
   }
 
-  onSourceItemClick(event: MouseEvent, item: any) {
+  onSourceItemClick(event: MouseEvent, item: MagaryPickListItem) {
     const metaKey = event.metaKey || event.ctrlKey;
     const selected = [...this.selectedSource()];
     const index = selected.indexOf(item);
@@ -139,7 +146,7 @@ export class MagaryPickList {
     this.selectedSource.set(selected);
   }
 
-  onTargetItemClick(event: MouseEvent, item: any) {
+  onTargetItemClick(event: MouseEvent, item: MagaryPickListItem) {
     const metaKey = event.metaKey || event.ctrlKey;
     const selected = [...this.selectedTarget()];
     const index = selected.indexOf(item);
@@ -159,5 +166,21 @@ export class MagaryPickList {
       return;
     }
     this.selectedTarget.set(selected);
+  }
+
+  getItemLabel(item: unknown): string {
+    if (typeof item === 'string' || typeof item === 'number') {
+      return String(item);
+    }
+
+    if (this.isRecord(item) && typeof item['label'] === 'string') {
+      return item['label'];
+    }
+
+    return String(item ?? '');
+  }
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
   }
 }

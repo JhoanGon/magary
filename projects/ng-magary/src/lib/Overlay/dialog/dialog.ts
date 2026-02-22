@@ -74,8 +74,8 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
   closeOnEscape = input(true, { transform: booleanAttribute });
   dismissableMask = input(false, { transform: booleanAttribute });
   maximizable = input(false, { transform: booleanAttribute });
-  style = input<any>(null);
-  contentStyle = input<any>(null);
+  style = input<Record<string, unknown> | null>(null);
+  contentStyle = input<Record<string, unknown> | null>(null);
   styleClass = input<string | undefined>(undefined);
   appendTo = input<'body' | 'local'>('body');
 

@@ -14,6 +14,8 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
+type DatePickerValue = Date | Date[] | null;
+
 @Component({
   selector: 'magary-datepicker',
   standalone: true,
@@ -37,7 +39,7 @@ export class MagaryDatePicker
   readonly maxDate = input<Date>();
   readonly selectionMode = input<'single' | 'range'>('single');
 
-  readonly onSelect = output<any>(); // Date | Date[]
+  readonly onSelect = output<Date | Date[]>();
 
   // Use simple short names for week days
   readonly weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -57,7 +59,7 @@ export class MagaryDatePicker
   ];
 
   // State
-  readonly value = signal<any>(null); // Date | Date[] | null
+  readonly value = signal<DatePickerValue>(null);
   readonly isOpen = signal(false);
   readonly viewDate = signal(new Date()); // Current month being viewed
   readonly currentView = signal<'day' | 'month' | 'year'>('day');
@@ -115,17 +117,17 @@ export class MagaryDatePicker
     return days;
   });
 
-  private onChange: (value: any) => void = () => {};
+  private onChange: (value: DatePickerValue) => void = () => {};
   private onTouched: () => void = () => {};
   private documentClickListener: ((event: Event) => void) | null = null;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef<HTMLElement>) {}
 
   ngOnInit() {
     this.documentClickListener = (event: Event) => {
       if (
         this.isOpen() &&
-        !this.elementRef.nativeElement.contains(event.target)
+        !this.elementRef.nativeElement.contains(event.target as Node | null)
       ) {
         this.close();
       }
@@ -335,18 +337,20 @@ export class MagaryDatePicker
   }
 
   // CVA
-  writeValue(value: any): void {
+  writeValue(value: unknown): void {
     // Handle Date or Date[] or String
     if (value) {
       if (Array.isArray(value)) {
-        this.value.set(value); // Assume Date[]
+        this.value.set(value as Date[]); // Assume Date[]
       } else if (value instanceof Date) {
         this.value.set(value);
       } else {
         // Try parse string
-        const d = new Date(value);
-        if (!isNaN(d.getTime())) {
-          this.value.set(d);
+        if (typeof value === 'string' || typeof value === 'number') {
+          const d = new Date(value);
+          if (!isNaN(d.getTime())) {
+            this.value.set(d);
+          }
         }
       }
     } else {
@@ -354,11 +358,11 @@ export class MagaryDatePicker
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: DatePickerValue) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

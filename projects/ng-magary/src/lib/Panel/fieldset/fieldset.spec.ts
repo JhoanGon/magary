@@ -1,4 +1,4 @@
-import { Component, importProvidersFrom, ViewChild } from '@angular/core';
+﻿import { Component, importProvidersFrom, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { LucideAngularModule, icons } from 'lucide-angular';
@@ -14,7 +14,7 @@ import { MagaryFieldset } from './fieldset';
   `,
 })
 class FieldsetHostComponent {
-  @ViewChild('fieldset', { static: true }) fieldset!: MagaryFieldset;
+  fieldset = viewChild.required<MagaryFieldset>('fieldset');
 }
 
 const kebabCase = (value: string) =>
@@ -26,7 +26,7 @@ const lucideIcons = Object.entries(icons).reduce(
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, any>,
+  {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
 
 describe('MagaryFieldset behavior', () => {
@@ -68,18 +68,18 @@ describe('MagaryFieldset behavior', () => {
   it('toggles collapsed state and emits before/after events', () => {
     const beforeEvents: Array<{ collapsed: boolean }> = [];
     const afterEvents: Array<{ collapsed: boolean }> = [];
-    host.fieldset.onBeforeToggle.subscribe((event) => beforeEvents.push(event));
-    host.fieldset.onAfterToggle.subscribe((event) => afterEvents.push(event));
+    host.fieldset().onBeforeToggle.subscribe((event) => beforeEvents.push(event));
+    host.fieldset().onAfterToggle.subscribe((event) => afterEvents.push(event));
 
     const toggleButton = fixture.nativeElement.querySelector(
       '.magary-fieldset-toggler',
     ) as HTMLButtonElement;
 
-    expect(host.fieldset.collapsed()).toBe(false);
+    expect(host.fieldset().collapsed()).toBe(false);
     toggleButton.click();
     fixture.detectChanges();
 
-    expect(host.fieldset.collapsed()).toBe(true);
+    expect(host.fieldset().collapsed()).toBe(true);
     expect(beforeEvents).toHaveLength(1);
     expect(afterEvents).toHaveLength(1);
     expect(beforeEvents[0].collapsed).toBe(true);
@@ -88,10 +88,11 @@ describe('MagaryFieldset behavior', () => {
     toggleButton.click();
     fixture.detectChanges();
 
-    expect(host.fieldset.collapsed()).toBe(false);
+    expect(host.fieldset().collapsed()).toBe(false);
     expect(beforeEvents).toHaveLength(2);
     expect(afterEvents).toHaveLength(2);
     expect(beforeEvents[1].collapsed).toBe(false);
     expect(afterEvents[1].collapsed).toBe(false);
   });
 });
+

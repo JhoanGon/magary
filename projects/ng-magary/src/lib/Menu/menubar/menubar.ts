@@ -53,7 +53,7 @@ export class MenubarItemDirective {
 })
 export class MagaryMenubar implements OnDestroy {
   model = input<MenuItem[]>([]);
-  style = input<{ [klass: string]: any } | null>(null);
+  style = input<Record<string, unknown> | null>(null);
   styleClass = input<string>('');
 
   processedModel = computed(() => {
@@ -193,7 +193,7 @@ export class MagaryMenubar implements OnDestroy {
     this.unbindDocumentClickListener();
   }
 
-  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+  getRouterLink(item: MenuItem): string | readonly unknown[] | UrlTree | null {
     return item.route ?? item.routerLink ?? null;
   }
 }

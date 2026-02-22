@@ -2,7 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GridStack } from 'gridstack';
 import { MagaryGrid } from './grid';
 
-type GridListeners = Record<string, (event: any, items: any) => void>;
+type GridEvent = { type: string };
+type GridItem = { id: string };
+type GridListeners = Record<
+  string,
+  (event: GridEvent, items: GridItem[]) => void
+>;
 
 describe('MagaryGrid behavior', () => {
   let fixture: ComponentFixture<MagaryGrid>;
@@ -26,9 +31,14 @@ describe('MagaryGrid behavior', () => {
 
     listeners = {};
     gridApi = {
-      on: vi.fn((event: string, callback: (event: any, items: any) => void) => {
+      on: vi.fn(
+        (
+          event: string,
+          callback: (event: GridEvent, items: GridItem[]) => void,
+        ) => {
         listeners[event] = callback;
-      }),
+        },
+      ),
       destroy: vi.fn(),
       makeWidget: vi.fn(),
     };

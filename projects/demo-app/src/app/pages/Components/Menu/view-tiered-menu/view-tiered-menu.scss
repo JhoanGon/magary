@@ -71,9 +71,9 @@
 }
 
 // Override card overflow for this page to allow menus to spill out
-:host ::ng-deep magary-card .card,
-:host ::ng-deep magary-card .card-body {
-  overflow: visible !important;
+magary-card {
+  --card-overflow: visible;
+  --card-body-overflow: visible;
 }
 
 .section-header {
@@ -213,9 +213,3 @@
   }
 }
 
-.custom-menu {
-  // Demo custom style
-  ::ng-deep .magary-tieredmenu {
-    border-radius: 8px;
-  }
-}

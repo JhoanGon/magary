@@ -33,6 +33,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: API contract gate
+        run: pnpm run check:api-contract
+
       - name: Lint
         run: pnpm run lint
 

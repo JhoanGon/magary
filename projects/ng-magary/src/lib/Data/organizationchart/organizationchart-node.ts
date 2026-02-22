@@ -1,15 +1,10 @@
 import {
   Component,
-  Input,
-  Output,
-  EventEmitter,
   ViewEncapsulation,
   ChangeDetectionStrategy,
-  inject,
   forwardRef,
   computed,
   input,
-  contentChild,
   TemplateRef,
   signal,
   output,
@@ -23,7 +18,10 @@ import {
   animate,
 } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { MagaryTreeNode } from '../tree/tree-node.interface';
+import {
+  MagaryTreeNode,
+  MagaryTreeNodeSelectionEvent,
+} from '../tree/tree-node.interface';
 import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
@@ -163,16 +161,16 @@ import { LucideAngularModule } from 'lucide-angular';
 export class MagaryOrganizationChartNode implements OnInit {
   readonly node = input.required<MagaryTreeNode>();
   readonly selectionMode = input<string | null>(null);
-  readonly selection = input<any>(null);
+  readonly selection = input<unknown>(null);
   readonly collapsible = input<boolean>(false);
-  readonly itemTemplate = input<TemplateRef<any> | null | undefined>(null);
+  readonly itemTemplate = input<TemplateRef<unknown> | null | undefined>(null);
 
   readonly template = computed(() => this.itemTemplate());
 
-  readonly nodeSelect = output<any>();
-  readonly nodeUnselect = output<any>();
-  readonly nodeExpand = output<any>();
-  readonly nodeCollapse = output<any>();
+  readonly nodeSelect = output<MagaryTreeNodeSelectionEvent>();
+  readonly nodeUnselect = output<MagaryTreeNodeSelectionEvent>();
+  readonly nodeExpand = output<MagaryTreeNode>();
+  readonly nodeCollapse = output<MagaryTreeNode>();
 
   // Local signal for expansion state to ensure UI updates
   // Initialized from node().expanded but then managed locally for this component instance

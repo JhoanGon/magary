@@ -50,7 +50,7 @@ export class MegaMenuItemDirective {
 export class MagaryMegaMenu implements OnDestroy {
   model = input<MenuItem[]>([]);
   orientation = input<'horizontal' | 'vertical'>('horizontal');
-  style = input<{ [klass: string]: any } | null>(null);
+  style = input<Record<string, unknown> | null>(null);
   styleClass = input<string>('');
 
   processedModel = computed(() => {
@@ -159,7 +159,7 @@ export class MagaryMegaMenu implements OnDestroy {
     this.unbindDocumentClickListener();
   }
 
-  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+  getRouterLink(item: MenuItem): string | readonly unknown[] | UrlTree | null {
     return item.route ?? item.routerLink ?? null;
   }
 }

@@ -11,8 +11,10 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
 import { LucideAngularModule } from 'lucide-angular';
+
+type CascadeSelectOption = Record<string, unknown>;
+
 @Component({
   selector: 'magary-cascade-select',
   standalone: true,
@@ -31,7 +33,7 @@ import { LucideAngularModule } from 'lucide-angular';
 export class MagaryCascadeSelect implements ControlValueAccessor {
   private elementRef = inject(ElementRef);
 
-  public options = input<any[]>([]);
+  public options = input<CascadeSelectOption[]>([]);
   public optionLabel = input<string>('label');
   public optionValue = input<string | null>(null);
   public optionGroupLabel = input<string[] | string | null>(null);
@@ -45,21 +47,22 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
   // Signal interno: setDisabledState(true) desde Reactive Forms
   private _disabled = signal<boolean>(false);
 
-  // Computed que combina ambos (OR lógico)
+  // Computed que combina ambos (OR logico)
   public disabled = computed(() => this._disabled() || this.disabledInput());
 
   public isOpen = signal(false);
-  public value = signal<any>(null);
-  public activeOption = signal<any>(null);
+  public value = signal<unknown>(null);
 
-  private onChange: (value: any) => void = () => {};
+  private onChange: (value: unknown) => void = () => {};
   private onTouched: () => void = () => {};
 
   public selectedLabel = computed(() => {
     const val = this.value();
-    if (!val) return this.placeholder();
+    if (val === null || val === undefined || val === '') {
+      return this.placeholder();
+    }
 
-    const findLabel = (opts: any[]): string | null => {
+    const findLabel = (opts: CascadeSelectOption[]): string | null => {
       for (const opt of opts) {
         if (this.getOptionValue(opt) === val) {
           return this.getOptionLabel(opt);
@@ -76,33 +79,32 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
     return findLabel(this.options()) || this.placeholder();
   });
 
-  public getOptionLabel(option: any): string {
+  public getOptionLabel(option: CascadeSelectOption): string {
     if (this.isOptionGroup(option)) {
       const groupLabel = this.optionGroupLabel();
-      if (groupLabel) {
-        if (typeof groupLabel === 'string') {
-          return option[groupLabel];
-        }
+      if (groupLabel && typeof groupLabel === 'string') {
+        return String(option[groupLabel] ?? '');
       }
     }
-    return option[this.optionLabel()];
+    return String(option[this.optionLabel()] ?? '');
   }
 
-  public getOptionValue(option: any): any {
+  public getOptionValue(option: CascadeSelectOption): unknown {
     const valueKey = this.optionValue();
     return valueKey ? option[valueKey] : option;
   }
 
-  public getOptionChildren(option: any): any[] | null {
+  public getOptionChildren(option: CascadeSelectOption): CascadeSelectOption[] | null {
     for (const childKey of this.optionGroupChildren()) {
-      if (option[childKey]) {
-        return option[childKey];
+      const children = option[childKey];
+      if (Array.isArray(children)) {
+        return children as CascadeSelectOption[];
       }
     }
     return null;
   }
 
-  public isOptionGroup(option: any): boolean {
+  public isOptionGroup(option: CascadeSelectOption): boolean {
     const children = this.getOptionChildren(option);
     return !!children && children.length > 0;
   }
@@ -115,7 +117,7 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
     }
   }
 
-  public selectOption(option: any, event: Event) {
+  public selectOption(option: CascadeSelectOption, event: Event) {
     event.stopPropagation();
 
     const isGroup = this.isOptionGroup(option);
@@ -132,21 +134,21 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
 
   @HostListener('document:click', ['$event'])
   public onDocumentClick(event: Event) {
-    if (!this.elementRef.nativeElement.contains(event.target)) {
+    if (!this.elementRef.nativeElement.contains(event.target as Node | null)) {
       this.isOpen.set(false);
       this.onTouched();
     }
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: unknown): void {
     this.value.set(obj);
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: unknown) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 

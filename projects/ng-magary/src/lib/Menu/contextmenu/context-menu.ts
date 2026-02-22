@@ -9,7 +9,7 @@ import {
   OnDestroy,
   AfterViewInit,
   computed,
-  ViewChild,
+  viewChild,
   input,
 } from '@angular/core';
 import { CommonModule, NgTemplateOutlet, DOCUMENT } from '@angular/common';
@@ -36,17 +36,17 @@ export class MagaryContextMenu implements AfterViewInit, OnDestroy {
   private renderer = inject(Renderer2);
 
   model = input<MenuItem[]>([]);
-  style = input<{ [klass: string]: any } | null>(null);
+  style = input<Record<string, unknown> | null>(null);
   styleClass = input<string | null>(null);
   global = input<boolean>(false);
-  target = input<any>(null);
+  target = input<string | ElementRef<HTMLElement> | HTMLElement | null>(null);
 
   visible = signal<boolean>(false);
   // Position
   x = signal<number>(0);
   y = signal<number>(0);
 
-  @ViewChild('container') containerViewChild!: ElementRef;
+  containerViewChild = viewChild<ElementRef<HTMLElement>>('container');
 
   private documentClickListener: (() => void) | null = null;
   private documentResizeListener: (() => void) | null = null;
@@ -92,7 +92,7 @@ export class MagaryContextMenu implements AfterViewInit, OnDestroy {
   getTargetElement(): HTMLElement | null {
     const target = this.target();
     if (typeof target === 'string') {
-      return document.querySelector(target);
+      return this.document.querySelector<HTMLElement>(target);
     } else if (target instanceof ElementRef) {
       return target.nativeElement;
     } else {
@@ -136,10 +136,11 @@ export class MagaryContextMenu implements AfterViewInit, OnDestroy {
         'document',
         'click',
         (event) => {
+          const containerViewChild = this.containerViewChild();
           if (
             this.visible() &&
-            this.containerViewChild &&
-            !this.containerViewChild.nativeElement.contains(event.target)
+            containerViewChild &&
+            !containerViewChild.nativeElement.contains(event.target)
           ) {
             this.hide();
           }
@@ -254,7 +255,7 @@ export class MagaryContextMenu implements AfterViewInit, OnDestroy {
     // But submenus should respond to hover.
   }
 
-  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+  getRouterLink(item: MenuItem): string | readonly unknown[] | UrlTree | null {
     return item.route ?? item.routerLink ?? null;
   }
 }

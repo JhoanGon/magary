@@ -1,22 +1,20 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  EventEmitter,
-  Output,
   ViewEncapsulation,
   forwardRef,
   input,
   model,
-  signal,
+  output,
   inject,
   ChangeDetectorRef,
+  Provider,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
-export const RATING_VALUE_ACCESSOR: any = {
+export const RATING_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => MagaryRating),
   multi: true,
@@ -51,14 +49,14 @@ export class MagaryRating implements ControlValueAccessor {
   value = model<number | null>(null);
 
   // Events
-  @Output() onRate = new EventEmitter<any>();
-  @Output() onCancel = new EventEmitter<any>();
+  onRate = output<{ originalEvent: Event; value: number }>();
+  onCancel = output<Event>();
 
   // State
   private cdr = inject(ChangeDetectorRef);
 
-  onModelChange: Function = () => {};
-  onModelTouched: Function = () => {};
+  onModelChange: (value: number | null) => void = () => {};
+  onModelTouched: () => void = () => {};
 
   constructor() {}
 
@@ -95,15 +93,15 @@ export class MagaryRating implements ControlValueAccessor {
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: Function): void {
+  registerOnChange(fn: (value: number | null) => void): void {
     this.onModelChange = fn;
   }
 
-  registerOnTouched(fn: Function): void {
+  registerOnTouched(fn: () => void): void {
     this.onModelTouched = fn;
   }
 
-  setDisabledState(val: boolean): void {
+  setDisabledState(_val: boolean): void {
     // We use signal inputs generally, but for CVA directive compatibility we should handle this.
     // However, signals are read-only from here.
     // We can just rely on the template binding to `disabled()` input if used as component input,

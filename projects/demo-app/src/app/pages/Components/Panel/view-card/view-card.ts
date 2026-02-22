@@ -5,7 +5,6 @@ import {
   MagaryTab,
   MagaryTabs,
   MagaryToastService,
-  MagaryToast,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { LucideAngularModule } from 'lucide-angular';
@@ -54,7 +53,6 @@ const CODE_EXAMPLES = {
     MagaryTabs,
     MagaryTab,
     Highlight,
-    MagaryToast,
     LucideAngularModule,
   ],
   templateUrl: './view-card.html',
@@ -246,8 +244,7 @@ export class ViewCard {
     }
   }`;
   exampleNotificationsHTML = `
-  <!-- Componente Toast en el template -->
-  <magary-toast position="top-right"></magary-toast>
+  <!-- El contenedor <magary-toast> vive en el layout global -->
 
   <!-- Uso con MagaryButton dentro de Cards -->
   <magary-card [clickable]="true" (cardClick)="onCardClick($event)">

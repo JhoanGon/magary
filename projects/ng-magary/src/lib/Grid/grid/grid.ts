@@ -2,16 +2,19 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  Input,
   OnDestroy,
-  ViewChild,
+  viewChild,
   input,
   output,
-  model,
   ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GridStack, GridStackOptions } from 'gridstack';
+import { GridStack, GridStackNode, GridStackOptions } from 'gridstack';
+
+export interface MagaryGridEvent {
+  event: Event;
+  items: GridStackNode[];
+}
 
 @Component({
   selector: 'magary-grid',
@@ -22,14 +25,15 @@ import { GridStack, GridStackOptions } from 'gridstack';
   encapsulation: ViewEncapsulation.None,
 })
 export class MagaryGrid implements AfterViewInit, OnDestroy {
-  @ViewChild('gridStackContainer') gridStackContainer!: ElementRef;
+  gridStackContainer =
+    viewChild.required<ElementRef<HTMLDivElement>>('gridStackContainer');
 
   options = input<GridStackOptions>({});
 
   // Event outputs
-  change = output<any>();
-  added = output<any>();
-  removed = output<any>();
+  change = output<MagaryGridEvent>();
+  added = output<MagaryGridEvent>();
+  removed = output<MagaryGridEvent>();
 
   private grid?: GridStack;
 
@@ -38,7 +42,7 @@ export class MagaryGrid implements AfterViewInit, OnDestroy {
     setTimeout(() => {
       this.grid = GridStack.init(
         this.options(),
-        this.gridStackContainer.nativeElement,
+        this.gridStackContainer().nativeElement,
       );
 
       // Bind events after initialization
@@ -49,13 +53,13 @@ export class MagaryGrid implements AfterViewInit, OnDestroy {
   private bindEvents(): void {
     if (!this.grid) return;
 
-    this.grid.on('change', (event: any, items: any) =>
+    this.grid.on('change', (event: Event, items: GridStackNode[]) =>
       this.change.emit({ event, items }),
     );
-    this.grid.on('added', (event: any, items: any) =>
+    this.grid.on('added', (event: Event, items: GridStackNode[]) =>
       this.added.emit({ event, items }),
     );
-    this.grid.on('removed', (event: any, items: any) =>
+    this.grid.on('removed', (event: Event, items: GridStackNode[]) =>
       this.removed.emit({ event, items }),
     );
   }

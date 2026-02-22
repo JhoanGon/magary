@@ -1,6 +1,5 @@
 import {
   Component,
-  Input,
   booleanAttribute,
   computed,
   forwardRef,
@@ -14,6 +13,9 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { MagaryRadioButton } from './radio';
+
+type RadioObjectOption = Record<string, unknown>;
+type RadioOption = string | number | boolean | RadioObjectOption;
 
 @Component({
   selector: 'magary-radio-group',
@@ -30,54 +32,63 @@ import { MagaryRadioButton } from './radio';
   ],
 })
 export class MagaryRadioGroup implements ControlValueAccessor {
-  readonly options = input<any[]>([]);
+  readonly options = input<RadioOption[]>([]);
   readonly layout = input<'vertical' | 'horizontal'>('vertical');
   readonly name = input<string>();
   readonly optionLabel = input<string>();
   readonly optionValue = input<string>();
   readonly disabled = input(false, { transform: booleanAttribute });
 
-  readonly value = signal<any>(null);
+  readonly value = signal<unknown>(null);
 
-  private onChange: (value: any) => void = () => {};
+  private onChange: (value: unknown) => void = () => {};
   private onTouched: () => void = () => {};
 
-  onRadioChange(val: any) {
+  onRadioChange(val: unknown) {
     if (this.disabled()) return;
     this.value.set(val);
     this.onChange(val);
     this.onTouched();
   }
 
-  getOptionLabel(option: any): string {
+  getOptionLabel(option: RadioOption): string {
     const labelProp = this.optionLabel();
-    const val = labelProp ? option[labelProp] : option;
-    return String(val);
+    if (labelProp && this.isObjectOption(option)) {
+      return String(option[labelProp] ?? '');
+    }
+    return String(option ?? '');
   }
 
-  getOptionValue(option: any): any {
+  getOptionValue(option: RadioOption): unknown {
     const valueProp = this.optionValue();
-    return valueProp ? option[valueProp] : option;
+    if (valueProp && this.isObjectOption(option)) {
+      return option[valueProp];
+    }
+    return option;
   }
 
   readonly generatedName =
     'magary-radio-group-' + Math.random().toString(36).substr(2, 9);
   readonly groupName = computed(() => this.name() || this.generatedName);
 
-  writeValue(val: any): void {
+  writeValue(val: unknown): void {
     this.value.set(val);
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: unknown) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
   setDisabledState?(isDisabled: boolean): void {
     // Handled by signal input usually, but we can't write to input signal.
     // relying on parent binding [disabled].
+  }
+
+  private isObjectOption(option: RadioOption): option is RadioObjectOption {
+    return typeof option === 'object' && option !== null;
   }
 }

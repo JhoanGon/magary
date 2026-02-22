@@ -5,7 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MagaryTieredMenu, MagaryToast, MagaryToastService } from 'ng-magary';
+import { MagaryTieredMenu, MagaryToastService } from 'ng-magary';
 import { MenuItem } from 'ng-magary';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
 import { MagaryButton } from 'ng-magary';
@@ -21,7 +21,6 @@ import { Highlight } from 'ngx-highlightjs';
     MagaryTab,
     MagaryButton,
     Highlight,
-    MagaryToast,
   ],
   templateUrl: './view-tiered-menu.html',
   styleUrl: './view-tiered-menu.scss',

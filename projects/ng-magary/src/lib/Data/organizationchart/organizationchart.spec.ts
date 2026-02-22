@@ -11,13 +11,15 @@ const kebabCase = (value: string) =>
     .replace(/([a-zA-Z])([0-9])/g, '$1-$2')
     .toLowerCase();
 
+type LucideIconData = (typeof icons)[keyof typeof icons];
+
 const lucideIcons = Object.entries(icons).reduce(
   (acc, [key, icon]) => {
     acc[key] = icon;
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, any>,
+  {} as Record<string, LucideIconData>,
 );
 
 describe('MagaryOrganizationChart behavior', () => {
@@ -57,9 +59,13 @@ describe('MagaryOrganizationChart behavior', () => {
   });
 
   it('renders labels for all visible nodes from hierarchical input', () => {
-    const labels = Array.from(
-      fixture.nativeElement.querySelectorAll('.magary-organizationchart-node-label'),
-    ).map((element: any) => element.textContent?.trim());
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const nodeLabels = nativeElement.querySelectorAll(
+      '.magary-organizationchart-node-label',
+    ) as NodeListOf<HTMLElement>;
+    const labels = Array.from(nodeLabels).map((element) =>
+      element.textContent?.trim(),
+    );
 
     expect(labels).toContain('CEO');
     expect(labels).toContain('COO');
@@ -68,8 +74,8 @@ describe('MagaryOrganizationChart behavior', () => {
   });
 
   it('emits node selection and unselection based on current selection input', () => {
-    const selectEvents: any[] = [];
-    const unselectEvents: any[] = [];
+    const selectEvents: { node: MagaryTreeNode }[] = [];
+    const unselectEvents: { node: MagaryTreeNode }[] = [];
     component.onNodeSelect.subscribe((event) => selectEvents.push(event));
     component.onNodeUnselect.subscribe((event) => unselectEvents.push(event));
 
@@ -94,8 +100,8 @@ describe('MagaryOrganizationChart behavior', () => {
   it('toggles collapsible node and emits expand/collapse events', () => {
     const collapsed: string[] = [];
     const expanded: string[] = [];
-    component.onNodeCollapse.subscribe((node) => collapsed.push(node.label));
-    component.onNodeExpand.subscribe((node) => expanded.push(node.label));
+    component.onNodeCollapse.subscribe((node) => collapsed.push(node.label ?? ''));
+    component.onNodeExpand.subscribe((node) => expanded.push(node.label ?? ''));
 
     const toggler = fixture.nativeElement.querySelector(
       '.magary-organizationchart-toggler',

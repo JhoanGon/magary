@@ -57,12 +57,19 @@ describe('MagaryTimeline behavior', () => {
   });
 
   it('projects content and opposite templates for each event', () => {
-    const renderedStatuses = Array.from(
-      fixture.nativeElement.querySelectorAll('.event-content'),
-    ).map((element: any) => element.textContent?.trim());
-    const renderedDates = Array.from(
-      fixture.nativeElement.querySelectorAll('.event-date'),
-    ).map((element: any) => element.textContent?.trim());
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const contentElements = nativeElement.querySelectorAll(
+      '.event-content',
+    ) as NodeListOf<HTMLElement>;
+    const dateElements = nativeElement.querySelectorAll(
+      '.event-date',
+    ) as NodeListOf<HTMLElement>;
+    const renderedStatuses = Array.from(contentElements).map((element) =>
+      element.textContent?.trim(),
+    );
+    const renderedDates = Array.from(dateElements).map((element) =>
+      element.textContent?.trim(),
+    );
 
     expect(renderedStatuses).toEqual(['Ordered', 'Shipped', 'Delivered']);
     expect(renderedDates).toEqual(['2026-01-01', '2026-01-02', '2026-01-03']);

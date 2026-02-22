@@ -1,4 +1,4 @@
-import { importProvidersFrom } from '@angular/core';
+﻿import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryButton } from './button';
@@ -12,7 +12,7 @@ const lucideIcons = Object.entries(icons).reduce(
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, any>,
+  {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
 
 describe('MagaryButton behavior', () => {
@@ -30,12 +30,14 @@ describe('MagaryButton behavior', () => {
     fixture.detectChanges();
   });
 
-  it('emits buttonClick when clicked in enabled state', () => {
+  it('emits onClick and buttonClick when clicked in enabled state', () => {
     fixture.componentRef.setInput('label', 'Save');
     fixture.detectChanges();
 
-    const clickEvents: Event[] = [];
-    component.buttonClick.subscribe((event) => clickEvents.push(event));
+    const onClickEvents: Event[] = [];
+    const buttonClickEvents: Event[] = [];
+    component.onClick.subscribe((event) => onClickEvents.push(event));
+    component.buttonClick.subscribe((event) => buttonClickEvents.push(event));
 
     const button = fixture.nativeElement.querySelector(
       'button',
@@ -43,12 +45,16 @@ describe('MagaryButton behavior', () => {
     button.click();
     fixture.detectChanges();
 
-    expect(clickEvents).toHaveLength(1);
+    expect(onClickEvents).toHaveLength(1);
+    expect(buttonClickEvents).toHaveLength(1);
+    expect(buttonClickEvents[0]).toBe(onClickEvents[0]);
   });
 
   it('blocks clicks when disabled or loading', () => {
-    const clickEvents: Event[] = [];
-    component.buttonClick.subscribe((event) => clickEvents.push(event));
+    const onClickEvents: Event[] = [];
+    const buttonClickEvents: Event[] = [];
+    component.onClick.subscribe((event) => onClickEvents.push(event));
+    component.buttonClick.subscribe((event) => buttonClickEvents.push(event));
 
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
@@ -59,7 +65,8 @@ describe('MagaryButton behavior', () => {
     expect(button.disabled).toBe(true);
     button.click();
     fixture.detectChanges();
-    expect(clickEvents).toHaveLength(0);
+    expect(onClickEvents).toHaveLength(0);
+    expect(buttonClickEvents).toHaveLength(0);
 
     fixture.componentRef.setInput('disabled', false);
     fixture.componentRef.setInput('loading', true);
@@ -69,7 +76,8 @@ describe('MagaryButton behavior', () => {
     expect(button.getAttribute('aria-busy')).toBe('true');
     button.click();
     fixture.detectChanges();
-    expect(clickEvents).toHaveLength(0);
+    expect(onClickEvents).toHaveLength(0);
+    expect(buttonClickEvents).toHaveLength(0);
   });
 
   it('applies classes/styles and resolves aria-label fallback', () => {
@@ -110,3 +118,4 @@ describe('MagaryButton behavior', () => {
     expect(button.getAttribute('aria-label')).toBe('Button');
   });
 });
+

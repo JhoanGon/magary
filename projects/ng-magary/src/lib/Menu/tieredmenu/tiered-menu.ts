@@ -57,11 +57,11 @@ export class TieredMenuItemDirective {
 export class MagaryTieredMenu implements OnDestroy {
   model = input<MenuItem[]>([]);
   popup = input<boolean>(false);
-  style = input<{ [klass: string]: any } | null>(null);
+  style = input<Record<string, unknown> | null>(null);
   styleClass = input<string>('');
 
   visible = signal<boolean>(false);
-  target: any;
+  target: EventTarget | null = null;
 
   // Track expanded items path to handle closing siblings
   // Usually in tiered menu, only one item per level is expanded.
@@ -285,7 +285,7 @@ export class MagaryTieredMenu implements OnDestroy {
     this.unbindDocumentClickListener();
   }
 
-  getRouterLink(item: MenuItem): string | readonly any[] | UrlTree | null {
+  getRouterLink(item: MenuItem): string | readonly unknown[] | UrlTree | null {
     return item.route ?? item.routerLink ?? null;
   }
 }

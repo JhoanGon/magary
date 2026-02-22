@@ -576,11 +576,12 @@ export class MagaryCarouselComponent<T>
   protected readonly _slideProgress = signal<Map<number, number>>(new Map());
 
   // Autoplay state
-  private autoplayTimer: any;
-  private autoplayProgressInterval: any;
+  private autoplayTimer: ReturnType<typeof setInterval> | null = null;
+  private autoplayProgressInterval: ReturnType<typeof setInterval> | null =
+    null;
   private autoplayPaused = false;
   private autoplayReversed = false;
-  private autoplayResumeTimer: any;
+  private autoplayResumeTimer: ReturnType<typeof setTimeout> | null = null;
 
   // Intersection observer for viewport detection
   private intersectionObserver: IntersectionObserver | null = null;
@@ -1546,7 +1547,7 @@ export class MagaryCarouselComponent<T>
 
     this.touchStart.emit(event);
 
-    // Cancel momentum if any
+    // Cancel momentum if present
     if (this.momentumRAF) {
       cancelAnimationFrame(this.momentumRAF);
       this.momentumRAF = null;

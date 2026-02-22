@@ -78,7 +78,7 @@ export class Sidebar implements OnDestroy {
   public logoSrc = input<string>('assets/logo.svg');
   public appTitle = input<string>('PRIMENG');
   public appTitleClass = input<string>('');
-  public appTitleStyle = input<{ [klass: string]: any } | null>(null);
+  public appTitleStyle = input<Record<string, unknown> | null>(null);
   public menuBackgroundColor = input<string>('var(--surface-50)');
   public menuTextColor = input<string>('var(--text-primary)');
   public menuHoverColor = input<string>('var(--surface-100)');

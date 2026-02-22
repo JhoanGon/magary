@@ -1,4 +1,4 @@
-import { importProvidersFrom } from '@angular/core';
+﻿import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagarySelect } from './select';
@@ -12,7 +12,7 @@ const lucideIcons = Object.entries(icons).reduce(
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, any>,
+  {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
 
 describe('MagarySelect behavior', () => {
@@ -64,3 +64,4 @@ describe('MagarySelect behavior', () => {
     expect(root.classList.contains('disabled')).toBe(true);
   });
 });
+

@@ -130,7 +130,7 @@ export class MagaryPaginator implements OnChanges {
     }
   }
 
-  onRppChange(event: any) {
+  onRppChange(event: Event) {
     // We cannot mutate the input 'rows' directly.
     // The parent must handle the state change for 'rows' if it's dynamic,
     // or we emit an event.
@@ -140,7 +140,8 @@ export class MagaryPaginator implements OnChanges {
     // Since 'rows' is now a signal input, we can't write to it.
     // We will emit the change with page 0.
 
-    const newRows = Number(event.target.value);
+    const target = event.target as HTMLSelectElement | null;
+    const newRows = Number(target?.value ?? this.rows());
     const state: PaginatorState = {
       page: 0,
       first: 0,

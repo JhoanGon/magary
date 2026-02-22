@@ -2,15 +2,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  Output,
+  input,
+  output,
+  signal,
+  viewChild,
   Renderer2,
-  ViewChild,
   ChangeDetectorRef,
   OnDestroy,
   inject,
-  signal,
   ViewEncapsulation,
 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
@@ -39,32 +38,23 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class MagaryOverlayPanel implements OnDestroy {
-  dismissable = signal(true); // Default true
-  showCloseIcon = signal(false);
-
-  @Input('dismissable') set _dismissable(val: boolean) {
-    this.dismissable.set(val);
-  }
-  @Input('showCloseIcon') set _showCloseIcon(val: boolean) {
-    this.showCloseIcon.set(val);
-  }
-
-  @Output() onShow = new EventEmitter<any>();
-  @Output() onHide = new EventEmitter<any>();
-
-  @ViewChild('container') container: ElementRef | undefined;
+  dismissable = input<boolean>(true);
+  showCloseIcon = input<boolean>(false);
+  onShow = output<void>();
+  onHide = output<void>();
+  container = viewChild<ElementRef<HTMLElement>>('container');
 
   visible = signal(false);
-  target: any;
-  documentClickListener: any;
-  scrollListener: any;
+  target: HTMLElement | null = null;
+  documentClickListener: (() => void) | null = null;
+  scrollListener: ((event: Event) => void) | null = null;
 
   cd = inject(ChangeDetectorRef);
   renderer = inject(Renderer2);
   el = inject(ElementRef);
   document = inject(DOCUMENT);
 
-  toggle(event: Event, target?: any) {
+  toggle(event: Event, target?: EventTarget | null) {
     if (this.visible()) {
       this.hide();
     } else {
@@ -72,18 +62,19 @@ export class MagaryOverlayPanel implements OnDestroy {
     }
   }
 
-  show(event: Event, target?: any) {
-    this.target = target || event.currentTarget || event.target;
+  show(event: Event, target?: EventTarget | null) {
+    this.target = this.resolveTarget(event, target);
     this.visible.set(true);
-    this.onShow.emit(null);
+    this.onShow.emit();
 
     // Append to body to avoid z-index/transform issues
     // We need to wait for the view to be created by the signal change
     setTimeout(() => {
-      if (this.container) {
+      const container = this.container();
+      if (container) {
         this.renderer.appendChild(
           this.document.body,
-          this.container.nativeElement,
+          container.nativeElement,
         );
         this.alignWithTarget();
         this.bindDocumentClickListener();
@@ -95,7 +86,7 @@ export class MagaryOverlayPanel implements OnDestroy {
 
   hide() {
     this.visible.set(false);
-    this.onHide.emit(null);
+    this.onHide.emit();
     this.unbindDocumentClickListener();
     this.unbindScrollListener();
     this.target = null;
@@ -103,22 +94,21 @@ export class MagaryOverlayPanel implements OnDestroy {
     // Optional: Remove from body immediately or let *ngIf handle it?
     // Since we moved the DOM node, *ngIf removing it from its original place in View might not remove it from Body.
     // We MUST remove it from body manually if we moved it.
-    if (
-      this.container &&
-      this.container.nativeElement.parentNode === this.document.body
-    ) {
+    const container = this.container();
+    if (container && container.nativeElement.parentNode === this.document.body) {
       this.renderer.removeChild(
         this.document.body,
-        this.container.nativeElement,
+        container.nativeElement,
       );
     }
   }
 
   alignWithTarget() {
-    if (!this.target || !this.container) return;
+    const container = this.container();
+    if (!this.target || !container) return;
 
-    const targetRect = this.target.getBoundingClientRect();
-    const containerRect = this.container.nativeElement.getBoundingClientRect();
+      const targetRect = this.target.getBoundingClientRect();
+    const containerRect = container.nativeElement.getBoundingClientRect();
     const scrollY = window.scrollY || this.document.documentElement.scrollTop;
     const scrollX = window.scrollX || this.document.documentElement.scrollLeft;
 
@@ -136,19 +126,19 @@ export class MagaryOverlayPanel implements OnDestroy {
       if (left < 0) left = 10;
     }
 
-    this.renderer.setStyle(this.container.nativeElement, 'top', `${top}px`);
-    this.renderer.setStyle(this.container.nativeElement, 'left', `${left}px`);
+    this.renderer.setStyle(container.nativeElement, 'top', `${top}px`);
+    this.renderer.setStyle(container.nativeElement, 'left', `${left}px`);
     this.renderer.setStyle(
-      this.container.nativeElement,
+      container.nativeElement,
       'position',
       'absolute',
     );
-    this.renderer.setStyle(this.container.nativeElement, 'display', 'block'); // Ensure it's not hidden
+    this.renderer.setStyle(container.nativeElement, 'display', 'block'); // Ensure it's not hidden
   }
 
   bindScrollListener() {
     if (!this.scrollListener) {
-      // Use native addEventListener with capture: true to catch scroll of any parent container
+      // Use native addEventListener with capture: true to catch scroll of every parent container
       this.scrollListener = () => {
         if (this.visible()) {
           this.alignWithTarget();
@@ -168,7 +158,7 @@ export class MagaryOverlayPanel implements OnDestroy {
   bindDocumentClickListener() {
     if (!this.dismissable()) return;
 
-    // Unbind existing if any
+    // Unbind existing listener if present
     if (this.documentClickListener) {
       this.unbindDocumentClickListener();
     }
@@ -185,13 +175,16 @@ export class MagaryOverlayPanel implements OnDestroy {
             }
 
             // Check if click is inside the panel or is the target button
+            const targetNode = event.target as Node | null;
             const isTarget =
               this.target &&
-              (this.target === event.target ||
-                this.target.contains(event.target));
+              targetNode &&
+              (this.target === targetNode || this.target.contains(targetNode));
+            const container = this.container();
             const isOutside =
-              this.container &&
-              !this.container.nativeElement.contains(event.target);
+              container &&
+              targetNode &&
+              !container.nativeElement.contains(targetNode);
 
             if (isOutside && !isTarget) {
               this.hide();
@@ -214,14 +207,20 @@ export class MagaryOverlayPanel implements OnDestroy {
     this.unbindDocumentClickListener();
     this.unbindScrollListener();
     // Ensure removal from body
-    if (
-      this.container &&
-      this.container.nativeElement.parentNode === this.document.body
-    ) {
+    const container = this.container();
+    if (container && container.nativeElement.parentNode === this.document.body) {
       this.renderer.removeChild(
         this.document.body,
-        this.container.nativeElement,
+        container.nativeElement,
       );
     }
+  }
+
+  private resolveTarget(
+    event: Event,
+    target?: EventTarget | null,
+  ): HTMLElement | null {
+    const candidate = target ?? event.currentTarget ?? event.target;
+    return candidate instanceof HTMLElement ? candidate : null;
   }
 }

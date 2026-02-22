@@ -15,7 +15,7 @@ const lucideIcons = Object.entries(icons).reduce(
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, any>,
+  {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
 
 describe('MagaryOrderList behavior', () => {
@@ -40,7 +40,7 @@ describe('MagaryOrderList behavior', () => {
   it('emits selection changes for single click and toggle-off behavior', () => {
     const selections: string[][] = [];
     component.onSelectionChange.subscribe((selection) =>
-      selections.push(selection.map((item: any) => item.label)),
+      selections.push(selection.map((item) => String(item.label ?? ''))),
     );
 
     component.onItemClick(
@@ -77,7 +77,7 @@ describe('MagaryOrderList behavior', () => {
   it('reorders selected item upward and downward and emits onReorder', () => {
     const orders: string[][] = [];
     component.onReorder.subscribe((list) =>
-      orders.push(list.map((item: any) => item.label)),
+      orders.push(list.map((item) => String(item.label ?? ''))),
     );
 
     component.selection.set([items[1]]);

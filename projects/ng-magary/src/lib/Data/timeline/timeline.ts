@@ -67,11 +67,11 @@ import { CommonModule } from '@angular/common';
   },
 })
 export class MagaryTimeline {
-  value = input<any[]>([]);
+  value = input<unknown[]>([]);
   layout = input<'vertical' | 'horizontal'>('vertical');
   align = input<'left' | 'right' | 'top' | 'bottom' | 'alternate'>('left');
 
-  contentTemplate = contentChild<TemplateRef<any>>('content');
-  oppositeTemplate = contentChild<TemplateRef<any>>('opposite');
-  markerTemplate = contentChild<TemplateRef<any>>('marker');
+  contentTemplate = contentChild<TemplateRef<unknown>>('content');
+  oppositeTemplate = contentChild<TemplateRef<unknown>>('opposite');
+  markerTemplate = contentChild<TemplateRef<unknown>>('marker');
 }
