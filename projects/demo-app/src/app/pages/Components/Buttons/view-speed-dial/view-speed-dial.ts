@@ -29,6 +29,12 @@ interface CodeExample {
   code: string;
   language: string;
 }
+interface SpeedDialTableRow {
+  name: string;
+  type: string;
+  description: string;
+  default?: string;
+}
 interface Section {
   id: string;
   title: string;
@@ -39,7 +45,7 @@ interface Section {
   config?: SpeedDialConfig;
   customConfig?: SpeedDialConfig;
   codeExamples?: CodeExample[];
-  tableData?: any[];
+  tableData?: SpeedDialTableRow[];
   listItems?: string[];
 }
 @Component({

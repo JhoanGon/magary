@@ -157,7 +157,7 @@ export class ViewInputNumber {
   outputs = [
     {
       name: 'onInput',
-      type: 'EventEmitter<any>',
+      type: 'EventEmitter<Event>',
       description: 'Emitido cuando el valor cambia por input manual.',
     },
     {

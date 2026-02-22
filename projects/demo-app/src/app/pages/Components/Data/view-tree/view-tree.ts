@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MagaryTree, MagaryTreeNode } from 'ng-magary';
+import {
+  MagaryTree,
+  MagaryTreeNode,
+  MagaryTreeNodeDropEvent,
+  MagaryTreeNodeSelectionEvent,
+} from 'ng-magary';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
 import { MagaryCard } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
@@ -142,11 +147,11 @@ export class ViewTree {
   selectedFile: MagaryTreeNode | null = null;
   selectedFiles: MagaryTreeNode[] = [];
 
-  onNodeSelect(event: any) {}
+  onNodeSelect(event: MagaryTreeNodeSelectionEvent) {}
 
-  onNodeUnselect(event: any) {}
+  onNodeUnselect(event: MagaryTreeNodeSelectionEvent) {}
 
-  onNodeDrop(event: any) {
+  onNodeDrop(event: MagaryTreeNodeDropEvent) {
     const cdkEvent = event.originalEvent;
 
     if (cdkEvent.previousContainer === cdkEvent.container) {
@@ -203,7 +208,7 @@ export class MyComponent {
     files: MagaryTreeNode[] = [...]; 
     
     // For DnD
-    onNodeDrop(event: any) {
+    onNodeDrop(event: MagaryTreeNodeDropEvent) {
         const cdkEvent = event.originalEvent;
     
         if (cdkEvent.previousContainer === cdkEvent.container) {

@@ -130,7 +130,11 @@ export class ViewContextMenu {
       description: 'Callback al hacer clic.',
     },
     { name: 'url', type: 'string', description: 'Enlace externo.' },
-    { name: 'routerLink', type: 'any[]', description: 'Enlace del router.' },
+    {
+      name: 'routerLink',
+      type: '(string | number)[]',
+      description: 'Enlace del router.',
+    },
     { name: 'disabled', type: 'boolean', description: 'Estado deshabilitado.' },
     { name: 'separator', type: 'boolean', description: 'Línea separadora.' },
     {

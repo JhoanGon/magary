@@ -11,6 +11,21 @@ import {
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
+type ProductInventoryStatus = 'INSTOCK' | 'LOWSTOCK' | 'OUTOFSTOCK';
+
+interface DataViewProduct {
+  id: string;
+  code: string;
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+  category: string;
+  quantity: number;
+  inventoryStatus: ProductInventoryStatus;
+  rating: number;
+}
+
 @Component({
   selector: 'app-view-dataview',
   standalone: true,
@@ -31,7 +46,7 @@ import { Highlight } from 'ngx-highlightjs';
 export class ViewDataView {
   layout = signal<'list' | 'grid'>('grid');
 
-  products = [
+  products: DataViewProduct[] = [
     {
       id: '1000',
       code: 'f230fh0g3',
@@ -164,7 +179,7 @@ export class ViewDataView {
     },
   ];
 
-  getSeverity(product: any) {
+  getSeverity(product: DataViewProduct) {
     switch (product.inventoryStatus) {
       case 'INSTOCK':
         return 'success';
@@ -241,7 +256,7 @@ export class ViewDataView {
     layout = signal<'list' | 'grid'>('grid');
     products = [...]; // Data array
 
-    getSeverity(product: any) {
+    getSeverity(product: DataViewProduct) {
         switch (product.inventoryStatus) {
             case 'INSTOCK': return 'success';
             case 'LOWSTOCK': return 'warning';

@@ -7,6 +7,7 @@ import {
   MagaryButton,
   MagaryImage,
   MagaryAvatar,
+  MagaryGridEvent,
   MagaryTable,
   MagaryTabs,
   MagaryTab,
@@ -14,6 +15,62 @@ import {
 import { Highlight } from 'ngx-highlightjs';
 import { FormsModule } from '@angular/forms';
 import { GridStackOptions } from 'gridstack';
+
+type DashboardWidgetType =
+  | 'stats'
+  | 'actions'
+  | 'media'
+  | 'profile'
+  | 'card'
+  | 'table'
+  | 'image';
+
+interface BasicWidget {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  content: string;
+  noResize: boolean;
+  noMove: boolean;
+  locked: boolean;
+}
+
+interface DashboardTableRow {
+  id: number;
+  name: string;
+  status: string;
+}
+
+interface DashboardWidget {
+  id: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  type: DashboardWidgetType;
+  title: string;
+  value?: string;
+  icon?: string;
+  color?: string;
+  trend?: string;
+  images?: string[];
+  name?: string;
+  role?: string;
+  content?: string;
+  data?: DashboardTableRow[];
+  src?: string;
+}
+
+interface GalleryImage {
+  id: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  src: string;
+  alt: string;
+}
 
 const CODE_EXAMPLES = {
   import: `import { MagaryGrid, MagaryGridItem } from 'ng-magary';`,
@@ -79,7 +136,7 @@ const CODE_EXAMPLES = {
   };
 
   // Signal for reactive updates
-  dashboardWidgets = signal<any[]>([
+  dashboardWidgets = signal<DashboardWidget[]>([
     {
       id: 'stats-users',
       x: 0, y: 0, w: 3, h: 2,
@@ -96,7 +153,7 @@ const CODE_EXAMPLES = {
   }
 
   // Event Handler
-  onGridChange(event: any) {
+  onGridChange(event: MagaryGridEvent) {
     console.log('Layout changed:', event);
     // { node: GridStackNode, ... }
   }
@@ -169,7 +226,7 @@ export class ViewGrid {
   };
 
   // 2. Data for Basic Usage (Static/Locked)
-  basicWidgets = [
+  basicWidgets: BasicWidget[] = [
     {
       x: 0,
       y: 0,
@@ -210,7 +267,7 @@ export class ViewGrid {
     animate: true,
   };
 
-  dashboardWidgets = signal<any[]>([
+  dashboardWidgets = signal<DashboardWidget[]>([
     {
       id: 'stats-users',
       x: 0,
@@ -267,6 +324,7 @@ export class ViewGrid {
       w: 3,
       h: 4,
       type: 'profile',
+      title: 'Profile',
       name: 'Admin User',
       role: 'Administrator',
     },
@@ -279,7 +337,7 @@ export class ViewGrid {
     float: true,
   };
 
-  galleryImages = [
+  galleryImages: GalleryImage[] = [
     {
       id: 'img1',
       x: 0,
@@ -336,10 +394,14 @@ export class ViewGrid {
     },
   ];
 
-  onGridChange(event: any) {}
+  onGridChange(event: MagaryGridEvent) {}
 
   // Table config
-  tableColumns = [
+  tableColumns: Array<{
+    field: keyof DashboardTableRow;
+    header: string;
+    sortable?: boolean;
+  }> = [
     { field: 'id', header: 'ID', sortable: true },
     { field: 'name', header: 'Name', sortable: true },
     { field: 'status', header: 'Status' },
@@ -347,7 +409,15 @@ export class ViewGrid {
 
   addWidget(type: 'card' | 'table' | 'image') {
     const id = `widget-${Date.now()}`;
-    let newWidget: any = { id, x: 0, y: 0 };
+    let newWidget: DashboardWidget = {
+      id,
+      x: 0,
+      y: 0,
+      w: 4,
+      h: 4,
+      type: 'card',
+      title: 'Generic Card',
+    };
 
     switch (type) {
       case 'card':

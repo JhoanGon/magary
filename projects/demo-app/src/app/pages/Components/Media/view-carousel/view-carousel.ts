@@ -7,6 +7,9 @@ import {
   MagaryTabs,
   MagaryTab,
   CarouselResponsiveOptions,
+  CarouselEffect,
+  CarouselIndicatorStyle,
+  CarouselNavPosition,
   MagaryCard,
   MagaryTag,
 } from 'ng-magary';
@@ -36,6 +39,21 @@ import {
 })
 export class CarouselDemoIconsModule {}
 
+type InventoryStatus = 'INSTOCK' | 'LOWSTOCK' | 'OUTOFSTOCK';
+
+interface CarouselProduct {
+  id: string;
+  code: string;
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+  category: string;
+  quantity: number;
+  inventoryStatus: InventoryStatus;
+  rating: number;
+}
+
 @Component({
   selector: 'app-view-carousel',
   standalone: true,
@@ -55,13 +73,20 @@ export class CarouselDemoIconsModule {}
   styleUrl: './view-carousel.scss',
 })
 export class ViewCarousel implements OnInit {
-  products: any[] = [];
+  products: CarouselProduct[] = [];
   responsiveOptions: CarouselResponsiveOptions[] = [];
   verticalResponsiveOptions: CarouselResponsiveOptions[] = [];
 
   // Effects Demo
-  effects = ['slide', 'fade', 'cube', 'flip', 'coverflow', 'cards'];
-  currentEffect = signal<any>('coverflow');
+  effects: CarouselEffect[] = [
+    'slide',
+    'fade',
+    'cube',
+    'flip',
+    'coverflow',
+    'cards',
+  ];
+  currentEffect = signal<CarouselEffect>('coverflow');
   isStackedEffect = computed(() => {
     const effect = this.currentEffect();
     return (
@@ -73,12 +98,18 @@ export class ViewCarousel implements OnInit {
   });
 
   // Indicators Demo
-  indicatorStyles = ['dots', 'lines', 'fraction', 'progress', 'thumbnails'];
-  currentIndicatorStyle = signal<any>('dots');
+  indicatorStyles: CarouselIndicatorStyle[] = [
+    'dots',
+    'lines',
+    'fraction',
+    'progress',
+    'thumbnails',
+  ];
+  currentIndicatorStyle = signal<CarouselIndicatorStyle>('dots');
 
   // Navigation Demo Remove top, bottom
-  navPositions = ['default', 'outside'];
-  currentNavPosition = signal<any>('outside');
+  navPositions: CarouselNavPosition[] = ['default', 'outside'];
+  currentNavPosition = signal<CarouselNavPosition>('outside');
 
   constructor() {}
 
@@ -248,7 +279,7 @@ export class ViewCarousel implements OnInit {
     ];
   }
 
-  getSeverity(status: string) {
+  getSeverity(status: CarouselProduct['inventoryStatus']) {
     switch (status) {
       case 'INSTOCK':
         return 'success';
@@ -287,7 +318,7 @@ export class ViewCarousel implements OnInit {
 
   codeTSBasic = `
   products: Product[];
-  responsiveOptions: any[] | undefined;
+  responsiveOptions: CarouselResponsiveOptions[] | undefined;
 
   constructor(private productService: ProductService) {}
 

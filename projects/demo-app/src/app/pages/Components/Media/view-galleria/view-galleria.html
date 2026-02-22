@@ -29,14 +29,14 @@
       >
         <ng-template #itemTemplate let-item>
           <img
-            [src]="item.itemImageSrc"
+            [src]="item.src"
             [alt]="item.alt"
             style="width: 100%; display: block"
           />
         </ng-template>
         <ng-template #thumbnailTemplate let-item>
           <img
-            [src]="item.thumbnailImageSrc"
+            [src]="item.thumbnail"
             [alt]="item.alt"
             style="display: block"
           />
@@ -212,7 +212,7 @@
         <tbody>
           <tr>
             <td><code>value</code></td>
-            <td><code>any[]</code></td>
+            <td><code>unknown[]</code></td>
             <td><code>[]</code></td>
             <td>Array de objetos a mostrar.</td>
           </tr>
@@ -257,3 +257,4 @@
     </div>
   </div>
 </div>
+

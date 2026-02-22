@@ -1,6 +1,12 @@
 import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[];
+  readonly userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+  prompt(): Promise<void>;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +17,7 @@ export class PwaService {
   installable = signal(false);
   isIos = signal(false);
 
-  private deferredPrompt: any = null;
+  private deferredPrompt: BeforeInstallPromptEvent | null = null;
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
@@ -23,7 +29,7 @@ export class PwaService {
       // Check for iOS
       this.isIos.set(
         /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-          !(window as any).MSStream,
+          !('MSStream' in window),
       );
 
       // Only show install button if NOT standalone and (is iOS OR generic installable logic pending)
@@ -31,11 +37,13 @@ export class PwaService {
         this.installable.set(true);
       }
 
-      window.addEventListener('beforeinstallprompt', (e) => {
+      window.addEventListener('beforeinstallprompt', (event) => {
         // Prevent the mini-infobar from appearing on mobile
-        e.preventDefault();
+        const beforeInstallPromptEvent =
+          event as BeforeInstallPromptEvent;
+        beforeInstallPromptEvent.preventDefault();
         // Stash the event so it can be triggered later.
-        this.deferredPrompt = e;
+        this.deferredPrompt = beforeInstallPromptEvent;
         // Update UI notify the user they can install the PWA
         this.installable.set(true);
       });
@@ -58,8 +66,7 @@ export class PwaService {
 
     if (this.deferredPrompt) {
       this.deferredPrompt.prompt();
-      this.deferredPrompt.userChoice.then(
-        (choiceResult: { outcome: string }) => {
+      this.deferredPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
             console.log('User accepted the install prompt');
           } else {

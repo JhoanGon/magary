@@ -8,6 +8,14 @@ import {
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
+interface OverlayProduct {
+  id: string;
+  code: string;
+  name: string;
+  price: number;
+  image: string;
+}
+
 @Component({
   selector: 'app-view-overlaypanel',
   standalone: true,
@@ -27,7 +35,7 @@ export class ViewOverlayPanel {
   importRef = `import { MagaryOverlayPanel } from 'ng-magary';`;
 
   // Data for table example
-  products = [
+  products: OverlayProduct[] = [
     {
       id: '1000',
       code: 'f230fh0g3',
@@ -44,7 +52,7 @@ export class ViewOverlayPanel {
     },
   ];
 
-  selectedProduct: any;
+  selectedProduct: OverlayProduct | null = null;
 
   codeBasic = `<div style="display: flex; justify-content: center;">
     <magary-button (buttonClick)="op.toggle($event)" label="Show Overlay"></magary-button>
@@ -53,7 +61,7 @@ export class ViewOverlayPanel {
 <magary-overlaypanel #op>
     <div style="width: 300px;">
         <h4>Custom Content</h4>
-        <p>You can put any content here.</p>
+        <p>You can put custom content here.</p>
     </div>
 </magary-overlaypanel>`;
 
@@ -96,15 +104,19 @@ export class ViewOverlayPanel {
 </magary-overlaypanel>`;
 
   tsCode = `export class ViewOverlayPanel {
-    selectedProduct: any;
+    selectedProduct: OverlayProduct | null = null;
     
-    selectProduct(event: Event, product: any, overlay: any) {
+    selectProduct(event: Event, product: OverlayProduct, overlay: MagaryOverlayPanel) {
         this.selectedProduct = product;
         overlay.toggle(event);
     }
 }`;
 
-  selectProduct(event: Event, product: any, overlay: any) {
+  selectProduct(
+    event: Event,
+    product: OverlayProduct,
+    overlay: MagaryOverlayPanel,
+  ) {
     this.selectedProduct = product;
     overlay.toggle(event);
   }

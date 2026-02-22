@@ -36,6 +36,9 @@ jobs:
       - name: API contract gate
         run: pnpm run check:api-contract
 
+      - name: No-any gate (src/lib + specs)
+        run: pnpm run check:no-any
+
       - name: Lint
         run: pnpm run lint
 

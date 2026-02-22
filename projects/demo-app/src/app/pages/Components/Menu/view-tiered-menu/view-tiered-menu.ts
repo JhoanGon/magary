@@ -204,7 +204,7 @@ export class ViewTieredMenu {
     },
     {
       name: 'routerLink',
-      type: 'any[] | string',
+      type: '(string | number)[] | string',
       description: 'Router link for internal navigation.',
     },
     {

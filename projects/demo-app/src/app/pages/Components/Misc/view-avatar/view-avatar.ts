@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MagaryAvatar } from 'ng-magary';
+import { AvatarClickEvent, MagaryAvatar } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 @Component({
   selector: 'magary-view-avatar',
@@ -44,7 +44,7 @@ export class ViewAvatar {
     [badgeSeverity]="'danger'"
     (avatarClick)="onAvatarClick($event)"
   />`;
-  onAvatarClick(event: any): void {
+  onAvatarClick(event: AvatarClickEvent): void {
     if (event.type === 'avatar') {
       this.lastAvatarClick = `Avatar clickeado: ${event.data?.label || event.data?.icon || 'usuario'}`;
     } else if (event.type === 'badge') {

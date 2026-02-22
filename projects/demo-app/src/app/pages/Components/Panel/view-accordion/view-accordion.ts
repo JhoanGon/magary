@@ -89,11 +89,11 @@ export class ViewAccordion {
 </magary-accordion>
 `;
 
-  onTabClose(event: any) {
+  onTabClose(event: unknown) {
     console.log('Tab Closed', event);
   }
 
-  onTabOpen(event: any) {
+  onTabOpen(event: unknown) {
     console.log('Tab Open', event);
   }
 }

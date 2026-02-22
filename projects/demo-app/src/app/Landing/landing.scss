@@ -94,7 +94,7 @@ $text-dim: var(--text-secondary);
 
   // 3. Noise Texture (Universal Strategy)
   // Instead of mix-blend-mode overlay (which fails on dark), we use simple opacity
-  // This ensures the "grain" is visible as literal pixels on top of any color.
+  // This ensures the "grain" is visible as literal pixels on top of every color.
   &::after {
     content: "";
     position: absolute;
@@ -253,7 +253,7 @@ $text-dim: var(--text-secondary);
         transparent
       );
       transform: skewX(-25deg);
-      mix-blend-mode: overlay; // Better blending with any logo color
+      mix-blend-mode: overlay; // Better blending with every logo color
       animation: sheenPass 4s ease-in-out infinite;
     }
   }
@@ -419,3 +419,4 @@ $text-dim: var(--text-secondary);
   0%, 100% { transform: scale(1); opacity: 0.6; }
   50% { transform: scale(0.8); opacity: 0.3; }
 }
+

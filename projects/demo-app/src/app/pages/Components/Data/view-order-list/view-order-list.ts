@@ -83,13 +83,13 @@ export class ViewOrderList {
   inputsConfig = [
     {
       name: 'value',
-      type: 'any[]',
+      type: 'unknown[]',
       default: '[]',
       description: 'Array de elementos a ordenar.',
     },
     {
       name: 'selection',
-      type: 'any[]',
+      type: 'unknown[]',
       default: '[]',
       description: 'Elementos seleccionados.',
     },

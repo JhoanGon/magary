@@ -14,6 +14,13 @@ interface CodeExample {
   language: string;
 }
 
+interface ApiTableRow {
+  name: string;
+  type: string;
+  description: string;
+  default?: string;
+}
+
 interface Section {
   id: string;
   title: string;
@@ -21,9 +28,8 @@ interface Section {
   type: 'code' | 'demo' | 'table' | 'list';
   content?: { code: string; language: string };
   codeExamples?: CodeExample[];
-  tableData?: any[];
+  tableData?: ApiTableRow[];
   listItems?: string[];
-  demoConfig?: any;
 }
 
 @Component({
@@ -142,7 +148,7 @@ export class ViewToast {
           },
           {
             name: 'data',
-            type: 'any',
+            type: 'unknown',
             default: '-',
             description: 'Datos arbitrarios asociados al toast.',
           },

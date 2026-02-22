@@ -89,7 +89,7 @@ export class ComponentScanner {
     while ((match = decoratorInputRegex.exec(content)) !== null) {
       inputs.push({
         name: match[1] || match[2],
-        type: match[3] || 'any',
+        type: match[3] || 'unknown',
         required: false,
         defaultValue: match[4]?.trim(),
       });

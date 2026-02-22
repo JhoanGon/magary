@@ -264,11 +264,10 @@ export class ViewCard {
 
   onCardClick(event: Event): void {
     try {
-      const customEvent = event as CustomEvent;
       this.lastClickedCard = `Card clickeada a las ${new Date().toLocaleTimeString()}`;
       this.showToastNotification('¡Card clickeada exitosamente!');
       this.showNotificationIfAllowed();
-    } catch (error: any) {
+    } catch (error: unknown) {
       this.showToastNotification('Error al procesar el click', 'error');
     }
   }

@@ -1,6 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MagaryOrganizationChart, MagaryTreeNode } from 'ng-magary';
+import {
+  MagaryOrganizationChart,
+  MagaryTreeNode,
+  MagaryTreeNodeSelectionEvent,
+} from 'ng-magary';
 import { MagaryCard, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
@@ -67,7 +71,7 @@ export class ViewOrganizationChart {
     },
   ];
 
-  selectedNode: any;
+  selectedNode: MagaryTreeNode | null = null;
 
   exampleHTML = `
 <magary-organization-chart 
@@ -106,7 +110,7 @@ export class MyComponent {
 }
 `;
 
-  onNodeSelect(event: any) {
+  onNodeSelect(event: MagaryTreeNodeSelectionEvent) {
     this.selectedNode = event.node;
   }
 }

@@ -15,16 +15,31 @@ type CatalogItem = {
   name: string;
   selector: string;
   description: string;
-  inputs: any[];
-  outputs: any[];
+  inputs: Array<{
+    name: string;
+    type: string;
+    required: boolean;
+    defaultValue?: string;
+  }>;
+  outputs: Array<{
+    name: string;
+    description?: string;
+  }>;
 };
+
+type WorkerEnv = Record<string, unknown>;
+
+interface WorkerExecutionContext {
+  waitUntil(promise: Promise<unknown>): void;
+  passThroughOnException?(): void;
+}
 
 /**
  * Custom Transport for Cloudflare Workers (SSE)
  * Adapts the MCP Transport interface to Cloudflare's TransformStream
  */
 class CloudflareSSETransport {
-  private writer: WritableStreamDefaultWriter<any> | null = null;
+  private writer: WritableStreamDefaultWriter<Uint8Array> | null = null;
 
   // Callback provided by the Server/Client to receive messages from us
   onmessage?: (message: JSONRPCMessage) => void;
@@ -68,7 +83,7 @@ class CloudflareSSETransport {
   }
 
   // Custom method to attach the Web Standard WritableStream writer
-  setWriter(writer: WritableStreamDefaultWriter<any>) {
+  setWriter(writer: WritableStreamDefaultWriter<Uint8Array>) {
     this.writer = writer;
     // Send initial endpoint event as expected by MCP clients
     // The endpoint is absolute or relative. Since we are in the worker, relative /messages works.
@@ -78,7 +93,11 @@ class CloudflareSSETransport {
 }
 
 export default {
-  async fetch(request: Request, env: any, ctx: any): Promise<Response> {
+  async fetch(
+    request: Request,
+    _env: WorkerEnv,
+    _ctx: WorkerExecutionContext,
+  ): Promise<Response> {
     const url = new URL(request.url);
 
     if (request.method === 'GET' && url.pathname === '/sse') {

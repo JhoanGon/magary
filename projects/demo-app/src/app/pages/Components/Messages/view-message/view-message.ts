@@ -9,6 +9,20 @@ import {
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
+type MessageSeverity =
+  | 'success'
+  | 'info'
+  | 'warn'
+  | 'error'
+  | 'secondary'
+  | 'contrast';
+
+interface DynamicMessage {
+  severity: MessageSeverity;
+  text: string;
+  detail: string;
+}
+
 const CODE_EXAMPLES = {
   import: `import { MagaryMessage } from 'ng-magary';`,
   basic: `<magary-message severity="success" text="Success" detail="Message Content"></magary-message>
@@ -51,7 +65,7 @@ export class ViewMessage {
   readonly exampleContrast = CODE_EXAMPLES.contrast;
 
   // Logic for dynamic example
-  msgs: any[] = [];
+  msgs: DynamicMessage[] = [];
 
   showViaService() {
     this.msgs = [

@@ -8,6 +8,15 @@ import { MagaryImage } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { LucideAngularModule } from 'lucide-angular';
 
+interface TimelineEvent {
+  status: string;
+  date: string;
+  icon: string;
+  color: string;
+  image?: string;
+  description?: string;
+}
+
 @Component({
   selector: 'view-timeline',
   standalone: true,
@@ -27,9 +36,9 @@ import { LucideAngularModule } from 'lucide-angular';
   encapsulation: ViewEncapsulation.None,
 })
 export class ViewTimeline {
-  events: any[] = [];
+  events: TimelineEvent[] = [];
 
-  horizontalEvents: any[] = [];
+  horizontalEvents: string[] = [];
 
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',

@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MagaryGalleria } from 'ng-magary';
+import {
+  GalleriaItem,
+  GalleriaResponsiveOptions,
+  MagaryGalleria,
+} from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
 
@@ -20,9 +24,9 @@ import { MagaryTabs, MagaryTab } from 'ng-magary';
   styleUrl: './view-galleria.scss',
 })
 export class ViewGalleria implements OnInit {
-  images: any[] = [];
+  images: GalleriaItem[] = [];
 
-  responsiveOptions: any[] = [
+  responsiveOptions: GalleriaResponsiveOptions[] = [
     {
       breakpoint: '1024px',
       numVisible: 5,
@@ -40,41 +44,41 @@ export class ViewGalleria implements OnInit {
   ngOnInit() {
     this.images = [
       {
-        itemImageSrc:
+        src:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria1.jpg',
-        thumbnailImageSrc:
+        thumbnail:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria1s.jpg',
         alt: 'Description for Image 1',
         title: 'Title 1',
       },
       {
-        itemImageSrc:
+        src:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria2.jpg',
-        thumbnailImageSrc:
+        thumbnail:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria2s.jpg',
         alt: 'Description for Image 2',
         title: 'Title 2',
       },
       {
-        itemImageSrc:
+        src:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria3.jpg',
-        thumbnailImageSrc:
+        thumbnail:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria3s.jpg',
         alt: 'Description for Image 3',
         title: 'Title 3',
       },
       {
-        itemImageSrc:
+        src:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria4.jpg',
-        thumbnailImageSrc:
+        thumbnail:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria4s.jpg',
         alt: 'Description for Image 4',
         title: 'Title 4',
       },
       {
-        itemImageSrc:
+        src:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria5.jpg',
-        thumbnailImageSrc:
+        thumbnail:
           'https://primefaces.org/cdn/primeng/images/galleria/galleria5s.jpg',
         alt: 'Description for Image 5',
         title: 'Title 5',
@@ -97,7 +101,7 @@ import { MagaryGalleria } from 'ng-magary';
     templateUrl: './view-galleria.html'
 })
 export class ViewGalleria {
-    images: any[] = [...];
+    images: GalleriaItem[] = [...];
 }`;
 
   codeHTMLLeft = `<magary-galleria 

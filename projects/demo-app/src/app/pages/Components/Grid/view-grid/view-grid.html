@@ -187,7 +187,7 @@
                     <h4 style="margin: 0 0 1rem 0">{{ widget.title }}</h4>
                     <div style="flex: 1; overflow: auto; min-height: 0">
                       <magary-table
-                        [value]="widget.data"
+                        [value]="widget.data ?? []"
                         [columns]="tableColumns"
                         [paginator]="false"
                         [rows]="5"

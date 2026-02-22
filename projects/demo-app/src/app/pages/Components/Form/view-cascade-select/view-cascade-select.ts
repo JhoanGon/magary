@@ -9,6 +9,33 @@ import {
   MagaryCard,
 } from 'ng-magary';
 
+interface CascadeCity {
+  cname: string;
+  code: string;
+}
+
+type CascadeCityOption = CascadeCity & Record<string, unknown>;
+
+interface CascadeState {
+  name: string;
+  cities: CascadeCityOption[];
+}
+
+type CascadeStateOption = CascadeState & Record<string, unknown>;
+
+interface CascadeCountry {
+  name: string;
+  code: string;
+  states: CascadeStateOption[];
+}
+
+type CascadeCountryOption = CascadeCountry & Record<string, unknown>;
+type CascadeSelection =
+  | CascadeCountryOption
+  | CascadeStateOption
+  | CascadeCityOption
+  | null;
+
 @Component({
   selector: 'app-view-cascade-select',
   standalone: true,
@@ -25,10 +52,10 @@ import {
   styleUrl: './view-cascade-select.scss',
 })
 export class ViewCascadeSelect {
-  selectedCityBasic: any;
-  selectedCityGroup: any;
+  selectedCityBasic: CascadeSelection = null;
+  selectedCityGroup: CascadeSelection = null;
 
-  countries = [
+  countries: CascadeCountryOption[] = [
     {
       name: 'Australia',
       code: 'AU',
@@ -153,33 +180,54 @@ countries = [
     return this.buildPath(this.selectedCityGroup);
   }
 
-  private buildPath(city: any): string {
+  private buildPath(city: CascadeSelection): string {
     if (!city) return 'Ninguno';
 
     const parts: string[] = [];
 
-    // Caso 1: Objeto completo con toda la jerarquía
-    if (city.name) {
-      // País
+    if (this.isCascadeCountry(city)) {
       parts.push(city.name);
-
-      // Estado
-      if (city.states?.[0]?.name) {
+      if (city.states[0]?.name) {
         parts.push(city.states[0].name);
       }
-
-      // Ciudad
-      if (city.states?.[0]?.cities?.[0]?.cname) {
+      if (city.states[0]?.cities[0]?.cname) {
         parts.push(city.states[0].cities[0].cname);
       }
-    }
-    // Caso 2: Solo el objeto de la ciudad (nodo final)
-    else if (city.cname) {
+    } else if (this.isCascadeState(city)) {
+      parts.push(city.name);
+      if (city.cities[0]?.cname) {
+        parts.push(city.cities[0].cname);
+      }
+    } else if (this.isCascadeCity(city)) {
       parts.push(city.cname);
     }
 
-    return parts.length > 0 ? parts.join(' → ') : 'Ninguno';
+    return parts.length > 0 ? parts.join(' -> ') : 'Ninguno';
   }
 
-  onCityChange(event: any) {}
+  onCityChange(event: CascadeSelection) {}
+
+  private isCascadeCountry(
+    option: CascadeSelection,
+  ): option is CascadeCountryOption {
+    if (!option || typeof option !== 'object') return false;
+
+    const candidate = option as { states?: unknown };
+    return Array.isArray(candidate.states);
+  }
+
+  private isCascadeState(option: CascadeSelection): option is CascadeStateOption {
+    if (!option || typeof option !== 'object') return false;
+
+    const candidate = option as { cities?: unknown };
+    return Array.isArray(candidate.cities);
+  }
+
+  private isCascadeCity(option: CascadeSelection): option is CascadeCityOption {
+    if (!option || typeof option !== 'object') return false;
+
+    const candidate = option as { cname?: unknown };
+    return typeof candidate.cname === 'string';
+  }
 }
+

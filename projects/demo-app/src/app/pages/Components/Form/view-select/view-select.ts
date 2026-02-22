@@ -4,6 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { MagarySelect, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 
+interface CountryOption {
+  code: string;
+  name: string;
+}
+
+type SelectCountryOption = CountryOption & Record<string, unknown>;
+
 @Component({
   selector: 'app-view-select',
   standalone: true,
@@ -34,7 +41,7 @@ export class ViewSelect {
     return this.users.find((u) => u.id === this.selectedUserId);
   }
 
-  onUserChange(val: any) {}
+  onUserChange(val: string | null) {}
 
   // Code Examples
   importRef = `import { MagarySelect } from 'ng-magary';`;
@@ -71,8 +78,8 @@ export class ViewSelect {
 selectedUserId = '1';`;
 
   // Filter Demo
-  selectedCountry: any = null;
-  countries = [
+  selectedCountry: SelectCountryOption | null = null;
+  countries: SelectCountryOption[] = [
     { code: 'US', name: 'United States' },
     { code: 'CA', name: 'Canada' },
     { code: 'MX', name: 'Mexico' },

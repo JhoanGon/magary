@@ -5,7 +5,7 @@
     "inputs": [
       {
         "name": "style",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": ""
       },
@@ -506,7 +506,7 @@
       },
       {
         "name": "customStyle",
-        "type": "Record<string, any>",
+        "type": "Record<string, unknown>",
         "required": false,
         "defaultValue": ""
       },
@@ -609,13 +609,13 @@
       },
       {
         "name": "style",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": "null"
       },
       {
         "name": "contentStyle",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": "null"
       },
@@ -1020,7 +1020,7 @@
       },
       {
         "name": "containerStyle",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": ""
       },
@@ -1050,19 +1050,19 @@
       },
       {
         "name": "itemTemplateRef",
-        "type": "TemplateRef<any> | undefined",
+        "type": "TemplateRef<unknown> | undefined",
         "required": false,
         "defaultValue": ""
       },
       {
         "name": "thumbnailTemplateRef",
-        "type": "TemplateRef<any> | undefined",
+        "type": "TemplateRef<unknown> | undefined",
         "required": false,
         "defaultValue": ""
       },
       {
         "name": "captionTemplateRef",
-        "type": "TemplateRef<any> | undefined",
+        "type": "TemplateRef<unknown> | undefined",
         "required": false,
         "defaultValue": ""
       }
@@ -1542,7 +1542,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -1591,7 +1591,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: any } | null | undefined",
+        "type": "{ [klass: string]: unknown } | null | undefined",
         "required": false,
         "defaultValue": "null"
       },
@@ -1629,7 +1629,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -1716,7 +1716,7 @@
       },
       {
         "name": "appTitleStyle",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -1824,7 +1824,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -1867,7 +1867,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -2008,7 +2008,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -2026,7 +2026,7 @@
       },
       {
         "name": "target",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": "null"
       }
@@ -2053,7 +2053,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: any } | null | undefined",
+        "type": "{ [klass: string]: unknown } | null | undefined",
         "required": false,
         "defaultValue": "null"
       },
@@ -2295,7 +2295,7 @@
     "inputs": [
       {
         "name": "value",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": ""
       },
@@ -2334,7 +2334,7 @@
     "inputs": [
       {
         "name": "options",
-        "type": "any[]",
+        "type": "unknown[]",
         "required": false,
         "defaultValue": "[]"
       },
@@ -2415,7 +2415,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -2445,7 +2445,7 @@
     "inputs": [
       {
         "name": "options",
-        "type": "any[]",
+        "type": "unknown[]",
         "required": false,
         "defaultValue": "[]"
       },
@@ -2622,7 +2622,7 @@
       },
       {
         "name": "inputStyle",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -2634,7 +2634,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -2882,7 +2882,7 @@
     "inputs": [
       {
         "name": "options",
-        "type": "any[]",
+        "type": "unknown[]",
         "required": false,
         "defaultValue": "[]"
       },
@@ -3121,7 +3121,7 @@
       },
       {
         "name": "value",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": "null"
       }
@@ -3218,7 +3218,7 @@
       },
       {
         "name": "selection",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": "null"
       },
@@ -3283,7 +3283,7 @@
       },
       {
         "name": "selection",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": "null"
       },
@@ -3447,7 +3447,7 @@
     "inputs": [
       {
         "name": "value",
-        "type": "any[]",
+        "type": "unknown[]",
         "required": false,
         "defaultValue": "[]"
       },
@@ -3474,7 +3474,7 @@
     "inputs": [
       {
         "name": "value",
-        "type": "any[]",
+        "type": "unknown[]",
         "required": false,
         "defaultValue": "[]"
       },
@@ -3554,13 +3554,13 @@
       },
       {
         "name": "sourceStyle",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
       {
         "name": "targetStyle",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -3616,7 +3616,7 @@
       },
       {
         "name": "selection",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": "null"
       },
@@ -3660,7 +3660,7 @@
       },
       {
         "name": "selection",
-        "type": "any",
+        "type": "unknown",
         "required": false,
         "defaultValue": "null"
       },
@@ -3672,7 +3672,7 @@
       },
       {
         "name": "itemTemplate",
-        "type": "TemplateRef<any> | null | undefined",
+        "type": "TemplateRef<unknown> | null | undefined",
         "required": false,
         "defaultValue": "null"
       },
@@ -3715,7 +3715,7 @@
       },
       {
         "name": "listStyle",
-        "type": "{ [klass: string]: any } | null",
+        "type": "{ [klass: string]: unknown } | null",
         "required": false,
         "defaultValue": "null"
       }
@@ -3842,9 +3842,9 @@
       },
       {
         "name": "trackBy",
-        "type": "any",
+        "type": "unknown",
         "required": false,
-        "defaultValue": "(index: number, item: any) => item"
+        "defaultValue": "(index: number, item: unknown) => item"
       }
     ],
     "outputs": [

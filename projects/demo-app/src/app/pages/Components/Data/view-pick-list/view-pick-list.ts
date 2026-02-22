@@ -121,13 +121,13 @@ export class ViewPickList {
   inputsConfig = [
     {
       name: 'source',
-      type: 'any[]',
+      type: 'unknown[]',
       default: '[]',
       description: 'Array de elementos para la lista origen.',
     },
     {
       name: 'target',
-      type: 'any[]',
+      type: 'unknown[]',
       default: '[]',
       description: 'Array de elementos para la lista destino (seleccionados).',
     },
