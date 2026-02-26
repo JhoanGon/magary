@@ -1,18 +1,20 @@
 :host {
   display: block;
   width: 100%;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-family, "Inter", sans-serif);
 }
 
 .magary-table-container {
   background: var(--surface-0);
-  border-radius: 12px;
+  border-radius: var(--border-radius, 1rem);
   box-shadow: var(--shadow-md);
   border: 1px solid var(--surface-200);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   // Fixed Layout (Default)
   &:not(.responsive-layout) {
@@ -32,29 +34,6 @@
       overflow-y: visible;
     }
   }
-  // Custom Scrollbar
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--surface-100);
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--surface-400); // Visible grey
-    border-radius: 4px;
-    
-    &:hover {
-      background: var(--surface-500); // Darker on hover
-    }
-  }
-
-  // Firefox support
-  scrollbar-width: thin;
-  scrollbar-color: var(--surface-400) var(--surface-100);
 }
 
 // Header
@@ -98,6 +77,29 @@
 .table-scroll-wrapper {
   overflow-x: auto;
   width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-400) transparent;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: var(--surface-400);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}
+
+.table-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--surface-500);
+  background-clip: content-box;
 }
 
 .magary-table {
@@ -169,6 +171,10 @@
 
     tr:not(.empty-row):not(.skeleton-row):hover {
       background-color: var(--surface-50);
+    }
+
+    tr:not(.empty-row):not(.skeleton-row):focus-within {
+      background-color: var(--surface-100);
     }
 
     // Skeleton Loading Styles
