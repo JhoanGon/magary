@@ -1,49 +1,56 @@
 # Magary Workspace
 
-Monorepo de Magary UI con tres proyectos principales:
+Monorepo for the Magary Angular ecosystem.
 
-- `projects/ng-magary`: libreria Angular publicada como `ng-magary`.
-- `projects/demo-app`: app demo/documentacion visual.
-- `projects/magary-mcp`: servidor MCP para discovery de componentes.
+## Projects
 
-## Documentacion publica de la libreria
+- `projects/ng-magary`: Angular UI library published as `ng-magary`.
+- `projects/demo-app`: documentation/demo application used for QA and visual validation.
+- `projects/magary-mcp`: MCP helper tooling for component discovery workflows.
 
-La guia para consumidores del paquete esta en:
-
-- `projects/ng-magary/README.md`
-
-Ese archivo es el que termina en `dist/ng-magary/README.md` al publicar npm.
-
-## Desarrollo local
+## Quick Start
 
 ```bash
 pnpm install
 pnpm run build
 ```
 
-## Calidad (estado recomendado para PR)
+## Daily Commands
 
 ```bash
-pnpm run lint
 pnpm run build:lib
 pnpm run build:demo
 pnpm run test:unit
-pnpm run test:visual
+pnpm run test:visual:smoke
+pnpm run test:a11y:smoke
 ```
 
-Comando consolidado:
+Full quality gate:
 
 ```bash
 pnpm run qa:all
 ```
 
-## Nota importante sobre estilos
+## Library Consumer Docs
 
-`ng-magary` no publica archivos globales `theme.css` ni `core.css`.
+The npm consumer guide is maintained in:
 
-- Los estilos de componentes vienen encapsulados en la libreria.
-- `Tooltip` usa clases globales (`.magary-tooltip`) y requiere estilos globales en la app consumidora.
+- `projects/ng-magary/README.md`
 
-Para configuracion MCP y clientes IDE:
+This is the README shipped in `dist/ng-magary` during publish.
 
-- `docs/MCP_SETUP.md`
+## Release Notes
+
+- `CHANGELOG.md`
+- `docs/MIGRATION_COMPATIBILITY.md`
+- `docs/RECIPE_ECOMMERCE.md`
+- `docs/RECIPE_LOGISTICS.md`
+- `docs/RECIPE_DASHBOARD.md`
+
+## Tooltip Global Styles
+
+`magaryTooltip` renders overlays in `document.body`, so consumers must load global styles:
+
+```scss
+@use 'ng-magary/styles/tooltip.scss';
+```

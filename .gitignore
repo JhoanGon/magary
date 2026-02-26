@@ -33,23 +33,35 @@ yarn-error.log
 .sass-cache/
 /connect.lock
 /coverage
-/e2e/*
-!/e2e/playwright/
-/e2e/playwright/*
-!/e2e/playwright/playwright.config.ts
-!/e2e/playwright/specs/
-/e2e/playwright/specs/*
-!/e2e/playwright/specs/ci-smoke.spec.ts
-!/e2e/playwright/specs/ci-a11y.spec.ts
-/docs/*
-!/docs/ENTERPRISE_PREMIUM_ROADMAP.md
-!/docs/ENTERPRISE_SCORECARD.md
-!/docs/ENTERPRISE_BACKLOG.md
-!/docs/RECIPE_ECOMMERCE.md
-!/docs/RECIPE_LOGISTICS.md
-!/docs/RECIPE_DASHBOARD.md
-!/docs/MIGRATION_COMPATIBILITY.md
-!/docs/DEMO_PERFORMANCE_BUDGETS.md
+
+# Playwright artifacts
+/e2e/playwright/report/
+/e2e/playwright/test-results/
+/e2e/playwright/snapshots/
+# Internal QA suites/docs (keep only CI smoke specs public)
+/e2e/playwright/README.md
+/e2e/playwright/helpers/
+/e2e/playwright/specs/*.visual.spec.ts
+/e2e/playwright/specs/*functional-checklist.spec.ts
+
+# Cursor local rules and workspace metadata
+.cursorrules
+.cursor/
+
+# Internal planning/process docs (local only)
+docs/API_CONTRACT_BASELINE.md
+docs/API_CONTRACT_RULES.md
+docs/CONSUMO_MASIVO_ROADMAP.md
+docs/HANDOFF.md
+docs/MCP_SETUP.md
+docs/QA_ROADMAP.md
+docs/ROADMAP.md
+docs/DEMO_PERFORMANCE_BUDGETS.md
+docs/ENTERPRISE_BACKLOG.md
+docs/ENTERPRISE_PREMIUM_ROADMAP.md
+docs/ENTERPRISE_SCORECARD.md
+docs/RELEASE_CANDIDATE_CHECKLIST.md
+docs/RISK_REGISTER.md
 /libpeerconnection.log
 testem.log
 /typings
