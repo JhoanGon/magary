@@ -23,6 +23,7 @@
           [backgroundLine]="'var(--primary-500)'"
           [positionContent]="'flex-start'"
           [padding]="'2rem'"
+          tabListAriaLabel="Main sections"
         >
           <magary-tab label="Inicio">
             <h2>Bienvenido</h2>
@@ -86,6 +87,12 @@
               ancho disponible.
             </td>
           </tr>
+          <tr>
+            <td><code>tabListAriaLabel</code></td>
+            <td><code>string</code></td>
+            <td><code>'Tabs'</code></td>
+            <td>Etiqueta accesible para el contenedor <code>tablist</code>.</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -130,8 +137,8 @@
     <div class="section-content">
       <ul class="accessibility-list">
         <li>
-          <strong>Teclado:</strong> Los botones de pestañas pueden ser accedidos
-          con Tab
+          <strong>Teclado:</strong> Soporta Tab, ArrowLeft, ArrowRight, Home y
+          End
         </li>
         <li>
           <strong>Activación:</strong> Las pestañas se activan con Enter o Click
@@ -157,6 +164,7 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
           [heightLine]="'2px'"
+          tabListAriaLabel="Code samples"
         >
           <magary-tab label="HTML">
             <pre><code [highlight]="exampleBasicHTML" language="html"></code></pre>

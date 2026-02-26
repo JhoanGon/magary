@@ -10,7 +10,11 @@ import { Highlight } from 'ngx-highlightjs';
 export class ViewTab {
   importExample = "import { MagaryTabs, MagaryTab } from 'ng-magary';";
   exampleTab = `
-  <magary-tabs [backgroundLine]="'var(--primary-500)'" [positionContent]="'flex-start'">
+  <magary-tabs
+    [backgroundLine]="'var(--primary-500)'"
+    [positionContent]="'flex-start'"
+    tabListAriaLabel="Principal sections"
+  >
     <magary-tab label="Inicio">
       <h2>Bienvenido</h2>
       <p>Contenido de la pestaña de inicio.</p>
@@ -27,7 +31,10 @@ export class ViewTab {
     </magary-tab>
   </magary-tabs>`;
   exampleBasicHTML = `
-  <magary-tabs backgroundLine="var(--accent-500)">
+  <magary-tabs
+    backgroundLine="var(--accent-500)"
+    tabListAriaLabel="Profile sections"
+  >
     <magary-tab label="Perfil">
       <p>Contenido del perfil</p>
     </magary-tab>

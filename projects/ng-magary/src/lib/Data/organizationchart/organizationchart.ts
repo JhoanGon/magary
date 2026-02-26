@@ -2,6 +2,7 @@ import {
   Component,
   ViewEncapsulation,
   ChangeDetectionStrategy,
+  booleanAttribute,
   input,
   output,
   contentChild,
@@ -11,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import {
   MagaryTreeNode,
   MagaryTreeNodeSelectionEvent,
+  MagaryTreeSelectionValue,
 } from '../tree/tree-node.interface';
 import { MagaryOrganizationChartNode } from './organizationchart-node';
 
@@ -25,9 +27,10 @@ import { MagaryOrganizationChartNode } from './organizationchart-node';
 })
 export class MagaryOrganizationChart {
   readonly value = input<MagaryTreeNode[]>([]);
-  readonly selectionMode = input<string | null>(null);
-  readonly selection = input<unknown>(null);
-  readonly collapsible = input<boolean>(false);
+  readonly selectionMode = input<'single' | 'multiple' | null>(null);
+  readonly selection = input<MagaryTreeSelectionValue>(null);
+  readonly collapsible = input(false, { transform: booleanAttribute });
+  readonly chartAriaLabel = input<string>('Organization chart');
 
   // Custom template support
   readonly template = contentChild(TemplateRef);

@@ -50,4 +50,17 @@ describe('MagaryTab behavior', () => {
     expect(tabElement.getAttribute('aria-hidden')).toBe('false');
     expect(fixture.nativeElement.textContent).toContain('Profile Content');
   });
+
+  it('binds panel id and labelledby attributes when provided', () => {
+    host.tab().panelId.set('profile-panel');
+    host.tab().labelledBy.set('profile-tab');
+    fixture.detectChanges();
+
+    const tabElement = fixture.nativeElement.querySelector(
+      'magary-tab',
+    ) as HTMLElement;
+
+    expect(tabElement.id).toBe('profile-panel');
+    expect(tabElement.getAttribute('aria-labelledby')).toBe('profile-tab');
+  });
 });

@@ -26,10 +26,9 @@
                 [value]="files"
                 selectionMode="single"
                 [selection]="selectedFile"
-                (onNodeSelect)="
-                  selectedFile = $event.node; onNodeSelect($event)
-                "
-                (onNodeUnselect)="selectedFile = null; onNodeUnselect($event)"
+                treeAriaLabel="Basic file tree"
+                (onNodeSelect)="onNodeSelect($event)"
+                (onNodeUnselect)="onNodeUnselect($event)"
               >
               </magary-tree>
 
@@ -45,6 +44,17 @@
                   Seleccionado: <strong>{{ selectedFile.label }}</strong>
                 </div>
               }
+
+              <div
+                style="
+                  margin-top: 0.75rem;
+                  padding: 0.5rem;
+                  background: var(--surface-50);
+                  border-radius: 4px;
+                "
+              >
+                Evento: <strong>{{ treeEventSummary }}</strong>
+              </div>
             </div>
           </magary-card>
 
@@ -83,6 +93,7 @@
                 [value]="files"
                 [filter]="true"
                 filterPlaceholder="Buscar documentos..."
+                filterAriaLabel="Buscar en el arbol de documentos"
                 selectionMode="single"
               >
               </magary-tree>
@@ -121,9 +132,21 @@
                 [value]="filesDnD"
                 [draggable]="true"
                 [droppable]="true"
+                [validateDrop]="true"
                 (onNodeDrop)="onNodeDrop($event)"
               >
               </magary-tree>
+
+              <div
+                style="
+                  margin-top: 0.75rem;
+                  padding: 0.5rem;
+                  background: var(--surface-50);
+                  border-radius: 4px;
+                "
+              >
+                Evento: <strong>{{ treeEventSummary }}</strong>
+              </div>
             </div>
           </magary-card>
 
@@ -173,15 +196,21 @@
                 </tr>
                 <tr>
                   <td><code>selection</code></td>
-                  <td><code>unknown</code></td>
+                  <td><code>MagaryTreeNode | MagaryTreeNode[] | Record&lt;string, boolean&gt; | null</code></td>
                   <td><code>null</code></td>
                   <td>Enlace para el/los nodo(s) seleccionado(s).</td>
                 </tr>
                 <tr>
-                  <td><code>loading</code></td>
-                  <td><code>boolean</code></td>
-                  <td><code>false</code></td>
-                  <td>Muestra un estado de carga (skeleton).</td>
+                  <td><code>filterPlaceholder</code></td>
+                  <td><code>string</code></td>
+                  <td><code>'Search...'</code></td>
+                  <td>Texto del input de filtrado.</td>
+                </tr>
+                <tr>
+                  <td><code>filterMode</code></td>
+                  <td><code>'lenient' | 'strict'</code></td>
+                  <td><code>'lenient'</code></td>
+                  <td>Define si el filtro es parcial o exacto.</td>
                 </tr>
                 <tr>
                   <td><code>filter</code></td>
@@ -200,6 +229,12 @@
                   <td><code>boolean</code></td>
                   <td><code>false</code></td>
                   <td>Permite soltar nodos.</td>
+                </tr>
+                <tr>
+                  <td><code>validateDrop</code></td>
+                  <td><code>boolean</code></td>
+                  <td><code>false</code></td>
+                  <td>Valida drop para evitar soltar sobre si mismo/descendientes.</td>
                 </tr>
               </tbody>
             </table>
@@ -226,23 +261,28 @@
               <tbody>
                 <tr>
                   <td><code>onNodeSelect</code></td>
-                  <td><code>EventEmitter&lt;unknown&gt;</code></td>
+                  <td><code>EventEmitter&lt;MagaryTreeNodeSelectionEvent&gt;</code></td>
                   <td>Callback al seleccionar un nodo.</td>
                 </tr>
                 <tr>
                   <td><code>onNodeUnselect</code></td>
-                  <td><code>EventEmitter&lt;unknown&gt;</code></td>
+                  <td><code>EventEmitter&lt;MagaryTreeNodeSelectionEvent&gt;</code></td>
                   <td>Callback al deseleccionar un nodo.</td>
                 </tr>
                 <tr>
                   <td><code>onNodeExpand</code></td>
-                  <td><code>EventEmitter&lt;unknown&gt;</code></td>
+                  <td><code>EventEmitter&lt;MagaryTreeNode&gt;</code></td>
                   <td>Callback al expandir un nodo.</td>
                 </tr>
                 <tr>
                   <td><code>onNodeCollapse</code></td>
-                  <td><code>EventEmitter&lt;unknown&gt;</code></td>
+                  <td><code>EventEmitter&lt;MagaryTreeNode&gt;</code></td>
                   <td>Callback al colapsar un nodo.</td>
+                </tr>
+                <tr>
+                  <td><code>onNodeDrop</code></td>
+                  <td><code>EventEmitter&lt;MagaryTreeNodeDropEvent&gt;</code></td>
+                  <td>Callback de drag and drop con parent y dragNode.</td>
                 </tr>
               </tbody>
             </table>

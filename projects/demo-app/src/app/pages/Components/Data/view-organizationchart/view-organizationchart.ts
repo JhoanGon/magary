@@ -72,13 +72,18 @@ export class ViewOrganizationChart {
   ];
 
   selectedNode: MagaryTreeNode | null = null;
+  chartEventSummary = 'No events yet';
 
   exampleHTML = `
 <magary-organization-chart 
     [value]="data1" 
     selectionMode="single" 
+    chartAriaLabel="Company organization chart"
     [selection]="selectedNode"
-    (onNodeSelect)="onNodeSelect($event)">
+    (onNodeSelect)="onNodeSelect($event)"
+    (onNodeUnselect)="onNodeUnselect($event)"
+    (onNodeExpand)="onNodeExpand($event)"
+    (onNodeCollapse)="onNodeCollapse($event)">
 </magary-organization-chart>
 `;
 
@@ -112,5 +117,19 @@ export class MyComponent {
 
   onNodeSelect(event: MagaryTreeNodeSelectionEvent) {
     this.selectedNode = event.node;
+    this.chartEventSummary = `Selected: ${event.node.label ?? 'unknown node'}`;
+  }
+
+  onNodeUnselect(event: MagaryTreeNodeSelectionEvent) {
+    this.selectedNode = null;
+    this.chartEventSummary = `Unselected: ${event.node.label ?? 'unknown node'}`;
+  }
+
+  onNodeExpand(node: MagaryTreeNode) {
+    this.chartEventSummary = `Expanded: ${node.label ?? 'unknown node'}`;
+  }
+
+  onNodeCollapse(node: MagaryTreeNode) {
+    this.chartEventSummary = `Collapsed: ${node.label ?? 'unknown node'}`;
   }
 }

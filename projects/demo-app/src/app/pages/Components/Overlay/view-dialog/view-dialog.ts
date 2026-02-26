@@ -126,8 +126,6 @@ export class ViewDialog {
         [resizable]="true" 
         [maximizable]="true"
         appendTo="local"
-        [maximizable]="true"
-        appendTo="local"
         [modal]="false"
         width="300px">
         <p>

@@ -35,14 +35,44 @@
     [attr.aria-label]="title() ? title() + ' data region' : 'Table data region'"
   >
     <table class="magary-table">
-      <thead>
-        <tr>
+      @if (columns().length > 0) {
+        <colgroup>
           @for (col of columns(); track col.field) {
-            <th [style.width]="col.width">
-              {{ col.header }}
-            </th>
+            <col [style.width]="col.width || null" />
           }
-        </tr>
+        </colgroup>
+      }
+      @if (captionTemplate) {
+        <caption>
+          <ng-container [ngTemplateOutlet]="captionTemplate"></ng-container>
+        </caption>
+      }
+      <thead>
+        @if (headerTemplate) {
+          <ng-container [ngTemplateOutlet]="headerTemplate"></ng-container>
+        } @else {
+          <tr>
+            @for (col of columns(); track col.field) {
+              <th
+                [attr.aria-sort]="col.sortable ? getAriaSort(col.field) : null"
+              >
+                @if (col.sortable) {
+                  <button
+                    type="button"
+                    class="magary-sort-button"
+                    (click)="toggleSort(col.field)"
+                    [attr.aria-label]="getSortButtonLabel(col.header, col.field)"
+                  >
+                    <span>{{ col.header }}</span>
+                    <lucide-icon [name]="getSortIcon(col.field)" [size]="14"></lucide-icon>
+                  </button>
+                } @else {
+                  {{ col.header }}
+                }
+              </th>
+            }
+          </tr>
+        }
       </thead>
       <tbody>
         <!-- Data Rows -->
@@ -101,7 +131,7 @@
 
         <!-- Skeleton Rows -->
         @if (loading()) {
-          @for (i of [1, 2, 3, 4, 5]; track i) {
+          @for (i of skeletonRows(); track i) {
             <tr class="table-row skeleton-row">
               @for (col of columns(); track col.field) {
                 <td>

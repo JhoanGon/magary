@@ -240,7 +240,11 @@ export interface CarouselSlideEvent<T> {
 export class MagaryCarouselComponent<T>
   implements OnInit, AfterViewInit, ControlValueAccessor
 {
+  private static instanceSequence = 0;
   protected readonly Math = Math;
+  readonly carouselInstanceId = `magary-carousel-${++MagaryCarouselComponent.instanceSequence}`;
+  readonly viewportId = `${this.carouselInstanceId}-viewport`;
+  readonly indicatorsId = `${this.carouselInstanceId}-indicators`;
   // ============================================================================
   // CORE INPUTS
   // ============================================================================
@@ -1094,6 +1098,16 @@ export class MagaryCarouselComponent<T>
   onKeyDown(event: KeyboardEvent): void {
     if (!this.keyboard()) return;
 
+    const wrapperElement = this.carouselWrapper()?.nativeElement;
+    const target = event.target;
+    if (
+      target instanceof Element &&
+      target !== wrapperElement &&
+      this.isInteractiveTarget(target)
+    ) {
+      return;
+    }
+
     const { key } = event;
     const isVert = this.isVertical();
     const rtl = this.isRTL();
@@ -1416,6 +1430,88 @@ export class MagaryCarouselComponent<T>
     }
   }
 
+  onIndicatorKeydown(event: KeyboardEvent, pageIndex: number): void {
+    const total = this.totalPages();
+    if (total <= 1) return;
+
+    const isVert = this.isVertical();
+    const rtl = this.isRTL();
+    let nextIndex = pageIndex;
+
+    switch (event.key) {
+      case 'ArrowLeft':
+        if (!isVert) {
+          nextIndex = rtl ? pageIndex + 1 : pageIndex - 1;
+        } else {
+          return;
+        }
+        break;
+      case 'ArrowRight':
+        if (!isVert) {
+          nextIndex = rtl ? pageIndex - 1 : pageIndex + 1;
+        } else {
+          return;
+        }
+        break;
+      case 'ArrowUp':
+        if (isVert) {
+          nextIndex = pageIndex - 1;
+        } else {
+          return;
+        }
+        break;
+      case 'ArrowDown':
+        if (isVert) {
+          nextIndex = pageIndex + 1;
+        } else {
+          return;
+        }
+        break;
+      case 'Home':
+        nextIndex = 0;
+        break;
+      case 'End':
+        nextIndex = total - 1;
+        break;
+      case ' ':
+      case 'Enter':
+        event.preventDefault();
+        this.goToPage(pageIndex);
+        return;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const normalizedIndex = this.normalizeIndicatorIndex(nextIndex, total);
+    this.goToPage(normalizedIndex);
+    this.focusIndicator(normalizedIndex);
+  }
+
+  isTabIndicatorStyle(): boolean {
+    const style = this.indicatorStyle();
+    return style === 'dots' || style === 'lines';
+  }
+
+  getIndicatorTabIndex(pageIndex: number): number {
+    return this._currentPage() === pageIndex ? 0 : -1;
+  }
+
+  getIndicatorId(pageIndex: number): string {
+    return `${this.indicatorsId}-tab-${pageIndex}`;
+  }
+
+  getIndicatorAriaLabel(pageIndex: number): string {
+    return `Go to slide ${pageIndex + 1}`;
+  }
+
+  getSlideAriaLabel(itemIndex: number): string {
+    const totalItems = this.totalItems();
+    return `Slide ${itemIndex + 1} of ${totalItems}`;
+  }
+
   // ============================================================================
   // EVENT LISTENERS
   // ============================================================================
@@ -1698,6 +1794,25 @@ export class MagaryCarouselComponent<T>
         'button, a, input, textarea, select, label, [role="button"], [data-carousel-no-drag]',
       ),
     );
+  }
+
+  private normalizeIndicatorIndex(index: number, total: number): number {
+    if (total <= 0) return 0;
+    if (index < 0) return total - 1;
+    if (index >= total) return 0;
+    return index;
+  }
+
+  private focusIndicator(pageIndex: number): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const indicator = this.elementRef.nativeElement.querySelector(
+      `[data-indicator-index="${pageIndex}"]`,
+    );
+
+    if (indicator instanceof HTMLElement) {
+      indicator.focus();
+    }
   }
 
   private applyMomentum(initialVelocity: number, forward: boolean): void {

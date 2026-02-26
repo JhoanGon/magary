@@ -1,7 +1,9 @@
 <button
   class="hamburger-button"
   type="button"
-  aria-label="Abrir menu lateral"
+  [attr.aria-label]="mobileMenuButtonLabel()"
+  [attr.aria-controls]="sidebarId"
+  [attr.aria-expanded]="isMobileOpen()"
   (click)="toggleMobileSidebar()"
 >
   <lucide-icon name="menu"></lucide-icon>
@@ -9,10 +11,16 @@
 @if (isMobileOpen()) {
   <div class="sidebar-backdrop" (click)="closeMobileSidebar()"></div>
 }
-<div
+<aside
+  #sidebarElement
+  [id]="sidebarId"
   class="sidebar"
   [class.open]="isMobileOpen()"
   [class.collapsed]="isCollapsed()"
+  role="complementary"
+  [attr.aria-label]="navigationLabel()"
+  tabindex="-1"
+  (keydown)="onSidebarKeydown($event)"
 >
   <div class="sidebar-header" [class.collapsed-header]="isCollapsed()">
     @if (isCollapsed()) {
@@ -71,9 +79,10 @@
       }
     }
     <button
+      #closeButton
       class="close-button"
       type="button"
-      aria-label="Cerrar sidebar"
+      [attr.aria-label]="closeButtonLabel()"
       (click)="closeMobileSidebar()"
     >
       <lucide-icon name="x"></lucide-icon>
@@ -92,7 +101,7 @@
         />
       </div>
     }
-    <div class="menu-container">
+    <nav class="menu-container" [attr.aria-label]="navigationLabel()">
       @if (sections().length > 0) {
         @for (section of sections(); track $index) {
           <magary-panelmenu
@@ -125,7 +134,7 @@
           (expandSidebar)="openSidebar()"
         />
       }
-    </div>
+    </nav>
     @if (showBrandLogo() && brandLogoPosition() === "bottom") {
       <div
         class="brand-logo-container bottom"
@@ -229,4 +238,4 @@
       />
     </div>
   }
-</div>
+</aside>

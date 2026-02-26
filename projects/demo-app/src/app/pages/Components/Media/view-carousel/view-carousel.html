@@ -16,6 +16,7 @@
     <div class="section-content">
       <div class="demo-content">
         <magary-carousel
+          [ariaLabel]="'Hero featured products carousel'"
           [value]="products"
           [direction]="'ltr'"
           [numVisible]="1"
@@ -55,6 +56,20 @@
           </ng-template>
         </magary-carousel>
       </div>
+      <div class="code-block mt-4">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeHTMLHero" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="codeTSHero" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
     </div>
   </div>
 
@@ -69,6 +84,7 @@
     <div class="section-content">
       <div class="demo-content">
         <magary-carousel
+          [ariaLabel]="'Basic responsive products carousel'"
           [value]="products"
           [direction]="'ltr'"
           [numVisible]="3"
@@ -154,6 +170,7 @@
     <div class="section-content">
       <div class="demo-content">
         <magary-carousel
+          [ariaLabel]="'Autoplay products carousel'"
           [value]="products"
           [direction]="'ltr'"
           [numVisible]="3"
@@ -218,6 +235,7 @@
       <div class="demo-content flex justify-content-center">
         <div style="width: 600px; max-width: 100%">
           <magary-carousel
+            [ariaLabel]="'Vertical products carousel'"
             [value]="products"
             [direction]="'ltr'"
             [orientation]="'vertical'"
@@ -313,6 +331,7 @@
         style="overflow: hidden; min-height: 400px"
       >
         <magary-carousel
+          [ariaLabel]="'Effects preview carousel'"
           [value]="products"
           [direction]="'ltr'"
           [numVisible]="isStackedEffect() ? 1 : 3"
@@ -412,6 +431,7 @@
 
       <div class="demo-content py-4">
         <magary-carousel
+          [ariaLabel]="'Navigation and indicators carousel'"
           [value]="products"
           [direction]="'ltr'"
           [numVisible]="3"
@@ -448,6 +468,20 @@
             </div>
           </ng-template>
         </magary-carousel>
+      </div>
+      <div class="code-block mt-4">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="codeHTMLIndicators" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="codeTSIndicators" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
       </div>
     </div>
   </div>

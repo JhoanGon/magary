@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  booleanAttribute,
   input,
   output,
   signal,
@@ -38,16 +39,22 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
 })
 export class MagaryOverlayPanel implements OnDestroy {
-  dismissable = input<boolean>(true);
-  showCloseIcon = input<boolean>(false);
+  private static nextId = 0;
+  dismissable = input(true, { transform: booleanAttribute });
+  showCloseIcon = input(false, { transform: booleanAttribute });
+  closeOnEscape = input(true, { transform: booleanAttribute });
+  panelAriaLabel = input<string>('Overlay panel');
   onShow = output<void>();
   onHide = output<void>();
   container = viewChild<ElementRef<HTMLElement>>('container');
 
   visible = signal(false);
+  panelId = signal(`magary-overlaypanel-${MagaryOverlayPanel.nextId++}`);
   target: HTMLElement | null = null;
   documentClickListener: (() => void) | null = null;
+  documentKeydownListener: (() => void) | null = null;
   scrollListener: ((event: Event) => void) | null = null;
+  resizeListener: ((event: Event) => void) | null = null;
 
   cd = inject(ChangeDetectorRef);
   renderer = inject(Renderer2);
@@ -64,6 +71,7 @@ export class MagaryOverlayPanel implements OnDestroy {
 
   show(event: Event, target?: EventTarget | null) {
     this.target = this.resolveTarget(event, target);
+    this.updateTargetA11yState(true);
     this.visible.set(true);
     this.onShow.emit();
 
@@ -78,7 +86,9 @@ export class MagaryOverlayPanel implements OnDestroy {
         );
         this.alignWithTarget();
         this.bindDocumentClickListener();
+        this.bindDocumentKeydownListener();
         this.bindScrollListener();
+        this.bindResizeListener();
         this.cd.markForCheck();
       }
     });
@@ -88,7 +98,10 @@ export class MagaryOverlayPanel implements OnDestroy {
     this.visible.set(false);
     this.onHide.emit();
     this.unbindDocumentClickListener();
+    this.unbindDocumentKeydownListener();
     this.unbindScrollListener();
+    this.unbindResizeListener();
+    this.updateTargetA11yState(false);
     this.target = null;
 
     // Optional: Remove from body immediately or let *ngIf handle it?
@@ -107,7 +120,7 @@ export class MagaryOverlayPanel implements OnDestroy {
     const container = this.container();
     if (!this.target || !container) return;
 
-      const targetRect = this.target.getBoundingClientRect();
+    const targetRect = this.target.getBoundingClientRect();
     const containerRect = container.nativeElement.getBoundingClientRect();
     const scrollY = window.scrollY || this.document.documentElement.scrollTop;
     const scrollX = window.scrollX || this.document.documentElement.scrollLeft;
@@ -118,6 +131,8 @@ export class MagaryOverlayPanel implements OnDestroy {
 
     // Viewport check
     const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const viewportBottom = scrollY + viewportHeight;
 
     // If goes off screen right
     if (left + containerRect.width > viewportWidth) {
@@ -125,6 +140,13 @@ export class MagaryOverlayPanel implements OnDestroy {
       // If still off screen (element wider than target and aligned right), capped at viewport width
       if (left < 0) left = 10;
     }
+    left = Math.max(scrollX + 10, left);
+
+    // If goes off screen bottom, show above target
+    if (top + containerRect.height > viewportBottom) {
+      top = targetRect.top + scrollY - containerRect.height - 5;
+    }
+    top = Math.max(scrollY + 10, top);
 
     this.renderer.setStyle(container.nativeElement, 'top', `${top}px`);
     this.renderer.setStyle(container.nativeElement, 'left', `${left}px`);
@@ -148,10 +170,28 @@ export class MagaryOverlayPanel implements OnDestroy {
     }
   }
 
+  bindResizeListener() {
+    if (!this.resizeListener) {
+      this.resizeListener = () => {
+        if (this.visible()) {
+          this.alignWithTarget();
+        }
+      };
+      window.addEventListener('resize', this.resizeListener);
+    }
+  }
+
   unbindScrollListener() {
     if (this.scrollListener) {
       window.removeEventListener('scroll', this.scrollListener, true);
       this.scrollListener = null;
+    }
+  }
+
+  unbindResizeListener() {
+    if (this.resizeListener) {
+      window.removeEventListener('resize', this.resizeListener);
+      this.resizeListener = null;
     }
   }
 
@@ -203,9 +243,41 @@ export class MagaryOverlayPanel implements OnDestroy {
     }
   }
 
+  bindDocumentKeydownListener() {
+    if (!this.closeOnEscape()) return;
+    if (this.documentKeydownListener) {
+      this.unbindDocumentKeydownListener();
+    }
+
+    this.documentKeydownListener = this.renderer.listen(
+      'document',
+      'keydown',
+      (event: KeyboardEvent) => {
+        if (event.key !== 'Escape' || !this.visible()) {
+          return;
+        }
+        event.preventDefault();
+        const targetToFocus = this.target;
+        this.hide();
+        targetToFocus?.focus();
+        this.cd.markForCheck();
+      },
+    );
+  }
+
+  unbindDocumentKeydownListener() {
+    if (this.documentKeydownListener) {
+      this.documentKeydownListener();
+      this.documentKeydownListener = null;
+    }
+  }
+
   ngOnDestroy() {
     this.unbindDocumentClickListener();
+    this.unbindDocumentKeydownListener();
     this.unbindScrollListener();
+    this.unbindResizeListener();
+    this.updateTargetA11yState(false);
     // Ensure removal from body
     const container = this.container();
     if (container && container.nativeElement.parentNode === this.document.body) {
@@ -222,5 +294,18 @@ export class MagaryOverlayPanel implements OnDestroy {
   ): HTMLElement | null {
     const candidate = target ?? event.currentTarget ?? event.target;
     return candidate instanceof HTMLElement ? candidate : null;
+  }
+
+  private updateTargetA11yState(expanded: boolean) {
+    if (!this.target) {
+      return;
+    }
+    this.renderer.setAttribute(this.target, 'aria-haspopup', 'dialog');
+    this.renderer.setAttribute(this.target, 'aria-controls', this.panelId());
+    this.renderer.setAttribute(
+      this.target,
+      'aria-expanded',
+      expanded ? 'true' : 'false',
+    );
   }
 }

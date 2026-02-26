@@ -115,6 +115,12 @@ magary-carousel {
   width: 100%;
   height: var(--carousel-height);
   padding: var(--carousel-padding);
+
+  &:focus-visible {
+    outline: 2px solid var(--primary-color, #3b82f6);
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
 }
 
 .magary-carousel-content {

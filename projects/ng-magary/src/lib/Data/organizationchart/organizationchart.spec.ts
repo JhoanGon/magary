@@ -28,14 +28,16 @@ describe('MagaryOrganizationChart behavior', () => {
 
   const nodes: MagaryTreeNode[] = [
     {
+      key: 'ceo',
       label: 'CEO',
       expanded: true,
       children: [
-        { label: 'COO', expanded: true },
-        { label: 'CFO', expanded: true },
+        { key: 'coo', label: 'COO', expanded: true },
+        { key: 'cfo', label: 'CFO', expanded: true },
       ],
     },
     {
+      key: 'cto',
       label: 'CTO',
       expanded: true,
     },
@@ -73,6 +75,22 @@ describe('MagaryOrganizationChart behavior', () => {
     expect(labels).toContain('CTO');
   });
 
+  it('renders chart region with configurable aria label', () => {
+    fixture.componentRef.setInput('chartAriaLabel', 'Company organization chart');
+    fixture.detectChanges();
+
+    const container = fixture.nativeElement.querySelector(
+      '.magary-organizationchart',
+    ) as HTMLElement;
+    const table = fixture.nativeElement.querySelector(
+      '.magary-organizationchart-table',
+    ) as HTMLTableElement;
+
+    expect(container.getAttribute('role')).toBe('region');
+    expect(container.getAttribute('aria-label')).toBe('Company organization chart');
+    expect(table.getAttribute('aria-label')).toBe('Company organization chart');
+  });
+
   it('emits node selection and unselection based on current selection input', () => {
     const selectEvents: { node: MagaryTreeNode }[] = [];
     const unselectEvents: { node: MagaryTreeNode }[] = [];
@@ -97,6 +115,34 @@ describe('MagaryOrganizationChart behavior', () => {
     expect(unselectEvents[0].node.label).toBe('CEO');
   });
 
+  it('supports keyboard selection and key-based selection map', () => {
+    const selectEvents: { node: MagaryTreeNode }[] = [];
+    component.onNodeSelect.subscribe((event) => selectEvents.push(event));
+
+    const nodeContents = fixture.nativeElement.querySelectorAll(
+      '.magary-organizationchart-node-content',
+    ) as NodeListOf<HTMLElement>;
+    const ceoNodeContent = nodeContents[0];
+    ceoNodeContent.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+
+    expect(selectEvents).toHaveLength(1);
+    expect(selectEvents[0].node.label).toBe('CEO');
+
+    fixture.componentRef.setInput('selection', { cto: true });
+    fixture.detectChanges();
+
+    const ctoNodeContent = Array.from(
+      fixture.nativeElement.querySelectorAll(
+        '.magary-organizationchart-node-content',
+      ) as NodeListOf<HTMLElement>,
+    ).find((element) => element.textContent?.includes('CTO'));
+
+    expect(ctoNodeContent?.classList.contains('magary-organizationchart-selected')).toBe(
+      true,
+    );
+  });
+
   it('toggles collapsible node and emits expand/collapse events', () => {
     const collapsed: string[] = [];
     const expanded: string[] = [];
@@ -118,5 +164,16 @@ describe('MagaryOrganizationChart behavior', () => {
 
     expect(expanded).toEqual(['CEO']);
     expect(nodes[0].expanded).toBe(true);
+  });
+
+  it('exposes accessible labels for toggler controls', () => {
+    const toggler = fixture.nativeElement.querySelector(
+      '.magary-organizationchart-toggler',
+    ) as HTMLButtonElement;
+
+    expect(toggler.getAttribute('aria-label')).toBe('Collapse CEO');
+    toggler.click();
+    fixture.detectChanges();
+    expect(toggler.getAttribute('aria-label')).toBe('Expand CEO');
   });
 });

@@ -41,7 +41,15 @@ yarn-error.log
 /e2e/playwright/specs/*
 !/e2e/playwright/specs/ci-smoke.spec.ts
 !/e2e/playwright/specs/ci-a11y.spec.ts
-/docs
+/docs/*
+!/docs/ENTERPRISE_PREMIUM_ROADMAP.md
+!/docs/ENTERPRISE_SCORECARD.md
+!/docs/ENTERPRISE_BACKLOG.md
+!/docs/RECIPE_ECOMMERCE.md
+!/docs/RECIPE_LOGISTICS.md
+!/docs/RECIPE_DASHBOARD.md
+!/docs/MIGRATION_COMPATIBILITY.md
+!/docs/DEMO_PERFORMANCE_BUDGETS.md
 /libpeerconnection.log
 testem.log
 /typings

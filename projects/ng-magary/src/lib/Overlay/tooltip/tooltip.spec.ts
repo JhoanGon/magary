@@ -10,6 +10,7 @@ import { MagaryTooltip } from './tooltip';
       id="tooltip-host"
       [magaryTooltip]="tooltipText"
       [tooltipPosition]="position"
+      [tooltipDisabled]="disabled"
       type="button"
     >
       Hover me
@@ -19,6 +20,7 @@ import { MagaryTooltip } from './tooltip';
 class TooltipHostComponent {
   tooltipText: string | undefined = 'Tooltip content';
   position: 'top' | 'bottom' | 'left' | 'right' = 'top';
+  disabled = false;
 }
 
 describe('MagaryTooltip behavior', () => {
@@ -61,6 +63,9 @@ describe('MagaryTooltip behavior', () => {
     expect(tooltip.textContent).toContain('Tooltip content');
     expect(tooltip.classList.contains('magary-tooltip-right')).toBe(true);
     expect(tooltip.classList.contains('magary-tooltip-visible')).toBe(true);
+    expect(tooltip.getAttribute('role')).toBe('tooltip');
+    expect(tooltip.id).toContain('magary-tooltip-');
+    expect(hostButton.getAttribute('aria-describedby')).toBe(tooltip.id);
   });
 
   it('hides tooltip on mouseleave', () => {
@@ -73,6 +78,7 @@ describe('MagaryTooltip behavior', () => {
     fixture.detectChanges();
 
     expect(document.body.querySelector('.magary-tooltip')).toBeNull();
+    expect(hostButton.hasAttribute('aria-describedby')).toBe(false);
   });
 
   it('does not create tooltip when text is empty', () => {
@@ -92,6 +98,28 @@ describe('MagaryTooltip behavior', () => {
     expect(document.body.querySelector('.magary-tooltip')).toBeTruthy();
 
     window.dispatchEvent(new Event('scroll'));
+    fixture.detectChanges();
+
+    expect(document.body.querySelector('.magary-tooltip')).toBeNull();
+  });
+
+  it('hides tooltip when escape key is pressed', () => {
+    renderHost();
+    hostButton.dispatchEvent(new Event('mouseenter'));
+    fixture.detectChanges();
+    expect(document.body.querySelector('.magary-tooltip')).toBeTruthy();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    fixture.detectChanges();
+
+    expect(document.body.querySelector('.magary-tooltip')).toBeNull();
+  });
+
+  it('does not create tooltip when disabled', () => {
+    host.disabled = true;
+    renderHost();
+
+    hostButton.dispatchEvent(new Event('mouseenter'));
     fixture.detectChanges();
 
     expect(document.body.querySelector('.magary-tooltip')).toBeNull();

@@ -188,6 +188,53 @@
   }
 }
 
+.inline-edit-header-row th {
+  white-space: nowrap;
+}
+
+.inline-edit-row .inline-edit-price-cell {
+  min-width: 14rem;
+}
+
+.inline-edit-row .inline-edit-actions-cell {
+  width: 6rem;
+}
+
+.inline-edit-row .table-cell-value {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.template-guidelines {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--surface-200);
+  border-radius: var(--border-radius);
+  background: var(--surface-0);
+
+  h3 {
+    margin: 0 0 0.5rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0 0 0.75rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  ul {
+    margin: 0 0 1rem 1rem;
+    color: var(--text-primary);
+  }
+
+  li {
+    margin: 0.35rem 0;
+  }
+}
+
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }

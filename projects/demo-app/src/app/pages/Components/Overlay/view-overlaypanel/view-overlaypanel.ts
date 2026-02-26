@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MagaryButton,
@@ -33,6 +33,7 @@ interface OverlayProduct {
 })
 export class ViewOverlayPanel {
   importRef = `import { MagaryOverlayPanel } from 'ng-magary';`;
+  overlayEventSummary = 'Sin eventos por ahora.';
 
   // Data for table example
   products: OverlayProduct[] = [
@@ -55,10 +56,19 @@ export class ViewOverlayPanel {
   selectedProduct: OverlayProduct | null = null;
 
   codeBasic = `<div style="display: flex; justify-content: center;">
-    <magary-button (buttonClick)="op.toggle($event)" label="Show Overlay"></magary-button>
+    <magary-button
+      (buttonClick)="op.toggle($event)"
+      label="Show Overlay"
+    ></magary-button>
 </div>
 
-<magary-overlaypanel #op>
+<magary-overlaypanel
+    #op
+    panelAriaLabel="Información rápida"
+    [closeOnEscape]="true"
+    (onShow)="onOverlayShow()"
+    (onHide)="onOverlayHide()"
+>
     <div style="width: 300px;">
         <h4>Custom Content</h4>
         <p>You can put custom content here.</p>
@@ -91,24 +101,37 @@ export class ViewOverlayPanel {
     </table>
 </div>
 
-<magary-overlaypanel #op2 [showCloseIcon]="true">
+<magary-overlaypanel
+    #op2
+    [showCloseIcon]="true"
+    panelAriaLabel="Detalle del producto"
+>
     @if (selectedProduct) {
         <div class="p-3 text-center">
             <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + selectedProduct.image" 
                  [alt]="selectedProduct.name" 
                  style="width: 100px; display: block; margin: 0 auto 1rem auto;">
             <span class="font-bold block mb-2">{{selectedProduct.name}}</span>
-            <span class="text-secondary">{{product.price}}</span>
+            <span class="text-secondary">{{selectedProduct.price}}</span>
         </div>
     }
 </magary-overlaypanel>`;
 
   tsCode = `export class ViewOverlayPanel {
     selectedProduct: OverlayProduct | null = null;
+    overlayEventSummary = 'Sin eventos por ahora.';
     
     selectProduct(event: Event, product: OverlayProduct, overlay: MagaryOverlayPanel) {
         this.selectedProduct = product;
         overlay.toggle(event);
+    }
+
+    onOverlayShow() {
+        this.overlayEventSummary = 'Overlay abierto';
+    }
+
+    onOverlayHide() {
+        this.overlayEventSummary = 'Overlay cerrado';
     }
 }`;
 
@@ -119,5 +142,13 @@ export class ViewOverlayPanel {
   ) {
     this.selectedProduct = product;
     overlay.toggle(event);
+  }
+
+  onOverlayShow() {
+    this.overlayEventSummary = 'Overlay abierto';
+  }
+
+  onOverlayHide() {
+    this.overlayEventSummary = 'Overlay cerrado';
   }
 }

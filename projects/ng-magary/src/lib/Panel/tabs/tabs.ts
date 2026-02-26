@@ -13,6 +13,9 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { MagaryTab } from './tab/tab';
+
+let tabsInstanceSequence = 0;
+
 @Component({
   selector: 'magary-tabs',
   imports: [],
@@ -26,17 +29,26 @@ export class MagaryTabs implements OnInit, OnDestroy {
   buttonsRef = viewChildren<ElementRef<HTMLElement>>('tabButton');
 
   public activeIndex = signal(0);
+  public tabListAriaLabel = input<string>('Tabs');
   public backgroundLine = input<string>('#000');
   public positionContent = input<string>('center');
   public background = input<string>('var(--surface-0)');
   public padding = input<string>('0');
   public heightLine = input<string>('5px');
   public panelWidth = input<'auto' | 'full'>('full');
+  private readonly tabIdPrefix = `magary-tabs-${++tabsInstanceSequence}`;
   private resizeObserver: ResizeObserver | null = null;
   private rafId: number | null = null;
   private el = inject(ElementRef);
 
   constructor() {
+    effect(() => {
+      this.tabs().forEach((tab, index) => {
+        tab.panelId.set(this.getTabPanelId(index));
+        tab.labelledBy.set(this.getTabButtonId(index));
+      });
+    });
+
     effect(() => {
       const tabs = this.tabs();
       if (!tabs.length) {
@@ -96,27 +108,47 @@ export class MagaryTabs implements OnInit, OnDestroy {
     if (!total) return;
 
     let nextIndex = index;
+    let shouldFocus = false;
 
     switch (event.key) {
       case 'ArrowRight':
         nextIndex = index + 1 > total - 1 ? 0 : index + 1;
+        shouldFocus = true;
         break;
       case 'ArrowLeft':
         nextIndex = index - 1 < 0 ? total - 1 : index - 1;
+        shouldFocus = true;
         break;
       case 'Home':
         nextIndex = 0;
+        shouldFocus = true;
         break;
       case 'End':
         nextIndex = total - 1;
+        shouldFocus = true;
         break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        this.selectTab(index);
+        return;
       default:
         return;
     }
 
     event.preventDefault();
     this.selectTab(nextIndex);
-    this.focusTab(nextIndex);
+    if (shouldFocus) {
+      this.focusTab(nextIndex);
+    }
+  }
+
+  public getTabButtonId(index: number): string {
+    return `${this.tabIdPrefix}-tab-${index}`;
+  }
+
+  public getTabPanelId(index: number): string {
+    return `${this.tabIdPrefix}-panel-${index}`;
   }
 
   private updateUnderlinePosition(index: number): void {

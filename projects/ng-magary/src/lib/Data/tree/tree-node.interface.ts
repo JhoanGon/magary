@@ -20,6 +20,12 @@ export interface MagaryTreeNode {
   key?: string;
 }
 
+export type MagaryTreeSelectionValue =
+  | MagaryTreeNode
+  | MagaryTreeNode[]
+  | Record<string, boolean>
+  | null;
+
 export interface MagaryTreeNodeSelectionEvent {
   originalEvent: Event;
   node: MagaryTreeNode;

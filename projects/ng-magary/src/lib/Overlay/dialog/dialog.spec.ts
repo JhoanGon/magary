@@ -1,5 +1,6 @@
 ﻿import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AnimationEvent } from '@angular/animations';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryDialog } from './dialog';
@@ -214,6 +215,118 @@ describe('MagaryDialog behavior', () => {
 
     component.endResize({ pointerId: 2 } as PointerEvent);
     expect(component.resizing()).toBe(false);
+  });
+
+  it('makes header action buttons keyboard focusable', () => {
+    fixture.componentRef.setInput('header', 'Focusable');
+    fixture.componentRef.setInput('maximizable', true);
+    component.visible.set(true);
+    fixture.detectChanges();
+
+    const actionButtons = fixture.nativeElement.querySelectorAll(
+      '.magary-dialog-header-icon',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    expect(actionButtons.length).toBe(2);
+    expect(actionButtons[0].getAttribute('tabindex')).toBeNull();
+    expect(actionButtons[1].getAttribute('tabindex')).toBeNull();
+  });
+
+  it('traps focus with Tab and Shift+Tab while visible', () => {
+    fixture.componentRef.setInput('header', 'Trap focus');
+    fixture.componentRef.setInput('maximizable', true);
+    fixture.componentRef.setInput('trapFocus', true);
+    component.visible.set(true);
+    fixture.detectChanges();
+
+    const actionButtons = fixture.nativeElement.querySelectorAll(
+      '.magary-dialog-header-icon',
+    ) as NodeListOf<HTMLButtonElement>;
+    const firstButton = actionButtons[0];
+    const lastButton = actionButtons[1];
+
+    lastButton.focus();
+    component.onDialogKeydown({
+      key: 'Tab',
+      shiftKey: false,
+      preventDefault: vi.fn(),
+    } as unknown as KeyboardEvent);
+    expect(document.activeElement).toBe(firstButton);
+
+    firstButton.focus();
+    component.onDialogKeydown({
+      key: 'Tab',
+      shiftKey: true,
+      preventDefault: vi.fn(),
+    } as unknown as KeyboardEvent);
+    expect(document.activeElement).toBe(lastButton);
+  });
+
+  it('restores previously focused element when dialog closes', async () => {
+    fixture.componentRef.setInput('header', 'Restore focus');
+
+    const opener = document.createElement('button');
+    opener.type = 'button';
+    document.body.appendChild(opener);
+    opener.focus();
+
+    component.visible.set(true);
+    fixture.detectChanges();
+    await Promise.resolve();
+
+    component.close();
+    fixture.detectChanges();
+    await Promise.resolve();
+
+    expect(document.activeElement).toBe(opener);
+    opener.remove();
+  });
+
+  it('sets accessible labeling attributes based on header presence', () => {
+    component.visible.set(true);
+    fixture.detectChanges();
+
+    const dialogElement = fixture.nativeElement.querySelector(
+      '.magary-dialog',
+    ) as HTMLElement;
+    expect(dialogElement.getAttribute('aria-label')).toBe('Dialog');
+    expect(dialogElement.getAttribute('aria-labelledby')).toBeNull();
+
+    fixture.componentRef.setInput('header', 'Dialog title');
+    fixture.detectChanges();
+
+    const title = fixture.nativeElement.querySelector(
+      '.magary-dialog-title',
+    ) as HTMLElement;
+    expect(dialogElement.getAttribute('aria-label')).toBeNull();
+    expect(dialogElement.getAttribute('aria-labelledby')).toBe(title.id);
+  });
+
+  it('emits onShow and onHide only on matching animation transitions', () => {
+    const showSpy = vi.fn();
+    const hideSpy = vi.fn();
+    component.onShow.subscribe(showSpy);
+    component.onHide.subscribe(hideSpy);
+
+    component.handleDialogAnimationStart({
+      fromState: 'void',
+      toState: '*',
+    } as AnimationEvent);
+    component.handleDialogAnimationStart({
+      fromState: '*',
+      toState: 'void',
+    } as AnimationEvent);
+    component.handleDialogAnimationDone({
+      fromState: 'void',
+      toState: '*',
+    } as AnimationEvent);
+    component.handleDialogAnimationDone({
+      fromState: '*',
+      toState: 'void',
+    } as AnimationEvent);
+
+    expect(showSpy).toHaveBeenCalledTimes(1);
+    expect(hideSpy).toHaveBeenCalledTimes(1);
   });
 });
 

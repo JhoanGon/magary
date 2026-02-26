@@ -130,11 +130,58 @@ describe('MagaryOverlayPanel behavior', () => {
       '.magary-overlaypanel-close',
     ) as HTMLButtonElement;
     expect(closeButton).toBeTruthy();
+    expect(closeButton.type).toBe('button');
 
     closeButton.click();
     fixture.detectChanges();
 
     expect(component.visible()).toBe(false);
+  });
+
+  it('applies dialog semantics and synchronizes target aria attributes', () => {
+    fixture.componentRef.setInput('panelAriaLabel', 'Product details');
+    fixture.detectChanges();
+    openPanel();
+
+    const panel = document.body.querySelector(
+      '.magary-overlaypanel',
+    ) as HTMLElement;
+
+    expect(panel.getAttribute('role')).toBe('dialog');
+    expect(panel.getAttribute('aria-label')).toBe('Product details');
+    expect(panel.id).toBe(component.panelId());
+
+    expect(target.getAttribute('aria-haspopup')).toBe('dialog');
+    expect(target.getAttribute('aria-controls')).toBe(component.panelId());
+    expect(target.getAttribute('aria-expanded')).toBe('true');
+
+    component.hide();
+    fixture.detectChanges();
+    expect(target.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('closes on Escape and restores focus to the trigger by default', () => {
+    openPanel();
+    expect(component.visible()).toBe(true);
+
+    document.body.focus();
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    fixture.detectChanges();
+
+    expect(component.visible()).toBe(false);
+    expect(document.activeElement).toBe(target);
+  });
+
+  it('keeps panel open on Escape when closeOnEscape is disabled', () => {
+    fixture.componentRef.setInput('closeOnEscape', false);
+    fixture.detectChanges();
+    openPanel();
+    expect(component.visible()).toBe(true);
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    fixture.detectChanges();
+
+    expect(component.visible()).toBe(true);
   });
 });
 

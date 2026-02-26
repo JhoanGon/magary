@@ -146,10 +146,17 @@ export class ViewTree {
 
   selectedFile: MagaryTreeNode | null = null;
   selectedFiles: MagaryTreeNode[] = [];
+  treeEventSummary = 'No events yet';
 
-  onNodeSelect(event: MagaryTreeNodeSelectionEvent) {}
+  onNodeSelect(event: MagaryTreeNodeSelectionEvent) {
+    this.selectedFile = event.node;
+    this.treeEventSummary = `Selected: ${event.node.label ?? 'unknown node'}`;
+  }
 
-  onNodeUnselect(event: MagaryTreeNodeSelectionEvent) {}
+  onNodeUnselect(event: MagaryTreeNodeSelectionEvent) {
+    this.selectedFile = null;
+    this.treeEventSummary = `Unselected: ${event.node.label ?? 'unknown node'}`;
+  }
 
   onNodeDrop(event: MagaryTreeNodeDropEvent) {
     const cdkEvent = event.originalEvent;
@@ -168,6 +175,10 @@ export class ViewTree {
         cdkEvent.currentIndex,
       );
     }
+
+    const parentLabel = event.parent?.label ?? 'root';
+    const dragLabel = event.dragNode.label ?? 'unknown node';
+    this.treeEventSummary = `Dropped "${dragLabel}" into "${parentLabel}"`;
   }
 
   // Clone for DnD to avoid affecting other examples
@@ -178,6 +189,7 @@ export class ViewTree {
     [value]="files" 
     selectionMode="single" 
     [(selection)]="selectedFile"
+    treeAriaLabel="Basic file tree"
     (onNodeSelect)="onNodeSelect($event)">
 </magary-tree>
 `;
@@ -187,6 +199,7 @@ export class ViewTree {
     [value]="files" 
     [filter]="true" 
     filterPlaceholder="Search documents..."
+    filterAriaLabel="Search file tree"
     selectionMode="single">
 </magary-tree>
 `;
@@ -196,6 +209,7 @@ export class ViewTree {
     [value]="files" 
     [draggable]="true" 
     [droppable]="true"
+    [validateDrop]="true"
     (onNodeDrop)="onNodeDrop($event)">
 </magary-tree>
 `;

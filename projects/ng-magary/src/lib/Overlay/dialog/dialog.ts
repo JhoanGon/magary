@@ -74,6 +74,9 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
   closeOnEscape = input(true, { transform: booleanAttribute });
   dismissableMask = input(false, { transform: booleanAttribute });
   maximizable = input(false, { transform: booleanAttribute });
+  trapFocus = input(true, { transform: booleanAttribute });
+  autoFocus = input(true, { transform: booleanAttribute });
+  ariaLabel = input<string>('Dialog');
   style = input<Record<string, unknown> | null>(null);
   contentStyle = input<Record<string, unknown> | null>(null);
   styleClass = input<string | undefined>(undefined);
@@ -111,6 +114,11 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
   maximized = signal(false);
   resizing = signal(false);
   dragging = signal(false);
+  private previouslyFocusedElement: HTMLElement | null = null;
+  private readonly focusableSelectors =
+    'button:not([disabled]), [href], input:not([disabled]):not([type="hidden"]), ' +
+    'select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  readonly titleId = `magary-dialog-title-${Math.random().toString(36).substring(2, 11)}`;
 
   // Drag/Resize State
   private lastClientX = 0;
@@ -138,7 +146,27 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
       }
     });
 
-    // Effect to handle focus trap or other side effects if needed
+    let wasVisible = false;
+    effect(() => {
+      const isVisible = this.visible();
+
+      if (isVisible && !wasVisible) {
+        this.previouslyFocusedElement =
+          document.activeElement instanceof HTMLElement
+            ? document.activeElement
+            : null;
+
+        if (this.autoFocus()) {
+          queueMicrotask(() => this.focusInitialElement());
+        }
+      }
+
+      if (!isVisible && wasVisible) {
+        this.restorePreviousFocus();
+      }
+
+      wasVisible = isVisible;
+    });
   }
 
   ngAfterViewInit() {
@@ -194,6 +222,51 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
   onEscapeKey(event: Event) {
     if (!this.visible() || !this.closeOnEscape()) return;
     this.close(event);
+  }
+
+  onDialogKeydown(event: KeyboardEvent) {
+    if (event.key !== 'Tab' || !this.visible() || !this.trapFocus()) {
+      return;
+    }
+
+    const focusableElements = this.getFocusableElements();
+    if (focusableElements.length === 0) {
+      event.preventDefault();
+      this.containerViewChild().nativeElement.focus();
+      return;
+    }
+
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+    const activeElement = document.activeElement;
+    const activeInsideDialog =
+      activeElement instanceof HTMLElement &&
+      this.containerViewChild().nativeElement.contains(activeElement);
+
+    if (event.shiftKey) {
+      if (!activeInsideDialog || activeElement === firstFocusable) {
+        event.preventDefault();
+        lastFocusable.focus();
+      }
+      return;
+    }
+
+    if (!activeInsideDialog || activeElement === lastFocusable) {
+      event.preventDefault();
+      firstFocusable.focus();
+    }
+  }
+
+  handleDialogAnimationStart(event: AnimationEvent) {
+    if (event.toState !== 'void') {
+      this.onShow.emit(event);
+    }
+  }
+
+  handleDialogAnimationDone(event: AnimationEvent) {
+    if (event.toState === 'void') {
+      this.onHide.emit(event);
+    }
   }
 
   // --- Dragging Logic ---
@@ -391,6 +464,47 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     this.renderer.removeClass(document.body, 'magary-resizing');
     this.dragging.set(false);
     this.resizing.set(false);
+  }
+
+  private focusInitialElement() {
+    if (!this.visible()) {
+      return;
+    }
+
+    const focusableElements = this.getFocusableElements();
+    if (focusableElements.length > 0) {
+      focusableElements[0].focus();
+      return;
+    }
+
+    this.containerViewChild().nativeElement.focus();
+  }
+
+  private restorePreviousFocus() {
+    const element = this.previouslyFocusedElement;
+    this.previouslyFocusedElement = null;
+
+    if (!element) {
+      return;
+    }
+
+    if (document.contains(element)) {
+      queueMicrotask(() => element.focus());
+    }
+  }
+
+  private getFocusableElements(): HTMLElement[] {
+    const container = this.containerViewChild().nativeElement;
+    const elements = Array.from(
+      container.querySelectorAll<HTMLElement>(this.focusableSelectors),
+    );
+
+    return elements.filter((element) => this.isElementVisible(element));
+  }
+
+  private isElementVisible(element: HTMLElement): boolean {
+    const style = getComputedStyle(element);
+    return style.visibility !== 'hidden' && style.display !== 'none';
   }
 
   private isPrimaryPointer(event: PointerEvent): boolean {

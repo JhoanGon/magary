@@ -2,6 +2,7 @@ import {
   Directive,
   ElementRef,
   HostListener,
+  booleanAttribute,
   input,
   OnDestroy,
   Renderer2,
@@ -15,12 +16,16 @@ import { DOCUMENT } from '@angular/common';
   standalone: true,
 })
 export class MagaryTooltip implements OnDestroy {
+  private static instanceSequence = 0;
   text = input<string | undefined>(undefined, { alias: 'magaryTooltip' });
   tooltipPosition = input<'top' | 'bottom' | 'left' | 'right'>('top');
+  tooltipDisabled = input(false, { transform: booleanAttribute });
 
   private tooltipElement: HTMLElement | null = null;
+  private readonly tooltipId = `magary-tooltip-${++MagaryTooltip.instanceSequence}`;
   private scrollUnlisten: (() => void) | null = null;
   private resizeUnlisten: (() => void) | null = null;
+  private keydownUnlisten: (() => void) | null = null;
 
   constructor(
     private el: ElementRef,
@@ -31,7 +36,7 @@ export class MagaryTooltip implements OnDestroy {
 
   @HostListener('mouseenter')
   onMouseEnter() {
-    if (!this.text()) return;
+    if (!this.text() || this.tooltipDisabled()) return;
     this.show();
   }
 
@@ -42,7 +47,7 @@ export class MagaryTooltip implements OnDestroy {
 
   @HostListener('focus')
   onFocus() {
-    if (!this.text()) return;
+    if (!this.text() || this.tooltipDisabled()) return;
     this.show();
   }
 
@@ -51,8 +56,13 @@ export class MagaryTooltip implements OnDestroy {
     this.hide();
   }
 
+  @HostListener('keydown.escape')
+  onEscape() {
+    this.hide();
+  }
+
   show() {
-    if (this.tooltipElement) return;
+    if (this.tooltipElement || this.tooltipDisabled()) return;
 
     this.create();
     this.align();
@@ -62,14 +72,19 @@ export class MagaryTooltip implements OnDestroy {
 
     // Add Fade In class
     this.renderer.addClass(this.tooltipElement, 'magary-tooltip-visible');
+    this.renderer.setAttribute(this.hostElement, 'aria-describedby', this.tooltipId);
   }
 
   hide() {
-    if (!this.tooltipElement) return;
+    if (!this.tooltipElement) {
+      this.renderer.removeAttribute(this.hostElement, 'aria-describedby');
+      return;
+    }
 
     this.unbindEvents();
     this.renderer.removeChild(this.document.body, this.tooltipElement);
     this.tooltipElement = null;
+    this.renderer.removeAttribute(this.hostElement, 'aria-describedby');
   }
 
   create() {
@@ -79,24 +94,20 @@ export class MagaryTooltip implements OnDestroy {
       this.tooltipElement,
       `magary-tooltip-${this.tooltipPosition()}`,
     );
+    this.renderer.setAttribute(this.tooltipElement, 'id', this.tooltipId);
+    this.renderer.setAttribute(this.tooltipElement, 'role', 'tooltip');
+    this.renderer.setAttribute(this.tooltipElement, 'aria-hidden', 'false');
 
     const textNode = this.renderer.createText(this.text()!);
     this.renderer.appendChild(this.tooltipElement, textNode);
 
     this.renderer.appendChild(this.document.body, this.tooltipElement);
-
-    // Ensure styles are available globally if not encapsulated
-    // Or we rely on global styles. Since this is a directive appending to body, styles must be global or added via a component.
-    // For simplicity in this structure, we assume tooltip styles are loaded globally or we'll add them to a global css file.
-    // Wait, directives can't easily encapsulation styles.
-    // We will define styles in tooltip.scss and the user must import them or we make a dummy component or use ViewEncapsulation.None on a container?
-    // Best practice for libs: usually provide a global css or inclusion.
   }
 
   align() {
     if (!this.tooltipElement) return;
 
-    const hostRect = this.el.nativeElement.getBoundingClientRect();
+    const hostRect = this.hostElement.getBoundingClientRect();
     const tooltipRect = this.tooltipElement.getBoundingClientRect();
 
     let top = 0;
@@ -123,8 +134,36 @@ export class MagaryTooltip implements OnDestroy {
     }
 
     // Add scroll offset
-    top += window.scrollY;
-    left += window.scrollX;
+    const scrollY = window.scrollY;
+    const scrollX = window.scrollX;
+    top += scrollY;
+    left += scrollX;
+
+    const viewportTop = scrollY + 8;
+    const viewportBottom = scrollY + window.innerHeight - 8;
+    const viewportLeft = scrollX + 8;
+    const viewportRight = scrollX + window.innerWidth - 8;
+
+    // Fallback placement if initial position overflows viewport.
+    if (this.tooltipPosition() === 'top' && top < viewportTop) {
+      top = hostRect.bottom + scrollY + offset;
+    } else if (
+      this.tooltipPosition() === 'bottom' &&
+      top + tooltipRect.height > viewportBottom
+    ) {
+      top = hostRect.top + scrollY - tooltipRect.height - offset;
+    } else if (this.tooltipPosition() === 'left' && left < viewportLeft) {
+      left = hostRect.right + scrollX + offset;
+    } else if (
+      this.tooltipPosition() === 'right' &&
+      left + tooltipRect.width > viewportRight
+    ) {
+      left = hostRect.left + scrollX - tooltipRect.width - offset;
+    }
+
+    // Final clamp
+    left = Math.min(Math.max(left, viewportLeft), viewportRight - tooltipRect.width);
+    top = Math.min(Math.max(top, viewportTop), viewportBottom - tooltipRect.height);
 
     this.renderer.setStyle(this.tooltipElement, 'top', `${top}px`);
     this.renderer.setStyle(this.tooltipElement, 'left', `${left}px`);
@@ -138,6 +177,15 @@ export class MagaryTooltip implements OnDestroy {
       this.scrollUnlisten = this.renderer.listen(window, 'scroll', () =>
         this.hide(),
       );
+      this.keydownUnlisten = this.renderer.listen(
+        this.document,
+        'keydown',
+        (event: KeyboardEvent) => {
+          if (event.key === 'Escape') {
+            this.hide();
+          }
+        },
+      );
     });
   }
 
@@ -150,9 +198,17 @@ export class MagaryTooltip implements OnDestroy {
       this.scrollUnlisten();
       this.scrollUnlisten = null;
     }
+    if (this.keydownUnlisten) {
+      this.keydownUnlisten();
+      this.keydownUnlisten = null;
+    }
   }
 
   ngOnDestroy() {
     this.hide();
+  }
+
+  private get hostElement(): HTMLElement {
+    return this.el.nativeElement as HTMLElement;
   }
 }

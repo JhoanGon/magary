@@ -97,25 +97,10 @@ No agregues imports legacy como estos:
 
 ### Caso especial: Tooltip
 
-`magaryTooltip` renderiza overlays con clases globales. Agrega en tu `styles.scss`:
+`magaryTooltip` renderiza overlays con clases globales. Importa en tu `styles.scss`:
 
 ```scss
-.magary-tooltip {
-  position: absolute;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  background: #111827;
-  color: #ffffff;
-  font-size: 0.875rem;
-  pointer-events: none;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.magary-tooltip.magary-tooltip-visible {
-  opacity: 1;
-}
+@use 'ng-magary/styles/tooltip.scss';
 ```
 
 ## Desarrollo de la libreria

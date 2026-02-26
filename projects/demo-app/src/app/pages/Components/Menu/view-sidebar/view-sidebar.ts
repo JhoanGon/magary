@@ -157,8 +157,8 @@ sectionsDemo: SidebarSectionDemo[] = [
   [brandLogoSrc]="'assets/magary_logo.png'"
   [brandLogoPosition]="'bottom'"
   [showUserSection]="false"
-  [menuBackgroundColor]="'var(--surface-0)'"
-  [menuHoverColor]="'var(--surface-100)'"
+  [menuBackgroundColor]="'var(--surface-200)'"
+  [menuHoverColor]="'var(--surface-400)'"
 ></magary-sidebar>`;
 
   menuTsExample = `

@@ -82,6 +82,7 @@
         transform: translateX(-50%);
         width: 20px;
         height: 20px;
+        padding: 0;
         background: var(--surface-0);
         border: 1px solid var(--surface-300);
         border-radius: 50%;
@@ -95,6 +96,11 @@
         &:hover {
             background: var(--surface-100);
             color: var(--text-color);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--primary-500);
+            outline-offset: 2px;
         }
     }
 }

@@ -16,12 +16,13 @@
     "check:api-contract": "node tools/ci/check-api-contract.mjs",
     "check:api-contract:update": "node tools/ci/check-api-contract.mjs --update-baseline",
     "check:no-any": "node tools/ci/check-no-any.mjs",
+    "check:demo-budgets": "node tools/ci/check-demo-budgets.mjs",
     "lint": "eslint . --ext .ts,.html",
     "test:visual": "playwright test -c e2e/playwright/playwright.config.ts",
     "test:visual:smoke": "playwright test -c e2e/playwright/playwright.config.ts e2e/playwright/specs/ci-smoke.spec.ts",
     "test:a11y:smoke": "playwright test -c e2e/playwright/playwright.config.ts e2e/playwright/specs/ci-a11y.spec.ts",
     "test:visual:update": "playwright test -c e2e/playwright/playwright.config.ts --update-snapshots",
-    "qa:all": "pnpm run check:api-contract && pnpm run check:no-any && pnpm run lint && pnpm run build:lib && pnpm run build:demo && pnpm run test:unit && pnpm run test:visual"
+    "qa:all": "pnpm run check:api-contract && pnpm run check:no-any && pnpm run lint && pnpm run build:lib && pnpm run build:demo && pnpm run check:demo-budgets && pnpm run test:unit && pnpm run test:visual:smoke && pnpm run test:a11y:smoke"
   },
   "prettier": {
     "overrides": [

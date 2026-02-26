@@ -34,10 +34,8 @@ export class ViewTooltip {
     background: '#282c34',
   };
 
-  readonly importRef = `import { MagaryTooltip } from 'ng-magary';
-// or
-import { MagaryTooltipModule } from 'ng-magary';
-`;
+  readonly importRef = `import { MagaryTooltip } from 'ng-magary';`;
+  readonly tooltipGlobalStylesRef = `@use 'ng-magary/styles/tooltip.scss';`;
 
   readonly exampleHTML = `
 <!-- Basic -->
@@ -50,5 +48,8 @@ import { MagaryTooltipModule } from 'ng-magary';
     <button magary-button label="Left" magaryTooltip="Tooltip on Left" tooltipPosition="left"></button>
     <button magary-button label="Right" magaryTooltip="Tooltip on Right" tooltipPosition="right"></button>
 </div>
+
+<!-- Disabled -->
+<button magary-button label="Disabled Tooltip" magaryTooltip="Not visible" [tooltipDisabled]="true"></button>
 `;
 }

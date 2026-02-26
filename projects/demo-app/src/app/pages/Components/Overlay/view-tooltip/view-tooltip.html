@@ -30,14 +30,15 @@
           >
             <p style="margin: 0; color: var(--text-secondary)">
               <strong>Nota:</strong> Para que el Tooltip se visualice
-              correctamente, debes agregar los estilos globales en tu
-              <code>angular.json</code> bajo la propiedad <code>styles</code>:
+              correctamente, agrega este import global en tu
+              <code>styles.scss</code>:
             </p>
             <div class="code-block" style="margin-top: 0.5rem">
-              <pre><code [highlight]="'node_modules/ng-magary/lib/Overlay/tooltip/tooltip.scss'" language="json"></code></pre>
+              <pre><code [highlight]="tooltipGlobalStylesRef" language="scss"></code></pre>
             </div>
             <p style="margin-top: 0.5rem; color: var(--text-secondary)">
-              O importarlo en tu <code>styles.scss</code> global.
+              Esta directiva renderiza el overlay en <code>document.body</code>,
+              por eso requiere estilos globales.
             </p>
           </div>
         </div>
@@ -149,6 +150,12 @@
                   <td><code>"top"</code></td>
                   <td>Posición relativa al elemento.</td>
                 </tr>
+                <tr>
+                  <td><code>tooltipDisabled</code></td>
+                  <td><code>boolean</code></td>
+                  <td><code>false</code></td>
+                  <td>Deshabilita la aparicion del tooltip.</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -157,3 +164,5 @@
     </div>
   </div>
 </div>
+
+

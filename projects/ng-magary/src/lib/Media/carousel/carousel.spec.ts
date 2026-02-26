@@ -113,4 +113,56 @@ describe('MagaryCarouselComponent', () => {
     expect(component.isItemActive(2)).toBe(true);
     expect(component.isItemActive(3)).toBe(false);
   });
+
+  it('renders slide semantics with list/listitem roles and aria labels', () => {
+    const viewport = fixture.nativeElement.querySelector(
+      '.magary-carousel-viewport',
+    ) as HTMLElement;
+    const track = fixture.nativeElement.querySelector(
+      '.magary-carousel-track',
+    ) as HTMLElement;
+    const firstItem = fixture.nativeElement.querySelector(
+      '.magary-carousel-item',
+    ) as HTMLElement;
+
+    expect(viewport.id).toBe(component.viewportId);
+    expect(viewport.getAttribute('role')).toBe('group');
+    expect(track.getAttribute('role')).toBe('list');
+    expect(firstItem.getAttribute('role')).toBe('listitem');
+    expect(firstItem.getAttribute('aria-roledescription')).toBe('slide');
+    expect(firstItem.getAttribute('aria-label')).toBe('Slide 1 of 6');
+  });
+
+  it('navigates slides with keyboard arrows on carousel wrapper', () => {
+    const wrapper = fixture.nativeElement.querySelector(
+      '.magary-carousel-wrapper',
+    ) as HTMLElement;
+    const internal = component as unknown as {
+      _currentPage: () => number;
+    };
+
+    wrapper.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }),
+    );
+    fixture.detectChanges();
+
+    expect(internal._currentPage()).toBe(1);
+  });
+
+  it('uses roving tabindex and keyboard navigation for indicators', () => {
+    const indicators = fixture.nativeElement.querySelectorAll(
+      '.magary-carousel-indicator',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    expect(indicators[0].getAttribute('tabindex')).toBe('0');
+    expect(indicators[1].getAttribute('tabindex')).toBe('-1');
+    expect(indicators[0].getAttribute('aria-controls')).toBe(component.viewportId);
+
+    indicators[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    fixture.detectChanges();
+
+    expect(component.page()).toBe(1);
+    expect(indicators[1].getAttribute('tabindex')).toBe('0');
+    expect(indicators[1].getAttribute('aria-selected')).toBe('true');
+  });
 });

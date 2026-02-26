@@ -25,12 +25,13 @@
               <magary-organization-chart
                 [value]="data1"
                 selectionMode="single"
+                chartAriaLabel="Company organization chart"
                 [selection]="selectedNode"
                 [collapsible]="true"
-                (onNodeSelect)="
-                  selectedNode = $event.node; onNodeSelect($event)
-                "
-                (onNodeUnselect)="selectedNode = null"
+                (onNodeSelect)="onNodeSelect($event)"
+                (onNodeUnselect)="onNodeUnselect($event)"
+                (onNodeExpand)="onNodeExpand($event)"
+                (onNodeCollapse)="onNodeCollapse($event)"
               ></magary-organization-chart>
 
               @if (selectedNode) {
@@ -46,6 +47,18 @@
                   Seleccionado: <strong>{{ selectedNode.label }}</strong>
                 </div>
               }
+
+              <div
+                style="
+                  margin-top: 0.75rem;
+                  padding: 0.5rem;
+                  background: var(--surface-50);
+                  border-radius: 4px;
+                  text-align: center;
+                "
+              >
+                Evento: <strong>{{ chartEventSummary }}</strong>
+              </div>
             </div>
           </magary-card>
 
@@ -96,10 +109,22 @@
                   <td>Modo de selección.</td>
                 </tr>
                 <tr>
+                  <td><code>selection</code></td>
+                  <td><code>MagaryTreeNode | MagaryTreeNode[] | Record&lt;string, boolean&gt; | null</code></td>
+                  <td><code>null</code></td>
+                  <td>Nodo o nodos seleccionados.</td>
+                </tr>
+                <tr>
                   <td><code>collapsible</code></td>
                   <td><code>boolean</code></td>
                   <td><code>false</code></td>
                   <td>Permite colapsar ramas.</td>
+                </tr>
+                <tr>
+                  <td><code>chartAriaLabel</code></td>
+                  <td><code>string</code></td>
+                  <td><code>'Organization chart'</code></td>
+                  <td>Etiqueta accesible del arbol organizacional.</td>
                 </tr>
               </tbody>
             </table>

@@ -7,7 +7,7 @@ import { MagaryTab } from './tab/tab';
   standalone: true,
   imports: [MagaryTabs, MagaryTab],
   template: `
-    <magary-tabs #tabs>
+    <magary-tabs #tabs [tabListAriaLabel]="'Account tabs'">
       <magary-tab label="Overview">Overview Content</magary-tab>
       <magary-tab label="Settings">Settings Content</magary-tab>
       <magary-tab label="Billing">Billing Content</magary-tab>
@@ -47,14 +47,25 @@ describe('MagaryTabs behavior', () => {
   });
 
   it('renders tab headers as non-submit buttons with aria-selected state', () => {
+    const tabHeaders = fixture.nativeElement.querySelector(
+      '.tab-headers',
+    ) as HTMLElement;
     const tabButtons = fixture.nativeElement.querySelectorAll(
       '.tab-headers button',
     ) as NodeListOf<HTMLButtonElement>;
+    const projectedTabs = fixture.nativeElement.querySelectorAll(
+      'magary-tab',
+    ) as NodeListOf<HTMLElement>;
 
+    expect(tabHeaders.getAttribute('aria-label')).toBe('Account tabs');
     expect(tabButtons[0].type).toBe('button');
     expect(tabButtons[0].getAttribute('role')).toBe('tab');
     expect(tabButtons[0].getAttribute('aria-selected')).toBe('true');
+    expect(tabButtons[0].getAttribute('tabindex')).toBe('0');
     expect(tabButtons[1].getAttribute('aria-selected')).toBe('false');
+    expect(tabButtons[1].getAttribute('tabindex')).toBe('-1');
+    expect(tabButtons[0].getAttribute('aria-controls')).toBe(projectedTabs[0].id);
+    expect(projectedTabs[0].getAttribute('aria-labelledby')).toBe(tabButtons[0].id);
   });
 
   it('uses full panel width by default to avoid content gaps', () => {
@@ -120,5 +131,18 @@ describe('MagaryTabs behavior', () => {
 
     expect(headers.style.getPropertyValue('--underline-left')).toBe('120px');
     expect(headers.style.getPropertyValue('--underline-width')).toBe('80px');
+  });
+
+  it('supports keyboard roving between tabs with arrow keys', () => {
+    const tabButtons = fixture.nativeElement.querySelectorAll(
+      '.tab-headers button',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    tabButtons[0].focus();
+    tabButtons[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    fixture.detectChanges();
+
+    expect(host.tabsComponent().activeIndex()).toBe(1);
+    expect(tabButtons[1].classList.contains('active')).toBe(true);
   });
 });

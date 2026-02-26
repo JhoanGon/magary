@@ -1,9 +1,14 @@
-<div class="magary-organizationchart">
-  <table class="magary-organizationchart-table">
+<div
+  class="magary-organizationchart"
+  role="region"
+  [attr.aria-label]="chartAriaLabel()"
+>
+  <table class="magary-organizationchart-table" [attr.aria-label]="chartAriaLabel()">
     <tbody
       magary-organizationchart-node
       *ngFor="let node of value()"
       [node]="node"
+      [level]="1"
       [selectionMode]="selectionMode()"
       [selection]="selection()"
       [collapsible]="collapsible()"

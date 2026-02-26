@@ -11,6 +11,8 @@ import {
   host: {
     '[class.magary-tab-active]': 'active()',
     role: 'tabpanel',
+    '[attr.id]': 'panelId() || null',
+    '[attr.aria-labelledby]': 'labelledBy() || null',
     '[attr.aria-hidden]': '!active()',
   },
   template: `@if (active()) {
@@ -39,4 +41,6 @@ import {
 export class MagaryTab {
   public label = input<string>('');
   public active = signal(false);
+  public panelId = signal('');
+  public labelledBy = signal('');
 }

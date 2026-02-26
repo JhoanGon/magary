@@ -94,6 +94,25 @@
           </magary-tab>
         </magary-tabs>
       </div>
+
+      <div class="template-guidelines">
+        <h3>Guía Visual Para Templates</h3>
+        <p>
+          Para mantener el mismo look de <code>magary-table</code> cuando usas
+          <code>ng-template</code>, conserva estas clases:
+        </p>
+        <ul>
+          <li><code>table-row</code> en cada fila custom.</li>
+          <li><code>table-cell-value</code> para contenido dentro de celdas.</li>
+          <li>
+            Clases de layout específicas como <code>inline-edit-price-cell</code>
+            y <code>inline-edit-actions-cell</code> para anchos de columnas.
+          </li>
+        </ul>
+        <div class="code-block">
+          <pre><code [highlight]="templateGuidelinesExample" language="html"></code></pre>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -249,10 +268,16 @@
             [backgroundColor]="'var(--surface-0)'"
           >
             <div class="demo-card-content">
-              <magary-table [value]="products" [columns]="cols">
+              <magary-table
+                [value]="inlineEditProducts"
+                [columns]="inlineEditCols"
+                [paginator]="true"
+                [rows]="5"
+                [rowsPerPageOptions]="[5, 10]"
+              >
                 <!-- Header Template -->
                 <ng-template magaryTemplate="header">
-                  <tr>
+                  <tr class="inline-edit-header-row">
                     <th>Name</th>
                     <th>Price (Edit)</th>
                     <th>Actions</th>
@@ -260,22 +285,30 @@
                 </ng-template>
                 <!-- Body Template -->
                 <ng-template magaryTemplate="body" let-product>
-                  <tr class="table-row">
-                    <td>{{ product.name }}</td>
+                  <tr class="table-row inline-edit-row">
                     <td>
-                      <magary-input
-                        [(value)]="product.price"
-                        type="number"
-                        [ariaLabel]="'Edit price for ' + product.name"
-                        prefixIcon="dollar-sign"
-                      ></magary-input>
+                      <span class="table-cell-value">{{ product.name }}</span>
                     </td>
-                    <td>
-                      <magary-button
-                        icon="trash"
-                        severity="danger"
-                        variant="text"
-                      ></magary-button>
+                    <td class="inline-edit-price-cell">
+                      <span class="table-cell-value">
+                        <magary-input
+                          [(value)]="product.price"
+                          type="number"
+                          size="small"
+                          width="12rem"
+                          [ariaLabel]="'Edit price for ' + product.name"
+                          prefixIcon="dollar-sign"
+                        ></magary-input>
+                      </span>
+                    </td>
+                    <td class="inline-edit-actions-cell">
+                      <span class="table-cell-value">
+                        <magary-button
+                          icon="trash"
+                          severity="danger"
+                          variant="text"
+                        ></magary-button>
+                      </span>
                     </td>
                   </tr>
                 </ng-template>
@@ -295,6 +328,65 @@
           </magary-tab>
           <magary-tab label="TS">
             <pre><code [highlight]="tsExample" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enterprise Recipe Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Enterprise Recipe</h2>
+      <p>Production-oriented setup with stable paging and sorting events.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item" style="width: 100%">
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div class="demo-card-content">
+              <magary-table
+                [value]="products"
+                [columns]="cols"
+                [paginator]="true"
+                [rows]="10"
+                [rowsPerPageOptions]="[10, 25, 50]"
+                [globalFilterFields]="['name', 'category', 'status']"
+                [responsiveLayout]="false"
+                title="Inventory Control"
+                (onPageChange)="onEnterprisePageChange($event)"
+                (onSortChange)="onEnterpriseSortChange($event)"
+              ></magary-table>
+              <div class="template-guidelines">
+                <p>
+                  <strong>Last page event:</strong>
+                  {{ enterprisePageEventSummary }}
+                </p>
+                <p>
+                  <strong>Last sort event:</strong>
+                  {{ enterpriseSortEventSummary }}
+                </p>
+              </div>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="tabsConfig.backgroundLine"
+          [positionContent]="tabsConfig.positionContent"
+          [background]="tabsConfig.background"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="enterpriseRecipeExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TS">
+            <pre><code [highlight]="enterpriseRecipeTsExample" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
       </div>
@@ -330,6 +422,12 @@
               <td><code>MagaryTableColumn[]</code></td>
               <td><code>[]</code></td>
               <td>Configuración de columnas.</td>
+            </tr>
+            <tr>
+              <td><code>columns[].sortable</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Habilita orden asc/desc por click en el encabezado.</td>
             </tr>
             <tr>
               <td><code>paginator</code></td>
@@ -394,11 +492,20 @@
           <tbody>
             <tr>
               <td><code>onPageChange</code></td>
-              <td><code>EventEmitter&lt;unknown&gt;</code></td>
+              <td><code>EventEmitter&lt;PaginatorState&gt;</code></td>
               <td>
                 Se emite al cambiar de página. Retorna un objeto con:
                 <code>first</code>, <code>rows</code>, <code>page</code>,
                 <code>pageCount</code>.
+              </td>
+            </tr>
+            <tr>
+              <td><code>onSortChange</code></td>
+              <td><code>EventEmitter&lt;MagaryTableSortState&gt;</code></td>
+              <td>
+                Se emite al cambiar el orden. Retorna <code>field</code> y
+                <code>order</code> (<code>1</code>, <code>-1</code>,
+                <code>0</code>).
               </td>
             </tr>
           </tbody>

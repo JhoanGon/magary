@@ -10,12 +10,15 @@
 
   <div class="input-wrapper">
     @if (prefixIcon()) {
-      <lucide-icon
-        [name]="prefixIcon()"
-        class="prefix-icon"
+      <button
+        type="button"
+        class="icon-button prefix-icon-button"
+        [disabled]="disabled() || loading()"
+        [attr.aria-label]="getPrefixIconLabel()"
         (click)="onPrefixIconClick()"
-        [class.clickable]="!disabled()"
-      ></lucide-icon>
+      >
+        <lucide-icon [name]="prefixIcon()" class="prefix-icon"></lucide-icon>
+      </button>
     }
 
     <input
@@ -24,11 +27,15 @@
       [type]="actualType()"
       [value]="value()"
       [attr.aria-label]="resolvedAriaLabel()"
+      [attr.aria-invalid]="hasEffectiveError() ? 'true' : null"
+      [attr.aria-describedby]="describedBy()"
+      [attr.aria-required]="required() ? 'true' : null"
+      [attr.inputmode]="resolvedInputMode()"
       [placeholder]="placeholder()"
       [disabled]="disabled()"
       [readonly]="readonly()"
       [required]="required()"
-      attr.maxlength="{{ maxLength() }}"
+      [attr.maxlength]="resolvedMaxLength()"
       (input)="onInput($event)"
       (focus)="onFocus($event)"
       (blur)="onBlur($event)"
@@ -37,33 +44,41 @@
     @if (loading()) {
       <lucide-icon
         name="loader"
-        class="suffix-icon loading-icon spin"
+        class="suffix-icon loading-icon"
+        aria-hidden="true"
       ></lucide-icon>
     } @else if (type() === "password") {
-      <lucide-icon
-        [name]="passwordIcon()"
-        class="suffix-icon password-toggle"
+      <button
+        type="button"
+        class="icon-button suffix-icon-button password-toggle"
+        [disabled]="disabled() || readonly()"
+        [attr.aria-label]="getPasswordToggleLabel()"
         (click)="togglePasswordVisibility()"
-      ></lucide-icon>
+      >
+        <lucide-icon [name]="passwordIcon()" class="suffix-icon"></lucide-icon>
+      </button>
     } @else if (suffixIcon()) {
-      <lucide-icon
-        [name]="suffixIcon()"
-        class="suffix-icon"
+      <button
+        type="button"
+        class="icon-button suffix-icon-button"
+        [disabled]="disabled() || loading()"
+        [attr.aria-label]="getSuffixIconLabel()"
         (click)="onSuffixIconClick()"
-        [class.clickable]="!disabled()"
-      ></lucide-icon>
+      >
+        <lucide-icon [name]="suffixIcon()" class="suffix-icon"></lucide-icon>
+      </button>
     }
   </div>
 
   @if (effectiveError() || helpText()) {
     <div class="input-message">
       @if (effectiveError()) {
-        <span class="error-message">
+        <span class="error-message" [id]="errorMessageId" role="alert">
           <lucide-icon name="circle-alert" [size]="16"></lucide-icon>
           {{ effectiveError() }}
         </span>
       } @else if (helpText()) {
-        <span class="help-message">{{ helpText() }}</span>
+        <span class="help-message" [id]="helpMessageId">{{ helpText() }}</span>
       }
     </div>
   }

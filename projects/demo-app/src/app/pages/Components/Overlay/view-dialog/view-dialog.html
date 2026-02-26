@@ -119,7 +119,6 @@
             [modal]="true"
             width="min(90vw, 48rem)"
             [dismissableMask]="false"
-            [modal]="true"
             [draggable]="false"
           >
             <p>
@@ -370,7 +369,6 @@
                 appendTo="local"
                 width="300px"
                 styleClass="absolute-dialog-demo"
-                [draggable]="false"
               >
                 <p>Soy libre, pero solo dentro de este contenedor.</p>
                 <div
@@ -460,6 +458,33 @@
               <td>Si es true, cierra el diálogo al hacer click fuera.</td>
             </tr>
             <tr>
+              <td><code>closeOnEscape</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Si es true, permite cerrar el dialogo con la tecla Escape.</td>
+            </tr>
+            <tr>
+              <td><code>trapFocus</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Mantiene el foco de teclado dentro del dialogo mientras esta abierto.</td>
+            </tr>
+            <tr>
+              <td><code>autoFocus</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Enfoca automaticamente el primer elemento interactivo al abrir.</td>
+            </tr>
+            <tr>
+              <td><code>ariaLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>'Dialog'</code></td>
+              <td>
+                Nombre accesible para lectores de pantalla cuando no se define
+                <code>header</code>.
+              </td>
+            </tr>
+            <tr>
               <td><code>draggable</code></td>
               <td><code>boolean</code></td>
               <td><code>true</code></td>
@@ -522,3 +547,4 @@
     </div>
   </div>
 </div>
+

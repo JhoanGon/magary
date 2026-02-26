@@ -3,7 +3,7 @@
   class="magary-carousel-wrapper"
   [ngClass]="contentClass()"
   [attr.aria-live]="autoplayInterval() > 0 ? 'off' : 'polite'"
-  [attr.tabindex]="0"
+  [attr.tabindex]="keyboard() && !isEmpty() ? 0 : -1"
 >
   <!-- Header Template -->
   @if (headerTemplate()) {
@@ -75,12 +75,18 @@
         <div
           #itemsContainer
           class="magary-carousel-viewport"
+          [attr.id]="viewportId"
           [class.magary-carousel-viewport-center]="centerMode()"
           [class.magary-carousel-viewport-peek]="peekMode()"
           [style.height]="isVertical() ? verticalViewPortHeight() : null"
+          [attr.role]="'group'"
+          [attr.aria-roledescription]="'viewport'"
           [attr.aria-label]="
-            'Slide ' + (_currentPage() + 1) + ' of ' + totalPages()
+            totalPages() > 0
+              ? 'Slide ' + (_currentPage() + 1) + ' of ' + totalPages()
+              : 'No slides available'
           "
+          [attr.aria-describedby]="showIndicators() && totalPages() > 1 ? indicatorsId : null"
         >
           <!-- Track (Slides Container) -->
           <div
@@ -89,8 +95,7 @@
             [ngStyle]="transformStyle()"
             [class.is-dragging]="_isDragging()"
             [style.gap]="_activeSpaceBetween() + 'px'"
-            [attr.role]="'group'"
-            [attr.aria-roledescription]="'slide'"
+            [attr.role]="'list'"
           >
             <!-- Individual Items -->
             @for (item of value(); track trackByIndex($index)) {
@@ -130,7 +135,12 @@
                         ')'
                       : 'auto'
                   "
+                  [attr.role]="'listitem'"
+                  [attr.aria-roledescription]="'slide'"
+                  [attr.aria-label]="getSlideAriaLabel($index)"
                   [attr.aria-hidden]="!isItemActive($index)"
+                  [attr.inert]="!isItemActive($index) ? '' : null"
+                  [attr.aria-current]="isItemActive($index) ? 'true' : null"
                   [attr.data-index]="$index"
                   (click)="onItemClick(item, $index, $event)"
                 >
@@ -227,11 +237,16 @@
       @if (showIndicators() && totalPages() > 1) {
         <div
           class="magary-carousel-indicators"
+          [attr.id]="indicatorsId"
           [ngClass]="indicatorsContentClass()"
           [attr.data-style]="indicatorStyle()"
           [attr.data-position]="indicatorPosition()"
-          role="tablist"
-          [attr.aria-label]="'Carousel pagination'"
+          [attr.role]="isTabIndicatorStyle() ? 'tablist' : 'group'"
+          [attr.aria-label]="
+            isTabIndicatorStyle()
+              ? 'Carousel pagination tabs'
+              : 'Carousel pagination'
+          "
         >
           <!-- Dots Style -->
           @if (indicatorStyle() === "dots") {
@@ -250,16 +265,21 @@
                 <button
                   type="button"
                   class="magary-carousel-indicator"
+                  [attr.id]="getIndicatorId($index)"
+                  [attr.data-indicator-index]="$index"
                   [class.magary-carousel-indicator-active]="
                     _currentPage() === $index
                   "
-                  [attr.aria-label]="'Go to slide ' + ($index + 1)"
+                  [attr.aria-label]="getIndicatorAriaLabel($index)"
                   [attr.aria-selected]="_currentPage() === $index"
+                  [attr.aria-controls]="viewportId"
+                  [attr.tabindex]="getIndicatorTabIndex($index)"
                   [attr.aria-current]="
                     _currentPage() === $index ? 'true' : 'false'
                   "
                   [attr.role]="'tab'"
                   (click)="goToPage($index)"
+                  (keydown)="onIndicatorKeydown($event, $index)"
                 ></button>
               }
             }
@@ -271,12 +291,18 @@
               <button
                 type="button"
                 class="magary-carousel-indicator magary-carousel-indicator-line"
+                [attr.id]="getIndicatorId($index)"
+                [attr.data-indicator-index]="$index"
                 [class.magary-carousel-indicator-active]="
                   _currentPage() === $index
                 "
-                [attr.aria-label]="'Go to slide ' + ($index + 1)"
+                [attr.aria-label]="getIndicatorAriaLabel($index)"
                 [attr.aria-selected]="_currentPage() === $index"
+                [attr.aria-controls]="viewportId"
+                [attr.tabindex]="getIndicatorTabIndex($index)"
+                [attr.role]="'tab'"
                 (click)="goToPage($index)"
+                (keydown)="onIndicatorKeydown($event, $index)"
               ></button>
             }
           }
@@ -309,12 +335,18 @@
                 <button
                   type="button"
                   class="magary-carousel-indicator-thumbnail"
+                  [attr.data-indicator-index]="Math.floor($index / _activeNumScroll())"
                   [class.is-active]="
                     _currentPage() === Math.floor($index / _activeNumScroll())
                   "
                   [attr.aria-label]="
                     'Go to slide ' +
                     (Math.floor($index / _activeNumScroll()) + 1)
+                  "
+                  [attr.aria-current]="
+                    _currentPage() === Math.floor($index / _activeNumScroll())
+                      ? 'true'
+                      : null
                   "
                   (click)="goToPage(Math.floor($index / _activeNumScroll()))"
                 >
@@ -368,6 +400,10 @@
       overflow: hidden;
     "
   >
-    Slide {{ _currentPage() + 1 }} of {{ totalPages() }}
+    @if (totalPages() > 0) {
+      Slide {{ _currentPage() + 1 }} of {{ totalPages() }}
+    } @else {
+      No slides available
+    }
   </div>
 </div>

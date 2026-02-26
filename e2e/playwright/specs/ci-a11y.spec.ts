@@ -60,6 +60,24 @@ test.describe('ci a11y smoke', () => {
     });
   });
 
+  test('overlay panel route (opened state) has no serious/critical a11y violations', async ({
+    page,
+  }) => {
+    await expectNoSeriousA11yIssues(
+      page,
+      '/components/OverlayPanel',
+      async (currentPage) => {
+        await currentPage
+          .getByRole('button', { name: 'Toggle Overlay' })
+          .first()
+          .click();
+        await expect(
+          currentPage.locator('.magary-overlaypanel[role="dialog"]:visible'),
+        ).toHaveCount(1);
+      },
+    );
+  });
+
   test('input route has no serious/critical a11y violations', async ({ page }) => {
     await expectNoSeriousA11yIssues(page, '/components/Input');
   });
@@ -67,5 +85,46 @@ test.describe('ci a11y smoke', () => {
   test('sidebar route has no serious/critical a11y violations', async ({ page }) => {
     await expectNoSeriousA11yIssues(page, '/components/Sidebar');
   });
-});
 
+  test('tree route has no serious/critical a11y violations', async ({ page }) => {
+    await expectNoSeriousA11yIssues(page, '/components/tree');
+  });
+
+  test('organization chart route has no serious/critical a11y violations', async ({
+    page,
+  }) => {
+    await expectNoSeriousA11yIssues(page, '/components/organization-chart');
+  });
+
+  test('tabview route has no serious/critical a11y violations', async ({
+    page,
+  }) => {
+    await expectNoSeriousA11yIssues(page, '/components/tabview');
+  });
+
+  test('carousel route has no serious/critical a11y violations', async ({
+    page,
+  }) => {
+    await expectNoSeriousA11yIssues(page, '/components/view-carousel');
+  });
+
+  test('tooltip route (visible state) has no serious/critical a11y violations', async ({
+    page,
+  }) => {
+    await expectNoSeriousA11yIssues(page, '/components/Tooltip', async (currentPage) => {
+      const topButton = currentPage.getByRole('button', { name: 'Top' }).first();
+      await topButton.hover();
+      await expect(currentPage.locator('.magary-tooltip:visible')).toHaveCount(1);
+    });
+  });
+
+  test('select route (opened state) has no serious/critical a11y violations', async ({
+    page,
+  }) => {
+    await expectNoSeriousA11yIssues(page, '/components/Select', async (currentPage) => {
+      const trigger = currentPage.locator('.magary-select-container').first();
+      await trigger.click();
+      await expect(currentPage.locator('.select-overlay:visible')).toHaveCount(1);
+    });
+  });
+});

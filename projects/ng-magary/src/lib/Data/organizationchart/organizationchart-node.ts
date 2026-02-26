@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import {
   MagaryTreeNode,
   MagaryTreeNodeSelectionEvent,
+  MagaryTreeSelectionValue,
 } from '../tree/tree-node.interface';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -46,7 +47,9 @@ import { LucideAngularModule } from 'lucide-angular';
           class="magary-organizationchart-node-content"
           [class.magary-organizationchart-selectable]="selectionMode() !== null"
           [class.magary-organizationchart-selected]="isSelected()"
+          [attr.tabindex]="isSelectable() || (collapsible() && !isLeaf()) ? 0 : -1"
           (click)="onNodeClick($event)"
+          (keydown)="onNodeKeydown($event)"
         >
           <!-- Display content based on template or fallback -->
           <ng-container *ngIf="template(); else defaultContent">
@@ -68,16 +71,18 @@ import { LucideAngularModule } from 'lucide-angular';
           </ng-template>
 
           <!-- Toggler -->
-          <div
+          <button
+            type="button"
             *ngIf="!isLeaf() && collapsible()"
             class="magary-organizationchart-toggler"
+            [attr.aria-label]="getTogglerAriaLabel()"
             (click)="toggle($event)"
           >
             <lucide-icon
               [name]="internalExpanded() ? 'chevron-down' : 'chevron-up'"
               [size]="14"
             ></lucide-icon>
-          </div>
+          </button>
         </div>
       </td>
     </tr>
@@ -129,6 +134,7 @@ import { LucideAngularModule } from 'lucide-angular';
             <tbody
               magary-organizationchart-node
               [node]="child"
+              [level]="level() + 1"
               [selectionMode]="selectionMode()"
               [selection]="selection()"
               [collapsible]="collapsible()"
@@ -160,8 +166,9 @@ import { LucideAngularModule } from 'lucide-angular';
 })
 export class MagaryOrganizationChartNode implements OnInit {
   readonly node = input.required<MagaryTreeNode>();
-  readonly selectionMode = input<string | null>(null);
-  readonly selection = input<unknown>(null);
+  readonly level = input<number>(1);
+  readonly selectionMode = input<'single' | 'multiple' | null>(null);
+  readonly selection = input<MagaryTreeSelectionValue>(null);
   readonly collapsible = input<boolean>(false);
   readonly itemTemplate = input<TemplateRef<unknown> | null | undefined>(null);
 
@@ -206,25 +213,81 @@ export class MagaryOrganizationChartNode implements OnInit {
 
   isSelected = computed(() => {
     const sel = this.selection();
-    if (!sel) return false;
-    if (Array.isArray(sel)) return sel.includes(this.node());
-    return sel === this.node();
+    const currentNode = this.node();
+    if (!sel) {
+      return false;
+    }
+    if (Array.isArray(sel)) {
+      return sel.some((selectedNode) => this.isSameNode(selectedNode, currentNode));
+    }
+    if (this.isTreeNode(sel)) {
+      return this.isSameNode(sel, currentNode);
+    }
+    if (this.isSelectionMap(sel)) {
+      const nodeKey = currentNode.key;
+      return typeof nodeKey === 'string' ? sel[nodeKey] === true : false;
+    }
+    return false;
   });
 
   onNodeClick(event: Event) {
-    if (this.selectionMode()) {
-      if (this.isSelected()) {
-        this.nodeUnselect.emit({ originalEvent: event, node: this.node() });
-      } else {
-        this.nodeSelect.emit({ originalEvent: event, node: this.node() });
-      }
+    event.stopPropagation();
+    if (!this.isSelectable()) {
+      return;
+    }
+
+    if (this.isSelected()) {
+      this.nodeUnselect.emit({ originalEvent: event, node: this.node() });
+    } else {
+      this.nodeSelect.emit({ originalEvent: event, node: this.node() });
     }
   }
 
   toggle(event: Event) {
     event.stopPropagation();
-    this.internalExpanded.update((v) => !v);
-    const expanded = this.internalExpanded();
+    this.setExpanded(!this.internalExpanded());
+  }
+
+  onNodeKeydown(event: KeyboardEvent) {
+    if (event.key === 'ArrowRight' && this.collapsible() && !this.isLeaf()) {
+      event.preventDefault();
+      if (!this.internalExpanded()) {
+        this.setExpanded(true);
+      }
+      return;
+    }
+
+    if (event.key === 'ArrowLeft' && this.collapsible() && !this.isLeaf()) {
+      event.preventDefault();
+      if (this.internalExpanded()) {
+        this.setExpanded(false);
+      }
+      return;
+    }
+
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+
+    if (!this.isSelectable()) {
+      return;
+    }
+
+    event.preventDefault();
+    this.onNodeClick(event);
+  }
+
+  getTogglerAriaLabel(): string {
+    const label = this.node().label || 'node';
+    return this.internalExpanded() ? `Collapse ${label}` : `Expand ${label}`;
+  }
+
+  isSelectable(): boolean {
+    return this.selectionMode() !== null;
+  }
+
+  private setExpanded(expanded: boolean) {
+    this.internalExpanded.set(expanded);
     this.node().expanded = expanded;
 
     if (expanded) {
@@ -232,5 +295,47 @@ export class MagaryOrganizationChartNode implements OnInit {
     } else {
       this.nodeCollapse.emit(this.node());
     }
+  }
+
+  private isSameNode(left: unknown, right: MagaryTreeNode): boolean {
+    if (!this.isTreeNode(left)) {
+      return false;
+    }
+
+    if (left === right) {
+      return true;
+    }
+
+    if (left.key && right.key) {
+      return left.key === right.key;
+    }
+
+    return false;
+  }
+
+  private isTreeNode(value: unknown): value is MagaryTreeNode {
+    if (!this.isRecord(value) || Array.isArray(value)) {
+      return false;
+    }
+
+    return (
+      'key' in value ||
+      'label' in value ||
+      'data' in value ||
+      'children' in value ||
+      'icon' in value
+    );
+  }
+
+  private isSelectionMap(value: unknown): value is Record<string, boolean> {
+    if (!this.isRecord(value) || Array.isArray(value)) {
+      return false;
+    }
+
+    return Object.values(value).every((entry) => typeof entry === 'boolean');
+  }
+
+  private isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null;
   }
 }

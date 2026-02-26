@@ -37,7 +37,12 @@
             label="Toggle Overlay"
           ></magary-button>
 
-          <magary-overlaypanel #op>
+          <magary-overlaypanel
+            #op
+            panelAriaLabel="Información rápida"
+            (onShow)="onOverlayShow()"
+            (onHide)="onOverlayHide()"
+          >
             <div style="width: 300px">
               <h4 style="margin-top: 0">Contenido Personalizado</h4>
               <p>
@@ -54,6 +59,7 @@
           [backgroundLine]="'#ed2c44'"
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
+          tabListAriaLabel="Overlay basic example code"
         >
           <magary-tab label="HTML">
             <pre><code [highlight]="codeBasic" language="html"></code></pre>
@@ -95,7 +101,11 @@
           ></magary-button>
         </div>
 
-        <magary-overlaypanel #op2 [showCloseIcon]="true">
+        <magary-overlaypanel
+          #op2
+          [showCloseIcon]="true"
+          panelAriaLabel="Detalle del producto"
+        >
           @if (selectedProduct) {
             <div style="text-align: center; padding: 1rem">
               <img
@@ -119,12 +129,17 @@
             </div>
           }
         </magary-overlaypanel>
+
+        <p style="margin-top: 1rem; color: var(--text-secondary)">
+          Estado evento: {{ overlayEventSummary }}
+        </p>
       </div>
       <div class="code-block" style="margin-top: 1rem">
         <magary-tabs
           [backgroundLine]="'#ed2c44'"
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
+          tabListAriaLabel="Overlay selection example code"
         >
           <magary-tab label="HTML">
             <pre><code [highlight]="codeTable" language="html"></code></pre>
@@ -164,6 +179,18 @@
               <td><code>boolean</code></td>
               <td><code>false</code></td>
               <td>Muestra un icono para cerrar el panel.</td>
+            </tr>
+            <tr>
+              <td><code>closeOnEscape</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Cierra el panel al presionar Escape.</td>
+            </tr>
+            <tr>
+              <td><code>panelAriaLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>'Overlay panel'</code></td>
+              <td>Etiqueta accesible aplicada al contenedor del panel.</td>
             </tr>
           </tbody>
         </table>

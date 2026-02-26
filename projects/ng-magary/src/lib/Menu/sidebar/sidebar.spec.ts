@@ -47,6 +47,11 @@ describe('Sidebar behavior', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    document.body.style.overflow = '';
+    fixture.destroy();
+  });
+
   it('opens and closes mobile sidebar from hamburger and backdrop', () => {
     const hamburger = fixture.nativeElement.querySelector(
       '.hamburger-button',
@@ -206,9 +211,11 @@ describe('Sidebar behavior', () => {
       '.logout-button',
     ) as HTMLButtonElement;
 
-    expect(hamburger.getAttribute('aria-label')).toBe('Abrir menu lateral');
-    expect(closeButton.getAttribute('aria-label')).toBe('Cerrar sidebar');
+    expect(hamburger.getAttribute('aria-label')).toBe('Open sidebar navigation');
+    expect(closeButton.getAttribute('aria-label')).toBe('Close sidebar');
     expect(logoutButton.getAttribute('aria-label')).toBe('Cerrar sesion');
+    expect(hamburger.getAttribute('aria-controls')).toBe(component.sidebarId);
+    expect(hamburger.getAttribute('aria-expanded')).toBe('false');
 
     fixture.componentRef.setInput('collapsible', true);
     component.isCollapsed.set(true);
@@ -226,6 +233,88 @@ describe('Sidebar behavior', () => {
       '.header-toggle.expanded',
     ) as HTMLButtonElement;
     expect(collapseToggle.getAttribute('aria-label')).toBe('Colapsar sidebar');
+  });
+
+  it('locks and restores body scroll when mobile sidebar opens/closes', () => {
+    expect(document.body.style.overflow).toBe('');
+
+    component.toggleMobileSidebar();
+    fixture.detectChanges();
+    expect(component.isMobileOpen()).toBe(true);
+    expect(document.body.style.overflow).toBe('hidden');
+
+    component.closeMobileSidebar();
+    fixture.detectChanges();
+    expect(component.isMobileOpen()).toBe(false);
+    expect(document.body.style.overflow).toBe('');
+  });
+
+  it('closes with Escape only when closeOnEscape is enabled', () => {
+    component.isMobileOpen.set(true);
+    fixture.detectChanges();
+
+    component.onEscapeKey({
+      key: 'Escape',
+      preventDefault: vi.fn(),
+    } as unknown as KeyboardEvent);
+    fixture.detectChanges();
+    expect(component.isMobileOpen()).toBe(false);
+
+    fixture.componentRef.setInput('closeOnEscape', false);
+    component.isMobileOpen.set(true);
+    fixture.detectChanges();
+
+    const event = {
+      key: 'Escape',
+      preventDefault: vi.fn(),
+    } as unknown as KeyboardEvent;
+    component.onEscapeKey(event);
+    fixture.detectChanges();
+
+    expect(component.isMobileOpen()).toBe(true);
+    expect(event.preventDefault).not.toHaveBeenCalled();
+  });
+
+  it('renders complementary and navigation landmarks with labels', () => {
+    const sidebar = fixture.nativeElement.querySelector('.sidebar') as HTMLElement;
+    const nav = fixture.nativeElement.querySelector('.menu-container') as HTMLElement;
+
+    expect(sidebar.tagName).toBe('ASIDE');
+    expect(sidebar.getAttribute('role')).toBe('complementary');
+    expect(sidebar.getAttribute('aria-label')).toBe('Primary navigation');
+    expect(nav.tagName).toBe('NAV');
+    expect(nav.getAttribute('aria-label')).toBe('Primary navigation');
+  });
+
+  it('cycles focus inside sidebar on Tab when mobile is open', () => {
+    component.isMobileOpen.set(true);
+    fixture.detectChanges();
+
+    const sidebar = fixture.nativeElement.querySelector('.sidebar') as HTMLElement;
+    const focusable = Array.from(
+      sidebar.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input:not([disabled]):not([type="hidden"]), ' +
+          'select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      ),
+    ).filter((element) => {
+      const styles = getComputedStyle(element);
+      return styles.visibility !== 'hidden' && styles.display !== 'none';
+    });
+
+    expect(focusable.length).toBeGreaterThan(1);
+    const firstFocusable = focusable[0];
+    const lastFocusable = focusable[focusable.length - 1];
+    lastFocusable.focus();
+
+    const tabEvent = {
+      key: 'Tab',
+      shiftKey: false,
+      preventDefault: vi.fn(),
+    } as unknown as KeyboardEvent;
+    component.onSidebarKeydown(tabEvent);
+
+    expect(document.activeElement).toBe(firstFocusable);
+    expect(tabEvent.preventDefault).toHaveBeenCalled();
   });
 });
 

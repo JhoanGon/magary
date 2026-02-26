@@ -116,6 +116,7 @@
           [ngModel]="rows()"
           (change)="onRppChange($event)"
           class="magary-paginator-rpp-dropdown"
+          aria-label="Rows per page"
         >
           @for (opt of rowsPerPageOptions(); track opt) {
             <option [value]="opt">{{ opt }} / page</option>

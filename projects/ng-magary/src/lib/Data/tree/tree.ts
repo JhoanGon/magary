@@ -1,5 +1,6 @@
 import {
   Component,
+  booleanAttribute,
   input,
   output,
   ChangeDetectionStrategy,
@@ -14,6 +15,7 @@ import {
   MagaryTreeNode,
   MagaryTreeNodeDropEvent,
   MagaryTreeNodeSelectionEvent,
+  MagaryTreeSelectionValue,
 } from './tree-node.interface';
 import { MagaryUITreeNode } from './uitree-node';
 
@@ -34,13 +36,15 @@ import { MagaryUITreeNode } from './uitree-node';
 export class MagaryTree {
   value = input<MagaryTreeNode[]>([]);
   selectionMode = input<'single' | 'multiple' | 'checkbox' | null>(null);
-  selection = input<unknown>(null);
-  filter = input<boolean>(false);
+  selection = input<MagaryTreeSelectionValue>(null);
+  filter = input(false, { transform: booleanAttribute });
   filterPlaceholder = input<string>('Search...');
+  filterAriaLabel = input<string>('Filter tree nodes');
   filterMode = input<'lenient' | 'strict'>('lenient');
-  draggable = input<boolean>(false);
-  droppable = input<boolean>(false);
-  validateDrop = input<boolean>(false);
+  draggable = input(false, { transform: booleanAttribute });
+  droppable = input(false, { transform: booleanAttribute });
+  validateDrop = input(false, { transform: booleanAttribute });
+  treeAriaLabel = input<string>('Tree data');
 
   onNodeSelect = output<MagaryTreeNodeSelectionEvent>();
   onNodeUnselect = output<MagaryTreeNodeSelectionEvent>();
@@ -97,8 +101,9 @@ export class MagaryTree {
   }
 
   onFilterInput(event: Event) {
-    const val = (event.target as HTMLInputElement).value;
-    this.filterValue.set(val);
+    const inputElement =
+      event.target instanceof HTMLInputElement ? event.target : null;
+    this.filterValue.set(inputElement?.value ?? '');
   }
 
   // Pass through events
@@ -119,17 +124,64 @@ export class MagaryTree {
     event: CdkDragDrop<MagaryTreeNode[]>,
     parent: MagaryTreeNode | null,
   ) {
-    // This is the root level handler (or when bubbled up if configured that way)
-    if (this.validateDrop()) {
-      // Logic to validate if needed
+    const dropEvent: MagaryTreeNodeDropEvent = {
+      originalEvent: event,
+      parent,
+      dragNode: event.item.data as MagaryTreeNode,
+    };
+
+    if (this.validateDrop() && !this.isDropAllowed(dropEvent)) {
+      return;
     }
 
-    // Emit the raw event for the consumer to handle data updates
-    // They can use moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
-    this.onNodeDrop.emit({
-      originalEvent: event,
-      parent: parent,
-      dragNode: event.item.data as MagaryTreeNode,
-    });
+    this.onNodeDrop.emit(dropEvent);
+  }
+
+  handleNodeDrop(event: MagaryTreeNodeDropEvent) {
+    if (this.validateDrop() && !this.isDropAllowed(event)) {
+      return;
+    }
+
+    this.onNodeDrop.emit(event);
+  }
+
+  private isDropAllowed(event: MagaryTreeNodeDropEvent): boolean {
+    const targetParent = event.parent;
+    if (!targetParent) {
+      return true;
+    }
+
+    const dragNode = event.dragNode;
+    if (this.isSameNode(dragNode, targetParent)) {
+      return false;
+    }
+
+    return !this.containsNode(dragNode, targetParent);
+  }
+
+  private containsNode(root: MagaryTreeNode, target: MagaryTreeNode): boolean {
+    if (!root.children || root.children.length === 0) {
+      return false;
+    }
+
+    for (const child of root.children) {
+      if (this.isSameNode(child, target) || this.containsNode(child, target)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private isSameNode(left: MagaryTreeNode, right: MagaryTreeNode): boolean {
+    if (left === right) {
+      return true;
+    }
+
+    if (left.key && right.key) {
+      return left.key === right.key;
+    }
+
+    return false;
   }
 }

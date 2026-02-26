@@ -20,15 +20,19 @@
       [style.background-color]="backgroundColor()"
       [ngStyle]="style()"
       [@dialogAnimation]
-      (@dialogAnimation.start)="onShow.emit($event)"
-      (@dialogAnimation.done)="onHide.emit($event)"
+      (@dialogAnimation.start)="handleDialogAnimationStart($event)"
+      (@dialogAnimation.done)="handleDialogAnimationDone($event)"
+      (keydown)="onDialogKeydown($event)"
       role="dialog"
-      aria-modal="true"
+      [attr.aria-modal]="modal() ? 'true' : null"
+      [attr.aria-labelledby]="header() ? titleId : null"
+      [attr.aria-label]="header() ? null : ariaLabel()"
+      tabindex="-1"
     >
       <!-- Header -->
       @if (header()) {
         <div class="magary-dialog-header" (pointerdown)="initDrag($event)">
-          <span class="magary-dialog-title">{{ header() }}</span>
+          <span class="magary-dialog-title" [id]="titleId">{{ header() }}</span>
           <div class="magary-dialog-header-icons">
             @if (maximizable()) {
               <button
@@ -36,7 +40,6 @@
                 class="magary-dialog-header-icon"
                 (pointerdown)="$event.stopPropagation()"
                 (click)="maximize($event)"
-                tabindex="-1"
                 [attr.aria-label]="maximized() ? 'Restore' : 'Maximize'"
               >
                 <lucide-icon
@@ -49,7 +52,6 @@
               class="magary-dialog-header-icon"
               (pointerdown)="$event.stopPropagation()"
               (click)="close($event)"
-              tabindex="-1"
               aria-label="Close"
             >
               <lucide-icon name="x"></lucide-icon>

@@ -11,6 +11,8 @@
         type="text"
         class="magary-tree-filter-input"
         [placeholder]="filterPlaceholder()"
+        [attr.aria-label]="filterAriaLabel()"
+        autocomplete="off"
         (input)="onFilterInput($event)"
       />
     </div>
@@ -19,6 +21,8 @@
   @if (filteredValue() && filteredValue().length) {
     <ul
       class="magary-tree-root-children"
+      role="tree"
+      [attr.aria-label]="treeAriaLabel()"
       cdkDropList
       [cdkDropListDisabled]="!droppable()"
       [cdkDropListData]="filteredValue() || []"
@@ -35,7 +39,7 @@
           (nodeUnselect)="handleNodeUnselect($event)"
           (nodeExpand)="handleNodeExpand($event)"
           (nodeCollapse)="handleNodeCollapse($event)"
-          (nodeDrop)="onNodeDrop.emit($event)"
+          (nodeDrop)="handleNodeDrop($event)"
         >
         </magary-uitree-node>
       }
@@ -43,6 +47,8 @@
   }
 
   @if (!filteredValue() || filteredValue().length === 0) {
-    <div class="magary-tree-empty-message">No records found</div>
+    <div class="magary-tree-empty-message" role="status" aria-live="polite">
+      No records found
+    </div>
   }
 </div>

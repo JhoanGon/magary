@@ -2,6 +2,11 @@
   <div
     #container
     class="magary-overlaypanel p-component"
+    [attr.id]="panelId()"
+    role="dialog"
+    [attr.aria-modal]="false"
+    [attr.aria-label]="panelAriaLabel()"
+    tabindex="-1"
     [@animation]
     (click)="$event.stopPropagation()"
   >
@@ -10,6 +15,7 @@
     </div>
     @if (showCloseIcon()) {
       <button
+        type="button"
         class="magary-overlaypanel-close"
         (click)="hide()"
         aria-label="Close"

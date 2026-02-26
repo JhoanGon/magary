@@ -7,10 +7,18 @@
     position: absolute;
     z-index: 1000;
     min-width: 15rem; // Default min width
+    outline: 0;
     
     // Make sure we are in a positioning context if not appended to body
     // If we append to body, valid. If inline, needs considering.
     // For now we assume inline but absolute positioned relative to page (since we calculate scrollY).
+}
+
+.magary-overlaypanel:focus-visible {
+    box-shadow:
+        0 0 0 2px var(--primary-400, #22d3ee),
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .magary-overlaypanel-content {

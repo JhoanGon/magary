@@ -292,6 +292,39 @@ export class ViewCarousel implements OnInit {
     }
   }
 
+  codeHTMLHero = `<magary-carousel
+  [ariaLabel]="'Hero featured products carousel'"
+  [value]="products"
+  [numVisible]="1"
+  [numScroll]="1"
+  [circular]="true"
+  [autoplayInterval]="4000"
+  [showProgress]="true"
+  [progressStyle]="'bar'"
+  [indicatorStyle]="'dots'"
+  [indicatorPosition]="'inside'"
+  [showNavigators]="true"
+>
+  <ng-template #item let-product>
+    <div class="hero-slide">
+      <div class="hero-slide-image">
+        <img [src]="product.image" [alt]="product.name" />
+      </div>
+      <div class="hero-slide-content">
+        <span class="hero-category">{{ product.category }}</span>
+        <h2 class="hero-title">{{ product.name }}</h2>
+        <p class="hero-price">\${{ product.price }}</p>
+      </div>
+    </div>
+  </ng-template>
+</magary-carousel>`;
+
+  codeTSHero = `products: CarouselProduct[] = [];
+
+ngOnInit() {
+  this.products = fetchProducts();
+}`;
+
   codeHTMLBasic = `<magary-carousel [value]="products" [numVisible]="3" [numScroll]="3" [circular]="false" [spaceBetween]="24" [responsiveOptions]="responsiveOptions">
     <ng-template let-product>
         <magary-card
@@ -446,4 +479,35 @@ isStackedEffect = computed(() => {
   const effect = this.currentEffect();
   return effect === 'fade' || effect === 'cube' || effect === 'flip' || effect === 'cards';
 });`;
+
+  codeHTMLIndicators = `<magary-carousel
+  [ariaLabel]="'Navigation and indicators carousel'"
+  [value]="products"
+  [numVisible]="3"
+  [numScroll]="3"
+  [circular]="false"
+  [responsiveOptions]="responsiveOptions"
+  [indicatorStyle]="currentIndicatorStyle()"
+  [navPosition]="currentNavPosition()"
+  [spaceBetween]="24"
+  [showNavigators]="true"
+  [showIndicators]="true"
+>
+  <ng-template #item let-product>
+    <magary-card [img]="product.image" [altText]="product.name" [width]="'100%'">
+      <div class="absolute top-0 left-0 m-3 z-1">
+        <magary-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></magary-tag>
+      </div>
+      <div slot="header">
+        <h4 class="m-0 text-base font-semibold">{{ product.name }}</h4>
+      </div>
+    </magary-card>
+  </ng-template>
+</magary-carousel>`;
+
+  codeTSIndicators = `indicatorStyles: CarouselIndicatorStyle[] = ['dots', 'lines', 'fraction', 'progress', 'thumbnails'];
+currentIndicatorStyle = signal<CarouselIndicatorStyle>('dots');
+
+navPositions: CarouselNavPosition[] = ['default', 'outside'];
+currentNavPosition = signal<CarouselNavPosition>('outside');`;
 }

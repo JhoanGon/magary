@@ -57,13 +57,14 @@ export class MagaryInput {
   width = input<string>('100%');
   maxLength = input<number | undefined>(undefined);
 
-  inputFocus = output<Event>();
-  inputBlur = output<Event>();
+  inputFocus = output<FocusEvent>();
+  inputBlur = output<FocusEvent>();
   iconClick = output<'prefix' | 'suffix'>();
 
   private _internalError = signal<string>('');
 
   effectiveError = computed(() => this.error() || this._internalError());
+  hasEffectiveError = computed(() => this.effectiveError().trim().length > 0);
 
   private focused = signal(false);
 
@@ -73,17 +74,20 @@ export class MagaryInput {
     computation: () => false,
   });
 
-  private readonly uniqueId = `magary-input-${Math.random().toString(36).substr(2, 9)}`;
+  private readonly uniqueId = `magary-input-${Math.random().toString(36).substring(2, 11)}`;
+  readonly errorMessageId = `${this.uniqueId}-error`;
+  readonly helpMessageId = `${this.uniqueId}-help`;
 
   inputClasses = computed(() => {
     const classes = ['magary-input-field'];
     classes.push(`input-${this.variant()}`);
     classes.push(`input-${this.size()}`);
+    const hasError = this.hasEffectiveError();
 
     if (this.disabled()) classes.push('input-disabled');
     if (this.readonly()) classes.push('input-readonly');
-    if (this.effectiveError()) classes.push('input-error');
-    if (this.success()) classes.push('input-success');
+    if (hasError) classes.push('input-error');
+    if (this.success() && !hasError) classes.push('input-success');
     if (this.focused()) classes.push('input-focused');
     if (this.loading()) classes.push('input-loading');
 
@@ -94,7 +98,7 @@ export class MagaryInput {
     const classes = ['magary-input-container'];
     if (this.label()) classes.push('has-label');
     if (this.prefixIcon()) classes.push('has-prefix');
-    if (this.suffixIcon() || this.type() === 'password')
+    if (this.suffixIcon() || this.type() === 'password' || this.loading())
       classes.push('has-suffix');
     return classes.join(' ');
   });
@@ -108,15 +112,49 @@ export class MagaryInput {
       return this.ariaLabel();
     }
 
-    if (this.label()) {
-      return this.label();
-    }
-
-    if (this.placeholder()) {
+    if (!this.label() && this.placeholder()) {
       return this.placeholder();
     }
 
     return null;
+  });
+
+  describedBy = computed(() => {
+    if (this.hasEffectiveError()) {
+      return this.errorMessageId;
+    }
+
+    if (this.helpText().trim().length > 0) {
+      return this.helpMessageId;
+    }
+
+    return null;
+  });
+
+  resolvedMaxLength = computed(() => {
+    const maxLength = this.maxLength();
+    if (typeof maxLength !== 'number' || !Number.isFinite(maxLength) || maxLength <= 0) {
+      return null;
+    }
+
+    return Math.floor(maxLength);
+  });
+
+  resolvedInputMode = computed(() => {
+    switch (this.type()) {
+      case 'email':
+        return 'email';
+      case 'number':
+        return 'decimal';
+      case 'tel':
+        return 'tel';
+      case 'url':
+        return 'url';
+      case 'search':
+        return 'search';
+      default:
+        return 'text';
+    }
   });
 
   actualType = computed(() => {
@@ -131,7 +169,11 @@ export class MagaryInput {
   });
 
   onInput(event: Event): void {
-    const target = event.target as HTMLInputElement;
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+
     this.value.set(target.value);
 
     if (this._internalError()) {
@@ -139,46 +181,95 @@ export class MagaryInput {
     }
   }
 
-  onFocus(event: Event): void {
+  onFocus(event: FocusEvent): void {
     this.focused.set(true);
     this.inputFocus.emit(event);
   }
 
-  onBlur(event: Event): void {
+  onBlur(event: FocusEvent): void {
     this.focused.set(false);
-    this.validateEmail();
+    this.validateInput();
     this.inputBlur.emit(event);
   }
 
-  private validateEmail(): void {
-    if (this.type() === 'email' && this.value()) {
+  private validateInput(): void {
+    if (this.disabled() || this.readonly()) {
+      this._internalError.set('');
+      return;
+    }
+
+    const value = this.toComparableString(this.value() as unknown).trim();
+
+    if (this.required() && value.length === 0) {
+      this._internalError.set('Campo obligatorio');
+      return;
+    }
+
+    if (this.type() === 'email' && value.length > 0) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(this.value())) {
-        this._internalError.set('Email invalido');
+      if (!emailRegex.test(value)) {
+        this._internalError.set('Correo electrónico inválido');
+        return;
       }
     }
+
+    this._internalError.set('');
+  }
+
+  private toComparableString(value: unknown): string {
+    if (value == null) {
+      return '';
+    }
+
+    return typeof value === 'string' ? value : String(value);
   }
 
   onPrefixIconClick(): void {
-    if (!this.disabled()) {
+    if (!this.isInteractionBlocked()) {
       this.iconClick.emit('prefix');
     }
   }
 
   onSuffixIconClick(): void {
-    if (!this.disabled()) {
+    if (!this.isInteractionBlocked()) {
       this.iconClick.emit('suffix');
     }
   }
 
   togglePasswordVisibility(): void {
-    if (this.type() === 'password') {
+    if (
+      this.type() === 'password' &&
+      !this.readonly() &&
+      !this.isInteractionBlocked()
+    ) {
       this.showPassword.set(!this.showPassword());
     }
   }
 
+  getPrefixIconLabel(): string {
+    if (this.label()) {
+      return `Activate prefix action for ${this.label()}`;
+    }
+    return 'Activate prefix action';
+  }
+
+  getSuffixIconLabel(): string {
+    if (this.label()) {
+      return `Activate suffix action for ${this.label()}`;
+    }
+    return 'Activate suffix action';
+  }
+
+  getPasswordToggleLabel(): string {
+    return this.showPassword() ? 'Hide password' : 'Show password';
+  }
+
   getId(): string {
     return this.uniqueId;
+  }
+
+  private isInteractionBlocked(): boolean {
+    return this.disabled() || this.loading();
   }
 }
 

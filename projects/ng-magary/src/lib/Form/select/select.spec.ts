@@ -1,7 +1,7 @@
 ﻿import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
-import { MagarySelect } from './select';
+import { MagarySelect, MagarySelectValue } from './select';
 
 const kebabCase = (value: string) =>
   value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -62,6 +62,119 @@ describe('MagarySelect behavior', () => {
     expect(component.isDisabled()).toBe(true);
     expect(component.isOpen()).toBe(false);
     expect(root.classList.contains('disabled')).toBe(true);
+  });
+
+  it('exposes an accessible name on combobox trigger', () => {
+    fixture.componentRef.setInput('placeholder', 'Select a city');
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.querySelector(
+      '.magary-select-container',
+    ) as HTMLElement;
+    expect(root.getAttribute('aria-label')).toBe('Select a city');
+
+    fixture.componentRef.setInput('ariaLabel', 'City selector');
+    fixture.detectChanges();
+    expect(root.getAttribute('aria-label')).toBe('City selector');
+  });
+
+  it('supports keyboard open and selection with Enter', () => {
+    fixture.componentRef.setInput('options', ['New York', 'London', 'Tokyo']);
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.querySelector(
+      '.magary-select-container',
+    ) as HTMLElement;
+
+    root.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    fixture.detectChanges();
+    expect(component.isOpen()).toBe(true);
+    expect(component.activeIndex()).toBe(0);
+
+    root.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+
+    expect(component.value()).toBe('New York');
+    expect(component.selectedLabel()).toBe('New York');
+    expect(component.isOpen()).toBe(false);
+  });
+
+  it('updates aria-activedescendant while navigating options', () => {
+    fixture.componentRef.setInput('options', ['One', 'Two', 'Three']);
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.querySelector(
+      '.magary-select-container',
+    ) as HTMLElement;
+
+    root.click();
+    fixture.detectChanges();
+
+    root.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    fixture.detectChanges();
+    expect(root.getAttribute('aria-activedescendant')).toContain(
+      '-option-1',
+    );
+
+    root.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    fixture.detectChanges();
+    expect(root.getAttribute('aria-activedescendant')).toContain(
+      '-option-2',
+    );
+  });
+
+  it('filters visible options and shows empty state when no matches', () => {
+    fixture.componentRef.setInput('filter', true);
+    fixture.componentRef.setInput('options', ['Alpha', 'Beta']);
+    fixture.detectChanges();
+
+    component.open();
+    fixture.detectChanges();
+
+    const filterInput = document.querySelector(
+      '.cdk-overlay-container .filter-input',
+    ) as HTMLInputElement | null;
+    expect(filterInput).toBeTruthy();
+    if (!filterInput) {
+      return;
+    }
+
+    filterInput.value = 'zzz';
+    filterInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    const emptyMessage = document.querySelector(
+      '.cdk-overlay-container .empty-message',
+    ) as HTMLElement | null;
+
+    expect(component.visibleOptions().length).toBe(0);
+    expect(emptyMessage?.textContent?.trim()).toBe('No results found');
+    component.close();
+  });
+
+  it('clears selected value and emits null through ControlValueAccessor', () => {
+    fixture.componentRef.setInput('showClear', true);
+    fixture.componentRef.setInput('options', [
+      { id: '1', name: 'Alice' },
+      { id: '2', name: 'Bob' },
+    ]);
+    fixture.componentRef.setInput('optionLabel', 'name');
+    fixture.componentRef.setInput('optionValue', 'id');
+    fixture.detectChanges();
+
+    const emitted: MagarySelectValue[] = [];
+    component.registerOnChange((value) => emitted.push(value));
+    component.writeValue('1');
+    fixture.detectChanges();
+
+    const clearButton = fixture.nativeElement.querySelector(
+      '.clear-button',
+    ) as HTMLButtonElement;
+    clearButton.click();
+    fixture.detectChanges();
+
+    expect(component.value()).toBeNull();
+    expect(emitted).toEqual([null]);
   });
 });
 

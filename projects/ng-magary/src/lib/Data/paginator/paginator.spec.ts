@@ -107,6 +107,8 @@ describe('MagaryPaginator behavior', () => {
       '.magary-paginator-rpp-dropdown',
     ) as HTMLSelectElement;
 
+    expect(rowsSelect.getAttribute('aria-label')).toBe('Rows per page');
+
     rowsSelect.value = '20';
     rowsSelect.dispatchEvent(new Event('change'));
     fixture.detectChanges();

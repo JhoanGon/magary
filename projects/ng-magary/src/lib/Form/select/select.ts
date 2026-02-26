@@ -15,7 +15,9 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { LucideAngularModule } from 'lucide-angular';
 
 type SelectObjectOption = Record<string, unknown>;
-type SelectOption = string | number | boolean | SelectObjectOption;
+type SelectPrimitiveOption = string | number | boolean;
+export type MagarySelectOption = SelectPrimitiveOption | SelectObjectOption;
+export type MagarySelectValue = SelectPrimitiveOption | SelectObjectOption | null;
 
 @Component({
   selector: 'magary-select',
@@ -33,10 +35,11 @@ type SelectOption = string | number | boolean | SelectObjectOption;
 })
 export class MagarySelect implements ControlValueAccessor {
   // Signal Inputs
-  readonly options = input<SelectOption[]>([]);
+  readonly options = input<MagarySelectOption[]>([]);
   readonly optionLabel = input<string>();
   readonly optionValue = input<string>();
   readonly placeholder = input<string>('Select an option');
+  readonly ariaLabel = input<string>('');
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly loading = input(false, { transform: booleanAttribute });
   readonly filter = input(false, { transform: booleanAttribute });
@@ -48,15 +51,48 @@ export class MagarySelect implements ControlValueAccessor {
   // Internal State
   readonly isOpen = signal(false);
   readonly focused = signal(false);
-  readonly value = signal<unknown>(null);
+  readonly value = signal<MagarySelectValue>(null);
   readonly filterValue = signal('');
+  readonly activeIndex = signal<number>(-1);
 
   // Element Reference for Overlay Width
   readonly trigger = viewChild.required<ElementRef<HTMLElement>>('trigger');
+  readonly filterInputRef = viewChild<ElementRef<HTMLInputElement>>('filterInput');
   readonly triggerWidth = signal<number | string>('auto');
+  private readonly uniqueId = `magary-select-${Math.random().toString(36).substring(2, 11)}`;
+  readonly triggerId = `${this.uniqueId}-trigger`;
+  readonly listboxId = `${this.uniqueId}-listbox`;
+  readonly listboxLabel = computed(() =>
+    this.placeholder().trim().length > 0 ? `${this.placeholder()} options` : 'Select options',
+  );
+  readonly resolvedAriaLabel = computed(() => {
+    const explicitLabel = this.ariaLabel().trim();
+    if (explicitLabel.length > 0) {
+      return explicitLabel;
+    }
+
+    const placeholder = this.placeholder().trim();
+    if (placeholder.length > 0) {
+      return placeholder;
+    }
+
+    return 'Select option';
+  });
+  readonly activeDescendantId = computed(() => {
+    if (!this.isOpen()) {
+      return null;
+    }
+
+    const index = this.activeIndex();
+    if (index < 0 || index >= this.visibleOptions().length) {
+      return null;
+    }
+
+    return this.getOptionId(index);
+  });
 
   // CVA Callbacks
-  private onChange: (value: unknown) => void = () => {};
+  private onChange: (value: MagarySelectValue) => void = () => {};
   private onTouched: () => void = () => {};
 
   // Computed Helpers
@@ -93,44 +129,82 @@ export class MagarySelect implements ControlValueAccessor {
         this.close();
       }
     });
+
+    effect(() => {
+      if (!this.isOpen()) {
+        this.activeIndex.set(-1);
+        return;
+      }
+
+      const options = this.visibleOptions();
+      if (options.length === 0) {
+        this.activeIndex.set(-1);
+        return;
+      }
+
+      const currentIndex = this.activeIndex();
+      if (currentIndex >= 0 && currentIndex < options.length) {
+        return;
+      }
+
+      const selectedIndex = options.findIndex((option) =>
+        this.valuesEqual(this.getValue(option), this.value()),
+      );
+      this.activeIndex.set(selectedIndex >= 0 ? selectedIndex : 0);
+    });
+
+    effect(() => {
+      if (!this.isOpen() || !this.filter()) {
+        return;
+      }
+
+      queueMicrotask(() => {
+        this.filterInputRef()?.nativeElement.focus();
+      });
+    });
   }
 
-  toggleOverlay() {
-    if (this.isDisabled() || this.loading()) return;
-
-    // Update width before opening
-    if (!this.isOpen()) {
-      const width = this.trigger().nativeElement.getBoundingClientRect().width;
-      this.triggerWidth.set(width);
+  toggleOverlay(): void {
+    if (this.isDisabled() || this.loading()) {
+      return;
     }
 
-    this.isOpen.update((v) => !v);
     if (this.isOpen()) {
-      this.focused.set(true);
+      this.close();
     } else {
-      this.onTouched();
-      this.focused.set(false);
+      this.open();
     }
   }
 
-  close() {
+  open(): void {
+    if (this.isDisabled() || this.loading()) {
+      return;
+    }
+
+    const width = this.trigger().nativeElement.getBoundingClientRect().width;
+    this.triggerWidth.set(width);
+    this.isOpen.set(true);
+    this.focused.set(true);
+  }
+
+  close(): void {
     this.isOpen.set(false);
     this.focused.set(false);
     this.onTouched();
   }
 
-  selectOption(option: SelectOption) {
+  selectOption(option: MagarySelectOption): void {
     const val = this.getValue(option);
     this.value.set(val);
     this.onChange(val);
     this.close();
   }
 
-  isSelected(option: SelectOption): boolean {
-    return this.getValue(option) === this.value();
+  isSelected(option: MagarySelectOption): boolean {
+    return this.valuesEqual(this.getValue(option), this.value());
   }
 
-  getLabel(option: SelectOption): string {
+  getLabel(option: MagarySelectOption): string {
     const labelProp = this.optionLabel();
     if (labelProp && this.isObjectOption(option)) {
       return String(option[labelProp] ?? '');
@@ -138,33 +212,146 @@ export class MagarySelect implements ControlValueAccessor {
     return String(option ?? '');
   }
 
-  getValue(option: SelectOption): unknown {
+  getValue(option: MagarySelectOption): MagarySelectValue {
     const valueProp = this.optionValue();
     if (valueProp && this.isObjectOption(option)) {
-      return option[valueProp];
+      const resolved = option[valueProp];
+      return this.normalizeExternalValue(resolved);
     }
-    return option;
+    return this.normalizeExternalValue(option);
   }
 
-  onFilterInput(event: Event) {
-    const val = (event.target as HTMLInputElement).value;
+  getOptionId(index: number): string {
+    return `${this.listboxId}-option-${index}`;
+  }
+
+  onFilterInput(event: Event): void {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const val = target.value;
     this.filterValue.set(val);
   }
 
-  clear(event: Event) {
-    if (this.isDisabled()) return;
+  clear(event: Event): void {
+    if (this.isDisabled()) {
+      return;
+    }
+
     event.stopPropagation();
     this.value.set(null);
     this.onChange(null);
     this.onTouched();
   }
 
-  // CVA Implementation
-  writeValue(obj: unknown): void {
-    this.value.set(obj);
+  onTriggerKeydown(event: KeyboardEvent): void {
+    if (this.isDisabled() || this.loading()) {
+      return;
+    }
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.open();
+        } else {
+          this.moveActive(1);
+        }
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.open();
+        } else {
+          this.moveActive(-1);
+        }
+        break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.open();
+        } else {
+          this.selectActiveOption();
+        }
+        break;
+      case 'Home':
+        if (this.isOpen()) {
+          event.preventDefault();
+          this.setActiveIndex(0);
+        }
+        break;
+      case 'End':
+        if (this.isOpen()) {
+          event.preventDefault();
+          this.setActiveIndex(this.visibleOptions().length - 1);
+        }
+        break;
+      case 'Escape':
+        if (this.isOpen()) {
+          event.preventDefault();
+          this.close();
+        }
+        break;
+      default:
+        break;
+    }
   }
 
-  registerOnChange(fn: (value: unknown) => void): void {
+  onFilterKeydown(event: KeyboardEvent): void {
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        this.moveActive(1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.moveActive(-1);
+        break;
+      case 'Enter':
+        event.preventDefault();
+        this.selectActiveOption();
+        break;
+      case 'Home':
+        event.preventDefault();
+        this.setActiveIndex(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        this.setActiveIndex(this.visibleOptions().length - 1);
+        break;
+      case 'Escape':
+        event.preventDefault();
+        this.close();
+        this.trigger().nativeElement.focus();
+        break;
+      case 'Tab':
+        this.close();
+        break;
+      default:
+        break;
+    }
+  }
+
+  setActiveIndex(index: number): void {
+    const optionsCount = this.visibleOptions().length;
+    if (optionsCount === 0) {
+      this.activeIndex.set(-1);
+      return;
+    }
+
+    const normalized = Math.max(0, Math.min(index, optionsCount - 1));
+    this.activeIndex.set(normalized);
+  }
+
+  // CVA Implementation
+  writeValue(obj: unknown): void {
+    this.value.set(this.normalizeExternalValue(obj));
+  }
+
+  registerOnChange(fn: (value: MagarySelectValue) => void): void {
     this.onChange = fn;
   }
 
@@ -176,7 +363,58 @@ export class MagarySelect implements ControlValueAccessor {
     this.formDisabled.set(isDisabled);
   }
 
-  private isObjectOption(option: SelectOption): option is SelectObjectOption {
+  private moveActive(step: 1 | -1): void {
+    const optionsCount = this.visibleOptions().length;
+    if (optionsCount === 0) {
+      this.activeIndex.set(-1);
+      return;
+    }
+
+    const current = this.activeIndex();
+    if (current === -1) {
+      this.activeIndex.set(step > 0 ? 0 : optionsCount - 1);
+      return;
+    }
+
+    const next = (current + step + optionsCount) % optionsCount;
+    this.activeIndex.set(next);
+  }
+
+  private selectActiveOption(): void {
+    const index = this.activeIndex();
+    const options = this.visibleOptions();
+    if (index < 0 || index >= options.length) {
+      return;
+    }
+
+    this.selectOption(options[index]);
+  }
+
+  private normalizeExternalValue(value: unknown): MagarySelectValue {
+    if (value == null) {
+      return null;
+    }
+
+    if (
+      typeof value === 'string' ||
+      typeof value === 'number' ||
+      typeof value === 'boolean'
+    ) {
+      return value;
+    }
+
+    if (typeof value === 'object') {
+      return value as SelectObjectOption;
+    }
+
+    return null;
+  }
+
+  private valuesEqual(left: MagarySelectValue, right: MagarySelectValue): boolean {
+    return Object.is(left, right);
+  }
+
+  private isObjectOption(option: MagarySelectOption): option is SelectObjectOption {
     return typeof option === 'object' && option !== null;
   }
 }

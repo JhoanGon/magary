@@ -129,20 +129,33 @@
       color: var(--text-secondary);
       border-bottom: 1px solid var(--surface-200);
       background: inherit; // For sticky header
+
+      .magary-sort-button {
+        width: 100%;
+        border: none;
+        background: transparent;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        color: inherit;
+        font: inherit;
+        letter-spacing: inherit;
+        text-transform: inherit;
+      }
     }
   }
 
   tbody {
-    tr.table-row {
+    tr:not(.empty-row) {
       transition: background-color 0.2s;
       border-bottom: 1px solid var(--surface-100);
 
       &:last-child {
         border-bottom: none;
-      }
-
-      &:hover {
-        background-color: var(--surface-50);
       }
 
       td {
@@ -152,6 +165,10 @@
         vertical-align: middle;
         font-weight: 500;
       }
+    }
+
+    tr:not(.empty-row):not(.skeleton-row):hover {
+      background-color: var(--surface-50);
     }
 
     // Skeleton Loading Styles
@@ -312,7 +329,7 @@
     tbody {
       display: block;
       
-      tr.table-row {
+      tr:not(.empty-row) {
         display: flex;
         flex-direction: column;
         background: var(--surface-0);

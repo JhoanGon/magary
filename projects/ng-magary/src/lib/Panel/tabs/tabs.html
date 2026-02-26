@@ -3,6 +3,8 @@
     class="tab-headers"
     #tabHeaders
     role="tablist"
+    aria-orientation="horizontal"
+    [attr.aria-label]="tabListAriaLabel()"
     [style.--background-color-line]="backgroundLine()"
     [style.--height-line]="heightLine()"
   >
@@ -11,7 +13,11 @@
         type="button"
         role="tab"
         #tabButton
+        [id]="getTabButtonId($index)"
+        [attr.tabindex]="activeIndex() === $index ? '0' : '-1'"
+        [attr.aria-controls]="getTabPanelId($index)"
         (click)="selectTab($index)"
+        (keydown)="onTabKeydown($event, $index)"
         [class.active]="activeIndex() === $index"
         [attr.aria-selected]="activeIndex() === $index"
       >
