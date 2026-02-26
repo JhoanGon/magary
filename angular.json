@@ -19,7 +19,8 @@
             "production": {
               "tsConfig": "projects/ng-magary/tsconfig.lib.prod.json"
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
           "builder": "@angular/build:unit-test",
