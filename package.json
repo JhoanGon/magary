@@ -25,6 +25,8 @@
     "check:consumer-matrix": "node tools/ci/check-consumer-matrix.mjs",
     "lint": "eslint . --ext .ts,.html",
     "test:visual": "playwright test -c e2e/playwright/playwright.config.ts",
+    "test:visual:regression": "playwright test -c e2e/playwright/playwright.config.ts --grep \"visual baseline\"",
+    "test:visual:regression:update": "playwright test -c e2e/playwright/playwright.config.ts --update-snapshots --grep \"visual baseline\"",
     "test:visual:smoke": "playwright test -c e2e/playwright/playwright.config.ts e2e/playwright/specs/ci-smoke.spec.ts",
     "test:a11y:smoke": "playwright test -c e2e/playwright/playwright.config.ts e2e/playwright/specs/ci-a11y.spec.ts",
     "test:visual:update": "playwright test -c e2e/playwright/playwright.config.ts --update-snapshots",

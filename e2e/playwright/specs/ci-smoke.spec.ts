@@ -108,6 +108,53 @@ test.describe('ci smoke', () => {
     await expect(input).toHaveValue('ci-smoke');
   });
 
+  test('input route covers loading, error and disabled states', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await openRoute('/components/Input', page);
+
+    const errorInput = page.getByLabel('Error').first();
+    await expect(errorInput).toBeVisible();
+    await expect(errorInput).toHaveAttribute('aria-invalid', 'true');
+    await expect(
+      page.locator('magary-input', { has: page.getByLabel('Error').first() }),
+    ).toContainText('Mensaje de error');
+
+    const loadingInput = page.getByLabel('Loading').first();
+    await expect(loadingInput).toBeVisible();
+    await expect(loadingInput).toHaveClass(/input-loading/);
+    const loadingInputContainer = page.locator('magary-input', {
+      has: page.getByLabel('Loading').first(),
+    });
+    await expect(
+      loadingInputContainer.locator('lucide-icon.loading-icon').first(),
+    ).toBeVisible();
+
+    const disabledInput = page.getByLabel('Deshabilitado').first();
+    await expect(disabledInput).toBeVisible();
+    await expect(disabledInput).toBeDisabled();
+    await expect(disabledInput).toHaveValue('Deshabilitado');
+  });
+
+  test('setup route exposes integration examples and navigates to demo references', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await openRoute('/setup', page);
+
+    await expect(page.getByRole('heading', { name: 'Integration Examples (Demo App)' })).toBeVisible();
+    await expect(page.getByText('Standalone bootstrap:')).toBeVisible();
+    await expect(page.getByText('Reactive forms bridge:')).toBeVisible();
+    await expect(page.getByText('Overlay + feedback flow:')).toBeVisible();
+
+    const formIntegrationButton = page
+      .getByRole('button', { name: 'Form Integration' })
+      .first();
+    await expect(formIntegrationButton).toBeVisible();
+    await formIntegrationButton.click();
+    await expect(page).toHaveURL(/\/components\/Input$/);
+    await expect(page.locator('app-root')).toBeVisible();
+  });
+
   test('sidebar route renders navigation sections', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await openRoute('/components/Sidebar', page);
@@ -232,6 +279,18 @@ test.describe('ci smoke', () => {
 
     await page.keyboard.press('Escape');
     await expect(hamburger).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  test('table route paginates on mobile viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await openRoute('/components/Table', page);
+
+    const nextPageButton = page.locator('.magary-paginator-next').first();
+    await expect(nextPageButton).toBeVisible();
+    await nextPageButton.click();
+    await expect(page.locator('.magary-paginator-page-active').first()).toHaveText(
+      '2',
+    );
   });
 
   test('select route opens dropdown and selects an option', async ({ page }) => {

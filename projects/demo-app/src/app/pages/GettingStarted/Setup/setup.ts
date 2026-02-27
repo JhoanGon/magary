@@ -17,6 +17,11 @@ export class Setup {
   navigateToTheming() {
     this._router.navigate(['/theming']);
   }
+
+  navigateToRoute(route: string) {
+    this._router.navigateByUrl(route);
+  }
+
   readonly iconInstall = `npm install lucide-angular lucide`;
   readonly angularJsonConfig = `// app.config.ts
 import { ApplicationConfig } from '@angular/core';
@@ -75,4 +80,44 @@ export class AppModule { }`;
   --danger: #ef4444;
   /* ... */
 }`;
+
+  readonly integrationStandalone = `// app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { LucideIconProvider, LUCIDE_ICONS, icons } from 'lucide-angular';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideAnimations(),
+    { provide: LUCIDE_ICONS, useValue: new LucideIconProvider(icons) }
+  ]
+};`;
+
+  readonly integrationForms = `// reactive-form bridge for Magary controls
+this.form = this.fb.group({
+  city: [''],
+  notes: ['']
+});
+
+// template
+<magary-select
+  [options]="cities"
+  [value]="form.controls.city.value ?? ''"
+  (valueChange)="form.controls.city.setValue($event)"
+></magary-select>
+
+<magary-input
+  [value]="form.controls.notes.value ?? ''"
+  (valueChange)="form.controls.notes.setValue($event)"
+></magary-input>`;
+
+  readonly integrationOverlay = `// overlay + feedback integration
+confirmService.confirm({
+  message: 'Delete item?',
+  accept: () => toastService.add({
+    type: 'success',
+    title: 'Done',
+    message: 'Item removed'
+  })
+});`;
 }

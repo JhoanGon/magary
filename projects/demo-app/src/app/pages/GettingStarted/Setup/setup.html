@@ -135,6 +135,72 @@
       </div>
     </magary-card>
 
+    <!-- Step 4: Integration Examples -->
+    <magary-card
+      [width]="'100%'"
+      [shadow]="3"
+      [borderRadius]="'1rem'"
+      [backgroundColor]="'var(--surface-0)'"
+      [border]="'1px solid var(--surface-200)'"
+      class="step-card"
+    >
+      <div slot="header">
+        <div class="step-header">
+          <span class="step-number">4</span>
+          <h3>Integration Examples (Demo App)</h3>
+        </div>
+      </div>
+      <div class="step-content step-content-column">
+        <p>
+          Use these routes as integration references for consumer apps. Each one
+          includes real component wiring with forms, overlays, and data flows.
+        </p>
+        <div class="quick-links">
+          <magary-button
+            label="Form Integration"
+            icon="form-input"
+            severity="info"
+            variant="outlined"
+            (buttonClick)="navigateToRoute('/components/Input')"
+          ></magary-button>
+          <magary-button
+            label="Overlay Integration"
+            icon="layers"
+            severity="info"
+            variant="outlined"
+            (buttonClick)="navigateToRoute('/components/ConfirmDialog')"
+          ></magary-button>
+          <magary-button
+            label="Data Integration"
+            icon="table"
+            severity="info"
+            variant="outlined"
+            (buttonClick)="navigateToRoute('/components/Table')"
+          ></magary-button>
+        </div>
+        <div class="integration-grid">
+          <div class="code-block">
+            <p class="text-secondary text-sm" style="margin-left: 1rem">
+              Standalone bootstrap:
+            </p>
+            <pre><code [highlight]="integrationStandalone" language="typescript"></code></pre>
+          </div>
+          <div class="code-block">
+            <p class="text-secondary text-sm" style="margin-left: 1rem">
+              Reactive forms bridge:
+            </p>
+            <pre><code [highlight]="integrationForms" language="typescript"></code></pre>
+          </div>
+          <div class="code-block">
+            <p class="text-secondary text-sm" style="margin-left: 1rem">
+              Overlay + feedback flow:
+            </p>
+            <pre><code [highlight]="integrationOverlay" language="typescript"></code></pre>
+          </div>
+        </div>
+      </div>
+    </magary-card>
+
     <!-- Attribution -->
     <magary-card
       [width]="'100%'"
