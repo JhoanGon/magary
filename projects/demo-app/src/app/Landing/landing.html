@@ -12,7 +12,7 @@
     <!-- HEADER -->
     <div class="header">
       <h1 class="main-title">Magary</h1>
-      <p class="subtitle">Componentes Modernos para Angular</p>
+      <p class="subtitle">{{ i18n.translateUi('landingSubtitle') }}</p>
     </div>
 
     <!-- LOGO (Fixed Glamour Mode) -->
@@ -40,8 +40,25 @@
 
     <!-- ACTIONS -->
     <div class="actions-area">
+      <div
+        class="language-switch"
+        role="group"
+        [attr.aria-label]="i18n.translateUi('languageSelector')"
+      >
+        <magary-segmented
+          class="lang-control"
+          [options]="languageOptions"
+          optionLabel="label"
+          optionValue="value"
+          [value]="i18n.language()"
+          [ariaLabel]="i18n.translateUi('languageSelector')"
+          size="small"
+          (valueChange)="onLanguageSelection($event)"
+        ></magary-segmented>
+      </div>
+
       <button class="enter-app-btn" (click)="enterApp()">
-        <span>Ingresar</span>
+        <span>{{ i18n.translateUi('enterApp') }}</span>
         <lucide-icon name="arrow-right" size="18"></lucide-icon>
       </button>
 

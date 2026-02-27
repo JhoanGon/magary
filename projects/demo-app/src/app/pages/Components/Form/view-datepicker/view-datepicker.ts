@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MagaryDatePicker, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { MagaryDatePicker, MagaryTab, MagaryTabs } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 
 @Component({
   selector: 'app-view-datepicker',
@@ -19,6 +20,8 @@ import { Highlight } from 'ngx-highlightjs';
   styleUrl: './view-datepicker.scss',
 })
 export class ViewDatePicker {
+  readonly i18n = inject(DemoI18nService);
+
   date: Date | null = null;
 
   importRef = `import { MagaryDatePicker } from 'ng-magary';
@@ -39,18 +42,18 @@ import { FormsModule } from '@angular/forms';`;
 
   rangeDates: Date[] | null = null;
 
-  rangeHTML = `<magary-datepicker 
-  [(ngModel)]="rangeDates" 
-  selectionMode="range" 
+  rangeHTML = `<magary-datepicker
+  [(ngModel)]="rangeDates"
+  selectionMode="range"
   placeholder="Select a date range">
 </magary-datepicker>`;
 
   rangeTS = `rangeDates: Date[] | null = null;`;
 
-  minMaxHTML = `<magary-datepicker 
-  [(ngModel)]="date" 
-  [minDate]="minDate" 
-  [maxDate]="maxDate" 
+  minMaxHTML = `<magary-datepicker
+  [(ngModel)]="date"
+  [minDate]="minDate"
+  [maxDate]="maxDate"
   placeholder="Next 7 days only">
 </magary-datepicker>`;
 
@@ -58,7 +61,6 @@ import { FormsModule } from '@angular/forms';`;
 maxDate = new Date();
 
 constructor() {
-  // Restrict to next 7 days
   this.maxDate.setDate(this.maxDate.getDate() + 7);
 }`;
 }

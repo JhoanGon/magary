@@ -1,8 +1,8 @@
 <div class="layout">
   <magary-sidebar
-    [sections]="sidebarSections"
+    [sections]="sidebarSections()"
     [showUserSection]="true"
-    [userName]="'Juan Pérez'"
+    [userName]="'Juan Perez'"
     [userEmail]="'juan@empresa.com'"
     [appTitle]="'Magary'"
     [logoSrc]="'/assets/magary_logo.webp'"
@@ -18,6 +18,9 @@
     [logoHeight]="603"
     [brandLogoWidth]="414"
     [brandLogoHeight]="603"
+    [navigationLabel]="i18n.translateUi('navigationLabel')"
+    [mobileMenuButtonLabel]="i18n.translateUi('openSidebarLabel')"
+    [closeButtonLabel]="i18n.translateUi('closeSidebarLabel')"
     [appTitleStyle]="{
       background: 'var(--gradient-text)',
       '-webkit-background-clip': 'text',
@@ -32,14 +35,31 @@
   <main class="main-container">
     <header class="top-bar">
       <div class="app-branding" routerLink="/" style="cursor: pointer">
-        Magary <span class="highlight">Demo Alpha v{{ version }}</span>
+        Magary <span class="highlight">{{ i18n.translateUi('demoBadge') }} v{{ version }}</span>
       </div>
 
       <div class="top-actions">
+        <div
+          class="language-switch"
+          role="group"
+          [attr.aria-label]="i18n.translateUi('languageSelector')"
+        >
+          <magary-segmented
+            class="lang-control"
+            [options]="languageOptions"
+            optionLabel="label"
+            optionValue="value"
+            [value]="i18n.language()"
+            [ariaLabel]="i18n.translateUi('languageSelector')"
+            size="small"
+            (valueChange)="onLanguageSelection($event)"
+          ></magary-segmented>
+        </div>
+
         @if (pwaService.installable()) {
           <magary-button
             icon="download"
-            label="Instalar App"
+            [label]="i18n.translateUi('installApp')"
             severity="info"
             variant="outlined"
             [rounded]="true"

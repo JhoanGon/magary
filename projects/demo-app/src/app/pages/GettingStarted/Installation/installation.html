@@ -1,7 +1,7 @@
 <div class="installation-container fade-in">
   <div class="header">
-    <h1>Instalacion</h1>
-    <p>Guia rapida para integrar Magary en tu proyecto Angular</p>
+    <h1>{{ i18n.translateDocs('installation.title') }}</h1>
+    <p>{{ i18n.translateDocs('installation.subtitle') }}</p>
   </div>
 
   <div class="steps-grid">
@@ -16,12 +16,12 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">1</span>
-          <h3>Instalar paquete y dependencias</h3>
+          <h3>{{ i18n.translateDocs('installation.step1.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
         <div class="step-description">
-          <p>Instala ng-magary junto con sus peer dependencies requeridas.</p>
+          <p>{{ i18n.translateDocs('installation.step1.desc') }}</p>
         </div>
         <div
           style="
@@ -53,14 +53,11 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">2</span>
-          <h3>Configurar App (Iconos + Animaciones)</h3>
+          <h3>{{ i18n.translateDocs('installation.step2.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
-        <p>
-          Magary usa iconos Lucide y varios componentes con animaciones de
-          Angular. Configura ambos providers en tu app.config.ts.
-        </p>
+        <p>{{ i18n.translateDocs('installation.step2.desc') }}</p>
         <div
           style="
             flex: 1.5;
@@ -91,13 +88,11 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">3</span>
-          <h3>Estilos globales (solo Tooltip)</h3>
+          <h3>{{ i18n.translateDocs('installation.step3.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
-        <p>
-          Si usas magaryTooltip, agrega estas clases globales en styles.scss.
-        </p>
+        <p>{{ i18n.translateDocs('installation.step3.desc') }}</p>
         <div class="code-block">
           <pre><code [highlight]="tooltipStyles" language="scss"></code></pre>
         </div>
@@ -115,14 +110,11 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">4</span>
-          <h3>Usar componentes</h3>
+          <h3>{{ i18n.translateDocs('installation.step4.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
-        <p>
-          Importa los componentes de ng-magary directamente en tus componentes
-          standalone.
-        </p>
+        <p>{{ i18n.translateDocs('installation.step4.desc') }}</p>
         <div class="code-block">
           <pre><code [highlight]="componentImport" language="typescript"></code></pre>
         </div>

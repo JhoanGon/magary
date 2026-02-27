@@ -1,13 +1,13 @@
-﻿<div class="container fade-in">
+<div class="container fade-in">
   <div class="header">
-    <h1>Magary TextArea</h1>
-    <p>Area de texto con autoredimensionamiento y soporte CVA.</p>
+    <h1>{{ i18n.translateDocs('components.form.textarea.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.form.textarea.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
-      <p>Importa el módulo en tu componente standalone.</p>
+      <h2>{{ i18n.translateDocs('components.form.textarea.import.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.textarea.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -18,30 +18,48 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Uso Básico</h2>
-      <p>Textarea simple y con AutoResize.</p>
+      <h2>{{ i18n.translateDocs('components.form.textarea.basic.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.textarea.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <div class="field">
-          <label>Basic</label>
-          <magary-textarea placeholder="Type something..."></magary-textarea>
-        </div>
-
-        <div class="field">
-          <label>Auto Resize</label>
+          <label>
+            {{ i18n.translateDocs('components.form.textarea.basic.label.basic') }}
+          </label>
           <magary-textarea
-            [autoResize]="true"
-            [rows]="1"
-            placeholder="Type and watch me grow..."
+            [placeholder]="
+              i18n.translateDocs('components.form.textarea.basic.placeholder.basic')
+            "
           ></magary-textarea>
         </div>
 
         <div class="field">
-          <label>Disabled</label>
+          <label>
+            {{ i18n.translateDocs('components.form.textarea.basic.label.autoResize') }}
+          </label>
+          <magary-textarea
+            [autoResize]="true"
+            [rows]="1"
+            [placeholder]="
+              i18n.translateDocs(
+                'components.form.textarea.basic.placeholder.autoResize'
+              )
+            "
+          ></magary-textarea>
+        </div>
+
+        <div class="field">
+          <label>
+            {{ i18n.translateDocs('components.form.textarea.basic.label.disabled') }}
+          </label>
           <magary-textarea
             [disabled]="true"
-            placeholder="Disabled"
+            [placeholder]="
+              i18n.translateDocs(
+                'components.form.textarea.basic.placeholder.disabled'
+              )
+            "
           ></magary-textarea>
         </div>
       </div>
@@ -65,21 +83,24 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Character Counter</h2>
-      <p>Contador de caracteres y límite de input.</p>
+      <h2>{{ i18n.translateDocs('components.form.textarea.counter.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.textarea.counter.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <div class="field">
-          <label>With MaxLength (20)</label>
+          <label>
+            {{ i18n.translateDocs('components.form.textarea.counter.label') }}
+          </label>
           <magary-textarea
             [rows]="5"
             [cols]="30"
-            placeholder="Max 20 chars"
+            [placeholder]="
+              i18n.translateDocs('components.form.textarea.counter.placeholder')
+            "
             [maxlength]="20"
             showCounter
-          >
-          </magary-textarea>
+          ></magary-textarea>
         </div>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -90,18 +111,26 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>API Reference</h2>
-      <p>Inputs para <code>magary-textarea</code>.</p>
+      <h2>{{ i18n.translateDocs('components.form.textarea.api.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.textarea.api.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Default</th>
-              <th>Descripción</th>
+              <th>{{ i18n.translateDocs('components.form.textarea.api.header.name') }}</th>
+              <th>{{ i18n.translateDocs('components.form.textarea.api.header.type') }}</th>
+              <th>
+                {{ i18n.translateDocs('components.form.textarea.api.header.default') }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.textarea.api.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -109,45 +138,53 @@
               <td><code>rows</code></td>
               <td><code>number</code></td>
               <td><code>3</code></td>
-              <td>Filas iniciales.</td>
+              <td>{{ i18n.translateDocs('components.form.textarea.api.rows.desc') }}</td>
             </tr>
             <tr>
               <td><code>cols</code></td>
               <td><code>number</code></td>
               <td><code>20</code></td>
-              <td>Columnas iniciales.</td>
+              <td>{{ i18n.translateDocs('components.form.textarea.api.cols.desc') }}</td>
             </tr>
             <tr>
               <td><code>placeholder</code></td>
               <td><code>string</code></td>
               <td><code>-</code></td>
-              <td>Texto de ayuda.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.textarea.api.placeholder.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>autoResize</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
               <td>
-                Si es true, la altura se ajusta automáticamente al contenido.
+                {{ i18n.translateDocs('components.form.textarea.api.autoResize.desc') }}
               </td>
             </tr>
             <tr>
               <td><code>maxlength</code></td>
               <td><code>number</code></td>
               <td><code>-</code></td>
-              <td>Límite de caracteres.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.textarea.api.maxlength.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>showCounter</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Muestra el contador `current / max`.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.textarea.api.showCounter.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>disabled</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Deshabilita el textarea.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.textarea.api.disabled.desc') }}
+              </td>
             </tr>
           </tbody>
         </table>

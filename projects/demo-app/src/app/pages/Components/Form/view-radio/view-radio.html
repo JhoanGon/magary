@@ -1,15 +1,13 @@
-﻿<div class="container fade-in">
-  <!-- Header -->
+<div class="container fade-in">
   <div class="header">
-    <h1>Magary Radio Button</h1>
-    <p>Componente de selección única estilizado y accesible.</p>
+    <h1>{{ i18n.translateDocs('components.form.radio.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.form.radio.subtitle') }}</p>
   </div>
 
-  <!-- Import -->
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
-      <p>Importa el módulo en tu componente standalone.</p>
+      <h2>{{ i18n.translateDocs('components.form.radio.import.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.radio.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -18,11 +16,10 @@
     </div>
   </div>
 
-  <!-- Basic Usage -->
   <div class="section">
     <div class="section-header">
-      <h2>Uso Básico</h2>
-      <p>Selección de opciones simples.</p>
+      <h2>{{ i18n.translateDocs('components.form.radio.basic.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.radio.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="radio-group-demo">
@@ -30,34 +27,36 @@
           <magary-radio
             name="city"
             value="NY"
-            label="New York"
+            [label]="i18n.translateDocs('components.form.radio.basic.city.newYork')"
             [(ngModel)]="city"
             inputId="r1"
-          >
-          </magary-radio>
+          ></magary-radio>
 
           <magary-radio
             name="city"
             value="LDN"
-            label="London"
+            [label]="i18n.translateDocs('components.form.radio.basic.city.london')"
             [(ngModel)]="city"
             inputId="r2"
-          >
-          </magary-radio>
+          ></magary-radio>
 
           <magary-radio
             name="city"
             value="PAR"
-            label="Paris (Disabled)"
+            [label]="
+              i18n.translateDocs('components.form.radio.basic.city.parisDisabled')
+            "
             [(ngModel)]="city"
             inputId="r3"
             disabled
-          >
-          </magary-radio>
+          ></magary-radio>
         </div>
 
         <p>
-          Selected City: <strong>{{ city || "None" }}</strong>
+          {{ i18n.translateDocs('components.form.radio.basic.selectedCity') }}:
+          <strong>
+            {{ city || i18n.translateDocs('components.form.radio.common.none') }}
+          </strong>
         </p>
       </div>
 
@@ -78,21 +77,16 @@
     </div>
   </div>
 
-  <!-- Radio Group Usage -->
   <div class="section">
     <div class="section-header">
-      <h2>Radio Group</h2>
-      <p>
-        Genera opciones dinámicamente desde un Array. Simplifica el código y
-        permite alternar fácilmente entre layout <code>vertical</code> u
-        <code>horizontal</code>.
-      </p>
+      <h2>{{ i18n.translateDocs('components.form.radio.group.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.radio.group.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="radio-group-demo">
-        <label style="margin-bottom: 0.5rem; display: block; font-weight: 500"
-          >Payment Method</label
-        >
+        <label style="margin-bottom: 0.5rem; display: block; font-weight: 500">
+          {{ i18n.translateDocs('components.form.radio.group.paymentMethod') }}
+        </label>
         <magary-radio-group
           [options]="paymentOptions"
           [(ngModel)]="paymentMethod"
@@ -100,11 +94,11 @@
           layout="horizontal"
           optionLabel="label"
           optionValue="value"
-        >
-        </magary-radio-group>
+        ></magary-radio-group>
 
         <p style="margin-top: 1rem">
-          Selected Method: <strong>{{ paymentMethod }}</strong>
+          {{ i18n.translateDocs('components.form.radio.group.selectedMethod') }}:
+          <strong>{{ paymentMethod }}</strong>
         </p>
       </div>
 
@@ -125,21 +119,24 @@
     </div>
   </div>
 
-  <!-- API Table Group -->
   <div class="section">
     <div class="section-header">
-      <h2>API Reference (Group)</h2>
-      <p>Inputs para <code>magary-radio-group</code>.</p>
+      <h2>{{ i18n.translateDocs('components.form.radio.apiGroup.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.radio.apiGroup.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Default</th>
-              <th>Descripción</th>
+              <th>{{ i18n.translateDocs('components.form.radio.api.header.name') }}</th>
+              <th>{{ i18n.translateDocs('components.form.radio.api.header.type') }}</th>
+              <th>
+                {{ i18n.translateDocs('components.form.radio.api.header.default') }}
+              </th>
+              <th>
+                {{ i18n.translateDocs('components.form.radio.api.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -147,25 +144,33 @@
               <td><code>options</code></td>
               <td><code>unknown[]</code></td>
               <td><code>[]</code></td>
-              <td>Lista de opciones.</td>
+              <td>{{ i18n.translateDocs('components.form.radio.apiGroup.options.desc') }}</td>
             </tr>
             <tr>
               <td><code>layout</code></td>
               <td><code>'vertical' | 'horizontal'</code></td>
               <td><code>vertical</code></td>
-              <td>Orientación del grupo.</td>
+              <td>{{ i18n.translateDocs('components.form.radio.apiGroup.layout.desc') }}</td>
             </tr>
             <tr>
               <td><code>optionLabel</code></td>
               <td><code>string</code></td>
               <td><code>-</code></td>
-              <td>Propiedad para etiqueta.</td>
+              <td>
+                {{
+                  i18n.translateDocs('components.form.radio.apiGroup.optionLabel.desc')
+                }}
+              </td>
             </tr>
             <tr>
               <td><code>optionValue</code></td>
               <td><code>string</code></td>
               <td><code>-</code></td>
-              <td>Propiedad para valor.</td>
+              <td>
+                {{
+                  i18n.translateDocs('components.form.radio.apiGroup.optionValue.desc')
+                }}
+              </td>
             </tr>
           </tbody>
         </table>
@@ -173,21 +178,24 @@
     </div>
   </div>
 
-  <!-- API Table -->
   <div class="section">
     <div class="section-header">
-      <h2>API Reference</h2>
-      <p>Inputs para <code>magary-radio</code>.</p>
+      <h2>{{ i18n.translateDocs('components.form.radio.api.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.radio.api.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Default</th>
-              <th>Descripción</th>
+              <th>{{ i18n.translateDocs('components.form.radio.api.header.name') }}</th>
+              <th>{{ i18n.translateDocs('components.form.radio.api.header.type') }}</th>
+              <th>
+                {{ i18n.translateDocs('components.form.radio.api.header.default') }}
+              </th>
+              <th>
+                {{ i18n.translateDocs('components.form.radio.api.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -195,31 +203,31 @@
               <td><code>value</code></td>
               <td><code>unknown</code></td>
               <td><code>-</code></td>
-              <td>Valor del radio button.</td>
+              <td>{{ i18n.translateDocs('components.form.radio.api.value.desc') }}</td>
             </tr>
             <tr>
               <td><code>name</code></td>
               <td><code>string</code></td>
               <td><code>-</code></td>
-              <td>Nombre del grupo de radios (atributo HTML).</td>
+              <td>{{ i18n.translateDocs('components.form.radio.api.name.desc') }}</td>
             </tr>
             <tr>
               <td><code>label</code></td>
               <td><code>string</code></td>
               <td><code>-</code></td>
-              <td>Texto descriptivo opcional.</td>
+              <td>{{ i18n.translateDocs('components.form.radio.api.label.desc') }}</td>
             </tr>
             <tr>
               <td><code>inputId</code></td>
               <td><code>string</code></td>
               <td><code>-</code></td>
-              <td>ID del input interno (para labels).</td>
+              <td>{{ i18n.translateDocs('components.form.radio.api.inputId.desc') }}</td>
             </tr>
             <tr>
               <td><code>disabled</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Deshabilita el radio button (soporta atributo HTML).</td>
+              <td>{{ i18n.translateDocs('components.form.radio.api.disabled.desc') }}</td>
             </tr>
           </tbody>
         </table>

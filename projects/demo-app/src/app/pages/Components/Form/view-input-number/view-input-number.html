@@ -1,14 +1,12 @@
-﻿<div class="container fade-in">
+<div class="container fade-in">
   <div class="header">
-    <h1>Magary InputNumber</h1>
-    <p>
-      Componente de entrada para valores numéricos con formato y validación.
-    </p>
+    <h1>{{ i18n.translateDocs('components.form.inputNumber.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.form.inputNumber.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ i18n.translateDocs('components.form.inputNumber.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -19,15 +17,16 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplos</h2>
-      <p>Diferentes configuraciones de formato y layout.</p>
+      <h2>{{ i18n.translateDocs('components.form.inputNumber.examples.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.inputNumber.examples.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <div class="form-grid">
-          <!-- Basic -->
           <div class="field">
-            <label>Básico</label>
+            <label>
+              {{ i18n.translateDocs('components.form.inputNumber.examples.basic.label') }}
+            </label>
             <magary-input-number
               [(value)]="val1"
               mode="decimal"
@@ -35,25 +34,43 @@
               inputId="minmax"
               [min]="0"
               [max]="100"
-              placeholder="0-100"
+              [placeholder]="
+                i18n.translateDocs(
+                  'components.form.inputNumber.examples.basic.placeholder'
+                )
+              "
             ></magary-input-number>
           </div>
 
-          <!-- Currency -->
           <div class="field">
-            <label>Moneda (USD)</label>
+            <label>
+              {{
+                i18n.translateDocs(
+                  'components.form.inputNumber.examples.currency.label'
+                )
+              }}
+            </label>
             <magary-input-number
               [(value)]="val3"
               mode="currency"
               currency="USD"
               locale="en-US"
-              placeholder="USD"
+              [placeholder]="
+                i18n.translateDocs(
+                  'components.form.inputNumber.examples.currency.placeholder'
+                )
+              "
             ></magary-input-number>
           </div>
 
-          <!-- Horizontal Buttons -->
           <div class="field">
-            <label>Botones Horizontales</label>
+            <label>
+              {{
+                i18n.translateDocs(
+                  'components.form.inputNumber.examples.horizontal.label'
+                )
+              }}
+            </label>
             <magary-input-number
               [(value)]="val9"
               [showButtons]="true"
@@ -85,33 +102,51 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente</p>
+      <h2>{{ i18n.translateDocs('components.form.inputNumber.inputs.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.inputNumber.inputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Por Defecto</th>
-              <th>Descripción</th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.inputNumber.inputs.header.name'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.inputNumber.inputs.header.type'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.inputNumber.inputs.header.default'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.inputNumber.inputs.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
             @for (input of inputs; track input.name) {
               <tr>
-                <td>
-                  <code>{{ input.name }}</code>
-                </td>
-                <td>
-                  <code>{{ input.type }}</code>
-                </td>
-                <td>
-                  <code>{{ input.default }}</code>
-                </td>
-                <td>{{ input.description }}</td>
+                <td><code>{{ input.name }}</code></td>
+                <td><code>{{ input.type }}</code></td>
+                <td><code>{{ input.default }}</code></td>
+                <td>{{ i18n.translateDocs(input.descriptionKey) }}</td>
               </tr>
             }
           </tbody>
@@ -122,29 +157,43 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos emitidos por el componente</p>
+      <h2>{{ i18n.translateDocs('components.form.inputNumber.outputs.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.inputNumber.outputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.inputNumber.outputs.header.name'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.inputNumber.outputs.header.type'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.inputNumber.outputs.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
             @for (output of outputs; track output.name) {
               <tr>
-                <td>
-                  <code>{{ output.name }}</code>
-                </td>
-                <td>
-                  <code>{{ output.type }}</code>
-                </td>
-                <td>{{ output.description }}</td>
+                <td><code>{{ output.name }}</code></td>
+                <td><code>{{ output.type }}</code></td>
+                <td>{{ i18n.translateDocs(output.descriptionKey) }}</td>
               </tr>
             }
           </tbody>

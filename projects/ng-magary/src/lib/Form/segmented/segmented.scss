@@ -1,0 +1,178 @@
+:host {
+  display: inline-block;
+  --segmented-bg: color-mix(in srgb, var(--surface-0, #ffffff) 72%, var(--surface-100, #f1f5f9) 28%);
+  --segmented-border: color-mix(in srgb, var(--surface-300, #cbd5e1) 78%, transparent);
+  --segmented-selected-bg: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--primary-400, #22d3ee) 88%, #ffffff 12%),
+    color-mix(in srgb, var(--primary-600, #0891b2) 85%, #ffffff 15%)
+  );
+  --segmented-selected-text: var(--surface-0, #ffffff);
+  --segmented-text: var(--text-secondary, #64748b);
+  --segmented-text-active: var(--text-primary, #0f172a);
+  --segmented-radius: 999px;
+  --segmented-height: 2.2rem;
+  --segmented-padding: 0.16rem;
+  --segmented-option-padding-x: 0.9rem;
+  --segmented-glass-shadow: 0 8px 24px rgba(2, 6, 23, 0.2);
+}
+
+.magary-segmented {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: var(--segmented-height);
+  padding: var(--segmented-padding);
+  border: 1px solid var(--segmented-border);
+  border-radius: var(--segmented-radius);
+  background: var(--segmented-bg);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+
+  &:focus-within {
+    border-color: color-mix(in srgb, var(--primary-500, #06b6d4) 50%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-500, #06b6d4) 18%, transparent);
+  }
+
+  &.full-width {
+    display: flex;
+    width: 100%;
+
+    .segment-option {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+
+  &.size-small {
+    --segmented-height: 1.9rem;
+    --segmented-option-padding-x: 0.72rem;
+
+    .segment-option {
+      font-size: 0.76rem;
+    }
+  }
+
+  &.size-large {
+    --segmented-height: 2.5rem;
+    --segmented-option-padding-x: 1.05rem;
+
+    .segment-option {
+      font-size: 0.9rem;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.72;
+  }
+}
+
+.segment-indicator {
+  position: absolute;
+  top: var(--segmented-padding);
+  left: 0;
+  height: calc(var(--segmented-height) - (var(--segmented-padding) * 2));
+  border-radius: calc(var(--segmented-radius) - 0.28rem);
+  background: var(--segmented-selected-bg);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+    var(--segmented-glass-shadow);
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0.08)
+    );
+    mix-blend-mode: screen;
+    opacity: 0.9;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      130% 80% at 50% 4%,
+      rgba(255, 255, 255, 0.55) 0%,
+      transparent 62%
+    );
+    opacity: 0.7;
+  }
+}
+
+.segment-option {
+  position: relative;
+  z-index: 1;
+  min-height: calc(var(--segmented-height) - (var(--segmented-padding) * 2));
+  padding: 0.35rem var(--segmented-option-padding-x);
+  border: none;
+  border-radius: calc(var(--segmented-radius) - 0.28rem);
+  background: transparent;
+  color: var(--segmented-text);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    color 220ms ease,
+    transform 220ms ease;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  &:hover:not(:disabled):not(.selected) {
+    color: var(--segmented-text-active);
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &.selected {
+    color: var(--segmented-selected-text);
+    text-shadow: 0 1px 1px rgba(2, 6, 23, 0.35);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magary-segmented,
+  .segment-indicator,
+  .segment-option {
+    transition: none !important;
+    animation: none !important;
+  }
+}

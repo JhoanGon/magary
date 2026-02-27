@@ -26,6 +26,7 @@ export * from './Form/cascade-select/cascade-select';
 export * from './Form/input/input';
 export * from './Form/checkbox/checkbox';
 export * from './Form/switch/switch';
+export * from './Form/segmented/segmented';
 export * from './Form/select/select';
 export * from './Form/radio/radio';
 export * from './Form/radio/radio-group';

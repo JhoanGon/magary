@@ -1,15 +1,10 @@
 <div class="icons-container fade-in">
   <div class="header">
-    <h1>Iconografía</h1>
-    <p>
-      ng-magary utiliza <b>Lucide Icons</b> por defecto para una apariencia
-      moderna y consistente. Aquí tienes una guía rápida de uso y los iconos más
-      comunes.
-    </p>
+    <h1>{{ i18n.translateDocs('utilities.icons.title') }}</h1>
+    <p>{{ i18n.translateDocs('utilities.icons.subtitle') }}</p>
   </div>
 
   <div class="content-grid">
-    <!-- Usage Guide -->
     <magary-card
       [width]="'100%'"
       [shadow]="3"
@@ -18,13 +13,11 @@
       class="usage-card"
     >
       <div slot="header" style="padding: 1.5rem 1.5rem 0">
-        <h3>¿Cómo usar iconos?</h3>
+        <h3>{{ i18n.translateDocs('utilities.icons.usageTitle') }}</h3>
       </div>
       <div style="padding: 1.5rem">
         <p style="margin-bottom: 1rem; color: var(--text-secondary)">
-          Simplemente pasa el nombre del icono Lucide (ej: <code>'house'</code>)
-          a la propiedad <code>icon</code> de los componentes como Botones o
-          Inputs.
+          {{ i18n.translateDocs('utilities.icons.usageDesc') }}
         </p>
         <div class="code-block">
           <pre><code [highlight]="iconUsage" language="html"></code></pre>
@@ -32,7 +25,6 @@
       </div>
     </magary-card>
 
-    <!-- Common Icons Gallery -->
     <magary-card
       [width]="'100%'"
       [shadow]="3"
@@ -47,13 +39,13 @@
             align-items: center;
           "
         >
-          <h3>Iconos Comunes</h3>
+          <h3>{{ i18n.translateDocs('utilities.icons.commonTitle') }}</h3>
           <a
             href="https://lucide.dev/icons"
             target="_blank"
             class="external-link"
           >
-            Ver todos en Lucide.dev
+            {{ i18n.translateDocs('utilities.icons.commonLink') }}
             <lucide-icon name="external-link" size="16"></lucide-icon>
           </a>
         </div>

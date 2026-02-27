@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Highlight } from 'ngx-highlightjs';
 import {
   MagaryRadioButton,
   MagaryRadioGroup,
-  MagaryTabs,
   MagaryTab,
+  MagaryTabs,
 } from 'ng-magary';
-import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 
 @Component({
   selector: 'app-view-radio',
@@ -26,19 +27,18 @@ import { Highlight } from 'ngx-highlightjs';
   styleUrl: './view-radio.scss',
 })
 export class ViewRadio {
+  readonly i18n = inject(DemoI18nService);
+
   city: string | null = null;
   paymentMethod = 'paypal';
 
-  paymentOptions = [
-    { label: 'Credit Card', value: 'cc' },
-    { label: 'PayPal', value: 'paypal' },
-    { label: 'Bitcoin', value: 'btc', disabled: true }, // If option level disabled support?
-    // My implementation supports disabled on group, and MagaryRadio checks parent disabled?
-    // Let's check Radio.ts. It checks `this.disabled()`.
-    // My RadioGroup logic: `[disabled]="disabled()"` (group level).
-    // I didn't implement option-level disabled in RadioGroup.
-    // It's fine for V1.
-  ];
+  get paymentOptions() {
+    return [
+      { label: 'Credit Card', value: 'cc' },
+      { label: 'PayPal', value: 'paypal' },
+      { label: 'Bitcoin', value: 'btc', disabled: true },
+    ];
+  }
 
   importRef = `import { MagaryRadioButton } from 'ng-magary';`;
 
@@ -46,25 +46,24 @@ export class ViewRadio {
 <magary-radio name="city" value="LDN" label="London" [(ngModel)]="city"></magary-radio>
 
 <!-- Disabled -->
-<magary-radio 
-  name="city" 
-  value="PAR" 
-  label="Paris (Disabled)" 
+<magary-radio
+  name="city"
+  value="PAR"
+  label="Paris (Disabled)"
   disabled>
 </magary-radio>`;
 
   basicTS = `city: string | null = null;`;
 
-  groupHTML = `<magary-radio-group 
-  [options]="paymentOptions" 
-  [(ngModel)]="paymentMethod" 
+  groupHTML = `<magary-radio-group
+  [options]="paymentOptions"
+  [(ngModel)]="paymentMethod"
   name="payment"
   layout="horizontal">
 </magary-radio-group>`;
 
   groupTS = `paymentMethod = 'paypal';
 
-// Options defined in Controller
 paymentOptions = [
   { label: 'Credit Card', value: 'cc' },
   { label: 'PayPal', value: 'paypal' },

@@ -1,31 +1,26 @@
-import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  MagaryCheckbox,
-  MagaryCard,
-  MagaryTabs,
-  MagaryTab,
-  MagaryButton,
-} from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { MagaryCard, MagaryCheckbox } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 
 const CODE_EXAMPLES = {
   BASIC: `
-  <magary-checkbox 
-    [(checked)]="checked" 
-    label="Accept Terms and Conditions"
+  <magary-checkbox
+    [(checked)]="checked"
+    label="Accept Terms"
   ></magary-checkbox>`,
   STATES: `
   <!-- Checked -->
   <magary-checkbox [(checked)]="checked" label="Checked"></magary-checkbox>
-  
+
   <!-- Unchecked -->
   <magary-checkbox [checked]="false" label="Unchecked"></magary-checkbox>
-  
+
   <!-- Disabled Checked -->
   <magary-checkbox [checked]="true" [disabled]="true" label="Disabled Checked"></magary-checkbox>
-  
+
   <!-- Disabled Unchecked -->
   <magary-checkbox [checked]="false" [disabled]="true" label="Disabled Unchecked"></magary-checkbox>`,
   COLORS: `
@@ -43,10 +38,11 @@ const CODE_EXAMPLES = {
   styleUrl: './view-checkbox.scss',
 })
 export class ViewCheckbox {
+  readonly i18n = inject(DemoI18nService);
+
   checked1 = signal(false);
   checked2 = signal(true);
 
-  // Colors
   valPrimary = signal(true);
   valSuccess = signal(true);
   valDanger = signal(true);

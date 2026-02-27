@@ -1,14 +1,13 @@
-﻿<div class="container">
+<div class="container">
   <div class="header">
-    <h1>CascadeSelect</h1>
-    <p>CascadeSelect muestra una estructura anidada de opciones.</p>
+    <h1>{{ i18n.translateDocs('components.form.cascadeSelect.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.form.cascadeSelect.subtitle') }}</p>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Importar</h2>
-      <p>Importa el componente en el componente standalone.</p>
+      <h2>{{ i18n.translateDocs('components.form.cascadeSelect.import.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.cascadeSelect.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,19 +16,17 @@
     </div>
   </div>
 
-  <!-- Basic Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Uso Basico</h2>
-      <p>
-        Comportamiento estandar donde solo los nodos hoja (ciudades) son
-        seleccionables.
-      </p>
+      <h2>{{ i18n.translateDocs('components.form.cascadeSelect.basic.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.cascadeSelect.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Solo Selección de Hojas</h4>
+          <h4>
+            {{ i18n.translateDocs('components.form.cascadeSelect.basic.cardTitle') }}
+          </h4>
           <magary-card
             [width]="'400px'"
             [height]="'300px'"
@@ -46,7 +43,11 @@
                   optionLabel="cname"
                   optionGroupLabel="name"
                   [optionGroupChildren]="['states', 'cities']"
-                  placeholder="Selecciona una Ciudad"
+                  [placeholder]="
+                    i18n.translateDocs(
+                      'components.form.cascadeSelect.basic.placeholder'
+                    )
+                  "
                 ></magary-cascade-select>
               </div>
             </div>
@@ -68,7 +69,11 @@
                   margin-bottom: 0.5rem;
                 "
               >
-                Ruta Seleccionada
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.basic.selectedPath'
+                  )
+                }}
               </div>
               <div
                 style="
@@ -102,19 +107,17 @@
     </div>
   </div>
 
-  <!-- Group Selection Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Selección de Grupo</h2>
-      <p>
-        Permite seleccionar grupos padres (Países o Estados) como valores
-        válidos.
-      </p>
+      <h2>{{ i18n.translateDocs('components.form.cascadeSelect.group.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.cascadeSelect.group.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Selección de Padre Habilitada</h4>
+          <h4>
+            {{ i18n.translateDocs('components.form.cascadeSelect.group.cardTitle') }}
+          </h4>
           <magary-card
             [width]="'400px'"
             [height]="'300px'"
@@ -132,7 +135,11 @@
                   optionGroupLabel="name"
                   [optionGroupChildren]="['states', 'cities']"
                   [optionGroupSelectable]="true"
-                  placeholder="Selecciona una Ciudad o Región"
+                  [placeholder]="
+                    i18n.translateDocs(
+                      'components.form.cascadeSelect.group.placeholder'
+                    )
+                  "
                 ></magary-cascade-select>
               </div>
             </div>
@@ -154,7 +161,11 @@
                   margin-bottom: 0.5rem;
                 "
               >
-                Ruta Seleccionada
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.group.selectedPath'
+                  )
+                }}
               </div>
               <div
                 style="
@@ -188,21 +199,40 @@
     </div>
   </div>
 
-  <!-- Properties Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Propiedades disponibles para el componente.</p>
+      <h2>{{ i18n.translateDocs('components.form.cascadeSelect.api.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.cascadeSelect.api.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Por Defecto</th>
-              <th>Descripción</th>
+              <th>
+                {{
+                  i18n.translateDocs('components.form.cascadeSelect.api.header.name')
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs('components.form.cascadeSelect.api.header.type')
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.api.header.default'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.api.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -211,37 +241,55 @@
               <td><code>unknown[]</code></td>
               <td><code>null</code></td>
               <td>
-                Un array de objetos para mostrar como las opciones disponibles.
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.options.desc') }}
               </td>
             </tr>
             <tr>
               <td><code>optionLabel</code></td>
               <td><code>string</code></td>
               <td><code>label</code></td>
-              <td>Nombre del campo de etiqueta de una opción.</td>
+              <td>
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.api.optionLabel.desc'
+                  )
+                }}
+              </td>
             </tr>
             <tr>
               <td><code>optionValue</code></td>
               <td><code>string</code></td>
               <td><code>null</code></td>
               <td>
-                Nombre del campo de valor de una opción. Por defecto es el
-                objeto de la opción en sí.
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.api.optionValue.desc'
+                  )
+                }}
               </td>
             </tr>
             <tr>
               <td><code>optionGroupLabel</code></td>
               <td><code>string</code></td>
               <td><code>null</code></td>
-              <td>Nombre del campo de etiqueta de un grupo de opciones.</td>
+              <td>
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.api.optionGroupLabel.desc'
+                  )
+                }}
+              </td>
             </tr>
             <tr>
               <td><code>optionGroupChildren</code></td>
               <td><code>string[]</code></td>
               <td><code>['children']</code></td>
               <td>
-                Nombres de las propiedades a usar como opciones hijas de un
-                grupo de opciones.
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.api.optionGroupChildren.desc'
+                  )
+                }}
               </td>
             </tr>
             <tr>
@@ -249,8 +297,11 @@
               <td><code>boolean</code></td>
               <td><code>false</code></td>
               <td>
-                Cuando está habilitado, permite la selección de grupos de
-                opciones (padres).
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.api.optionGroupSelectable.desc'
+                  )
+                }}
               </td>
             </tr>
             <tr>
@@ -258,8 +309,11 @@
               <td><code>string</code></td>
               <td><code>Select an option</code></td>
               <td>
-                Texto por defecto para mostrar cuando no hay ninguna opción
-                seleccionada.
+                {{
+                  i18n.translateDocs(
+                    'components.form.cascadeSelect.api.placeholder.desc'
+                  )
+                }}
               </td>
             </tr>
             <tr>
@@ -267,45 +321,64 @@
               <td><code>boolean</code></td>
               <td><code>false</code></td>
               <td>
-                Cuando está presente, especifica que el componente debe estar
-                deshabilitado.
+                {{
+                  i18n.translateDocs('components.form.cascadeSelect.api.disabled.desc')
+                }}
               </td>
             </tr>
             <tr>
               <td><code>loading</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Muestra spinner en el trigger y bloquea interacción.</td>
+              <td>
+                {{
+                  i18n.translateDocs('components.form.cascadeSelect.api.loading.desc')
+                }}
+              </td>
             </tr>
             <tr>
               <td><code>size</code></td>
               <td><code>'small' | 'normal' | 'large'</code></td>
               <td><code>'normal'</code></td>
-              <td>Tamaño visual del control.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.size.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>invalid</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Activa estado visual de error.</td>
+              <td>
+                {{
+                  i18n.translateDocs('components.form.cascadeSelect.api.invalid.desc')
+                }}
+              </td>
             </tr>
             <tr>
               <td><code>error</code></td>
               <td><code>string</code></td>
               <td><code>''</code></td>
-              <td>Mensaje de error mostrado debajo del control.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.error.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>helpText</code></td>
               <td><code>string</code></td>
               <td><code>''</code></td>
-              <td>Texto de ayuda cuando no hay error.</td>
+              <td>
+                {{
+                  i18n.translateDocs('components.form.cascadeSelect.api.helpText.desc')
+                }}
+              </td>
             </tr>
             <tr>
               <td><code>width</code></td>
               <td><code>string</code></td>
               <td><code>100%</code></td>
-              <td>Ancho del componente.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.width.desc') }}
+              </td>
             </tr>
           </tbody>
         </table>

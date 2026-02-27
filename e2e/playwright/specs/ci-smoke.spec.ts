@@ -117,7 +117,7 @@ test.describe('ci smoke', () => {
     await expect(errorInput).toHaveAttribute('aria-invalid', 'true');
     await expect(
       page.locator('magary-input', { has: page.getByLabel('Error').first() }),
-    ).toContainText('Mensaje de error');
+    ).toContainText(/Mensaje de error|Error message/i);
 
     const loadingInput = page.getByLabel('Loading').first();
     await expect(loadingInput).toBeVisible();
@@ -129,10 +129,10 @@ test.describe('ci smoke', () => {
       loadingInputContainer.locator('lucide-icon.loading-icon').first(),
     ).toBeVisible();
 
-    const disabledInput = page.getByLabel('Deshabilitado').first();
+    const disabledInput = page.getByLabel(/Deshabilitado|Disabled/i).first();
     await expect(disabledInput).toBeVisible();
     await expect(disabledInput).toBeDisabled();
-    await expect(disabledInput).toHaveValue('Deshabilitado');
+    await expect(disabledInput).toHaveValue(/Deshabilitado|Disabled/i);
   });
 
   test('setup route exposes integration examples and navigates to demo references', async ({
@@ -317,6 +317,38 @@ test.describe('ci smoke', () => {
     await expect(trigger).not.toContainText('Select a city');
   });
 
+  test('segmented route supports click, keyboard and ngModel sync', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await openRoute('/components/Segmented', page);
+
+    const segmentedPage = page.locator('app-view-segmented');
+    const segmentedGroups = segmentedPage.getByRole('radiogroup');
+
+    const languageGroup = segmentedGroups.first();
+    await expect(languageGroup).toBeVisible();
+
+    const languageOptions = languageGroup.getByRole('radio');
+    await expect(languageOptions).toHaveCount(2);
+    await expect(languageOptions.nth(0)).toHaveAttribute('aria-checked', 'true');
+
+    await languageOptions.nth(1).click();
+    await expect(languageOptions.nth(1)).toHaveAttribute('aria-checked', 'true');
+    await expect(page.locator('.value-pill').first()).toContainText('en');
+
+    await languageOptions.nth(1).focus();
+    await languageOptions.nth(1).press('ArrowRight');
+    await expect(languageOptions.nth(0)).toHaveAttribute('aria-checked', 'true');
+    await expect(page.locator('.value-pill').first()).toContainText('es');
+
+    const formGroup = segmentedGroups.last();
+    await expect(formGroup).toBeVisible();
+    const formEnOption = formGroup.getByRole('radio', { name: 'en' });
+    await formEnOption.click();
+    await expect(page.locator('.value-pill').nth(2)).toContainText('en');
+  });
+
   test('cascade select route opens nested options and selects a leaf', async ({
     page,
   }) => {
@@ -326,7 +358,7 @@ test.describe('ci smoke', () => {
     const cascade = page.locator('magary-cascade-select').first();
     const trigger = cascade.locator('.magary-cascade-select').first();
     await expect(trigger).toBeVisible();
-    await expect(trigger).toContainText('Selecciona una Ciudad');
+    await expect(trigger).toContainText(/Select a city|Selecciona una ciudad/i);
 
     await trigger.click();
     const panel = cascade.locator('.select-panel').first();

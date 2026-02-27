@@ -1,24 +1,21 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Highlight } from 'ngx-highlightjs';
-import { MagaryTabs, MagaryTab } from 'ng-magary';
+import { Component, inject } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
+import { Highlight } from 'ngx-highlightjs';
+import { MagaryTab, MagaryTabs } from 'ng-magary';
+import { DemoI18nService } from '../../../i18n/demo-i18n.service';
 
 @Component({
   selector: 'app-view-theming',
   standalone: true,
-  imports: [
-    CommonModule,
-    Highlight,
-    MagaryTabs,
-    MagaryTab,
-    LucideAngularModule,
-  ],
+  imports: [CommonModule, Highlight, MagaryTabs, MagaryTab, LucideAngularModule],
   templateUrl: './view-theming.html',
   styleUrl: './view-theming.scss',
 })
 export class ViewTheming {
-  usageExample = `
+  public readonly i18n = inject(DemoI18nService);
+
+  readonly usageExample = `
 import { Component, inject } from '@angular/core';
 import { MagaryThemeService } from 'ng-magary';
 
@@ -26,57 +23,57 @@ import { MagaryThemeService } from 'ng-magary';
 export class AppComponent {
   themeService = inject(MagaryThemeService);
 
-  // Cambiar a tema oscuro
+  // Switch to dark theme
   switchToDark() {
     this.themeService.setTheme('dark');
   }
 
-  // Alternar entre temas disponibles
+  // Toggle between available themes
   toggleTheme() {
-    this.themeService.toggleTheme(); 
+    this.themeService.toggleTheme();
   }
 
-  // Establecer un tema específico
-  // 'light', 'dark' o el nombre de tu tema personalizado (ej: 'purple')
+  // Set a specific theme
+  // 'light', 'dark', or your custom theme name (for example: 'purple')
   setPurpleTheme() {
     this.themeService.setTheme('purple');
   }
 }`;
 
-  cssExample = `
-// En tu styles.scss global
+  readonly cssExample = `
+// In your global styles.scss
 
-/* Definición del Tema "Purple" */
+/* "Purple" theme definition */
 [data-theme="purple"] {
-  // Fondos
-  --surface-0: #2d1b4e;   // Color principal de tarjetas
-  --surface-50: #1a102e;  // Color de fondo de la app
-  --surface-100: #2d1b4e; // Elementos secundarios
-  
-  // Texto
+  // Surfaces
+  --surface-0: #2d1b4e;
+  --surface-50: #1a102e;
+  --surface-100: #2d1b4e;
+
+  // Text
   --text-primary: #f3e8ff;
   --text-secondary: #d8b4fe;
 
-  // Color Primario (Acentos)
+  // Primary accents
   --primary-500: #a855f7;
   --primary-600: #9333ea;
-  
-  // Opcional: Gradientes personalizados
+
+  // Optional custom gradient
   --gradient-text: linear-gradient(135deg, #a855f7, #ec4899);
 }`;
 
-  htmlExample = `
-<!-- En tu template (app.component.html) -->
+  readonly htmlExample = `
+<!-- In your template (app.component.html) -->
 <div class="theme-controls">
-  <!-- Botón para alternar tema -->
-  <magary-button 
-    label="Toggle Theme" 
+  <!-- Toggle theme button -->
+  <magary-button
+    label="Toggle Theme"
     (click)="toggleTheme()">
   </magary-button>
 
-  <!-- Botón para tema específico -->
-  <magary-button 
-    label="Purple Theme" 
+  <!-- Specific theme button -->
+  <magary-button
+    label="Purple Theme"
     severity="help"
     (click)="setPurpleTheme()">
   </magary-button>

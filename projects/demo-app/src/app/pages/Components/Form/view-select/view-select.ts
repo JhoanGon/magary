@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MagarySelect, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 
 interface CountryOption {
   code: string;
@@ -26,6 +27,8 @@ type SelectCountryOption = CountryOption & Record<string, unknown>;
   styleUrl: './view-select.scss',
 })
 export class ViewSelect {
+  readonly i18n = inject(DemoI18nService);
+
   // Demo Data
   cities = ['New York', 'London', 'Paris', 'Tokyo'];
 

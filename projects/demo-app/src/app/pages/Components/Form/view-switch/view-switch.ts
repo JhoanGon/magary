@@ -1,31 +1,26 @@
-import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  MagarySwitch,
-  MagaryCard,
-  MagaryTabs,
-  MagaryTab,
-  MagaryButton,
-} from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { MagaryCard, MagarySwitch } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 
 const CODE_EXAMPLES = {
   BASIC: `
-  <magary-switch 
-    [(checked)]="checked" 
+  <magary-switch
+    [(checked)]="checked"
     label="Notifications"
   ></magary-switch>`,
   STATES: `
   <!-- Checked -->
   <magary-switch [(checked)]="checked" label="Checked"></magary-switch>
-  
+
   <!-- Unchecked -->
   <magary-switch [checked]="false" label="Unchecked"></magary-switch>
-  
+
   <!-- Disabled Checked -->
   <magary-switch [checked]="true" [disabled]="true" label="Disabled Checked"></magary-switch>
-  
+
   <!-- Disabled Unchecked -->
   <magary-switch [checked]="false" [disabled]="true" label="Disabled Unchecked"></magary-switch>`,
   COLORS: `
@@ -43,10 +38,11 @@ const CODE_EXAMPLES = {
   styleUrl: './view-switch.scss',
 })
 export class ViewSwitch {
+  readonly i18n = inject(DemoI18nService);
+
   checked1 = signal(false);
   checked2 = signal(true);
 
-  // Colors
   valPrimary = signal(true);
   valSuccess = signal(true);
   valDanger = signal(true);

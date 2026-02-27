@@ -25,6 +25,11 @@ export const FORM_CONFIG: NavigationItem = {
       icon: 'toggle-right',
     },
     {
+      label: 'Segmented',
+      route: 'components/Segmented',
+      icon: 'layout-grid',
+    },
+    {
       label: 'Select',
       route: 'components/Select',
       icon: 'mouse-pointer-2',

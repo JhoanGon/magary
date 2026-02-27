@@ -1,0 +1,36 @@
+<div
+  class="magary-segmented"
+  [class.disabled]="isDisabled()"
+  [class.full-width]="fullWidth()"
+  [class.size-small]="size() === 'small'"
+  [class.size-normal]="size() === 'normal'"
+  [class.size-large]="size() === 'large'"
+  role="radiogroup"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-disabled]="isDisabled() ? 'true' : null"
+>
+  <span
+    class="segment-indicator"
+    [class.visible]="indicatorVisible()"
+    [style.width.px]="indicatorWidth()"
+    [style.transform]="indicatorTransform()"
+  ></span>
+  @for (option of options(); track $index; let optionIndex = $index) {
+    <button
+      #optionButton
+      type="button"
+      class="segment-option"
+      role="radio"
+      [id]="getOptionId(optionIndex)"
+      [attr.aria-checked]="isSelected(option)"
+      [attr.aria-label]="getLabel(option)"
+      [attr.tabindex]="getTabIndex(optionIndex)"
+      [class.selected]="isSelected(option)"
+      [disabled]="isDisabled()"
+      (click)="selectOption(option)"
+      (keydown)="onOptionKeydown($event, optionIndex)"
+    >
+      {{ getLabel(option) }}
+    </button>
+  }
+</div>

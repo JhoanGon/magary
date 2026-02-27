@@ -1,8 +1,23 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MagaryInputNumber, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { MagaryInputNumber, MagaryTab, MagaryTabs } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type InputNumberApiRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type InputNumberOutputRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'app-view-input-number',
@@ -20,6 +35,8 @@ import { Highlight } from 'ngx-highlightjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewInputNumber {
+  readonly i18n = inject(DemoI18nService);
+
   val1: number | null = null;
   val2: number | null = 50.5;
   val3: number | null = 1500;
@@ -33,147 +50,151 @@ export class ViewInputNumber {
   importRef = `import { MagaryInputNumber } from 'ng-magary';`;
 
   basicHTML = `<div class="formgrid">
-    <div class="field">
-        <label for="basic">Básico</label>
-        <magary-input-number [(value)]="val1" inputId="basic" mode="decimal" [min]="0" [max]="100" />
-    </div>
-    
-    <div class="field">
-        <label for="currency">Moneda (USD)</label>
-        <magary-input-number [(value)]="val3" mode="currency" currency="USD" locale="en-US" />
-    </div>
+  <div class="field">
+      <label>Basic</label>
+      <magary-input-number [(value)]="val1" mode="decimal" [min]="0" [max]="100" />
+  </div>
+
+  <div class="field">
+      <label>Currency (USD)</label>
+      <magary-input-number [(value)]="val3" mode="currency" currency="USD" locale="en-US" />
+  </div>
 </div>`;
 
   basicTS = `export class MyComponent {
-    val1: number = 0;
-    val3: number = 1500;
+  val1: number = 0;
+  val3: number = 1500;
 }`;
 
-  inputs = [
+  inputs: InputNumberApiRow[] = [
     {
       name: 'value',
       type: 'number',
       default: 'null',
-      description: 'Valor del componente.',
+      descriptionKey: 'components.form.inputNumber.inputs.value.desc',
     },
     {
       name: 'format',
       type: 'boolean',
       default: 'true',
-      description: 'Si se debe formatear el valor.',
+      descriptionKey: 'components.form.inputNumber.inputs.format.desc',
     },
     {
       name: 'showButtons',
       type: 'boolean',
       default: 'false',
-      description: 'Mostrar botones de incremento/decremento.',
+      descriptionKey: 'components.form.inputNumber.inputs.showButtons.desc',
     },
     {
       name: 'buttonLayout',
       type: 'string',
       default: 'stacked',
-      description: 'Layout de botones: sticky, horizontal o vertical.',
+      descriptionKey: 'components.form.inputNumber.inputs.buttonLayout.desc',
     },
     {
       name: 'incrementButtonIcon',
       type: 'string',
       default: 'chevron-up',
-      description: 'Icono del botón de incremento.',
+      descriptionKey:
+        'components.form.inputNumber.inputs.incrementButtonIcon.desc',
     },
     {
       name: 'decrementButtonIcon',
       type: 'string',
       default: 'chevron-down',
-      description: 'Icono del botón de decremento.',
+      descriptionKey:
+        'components.form.inputNumber.inputs.decrementButtonIcon.desc',
     },
     {
       name: 'mode',
       type: 'string',
       default: 'decimal',
-      description: 'decimal, currency o percent.',
+      descriptionKey: 'components.form.inputNumber.inputs.mode.desc',
     },
     {
       name: 'min',
       type: 'number',
       default: 'null',
-      description: 'Valor mínimo.',
+      descriptionKey: 'components.form.inputNumber.inputs.min.desc',
     },
     {
       name: 'max',
       type: 'number',
       default: 'null',
-      description: 'Valor máximo.',
+      descriptionKey: 'components.form.inputNumber.inputs.max.desc',
     },
     {
       name: 'step',
       type: 'number',
       default: '1',
-      description: 'Paso de incremento.',
+      descriptionKey: 'components.form.inputNumber.inputs.step.desc',
     },
     {
       name: 'suffix',
       type: 'string',
       default: 'null',
-      description: 'Texto sufijo.',
+      descriptionKey: 'components.form.inputNumber.inputs.suffix.desc',
     },
     {
       name: 'prefix',
       type: 'string',
       default: 'null',
-      description: 'Texto prefijo.',
+      descriptionKey: 'components.form.inputNumber.inputs.prefix.desc',
     },
     {
       name: 'currency',
       type: 'string',
       default: 'null',
-      description: 'Código de moneda (ISO 4217).',
+      descriptionKey: 'components.form.inputNumber.inputs.currency.desc',
     },
     {
       name: 'currencyDisplay',
       type: 'string',
       default: 'symbol',
-      description: 'Cómo mostrar la moneda.',
+      descriptionKey: 'components.form.inputNumber.inputs.currencyDisplay.desc',
     },
     {
       name: 'useGrouping',
       type: 'boolean',
       default: 'true',
-      description: 'Usar separador de miles.',
+      descriptionKey: 'components.form.inputNumber.inputs.useGrouping.desc',
     },
     {
       name: 'minFractionDigits',
       type: 'number',
       default: 'null',
-      description: 'Mínimo de decimales.',
+      descriptionKey:
+        'components.form.inputNumber.inputs.minFractionDigits.desc',
     },
     {
       name: 'maxFractionDigits',
       type: 'number',
       default: 'null',
-      description: 'Máximo de decimales.',
+      descriptionKey:
+        'components.form.inputNumber.inputs.maxFractionDigits.desc',
     },
   ];
 
-  outputs = [
+  outputs: InputNumberOutputRow[] = [
     {
       name: 'onInput',
       type: 'EventEmitter<Event>',
-      description: 'Emitido cuando el valor cambia por input manual.',
+      descriptionKey: 'components.form.inputNumber.outputs.onInput.desc',
     },
     {
       name: 'onFocus',
       type: 'EventEmitter<Event>',
-      description: 'Emitido cuando el input recibe el foco.',
+      descriptionKey: 'components.form.inputNumber.outputs.onFocus.desc',
     },
     {
       name: 'onBlur',
       type: 'EventEmitter<Event>',
-      description: 'Emitido cuando el input pierde el foco.',
+      descriptionKey: 'components.form.inputNumber.outputs.onBlur.desc',
     },
     {
       name: 'onKeyDown',
       type: 'EventEmitter<KeyboardEvent>',
-      description: 'Emitido al presionar una tecla.',
+      descriptionKey: 'components.form.inputNumber.outputs.onKeyDown.desc',
     },
   ];
 }

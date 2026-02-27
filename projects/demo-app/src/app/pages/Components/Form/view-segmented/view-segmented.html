@@ -1,0 +1,317 @@
+<div class="container fade-in">
+  <div class="header">
+    <h1>{{ i18n.translateDocs('components.form.segmented.title') }}</h1>
+    <p>
+      {{ i18n.translateDocs('components.form.segmented.subtitle') }}
+    </p>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ i18n.translateDocs('components.form.segmented.import.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.segmented.import.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <div class="code-block">
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ i18n.translateDocs('components.form.segmented.basic.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.segmented.basic.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <magary-card
+        [width]="'100%'"
+        [shadow]="2"
+        [borderRadius]="'1rem'"
+        [backgroundColor]="'var(--surface-0)'"
+      >
+        <div class="demo-row">
+          <magary-segmented
+            [options]="languageOptions"
+            optionLabel="label"
+            optionValue="value"
+            [value]="language()"
+            [ariaLabel]="
+              i18n.translateDocs('components.form.segmented.basic.ariaLanguage')
+            "
+            (valueChange)="language.set($event)"
+          ></magary-segmented>
+          <span class="value-pill">
+            {{ i18n.translateDocs('components.form.segmented.basic.valueLabel') }}:
+            {{ language() }}
+          </span>
+        </div>
+      </magary-card>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="exampleBasicHtml" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="exampleBasicTs" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ i18n.translateDocs('components.form.segmented.object.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.segmented.object.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <magary-card
+        [width]="'100%'"
+        [shadow]="2"
+        [borderRadius]="'1rem'"
+        [backgroundColor]="'var(--surface-0)'"
+      >
+        <div class="demo-row">
+          <magary-segmented
+            [options]="planOptions"
+            optionLabel="label"
+            optionValue="value"
+            [value]="selectedPlan()"
+            [ariaLabel]="
+              i18n.translateDocs('components.form.segmented.object.ariaPlan')
+            "
+            (valueChange)="selectedPlan.set($event)"
+          ></magary-segmented>
+          <span class="value-pill">
+            {{ i18n.translateDocs('components.form.segmented.object.planLabel') }}:
+            {{ selectedPlan() }}
+          </span>
+        </div>
+      </magary-card>
+      <div class="code-block">
+        <pre><code [highlight]="exampleObjectOptions" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ i18n.translateDocs('components.form.segmented.sizes.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.segmented.sizes.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <magary-card
+        [width]="'100%'"
+        [shadow]="2"
+        [borderRadius]="'1rem'"
+        [backgroundColor]="'var(--surface-0)'"
+      >
+        <div class="demo-stack">
+          <magary-segmented
+            [options]="languageOptions"
+            optionLabel="label"
+            optionValue="value"
+            [value]="language()"
+            [ariaLabel]="
+              i18n.translateDocs('components.form.segmented.sizes.ariaSmall')
+            "
+            size="small"
+            (valueChange)="language.set($event)"
+          ></magary-segmented>
+
+          <magary-segmented
+            [options]="languageOptions"
+            optionLabel="label"
+            optionValue="value"
+            [value]="language()"
+            [ariaLabel]="
+              i18n.translateDocs('components.form.segmented.sizes.ariaNormal')
+            "
+            size="normal"
+            (valueChange)="language.set($event)"
+          ></magary-segmented>
+
+          <magary-segmented
+            [options]="languageOptions"
+            optionLabel="label"
+            optionValue="value"
+            [value]="language()"
+            [ariaLabel]="
+              i18n.translateDocs('components.form.segmented.sizes.ariaLarge')
+            "
+            size="large"
+            (valueChange)="language.set($event)"
+          ></magary-segmented>
+
+          <magary-segmented
+            [options]="planOptions"
+            optionLabel="label"
+            optionValue="value"
+            [value]="selectedPlan()"
+            [ariaLabel]="
+              i18n.translateDocs(
+                'components.form.segmented.sizes.ariaPlansFullWidth'
+              )
+            "
+            [fullWidth]="true"
+            (valueChange)="selectedPlan.set($event)"
+          ></magary-segmented>
+        </div>
+      </magary-card>
+      <div class="code-block">
+        <pre><code [highlight]="exampleSizes" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ i18n.translateDocs('components.form.segmented.forms.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.segmented.forms.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <magary-card
+        [width]="'100%'"
+        [shadow]="2"
+        [borderRadius]="'1rem'"
+        [backgroundColor]="'var(--surface-0)'"
+      >
+        <div class="demo-row">
+          <magary-segmented
+            [options]="localeOptions"
+            [ariaLabel]="
+              i18n.translateDocs('components.form.segmented.forms.ariaBinding')
+            "
+            [(ngModel)]="locale"
+          ></magary-segmented>
+          <span class="value-pill">
+            {{ i18n.translateDocs('components.form.segmented.forms.modelLabel') }}:
+            {{ locale }}
+          </span>
+        </div>
+      </magary-card>
+      <div class="code-block">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="exampleFormBindingHtml" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="exampleFormBindingTs" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ i18n.translateDocs('components.form.segmented.api.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.segmented.api.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>
+                {{ i18n.translateDocs('components.form.segmented.api.header.name') }}
+              </th>
+              <th>
+                {{ i18n.translateDocs('components.form.segmented.api.header.type') }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs('components.form.segmented.api.header.default')
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.segmented.api.header.description'
+                  )
+                }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>options</code></td>
+              <td><code>(string | number | object)[]</code></td>
+              <td><code>[]</code></td>
+              <td>{{ i18n.translateDocs('components.form.segmented.api.options.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>value</code></td>
+              <td><code>model&lt;unknown&gt;</code></td>
+              <td><code>null</code></td>
+              <td>{{ i18n.translateDocs('components.form.segmented.api.value.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>optionLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>
+                {{
+                  i18n.translateDocs(
+                    'components.form.segmented.api.optionLabel.desc'
+                  )
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>optionValue</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>
+                {{
+                  i18n.translateDocs(
+                    'components.form.segmented.api.optionValue.desc'
+                  )
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>size</code></td>
+              <td><code>'small' | 'normal' | 'large'</code></td>
+              <td><code>'normal'</code></td>
+              <td>{{ i18n.translateDocs('components.form.segmented.api.size.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>fullWidth</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>
+                {{
+                  i18n.translateDocs(
+                    'components.form.segmented.api.fullWidth.desc'
+                  )
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>disabled</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>{{ i18n.translateDocs('components.form.segmented.api.disabled.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>change</code></td>
+              <td><code>EventEmitter&lt;value&gt;</code></td>
+              <td><code>-</code></td>
+              <td>{{ i18n.translateDocs('components.form.segmented.api.change.desc') }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

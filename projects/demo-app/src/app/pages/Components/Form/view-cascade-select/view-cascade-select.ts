@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Highlight } from 'ngx-highlightjs';
 import {
-  MagaryCascadeSelect,
-  MagaryTabs,
-  MagaryTab,
   MagaryCard,
+  MagaryCascadeSelect,
+  MagaryTab,
+  MagaryTabs,
 } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 
 interface CascadeCity {
   cname: string;
@@ -52,6 +53,8 @@ type CascadeSelection =
   styleUrl: './view-cascade-select.scss',
 })
 export class ViewCascadeSelect {
+  readonly i18n = inject(DemoI18nService);
+
   selectedCityBasic: CascadeSelection = null;
   selectedCityGroup: CascadeSelection = null;
 
@@ -138,7 +141,7 @@ export class ViewCascadeSelect {
   optionGroupLabel="name"
   [optionGroupChildren]="['states', 'cities']"
   [style]="{ minWidth: '14rem' }"
-  placeholder="Selecciona una Ciudad"
+  placeholder="Select a city"
 ></magary-cascade-select>`;
 
   exampleGroupHTML = `
@@ -149,7 +152,7 @@ export class ViewCascadeSelect {
   optionGroupLabel="name"
   [optionGroupChildren]="['states', 'cities']"
   [optionGroupSelectable]="true"
-  placeholder="Selecciona una Ciudad o Región"
+  placeholder="Select a city or region"
 ></magary-cascade-select>`;
 
   exampleTS = `
@@ -165,11 +168,9 @@ countries = [
           { cname: 'Newcastle', code: 'A-NE' },
           { cname: 'Wollongong', code: 'A-WO' }
         ]
-      },
-      ...
+      }
     ]
-  },
-  ...
+  }
 ];`;
 
   get selectedPathBasic(): string {
@@ -181,7 +182,9 @@ countries = [
   }
 
   private buildPath(city: CascadeSelection): string {
-    if (!city) return 'Ninguno';
+    const empty = this.i18n.translateDocs('components.form.cascadeSelect.common.none');
+
+    if (!city) return empty;
 
     const parts: string[] = [];
 
@@ -202,10 +205,10 @@ countries = [
       parts.push(city.cname);
     }
 
-    return parts.length > 0 ? parts.join(' -> ') : 'Ninguno';
+    return parts.length > 0 ? parts.join(' -> ') : empty;
   }
 
-  onCityChange(event: CascadeSelection) {}
+  onCityChange(_event: CascadeSelection) {}
 
   private isCascadeCountry(
     option: CascadeSelection,
@@ -230,4 +233,3 @@ countries = [
     return typeof candidate.cname === 'string';
   }
 }
-

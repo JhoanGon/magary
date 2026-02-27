@@ -44,8 +44,7 @@ describe('Layout', () => {
         { provide: ActivatedRoute, useValue: {} },
         { provide: PwaService, useValue: pwaServiceStub },
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Layout);
     component = fixture.componentInstance;
@@ -95,8 +94,6 @@ describe('Layout', () => {
 
     component.handleLogout();
 
-    expect(logSpy).toHaveBeenCalledWith('Usuario cerrando sesión...');
+    expect(logSpy).toHaveBeenCalledWith('Usuario cerrando sesion...');
   });
 });
-
-

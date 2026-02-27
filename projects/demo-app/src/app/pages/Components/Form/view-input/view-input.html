@@ -1,14 +1,13 @@
-﻿<div class="container">
+<div class="container">
   <div class="header">
-    <h1>MagaryInput</h1>
-    <p>Componente de entrada de texto altamente personalizable.</p>
+    <h1>{{ i18n.translateDocs('components.form.input.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.form.input.subtitle') }}</p>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone.</p>
+      <h2>{{ i18n.translateDocs('components.form.input.import.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,15 +16,14 @@
     </div>
   </div>
 
-  <!-- Basic Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Básico</h2>
+      <h2>{{ i18n.translateDocs('components.form.input.basic.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Default</h4>
+          <h4>{{ i18n.translateDocs('components.form.input.basic.demoTitle') }}</h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -41,8 +39,10 @@
               "
             >
               <magary-input
-                [label]="'Nombre'"
-                [placeholder]="'Escribe tu nombre'"
+                [label]="i18n.translateDocs('components.form.input.basic.label')"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.basic.placeholder')
+                "
                 [(value)]="inputValue"
               ></magary-input>
             </div>
@@ -54,7 +54,8 @@
                 font-size: 0.9rem;
               "
             >
-              Value: {{ inputValue() }}
+              {{ i18n.translateDocs('components.form.input.basic.valueLabel') }}:
+              {{ inputValue() }}
             </div>
           </magary-card>
         </div>
@@ -65,78 +66,67 @@
     </div>
   </div>
 
-  <!-- Types Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Tipos</h2>
-      <p>Diferentes tipos de input soportados.</p>
+      <h2>{{ i18n.translateDocs('components.form.input.types.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.types.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Text</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.types.text.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [type]="'text'"
-                [label]="'Texto'"
-                [placeholder]="'Texto normal'"
+                [label]="i18n.translateDocs('components.form.input.types.text.label')"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.types.text.placeholder')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Email</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.types.email.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [type]="'email'"
-                [label]="'Email'"
-                [placeholder]="'usuario@email.com'"
+                [label]="i18n.translateDocs('components.form.input.types.email.label')"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.types.email.placeholder')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Password</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.types.password.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [type]="'password'"
-                [label]="'Contraseña'"
-                [placeholder]="'********'"
+                [label]="i18n.translateDocs('components.form.input.types.password.label')"
+                [placeholder]="
+                  i18n.translateDocs(
+                    'components.form.input.types.password.placeholder'
+                  )
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Search</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.types.search.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [type]="'search'"
-                [label]="'Buscar'"
-                [placeholder]="'Buscar...'"
+                [label]="i18n.translateDocs('components.form.input.types.search.label')"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.types.search.placeholder')
+                "
               ></magary-input>
             </div>
           </magary-card>
@@ -148,61 +138,51 @@
     </div>
   </div>
 
-  <!-- Sizes Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Tamaños</h2>
-      <p>Controla el tamaño del input con la propiedad size.</p>
+      <h2>{{ i18n.translateDocs('components.form.input.sizes.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.sizes.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Small</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.sizes.small.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [size]="'small'"
-                [label]="'Pequeño'"
-                [placeholder]="'Small'"
+                [label]="i18n.translateDocs('components.form.input.sizes.small.label')"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.sizes.small.cardTitle')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Normal</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.sizes.normal.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [size]="'normal'"
-                [label]="'Normal'"
-                [placeholder]="'Normal'"
+                [label]="i18n.translateDocs('components.form.input.sizes.normal.label')"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.sizes.normal.cardTitle')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Large</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.sizes.large.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [size]="'large'"
-                [label]="'Grande'"
-                [placeholder]="'Large'"
+                [label]="i18n.translateDocs('components.form.input.sizes.large.label')"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.sizes.large.cardTitle')
+                "
               ></magary-input>
             </div>
           </magary-card>
@@ -214,61 +194,71 @@
     </div>
   </div>
 
-  <!-- Variants Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Variantes</h2>
-      <p>Estilos visuales alternativos.</p>
+      <h2>{{ i18n.translateDocs('components.form.input.variants.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.variants.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Outlined</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>
+            {{ i18n.translateDocs('components.form.input.variants.outlined.cardTitle') }}
+          </h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [variant]="'outlined'"
-                [label]="'Outlined'"
-                [placeholder]="'Outlined'"
+                [label]="
+                  i18n.translateDocs(
+                    'components.form.input.variants.outlined.cardTitle'
+                  )
+                "
+                [placeholder]="
+                  i18n.translateDocs(
+                    'components.form.input.variants.outlined.cardTitle'
+                  )
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Filled</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.variants.filled.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [variant]="'filled'"
-                [label]="'Filled'"
-                [placeholder]="'Filled'"
+                [label]="
+                  i18n.translateDocs('components.form.input.variants.filled.cardTitle')
+                "
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.variants.filled.cardTitle')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Underlined</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>
+            {{
+              i18n.translateDocs('components.form.input.variants.underlined.cardTitle')
+            }}
+          </h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
                 [variant]="'underlined'"
-                [label]="'Underlined'"
-                [placeholder]="'Underlined'"
+                [label]="
+                  i18n.translateDocs(
+                    'components.form.input.variants.underlined.cardTitle'
+                  )
+                "
+                [placeholder]="
+                  i18n.translateDocs(
+                    'components.form.input.variants.underlined.cardTitle'
+                  )
+                "
               ></magary-input>
             </div>
           </magary-card>
@@ -280,61 +270,67 @@
     </div>
   </div>
 
-  <!-- Validation Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Validación</h2>
-      <p>Estados de validación visual.</p>
+      <h2>{{ i18n.translateDocs('components.form.input.validation.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.validation.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Error</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.validation.error.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Error'"
-                [error]="'Mensaje de error'"
-                [value]="'Invalido'"
+                [label]="
+                  i18n.translateDocs('components.form.input.validation.error.label')
+                "
+                [error]="
+                  i18n.translateDocs('components.form.input.validation.error.message')
+                "
+                [value]="
+                  i18n.translateDocs('components.form.input.validation.error.value')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Éxito</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>
+            {{ i18n.translateDocs('components.form.input.validation.success.cardTitle') }}
+          </h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Éxito'"
+                [label]="
+                  i18n.translateDocs('components.form.input.validation.success.label')
+                "
                 [success]="true"
-                [value]="'Valido'"
+                [value]="
+                  i18n.translateDocs('components.form.input.validation.success.value')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Requerido</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>
+            {{
+              i18n.translateDocs('components.form.input.validation.required.cardTitle')
+            }}
+          </h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Requerido'"
+                [label]="
+                  i18n.translateDocs('components.form.input.validation.required.label')
+                "
                 [required]="true"
-                [placeholder]="'Campo obligatorio'"
+                [placeholder]="
+                  i18n.translateDocs(
+                    'components.form.input.validation.required.placeholder'
+                  )
+                "
               ></magary-input>
             </div>
           </magary-card>
@@ -346,79 +342,68 @@
     </div>
   </div>
 
-  <!-- Icons Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Iconos</h2>
-      <p>Añade iconos al inicio o al final.</p>
+      <h2>{{ i18n.translateDocs('components.form.input.icons.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.icons.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Prefijo</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.icons.prefix.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Prefijo'"
+                [label]="i18n.translateDocs('components.form.input.icons.prefix.label')"
                 [prefixIcon]="'user'"
-                [placeholder]="'Usuario'"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.icons.prefix.placeholder')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Sufijo</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.icons.suffix.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Sufijo'"
+                [label]="i18n.translateDocs('components.form.input.icons.suffix.label')"
                 [suffixIcon]="'search'"
-                [placeholder]="'Buscar'"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.icons.suffix.placeholder')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Ambos</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.icons.both.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Ambos'"
+                [label]="i18n.translateDocs('components.form.input.icons.both.label')"
                 [prefixIcon]="'mail'"
                 [suffixIcon]="'check'"
-                [placeholder]="'Email'"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.icons.both.placeholder')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Loading</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>
+            {{ i18n.translateDocs('components.form.input.icons.loading.cardTitle') }}
+          </h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Loading'"
+                [label]="i18n.translateDocs('components.form.input.icons.loading.label')"
                 [loading]="true"
-                [placeholder]="'Cargando...'"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.icons.loading.placeholder')
+                "
               ></magary-input>
             </div>
           </magary-card>
@@ -430,60 +415,58 @@
     </div>
   </div>
 
-  <!-- States Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Estados</h2>
-      <p>Estados interactivos del componente.</p>
+      <h2>{{ i18n.translateDocs('components.form.input.states.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.states.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Normal</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>{{ i18n.translateDocs('components.form.input.states.normal.cardTitle') }}</h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Normal'"
-                [placeholder]="'Normal'"
+                [label]="i18n.translateDocs('components.form.input.states.normal.label')"
+                [placeholder]="
+                  i18n.translateDocs('components.form.input.states.normal.placeholder')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Deshabilitado</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>
+            {{ i18n.translateDocs('components.form.input.states.disabled.cardTitle') }}
+          </h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Deshabilitado'"
+                [label]="
+                  i18n.translateDocs('components.form.input.states.disabled.label')
+                "
                 [disabled]="true"
-                [value]="'Deshabilitado'"
+                [value]="
+                  i18n.translateDocs('components.form.input.states.disabled.value')
+                "
               ></magary-input>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Solo Lectura</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
+          <h4>
+            {{ i18n.translateDocs('components.form.input.states.readonly.cardTitle') }}
+          </h4>
+          <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
               <magary-input
-                [label]="'Solo Lectura'"
+                [label]="
+                  i18n.translateDocs('components.form.input.states.readonly.label')
+                "
                 [readonly]="true"
-                [value]="'Solo lectura'"
+                [value]="
+                  i18n.translateDocs('components.form.input.states.readonly.value')
+                "
               ></magary-input>
             </div>
           </magary-card>
@@ -495,178 +478,118 @@
     </div>
   </div>
 
-  <!-- Inputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente</p>
+      <h2>{{ i18n.translateDocs('components.form.input.apiInputs.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.apiInputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Valor por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ i18n.translateDocs('components.form.input.apiInputs.header.name') }}</th>
+              <th>{{ i18n.translateDocs('components.form.input.apiInputs.header.type') }}</th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.input.apiInputs.header.default'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.input.apiInputs.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>label</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Etiqueta del input.</td>
-            </tr>
-            <tr>
-              <td><code>placeholder</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Texto de ayuda temporal.</td>
-            </tr>
-            <tr>
-              <td><code>value</code></td>
-              <td><code>string</code></td>
-              <td><code>''</code></td>
-              <td>Valor del input.</td>
-            </tr>
-            <tr>
-              <td><code>type</code></td>
-              <td><code>string</code></td>
-              <td><code>'text'</code></td>
-              <td>Tipo de input (text, email, password, etc).</td>
-            </tr>
-            <tr>
-              <td><code>size</code></td>
-              <td><code>'small' | 'normal' | 'large'</code></td>
-              <td><code>'normal'</code></td>
-              <td>Tamaño del componente.</td>
-            </tr>
-            <tr>
-              <td><code>variant</code></td>
-              <td><code>'outlined' | 'filled' | 'underlined'</code></td>
-              <td><code>'outlined'</code></td>
-              <td>Estilo visual del input.</td>
-            </tr>
-            <tr>
-              <td><code>disabled</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Deshabilita el input.</td>
-            </tr>
-            <tr>
-              <td><code>readonly</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Modo solo lectura.</td>
-            </tr>
-            <tr>
-              <td><code>required</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Marca el campo como obligatorio.</td>
-            </tr>
-            <tr>
-              <td><code>error</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Mensaje de error.</td>
-            </tr>
-            <tr>
-              <td><code>success</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Indica estado de éxito.</td>
-            </tr>
-            <tr>
-              <td><code>loading</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Muestra indicador de carga.</td>
-            </tr>
-            <tr>
-              <td><code>prefixIcon</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Clase del icono inicial (ej: 'user').</td>
-            </tr>
-            <tr>
-              <td><code>suffixIcon</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Clase del icono final.</td>
-            </tr>
+            <tr><td><code>label</code></td><td><code>string</code></td><td><code>undefined</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.label.desc') }}</td></tr>
+            <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>undefined</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.placeholder.desc') }}</td></tr>
+            <tr><td><code>value</code></td><td><code>string</code></td><td><code>''</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.value.desc') }}</td></tr>
+            <tr><td><code>type</code></td><td><code>string</code></td><td><code>'text'</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.type.desc') }}</td></tr>
+            <tr><td><code>size</code></td><td><code>'small' | 'normal' | 'large'</code></td><td><code>'normal'</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.size.desc') }}</td></tr>
+            <tr><td><code>variant</code></td><td><code>'outlined' | 'filled' | 'underlined'</code></td><td><code>'outlined'</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.variant.desc') }}</td></tr>
+            <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.disabled.desc') }}</td></tr>
+            <tr><td><code>readonly</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.readonly.desc') }}</td></tr>
+            <tr><td><code>required</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.required.desc') }}</td></tr>
+            <tr><td><code>error</code></td><td><code>string</code></td><td><code>undefined</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.error.desc') }}</td></tr>
+            <tr><td><code>success</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.success.desc') }}</td></tr>
+            <tr><td><code>loading</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.loading.desc') }}</td></tr>
+            <tr><td><code>prefixIcon</code></td><td><code>string</code></td><td><code>undefined</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.prefixIcon.desc') }}</td></tr>
+            <tr><td><code>suffixIcon</code></td><td><code>string</code></td><td><code>undefined</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.suffixIcon.desc') }}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- Outputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos emitidos por el componente</p>
+      <h2>{{ i18n.translateDocs('components.form.input.apiOutputs.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.apiOutputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ i18n.translateDocs('components.form.input.apiOutputs.header.name') }}</th>
+              <th>{{ i18n.translateDocs('components.form.input.apiOutputs.header.type') }}</th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.input.apiOutputs.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>valueChange</code></td>
-              <td><code>EventEmitter&lt;string&gt;</code></td>
-              <td>Se emite cuando cambia el valor.</td>
-            </tr>
-            <tr>
-              <td><code>iconClick</code></td>
-              <td><code>EventEmitter&lt;'prefix' | 'suffix'&gt;</code></td>
-              <td>Se emite al hacer click en un icono.</td>
-            </tr>
-            <tr>
-              <td><code>inputFocus</code></td>
-              <td><code>EventEmitter&lt;FocusEvent&gt;</code></td>
-              <td>Se emite al recibir foco.</td>
-            </tr>
-            <tr>
-              <td><code>inputBlur</code></td>
-              <td><code>EventEmitter&lt;FocusEvent&gt;</code></td>
-              <td>Se emite al perder foco.</td>
-            </tr>
+            <tr><td><code>valueChange</code></td><td><code>EventEmitter&lt;string&gt;</code></td><td>{{ i18n.translateDocs('components.form.input.apiOutputs.valueChange.desc') }}</td></tr>
+            <tr><td><code>iconClick</code></td><td><code>EventEmitter&lt;'prefix' | 'suffix'&gt;</code></td><td>{{ i18n.translateDocs('components.form.input.apiOutputs.iconClick.desc') }}</td></tr>
+            <tr><td><code>inputFocus</code></td><td><code>EventEmitter&lt;FocusEvent&gt;</code></td><td>{{ i18n.translateDocs('components.form.input.apiOutputs.inputFocus.desc') }}</td></tr>
+            <tr><td><code>inputBlur</code></td><td><code>EventEmitter&lt;FocusEvent&gt;</code></td><td>{{ i18n.translateDocs('components.form.input.apiOutputs.inputBlur.desc') }}</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- Accessibility Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Accesibilidad</h2>
-      <p>Consideraciones para lectores de pantalla y navegación por teclado.</p>
+      <h2>{{ i18n.translateDocs('components.form.input.a11y.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.a11y.desc') }}</p>
     </div>
     <div class="section-content">
       <ul class="accessibility-list">
         <li>
-          <strong>Teclado:</strong> El input es completamente navegable mediante
-          la tecla Tab.
+          <strong>
+            {{ i18n.translateDocs('components.form.input.a11y.keyboard.title') }}:
+          </strong>
+          {{ i18n.translateDocs('components.form.input.a11y.keyboard.desc') }}
         </li>
         <li>
-          <strong>Labels:</strong> Se asocia correctamente el label con el input
-          mediante el atributo <code>for</code>.
+          <strong>
+            {{ i18n.translateDocs('components.form.input.a11y.labels.title') }}:
+          </strong>
+          {{ i18n.translateDocs('components.form.input.a11y.labels.desc') }}
         </li>
         <li>
-          <strong>ARIA:</strong> Se utilizan atributos ARIA para indicar estados
-          como inválido o requerido.
+          <strong>
+            {{ i18n.translateDocs('components.form.input.a11y.aria.title') }}:
+          </strong>
+          {{ i18n.translateDocs('components.form.input.a11y.aria.desc') }}
         </li>
-        <li><strong>Foco:</strong> El estado de foco es visible y claro.</li>
+        <li>
+          <strong>
+            {{ i18n.translateDocs('components.form.input.a11y.focus.title') }}:
+          </strong>
+          {{ i18n.translateDocs('components.form.input.a11y.focus.desc') }}
+        </li>
       </ul>
     </div>
   </div>

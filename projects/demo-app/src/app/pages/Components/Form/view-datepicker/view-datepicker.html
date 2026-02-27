@@ -1,13 +1,13 @@
-﻿<div class="container fade-in">
+<div class="container fade-in">
   <div class="header">
-    <h1>Magary DatePicker</h1>
-    <p>Selector de fecha intuitivo con calendario popup.</p>
+    <h1>{{ i18n.translateDocs('components.form.datepicker.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.form.datepicker.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
-      <p>Importa el módulo en tu componente standalone.</p>
+      <h2>{{ i18n.translateDocs('components.form.datepicker.import.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.datepicker.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -18,25 +18,44 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Uso Básico</h2>
-      <p>Selección de fecha simple.</p>
+      <h2>{{ i18n.translateDocs('components.form.datepicker.basic.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.datepicker.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <div class="field">
-          <label>Date</label>
+          <label>
+            {{ i18n.translateDocs('components.form.datepicker.basic.label.date') }}
+          </label>
           <magary-datepicker
             [(ngModel)]="date"
-            placeholder="Select a date"
+            [placeholder]="
+              i18n.translateDocs(
+                'components.form.datepicker.basic.placeholder.date'
+              )
+            "
           ></magary-datepicker>
-          <p>Selected: {{ date | date: "fullDate" }}</p>
+          <p>
+            {{ i18n.translateDocs('components.form.datepicker.basic.selectedLabel') }}:
+            {{
+              date
+                ? (date | date: 'fullDate')
+                : i18n.translateDocs('components.form.datepicker.common.none')
+            }}
+          </p>
         </div>
 
         <div class="field">
-          <label>Disabled</label>
+          <label>
+            {{ i18n.translateDocs('components.form.datepicker.basic.label.disabled') }}
+          </label>
           <magary-datepicker
             [disabled]="true"
-            placeholder="Disabled"
+            [placeholder]="
+              i18n.translateDocs(
+                'components.form.datepicker.basic.placeholder.disabled'
+              )
+            "
           ></magary-datepicker>
         </div>
       </div>
@@ -60,18 +79,26 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Advanced Features</h2>
-      <p>Navegación inteligente (Año/Mes), Input manual y Rangos.</p>
+      <h2>{{ i18n.translateDocs('components.form.datepicker.advanced.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.datepicker.advanced.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <div class="field">
-          <label>Min & Max Date (Next 7 Days)</label>
+          <label>
+            {{
+              i18n.translateDocs('components.form.datepicker.advanced.label.minMax')
+            }}
+          </label>
           <magary-datepicker
             [(ngModel)]="date"
             [minDate]="minDate"
             [maxDate]="maxDate"
-            placeholder="Try manual input too!"
+            [placeholder]="
+              i18n.translateDocs(
+                'components.form.datepicker.advanced.placeholder'
+              )
+            "
           ></magary-datepicker>
         </div>
       </div>
@@ -94,25 +121,28 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Range Selection</h2>
-      <p>Selecciona un rango de fechas (Inicio y Fin).</p>
+      <h2>{{ i18n.translateDocs('components.form.datepicker.range.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.datepicker.range.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <div class="field">
-          <label
-            >Date Range ({{
+          <label>
+            {{ i18n.translateDocs('components.form.datepicker.range.label') }}
+            ({{
               rangeDates
-                ? (rangeDates[0] | date: "shortDate") +
-                  " - " +
-                  (rangeDates[1] | date: "shortDate")
-                : "None"
-            }})</label
-          >
+                ? (rangeDates[0] | date: 'shortDate') +
+                  ' - ' +
+                  (rangeDates[1] | date: 'shortDate')
+                : i18n.translateDocs('components.form.datepicker.common.none')
+            }})
+          </label>
           <magary-datepicker
             [(ngModel)]="rangeDates"
             selectionMode="range"
-            placeholder="Select range"
+            [placeholder]="
+              i18n.translateDocs('components.form.datepicker.range.placeholder')
+            "
           ></magary-datepicker>
         </div>
       </div>
@@ -135,18 +165,32 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>API Reference</h2>
-      <p>Inputs para <code>magary-datepicker</code>.</p>
+      <h2>{{ i18n.translateDocs('components.form.datepicker.api.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.datepicker.api.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Default</th>
-              <th>Descripción</th>
+              <th>
+                {{ i18n.translateDocs('components.form.datepicker.api.header.name') }}
+              </th>
+              <th>
+                {{ i18n.translateDocs('components.form.datepicker.api.header.type') }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs('components.form.datepicker.api.header.default')
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.datepicker.api.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -154,37 +198,53 @@
               <td><code>ngModel</code></td>
               <td><code>Date | Date[]</code></td>
               <td><code>null</code></td>
-              <td>Vincula el valor de la fecha o rango.</td>
+              <td>{{ i18n.translateDocs('components.form.datepicker.api.ngModel.desc') }}</td>
             </tr>
             <tr>
               <td><code>selectionMode</code></td>
               <td><code>'single' | 'range'</code></td>
               <td><code>single</code></td>
-              <td>Modo de selección.</td>
+              <td>
+                {{
+                  i18n.translateDocs(
+                    'components.form.datepicker.api.selectionMode.desc'
+                  )
+                }}
+              </td>
             </tr>
             <tr>
               <td><code>minDate</code></td>
               <td><code>Date</code></td>
               <td><code>-</code></td>
-              <td>Fecha mínima permitida.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.minDate.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>maxDate</code></td>
               <td><code>Date</code></td>
               <td><code>-</code></td>
-              <td>Fecha máxima permitida.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.maxDate.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>placeholder</code></td>
               <td><code>string</code></td>
               <td><code>-</code></td>
-              <td>Texto de ayuda.</td>
+              <td>
+                {{
+                  i18n.translateDocs('components.form.datepicker.api.placeholder.desc')
+                }}
+              </td>
             </tr>
             <tr>
               <td><code>disabled</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Deshabilita el selector.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.disabled.desc') }}
+              </td>
             </tr>
           </tbody>
         </table>

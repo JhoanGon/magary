@@ -1,15 +1,12 @@
-﻿<div class="container fade-in">
+<div class="container fade-in">
   <div class="header">
-    <h1>Magary Slider</h1>
-    <p>
-      Componente de entrada para seleccionar un valor o rango arrastrando un
-      control.
-    </p>
+    <h1>{{ i18n.translateDocs('components.form.slider.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.form.slider.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ i18n.translateDocs('components.form.slider.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -20,12 +17,15 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Básico</h2>
-      <p>Configuración por defecto de selección de valor único.</p>
+      <h2>{{ i18n.translateDocs('components.form.slider.basic.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.slider.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <h3>Valor: {{ val1 }}</h3>
+        <h3>
+          {{ i18n.translateDocs('components.form.slider.basic.valueLabel') }}:
+          {{ val1 }}
+        </h3>
         <magary-slider [(ngModel)]="val1"></magary-slider>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -47,12 +47,15 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Steps</h2>
-      <p>Incrementos definidos por la propiedad <code>step</code>.</p>
+      <h2>{{ i18n.translateDocs('components.form.slider.steps.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.slider.steps.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <h3>Valor: {{ val3 }}</h3>
+        <h3>
+          {{ i18n.translateDocs('components.form.slider.steps.title') }} (20):
+          {{ val3 }}
+        </h3>
         <magary-slider [(ngModel)]="val3" [step]="20"></magary-slider>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -74,12 +77,15 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Rango</h2>
-      <p>Selección de un rango de valores (inicio y fin).</p>
+      <h2>{{ i18n.translateDocs('components.form.slider.range.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.slider.range.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <h3>Rango: {{ val4[0] }} - {{ val4[1] }}</h3>
+        <h3>
+          {{ i18n.translateDocs('components.form.slider.range.valueLabel') }}:
+          {{ val4[0] }} - {{ val4[1] }}
+        </h3>
         <magary-slider [(ngModel)]="val4" [range]="true"></magary-slider>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -101,12 +107,15 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Vertical</h2>
-      <p>Orientación vertical del slider.</p>
+      <h2>{{ i18n.translateDocs('components.form.slider.vertical.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.slider.vertical.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <h3>Vertical: {{ val5 }}</h3>
+        <h3>
+          {{ i18n.translateDocs('components.form.slider.vertical.valueLabel') }}:
+          {{ val5 }}
+        </h3>
         <div
           style="
             height: 200px;
@@ -116,10 +125,7 @@
             align-items: center;
           "
         >
-          <magary-slider
-            [(ngModel)]="val5"
-            orientation="vertical"
-          ></magary-slider>
+          <magary-slider [(ngModel)]="val5" orientation="vertical"></magary-slider>
         </div>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -141,17 +147,21 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ i18n.translateDocs('components.form.slider.api.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ i18n.translateDocs('components.form.slider.api.header.name') }}</th>
+              <th>{{ i18n.translateDocs('components.form.slider.api.header.type') }}</th>
+              <th>
+                {{ i18n.translateDocs('components.form.slider.api.header.default') }}
+              </th>
+              <th>
+                {{ i18n.translateDocs('components.form.slider.api.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -159,39 +169,39 @@
               <td><code>min</code></td>
               <td><code>number</code></td>
               <td><code>0</code></td>
-              <td>Valor mínimo.</td>
+              <td>{{ i18n.translateDocs('components.form.slider.api.min.desc') }}</td>
             </tr>
             <tr>
               <td><code>max</code></td>
               <td><code>number</code></td>
               <td><code>100</code></td>
-              <td>Valor máximo.</td>
+              <td>{{ i18n.translateDocs('components.form.slider.api.max.desc') }}</td>
             </tr>
             <tr>
               <td><code>step</code></td>
               <td><code>number</code></td>
               <td><code>1</code></td>
-              <td>Incremento del valor.</td>
+              <td>{{ i18n.translateDocs('components.form.slider.api.step.desc') }}</td>
             </tr>
             <tr>
               <td><code>range</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>
-                Si es verdadero, permite seleccionar un rango (inicio, fin).
-              </td>
+              <td>{{ i18n.translateDocs('components.form.slider.api.range.desc') }}</td>
             </tr>
             <tr>
               <td><code>orientation</code></td>
               <td><code>'horizontal' | 'vertical'</code></td>
               <td><code>'horizontal'</code></td>
-              <td>Orientación del slider.</td>
+              <td>
+                {{ i18n.translateDocs('components.form.slider.api.orientation.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>disabled</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Deshabilita el componente.</td>
+              <td>{{ i18n.translateDocs('components.form.slider.api.disabled.desc') }}</td>
             </tr>
           </tbody>
         </table>

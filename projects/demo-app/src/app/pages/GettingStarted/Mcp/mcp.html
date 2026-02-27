@@ -1,7 +1,7 @@
 <div class="mcp-container fade-in">
   <div class="header">
-    <h1>MCP</h1>
-    <p>Guia rapida para conectar <code>magary-mcp</code> en tu IDE.</p>
+    <h1>{{ i18n.translateDocs('mcp.title') }}</h1>
+    <p>{{ i18n.translateDocs('mcp.subtitle') }}</p>
   </div>
 
   <div class="steps-grid">
@@ -16,14 +16,11 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">1</span>
-          <h3>Endpoint oficial</h3>
+          <h3>{{ i18n.translateDocs('mcp.step1.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
-        <p>
-          Este es el endpoint remoto SSE del servidor MCP de Magary. Todas las
-          configuraciones de esta pagina usan esta URL.
-        </p>
+        <p>{{ i18n.translateDocs('mcp.step1.desc') }}</p>
         <div class="code-block">
           <pre><code [highlight]="endpoint" language="bash"></code></pre>
         </div>
@@ -41,24 +38,20 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">2</span>
-          <h3>Configuracion recomendada (mcp-remote)</h3>
+          <h3>{{ i18n.translateDocs('mcp.step2.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
-        <p>
-          Para mejor compatibilidad entre clientes MCP, usa el bridge
-          mcp-remote. Si tu cliente soporta URL remota directa, puedes usar la
-          opcion alternativa.
-        </p>
+        <p>{{ i18n.translateDocs('mcp.step2.desc') }}</p>
         <div class="code-grid">
           <div>
-            <p class="block-label">Recomendada</p>
+            <p class="block-label">{{ i18n.translateDocs('mcp.step2.recommended') }}</p>
             <div class="code-block">
               <pre><code [highlight]="recommendedBridgeConfig" language="json"></code></pre>
             </div>
           </div>
           <div>
-            <p class="block-label">Alternativa (URL directa)</p>
+            <p class="block-label">{{ i18n.translateDocs('mcp.step2.alternative') }}</p>
             <div class="code-block">
               <pre><code [highlight]="directRemoteConfig" language="json"></code></pre>
             </div>
@@ -78,26 +71,26 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">3</span>
-          <h3>Codex (CLI + Extension)</h3>
+          <h3>{{ i18n.translateDocs('mcp.step3.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
-        <p>Agrega el servidor, verifica y abre un chat nuevo en Codex.</p>
+        <p>{{ i18n.translateDocs('mcp.step3.desc') }}</p>
         <div class="code-grid">
           <div>
-            <p class="block-label">Agregar servidor</p>
+            <p class="block-label">{{ i18n.translateDocs('mcp.step3.addServer') }}</p>
             <div class="code-block">
               <pre><code [highlight]="codexAddCommand" language="bash"></code></pre>
             </div>
           </div>
           <div>
-            <p class="block-label">Verificar</p>
+            <p class="block-label">{{ i18n.translateDocs('mcp.step3.verify') }}</p>
             <div class="code-block">
               <pre><code [highlight]="codexVerifyCommands" language="bash"></code></pre>
             </div>
           </div>
         </div>
-        <p class="note">Config manual opcional: ~/.codex/config.toml</p>
+        <p class="note">{{ i18n.translateDocs('mcp.step3.note') }}</p>
         <div class="code-block">
           <pre><code [highlight]="codexToml" language="bash"></code></pre>
         </div>
@@ -115,36 +108,25 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">4</span>
-          <h3>Cursor, Claude, Antigravity, VS Code</h3>
+          <h3>{{ i18n.translateDocs('mcp.step4.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
         <ul class="info-list">
-          <li>
-            VS Code: configura MCP desde tu extension cliente (UI o JSON), no
-            hay un archivo universal del core de VS Code.
-          </li>
-          <li>
-            Cursor: usa .cursor/mcp.json (proyecto) o ~/.cursor/mcp.json
-            (global).
-          </li>
-          <li>
-            Claude Desktop: edita el archivo de configuracion segun tu sistema.
-          </li>
-          <li>
-            Antigravity: Agent panel > MCP Servers > Manage MCP Servers > View
-            raw config.
-          </li>
+          <li>{{ i18n.translateDocs('mcp.step4.vscode') }}</li>
+          <li>{{ i18n.translateDocs('mcp.step4.cursor') }}</li>
+          <li>{{ i18n.translateDocs('mcp.step4.claude') }}</li>
+          <li>{{ i18n.translateDocs('mcp.step4.antigravity') }}</li>
         </ul>
         <div class="code-grid">
           <div>
-            <p class="block-label">Claude paths</p>
+            <p class="block-label">{{ i18n.translateDocs('mcp.step4.claudePaths') }}</p>
             <div class="code-block">
               <pre><code [highlight]="claudePathConfig" language="bash"></code></pre>
             </div>
           </div>
           <div>
-            <p class="block-label">JSON recomendado para estos clientes</p>
+            <p class="block-label">{{ i18n.translateDocs('mcp.step4.recommendedJson') }}</p>
             <div class="code-block">
               <pre><code [highlight]="recommendedBridgeConfig" language="json"></code></pre>
             </div>
@@ -164,25 +146,18 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">5</span>
-          <h3>Verificacion y troubleshooting</h3>
+          <h3>{{ i18n.translateDocs('mcp.step5.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
-        <p>
-          Despues de configurar MCP, reinicia el IDE y abre una sesion nueva.
-          Luego valida con estos prompts:
-        </p>
+        <p>{{ i18n.translateDocs('mcp.step5.desc') }}</p>
         <div class="code-block">
           <pre><code [highlight]="verificationPrompts" language="bash"></code></pre>
         </div>
         <ul class="info-list">
-          <li>Si no aparecen herramientas, reinicia IDE y chat/sesion.</li>
-          <li>
-            Si usas mcp-remote, verifica que Node.js y npx esten instalados.
-          </li>
-          <li>
-            Si falla HTTPS en red corporativa, revisa proxy/SSL interception.
-          </li>
+          <li>{{ i18n.translateDocs('mcp.step5.tip1') }}</li>
+          <li>{{ i18n.translateDocs('mcp.step5.tip2') }}</li>
+          <li>{{ i18n.translateDocs('mcp.step5.tip3') }}</li>
         </ul>
       </div>
     </magary-card>

@@ -262,6 +262,12 @@ test.describe('ci a11y smoke', () => {
     });
   });
 
+  test('segmented route has no serious/critical a11y violations', async ({
+    page,
+  }) => {
+    await expectNoSeriousA11yIssues(page, '/components/Segmented');
+  });
+
   test('cascade select route (opened state) has no serious/critical a11y violations', async ({
     page,
   }) => {
@@ -318,7 +324,7 @@ test.describe('ci a11y smoke', () => {
     page,
   }) => {
     await openRoute(page, '/components/Input');
-    await expectVisibleFocusIndicator(page.getByLabel('Nombre').first());
+    await expectVisibleFocusIndicator(page.getByLabel(/Nombre|Name/i).first());
     await expectVisibleFocusIndicator(page.getByLabel('Error').first());
 
     await openRoute(page, '/components/tabview');
@@ -340,7 +346,9 @@ test.describe('ci a11y smoke', () => {
 
     const describedBy = await errorInput.getAttribute('aria-describedby');
     expect(describedBy).toBeTruthy();
-    await expect(page.locator(`#${describedBy}`)).toContainText('Mensaje de error');
+    await expect(page.locator(`#${describedBy}`)).toContainText(
+      /Mensaje de error|Error message/i,
+    );
 
     await expectMinimumContrast(page.locator('.header h1').first(), 4.5);
     await expectMinimumContrast(errorInput, 4.5);

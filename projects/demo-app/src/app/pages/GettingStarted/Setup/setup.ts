@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MagaryCard, MagaryButton } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { LucideAngularModule } from 'lucide-angular';
+import { DemoI18nService } from '../../../i18n/demo-i18n.service';
 
 @Component({
   selector: 'app-setup',
@@ -12,14 +13,15 @@ import { LucideAngularModule } from 'lucide-angular';
   styleUrl: './setup.scss',
 })
 export class Setup {
-  private _router = inject(Router);
+  private readonly router = inject(Router);
+  public readonly i18n = inject(DemoI18nService);
 
   navigateToTheming() {
-    this._router.navigate(['/theming']);
+    this.router.navigate(['/theming']);
   }
 
   navigateToRoute(route: string) {
-    this._router.navigateByUrl(route);
+    this.router.navigateByUrl(route);
   }
 
   readonly iconInstall = `npm install lucide-angular lucide`;
@@ -50,7 +52,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
-    // otros providers...
+    // other providers...
   ]
 };`;
   readonly moduleAnimationsConfig = `// app.module.ts (Modules / Angular 14-16)

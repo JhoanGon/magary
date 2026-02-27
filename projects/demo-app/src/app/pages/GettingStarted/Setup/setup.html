@@ -1,11 +1,10 @@
 <div class="setup-container fade-in">
   <div class="header">
-    <h1>Configuración</h1>
-    <p>Guía paso a paso para configurar ng-magary en tu proyecto.</p>
+    <h1>{{ i18n.translateDocs('setup.title') }}</h1>
+    <p>{{ i18n.translateDocs('setup.subtitle') }}</p>
   </div>
 
   <div class="steps-grid">
-    <!-- Step 1: Estilos y Tema -->
     <magary-card
       [width]="'100%'"
       [shadow]="3"
@@ -17,17 +16,14 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">1</span>
-          <h3>Estilos y Tema</h3>
+          <h3>{{ i18n.translateDocs('setup.step1.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
         <div class="step-text">
-          <p>
-            ng-magary utiliza variables CSS nativas para el theming y
-            Glassmorphism.
-          </p>
+          <p>{{ i18n.translateDocs('setup.step1.desc') }}</p>
           <magary-button
-            label="Ver Guía de Temas y Variables"
+            [label]="i18n.translateDocs('setup.step1.button')"
             icon="palette"
             severity="info"
             variant="outlined"
@@ -37,14 +33,13 @@
         </div>
         <div class="code-block">
           <p class="text-secondary text-sm" style="margin-left: 1rem">
-            Ejemplo resumido de variables requeridas:
+            {{ i18n.translateDocs('setup.step1.codeLabel') }}
           </p>
           <pre><code [highlight]="cssVariables" language="css"></code></pre>
         </div>
       </div>
     </magary-card>
 
-    <!-- Step 2: Iconos -->
     <magary-card
       [width]="'100%'"
       [shadow]="3"
@@ -56,18 +51,14 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">2</span>
-          <h3>Iconos</h3>
+          <h3>{{ i18n.translateDocs('setup.step2.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
         <p>
-          Esta librería utiliza <b>Lucide Icons</b>. Para que los componentes
-          rendericen los iconos correctamente, debes proveerlos en la
-          configuración de tu aplicación (<code>app.config.ts</code>).
+          {{ i18n.translateDocs('setup.step2.desc') }}
           <br /><br />
-          <b>Opción recomendada (Cargar todos los iconos):</b> Esta opción
-          habilita todos los iconos disponibles para usarse en cualquier
-          componente.
+          <b>{{ i18n.translateDocs('setup.step2.optionLabel') }}</b>
         </p>
         <div
           style="
@@ -81,11 +72,11 @@
           <div class="code-block">
             <pre><code [highlight]="iconInstall" language="bash"></code></pre>
           </div>
-          <h4>Standalone (AppConfig)</h4>
+          <h4>{{ i18n.translateDocs('setup.step2.standalone') }}</h4>
           <div class="code-block">
             <pre><code [highlight]="angularJsonConfig" language="typescript"></code></pre>
           </div>
-          <h4>Módulos (AppModule)</h4>
+          <h4>{{ i18n.translateDocs('setup.step2.modules') }}</h4>
           <div class="code-block">
             <pre><code [highlight]="moduleConfig" language="typescript"></code></pre>
           </div>
@@ -93,7 +84,6 @@
       </div>
     </magary-card>
 
-    <!-- Step 3: Animaciones -->
     <magary-card
       [width]="'100%'"
       [shadow]="3"
@@ -105,15 +95,11 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">3</span>
-          <h3>Animaciones</h3>
+          <h3>{{ i18n.translateDocs('setup.step3.title') }}</h3>
         </div>
       </div>
       <div class="step-content">
-        <p>
-          Para que las animaciones (como ripples y transiciones) funcionen,
-          asegúrate de proveer el módulo de animaciones en tu
-          <code>app.config.ts</code> (Standalone) o <code>app.module.ts</code>.
-        </p>
+        <p>{{ i18n.translateDocs('setup.step3.desc') }}</p>
         <div
           style="
             flex: 1.5;
@@ -123,11 +109,11 @@
             width: 100%;
           "
         >
-          <h4>Standalone (AppConfig)</h4>
+          <h4>{{ i18n.translateDocs('setup.step3.standalone') }}</h4>
           <div class="code-block">
             <pre><code [highlight]="animationsConfig" language="typescript"></code></pre>
           </div>
-          <h4>Módulos (AppModule)</h4>
+          <h4>{{ i18n.translateDocs('setup.step3.modules') }}</h4>
           <div class="code-block">
             <pre><code [highlight]="moduleAnimationsConfig" language="typescript"></code></pre>
           </div>
@@ -135,7 +121,6 @@
       </div>
     </magary-card>
 
-    <!-- Step 4: Integration Examples -->
     <magary-card
       [width]="'100%'"
       [shadow]="3"
@@ -147,31 +132,28 @@
       <div slot="header">
         <div class="step-header">
           <span class="step-number">4</span>
-          <h3>Integration Examples (Demo App)</h3>
+          <h3>{{ i18n.translateDocs('setup.step4.title') }}</h3>
         </div>
       </div>
       <div class="step-content step-content-column">
-        <p>
-          Use these routes as integration references for consumer apps. Each one
-          includes real component wiring with forms, overlays, and data flows.
-        </p>
+        <p>{{ i18n.translateDocs('setup.step4.desc') }}</p>
         <div class="quick-links">
           <magary-button
-            label="Form Integration"
-            icon="form-input"
+            [label]="i18n.translateDocs('setup.step4.formButton')"
+            icon="settings"
             severity="info"
             variant="outlined"
             (buttonClick)="navigateToRoute('/components/Input')"
           ></magary-button>
           <magary-button
-            label="Overlay Integration"
+            [label]="i18n.translateDocs('setup.step4.overlayButton')"
             icon="layers"
             severity="info"
             variant="outlined"
             (buttonClick)="navigateToRoute('/components/ConfirmDialog')"
           ></magary-button>
           <magary-button
-            label="Data Integration"
+            [label]="i18n.translateDocs('setup.step4.dataButton')"
             icon="table"
             severity="info"
             variant="outlined"
@@ -181,19 +163,19 @@
         <div class="integration-grid">
           <div class="code-block">
             <p class="text-secondary text-sm" style="margin-left: 1rem">
-              Standalone bootstrap:
+              {{ i18n.translateDocs('setup.step4.standaloneLabel') }}
             </p>
             <pre><code [highlight]="integrationStandalone" language="typescript"></code></pre>
           </div>
           <div class="code-block">
             <p class="text-secondary text-sm" style="margin-left: 1rem">
-              Reactive forms bridge:
+              {{ i18n.translateDocs('setup.step4.formsLabel') }}
             </p>
             <pre><code [highlight]="integrationForms" language="typescript"></code></pre>
           </div>
           <div class="code-block">
             <p class="text-secondary text-sm" style="margin-left: 1rem">
-              Overlay + feedback flow:
+              {{ i18n.translateDocs('setup.step4.overlayLabel') }}
             </p>
             <pre><code [highlight]="integrationOverlay" language="typescript"></code></pre>
           </div>
@@ -201,7 +183,6 @@
       </div>
     </magary-card>
 
-    <!-- Attribution -->
     <magary-card
       [width]="'100%'"
       [shadow]="3"
@@ -213,14 +194,11 @@
       <div slot="header">
         <div class="step-header">
           <lucide-icon name="heart-handshake" class="step-icon"></lucide-icon>
-          <h3>Créditos y Atribuciones</h3>
+          <h3>{{ i18n.translateDocs('setup.attribution.title') }}</h3>
         </div>
       </div>
       <div class="step-content-attribution">
-        <p>
-          Este proyecto utiliza y agradece el trabajo de las siguientes
-          librerías open-source:
-        </p>
+        <p>{{ i18n.translateDocs('setup.attribution.desc') }}</p>
         <div class="attribution-list">
           <div class="attribution-item">
             <div class="attribution-icon">
@@ -228,7 +206,7 @@
             </div>
             <div class="attribution-details">
               <h4>Gridstack.js</h4>
-              <p>Funcionalidad de Grid y Drag & Drop.</p>
+              <p>{{ i18n.translateDocs('setup.attribution.gridstack') }}</p>
               <a
                 href="https://gridstackjs.com/"
                 target="_blank"
@@ -246,7 +224,7 @@
             </div>
             <div class="attribution-details">
               <h4>Lucide Icons</h4>
-              <p>Set de iconos flexible y moderno.</p>
+              <p>{{ i18n.translateDocs('setup.attribution.lucide') }}</p>
               <a
                 href="https://lucide.dev/"
                 target="_blank"

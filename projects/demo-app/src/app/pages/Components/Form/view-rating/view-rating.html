@@ -1,12 +1,12 @@
-﻿<div class="container fade-in">
+<div class="container fade-in">
   <div class="header">
-    <h1>Magary Rating</h1>
-    <p>Componente de calificación con estrellas.</p>
+    <h1>{{ i18n.translateDocs('components.form.rating.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.form.rating.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ i18n.translateDocs('components.form.rating.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,12 +17,15 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Básico</h2>
-      <p>Configuración por defecto con 5 estrellas y opción de cancelar.</p>
+      <h2>{{ i18n.translateDocs('components.form.rating.basic.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.rating.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <h3>Valor: {{ val1 }}</h3>
+        <h3>
+          {{ i18n.translateDocs('components.form.rating.basic.valueLabel') }}:
+          {{ val1 }}
+        </h3>
         <magary-rating [(ngModel)]="val1"></magary-rating>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -44,12 +47,15 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Sin Cancelar</h2>
-      <p>Deshabilita la opción de cancelar la selección.</p>
+      <h2>{{ i18n.translateDocs('components.form.rating.noCancel.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.rating.noCancel.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <h3>Valor: {{ val2 }}</h3>
+        <h3>
+          {{ i18n.translateDocs('components.form.rating.basic.valueLabel') }}:
+          {{ val2 }}
+        </h3>
         <magary-rating [(ngModel)]="val2" [cancel]="false"></magary-rating>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -71,12 +77,15 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Solo Lectura</h2>
-      <p>Modo de visualización sin interacción.</p>
+      <h2>{{ i18n.translateDocs('components.form.rating.readonly.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.rating.readonly.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <h3>Valor: {{ val3 }}</h3>
+        <h3>
+          {{ i18n.translateDocs('components.form.rating.basic.valueLabel') }}:
+          {{ val3 }}
+        </h3>
         <magary-rating [(ngModel)]="val3" [readonly]="true"></magary-rating>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -98,12 +107,15 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Estrellas Personalizadas</h2>
-      <p>Define el número de estrellas con <code>stars</code>.</p>
+      <h2>{{ i18n.translateDocs('components.form.rating.customStars.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.rating.customStars.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <h3>Valor: {{ val4 }}</h3>
+        <h3>
+          {{ i18n.translateDocs('components.form.rating.basic.valueLabel') }}:
+          {{ val4 }}
+        </h3>
         <magary-rating [(ngModel)]="val4" [stars]="10"></magary-rating>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -125,17 +137,21 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ i18n.translateDocs('components.form.rating.api.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ i18n.translateDocs('components.form.rating.api.header.name') }}</th>
+              <th>{{ i18n.translateDocs('components.form.rating.api.header.type') }}</th>
+              <th>
+                {{ i18n.translateDocs('components.form.rating.api.header.default') }}
+              </th>
+              <th>
+                {{ i18n.translateDocs('components.form.rating.api.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -143,25 +159,25 @@
               <td><code>stars</code></td>
               <td><code>number</code></td>
               <td><code>5</code></td>
-              <td>Número de estrellas.</td>
+              <td>{{ i18n.translateDocs('components.form.rating.api.stars.desc') }}</td>
             </tr>
             <tr>
               <td><code>cancel</code></td>
               <td><code>boolean</code></td>
               <td><code>true</code></td>
-              <td>Muestra el icono de cancelar.</td>
+              <td>{{ i18n.translateDocs('components.form.rating.api.cancel.desc') }}</td>
             </tr>
             <tr>
               <td><code>disabled</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Deshabilita el componente.</td>
+              <td>{{ i18n.translateDocs('components.form.rating.api.disabled.desc') }}</td>
             </tr>
             <tr>
               <td><code>readonly</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Modo solo lectura.</td>
+              <td>{{ i18n.translateDocs('components.form.rating.api.readonly.desc') }}</td>
             </tr>
           </tbody>
         </table>

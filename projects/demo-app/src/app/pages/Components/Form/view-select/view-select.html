@@ -1,18 +1,13 @@
-﻿<div class="container fade-in">
-  <!-- 1. Header Standard -->
+<div class="container fade-in">
   <div class="header">
-    <h1>Magary Select</h1>
-    <p>
-      Componente de selección nativo estilizado compatible con Reactive Forms y
-      soporte para objetos complejos.
-    </p>
+    <h1>{{ i18n.translateDocs('components.form.select.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.form.select.subtitle') }}</p>
   </div>
 
-  <!-- 2. Section Standard -->
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
-      <p>Importa el módulo en tu componente standalone.</p>
+      <h2>{{ i18n.translateDocs('components.form.select.import.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.select.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -21,64 +16,98 @@
     </div>
   </div>
 
-  <!-- 3. Section: Basic Usage -->
   <div class="section">
     <div class="section-header">
-      <h2>Uso Básico</h2>
-      <p>Select simple con opciones primitivas o de objetos.</p>
+      <h2>{{ i18n.translateDocs('components.form.select.basic.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.select.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <div class="form-grid">
           <div class="field">
-            <label>Basic (String)</label>
+            <label>{{
+              i18n.translateDocs('components.form.select.basic.label.basic')
+            }}</label>
             <magary-select
               [options]="cities"
-              placeholder="Select a city"
+              [placeholder]="
+                i18n.translateDocs(
+                  'components.form.select.basic.placeholder.selectCity'
+                )
+              "
             ></magary-select>
           </div>
 
           <div class="field">
-            <label>Disabled</label>
+            <label>{{
+              i18n.translateDocs('components.form.select.basic.label.disabled')
+            }}</label>
             <magary-select
               [options]="cities"
-              placeholder="Disabled"
+              [placeholder]="
+                i18n.translateDocs(
+                  'components.form.select.basic.placeholder.disabled'
+                )
+              "
               disabled
             ></magary-select>
           </div>
 
           <div class="field">
-            <label>Loading</label>
+            <label>{{
+              i18n.translateDocs('components.form.select.basic.label.loading')
+            }}</label>
             <magary-select
               [options]="[]"
-              placeholder="Loading..."
+              [placeholder]="
+                i18n.translateDocs(
+                  'components.form.select.basic.placeholder.loading'
+                )
+              "
               loading
             ></magary-select>
           </div>
 
           <div class="field">
-            <label>Small + HelpText</label>
+            <label>{{
+              i18n.translateDocs('components.form.select.basic.label.smallHelp')
+            }}</label>
             <magary-select
               [options]="cities"
-              placeholder="Choose city"
+              [placeholder]="
+                i18n.translateDocs(
+                  'components.form.select.basic.placeholder.chooseCity'
+                )
+              "
               size="small"
-              helpText="Puedes cambiar la selección luego"
+              [helpText]="
+                i18n.translateDocs('components.form.select.basic.helpText')
+              "
             ></magary-select>
           </div>
 
           <div class="field">
-            <label>Invalid + Error</label>
+            <label>{{
+              i18n.translateDocs(
+                'components.form.select.basic.label.invalidError'
+              )
+            }}</label>
             <magary-select
               [options]="cities"
-              placeholder="Required"
+              [placeholder]="
+                i18n.translateDocs(
+                  'components.form.select.basic.placeholder.required'
+                )
+              "
               invalid
-              error="Selecciona una ciudad válida"
+              [error]="
+                i18n.translateDocs('components.form.select.basic.errorMessage')
+              "
             ></magary-select>
           </div>
         </div>
       </div>
 
-      <!-- 4. Code Tabs Standard -->
       <div class="code-block" style="margin-top: 1rem">
         <magary-tabs
           [backgroundLine]="'#ed2c44'"
@@ -96,24 +125,31 @@
     </div>
   </div>
 
-  <!-- 5. Advanced / Reactive Forms -->
   <div class="section">
     <div class="section-header">
-      <h2>Reactive Forms & Objects</h2>
-      <p>
-        Integración completa con `FormControl` y manejo de objetos complejos.
-      </p>
+      <h2>{{ i18n.translateDocs('components.form.select.reactive.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.select.reactive.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <div class="form-grid">
           <div class="field">
-            <label>Selected User: {{ selectedUser?.name || "None" }}</label>
+            <label>
+              {{
+                i18n.translateDocs('components.form.select.reactive.selectedUser')
+              }}:
+              {{
+                selectedUser?.name ||
+                  i18n.translateDocs('components.form.select.common.none')
+              }}
+            </label>
             <magary-select
               [options]="users"
               optionLabel="name"
               optionValue="id"
-              placeholder="Select a user"
+              [placeholder]="
+                i18n.translateDocs('components.form.select.reactive.placeholder')
+              "
               [(ngModel)]="selectedUserId"
               (ngModelChange)="onUserChange($event)"
             ></magary-select>
@@ -137,29 +173,37 @@
     </div>
   </div>
 
-  <!-- Advanced: Filter & Clear -->
   <div class="section">
     <div class="section-header">
-      <h2>Filtering & Clear</h2>
-      <p>
-        Habilita búsqueda por texto en listas largas y botón de limpieza. El
-        filtrado se realiza localmente sobre la propiedad `optionLabel`.
-      </p>
+      <h2>{{ i18n.translateDocs('components.form.select.filter.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.select.filter.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <div class="form-grid">
           <div class="field">
-            <label>Countries (Filterable)</label>
+            <label>{{
+              i18n.translateDocs('components.form.select.filter.label.countries')
+            }}</label>
             <magary-select
               [options]="countries"
               optionLabel="name"
-              placeholder="Select a country"
+              [placeholder]="
+                i18n.translateDocs('components.form.select.filter.placeholder')
+              "
               filter
               showClear
               [(ngModel)]="selectedCountry"
             ></magary-select>
-            <p>Selected: {{ selectedCountry?.name || "None" }}</p>
+            <p>
+              {{
+                i18n.translateDocs('components.form.select.filter.selectedLabel')
+              }}:
+              {{
+                selectedCountry?.name ||
+                  i18n.translateDocs('components.form.select.common.none')
+              }}
+            </p>
           </div>
         </div>
       </div>
@@ -180,21 +224,34 @@
     </div>
   </div>
 
-  <!-- 7. API Table Standard -->
   <div class="section">
     <div class="section-header">
-      <h2>API Reference</h2>
-      <p>Inputs y Outputs disponibles para <code>magary-select</code>.</p>
+      <h2>{{ i18n.translateDocs('components.form.select.api.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.select.api.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Default</th>
-              <th>Descripción</th>
+              <th>
+                {{ i18n.translateDocs('components.form.select.api.header.name') }}
+              </th>
+              <th>
+                {{ i18n.translateDocs('components.form.select.api.header.type') }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs('components.form.select.api.header.default')
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.form.select.api.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -202,73 +259,73 @@
               <td><code>options</code></td>
               <td><code>MagarySelectOption[]</code></td>
               <td><code>[]</code></td>
-              <td>Array de objetos o primitivos a mostrar.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.options.desc') }}</td>
             </tr>
             <tr>
               <td><code>optionLabel</code></td>
               <td><code>string</code></td>
               <td><code>-</code></td>
-              <td>Nombre de la propiedad a usar como etiqueta.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.optionLabel.desc') }}</td>
             </tr>
             <tr>
               <td><code>optionValue</code></td>
               <td><code>string</code></td>
               <td><code>-</code></td>
-              <td>Nombre de la propiedad a usar como valor.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.optionValue.desc') }}</td>
             </tr>
             <tr>
               <td><code>placeholder</code></td>
               <td><code>string</code></td>
               <td><code>Select...</code></td>
-              <td>Texto a mostrar cuando no hay selección.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.placeholder.desc') }}</td>
             </tr>
             <tr>
               <td><code>disabled</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Deshabilita el componente (soporta atributo HTML).</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.disabled.desc') }}</td>
             </tr>
             <tr>
               <td><code>loading</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Muestra un spinner de carga (soporta atributo HTML).</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.loading.desc') }}</td>
             </tr>
             <tr>
               <td><code>size</code></td>
               <td><code>'small' | 'normal' | 'large'</code></td>
               <td><code>'normal'</code></td>
-              <td>Tamaño visual del control.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.size.desc') }}</td>
             </tr>
             <tr>
               <td><code>invalid</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Marca el control como inválido y activa estado de error.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.invalid.desc') }}</td>
             </tr>
             <tr>
               <td><code>error</code></td>
               <td><code>string</code></td>
               <td><code>''</code></td>
-              <td>Mensaje de error mostrado debajo del select.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.error.desc') }}</td>
             </tr>
             <tr>
               <td><code>helpText</code></td>
               <td><code>string</code></td>
               <td><code>''</code></td>
-              <td>Texto de ayuda cuando no hay error.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.helpText.desc') }}</td>
             </tr>
             <tr>
               <td><code>filter</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Habilita el input de búsqueda.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.filter.desc') }}</td>
             </tr>
             <tr>
               <td><code>showClear</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Muestra botón para limpiar selección.</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.showClear.desc') }}</td>
             </tr>
           </tbody>
         </table>

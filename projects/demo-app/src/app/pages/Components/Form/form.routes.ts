@@ -17,6 +17,13 @@ export const FORM_ROUTES: Routes = [
       import('./view-switch/view-switch').then((m) => m.ViewSwitch),
   },
   {
+    path: 'Segmented',
+    loadComponent: () =>
+      import('./view-segmented/view-segmented').then(
+        (m) => m.ViewSegmented,
+      ),
+  },
+  {
     path: 'Cascade-Select',
     loadComponent: () =>
       import('./view-cascade-select/view-cascade-select').then(

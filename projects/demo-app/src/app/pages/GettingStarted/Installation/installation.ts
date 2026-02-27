@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MagaryCard } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../i18n/demo-i18n.service';
 
 @Component({
   selector: 'app-installation',
@@ -10,6 +11,8 @@ import { Highlight } from 'ngx-highlightjs';
   styleUrl: './installation.scss',
 })
 export class Installation {
+  public readonly i18n = inject(DemoI18nService);
+
   readonly installCommandNpm =
     'npm install ng-magary @angular/cdk gridstack lucide-angular lucide';
   readonly installCommandPnpm =
@@ -43,7 +46,8 @@ export const appConfig: ApplicationConfig = {
   providers: [provideAnimations()],
 };`;
 
-  readonly tooltipStyles = `/* styles.scss (solo si usas magaryTooltip) */
+  get tooltipStyles(): string {
+    return `/* ${this.i18n.translateDocs('installation.tooltipComment')} */
 .magary-tooltip {
   position: absolute;
   padding: 0.5rem 0.75rem;
@@ -63,6 +67,7 @@ export const appConfig: ApplicationConfig = {
 .magary-tooltip.magary-tooltip-visible {
   opacity: 1;
 }`;
+  }
 
   readonly componentImport = `import { Component } from '@angular/core';
 import { MagaryCard, MagaryButton } from 'ng-magary';

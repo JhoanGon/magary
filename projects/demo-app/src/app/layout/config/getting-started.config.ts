@@ -2,13 +2,13 @@ import { NavigationItem } from '../interface/sidebar.interface';
 
 export const GETTING_STARTED_ITEMS_CONFIG: NavigationItem[] = [
   {
-    label: 'Instalación',
+    label: 'Instalacion',
     route: '/installation',
     icon: 'download',
     iconClass: 'lucide-bounce',
   },
   {
-    label: 'Configuración',
+    label: 'Configuracion',
     route: '/setup',
     icon: 'settings',
     iconClass: 'lucide-spin',

@@ -1,39 +1,24 @@
 <div class="view-theming">
   <header>
-    <h1>Theming System</h1>
-    <p>
-      Un sistema de temas flexible y potente basado en CSS Variables y Signals.
-      Personaliza cada aspecto de tu aplicación con facilidad.
-    </p>
+    <h1>{{ i18n.translateDocs('utilities.theming.title') }}</h1>
+    <p>{{ i18n.translateDocs('utilities.theming.subtitle') }}</p>
   </header>
 
   <div class="doc-card">
     <div class="section-title">
       <lucide-icon name="rocket"></lucide-icon>
-      <span>Introducción</span>
+      <span>{{ i18n.translateDocs('utilities.theming.introTitle') }}</span>
     </div>
-    <p>
-      Magary utiliza un enfoque moderno para el theming, aprovechando las
-      <strong>CSS Custom Properties (Variables)</strong> para definir colores,
-      espaciados y tipografía. Esto permite cambiar de tema en tiempo real sin
-      necesidad de recargar la página y con un rendimiento óptimo.
-    </p>
-    <p>
-      El sistema está gestionado por <code>MagaryThemeService</code>, que se
-      encarga de persistir la preferencia del usuario y aplicar las clases
-      necesarias.
-    </p>
+    <p>{{ i18n.translateDocs('utilities.theming.introP1') }}</p>
+    <p>{{ i18n.translateDocs('utilities.theming.introP2') }}</p>
   </div>
 
   <div class="doc-card">
     <div class="section-title">
       <lucide-icon name="code"></lucide-icon>
-      <span>Implementación</span>
+      <span>{{ i18n.translateDocs('utilities.theming.implTitle') }}</span>
     </div>
-    <p>
-      Para usar el sistema de temas en tu proyecto, primero inyecta el servicio
-      en tu componente principal o layout:
-    </p>
+    <p>{{ i18n.translateDocs('utilities.theming.implDesc') }}</p>
     <magary-tabs
       [backgroundLine]="'#ed2c44'"
       [positionContent]="'flex-start'"
@@ -51,53 +36,53 @@
   <div class="doc-card">
     <div class="section-title">
       <lucide-icon name="palette"></lucide-icon>
-      <span>Creando un Nuevo Tema</span>
+      <span>{{ i18n.translateDocs('utilities.theming.newThemeTitle') }}</span>
     </div>
-    <p>
-      Para añadir un nuevo tema (por ejemplo, "Midnight Purple"), simplemente
-      define un bloque CSS con el atributo
-      <code>data-theme</code> correspondiente. Debes sobrescribir las variables
-      de color principales.
-    </p>
+    <p>{{ i18n.translateDocs('utilities.theming.newThemeDesc') }}</p>
     <pre><code [highlight]="cssExample" language="scss"></code></pre>
   </div>
 
   <div class="doc-card">
     <div class="section-title">
       <lucide-icon name="library"></lucide-icon>
-      <span>Variables Principales</span>
+      <span>{{ i18n.translateDocs('utilities.theming.variablesTitle') }}</span>
     </div>
-    <p>
-      Estas son las variables clave que debes definir para asegurar que todos
-      los componentes se adapten correctamente:
-    </p>
+    <p>{{ i18n.translateDocs('utilities.theming.variablesDesc') }}</p>
 
     <div class="color-grid">
       <div class="color-item">
         <div class="swatch" style="background: var(--primary-500)"></div>
         <div class="info">
-          <span class="name">Primary</span>
+          <span class="name">{{
+            i18n.translateDocs('utilities.theming.variablePrimary')
+          }}</span>
           <span class="var">--primary-500</span>
         </div>
       </div>
       <div class="color-item">
         <div class="swatch" style="background: var(--surface-0)"></div>
         <div class="info">
-          <span class="name">Surface</span>
+          <span class="name">{{
+            i18n.translateDocs('utilities.theming.variableSurface')
+          }}</span>
           <span class="var">--surface-0</span>
         </div>
       </div>
       <div class="color-item">
         <div class="swatch" style="background: var(--text-primary)"></div>
         <div class="info">
-          <span class="name">Text Main</span>
+          <span class="name">{{
+            i18n.translateDocs('utilities.theming.variableTextMain')
+          }}</span>
           <span class="var">--text-primary</span>
         </div>
       </div>
       <div class="color-item">
         <div class="swatch" style="background: var(--text-secondary)"></div>
         <div class="info">
-          <span class="name">Text Muted</span>
+          <span class="name">{{
+            i18n.translateDocs('utilities.theming.variableTextMuted')
+          }}</span>
           <span class="var">--text-secondary</span>
         </div>
       </div>
