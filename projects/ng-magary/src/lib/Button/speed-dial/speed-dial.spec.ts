@@ -49,6 +49,13 @@ describe('MagarySpeedDial behavior', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    if (component?.isOpen()) {
+      component.isOpen.set(false);
+      fixture.detectChanges();
+    }
+  });
+
   it('toggles open state and emits speedDialToggle from trigger click', () => {
     const toggleEvents: boolean[] = [];
     component.speedDialToggle.subscribe((state) => toggleEvents.push(state));

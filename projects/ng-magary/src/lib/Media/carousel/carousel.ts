@@ -586,6 +586,8 @@ export class MagaryCarouselComponent<T>
   private autoplayPaused = false;
   private autoplayReversed = false;
   private autoplayResumeTimer: ReturnType<typeof setTimeout> | null = null;
+  private slideChangedTimer: ReturnType<typeof setTimeout> | null = null;
+  private destroyed = false;
 
   // Intersection observer for viewport detection
   private intersectionObserver: IntersectionObserver | null = null;
@@ -952,7 +954,15 @@ export class MagaryCarouselComponent<T>
 
     // Handle animation state
     this._isAnimating.set(true);
-    setTimeout(() => {
+    if (this.slideChangedTimer) {
+      clearTimeout(this.slideChangedTimer);
+      this.slideChangedTimer = null;
+    }
+    this.slideChangedTimer = setTimeout(() => {
+      if (this.destroyed) {
+        return;
+      }
+
       this._isAnimating.set(false);
 
       // Emit after-change event
@@ -1019,8 +1029,18 @@ export class MagaryCarouselComponent<T>
    * Destroy carousel and cleanup
    */
   destroy(): void {
+    if (this.destroyed) {
+      return;
+    }
+    this.destroyed = true;
+
     this.stopAutoplay();
     this.detachEvents();
+
+    if (this.slideChangedTimer) {
+      clearTimeout(this.slideChangedTimer);
+      this.slideChangedTimer = null;
+    }
 
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();

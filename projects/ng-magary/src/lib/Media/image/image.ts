@@ -27,6 +27,7 @@ import { ElementRef, viewChild } from '@angular/core';
 })
 export class MagaryImage implements OnDestroy {
   private dialog = viewChild<ElementRef<HTMLDialogElement>>('previewDialog');
+  private destroyed = false;
 
   src = input<string | undefined>(undefined);
 
@@ -52,14 +53,26 @@ export class MagaryImage implements OnDestroy {
 
   error: boolean = false;
 
+  private emitLoad(event: Event): void {
+    if (!this.destroyed) {
+      this.onLoad.emit(event);
+    }
+  }
+
+  private emitError(event: Event): void {
+    if (!this.destroyed) {
+      this.onError.emit(event);
+    }
+  }
+
   onImageLoad(event: Event) {
     this.loaded = true;
-    this.onLoad.emit(event);
+    this.emitLoad(event);
   }
 
   onImageError(event: Event) {
     this.error = true;
-    this.onError.emit(event);
+    this.emitError(event);
   }
 
   rotate = signal<number>(0);
@@ -80,6 +93,7 @@ export class MagaryImage implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.destroyed = true;
     if (this.dialog()?.nativeElement?.open) {
       this.dialog()?.nativeElement.close();
     }

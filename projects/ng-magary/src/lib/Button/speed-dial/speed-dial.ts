@@ -4,6 +4,7 @@ import {
   Component,
   computed,
   input,
+  OnDestroy,
   output,
   signal,
   ElementRef,
@@ -30,8 +31,9 @@ type SpeedDialDirection =
   styleUrl: './speed-dial.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MagarySpeedDial {
+export class MagarySpeedDial implements OnDestroy {
   private readonly elementRef = inject(ElementRef);
+  private destroyed = false;
   readonly items = input.required<SpeedDialItem[]>();
   readonly icon = input<string>('plus');
   readonly activeIcon = input<string>('x');
@@ -79,24 +81,37 @@ export class MagarySpeedDial {
   readonly currentIcon = computed(() =>
     this.isOpen() ? this.activeIcon() : this.icon(),
   );
+
+  private emitToggle(state: boolean): void {
+    if (!this.destroyed) {
+      this.speedDialToggle.emit(state);
+    }
+  }
+
+  private emitItemSelect(payload: { item: SpeedDialItem; event: Event }): void {
+    if (!this.destroyed) {
+      this.itemSelect.emit(payload);
+    }
+  }
+
   toggleSpeedDial(event: Event): void {
     event.stopPropagation();
     const newState = !this.isOpen();
     this.isOpen.set(newState);
-    this.speedDialToggle.emit(newState);
+    this.emitToggle(newState);
   }
   onItemClick(event: Event, item: SpeedDialItem): void {
     event.stopPropagation();
     if (item.disabled) {
       return;
     }
-    this.itemSelect.emit({ item, event });
+    this.emitItemSelect({ item, event });
     if (item.command) {
       item.command(event);
     }
     if (this.closeOnItemSelect()) {
       this.isOpen.set(false);
-      this.speedDialToggle.emit(false);
+      this.emitToggle(false);
     }
   }
 
@@ -119,7 +134,7 @@ export class MagarySpeedDial {
 
   closeMask(): void {
     this.isOpen.set(false);
-    this.speedDialToggle.emit(false);
+    this.emitToggle(false);
   }
   trackByItem(index: number, item: SpeedDialItem): string {
     return item.id || `${item.icon}-${index}`;
@@ -133,14 +148,18 @@ export class MagarySpeedDial {
     const componentElement = this.elementRef.nativeElement;
     if (!componentElement.contains(target)) {
       this.isOpen.set(false);
-      this.speedDialToggle.emit(false);
+      this.emitToggle(false);
     }
   }
   @HostListener('document:keydown.escape')
   onEscapeKeydown(): void {
     if (this.isOpen()) {
       this.isOpen.set(false);
-      this.speedDialToggle.emit(false);
+      this.emitToggle(false);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed = true;
   }
 }

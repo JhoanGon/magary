@@ -5,6 +5,7 @@ import {
   signal,
   computed,
   OnChanges,
+  OnDestroy,
   SimpleChanges,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -32,7 +33,8 @@ export interface PaginatorState {
   templateUrl: './paginator.html',
   styleUrls: ['./paginator.scss'],
 })
-export class MagaryPaginator implements OnChanges {
+export class MagaryPaginator implements OnChanges, OnDestroy {
+  private destroyed = false;
   /** Total number of records. */
   totalRecords = input.required<number>();
 
@@ -87,6 +89,12 @@ export class MagaryPaginator implements OnChanges {
     return pages;
   });
 
+  private emitPageChange(state: PaginatorState): void {
+    if (!this.destroyed) {
+      this.onPageChange.emit(state);
+    }
+  }
+
   changePage(p: number) {
     const pc = this.getPageCount();
 
@@ -98,7 +106,7 @@ export class MagaryPaginator implements OnChanges {
         rows: this.rows(),
         pageCount: pc,
       };
-      this.onPageChange.emit(state);
+      this.emitPageChange(state);
     }
   }
 
@@ -148,7 +156,7 @@ export class MagaryPaginator implements OnChanges {
       rows: newRows,
       pageCount: Math.ceil(this.totalRecords() / newRows) || 1,
     };
-    this.onPageChange.emit(state);
+    this.emitPageChange(state);
   }
 
   onPageLinkClick(event: Event, page: number) {
@@ -175,5 +183,9 @@ export class MagaryPaginator implements OnChanges {
     //        // logic to adjust page should be on consumer?
     //    }
     // });
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed = true;
   }
 }
