@@ -1,22 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { importProvidersFrom } from '@angular/core';
-import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryPickList } from './picklist';
-
-const kebabCase = (value: string) =>
-  value
-    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-    .replace(/([a-zA-Z])([0-9])/g, '$1-$2')
-    .toLowerCase();
-
-const lucideIcons = Object.entries(icons).reduce(
-  (acc, [key, icon]) => {
-    acc[key] = icon;
-    acc[kebabCase(key)] = icon;
-    return acc;
-  },
-  {} as Record<string, (typeof icons)[keyof typeof icons]>,
-);
 
 describe('MagaryPickList behavior', () => {
   let fixture: ComponentFixture<MagaryPickList>;
@@ -28,8 +11,12 @@ describe('MagaryPickList behavior', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MagaryPickList],
-      providers: [importProvidersFrom(LucideAngularModule.pick(lucideIcons))],
-    }).compileComponents();
+    })
+      // These tests validate list transfer/selection logic and don't require child rendering.
+      .overrideComponent(MagaryPickList, {
+        set: { template: '<div></div>' },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(MagaryPickList);
     component = fixture.componentInstance;

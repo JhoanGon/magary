@@ -44,21 +44,19 @@
         <ul class="select-list" role="listbox" [id]="listboxId">
           <ng-template #optionTemplate let-items let-parentPath="parentPath" let-depth="depth">
             @for (option of items; track $index) {
-              @let optionPath = createPath(parentPath, $index);
-              @let optionChildren = getOptionChildren(option);
               <li
                 class="select-item"
                 [class.group]="isOptionGroup(option)"
-                [class.active]="isPathActive(optionPath)"
-                [class.expanded]="isGroupExpanded(optionPath)"
+                [class.active]="isPathActive(createPath(parentPath, $index))"
+                [class.expanded]="isGroupExpanded(createPath(parentPath, $index))"
                 [class.selectable]="isSelectableOption(option)"
                 [class.selected]="getOptionValue(option) === value()"
-                [id]="getOptionId(optionPath)"
+                [id]="getOptionId(createPath(parentPath, $index))"
                 role="option"
                 [attr.aria-selected]="getOptionValue(option) === value()"
                 [style.padding-inline-start.rem]="0.75 + depth * 0.75"
-                (mouseenter)="onOptionMouseEnter(option, optionPath)"
-                (click)="selectOption(option, $event, optionPath)"
+                (mouseenter)="onOptionMouseEnter(option, createPath(parentPath, $index))"
+                (click)="selectOption(option, $event, createPath(parentPath, $index))"
               >
                 <div class="item-content">
                   <span>{{ getOptionLabel(option) }}</span>
@@ -70,13 +68,17 @@
                   }
                 </div>
 
-                @if (isOptionGroup(option) && optionChildren && optionChildren.length > 0) {
-                  <div class="submenu" [class.open]="isGroupExpanded(optionPath)">
+                @if (isOptionGroup(option) && (getOptionChildren(option)?.length ?? 0) > 0) {
+                  <div class="submenu" [class.open]="isGroupExpanded(createPath(parentPath, $index))">
                     <ul class="select-list" role="listbox">
                       <ng-container
                         *ngTemplateOutlet="
                           optionTemplate;
-                          context: { $implicit: optionChildren, parentPath: optionPath, depth: depth + 1 }
+                          context: {
+                            $implicit: getOptionChildren(option)!,
+                            parentPath: createPath(parentPath, $index),
+                            depth: depth + 1
+                          }
                         "
                       ></ng-container>
                     </ul>

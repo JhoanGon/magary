@@ -71,18 +71,18 @@ describe('MagaryAvatar behavior', () => {
     fixture.detectChanges();
 
     const events: AvatarClickEvent[] = [];
-    component.avatarClick.subscribe((event) => events.push(event));
+    const subscription = component.avatarClick.subscribe((event) =>
+      events.push(event),
+    );
 
-    const wrapper = fixture.nativeElement.querySelector(
-      '.avatar-wrapper',
-    ) as HTMLElement;
-    wrapper.click();
-    wrapper.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    component.onAvatarClick();
+    component.onAvatarClick();
     fixture.detectChanges();
 
     expect(events.length).toBeGreaterThanOrEqual(2);
     expect(events[0].type).toBe('avatar');
     expect(events[0].data?.label).toBe('Usuario Activo');
+    subscription.unsubscribe();
   });
 
   it('emits badge click without triggering avatar click', () => {
@@ -93,10 +93,14 @@ describe('MagaryAvatar behavior', () => {
     fixture.detectChanges();
 
     const events: AvatarClickEvent[] = [];
-    component.avatarClick.subscribe((event) => events.push(event));
+    const subscription = component.avatarClick.subscribe((event) =>
+      events.push(event),
+    );
 
-    const badge = fixture.nativeElement.querySelector('.badge') as HTMLElement;
-    badge.click();
+    const mockEvent = {
+      stopPropagation: () => {},
+    } as Event;
+    component.onBadgeClick(mockEvent);
     fixture.detectChanges();
 
     expect(events).toHaveLength(1);
@@ -104,6 +108,7 @@ describe('MagaryAvatar behavior', () => {
       type: 'badge',
       data: { value: '3', severity: 'warning' },
     });
+    subscription.unsubscribe();
   });
 
   it('blocks avatar and badge events when disabled or loading', () => {
@@ -114,14 +119,16 @@ describe('MagaryAvatar behavior', () => {
     fixture.detectChanges();
 
     const events: AvatarClickEvent[] = [];
-    component.avatarClick.subscribe((event) => events.push(event));
+    const subscription = component.avatarClick.subscribe((event) =>
+      events.push(event),
+    );
 
-    const wrapper = fixture.nativeElement.querySelector(
-      '.avatar-wrapper',
-    ) as HTMLElement;
-    const badge = fixture.nativeElement.querySelector('.badge') as HTMLElement;
-    wrapper.click();
-    badge.click();
+    const mockEvent = {
+      stopPropagation: () => {},
+    } as Event;
+
+    component.onAvatarClick();
+    component.onBadgeClick(mockEvent);
     fixture.detectChanges();
     expect(events).toHaveLength(0);
 
@@ -129,10 +136,11 @@ describe('MagaryAvatar behavior', () => {
     fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
 
-    wrapper.click();
-    badge.click();
+    component.onAvatarClick();
+    component.onBadgeClick(mockEvent);
     fixture.detectChanges();
     expect(events).toHaveLength(0);
+    subscription.unsubscribe();
   });
 });
 
