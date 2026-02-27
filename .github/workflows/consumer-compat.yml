@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        angular_major: [17, 19, 21]
+        angular_major: [17, 18, 19, 20, 21]
 
     steps:
       - name: Checkout

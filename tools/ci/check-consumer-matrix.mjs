@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
-const DEFAULT_MAJORS = [17, 19, 21];
+const DEFAULT_MAJORS = [17, 18, 19, 20, 21];
 const args = process.argv.slice(2);
 
 const majorsArg = args.find((arg) => arg.startsWith('--majors='));
