@@ -11,9 +11,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate:
+  gates:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
+    env:
+      NODE_VERSION: '22'
+      ANGULAR_MAJOR: '21'
+      REPORT_DIR: tmp/ci-reports/ci/gates-node22-angular21
 
     steps:
       - name: Checkout
@@ -27,44 +31,305 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          mkdir -p "$REPORT_DIR"
+          set -o pipefail
+          pnpm install --frozen-lockfile 2>&1 | tee "$REPORT_DIR/install.log"
+
+      - name: Capture runtime context
+        run: |
+          {
+            echo "workflow=${GITHUB_WORKFLOW}"
+            echo "job=${GITHUB_JOB}"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
+            echo "sha=${GITHUB_SHA}"
+            echo "ref=${GITHUB_REF}"
+            echo "node=${NODE_VERSION}"
+            echo "angular=${ANGULAR_MAJOR}"
+            echo "pnpm=$(pnpm --version)"
+            echo "npm=$(npm --version)"
+          } > "$REPORT_DIR/context.env"
 
       - name: API contract gate
-        run: pnpm run check:api-contract
+        run: |
+          set -o pipefail
+          pnpm run check:api-contract 2>&1 | tee "$REPORT_DIR/check-api-contract.log"
 
       - name: No-any gate (src/lib + specs)
-        run: pnpm run check:no-any
+        run: |
+          set -o pipefail
+          pnpm run check:no-any 2>&1 | tee "$REPORT_DIR/check-no-any.log"
 
       - name: Lint
-        run: pnpm run lint
+        run: |
+          set -o pipefail
+          pnpm run lint 2>&1 | tee "$REPORT_DIR/lint.log"
 
-      - name: Build library
-        run: pnpm run build:lib
-
-      - name: Build demo app
-        run: pnpm run build:demo
-
-      - name: Unit tests
-        run: pnpm run test:unit:ci
-
-      - name: Install Playwright browser
-        run: pnpm exec playwright install --with-deps chromium
-
-      - name: Playwright smoke
-        run: pnpm run test:visual:smoke
-
-      - name: Playwright a11y smoke
-        run: pnpm run test:a11y:smoke
-
-      - name: Upload Playwright report
+      - name: Write failure report
         if: failure()
+        run: |
+          cat > "$REPORT_DIR/failure-report.md" <<EOF
+          # CI Failure Report
+          - workflow: ${GITHUB_WORKFLOW}
+          - job: ${GITHUB_JOB}
+          - stage: gates
+          - run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          - sha: ${GITHUB_SHA}
+          - ref: ${GITHUB_REF}
+          - node: ${NODE_VERSION}
+          - angular: ${ANGULAR_MAJOR}
+          - status: failure
+          EOF
+
+      - name: Upload stage artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: ci-gates-node${{ env.NODE_VERSION }}-run${{ github.run_number }}-attempt${{ github.run_attempt }}
+          path: ${{ env.REPORT_DIR }}
+          if-no-files-found: warn
+
+  build:
+    needs: gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NODE_VERSION: '22'
+      ANGULAR_MAJOR: '21'
+      REPORT_DIR: tmp/ci-reports/ci/build-node22-angular21
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: |
+          mkdir -p "$REPORT_DIR"
+          set -o pipefail
+          pnpm install --frozen-lockfile 2>&1 | tee "$REPORT_DIR/install.log"
+
+      - name: Capture runtime context
+        run: |
+          {
+            echo "workflow=${GITHUB_WORKFLOW}"
+            echo "job=${GITHUB_JOB}"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
+            echo "sha=${GITHUB_SHA}"
+            echo "ref=${GITHUB_REF}"
+            echo "node=${NODE_VERSION}"
+            echo "angular=${ANGULAR_MAJOR}"
+            echo "pnpm=$(pnpm --version)"
+            echo "npm=$(npm --version)"
+          } > "$REPORT_DIR/context.env"
+
+      - name: Build library
+        run: |
+          set -o pipefail
+          pnpm run build:lib 2>&1 | tee "$REPORT_DIR/build-lib.log"
+
+      - name: Build demo app
+        run: |
+          set -o pipefail
+          pnpm run build:demo 2>&1 | tee "$REPORT_DIR/build-demo.log"
+
+      - name: Write failure report
+        if: failure()
+        run: |
+          cat > "$REPORT_DIR/failure-report.md" <<EOF
+          # CI Failure Report
+          - workflow: ${GITHUB_WORKFLOW}
+          - job: ${GITHUB_JOB}
+          - stage: build
+          - run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          - sha: ${GITHUB_SHA}
+          - ref: ${GITHUB_REF}
+          - node: ${NODE_VERSION}
+          - angular: ${ANGULAR_MAJOR}
+          - status: failure
+          EOF
+
+      - name: Upload stage artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-build-node${{ env.NODE_VERSION }}-run${{ github.run_number }}-attempt${{ github.run_attempt }}
+          path: ${{ env.REPORT_DIR }}
+          if-no-files-found: warn
+
+  unit:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NODE_VERSION: '22'
+      ANGULAR_MAJOR: '21'
+      REPORT_DIR: tmp/ci-reports/ci/unit-node22-angular21
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: |
+          mkdir -p "$REPORT_DIR"
+          set -o pipefail
+          pnpm install --frozen-lockfile 2>&1 | tee "$REPORT_DIR/install.log"
+
+      - name: Capture runtime context
+        run: |
+          {
+            echo "workflow=${GITHUB_WORKFLOW}"
+            echo "job=${GITHUB_JOB}"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
+            echo "sha=${GITHUB_SHA}"
+            echo "ref=${GITHUB_REF}"
+            echo "node=${NODE_VERSION}"
+            echo "angular=${ANGULAR_MAJOR}"
+            echo "pnpm=$(pnpm --version)"
+            echo "npm=$(npm --version)"
+          } > "$REPORT_DIR/context.env"
+
+      - name: Unit tests
+        run: |
+          set -o pipefail
+          pnpm run test:unit:ci 2>&1 | tee "$REPORT_DIR/unit.log"
+
+      - name: Write failure report
+        if: failure()
+        run: |
+          cat > "$REPORT_DIR/failure-report.md" <<EOF
+          # CI Failure Report
+          - workflow: ${GITHUB_WORKFLOW}
+          - job: ${GITHUB_JOB}
+          - stage: unit
+          - run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          - sha: ${GITHUB_SHA}
+          - ref: ${GITHUB_REF}
+          - node: ${NODE_VERSION}
+          - angular: ${ANGULAR_MAJOR}
+          - status: failure
+          EOF
+
+      - name: Upload stage artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-unit-node${{ env.NODE_VERSION }}-run${{ github.run_number }}-attempt${{ github.run_attempt }}
+          path: ${{ env.REPORT_DIR }}
+          if-no-files-found: warn
+
+  e2e:
+    needs: unit
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      NODE_VERSION: '22'
+      ANGULAR_MAJOR: '21'
+      REPORT_DIR: tmp/ci-reports/ci/e2e-node22-angular21
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: |
+          mkdir -p "$REPORT_DIR"
+          set -o pipefail
+          pnpm install --frozen-lockfile 2>&1 | tee "$REPORT_DIR/install.log"
+
+      - name: Capture runtime context
+        run: |
+          {
+            echo "workflow=${GITHUB_WORKFLOW}"
+            echo "job=${GITHUB_JOB}"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
+            echo "sha=${GITHUB_SHA}"
+            echo "ref=${GITHUB_REF}"
+            echo "node=${NODE_VERSION}"
+            echo "angular=${ANGULAR_MAJOR}"
+            echo "pnpm=$(pnpm --version)"
+            echo "npm=$(npm --version)"
+          } > "$REPORT_DIR/context.env"
+
+      - name: Install Playwright browser
+        run: |
+          set -o pipefail
+          pnpm exec playwright install --with-deps chromium 2>&1 | tee "$REPORT_DIR/playwright-install.log"
+
+      - name: Playwright smoke
+        run: |
+          set -o pipefail
+          pnpm run test:visual:smoke 2>&1 | tee "$REPORT_DIR/playwright-smoke.log"
+
+      - name: Playwright a11y smoke
+        run: |
+          set -o pipefail
+          pnpm run test:a11y:smoke 2>&1 | tee "$REPORT_DIR/playwright-a11y.log"
+
+      - name: Write failure report
+        if: failure()
+        run: |
+          cat > "$REPORT_DIR/failure-report.md" <<EOF
+          # CI Failure Report
+          - workflow: ${GITHUB_WORKFLOW}
+          - job: ${GITHUB_JOB}
+          - stage: e2e
+          - run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          - sha: ${GITHUB_SHA}
+          - ref: ${GITHUB_REF}
+          - node: ${NODE_VERSION}
+          - angular: ${ANGULAR_MAJOR}
+          - status: failure
+          EOF
+
+      - name: Upload stage artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-e2e-node${{ env.NODE_VERSION }}-run${{ github.run_number }}-attempt${{ github.run_attempt }}
           path: |
+            ${{ env.REPORT_DIR }}
             e2e/playwright/report
             e2e/playwright/test-results
+          if-no-files-found: warn

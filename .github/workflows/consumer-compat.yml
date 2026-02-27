@@ -7,6 +7,7 @@ on:
       - 'projects/ng-magary/**'
       - 'tools/ci/check-consumer-matrix.mjs'
       - 'package.json'
+      - 'pnpm-workspace.yaml'
       - 'pnpm-lock.yaml'
       - '.github/workflows/consumer-compat.yml'
   push:
@@ -16,6 +17,7 @@ on:
       - 'projects/ng-magary/**'
       - 'tools/ci/check-consumer-matrix.mjs'
       - 'package.json'
+      - 'pnpm-workspace.yaml'
       - 'pnpm-lock.yaml'
       - '.github/workflows/consumer-compat.yml'
 
@@ -27,6 +29,9 @@ jobs:
   matrix-smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    env:
+      NODE_VERSION: '20'
+      REPORT_DIR: tmp/ci-reports/consumer-compat/ng${{ matrix.angular_major }}-node20
     strategy:
       fail-fast: false
       matrix:
@@ -44,14 +49,60 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ env.NODE_VERSION }}
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          mkdir -p "$REPORT_DIR"
+          set -o pipefail
+          pnpm install --frozen-lockfile 2>&1 | tee "$REPORT_DIR/install.log"
+
+      - name: Capture runtime context
+        run: |
+          {
+            echo "workflow=${GITHUB_WORKFLOW}"
+            echo "job=${GITHUB_JOB}"
+            echo "run_id=${GITHUB_RUN_ID}"
+            echo "run_attempt=${GITHUB_RUN_ATTEMPT}"
+            echo "sha=${GITHUB_SHA}"
+            echo "ref=${GITHUB_REF}"
+            echo "node=${NODE_VERSION}"
+            echo "angular=${{ matrix.angular_major }}"
+            echo "pnpm=$(pnpm --version)"
+            echo "npm=$(npm --version)"
+          } > "$REPORT_DIR/context.env"
 
       - name: Build library
-        run: pnpm run build:lib
+        run: |
+          set -o pipefail
+          pnpm run build:lib 2>&1 | tee "$REPORT_DIR/build-lib.log"
 
       - name: Consumer smoke (Angular ${{ matrix.angular_major }})
-        run: node tools/ci/check-consumer-matrix.mjs --majors=${{ matrix.angular_major }}
+        run: |
+          set -o pipefail
+          node tools/ci/check-consumer-matrix.mjs --majors=${{ matrix.angular_major }} 2>&1 | tee "$REPORT_DIR/consumer-smoke.log"
+
+      - name: Write failure report
+        if: failure()
+        run: |
+          cat > "$REPORT_DIR/failure-report.md" <<EOF
+          # CI Failure Report
+          - workflow: ${GITHUB_WORKFLOW}
+          - job: ${GITHUB_JOB}
+          - stage: matrix-smoke
+          - run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          - sha: ${GITHUB_SHA}
+          - ref: ${GITHUB_REF}
+          - node: ${NODE_VERSION}
+          - angular: ${{ matrix.angular_major }}
+          - status: failure
+          EOF
+
+      - name: Upload matrix artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: consumer-compat-ng${{ matrix.angular_major }}-node${{ env.NODE_VERSION }}-run${{ github.run_number }}-attempt${{ github.run_attempt }}
+          path: ${{ env.REPORT_DIR }}
+          if-no-files-found: warn
