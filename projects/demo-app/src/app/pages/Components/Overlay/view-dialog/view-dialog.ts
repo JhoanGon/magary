@@ -12,7 +12,19 @@ import { Highlight } from 'ngx-highlightjs';
 const CODE_EXAMPLES = {
   import: `import { MagaryDialog } from 'ng-magary';`,
   basic: `<magary-button (buttonClick)="visible = true" label="Mostrar"></magary-button>
-<magary-dialog header="Simple Dialog" [(visible)]="visible" width="min(90vw, 48rem)" [dismissableMask]="true" [resizable]="true" [draggable]="false">
+<magary-dialog
+    header="Simple Dialog"
+    [(visible)]="visible"
+    width="min(90vw, 48rem)"
+    [backgroundColor]="'var(--surface-0)'"
+    [headerBackground]="'var(--surface-0)'"
+    [contentBackground]="'var(--surface-0)'"
+    [footerBackground]="'var(--surface-0)'"
+    [showBorder]="false"
+    [showSectionBorders]="false"
+    [dismissableMask]="true"
+    [resizable]="true"
+    [draggable]="false">
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
@@ -67,6 +79,7 @@ export class ViewDialog {
   visibleResize: boolean = false;
   visiblePos: boolean = false;
   visibleGlass: boolean = false;
+  readonly demoDialogBackground = 'var(--surface-0)';
 
   readonly importExample = CODE_EXAMPLES.import;
   readonly exampleBasic = CODE_EXAMPLES.basic;

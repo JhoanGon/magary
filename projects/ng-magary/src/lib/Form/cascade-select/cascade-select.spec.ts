@@ -147,4 +147,56 @@ describe('MagaryCascadeSelect behavior', () => {
     fixture.detectChanges();
     expect(component.disabled()).toBe(false);
   });
+
+  it('blocks interactions while loading and exposes invalid aria state', () => {
+    const root = fixture.nativeElement.querySelector(
+      '.magary-cascade-select',
+    ) as HTMLElement;
+
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    root.click();
+    fixture.detectChanges();
+    expect(component.isOpen()).toBe(false);
+
+    fixture.componentRef.setInput('loading', false);
+    fixture.componentRef.setInput('invalid', true);
+    fixture.componentRef.setInput('error', 'Invalid selection');
+    fixture.detectChanges();
+
+    expect(root.getAttribute('aria-invalid')).toBe('true');
+    expect(
+      fixture.nativeElement.querySelector('.error-message')?.textContent,
+    ).toContain('Invalid selection');
+  });
+
+  it('supports hierarchical keyboard navigation and selection', () => {
+    const root = fixture.nativeElement.querySelector(
+      '.magary-cascade-select',
+    ) as HTMLElement;
+
+    root.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    fixture.detectChanges();
+
+    expect(component.isOpen()).toBe(true);
+    expect(root.getAttribute('aria-activedescendant')).toContain('-option-0');
+
+    const panel = fixture.nativeElement.querySelector(
+      '.select-panel',
+    ) as HTMLElement;
+
+    panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+    expect(root.getAttribute('aria-activedescendant')).toContain('-option-0-0');
+
+    panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+    expect(root.getAttribute('aria-activedescendant')).toContain('-option-0-0-0');
+
+    panel.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+
+    expect(component.value()).toBe('US-AU');
+    expect(component.isOpen()).toBe(false);
+  });
 });

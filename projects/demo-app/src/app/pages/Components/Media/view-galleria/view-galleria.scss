@@ -117,51 +117,6 @@
   }
 }
 
-.table-wrapper {
-  overflow-x: auto;
-  margin: 1.5rem 0;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--surface-200);
-}
-
-.api-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 0;
-  font-size: 0.875rem;
-
-  th,
-  td {
-    padding: 1rem;
-    text-align: left;
-    border-bottom: 1px solid var(--surface-200);
-    color: var(--text-primary);
-  }
-
-  th {
-    background: var(--surface-50);
-    font-weight: 600;
-    color: var(--text-secondary); /* Adjusted to match common theme, possibly text-primary in button view? Button view uses text-primary for th, let's stick to button view's th color */
-    color: var(--text-primary);
-    white-space: nowrap;
-  }
-  
-  /* Override specifically to match view-button if needed, viewing view-button lines 175: color: var(--text-primary); */
-
-  tr:last-child td {
-    border-bottom: none;
-  }
-
-  code {
-    background: var(--surface-100);
-    padding: 0.125rem 0.375rem;
-    border-radius: 0.25rem;
-    font-size: 0.8125rem;
-    color: var(--api-table-color-text, var(--primary-700)); /* Fallback to existing color if variable missing */
-    font-family: monospace;
-    border: 1px solid var(--surface-200);
-  }
-}
 
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }

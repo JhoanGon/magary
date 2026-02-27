@@ -42,7 +42,6 @@ describe('MagaryDialog behavior', () => {
     document.body.classList.remove('magary-overflow-hidden');
     document.body.classList.remove('magary-dragging');
     document.body.classList.remove('magary-resizing');
-    fixture.destroy();
   });
 
   it('blocks and unblocks body scroll based on visibility', () => {

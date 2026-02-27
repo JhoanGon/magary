@@ -52,7 +52,6 @@ describe('MagaryGrid behavior', () => {
   });
 
   afterEach(() => {
-    fixture.destroy();
     vi.runOnlyPendingTimers();
     vi.useRealTimers();
     vi.restoreAllMocks();

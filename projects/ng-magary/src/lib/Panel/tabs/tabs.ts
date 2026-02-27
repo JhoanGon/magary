@@ -1,7 +1,9 @@
 import {
   Component,
   ElementRef,
+  booleanAttribute,
   input,
+  computed,
   OnInit,
   OnDestroy,
   signal,
@@ -30,16 +32,35 @@ export class MagaryTabs implements OnInit, OnDestroy {
 
   public activeIndex = signal(0);
   public tabListAriaLabel = input<string>('Tabs');
-  public backgroundLine = input<string>('#000');
+  public lineColor = input<string>('var(--primary-500)');
+  // Legacy alias kept for backward compatibility.
+  public backgroundLine = input<string | null>(null);
+  public hoverBg = input<string | null>(null);
   public positionContent = input<string>('center');
   public background = input<string>('var(--surface-0)');
   public padding = input<string>('0');
-  public heightLine = input<string>('5px');
+  public heightLine = input<string>('2px');
   public panelWidth = input<'auto' | 'full'>('full');
+  public activeBg = input<string | null>(null);
+  public activeText = input<string | null>(null);
+  // Legacy aliases kept for backward compatibility.
+  public activeTabBackground = input<string | null>(null);
+  public activeTabTextColor = input<string | null>(null);
+  public showHeaderScrollbar = input(false, { transform: booleanAttribute });
   private readonly tabIdPrefix = `magary-tabs-${++tabsInstanceSequence}`;
   private resizeObserver: ResizeObserver | null = null;
   private rafId: number | null = null;
   private el = inject(ElementRef);
+  public resolvedLineColor = computed(
+    () => this.backgroundLine() ?? this.lineColor(),
+  );
+  public resolvedHoverBg = computed(() => this.hoverBg() ?? 'var(--surface-50)');
+  public resolvedActiveBg = computed(
+    () => this.activeTabBackground() ?? this.activeBg(),
+  );
+  public resolvedActiveText = computed(
+    () => this.activeTabTextColor() ?? this.activeText(),
+  );
 
   constructor() {
     effect(() => {
@@ -189,7 +210,8 @@ export class MagaryTabs implements OnInit, OnDestroy {
       return;
     }
 
-    const hasHorizontalOverflow = headersEl.scrollWidth > headersEl.clientWidth + 1;
+    const hasHorizontalOverflow =
+      headersEl.scrollWidth > headersEl.clientWidth + 1;
     if (!hasHorizontalOverflow) {
       return;
     }

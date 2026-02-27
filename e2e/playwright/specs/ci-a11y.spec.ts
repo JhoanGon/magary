@@ -127,4 +127,20 @@ test.describe('ci a11y smoke', () => {
       await expect(currentPage.locator('.select-overlay:visible')).toHaveCount(1);
     });
   });
+
+  test('cascade select route (opened state) has no serious/critical a11y violations', async ({
+    page,
+  }) => {
+    await expectNoSeriousA11yIssues(
+      page,
+      '/components/Cascade-Select',
+      async (currentPage) => {
+        const trigger = currentPage
+          .locator('magary-cascade-select .magary-cascade-select')
+          .first();
+        await trigger.click();
+        await expect(currentPage.locator('.select-panel:visible')).toHaveCount(1);
+      },
+    );
+  });
 });

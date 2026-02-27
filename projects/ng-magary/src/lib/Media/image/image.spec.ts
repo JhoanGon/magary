@@ -61,7 +61,6 @@ describe('MagaryImage behavior', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-    fixture.destroy();
   });
 
   it('updates load/error flags and emits related outputs', () => {

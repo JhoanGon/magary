@@ -58,7 +58,6 @@ describe('MagaryOverlayPanel behavior', () => {
     document
       .querySelectorAll('.magary-overlaypanel')
       .forEach((element) => element.parentNode?.removeChild(element));
-    fixture.destroy();
     vi.runOnlyPendingTimers();
     vi.useRealTimers();
   });

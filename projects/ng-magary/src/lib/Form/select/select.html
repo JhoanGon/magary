@@ -1,125 +1,146 @@
-<div
-  #trigger
-  cdkOverlayOrigin
-  #origin="cdkOverlayOrigin"
-  [id]="triggerId"
-  class="magary-select-container"
-  [class.disabled]="isDisabled()"
-  [class.focused]="focused()"
-  [class.filled]="hasValue()"
-  role="combobox"
-  [attr.tabindex]="isDisabled() ? -1 : 0"
-  aria-haspopup="listbox"
-  [attr.aria-expanded]="isOpen()"
-  [attr.aria-disabled]="isDisabled()"
-  [attr.aria-label]="resolvedAriaLabel()"
-  [attr.aria-controls]="listboxId"
-  [attr.aria-activedescendant]="activeDescendantId()"
-  [attr.aria-autocomplete]="filter() ? 'list' : null"
-  (click)="toggleOverlay()"
-  (keydown)="onTriggerKeydown($event)"
->
-  <div class="selected-value">
-    @if (hasValue()) {
-      <span>{{ selectedLabel() }}</span>
-    } @else {
-      <span class="placeholder">{{ placeholder() }}</span>
-    }
-  </div>
-
-  <div class="icons-container">
-    @if (showClear() && hasValue() && !isDisabled()) {
-      <button
-        type="button"
-        class="clear-button"
-        [attr.aria-label]="'Clear selected option'"
-        (click)="clear($event)"
-      >
-        <lucide-icon
-          name="x"
-          [size]="16"
-          class="clear-icon"
-        >
-        </lucide-icon>
-      </button>
-    }
-    @if (loading()) {
-      <lucide-icon name="loader" class="spin" [size]="18"></lucide-icon>
-    } @else {
-      <lucide-icon name="chevron-down" [size]="18"></lucide-icon>
-    }
-  </div>
-
-  <!-- CDK Overlay Template -->
-  <ng-template
-    cdkConnectedOverlay
-    [cdkConnectedOverlayOrigin]="origin"
-    [cdkConnectedOverlayOpen]="isOpen()"
-    [cdkConnectedOverlayHasBackdrop]="true"
-    [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
-    [cdkConnectedOverlayMinWidth]="triggerWidth()"
-    [cdkConnectedOverlayOffsetY]="4"
-    (backdropClick)="close()"
+<div class="magary-select-field">
+  <div
+    #trigger
+    cdkOverlayOrigin
+    #origin="cdkOverlayOrigin"
+    [id]="triggerId"
+    class="magary-select-container"
+    [class.disabled]="isDisabled()"
+    [class.focused]="focused()"
+    [class.filled]="hasValue()"
+    [class.loading]="loading()"
+    [class.invalid]="hasError()"
+    [class.open]="isOpen()"
+    [class.size-small]="size() === 'small'"
+    [class.size-normal]="size() === 'normal'"
+    [class.size-large]="size() === 'large'"
+    role="combobox"
+    [attr.tabindex]="isDisabled() ? -1 : 0"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-disabled]="isDisabled()"
+    [attr.aria-label]="resolvedAriaLabel()"
+    [attr.aria-controls]="listboxId"
+    [attr.aria-activedescendant]="activeDescendantId()"
+    [attr.aria-autocomplete]="filter() ? 'list' : null"
+    [attr.aria-invalid]="hasError() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    (click)="toggleOverlay()"
+    (keydown)="onTriggerKeydown($event)"
   >
-    <div
-      class="select-overlay fade-in"
-      (click)="$event.stopPropagation()"
-      tabindex="-1"
-    >
-      @if (filter()) {
-        <div class="filter-container">
-          <input
-            #filterInput
-            type="text"
-            class="filter-input"
-            [value]="filterValue()"
-            (input)="onFilterInput($event)"
-            (keydown)="onFilterKeydown($event)"
-            [attr.aria-label]="'Filter options'"
-            [attr.aria-controls]="listboxId"
-            [attr.aria-activedescendant]="activeDescendantId()"
-            placeholder="Search..."
-            autofocus
-          />
-          <lucide-icon
-            name="search"
-            [size]="14"
-            class="filter-icon"
-          ></lucide-icon>
-        </div>
+    <div class="selected-value">
+      @if (hasValue()) {
+        <span>{{ selectedLabel() }}</span>
+      } @else {
+        <span class="placeholder">{{ placeholder() }}</span>
       }
-
-      <ul
-        class="select-list"
-        role="listbox"
-        [id]="listboxId"
-        [attr.aria-label]="listboxLabel()"
-      >
-        @for (option of visibleOptions(); track option; let optionIndex = $index) {
-          <li
-            class="select-item"
-            [class.selected]="isSelected(option)"
-            [class.active]="activeIndex() === optionIndex"
-            [id]="getOptionId(optionIndex)"
-            role="option"
-            [attr.aria-selected]="isSelected(option)"
-            (mouseenter)="setActiveIndex(optionIndex)"
-            (click)="selectOption(option)"
-          >
-            {{ getLabel(option) }}
-            @if (isSelected(option)) {
-              <lucide-icon
-                name="check"
-                [size]="16"
-                class="check-icon"
-              ></lucide-icon>
-            }
-          </li>
-        }
-        @if (visibleOptions().length === 0) {
-          <li class="empty-message">No results found</li>
-        }
-      </ul>
     </div>
-  </ng-template>
+
+    <div class="icons-container">
+      @if (showClear() && hasValue() && !isDisabled()) {
+        <button
+          type="button"
+          class="clear-button"
+          [attr.aria-label]="'Clear selected option'"
+          (click)="clear($event)"
+        >
+          <lucide-icon
+            name="x"
+            [size]="16"
+            class="clear-icon"
+          >
+          </lucide-icon>
+        </button>
+      }
+      @if (loading()) {
+        <lucide-icon name="loader" class="spin" [size]="18"></lucide-icon>
+      } @else {
+        <lucide-icon name="chevron-down" [size]="18"></lucide-icon>
+      }
+    </div>
+
+    <!-- CDK Overlay Template -->
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="origin"
+      [cdkConnectedOverlayOpen]="isOpen()"
+      [cdkConnectedOverlayHasBackdrop]="true"
+      [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+      [cdkConnectedOverlayMinWidth]="triggerWidth()"
+      [cdkConnectedOverlayOffsetY]="2"
+      (backdropClick)="close()"
+    >
+      <div
+        class="select-overlay fade-in"
+        (click)="$event.stopPropagation()"
+        tabindex="-1"
+      >
+        @if (filter()) {
+          <div class="filter-container">
+            <input
+              #filterInput
+              type="text"
+              class="filter-input"
+              [value]="filterValue()"
+              (input)="onFilterInput($event)"
+              (keydown)="onFilterKeydown($event)"
+              [attr.aria-label]="'Filter options'"
+              [attr.aria-controls]="listboxId"
+              [attr.aria-activedescendant]="activeDescendantId()"
+              placeholder="Search..."
+              autofocus
+            />
+            <lucide-icon
+              name="search"
+              [size]="14"
+              class="filter-icon"
+            ></lucide-icon>
+          </div>
+        }
+
+        <ul
+          class="select-list"
+          role="listbox"
+          [id]="listboxId"
+          [attr.aria-label]="listboxLabel()"
+        >
+          @for (option of visibleOptions(); track option; let optionIndex = $index) {
+            <li
+              class="select-item"
+              [class.selected]="isSelected(option)"
+              [class.active]="activeIndex() === optionIndex"
+              [id]="getOptionId(optionIndex)"
+              role="option"
+              [attr.aria-selected]="isSelected(option)"
+              (mouseenter)="setActiveIndex(optionIndex)"
+              (click)="selectOption(option)"
+            >
+              {{ getLabel(option) }}
+              @if (isSelected(option)) {
+                <lucide-icon
+                  name="check"
+                  [size]="16"
+                  class="check-icon"
+                ></lucide-icon>
+              }
+            </li>
+          }
+          @if (visibleOptions().length === 0) {
+            <li class="empty-message">No results found</li>
+          }
+        </ul>
+      </div>
+    </ng-template>
+  </div>
+
+  @if (hasError()) {
+    <span class="select-message error-message" [id]="errorMessageId" role="alert">
+      <lucide-icon name="circle-alert" [size]="16"></lucide-icon>
+      {{ errorMessage() }}
+    </span>
+  } @else if (helpText().trim().length > 0) {
+    <span class="select-message help-message" [id]="helpMessageId">
+      {{ helpText() }}
+    </span>
+  }
 </div>

@@ -35,9 +35,15 @@ export class MagaryRadioGroup implements ControlValueAccessor {
   readonly options = input<RadioOption[]>([]);
   readonly layout = input<'vertical' | 'horizontal'>('vertical');
   readonly name = input<string>();
+  readonly ariaLabel = input<string>();
   readonly optionLabel = input<string>();
   readonly optionValue = input<string>();
   readonly disabled = input(false, { transform: booleanAttribute });
+  private readonly formDisabled = signal(false);
+  readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
+  readonly groupAriaLabel = computed(
+    () => this.ariaLabel() || this.name() || 'Radio group',
+  );
 
   readonly value = signal<unknown>(null);
 
@@ -45,7 +51,7 @@ export class MagaryRadioGroup implements ControlValueAccessor {
   private onTouched: () => void = () => {};
 
   onRadioChange(val: unknown) {
-    if (this.disabled()) return;
+    if (this.isDisabled()) return;
     this.value.set(val);
     this.onChange(val);
     this.onTouched();
@@ -84,8 +90,7 @@ export class MagaryRadioGroup implements ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    // Handled by signal input usually, but we can't write to input signal.
-    // relying on parent binding [disabled].
+    this.formDisabled.set(isDisabled);
   }
 
   private isObjectOption(option: RadioOption): option is RadioObjectOption {

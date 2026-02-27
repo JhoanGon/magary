@@ -1,12 +1,17 @@
 <div class="tabs">
   <div
     class="tab-headers"
+    [class.tab-headers-show-scrollbar]="showHeaderScrollbar()"
     #tabHeaders
     role="tablist"
     aria-orientation="horizontal"
     [attr.aria-label]="tabListAriaLabel()"
-    [style.--background-color-line]="backgroundLine()"
+    [style.--background-color-line]="resolvedLineColor()"
+    [style.--magary-tabs-line-color]="resolvedLineColor()"
     [style.--height-line]="heightLine()"
+    [style.--magary-tabs-active-bg]="resolvedActiveBg()"
+    [style.--magary-tabs-active-color]="resolvedActiveText()"
+    [style.--magary-tabs-hover-bg]="resolvedHoverBg()"
   >
     @for (tab of tabs(); track $index) {
       <button

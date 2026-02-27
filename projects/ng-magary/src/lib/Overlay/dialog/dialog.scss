@@ -7,6 +7,10 @@
   --magary-dialog-border: 1px solid var(--surface-200, #e2e8f0);
   --magary-dialog-shadow: var(--shadow-lg, 0 20px 25px -5px rgba(0, 0, 0, 0.1));
   --magary-dialog-radius: var(--border-radius, 1rem);
+  --magary-dialog-header-bg: var(--magary-dialog-bg);
+  --magary-dialog-content-bg: var(--magary-dialog-bg);
+  --magary-dialog-footer-bg: var(--magary-dialog-bg);
+  --magary-dialog-separator: 1px solid var(--surface-200, #e2e8f0);
 
   --magary-dialog-header-padding: 1.5rem;
   --magary-dialog-content-padding: 0 1.5rem 1.5rem 1.5rem;
@@ -25,7 +29,9 @@
   z-index: 99999; // Boosted to ensure it covers Sidebars/Topbars
   background-color: var(--magary-dialog-mask-bg);
   backdrop-filter: blur(8px); // Premium Glassmorphism
-  transition: background-color var(--magary-dialog-transition-duration);
+  transition:
+    background-color var(--magary-dialog-transition-duration),
+    backdrop-filter var(--magary-dialog-transition-duration);
 
   // Positioning
   &.magary-dialog-center {
@@ -123,12 +129,17 @@
   border-radius: var(--magary-dialog-radius);
   box-shadow: var(--magary-dialog-shadow);
   border: var(--magary-dialog-border);
+  overflow: hidden;
   width: 50vw; // Default width
   max-width: calc(100vw - 2rem);
   min-width: min(18rem, calc(100vw - 2rem));
 
   // Hardware acceleration for smoother animations/drags
   will-change: transform, width, height;
+
+  &.magary-dialog-no-border {
+    border: none;
+  }
 
   &.magary-dialog-maximized {
     width: 100vw !important;
@@ -181,6 +192,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--magary-dialog-header-padding);
+  background: var(--magary-dialog-header-bg);
+  border-bottom: var(--magary-dialog-separator);
   border-top-right-radius: var(--magary-dialog-radius);
   border-top-left-radius: var(--magary-dialog-radius);
   flex-shrink: 0;
@@ -235,7 +248,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--primary-color, #3b82f6);
+    outline: 2px solid var(--primary-400, #22d3ee);
     outline-offset: 2px;
   }
 
@@ -248,24 +261,29 @@
   padding: var(--magary-dialog-content-padding);
   flex-grow: 1;
   position: relative;
+  background: var(--magary-dialog-content-bg);
   overflow-wrap: anywhere;
   word-break: break-word;
+  scrollbar-gutter: stable;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-400, #94a3b8) transparent;
 
   // Custom scrollbar for premium feel
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 0.6rem;
   }
   &::-webkit-scrollbar-track {
     background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: rgba(156, 163, 175, 0.5);
-    border-radius: 4px;
+    background-color: var(--surface-400, #94a3b8);
+    border-radius: 999px;
     border: 2px solid transparent;
     background-clip: content-box;
 
     &:hover {
-      background-color: rgba(156, 163, 175, 0.8);
+      background-color: var(--surface-500, #64748b);
     }
   }
 }
@@ -317,8 +335,28 @@
   justify-content: flex-end;
   align-items: center;
   gap: 0.75rem;
+  background: var(--magary-dialog-footer-bg);
+  border-top: var(--magary-dialog-separator);
   border-bottom-right-radius: var(--magary-dialog-radius);
   border-bottom-left-radius: var(--magary-dialog-radius);
+}
+
+.magary-dialog.magary-dialog-no-section-borders {
+  .magary-dialog-header {
+    border-bottom: none;
+  }
+
+  .magary-dialog-footer {
+    border-top: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magary-dialog-mask,
+  .magary-dialog,
+  .magary-dialog-header-icon {
+    transition: none !important;
+  }
 }
 
 .magary-dialog-resizer {
@@ -349,7 +387,7 @@
   }
 
   &:hover::after {
-    border-color: transparent transparent var(--primary-color, #3b82f6)
+    border-color: transparent transparent var(--primary-500, #06b6d4)
       transparent;
     opacity: 1;
   }

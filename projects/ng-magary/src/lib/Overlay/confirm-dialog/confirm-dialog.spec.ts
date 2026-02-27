@@ -42,7 +42,6 @@ describe('MagaryConfirmDialog behavior', () => {
   });
 
   afterEach(() => {
-    fixture.destroy();
   });
 
   it('opens only when confirmation key matches component key', () => {

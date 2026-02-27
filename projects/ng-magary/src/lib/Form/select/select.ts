@@ -16,6 +16,7 @@ import { LucideAngularModule } from 'lucide-angular';
 
 type SelectObjectOption = Record<string, unknown>;
 type SelectPrimitiveOption = string | number | boolean;
+type SelectSize = 'small' | 'normal' | 'large';
 export type MagarySelectOption = SelectPrimitiveOption | SelectObjectOption;
 export type MagarySelectValue = SelectPrimitiveOption | SelectObjectOption | null;
 
@@ -40,8 +41,12 @@ export class MagarySelect implements ControlValueAccessor {
   readonly optionValue = input<string>();
   readonly placeholder = input<string>('Select an option');
   readonly ariaLabel = input<string>('');
+  readonly size = input<SelectSize>('normal');
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly loading = input(false, { transform: booleanAttribute });
+  readonly invalid = input(false, { transform: booleanAttribute });
+  readonly error = input<string>('');
+  readonly helpText = input<string>('');
   readonly filter = input(false, { transform: booleanAttribute });
   readonly showClear = input(false, { transform: booleanAttribute });
 
@@ -62,6 +67,8 @@ export class MagarySelect implements ControlValueAccessor {
   private readonly uniqueId = `magary-select-${Math.random().toString(36).substring(2, 11)}`;
   readonly triggerId = `${this.uniqueId}-trigger`;
   readonly listboxId = `${this.uniqueId}-listbox`;
+  readonly errorMessageId = `${this.uniqueId}-error`;
+  readonly helpMessageId = `${this.uniqueId}-help`;
   readonly listboxLabel = computed(() =>
     this.placeholder().trim().length > 0 ? `${this.placeholder()} options` : 'Select options',
   );
@@ -89,6 +96,22 @@ export class MagarySelect implements ControlValueAccessor {
     }
 
     return this.getOptionId(index);
+  });
+  readonly hasError = computed(() => this.invalid() || this.error().trim().length > 0);
+  readonly errorMessage = computed(() => {
+    const message = this.error().trim();
+    return message.length > 0 ? message : 'Invalid selection';
+  });
+  readonly describedBy = computed(() => {
+    if (this.hasError()) {
+      return this.errorMessageId;
+    }
+
+    if (this.helpText().trim().length > 0) {
+      return this.helpMessageId;
+    }
+
+    return null;
   });
 
   // CVA Callbacks
@@ -160,6 +183,27 @@ export class MagarySelect implements ControlValueAccessor {
 
       queueMicrotask(() => {
         this.filterInputRef()?.nativeElement.focus();
+      });
+    });
+
+    effect(() => {
+      if (!this.isOpen()) {
+        return;
+      }
+
+      const activeId = this.activeDescendantId();
+      if (!activeId) {
+        return;
+      }
+
+      queueMicrotask(() => {
+        const activeElement = document.getElementById(activeId);
+        if (
+          activeElement &&
+          typeof activeElement.scrollIntoView === 'function'
+        ) {
+          activeElement.scrollIntoView({ block: 'nearest' });
+        }
       });
     });
   }
@@ -278,20 +322,27 @@ export class MagarySelect implements ControlValueAccessor {
         }
         break;
       case 'Home':
-        if (this.isOpen()) {
-          event.preventDefault();
-          this.setActiveIndex(0);
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.open();
         }
+        this.setActiveIndex(0);
         break;
       case 'End':
-        if (this.isOpen()) {
-          event.preventDefault();
-          this.setActiveIndex(this.visibleOptions().length - 1);
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.open();
         }
+        this.setActiveIndex(this.visibleOptions().length - 1);
         break;
       case 'Escape':
         if (this.isOpen()) {
           event.preventDefault();
+          this.close();
+        }
+        break;
+      case 'Tab':
+        if (this.isOpen()) {
           this.close();
         }
         break;

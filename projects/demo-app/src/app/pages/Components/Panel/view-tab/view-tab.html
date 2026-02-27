@@ -1,4 +1,4 @@
-<div class="container">
+﻿<div class="container">
   <div class="header">
     <h1>MagaryTabs</h1>
   </div>
@@ -20,7 +20,10 @@
     <div class="section-content">
       <div class="demo-grid">
         <magary-tabs
-          [backgroundLine]="'var(--primary-500)'"
+          [lineColor]="'#06b6d4'"
+          [activeBg]="'#2f4158'"
+          [activeText]="'#f8fafc'"
+          [hoverBg]="'#25364b'"
           [positionContent]="'flex-start'"
           [padding]="'2rem'"
           tabListAriaLabel="Main sections"
@@ -63,10 +66,28 @@
         </thead>
         <tbody>
           <tr>
-            <td><code>backgroundLine</code></td>
+            <td><code>lineColor</code></td>
             <td><code>string</code></td>
-            <td><code>'#000'</code></td>
+            <td><code>'#06b6d4'</code></td>
             <td>Color de la línea que indica la pestaña activa</td>
+          </tr>
+          <tr>
+            <td><code>activeBg</code></td>
+            <td><code>string | null</code></td>
+            <td><code>null</code></td>
+            <td>Color de fondo para la pestaña activa.</td>
+          </tr>
+          <tr>
+            <td><code>activeText</code></td>
+            <td><code>string | null</code></td>
+            <td><code>null</code></td>
+            <td>Color de texto para la pestaña activa.</td>
+          </tr>
+          <tr>
+            <td><code>hoverBg</code></td>
+            <td><code>string | null</code></td>
+            <td><code>null</code></td>
+            <td>Color de fondo al pasar el cursor sobre cada pestaña.</td>
           </tr>
           <tr>
             <td><code>positionContent</code></td>
@@ -92,6 +113,19 @@
             <td><code>string</code></td>
             <td><code>'Tabs'</code></td>
             <td>Etiqueta accesible para el contenedor <code>tablist</code>.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>backgroundLine</code> / <code>activeTabBackground</code> /
+              <code>activeTabTextColor</code>
+            </td>
+            <td><code>string | null</code></td>
+            <td><code>null</code></td>
+            <td>
+              Inputs legacy soportados por compatibilidad (preferir
+              <code>lineColor</code>, <code>activeBg</code> y
+              <code>activeText</code>).
+            </td>
           </tr>
         </tbody>
       </table>
@@ -160,7 +194,9 @@
       <h4>Pestañas Básicas</h4>
       <div class="code-block">
         <magary-tabs
-          [backgroundLine]="'#ed2c44'"
+          [lineColor]="'#ed2c44'"
+          [activeBg]="'#4a2229'"
+          [hoverBg]="'#3a1f24'"
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
           [heightLine]="'2px'"

@@ -14,7 +14,7 @@
       <li
         [style.--i]="$index"
         [style.--radius.px]="radius()"
-        [style.transition-delay]="isOpen() ? $index * 50 + 'ms' : '0ms'"
+        [style.transition-delay]="itemTransitionDelay($index)"
         [class]="'item-' + type()"
         role="presentation"
       >

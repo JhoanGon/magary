@@ -60,6 +60,20 @@ export class ViewSelect {
   [options]="cities" 
   placeholder="Disabled" 
   disabled>
+</magary-select>
+
+<magary-select
+  [options]="cities"
+  placeholder="Choose city"
+  size="small"
+  helpText="Puedes cambiar la selección luego">
+</magary-select>
+
+<magary-select
+  [options]="cities"
+  placeholder="Required"
+  invalid
+  error="Selecciona una ciudad válida">
 </magary-select>`;
 
   basicTS = `cities = ['New York', 'London', 'Paris'];`;

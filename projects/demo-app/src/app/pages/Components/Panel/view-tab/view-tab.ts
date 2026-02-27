@@ -11,7 +11,10 @@ export class ViewTab {
   importExample = "import { MagaryTabs, MagaryTab } from 'ng-magary';";
   exampleTab = `
   <magary-tabs
-    [backgroundLine]="'var(--primary-500)'"
+    [lineColor]="'#06b6d4'"
+    [activeBg]="'#2f4158'"
+    [activeText]="'#f8fafc'"
+    [hoverBg]="'#25364b'"
     [positionContent]="'flex-start'"
     tabListAriaLabel="Principal sections"
   >
@@ -32,7 +35,9 @@ export class ViewTab {
   </magary-tabs>`;
   exampleBasicHTML = `
   <magary-tabs
-    backgroundLine="var(--accent-500)"
+    lineColor="#d946ef"
+    activeBg="#4a2854"
+    hoverBg="#3a2242"
     tabListAriaLabel="Profile sections"
   >
     <magary-tab label="Perfil">

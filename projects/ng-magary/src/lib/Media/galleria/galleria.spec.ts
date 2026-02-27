@@ -16,7 +16,6 @@ describe('MagaryGalleria mobile gestures', () => {
   });
 
   afterEach(() => {
-    fixture.destroy();
   });
 
   it('starts pinch zoom from default scale on touch devices', () => {

@@ -39,7 +39,6 @@ describe('MagaryMessage behavior', () => {
   afterEach(() => {
     vi.useRealTimers();
     vi.restoreAllMocks();
-    fixture.destroy();
   });
 
   it('renders summary/detail and computes default icon from severity', () => {

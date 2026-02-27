@@ -36,10 +36,17 @@ export class MagaryGrid implements AfterViewInit, OnDestroy {
   removed = output<MagaryGridEvent>();
 
   private grid?: GridStack;
+  private initTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private isDestroyed = false;
 
   ngAfterViewInit(): void {
     // Initialize GridStack with a slight delay to ensure DOM is ready and children are rendered
-    setTimeout(() => {
+    this.initTimeoutId = setTimeout(() => {
+      if (this.isDestroyed) {
+        return;
+      }
+
+      this.initTimeoutId = null;
       this.grid = GridStack.init(
         this.options(),
         this.gridStackContainer().nativeElement,
@@ -53,18 +60,31 @@ export class MagaryGrid implements AfterViewInit, OnDestroy {
   private bindEvents(): void {
     if (!this.grid) return;
 
-    this.grid.on('change', (event: Event, items: GridStackNode[]) =>
-      this.change.emit({ event, items }),
-    );
-    this.grid.on('added', (event: Event, items: GridStackNode[]) =>
-      this.added.emit({ event, items }),
-    );
-    this.grid.on('removed', (event: Event, items: GridStackNode[]) =>
-      this.removed.emit({ event, items }),
-    );
+    this.grid.on('change', (event: Event, items: GridStackNode[]) => {
+      if (!this.isDestroyed) {
+        this.change.emit({ event, items });
+      }
+    });
+    this.grid.on('added', (event: Event, items: GridStackNode[]) => {
+      if (!this.isDestroyed) {
+        this.added.emit({ event, items });
+      }
+    });
+    this.grid.on('removed', (event: Event, items: GridStackNode[]) => {
+      if (!this.isDestroyed) {
+        this.removed.emit({ event, items });
+      }
+    });
   }
 
   ngOnDestroy(): void {
+    this.isDestroyed = true;
+
+    if (this.initTimeoutId !== null) {
+      clearTimeout(this.initTimeoutId);
+      this.initTimeoutId = null;
+    }
+
     if (this.grid) {
       this.grid.destroy();
     }

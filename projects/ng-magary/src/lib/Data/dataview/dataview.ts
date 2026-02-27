@@ -1,5 +1,6 @@
 import {
   Component,
+  OnDestroy,
   contentChild,
   TemplateRef,
   input,
@@ -28,7 +29,9 @@ interface MagaryDataViewItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class MagaryDataView {
+export class MagaryDataView implements OnDestroy {
+  private isDestroyed = false;
+
   // Content Templates
   listItemTemplate =
     contentChild<TemplateRef<{ $implicit: MagaryDataViewItem; index: number }>>(
@@ -91,7 +94,9 @@ export class MagaryDataView {
   onPageChange(event: PaginatorState) {
     this.first.set(event.first);
     this._rows.set(event.rows);
-    this.onPage.emit(event);
+    if (!this.isDestroyed) {
+      this.onPage.emit(event);
+    }
   }
 
   getTotalRecords() {
@@ -100,5 +105,9 @@ export class MagaryDataView {
       : this.value()
         ? this.value().length
         : 0;
+  }
+
+  ngOnDestroy(): void {
+    this.isDestroyed = true;
   }
 }

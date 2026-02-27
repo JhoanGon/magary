@@ -7,20 +7,32 @@
   /* Layout & Typography */
   --font-family: "Inter", system-ui, -apple-system, sans-serif;
   --border-radius: 1.25rem;
-  
+
+  /* Shared Field System (Input / Select / Cascade) */
+  --magary-field-radius: 1.25rem;
+  --magary-field-height-sm: 2.25rem;
+  --magary-field-height-md: 2.75rem;
+  --magary-field-height-lg: 3.125rem;
+  --magary-field-padding-x: 1rem;
+  --magary-overlay-radius: 1.25rem;
+  --magary-overlay-padding: 0.375rem;
+  --magary-overlay-gap: 0.125rem;
+  --magary-option-radius: 0.625rem;
+  --magary-overlay-shadow: 0 12px 28px rgba(2, 6, 23, 0.24);
+
   /* Shadows */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
   --shadow-glow: 0 0 20px rgba(6, 182, 212, 0.4);
-  
+
   /* Semantic Colors (Single values) */
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
   --info: #3b82f6;
   --help: #8b5cf6;
-  
+
   /* Extended Palettes */
   /* Blue */
   --blue-50: #eff6ff;
@@ -33,7 +45,7 @@
   --blue-700: #1d4ed8;
   --blue-800: #1e40af;
   --blue-900: #1e3a8a;
-  
+
   /* Green */
   --green-50: #f0fdf4;
   --green-100: #dcfce7;
@@ -45,7 +57,7 @@
   --green-700: #15803d;
   --green-800: #166534;
   --green-900: #14532d;
-  
+
   /* Orange */
   --orange-50: #fff7ed;
   --orange-100: #ffedd5;
@@ -57,7 +69,7 @@
   --orange-700: #c2410c;
   --orange-800: #9a3412;
   --orange-900: #7c2d12;
-  
+
   /* Red */
   --red-50: #fef2f2;
   --red-100: #fee2e2;
@@ -338,11 +350,12 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 15px rgba(6, 182, 212, 0.3); 
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
   }
-  50% { 
-    box-shadow: 0 0 25px rgba(217, 70, 239, 0.4); 
+  50% {
+    box-shadow: 0 0 25px rgba(217, 70, 239, 0.4);
   }
 }
 
@@ -358,7 +371,7 @@
 body {
   font-family: var(--font-family);
   background-color: var(--surface-50);
-  background-image: 
+  background-image:
     radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.1) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(217, 70, 239, 0.1) 0px, transparent 50%);
   background-attachment: fixed;
@@ -376,3 +389,146 @@ body {
   }
 }
 
+/* ============================================
+   DEMO PREMIUM CONSISTENCY
+   ============================================ */
+:where(
+  .container,
+  .installation-container,
+  .setup-container,
+  .mcp-container,
+  .icons-container
+) {
+  .code-block {
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--shadow-sm) !important;
+    overflow-x: auto !important;
+    padding: 0 !important;
+    background: #282c34 !important;
+
+    pre {
+      margin: 0 !important;
+      padding: 0.9rem 1rem !important;
+      white-space: pre-wrap !important;
+      overflow-wrap: anywhere !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+    }
+
+    code {
+      font-family:
+        "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
+      font-size: 0.85rem !important;
+      line-height: 1.5 !important;
+    }
+
+    /* Neutralize highlight.js container defaults (background/padding) */
+    pre code,
+    pre code.hljs {
+      display: block !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    > magary-tabs {
+      display: block;
+      border-radius: inherit;
+      overflow: hidden;
+    }
+
+    magary-tabs .tab-content {
+      padding: 0 !important;
+      align-items: stretch !important;
+    }
+  }
+
+  .code-block:has(> magary-tabs) {
+    box-shadow: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .table-wrapper {
+    border: 1px solid var(--surface-200) !important;
+    border-radius: var(--border-radius) !important;
+    background: color-mix(
+      in srgb,
+      var(--surface-0) 70%,
+      var(--surface-50) 30%
+    ) !important;
+    box-shadow: var(--shadow-sm) !important;
+    overflow-x: auto !important;
+  }
+
+  /* Some views render API tables without .table-wrapper */
+  .section-content > .api-table {
+    border: 1px solid var(--surface-200) !important;
+    border-radius: var(--border-radius) !important;
+    background: color-mix(
+      in srgb,
+      var(--surface-0) 70%,
+      var(--surface-50) 30%
+    ) !important;
+    box-shadow: var(--shadow-sm) !important;
+    overflow: hidden !important;
+  }
+
+  .api-table {
+    width: 100% !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    margin: 0 !important;
+    min-width: 44rem;
+    font-size: 0.92rem !important;
+
+    th,
+    td {
+      padding: 0.95rem 1rem !important;
+      border-bottom: 1px solid var(--surface-200) !important;
+      vertical-align: top !important;
+    }
+
+    th {
+      background: color-mix(
+        in srgb,
+        var(--surface-100) 72%,
+        var(--surface-50) 28%
+      ) !important;
+      color: var(--text-primary) !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.01em !important;
+      white-space: nowrap !important;
+    }
+
+    tr:last-child td {
+      border-bottom: none !important;
+    }
+
+    tbody tr:hover td {
+      background: color-mix(
+        in srgb,
+        var(--primary-500) 8%,
+        transparent
+      ) !important;
+    }
+
+    code {
+      background: color-mix(
+        in srgb,
+        var(--surface-200) 65%,
+        var(--surface-100) 35%
+      ) !important;
+      color: var(--api-table-color-text, var(--text-primary)) !important;
+      border: 1px solid var(--surface-300) !important;
+      border-radius: 0.375rem !important;
+      padding: 0.12rem 0.42rem !important;
+      font-size: 0.82rem !important;
+      font-weight: 600 !important;
+      white-space: nowrap !important;
+    }
+  }
+}

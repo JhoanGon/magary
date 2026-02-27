@@ -106,6 +106,49 @@ export class ViewSplitButton {
       default: 'null',
       description: 'External styling class.',
     },
+    {
+      name: 'backgroundColor',
+      type: 'string | null',
+      default: 'null',
+      description:
+        'Custom background color for the split button root (overrides severity color).',
+    },
+    {
+      name: 'textColor',
+      type: 'string | null',
+      default: 'null',
+      description: 'Custom text/icon color for the split button root.',
+    },
+    {
+      name: 'severity',
+      type: "'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'help' | 'danger'",
+      default: "'primary'",
+      description: 'Semantic color preset for the split button.',
+    },
+    {
+      name: 'size',
+      type: "'sm' | 'md' | 'lg'",
+      default: "'md'",
+      description: 'Controls component size and spacing.',
+    },
+    {
+      name: 'menuPosition',
+      type: "'start' | 'end'",
+      default: "'start'",
+      description: 'Dropdown alignment relative to the trigger.',
+    },
+    {
+      name: 'menuAriaLabel',
+      type: 'string | null',
+      default: 'null',
+      description: 'Custom accessible label for the action menu.',
+    },
+    {
+      name: 'closeOnItemSelect',
+      type: 'boolean',
+      default: 'true',
+      description: 'Close dropdown automatically after selecting an item.',
+    },
   ];
 
   eventsConfig = [
@@ -120,6 +163,12 @@ export class ViewSplitButton {
       type: 'EventEmitter<MouseEvent>',
       description:
         'Callback to invoke when the dropdown trigger button is clicked.',
+    },
+    {
+      name: 'itemClick',
+      type: 'EventEmitter<{ item: MenuItem; originalEvent: MouseEvent }>',
+      description:
+        'Emits when any dropdown item is activated (before command execution).',
     },
   ];
 
@@ -166,15 +215,23 @@ export class ViewSplitButton {
   (onClick)="onSave()">
 </magary-split-button>`;
 
-  severityCode = `<magary-split-button label="Secondary" [model]="saveItems" styleClass="p-button-secondary"></magary-split-button>
-<magary-split-button label="Success" icon="check" [model]="saveItems" styleClass="p-button-success"></magary-split-button>
-<magary-split-button label="Info" icon="info" [model]="saveItems" styleClass="p-button-info"></magary-split-button>
-<magary-split-button label="Warning" icon="triangle-alert" [model]="saveItems" styleClass="p-button-warning"></magary-split-button>
-<magary-split-button label="Danger" icon="x" [model]="saveItems" styleClass="p-button-danger"></magary-split-button>`;
+  severityCode = `<magary-split-button label="Secondary" [model]="saveItems" severity="secondary"></magary-split-button>
+<magary-split-button label="Success" icon="check" [model]="saveItems" severity="success"></magary-split-button>
+<magary-split-button label="Info" icon="info" [model]="saveItems" severity="info"></magary-split-button>
+<magary-split-button label="Warning" icon="triangle-alert" [model]="saveItems" severity="warning"></magary-split-button>
+<magary-split-button label="Danger" icon="x" [model]="saveItems" severity="danger"></magary-split-button>`;
 
-  sizesCode = `<magary-split-button label="Small" icon="minimize" [model]="saveItems" styleClass="p-button-sm"></magary-split-button>
+  customColorsCode = `<magary-split-button
+  label="Custom"
+  icon="palette"
+  [model]="saveItems"
+  [backgroundColor]="'#0f766e'"
+  [textColor]="'#ecfeff'">
+</magary-split-button>`;
+
+  sizesCode = `<magary-split-button label="Small" icon="minimize" [model]="saveItems" size="sm"></magary-split-button>
 <magary-split-button label="Normal" icon="layout-grid" [model]="saveItems"></magary-split-button>
-<magary-split-button label="Large" icon="maximize" [model]="saveItems" styleClass="p-button-lg"></magary-split-button>`;
+<magary-split-button label="Large" icon="maximize" [model]="saveItems" size="lg"></magary-split-button>`;
 
   tsCode = `import { Component, inject } from '@angular/core';
 import { MagarySplitButton, MenuItem, MagaryToastService } from 'ng-magary';

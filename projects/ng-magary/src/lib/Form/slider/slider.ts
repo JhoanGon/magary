@@ -139,6 +139,8 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
     handleIdx: number = 0,
     originalEvent?: MouseEvent | Event,
   ) {
+    val = this.normalizeValue(val);
+
     if (this.range()) {
       let current = [
         ...((this.value() as number[]) || [this.min(), this.max()]),
@@ -178,11 +180,86 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
     let steps = Math.round((rawValue - min) / step);
     let value = steps * step + min;
 
-    // Float precision fix
-    // simple approach: assume step precision
-    // Or simpler: Number(value.toFixed(10)) logic?
+    return this.normalizeValue(value);
+  }
 
-    return value;
+  private normalizeValue(value: number): number {
+    const min = this.min();
+    const max = this.max();
+    const step = Math.abs(this.step()) || 1;
+
+    const clamped = Math.min(max, Math.max(min, value));
+    const snapped = Math.round((clamped - min) / step) * step + min;
+    const precision = this.getStepPrecision(step);
+
+    return Number(snapped.toFixed(Math.min(precision, 10)));
+  }
+
+  private getStepPrecision(step: number): number {
+    const text = String(step);
+    if (text.includes('e-')) {
+      return Number(text.split('e-')[1] ?? 0);
+    }
+
+    const dotIndex = text.indexOf('.');
+    return dotIndex === -1 ? 0 : text.length - dotIndex - 1;
+  }
+
+  private getHandleValue(handleIdx: number): number {
+    if (this.range()) {
+      const rangeValue = (this.value() as number[]) || [this.min(), this.max()];
+      return rangeValue[handleIdx] ?? this.min();
+    }
+
+    const singleValue = this.value() as number | null;
+    return singleValue ?? this.min();
+  }
+
+  getHandleAriaValue(handleIdx: number): number {
+    return this.getHandleValue(handleIdx);
+  }
+
+  onHandleKeydown(event: KeyboardEvent, handleIdx: number): void {
+    if (this.isDisabled()) return;
+
+    const currentValue = this.getHandleValue(handleIdx);
+    const step = Math.abs(this.step()) || 1;
+    const largeStep = step * 10;
+    let nextValue: number | null = null;
+
+    switch (event.key) {
+      case 'ArrowRight':
+      case 'ArrowUp':
+        nextValue = currentValue + step;
+        break;
+      case 'ArrowLeft':
+      case 'ArrowDown':
+        nextValue = currentValue - step;
+        break;
+      case 'PageUp':
+        nextValue = currentValue + largeStep;
+        break;
+      case 'PageDown':
+        nextValue = currentValue - largeStep;
+        break;
+      case 'Home':
+        nextValue = this.min();
+        break;
+      case 'End':
+        nextValue = this.max();
+        break;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    this.updateValue(nextValue, handleIdx, event);
+    this.onModelTouched();
+    this.onSlideEnd.emit({ originalEvent: event, value: this.value() });
+  }
+
+  onHandleBlur(): void {
+    this.onModelTouched();
   }
 
   // Events
@@ -219,11 +296,13 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
     }
 
     this.updateValueFromClientPosition(touch.clientX, touch.clientY, event);
+    this.onModelTouched();
   }
 
   onBarClick(event: MouseEvent) {
     if (this.isDisabled() || this.dragging()) return;
     this.updateValueFromClientPosition(event.clientX, event.clientY, event);
+    this.onModelTouched();
   }
 
   bindDragListeners() {
@@ -315,6 +394,7 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
       this.handleIndex.set(null);
       this.unbindDragListeners();
       this.onSlideEnd.emit({ originalEvent: event, value: this.value() });
+      this.onModelTouched();
     }
   }
 
@@ -337,6 +417,7 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
       this.handleIndex.set(null);
       this.unbindTouchListeners();
       this.onSlideEnd.emit({ originalEvent: event, value: this.value() });
+      this.onModelTouched();
     }
   }
 

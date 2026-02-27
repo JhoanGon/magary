@@ -1,8 +1,4 @@
-<div
-  [class]="
-    'magary-split-button ' + styleClass() + (disabled() ? ' disabled' : '')
-  "
->
+<div [class]="hostClasses()" [ngStyle]="hostStyles()">
   <button
     type="button"
     class="default-button"
@@ -34,8 +30,14 @@
   </button>
 
   @if (isOpen()) {
-    <div class="split-button-menu">
-      <ul role="menu" [attr.aria-label]="label() + ' actions'">
+    <div
+      class="split-button-menu"
+      [class.align-end]="menuPosition() === 'end'"
+    >
+      <ul
+        role="menu"
+        [attr.aria-label]="menuAriaLabel() || label() + ' actions'"
+      >
         @for (item of model(); track item.label || $index) {
           <li role="none" [class.disabled]="item.disabled">
             <button

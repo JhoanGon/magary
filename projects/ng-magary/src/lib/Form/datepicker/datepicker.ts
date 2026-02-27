@@ -63,8 +63,46 @@ export class MagaryDatePicker
   readonly isOpen = signal(false);
   readonly viewDate = signal(new Date()); // Current month being viewed
   readonly currentView = signal<'day' | 'month' | 'year'>('day');
+  readonly activeDate = signal<Date | null>(null);
+  readonly activeMonthIndex = signal<number | null>(null);
+  readonly activeYearValue = signal<number | null>(null);
   private readonly formDisabled = signal(false);
   readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
+  readonly triggerId = `magary-datepicker-${Math.random().toString(36).slice(2, 11)}`;
+  readonly panelId = `${this.triggerId}-panel`;
+  readonly panelLabelId = `${this.triggerId}-panel-label`;
+  readonly activeDayId = computed(() => {
+    const date = this.activeDate();
+    if (!date || !this.isOpen() || this.currentView() !== 'day') {
+      return null;
+    }
+
+    return this.getDayId(date);
+  });
+  readonly activeMonthId = computed(() => {
+    if (!this.isOpen() || this.currentView() !== 'month') {
+      return null;
+    }
+
+    const monthIndex = this.activeMonthIndex();
+    if (monthIndex == null || monthIndex < 0 || monthIndex > 11) {
+      return null;
+    }
+
+    return this.getMonthId(monthIndex);
+  });
+  readonly activeYearId = computed(() => {
+    if (!this.isOpen() || this.currentView() !== 'year') {
+      return null;
+    }
+
+    const year = this.activeYearValue();
+    if (year == null || !this.years().includes(year)) {
+      return null;
+    }
+
+    return this.getYearId(year);
+  });
 
   // Input Handling
   onInput(event: Event) {
@@ -144,17 +182,12 @@ export class MagaryDatePicker
   // Interaction
   toggle() {
     if (this.isDisabled()) return;
-    this.isOpen.update((v) => !v);
+    if (this.isOpen()) {
+      this.close();
+      return;
+    }
 
-    if (!this.isOpen()) return;
-
-    // Sync view
-    let d: Date | null = null;
-    const v = this.value();
-    if (Array.isArray(v) && v[0]) d = v[0];
-    else if (v instanceof Date) d = v;
-
-    this.viewDate.set(d ? new Date(d) : new Date());
+    this.openPanel();
   }
 
   open() {
@@ -165,63 +198,129 @@ export class MagaryDatePicker
 
   close() {
     this.isOpen.set(false);
+    this.activeDate.set(null);
+    this.activeMonthIndex.set(null);
+    this.activeYearValue.set(null);
     this.onTouched();
   }
 
   onContainerClick(event: Event) {}
 
+  onTriggerKeydown(event: KeyboardEvent): void {
+    if (this.isDisabled()) {
+      return;
+    }
+
+    if (this.handleOpenCalendarKeyboardNavigation(event)) {
+      event.preventDefault();
+      return;
+    }
+
+    if (event.key === 'Escape' && this.isOpen()) {
+      event.preventDefault();
+      this.close();
+      return;
+    }
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.toggle();
+    }
+
+    if (event.key === 'ArrowDown' && !this.isOpen()) {
+      event.preventDefault();
+      this.open();
+    }
+  }
+
+  onPanelKeydown(event: KeyboardEvent): void {
+    if (this.handleOpenCalendarKeyboardNavigation(event)) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      event.stopPropagation();
+      this.close();
+    }
+  }
+
   // Navigation
   prev() {
     if (this.currentView() === 'day') {
-      const d = new Date(this.viewDate());
-      d.setMonth(d.getMonth() - 1);
-      this.viewDate.set(d);
+      const active = this.activeDate() ?? this.resolveInitialActiveDate();
+      const next = new Date(active);
+      next.setMonth(next.getMonth() - 1);
+      this.setActiveDate(next);
     } else if (this.currentView() === 'month') {
       const d = new Date(this.viewDate());
       d.setFullYear(d.getFullYear() - 1);
       this.viewDate.set(d);
+      this.activeYearValue.set(d.getFullYear());
     } else {
       const d = new Date(this.viewDate());
       d.setFullYear(d.getFullYear() - 10);
       this.viewDate.set(d);
+      const activeYear = this.activeYearValue();
+      this.activeYearValue.set(
+        activeYear !== null ? activeYear - 10 : d.getFullYear(),
+      );
     }
   }
 
   next() {
     if (this.currentView() === 'day') {
-      const d = new Date(this.viewDate());
-      d.setMonth(d.getMonth() + 1);
-      this.viewDate.set(d);
+      const active = this.activeDate() ?? this.resolveInitialActiveDate();
+      const next = new Date(active);
+      next.setMonth(next.getMonth() + 1);
+      this.setActiveDate(next);
     } else if (this.currentView() === 'month') {
       const d = new Date(this.viewDate());
       d.setFullYear(d.getFullYear() + 1);
       this.viewDate.set(d);
+      this.activeYearValue.set(d.getFullYear());
     } else {
       const d = new Date(this.viewDate());
       d.setFullYear(d.getFullYear() + 10);
       this.viewDate.set(d);
+      const activeYear = this.activeYearValue();
+      this.activeYearValue.set(
+        activeYear !== null ? activeYear + 10 : d.getFullYear(),
+      );
     }
   }
 
   switchView() {
     if (this.currentView() === 'day') {
+      this.activeMonthIndex.set(this.viewDate().getMonth());
       this.currentView.set('month');
     } else if (this.currentView() === 'month') {
+      this.activeYearValue.set(this.viewDate().getFullYear());
       this.currentView.set('year');
     }
   }
 
   selectMonth(monthIndex: number) {
-    const d = new Date(this.viewDate());
+    if (this.isDisabled()) return;
+    const base = this.activeDate() ?? this.viewDate();
+    const d = new Date(base);
     d.setMonth(monthIndex);
     this.viewDate.set(d);
+    this.setActiveDate(d);
+    this.activeMonthIndex.set(monthIndex);
     this.currentView.set('day');
   }
 
   selectYear(year: number) {
-    const d = new Date(this.viewDate());
+    if (this.isDisabled()) return;
+    const base = this.activeDate() ?? this.viewDate();
+    const d = new Date(base);
     d.setFullYear(year);
     this.viewDate.set(d);
+    this.setActiveDate(d);
+    this.activeYearValue.set(year);
     this.currentView.set('month');
   }
 
@@ -238,6 +337,7 @@ export class MagaryDatePicker
   // Selection
   selectDate(date: Date | null) {
     if (!date || this.isDisabledDate(date)) return;
+    this.setActiveDate(date);
 
     if (this.selectionMode() === 'single') {
       this.value.set(date);
@@ -336,6 +436,65 @@ export class MagaryDatePicker
     return false;
   }
 
+  dayAriaLabel(date: Date): string {
+    return new Intl.DateTimeFormat('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    }).format(date);
+  }
+
+  getDayId(date: Date): string {
+    const normalized = this.normalizeDate(date);
+    return `${this.panelId}-day-${normalized.getFullYear()}-${normalized.getMonth()}-${normalized.getDate()}`;
+  }
+
+  isActive(date: Date | null): boolean {
+    if (!date) {
+      return false;
+    }
+
+    const active = this.activeDate();
+    if (!active) {
+      return false;
+    }
+
+    return this.isSameDay(date, active);
+  }
+
+  onDayHover(date: Date): void {
+    if (this.isDisabledDate(date)) {
+      return;
+    }
+
+    this.setActiveDate(date);
+  }
+
+  getMonthId(monthIndex: number): string {
+    return `${this.panelId}-month-${monthIndex}`;
+  }
+
+  getYearId(year: number): string {
+    return `${this.panelId}-year-${year}`;
+  }
+
+  isActiveMonth(monthIndex: number): boolean {
+    return this.activeMonthIndex() === monthIndex;
+  }
+
+  isActiveYear(year: number): boolean {
+    return this.activeYearValue() === year;
+  }
+
+  onMonthHover(monthIndex: number): void {
+    this.activeMonthIndex.set(monthIndex);
+  }
+
+  onYearHover(year: number): void {
+    this.activeYearValue.set(year);
+  }
+
   // CVA
   writeValue(value: unknown): void {
     // Handle Date or Date[] or String
@@ -368,5 +527,289 @@ export class MagaryDatePicker
 
   setDisabledState?(isDisabled: boolean): void {
     this.formDisabled.set(isDisabled);
+  }
+
+  private openPanel(): void {
+    this.isOpen.set(true);
+
+    const initialDate = this.resolveInitialActiveDate();
+    this.setActiveDate(initialDate);
+    this.activeMonthIndex.set(initialDate.getMonth());
+    this.activeYearValue.set(initialDate.getFullYear());
+  }
+
+  private resolveInitialActiveDate(): Date {
+    const selected = this.getSelectedAnchorDate();
+    if (selected) {
+      return this.boundDate(selected);
+    }
+
+    return this.boundDate(new Date());
+  }
+
+  private getSelectedAnchorDate(): Date | null {
+    const currentValue = this.value();
+    if (Array.isArray(currentValue)) {
+      return currentValue[0] ? this.normalizeDate(currentValue[0]) : null;
+    }
+
+    if (currentValue instanceof Date) {
+      return this.normalizeDate(currentValue);
+    }
+
+    return null;
+  }
+
+  private setActiveDate(date: Date): void {
+    const normalized = this.boundDate(date);
+    this.activeDate.set(normalized);
+    this.activeMonthIndex.set(normalized.getMonth());
+    this.activeYearValue.set(normalized.getFullYear());
+
+    const viewDate = this.viewDate();
+    if (
+      viewDate.getFullYear() !== normalized.getFullYear() ||
+      viewDate.getMonth() !== normalized.getMonth()
+    ) {
+      this.viewDate.set(new Date(normalized));
+    }
+  }
+
+  private handleDayKeyboardNavigation(event: KeyboardEvent): boolean {
+    if (!this.isOpen() || this.currentView() !== 'day') {
+      return false;
+    }
+
+    switch (event.key) {
+      case 'ArrowRight':
+        this.moveActiveDateByDays(1);
+        return true;
+      case 'ArrowLeft':
+        this.moveActiveDateByDays(-1);
+        return true;
+      case 'ArrowDown':
+        this.moveActiveDateByDays(7);
+        return true;
+      case 'ArrowUp':
+        this.moveActiveDateByDays(-7);
+        return true;
+      case 'Home':
+        this.moveActiveDateToWeekBoundary('start');
+        return true;
+      case 'End':
+        this.moveActiveDateToWeekBoundary('end');
+        return true;
+      case 'PageUp':
+        this.moveActiveDateByMonths(-1);
+        return true;
+      case 'PageDown':
+        this.moveActiveDateByMonths(1);
+        return true;
+      case 'Enter':
+      case ' ':
+        this.selectDate(this.activeDate());
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  private handleOpenCalendarKeyboardNavigation(event: KeyboardEvent): boolean {
+    if (!this.isOpen()) {
+      return false;
+    }
+
+    if (this.currentView() === 'day') {
+      return this.handleDayKeyboardNavigation(event);
+    }
+
+    if (this.currentView() === 'month') {
+      return this.handleMonthKeyboardNavigation(event);
+    }
+
+    if (this.currentView() === 'year') {
+      return this.handleYearKeyboardNavigation(event);
+    }
+
+    return false;
+  }
+
+  private handleMonthKeyboardNavigation(event: KeyboardEvent): boolean {
+    switch (event.key) {
+      case 'ArrowRight':
+        this.moveActiveMonth(1);
+        return true;
+      case 'ArrowLeft':
+        this.moveActiveMonth(-1);
+        return true;
+      case 'ArrowDown':
+        this.moveActiveMonth(3);
+        return true;
+      case 'ArrowUp':
+        this.moveActiveMonth(-3);
+        return true;
+      case 'Home':
+        this.activeMonthIndex.set(0);
+        return true;
+      case 'End':
+        this.activeMonthIndex.set(11);
+        return true;
+      case 'PageUp':
+        this.shiftMonthViewYear(-1);
+        return true;
+      case 'PageDown':
+        this.shiftMonthViewYear(1);
+        return true;
+      case 'Enter':
+      case ' ':
+        this.selectMonth(this.activeMonthIndex() ?? this.viewDate().getMonth());
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  private handleYearKeyboardNavigation(event: KeyboardEvent): boolean {
+    switch (event.key) {
+      case 'ArrowRight':
+        this.moveActiveYear(1);
+        return true;
+      case 'ArrowLeft':
+        this.moveActiveYear(-1);
+        return true;
+      case 'ArrowDown':
+        this.moveActiveYear(3);
+        return true;
+      case 'ArrowUp':
+        this.moveActiveYear(-3);
+        return true;
+      case 'Home': {
+        const years = this.years();
+        if (years.length > 0) {
+          this.activeYearValue.set(years[0]);
+        }
+        return true;
+      }
+      case 'End': {
+        const years = this.years();
+        if (years.length > 0) {
+          this.activeYearValue.set(years[years.length - 1]);
+        }
+        return true;
+      }
+      case 'PageUp':
+        this.moveActiveYear(-10);
+        return true;
+      case 'PageDown':
+        this.moveActiveYear(10);
+        return true;
+      case 'Enter':
+      case ' ':
+        this.selectYear(this.activeYearValue() ?? this.currentYear());
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  private moveActiveMonth(offset: number): void {
+    const current = this.activeMonthIndex() ?? this.viewDate().getMonth();
+    const next = Math.max(0, Math.min(11, current + offset));
+    this.activeMonthIndex.set(next);
+  }
+
+  private shiftMonthViewYear(yearOffset: number): void {
+    const d = new Date(this.viewDate());
+    d.setFullYear(d.getFullYear() + yearOffset);
+    this.viewDate.set(d);
+    this.activeYearValue.set(d.getFullYear());
+  }
+
+  private moveActiveYear(offset: number): void {
+    const current = this.activeYearValue() ?? this.currentYear();
+    const next = current + offset;
+    this.ensureYearVisible(next);
+    this.activeYearValue.set(next);
+  }
+
+  private ensureYearVisible(targetYear: number): void {
+    let guard = 0;
+
+    while (guard < 12) {
+      const years = this.years();
+      if (years.length === 0) {
+        return;
+      }
+
+      const first = years[0];
+      const last = years[years.length - 1];
+
+      if (targetYear < first) {
+        const d = new Date(this.viewDate());
+        d.setFullYear(d.getFullYear() - 10);
+        this.viewDate.set(d);
+        guard++;
+        continue;
+      }
+
+      if (targetYear > last) {
+        const d = new Date(this.viewDate());
+        d.setFullYear(d.getFullYear() + 10);
+        this.viewDate.set(d);
+        guard++;
+        continue;
+      }
+
+      return;
+    }
+  }
+
+  private moveActiveDateByDays(days: number): void {
+    const current = this.activeDate() ?? this.resolveInitialActiveDate();
+    const next = new Date(current);
+    next.setDate(next.getDate() + days);
+    this.setActiveDate(next);
+  }
+
+  private moveActiveDateByMonths(months: number): void {
+    const current = this.activeDate() ?? this.resolveInitialActiveDate();
+    const next = new Date(current);
+    next.setMonth(next.getMonth() + months);
+    this.setActiveDate(next);
+  }
+
+  private moveActiveDateToWeekBoundary(boundary: 'start' | 'end'): void {
+    const current = this.activeDate() ?? this.resolveInitialActiveDate();
+    const next = new Date(current);
+    const offset =
+      boundary === 'start' ? -current.getDay() : 6 - current.getDay();
+    next.setDate(next.getDate() + offset);
+    this.setActiveDate(next);
+  }
+
+  private boundDate(date: Date): Date {
+    const normalized = this.normalizeDate(date);
+    const minDate = this.minDate();
+    const maxDate = this.maxDate();
+
+    if (minDate) {
+      const min = this.normalizeDate(minDate);
+      if (normalized < min) {
+        return min;
+      }
+    }
+
+    if (maxDate) {
+      const max = this.normalizeDate(maxDate);
+      if (normalized > max) {
+        return max;
+      }
+    }
+
+    return normalized;
+  }
+
+  private normalizeDate(date: Date): Date {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
   }
 }

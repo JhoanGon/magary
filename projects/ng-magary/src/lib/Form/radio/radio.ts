@@ -34,6 +34,7 @@ export class MagaryRadioButton implements ControlValueAccessor {
   readonly label = input<string>();
   readonly inputId = input<string>();
   readonly disabled = input(false, { transform: booleanAttribute });
+  private readonly formDisabled = signal(false);
 
   // Internal State
   readonly focused = signal(false);
@@ -41,13 +42,14 @@ export class MagaryRadioButton implements ControlValueAccessor {
 
   // Computed
   readonly checked = computed(() => this.modelValue() === this.value());
+  readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
 
   // CVA Callbacks
   private onChange: (value: unknown) => void = () => {};
   private onTouched: () => void = () => {};
 
   select(event: Event) {
-    if (this.disabled()) {
+    if (this.isDisabled()) {
       return;
     }
 
@@ -68,7 +70,7 @@ export class MagaryRadioButton implements ControlValueAccessor {
   // Input Event Handlers
   onInputChange(event: Event) {
     // Native radio change
-    if (!this.disabled()) {
+    if (!this.isDisabled()) {
       this.updateModel();
     }
   }
@@ -96,6 +98,6 @@ export class MagaryRadioButton implements ControlValueAccessor {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    // managed by input binding normally, but good to have
+    this.formDisabled.set(isDisabled);
   }
 }

@@ -1,4 +1,4 @@
-<div class="container fade-in">
+﻿<div class="container fade-in">
   <!-- 1. Header Standard -->
   <div class="header">
     <h1>Magary Select</h1>
@@ -53,6 +53,26 @@
               [options]="[]"
               placeholder="Loading..."
               loading
+            ></magary-select>
+          </div>
+
+          <div class="field">
+            <label>Small + HelpText</label>
+            <magary-select
+              [options]="cities"
+              placeholder="Choose city"
+              size="small"
+              helpText="Puedes cambiar la selección luego"
+            ></magary-select>
+          </div>
+
+          <div class="field">
+            <label>Invalid + Error</label>
+            <magary-select
+              [options]="cities"
+              placeholder="Required"
+              invalid
+              error="Selecciona una ciudad válida"
             ></magary-select>
           </div>
         </div>
@@ -161,14 +181,14 @@
   </div>
 
   <!-- 7. API Table Standard -->
-  <div class="api-table section">
+  <div class="section">
     <div class="section-header">
       <h2>API Reference</h2>
       <p>Inputs y Outputs disponibles para <code>magary-select</code>.</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
-        <table>
+        <table class="api-table">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -215,6 +235,30 @@
               <td>Muestra un spinner de carga (soporta atributo HTML).</td>
             </tr>
             <tr>
+              <td><code>size</code></td>
+              <td><code>'small' | 'normal' | 'large'</code></td>
+              <td><code>'normal'</code></td>
+              <td>Tamaño visual del control.</td>
+            </tr>
+            <tr>
+              <td><code>invalid</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Marca el control como inválido y activa estado de error.</td>
+            </tr>
+            <tr>
+              <td><code>error</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>Mensaje de error mostrado debajo del select.</td>
+            </tr>
+            <tr>
+              <td><code>helpText</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>Texto de ayuda cuando no hay error.</td>
+            </tr>
+            <tr>
               <td><code>filter</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
@@ -232,4 +276,3 @@
     </div>
   </div>
 </div>
-

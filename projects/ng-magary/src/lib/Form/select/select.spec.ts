@@ -99,6 +99,27 @@ describe('MagarySelect behavior', () => {
     expect(component.isOpen()).toBe(false);
   });
 
+  it('supports Home/End shortcuts from closed state', () => {
+    fixture.componentRef.setInput('options', ['Alpha', 'Beta', 'Gamma']);
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.querySelector(
+      '.magary-select-container',
+    ) as HTMLElement;
+
+    root.dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
+    fixture.detectChanges();
+
+    expect(component.isOpen()).toBe(true);
+    expect(component.activeIndex()).toBe(2);
+
+    root.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+
+    expect(component.value()).toBe('Gamma');
+    expect(component.isOpen()).toBe(false);
+  });
+
   it('updates aria-activedescendant while navigating options', () => {
     fixture.componentRef.setInput('options', ['One', 'Two', 'Three']);
     fixture.detectChanges();
@@ -175,6 +196,28 @@ describe('MagarySelect behavior', () => {
 
     expect(component.value()).toBeNull();
     expect(emitted).toEqual([null]);
+  });
+
+  it('sets aria-invalid and renders error/help messages with priority to error', () => {
+    fixture.componentRef.setInput('helpText', 'Pick one item');
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.querySelector(
+      '.magary-select-container',
+    ) as HTMLElement;
+    expect(root.getAttribute('aria-invalid')).toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('.help-message')?.textContent?.trim(),
+    ).toBe('Pick one item');
+
+    fixture.componentRef.setInput('invalid', true);
+    fixture.componentRef.setInput('error', 'Invalid option');
+    fixture.detectChanges();
+
+    expect(root.getAttribute('aria-invalid')).toBe('true');
+    expect(
+      fixture.nativeElement.querySelector('.error-message')?.textContent,
+    ).toContain('Invalid option');
   });
 });
 

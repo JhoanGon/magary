@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  booleanAttribute,
   Component,
   computed,
   input,
@@ -39,6 +40,10 @@ export class MagarySpeedDial {
   readonly radius = input<number>(80);
   readonly showMask = input<boolean>(false);
   readonly background = input<string | null>(null);
+  readonly triggerSize = input<number>(56);
+  readonly itemSize = input<number>(40);
+  readonly itemGap = input<number>(64);
+  readonly closeOnItemSelect = input(true, { transform: booleanAttribute });
   readonly ariaLabel = input<string>('Speed dial menu');
   readonly isOpen = signal(false);
   readonly speedDialToggle = output<boolean>();
@@ -52,12 +57,24 @@ export class MagarySpeedDial {
       this.direction() ? `direction-${this.direction()}` : '',
     ].filter(Boolean),
   );
-  readonly triggerStyles = computed(() =>
-    this.background() ? { '--trigger-bg': this.background() } : null,
-  );
+  readonly triggerStyles = computed(() => {
+    const styles: Record<string, string> = {
+      '--speed-dial-trigger-size': `${this.triggerSize()}px`,
+      '--speed-dial-item-size': `${this.itemSize()}px`,
+      '--speed-dial-item-gap': `${this.itemGap()}px`,
+    };
+
+    if (this.background()) {
+      styles['--trigger-bg'] = this.background() as string;
+    }
+
+    return styles;
+  });
   readonly itemsStyles = computed(() => ({
     '--item-count': this.itemCount().toString(),
     '--radius': `${this.radius()}px`,
+    '--speed-dial-item-size': `${this.itemSize()}px`,
+    '--speed-dial-item-gap': `${this.itemGap()}px`,
   }));
   readonly currentIcon = computed(() =>
     this.isOpen() ? this.activeIcon() : this.icon(),
@@ -77,9 +94,29 @@ export class MagarySpeedDial {
     if (item.command) {
       item.command(event);
     }
-    this.isOpen.set(false);
-    this.speedDialToggle.emit(false);
+    if (this.closeOnItemSelect()) {
+      this.isOpen.set(false);
+      this.speedDialToggle.emit(false);
+    }
   }
+
+  itemTransitionDelay(index: number): string {
+    const itemTotal = this.itemCount();
+    if (itemTotal <= 1) {
+      return '0ms';
+    }
+
+    const openStep = this.type() === 'linear' ? 34 : 26;
+    const closeStep = this.type() === 'linear' ? 22 : 16;
+
+    if (this.isOpen()) {
+      return `${index * openStep}ms`;
+    }
+
+    const reverseIndex = itemTotal - 1 - index;
+    return `${Math.max(reverseIndex, 0) * closeStep}ms`;
+  }
+
   closeMask(): void {
     this.isOpen.set(false);
     this.speedDialToggle.emit(false);

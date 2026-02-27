@@ -93,4 +93,25 @@ describe('MagarySlider behavior', () => {
     component.onTouchEnd(endEvent);
     expect(component.dragging()).toBe(false);
   });
+
+  it('supports keyboard interaction on slider handle', () => {
+    component.writeValue(10);
+    fixture.detectChanges();
+
+    const slideEndEvents: Array<{
+      originalEvent?: Event;
+      value: number | number[] | null;
+    }> = [];
+    component.onSlideEnd.subscribe((event) => slideEndEvents.push(event));
+
+    component.onHandleKeydown(
+      new KeyboardEvent('keydown', { key: 'ArrowRight' }),
+      0,
+    );
+    fixture.detectChanges();
+
+    expect(component.value()).toBe(11);
+    expect(slideEndEvents).toHaveLength(1);
+    expect(slideEndEvents[0].value).toBe(11);
+  });
 });

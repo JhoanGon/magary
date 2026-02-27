@@ -10,7 +10,7 @@
     'magary-inputnumber-buttons-horizontal':
       showButtons() && buttonLayout() === 'horizontal',
     'magary-inputnumber-focused': focused(),
-    'magary-disabled': disabled(),
+    'magary-disabled': isDisabled(),
   }"
   [style]="style()"
   [attr.data-mode]="buttonLayout()"
@@ -24,7 +24,7 @@
     [attr.size]="size()"
     [attr.maxlength]="maxlength()"
     [attr.tabindex]="tabindex()"
-    [disabled]="disabled()"
+    [disabled]="isDisabled()"
     [readonly]="readonly()"
     [value]="formattedValue()"
     (input)="onUserInput($event)"
@@ -43,7 +43,7 @@
         type="button"
         class="magary-inputnumber-button magary-inputnumber-button-up"
         [ngClass]="incrementButtonClass()"
-        [disabled]="disabled() || (max() !== null && value()! >= max()!)"
+        [disabled]="isDisabled() || (max() !== null && value()! >= max()!)"
         (click)="spin($event, 1)"
         tabindex="-1"
       >
@@ -56,7 +56,7 @@
         type="button"
         class="magary-inputnumber-button magary-inputnumber-button-down"
         [ngClass]="decrementButtonClass()"
-        [disabled]="disabled() || (min() !== null && value()! <= min()!)"
+        [disabled]="isDisabled() || (min() !== null && value()! <= min()!)"
         (click)="spin($event, -1)"
         tabindex="-1"
       >
@@ -75,7 +75,7 @@
       type="button"
       class="magary-inputnumber-button magary-inputnumber-button-down"
       [ngClass]="decrementButtonClass()"
-      [disabled]="disabled() || (min() !== null && value()! <= min()!)"
+      [disabled]="isDisabled() || (min() !== null && value()! <= min()!)"
       (click)="spin($event, -1)"
       tabindex="-1"
     >
@@ -90,7 +90,7 @@
       type="button"
       class="magary-inputnumber-button magary-inputnumber-button-up"
       [ngClass]="incrementButtonClass()"
-      [disabled]="disabled() || (max() !== null && value()! >= max()!)"
+      [disabled]="isDisabled() || (max() !== null && value()! >= max()!)"
       (click)="spin($event, 1)"
       tabindex="-1"
     >

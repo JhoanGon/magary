@@ -1,4 +1,13 @@
 :host {
+  --split-button-bg: var(--primary-500, #3b82f6);
+  --split-button-text: var(--surface-0, #ffffff);
+  --split-button-separator: rgba(255, 255, 255, 0.22);
+  --split-button-overlay-bg: color-mix(in srgb, var(--split-button-bg) 86%, #000 14%);
+  --split-button-focus-ring: var(--primary-400, #22d3ee);
+  --split-button-menu-bg: var(--surface-0, #fff);
+  --split-button-menu-text: var(--text-primary, #334155);
+  --split-button-menu-border: var(--surface-200, #e2e8f0);
+  --split-button-menu-hover: var(--surface-100, #f1f5f9);
   display: inline-block;
   position: relative;
   font-family: var(--font-family, inherit);
@@ -9,10 +18,10 @@
   display: inline-flex;
   align-items: stretch;
   border-radius: var(--border-radius, 6px);
-  background-color: var(--primary-500, #3b82f6);
-  color: #fff;
+  background-color: var(--split-button-bg);
+  color: var(--split-button-text);
   transition: all 0.2s;
-  border: 1px solid transparent; // For outlined support later if needed, or to match sizing
+  border: 1px solid transparent;
 
   &.disabled {
     opacity: 0.6;
@@ -20,41 +29,63 @@
     cursor: default;
   }
 
-  // Severities
-  &.p-button-secondary { background-color: var(--surface-500, #64748b); }
-  &.p-button-success { background-color: var(--success, #10b981); }
-  &.p-button-info { background-color: var(--info, #3b82f6); } // Usually same as primary but explicit
-  &.p-button-warning { background-color: var(--warning, #f59e0b); }
-  &.p-button-help { background-color: var(--help, #8b5cf6); }
-  &.p-button-danger { background-color: var(--danger, #ef4444); }
+  &.severity-primary { --split-button-bg: var(--primary-500, #3b82f6); }
+  &.severity-secondary { --split-button-bg: var(--surface-500, #64748b); }
+  &.severity-success { --split-button-bg: var(--success, #10b981); }
+  &.severity-info { --split-button-bg: var(--info, #0ea5e9); }
+  &.severity-warning {
+    --split-button-bg: var(--warning, #f59e0b);
+    --split-button-text: var(--surface-900, #0f172a);
+    --split-button-separator: rgba(15, 23, 42, 0.18);
+  }
+  &.severity-help { --split-button-bg: var(--help, #8b5cf6); }
+  &.severity-danger { --split-button-bg: var(--danger, #ef4444); }
 
-  // Sizes
+  // Backward compatibility aliases
+  &.p-button-secondary { --split-button-bg: var(--surface-500, #64748b); }
+  &.p-button-success { --split-button-bg: var(--success, #10b981); }
+  &.p-button-info { --split-button-bg: var(--info, #0ea5e9); }
+  &.p-button-warning {
+    --split-button-bg: var(--warning, #f59e0b);
+    --split-button-text: var(--surface-900, #0f172a);
+    --split-button-separator: rgba(15, 23, 42, 0.18);
+  }
+  &.p-button-help { --split-button-bg: var(--help, #8b5cf6); }
+  &.p-button-danger { --split-button-bg: var(--danger, #ef4444); }
+
+  &.size-sm,
   &.p-button-sm {
-    .default-button, .dropdown-trigger {
+    .default-button,
+    .dropdown-trigger {
       padding: 0.5rem 0.75rem;
       font-size: 0.875rem;
     }
-    .default-button .button-icon, .dropdown-trigger lucide-icon {
+    .default-button .button-icon,
+    .dropdown-trigger lucide-icon {
       width: 1rem;
       height: 1rem;
     }
   }
 
+  &.size-lg,
   &.p-button-lg {
-    .default-button, .dropdown-trigger {
+    .default-button,
+    .dropdown-trigger {
       padding: 1rem 1.25rem;
       font-size: 1.25rem;
     }
-    .default-button .button-icon, .dropdown-trigger lucide-icon {
+    .default-button .button-icon,
+    .dropdown-trigger lucide-icon {
       width: 1.5rem;
       height: 1.5rem;
     }
   }
 }
 
-.default-button, .dropdown-trigger {
+.default-button,
+.dropdown-trigger {
   border: none;
-  background: transparent; // Parent has bg
+  background: transparent;
   color: inherit;
   cursor: pointer;
   display: flex;
@@ -67,7 +98,7 @@
   outline: none;
 
   &:focus-visible {
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 0 0 4px var(--primary-500);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.35), 0 0 0 4px var(--split-button-focus-ring);
     z-index: 1;
   }
 }
@@ -75,10 +106,10 @@
 .default-button {
   border-top-left-radius: var(--border-radius, 6px);
   border-bottom-left-radius: var(--border-radius, 6px);
-  border-right: 1px solid rgba(255, 255, 255, 0.2); // Separator
+  border-right: 1px solid var(--split-button-separator);
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--split-button-overlay-bg);
   }
 
   .button-icon {
@@ -94,7 +125,7 @@
   padding: 0.75rem;
   
   &:hover, &.active {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--split-button-overlay-bg);
   }
 
   lucide-icon {
@@ -112,20 +143,45 @@
   margin-top: 0.5rem;
   min-width: 12rem; // Ensure it's not too small
   max-width: min(90vw, 20rem);
-  background: var(--surface-0, #fff);
-  color: var(--text-primary, #333);
+  background: var(--split-button-menu-bg);
+  color: var(--split-button-menu-text);
   border-radius: var(--border-radius, 6px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   z-index: 1000;
   overflow: hidden;
   animation: scaleIn 0.15s ease-out forwards;
   transform-origin: top left;
-  border: 1px solid var(--surface-200, #e5e7eb);
+  border: 1px solid var(--split-button-menu-border);
+
+  &.align-end {
+    left: auto;
+    right: 0;
+    transform-origin: top right;
+  }
 
   ul {
     list-style: none;
     padding: 0.25rem 0;
     margin: 0;
+    max-height: min(18rem, 55vh);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-400, #94a3b8) transparent;
+  }
+
+  ul::-webkit-scrollbar {
+    width: 0.55rem;
+  }
+
+  ul::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ul::-webkit-scrollbar-thumb {
+    background: var(--surface-400, #94a3b8);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
   }
 
   li {
@@ -151,7 +207,7 @@
 
     &:hover:not(:disabled),
     &:focus-visible {
-      background-color: var(--surface-100, #f3f4f6);
+      background-color: var(--split-button-menu-hover);
       outline: none;
     }
 
@@ -197,6 +253,17 @@
 @media (max-width: 480px) {
   .split-button-menu .menu-item-button {
     padding: 0.75rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magary-split-button,
+  .default-button,
+  .dropdown-trigger,
+  .split-button-menu,
+  .split-button-menu .menu-item-button {
+    transition: none !important;
+    animation: none !important;
   }
 }
 

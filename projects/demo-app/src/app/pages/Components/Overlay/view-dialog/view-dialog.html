@@ -49,6 +49,12 @@
             header="Basic Dialog"
             [(visible)]="visible"
             width="min(90vw, 48rem)"
+            [backgroundColor]="demoDialogBackground"
+            [headerBackground]="demoDialogBackground"
+            [contentBackground]="demoDialogBackground"
+            [footerBackground]="demoDialogBackground"
+            [showBorder]="false"
+            [showSectionBorders]="false"
             [dismissableMask]="true"
             [resizable]="true"
             [draggable]="false"
@@ -118,6 +124,12 @@
             [(visible)]="visibleModal"
             [modal]="true"
             width="min(90vw, 48rem)"
+            [backgroundColor]="demoDialogBackground"
+            [headerBackground]="demoDialogBackground"
+            [contentBackground]="demoDialogBackground"
+            [footerBackground]="demoDialogBackground"
+            [showBorder]="false"
+            [showSectionBorders]="false"
             [dismissableMask]="false"
             [draggable]="false"
           >
@@ -176,6 +188,12 @@
             [draggable]="true"
             [modal]="false"
             width="min(92vw, 32rem)"
+            [backgroundColor]="demoDialogBackground"
+            [headerBackground]="demoDialogBackground"
+            [contentBackground]="demoDialogBackground"
+            [footerBackground]="demoDialogBackground"
+            [showBorder]="false"
+            [showSectionBorders]="false"
           >
             <p>
               Este diálogo se puede arrastrar desde el encabezado. Nota que
@@ -209,6 +227,12 @@
             [(visible)]="visibleResize"
             [resizable]="true"
             width="min(92vw, 40rem)"
+            [backgroundColor]="demoDialogBackground"
+            [headerBackground]="demoDialogBackground"
+            [contentBackground]="demoDialogBackground"
+            [footerBackground]="demoDialogBackground"
+            [showBorder]="false"
+            [showSectionBorders]="false"
             [style]="{ minHeight: '300px' }"
             [draggable]="false"
           >
@@ -243,6 +267,12 @@
             [(visible)]="visiblePos"
             position="right"
             width="min(92vw, 32rem)"
+            [backgroundColor]="demoDialogBackground"
+            [headerBackground]="demoDialogBackground"
+            [contentBackground]="demoDialogBackground"
+            [footerBackground]="demoDialogBackground"
+            [showBorder]="false"
+            [showSectionBorders]="false"
             [draggable]="false"
             [glass]="true"
           >
@@ -278,6 +308,12 @@
             [(visible)]="visibleGlass"
             [glass]="true"
             width="min(92vw, 36rem)"
+            [backgroundColor]="demoDialogBackground"
+            [headerBackground]="demoDialogBackground"
+            [contentBackground]="demoDialogBackground"
+            [footerBackground]="demoDialogBackground"
+            [showBorder]="false"
+            [showSectionBorders]="false"
             [draggable]="false"
           >
             <p>
@@ -368,6 +404,12 @@
                 [modal]="false"
                 appendTo="local"
                 width="300px"
+                [backgroundColor]="demoDialogBackground"
+                [headerBackground]="demoDialogBackground"
+                [contentBackground]="demoDialogBackground"
+                [footerBackground]="demoDialogBackground"
+                [showBorder]="false"
+                [showSectionBorders]="false"
                 styleClass="absolute-dialog-demo"
               >
                 <p>Soy libre, pero solo dentro de este contenedor.</p>
@@ -530,7 +572,37 @@
               <td><code>backgroundColor</code></td>
               <td><code>string</code></td>
               <td><code>undefined</code></td>
-              <td>Color de fondo personalizado del diálogo.</td>
+              <td>Color de fondo personalizado del dialogo.</td>
+            </tr>
+            <tr>
+              <td><code>headerBackground</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Color de fondo del encabezado.</td>
+            </tr>
+            <tr>
+              <td><code>contentBackground</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Color de fondo del contenido.</td>
+            </tr>
+            <tr>
+              <td><code>footerBackground</code></td>
+              <td><code>string</code></td>
+              <td><code>undefined</code></td>
+              <td>Color de fondo del footer.</td>
+            </tr>
+            <tr>
+              <td><code>showBorder</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Muestra u oculta el borde externo del dialogo.</td>
+            </tr>
+            <tr>
+              <td><code>showSectionBorders</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Muestra u oculta las lineas separadoras entre header, content y footer.</td>
             </tr>
             <tr>
               <td><code>glass</code></td>
@@ -547,4 +619,3 @@
     </div>
   </div>
 </div>
-

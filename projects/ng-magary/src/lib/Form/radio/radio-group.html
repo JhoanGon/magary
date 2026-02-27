@@ -2,6 +2,10 @@
   class="magary-radio-group"
   [class.vertical]="layout() === 'vertical'"
   [class.horizontal]="layout() === 'horizontal'"
+  [class.disabled]="isDisabled()"
+  role="radiogroup"
+  [attr.aria-label]="groupAriaLabel()"
+  [attr.aria-disabled]="isDisabled()"
 >
   @for (option of options(); track $index) {
     <magary-radio
@@ -10,7 +14,7 @@
       [label]="getOptionLabel(option)"
       [ngModel]="value()"
       (ngModelChange)="onRadioChange($event)"
-      [disabled]="disabled()"
+      [disabled]="isDisabled()"
     ></magary-radio>
   }
 </div>

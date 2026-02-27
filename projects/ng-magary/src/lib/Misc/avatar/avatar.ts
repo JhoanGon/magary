@@ -1,6 +1,7 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import {
   Component,
+  OnDestroy,
   input,
   output,
   signal,
@@ -29,7 +30,9 @@ import { LucideAngularModule } from 'lucide-angular';
   styleUrl: './avatar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MagaryAvatar {
+export class MagaryAvatar implements OnDestroy {
+  private isDestroyed = false;
+
   public label = input<string>();
   public image = input<string>();
   public icon = input<string>();
@@ -100,7 +103,7 @@ export class MagaryAvatar {
     this.imageError.set(false);
   }
   onAvatarClick(): void {
-    if (this.disabled() || this.loading()) return;
+    if (this.isDestroyed || this.disabled() || this.loading()) return;
     this.avatarClick.emit({
       type: 'avatar',
       data: {
@@ -111,7 +114,7 @@ export class MagaryAvatar {
     });
   }
   onBadgeClick(event: Event): void {
-    if (this.disabled() || this.loading()) return;
+    if (this.isDestroyed || this.disabled() || this.loading()) return;
     event.stopPropagation();
     this.avatarClick.emit({
       type: 'badge',
@@ -120,5 +123,9 @@ export class MagaryAvatar {
         severity: this.badgeSeverity(),
       },
     });
+  }
+
+  ngOnDestroy(): void {
+    this.isDestroyed = true;
   }
 }

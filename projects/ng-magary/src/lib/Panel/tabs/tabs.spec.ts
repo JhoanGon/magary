@@ -18,6 +18,27 @@ class TabsHostComponent {
   tabsComponent = viewChild.required<MagaryTabs>('tabs');
 }
 
+@Component({
+  standalone: true,
+  imports: [MagaryTabs, MagaryTab],
+  template: `
+    <magary-tabs
+      #tabs
+      [lineColor]="'#22d3ee'"
+      [hoverBg]="'#1e293b'"
+      [activeBg]="'#334155'"
+      [activeText]="'#f8fafc'"
+      [backgroundLine]="'#d946ef'"
+      [activeTabBackground]="'#0f172a'"
+      [activeTabTextColor]="'#e2e8f0'"
+    >
+      <magary-tab label="One">One</magary-tab>
+      <magary-tab label="Two">Two</magary-tab>
+    </magary-tabs>
+  `,
+})
+class TabsThemingHostComponent {}
+
 describe('MagaryTabs behavior', () => {
   let fixture: ComponentFixture<TabsHostComponent>;
   let host: TabsHostComponent;
@@ -144,5 +165,72 @@ describe('MagaryTabs behavior', () => {
 
     expect(host.tabsComponent().activeIndex()).toBe(1);
     expect(tabButtons[1].classList.contains('active')).toBe(true);
+    expect(tabButtons[1].getAttribute('tabindex')).toBe('0');
+    expect(tabButtons[0].getAttribute('tabindex')).toBe('-1');
+    expect(document.activeElement).toBe(tabButtons[1]);
+  });
+
+  it('supports Home/End keyboard navigation and wraps correctly', () => {
+    const tabButtons = fixture.nativeElement.querySelectorAll(
+      '.tab-headers button',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    tabButtons[0].focus();
+    tabButtons[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
+    fixture.detectChanges();
+    expect(host.tabsComponent().activeIndex()).toBe(2);
+
+    tabButtons[2].dispatchEvent(new KeyboardEvent('keydown', { key: 'Home' }));
+    fixture.detectChanges();
+    expect(host.tabsComponent().activeIndex()).toBe(0);
+
+    tabButtons[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'End' }));
+    fixture.detectChanges();
+    expect(host.tabsComponent().activeIndex()).toBe(2);
+  });
+
+  it('activates focused tab with Space key', () => {
+    const tabButtons = fixture.nativeElement.querySelectorAll(
+      '.tab-headers button',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    tabButtons[2].focus();
+    tabButtons[2].dispatchEvent(new KeyboardEvent('keydown', { key: ' ' }));
+    fixture.detectChanges();
+
+    expect(host.tabsComponent().activeIndex()).toBe(2);
+    expect(tabButtons[2].classList.contains('active')).toBe(true);
+  });
+});
+
+describe('MagaryTabs theming inputs', () => {
+  let fixture: ComponentFixture<TabsThemingHostComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TabsThemingHostComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TabsThemingHostComponent);
+    fixture.detectChanges();
+  });
+
+  it('maps new theming inputs and keeps legacy aliases compatible', () => {
+    const tabHeaders = fixture.nativeElement.querySelector(
+      '.tab-headers',
+    ) as HTMLElement;
+
+    expect(tabHeaders.style.getPropertyValue('--magary-tabs-hover-bg')).toBe(
+      '#1e293b',
+    );
+    expect(tabHeaders.style.getPropertyValue('--magary-tabs-line-color')).toBe(
+      '#d946ef',
+    );
+    expect(tabHeaders.style.getPropertyValue('--magary-tabs-active-bg')).toBe(
+      '#0f172a',
+    );
+    expect(tabHeaders.style.getPropertyValue('--magary-tabs-active-color')).toBe(
+      '#e2e8f0',
+    );
   });
 });

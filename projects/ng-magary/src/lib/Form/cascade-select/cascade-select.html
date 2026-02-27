@@ -1,58 +1,111 @@
-<div
-  class="magary-cascade-select"
-  [class.disabled]="disabled()"
-  [class.open]="isOpen()"
-  [style.width]="width()"
-  (click)="toggle()"
->
-  <div class="select-trigger">
-    <span class="select-label" [class.placeholder]="!value()">
-      {{ selectedLabel() }}
-    </span>
-    <lucide-icon name="chevron-down" class="select-icon"></lucide-icon>
+<div class="magary-cascade-field" [style.width]="width()">
+  <div
+    [id]="triggerId"
+    class="magary-cascade-select"
+    [class.disabled]="disabled()"
+    [class.loading]="loading()"
+    [class.invalid]="hasError()"
+    [class.open]="isOpen()"
+    [class.size-small]="size() === 'small'"
+    [class.size-normal]="size() === 'normal'"
+    [class.size-large]="size() === 'large'"
+    role="combobox"
+    [attr.tabindex]="isInteractionDisabled() ? -1 : 0"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-disabled]="isInteractionDisabled()"
+    [attr.aria-label]="resolvedAriaLabel()"
+    [attr.aria-controls]="listboxId"
+    [attr.aria-activedescendant]="activeDescendantId()"
+    [attr.aria-invalid]="hasError() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    (click)="toggle()"
+    (keydown)="onTriggerKeydown($event)"
+  >
+    <div class="select-trigger">
+      <span class="select-label" [class.placeholder]="!value()">
+        {{ selectedLabel() }}
+      </span>
+      @if (loading()) {
+        <lucide-icon name="loader" class="select-icon spin"></lucide-icon>
+      } @else {
+        <lucide-icon name="chevron-down" class="select-icon"></lucide-icon>
+      }
+    </div>
+
+    @if (isOpen()) {
+      <div
+        #panel
+        class="select-panel"
+        (click)="$event.stopPropagation()"
+        (keydown)="onPanelKeydown($event)"
+        tabindex="-1"
+      >
+        <ul class="select-list" role="listbox" [id]="listboxId">
+          <ng-template #optionTemplate let-items let-parentPath="parentPath" let-depth="depth">
+            @for (option of items; track $index) {
+              @let optionPath = createPath(parentPath, $index);
+              @let optionChildren = getOptionChildren(option);
+              <li
+                class="select-item"
+                [class.group]="isOptionGroup(option)"
+                [class.active]="isPathActive(optionPath)"
+                [class.expanded]="isGroupExpanded(optionPath)"
+                [class.selectable]="isSelectableOption(option)"
+                [class.selected]="getOptionValue(option) === value()"
+                [id]="getOptionId(optionPath)"
+                role="option"
+                [attr.aria-selected]="getOptionValue(option) === value()"
+                [style.padding-inline-start.rem]="0.75 + depth * 0.75"
+                (mouseenter)="onOptionMouseEnter(option, optionPath)"
+                (click)="selectOption(option, $event, optionPath)"
+              >
+                <div class="item-content">
+                  <span>{{ getOptionLabel(option) }}</span>
+                  @if (isOptionGroup(option)) {
+                    <lucide-icon
+                      name="chevron-right"
+                      class="group-icon"
+                    ></lucide-icon>
+                  }
+                </div>
+
+                @if (isOptionGroup(option) && optionChildren && optionChildren.length > 0) {
+                  <div class="submenu" [class.open]="isGroupExpanded(optionPath)">
+                    <ul class="select-list" role="listbox">
+                      <ng-container
+                        *ngTemplateOutlet="
+                          optionTemplate;
+                          context: { $implicit: optionChildren, parentPath: optionPath, depth: depth + 1 }
+                        "
+                      ></ng-container>
+                    </ul>
+                  </div>
+                }
+              </li>
+            }
+          </ng-template>
+
+          @if (options().length > 0) {
+            <ng-container
+              *ngTemplateOutlet="optionTemplate; context: { $implicit: options(), parentPath: [], depth: 0 }"
+            ></ng-container>
+          } @else {
+            <li class="empty-message">No options available</li>
+          }
+        </ul>
+      </div>
+    }
   </div>
 
-  @if (isOpen()) {
-    <div class="select-panel" (click)="$event.stopPropagation()">
-      <ul class="select-list">
-        <ng-template #optionTemplate let-items>
-          @for (option of items; track $index) {
-            <li
-              class="select-item"
-              [class.group]="isOptionGroup(option)"
-              [class.selected]="getOptionValue(option) === value()"
-              (click)="selectOption(option, $event)"
-            >
-              <div class="item-content">
-                <span>{{ getOptionLabel(option) }}</span>
-                @if (isOptionGroup(option)) {
-                  <lucide-icon
-                    name="chevron-right"
-                    class="group-icon"
-                  ></lucide-icon>
-                }
-              </div>
-
-              @if (isOptionGroup(option)) {
-                <div class="submenu">
-                  <ul class="select-list">
-                    <ng-container
-                      *ngTemplateOutlet="
-                        optionTemplate;
-                        context: { $implicit: getOptionChildren(option) }
-                      "
-                    ></ng-container>
-                  </ul>
-                </div>
-              }
-            </li>
-          }
-        </ng-template>
-
-        <ng-container
-          *ngTemplateOutlet="optionTemplate; context: { $implicit: options() }"
-        ></ng-container>
-      </ul>
-    </div>
+  @if (hasError()) {
+    <span class="cascade-message error-message" [id]="errorMessageId" role="alert">
+      <lucide-icon name="circle-alert" [size]="16"></lucide-icon>
+      {{ errorMessage() }}
+    </span>
+  } @else if (helpText().trim().length > 0) {
+    <span class="cascade-message help-message" [id]="helpMessageId">
+      {{ helpText() }}
+    </span>
   }
 </div>

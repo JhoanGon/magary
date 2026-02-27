@@ -485,4 +485,151 @@
       </div>
     </div>
   </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Propiedades (Inputs)</h2>
+      <p>Principales propiedades disponibles en <code>magary-carousel</code>.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Por Defecto</th>
+              <th>Descripcion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>value</code></td>
+              <td><code>unknown[]</code></td>
+              <td><code>[]</code></td>
+              <td>Items que renderiza el carrusel.</td>
+            </tr>
+            <tr>
+              <td><code>numVisible</code></td>
+              <td><code>number</code></td>
+              <td><code>1</code></td>
+              <td>Cantidad de items visibles.</td>
+            </tr>
+            <tr>
+              <td><code>numScroll</code></td>
+              <td><code>number</code></td>
+              <td><code>1</code></td>
+              <td>Cantidad de items por desplazamiento.</td>
+            </tr>
+            <tr>
+              <td><code>circular</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Activa navegacion circular.</td>
+            </tr>
+            <tr>
+              <td><code>responsiveOptions</code></td>
+              <td><code>CarouselResponsiveOptions[]</code></td>
+              <td><code>[]</code></td>
+              <td>Configuracion responsive por breakpoints.</td>
+            </tr>
+            <tr>
+              <td><code>indicatorStyle</code></td>
+              <td><code>CarouselIndicatorStyle</code></td>
+              <td><code>'dots'</code></td>
+              <td>Estilo de indicadores (dots, lines, fraction, etc.).</td>
+            </tr>
+            <tr>
+              <td><code>navPosition</code></td>
+              <td><code>CarouselNavPosition</code></td>
+              <td><code>'default'</code></td>
+              <td>Posicion de los navegadores.</td>
+            </tr>
+            <tr>
+              <td><code>autoplayInterval</code></td>
+              <td><code>number</code></td>
+              <td><code>0</code></td>
+              <td>Intervalo en ms para autoplay (0 desactiva).</td>
+            </tr>
+            <tr>
+              <td><code>showNavigators</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Muestra botones de anterior/siguiente.</td>
+            </tr>
+            <tr>
+              <td><code>showIndicators</code></td>
+              <td><code>boolean</code></td>
+              <td><code>true</code></td>
+              <td>Muestra indicadores de pagina.</td>
+            </tr>
+            <tr>
+              <td><code>effect</code></td>
+              <td><code>CarouselEffect</code></td>
+              <td><code>'slide'</code></td>
+              <td>Efecto de transicion.</td>
+            </tr>
+            <tr>
+              <td><code>transitionDuration</code></td>
+              <td><code>number</code></td>
+              <td><code>300</code></td>
+              <td>Duracion de la animacion en ms.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Eventos (Outputs)</h2>
+      <p>Eventos emitidos por el componente.</p>
+    </div>
+    <div class="section-content">
+      <div class="table-wrapper">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Descripcion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>pageChange</code></td>
+              <td><code>number</code></td>
+              <td>Se emite cuando cambia la pagina activa.</td>
+            </tr>
+            <tr>
+              <td><code>slideChange</code></td>
+              <td><code>CarouselSlideEvent&lt;T&gt;</code></td>
+              <td>Se emite antes del cambio de slide.</td>
+            </tr>
+            <tr>
+              <td><code>slideChanged</code></td>
+              <td><code>CarouselSlideEvent&lt;T&gt;</code></td>
+              <td>Se emite despues del cambio de slide.</td>
+            </tr>
+            <tr>
+              <td><code>itemClick</code></td>
+              <td><code>&#123; item: T; index: number &#125;</code></td>
+              <td>Se emite al hacer click sobre un item.</td>
+            </tr>
+            <tr>
+              <td><code>autoplayStart</code></td>
+              <td><code>void</code></td>
+              <td>Se emite cuando inicia autoplay.</td>
+            </tr>
+            <tr>
+              <td><code>autoplayStop</code></td>
+              <td><code>void</code></td>
+              <td>Se emite cuando se detiene autoplay.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

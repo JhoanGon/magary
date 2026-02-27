@@ -49,7 +49,6 @@ describe('Sidebar behavior', () => {
 
   afterEach(() => {
     document.body.style.overflow = '';
-    fixture.destroy();
   });
 
   it('opens and closes mobile sidebar from hamburger and backdrop', () => {

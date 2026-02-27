@@ -275,7 +275,34 @@ export class ViewSpeedDial {
             description:
               'Color de fondo del botón disparador. Acepta valores HEX, RGB o nombres de colores.',
           },
+                    {
+            name: 'triggerSize',
+            type: 'number',
+            default: '56',
+            description:
+              'Tamano (px) del boton principal que abre/cierra el speed dial.',
+          },
           {
+            name: 'itemSize',
+            type: 'number',
+            default: '40',
+            description:
+              'Tamano (px) de los botones de accion secundarios.',
+          },
+          {
+            name: 'itemGap',
+            type: 'number',
+            default: '64',
+            description:
+              'Separacion (px) entre el boton principal y cada item en disposiciones lineales.',
+          },
+          {
+            name: 'closeOnItemSelect',
+            type: 'boolean',
+            default: 'true',
+            description:
+              'Si es false, mantiene abierto el menu despues de seleccionar una accion.',
+          },{
             name: 'ariaLabel',
             type: 'string',
             default: "'Speed dial menu'",
@@ -454,3 +481,4 @@ export class ViewSpeedDial {
     return section.codeExamples || [];
   }
 }
+

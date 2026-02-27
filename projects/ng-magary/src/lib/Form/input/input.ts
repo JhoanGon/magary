@@ -6,7 +6,7 @@
   output,
   signal,
   model,
-  linkedSignal,
+  effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -68,15 +68,19 @@ export class MagaryInput {
 
   private focused = signal(false);
 
-  // Use linkedSignal to reset password visibility when type changes
-  private showPassword = linkedSignal({
-    source: this.type,
-    computation: () => false,
-  });
+  private showPassword = signal(false);
 
   private readonly uniqueId = `magary-input-${Math.random().toString(36).substring(2, 11)}`;
   readonly errorMessageId = `${this.uniqueId}-error`;
   readonly helpMessageId = `${this.uniqueId}-help`;
+
+  constructor() {
+    // Keep password visibility in sync with input type changes.
+    effect(() => {
+      this.type();
+      this.showPassword.set(false);
+    });
+  }
 
   inputClasses = computed(() => {
     const classes = ['magary-input-field'];

@@ -32,10 +32,6 @@ describe('MagaryTag behavior', () => {
     component = fixture.componentInstance;
   });
 
-  afterEach(() => {
-    fixture.destroy();
-  });
-
   it('renders value and icon when provided', () => {
     fixture.componentRef.setInput('value', 'Active');
     fixture.componentRef.setInput('icon', 'check');

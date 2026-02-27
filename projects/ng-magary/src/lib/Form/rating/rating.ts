@@ -9,6 +9,8 @@ import {
   inject,
   ChangeDetectorRef,
   Provider,
+  signal,
+  computed,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -31,13 +33,15 @@ export const RATING_VALUE_ACCESSOR: Provider = {
   encapsulation: ViewEncapsulation.None,
   host: {
     class: 'magary-rating',
-    '[class.magary-disabled]': 'disabled()',
+    '[class.magary-disabled]': 'isDisabled()',
     '[class.magary-readonly]': 'readonly()',
   },
 })
 export class MagaryRating implements ControlValueAccessor {
   // Inputs
   disabled = input<boolean>(false);
+  private readonly formDisabled = signal(false);
+  readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
   readonly = input<boolean>(false);
   stars = input<number>(5);
   cancel = input<boolean>(true);
@@ -66,7 +70,7 @@ export class MagaryRating implements ControlValueAccessor {
   }
 
   rate(event: Event, i: number) {
-    if (this.readonly() || this.disabled()) {
+    if (this.readonly() || this.isDisabled()) {
       return;
     }
 
@@ -77,7 +81,7 @@ export class MagaryRating implements ControlValueAccessor {
   }
 
   clear(event: Event) {
-    if (this.readonly() || this.disabled()) {
+    if (this.readonly() || this.isDisabled()) {
       return;
     }
 
@@ -101,12 +105,7 @@ export class MagaryRating implements ControlValueAccessor {
     this.onModelTouched = fn;
   }
 
-  setDisabledState(_val: boolean): void {
-    // We use signal inputs generally, but for CVA directive compatibility we should handle this.
-    // However, signals are read-only from here.
-    // We can just rely on the template binding to `disabled()` input if used as component input,
-    // but `setDisabledState` strictly comes from forms API.
-    // For now, let's assume usage via [disabled] input binding for simplicity in standalone signals world
-    // or we would need a separate signal for formDisabled state combined with input disabled.
+  setDisabledState(val: boolean): void {
+    this.formDisabled.set(val);
   }
 }

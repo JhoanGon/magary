@@ -1,11 +1,14 @@
 :host {
-  --speed-dial-trigger-size: 3.5rem; // 56px default but let's stick to rem for scalability, or maybe reduce to 3rem (48px) for 'sleeker'
-  --speed-dial-item-size: 2.5rem; // 40px
-  --speed-dial-item-gap: 4rem; // Slight adjustment
-  --speed-dial-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  --speed-dial-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1); // Softer shadow
+  --speed-dial-trigger-size: 3.5rem;
+  --speed-dial-item-size: 2.5rem;
+  --speed-dial-item-gap: 4rem;
+  --speed-dial-open-duration: 0.26s;
+  --speed-dial-close-duration: 0.22s;
+  --speed-dial-ease-open: cubic-bezier(0.16, 1, 0.3, 1);
+  --speed-dial-ease-close: cubic-bezier(0.4, 0, 0.2, 1);
+  --speed-dial-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1);
   --speed-dial-shadow-item: 0 2px 8px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
-  --speed-dial-mask-bg: rgba(0, 0, 0, 0.3); // Lighter mask
+  --speed-dial-mask-bg: rgba(0, 0, 0, 0.3);
   background: transparent;
   display: inline-block;
   z-index: 1000;
@@ -18,8 +21,8 @@
   z-index: 1000;
 
   &.is-open .trigger-button {
-    transform: rotate(45deg);
-    background-color: var(--surface-800); // Change color on open? Optional.
+    transform: scale(1.015);
+    background-color: var(--trigger-bg, var(--surface-700));
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   }
 }
@@ -28,7 +31,6 @@
   width: var(--speed-dial-trigger-size);
   height: var(--speed-dial-trigger-size);
   border-radius: 50%;
-  // Fallback to surface-700 if --trigger-bg is not set (matching action buttons)
   background-color: var(--trigger-bg, var(--surface-700));
   color: var(--surface-0);
   border: none;
@@ -39,17 +41,22 @@
   justify-content: center;
   font-size: 1.5rem;
   z-index: 1001;
-  transition: var(--speed-dial-transition);
+  transition:
+    transform 0.24s var(--speed-dial-ease-open),
+    background-color 0.24s var(--speed-dial-ease-open),
+    box-shadow 0.24s var(--speed-dial-ease-open);
   outline: none;
   position: relative;
   line-height: 0; // Fix alignment
   
-  // Ripple effect simulation or hover state
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.03);
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-    // Darken slightly on hover if using default
-    background-color: var(--trigger-bg, var(--surface-600));
+    background-color: color-mix(
+      in srgb,
+      var(--trigger-bg, var(--surface-700)) 88%,
+      #000 12%
+    );
   }
 
   &:active {
@@ -57,7 +64,7 @@
   }
 
   &:focus-visible {
-     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+     box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-400, #22d3ee) 40%, transparent);
   }
 
   lucide-icon {
@@ -73,7 +80,7 @@
   inset: 0;
   background: var(--speed-dial-mask-bg);
   z-index: 998;
-  backdrop-filter: blur(2px); // Glassmorphism touch
+  backdrop-filter: blur(2px);
   transition: opacity 0.3s;
 }
 
@@ -96,18 +103,17 @@
     left: 0;
     width: var(--speed-dial-item-size);
     height: var(--speed-dial-item-size);
-    /* 
-       We need to center the items relative to the 0x0 container which is at the center of the trigger.
-       The items should be centered on their own coordinate. 
-       Margin negative half to center.
-    */
     margin-top: calc(var(--speed-dial-item-size) * -0.5);
     margin-left: calc(var(--speed-dial-item-size) * -0.5);
 
     transform-origin: center;
-    transition: transform var(--speed-dial-transition), opacity var(--speed-dial-transition);
+    will-change: transform, opacity;
+    transition-property: transform, opacity;
+    transition-duration: var(--speed-dial-close-duration), var(--speed-dial-close-duration);
+    transition-timing-function: var(--speed-dial-ease-close), ease-out;
     opacity: 0;
-    transform: scale(0); // Start scaled down
+    transform: translate3d(0, 0, 0) scale(0.78);
+    backface-visibility: hidden;
     
     display: flex;
     align-items: center;
@@ -118,9 +124,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    // surface-700 provides high contrast: Dark in light mode, Light in dark/colored modes.
     background-color: var(--surface-700); 
-    // surface-0 provides the opposing contrast: Light in light mode, Dark in dark/colored modes.
     color: var(--surface-0);
     border: none;
     box-shadow: var(--speed-dial-shadow-item);
@@ -129,14 +133,16 @@
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    transition: all 0.2s;
+    transition:
+      transform 0.2s var(--speed-dial-ease-open),
+      background-color 0.2s var(--speed-dial-ease-open),
+      box-shadow 0.2s var(--speed-dial-ease-open);
     outline: none;
     line-height: 0;
 
     &:hover:not(:disabled) {
-      // Use surface-600 for hover (slightly lighter/darker depending on theme direction)
       background-color: var(--surface-600);
-      transform: scale(1.1);
+      transform: scale(1.06);
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     
@@ -169,11 +175,6 @@
     pointer-events: none;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     
-    // Positioning depends on direction, handled simpler:
-    // Default to left for vertical lists? Or dynamic?
-    // For now, keep it simplistic or use the direction attribute if possible.
-    // Let's assume right side for vertical lists, top for horizontal... 
-    // Actually, generic positioning:
     top: 50%;
     left: auto; 
     right: 125%; // Left of the button
@@ -187,20 +188,15 @@
   }
 }
 
-// Open State
 .is-open .speed-dial-items {
   pointer-events: auto;
 
   li {
     opacity: 1;
-    // Transform is set by inline styles/classes per direction, 
-    // BUT we need to ensure scale is 1
-    // The specific transforms below overwrite scale(0).
-    // We must include scale(1) in the calculated transforms.
+    transition-duration: var(--speed-dial-open-duration), 0.18s;
+    transition-timing-function: var(--speed-dial-ease-open), ease-out;
   }
 
-  // WE NEED TO UPDATE THE TRANSFORMS TO INCLUDE SCALE(1)
-  
   &[data-direction="up"] li {
     transform: translateY(calc(var(--speed-dial-item-gap) * (var(--i) + 1) * -1)) scale(1);
   }
@@ -214,9 +210,6 @@
     transform: translateX(calc(var(--speed-dial-item-gap) * (var(--i) + 1))) scale(1);
   }
 
-  // Circle / Semicircle logic
-  // Just append scale(1) to existing logic
-  
   .item-circle {
     --angle: calc(var(--i) * (360deg / var(--item-count)));
     transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1);
@@ -242,7 +235,6 @@
      transform: rotate(calc(var(--angle) - 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) - 90deg) * -1)) scale(1);
   }
 
-  // Quarter circle
   &[data-direction="up-right"] .item-quartercircle {
     --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
     transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1);
@@ -261,13 +253,24 @@
   }
 }
 
-// Media Queries for Responsiveness
 @media (max-width: 768px) {
   :host {
-    --speed-dial-trigger-size: 3rem; // 48px
-    --speed-dial-item-size: 2.25rem; // 36px
+    --speed-dial-trigger-size: 3rem;
+    --speed-dial-item-size: 2.25rem;
     --speed-dial-item-gap: 3.5rem;
   }
   .trigger-button { font-size: 1.25rem; }
   .speed-dial-items .action-button { font-size: 0.9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .speed-dial-container,
+  .trigger-button,
+  .speed-dial-items li,
+  .speed-dial-items .action-button,
+  .speed-dial-mask,
+  .action-tooltip {
+    transition: none !important;
+    animation: none !important;
+  }
 }

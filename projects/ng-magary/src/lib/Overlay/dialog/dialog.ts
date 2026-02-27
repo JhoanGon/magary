@@ -97,6 +97,11 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     | 'bottom-right'
   >('center');
   backgroundColor = input<string | undefined>(undefined);
+  headerBackground = input<string | undefined>(undefined);
+  contentBackground = input<string | undefined>(undefined);
+  footerBackground = input<string | undefined>(undefined);
+  showBorder = input(true, { transform: booleanAttribute });
+  showSectionBorders = input(true, { transform: booleanAttribute });
   glass = input(false, { transform: booleanAttribute });
 
   // Outputs
@@ -127,6 +132,7 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
   private startHeight = 0;
   private activeDragPointerId: number | null = null;
   private activeResizePointerId: number | null = null;
+  private destroyed = false;
 
   // Listeners
   private documentPointerMoveListener: (() => void) | null = null;
@@ -184,6 +190,7 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     // But we should unblock scroll just in case.
     this.cancelInteractions();
     this.unblockBodyScroll();
+    this.destroyed = true;
   }
 
   // --- Public Methods ---
@@ -258,13 +265,13 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
   }
 
   handleDialogAnimationStart(event: AnimationEvent) {
-    if (event.toState !== 'void') {
+    if (!this.destroyed && event.toState !== 'void') {
       this.onShow.emit(event);
     }
   }
 
   handleDialogAnimationDone(event: AnimationEvent) {
-    if (event.toState === 'void') {
+    if (!this.destroyed && event.toState === 'void') {
       this.onHide.emit(event);
     }
   }

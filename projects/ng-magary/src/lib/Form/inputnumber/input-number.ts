@@ -11,6 +11,7 @@ import {
   input,
   model,
   effect,
+  computed,
   Provider,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -86,6 +87,8 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
   maxlength = input<number | null>(null);
   tabindex = input<number | null>(null);
   disabled = input<boolean>(false);
+  private readonly formDisabled = signal(false);
+  readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
   readonly = input<boolean>(false);
   name = input<string>('');
   inputId = input<string>('');
@@ -381,11 +384,6 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
   }
 
   setDisabledState(val: boolean): void {
-    // Handled by signal input usually, but CVA calls are directive-driven
-    // We can't write to signal input easily?
-    // Actually Angular signal inputs are readonly from inside.
-    // We need a separate internal state or just rely on 'disabled' attribute binding if using template driven.
-    // But implementation needs to handle disabled via CVA.
-    // We will just use the input binding for now.
+    this.formDisabled.set(val);
   }
 }

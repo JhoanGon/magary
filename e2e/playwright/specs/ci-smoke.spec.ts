@@ -243,10 +243,56 @@ test.describe('ci smoke', () => {
     await expect(trigger).toContainText('Select a city');
 
     await trigger.click();
-    const firstOption = page.locator('.select-item').first();
+    const overlay = page.locator('.cdk-overlay-container .select-overlay').first();
+    await expect(overlay).toBeVisible();
+
+    const overlayRadius = await overlay.evaluate((element) =>
+      getComputedStyle(element).borderTopLeftRadius,
+    );
+    expect(Number.parseFloat(overlayRadius)).toBeGreaterThan(0);
+
+    const firstOption = overlay.locator('.select-item').first();
     await expect(firstOption).toBeVisible();
     await firstOption.click();
 
     await expect(trigger).not.toContainText('Select a city');
+  });
+
+  test('cascade select route opens nested options and selects a leaf', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await openRoute('/components/Cascade-Select', page);
+
+    const cascade = page.locator('magary-cascade-select').first();
+    const trigger = cascade.locator('.magary-cascade-select').first();
+    await expect(trigger).toBeVisible();
+    await expect(trigger).toContainText('Selecciona una Ciudad');
+
+    await trigger.click();
+    const panel = cascade.locator('.select-panel').first();
+    await expect(panel).toBeVisible();
+
+    const panelRadius = await panel.evaluate((element) =>
+      getComputedStyle(element).borderTopLeftRadius,
+    );
+    expect(Number.parseFloat(panelRadius)).toBeGreaterThan(0);
+
+    const country = panel.locator('.select-item', { hasText: 'Australia' }).first();
+    await country.hover();
+
+    const state = panel
+      .locator('.submenu .select-item', { hasText: 'New South Wales' })
+      .first();
+    await expect(state).toBeVisible();
+    await state.hover();
+
+    const city = panel
+      .locator('.submenu .submenu .select-item', { hasText: 'Sydney' })
+      .first();
+    await expect(city).toBeVisible();
+    await city.click();
+
+    await expect(trigger).toContainText('Sydney');
   });
 });

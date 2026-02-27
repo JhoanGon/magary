@@ -16,6 +16,13 @@
     <span
       #sliderHandle
       class="magary-slider-handle"
+      role="slider"
+      [tabindex]="isDisabled() ? -1 : 0"
+      [attr.aria-label]="'Slider value'"
+      [attr.aria-orientation]="orientation()"
+      [attr.aria-valuemin]="min()"
+      [attr.aria-valuemax]="max()"
+      [attr.aria-valuenow]="getHandleAriaValue(0)"
       [ngStyle]="
         orientation() === 'horizontal'
           ? { left: handle1Pos() + '%' }
@@ -23,12 +30,21 @@
       "
       (mousedown)="onMouseDown($event, 0)"
       (touchstart)="onTouchStart($event, 0)"
+      (keydown)="onHandleKeydown($event, 0)"
+      (blur)="onHandleBlur()"
     >
     </span>
   } @else {
     <span
       #sliderHandleStart
       class="magary-slider-handle"
+      role="slider"
+      [tabindex]="isDisabled() ? -1 : 0"
+      [attr.aria-label]="'Slider range start'"
+      [attr.aria-orientation]="orientation()"
+      [attr.aria-valuemin]="min()"
+      [attr.aria-valuemax]="max()"
+      [attr.aria-valuenow]="getHandleAriaValue(0)"
       [ngStyle]="
         orientation() === 'horizontal'
           ? { left: handle1Pos() + '%' }
@@ -36,11 +52,20 @@
       "
       (mousedown)="onMouseDown($event, 0)"
       (touchstart)="onTouchStart($event, 0)"
+      (keydown)="onHandleKeydown($event, 0)"
+      (blur)="onHandleBlur()"
     >
     </span>
     <span
       #sliderHandleEnd
       class="magary-slider-handle"
+      role="slider"
+      [tabindex]="isDisabled() ? -1 : 0"
+      [attr.aria-label]="'Slider range end'"
+      [attr.aria-orientation]="orientation()"
+      [attr.aria-valuemin]="min()"
+      [attr.aria-valuemax]="max()"
+      [attr.aria-valuenow]="getHandleAriaValue(1)"
       [ngStyle]="
         orientation() === 'horizontal'
           ? { left: handle2Pos() + '%' }
@@ -48,6 +73,8 @@
       "
       (mousedown)="onMouseDown($event, 1)"
       (touchstart)="onTouchStart($event, 1)"
+      (keydown)="onHandleKeydown($event, 1)"
+      (blur)="onHandleBlur()"
     >
     </span>
   }

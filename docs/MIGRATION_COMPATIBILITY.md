@@ -41,6 +41,14 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 - `pnpm run lint`
 - `pnpm run build:lib`
 - `pnpm run build:demo`
-- `pnpm run test:unit`
+- `pnpm run test:unit:ci`
 - `pnpm run test:visual:smoke`
 - `pnpm run test:a11y:smoke`
+
+## Consumer Matrix Smoke
+- Local command:
+```bash
+pnpm run build:lib
+pnpm run check:consumer-matrix
+```
+- CI workflow: `.github/workflows/consumer-compat.yml`

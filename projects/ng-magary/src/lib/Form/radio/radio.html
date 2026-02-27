@@ -1,6 +1,6 @@
 <div
   class="magary-radio-container"
-  [class.disabled]="disabled()"
+  [class.disabled]="isDisabled()"
   [class.checked]="checked()"
   (click)="select($event)"
 >
@@ -14,7 +14,7 @@
       [attr.name]="name()"
       [attr.aria-label]="label()"
       [checked]="checked()"
-      [disabled]="disabled()"
+      [disabled]="isDisabled()"
       (focus)="onInputFocus()"
       (blur)="onInputBlur()"
       (change)="onInputChange($event)"
@@ -26,7 +26,7 @@
     <label
       [attr.for]="inputId()"
       class="radio-label"
-      [class.disabled]="disabled()"
+      [class.disabled]="isDisabled()"
     >
       {{ label() }}
     </label>

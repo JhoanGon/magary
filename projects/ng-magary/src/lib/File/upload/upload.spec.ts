@@ -36,7 +36,6 @@ describe('MagaryUpload behavior', () => {
   afterEach(() => {
     vi.useRealTimers();
     vi.restoreAllMocks();
-    fixture.destroy();
   });
 
   it('rejects files larger than maxFileSize and emits onError', () => {

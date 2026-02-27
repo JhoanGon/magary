@@ -86,6 +86,5 @@ describe('MagaryTimeline behavior', () => {
     ) as HTMLElement;
     expect(root.classList.contains('magary-timeline-horizontal')).toBe(true);
     expect(root.classList.contains('magary-timeline-top')).toBe(true);
-    altFixture.destroy();
   });
 });

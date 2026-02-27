@@ -41,7 +41,6 @@ describe('MagaryTooltip behavior', () => {
     document
       .querySelectorAll('.magary-tooltip')
       .forEach((element) => element.parentNode?.removeChild(element));
-    fixture.destroy();
   });
 
   function renderHost() {

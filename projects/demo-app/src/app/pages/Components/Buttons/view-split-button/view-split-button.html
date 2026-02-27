@@ -100,31 +100,31 @@
               <magary-split-button
                 label="Secondary"
                 [model]="saveItems"
-                styleClass="p-button-secondary"
+                severity="secondary"
               ></magary-split-button>
               <magary-split-button
                 label="Success"
                 icon="check"
                 [model]="saveItems"
-                styleClass="p-button-success"
+                severity="success"
               ></magary-split-button>
               <magary-split-button
                 label="Info"
                 icon="info"
                 [model]="saveItems"
-                styleClass="p-button-info"
+                severity="info"
               ></magary-split-button>
               <magary-split-button
                 label="Warning"
                 icon="triangle-alert"
                 [model]="saveItems"
-                styleClass="p-button-warning"
+                severity="warning"
               ></magary-split-button>
               <magary-split-button
                 label="Danger"
                 icon="x"
                 [model]="saveItems"
-                styleClass="p-button-danger"
+                severity="danger"
               ></magary-split-button>
             </div>
           </magary-card>
@@ -132,6 +132,48 @@
       </div>
       <div class="code-block">
         <pre><code [highlight]="severityCode" language="xml"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Colors Section -->
+  <div class="section">
+    <div class="section-header">
+      <h2>Colores Personalizados</h2>
+      <p>Control total de color de fondo y color de texto/iconos.</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>Custom</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div
+              style="
+                padding: 1.5rem;
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+              "
+            >
+              <magary-split-button
+                label="Custom"
+                icon="palette"
+                [model]="saveItems"
+                [backgroundColor]="'#0f766e'"
+                [textColor]="'#ecfeff'"
+              ></magary-split-button>
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="customColorsCode" language="xml"></code></pre>
       </div>
     </div>
   </div>
@@ -159,7 +201,7 @@
                 label="Small"
                 icon="minimize"
                 [model]="saveItems"
-                styleClass="p-button-sm"
+                size="sm"
               ></magary-split-button>
             </div>
           </magary-card>
@@ -198,7 +240,7 @@
                 label="Large"
                 icon="maximize"
                 [model]="saveItems"
-                styleClass="p-button-lg"
+                size="lg"
               ></magary-split-button>
             </div>
           </magary-card>

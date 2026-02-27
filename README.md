@@ -25,6 +25,13 @@ pnpm run test:visual:smoke
 pnpm run test:a11y:smoke
 ```
 
+Consumer compatibility smoke (Angular 17/19/21):
+
+```bash
+pnpm run build:lib
+pnpm run check:consumer-matrix
+```
+
 Full quality gate:
 
 ```bash

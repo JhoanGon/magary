@@ -3,40 +3,80 @@
   border-radius: var(--border-radius);
   overflow: hidden;
   background: var(--surface-0);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(15, 23, 42, 0.06));
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 .tab-headers {
   display: flex;
   border-bottom: 1px solid var(--surface-200);
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x proximity;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
   &::after {
     content: "";
     position: absolute;
-    bottom: -1px;
+    bottom: 0;
     height: var(--height-line);
-    background-color: var(--background-color-line);
+    background-color: var(
+      --magary-tabs-line-color,
+      var(--background-color-line, var(--primary-500))
+    );
     transition:
       left 0.4s ease-in-out,
       width 0.4s ease-in-out;
     left: var(--underline-left, 0);
     width: var(--underline-width, 0);
+    z-index: 2;
+    pointer-events: none;
   }
   button {
-    flex: 1;
-    padding: 1rem;
+    flex: 0 0 auto;
+    min-width: max-content;
+    padding: 0.9rem 1.1rem;
     background: none;
     border: none;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.3s;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
     z-index: 1;
     color: var(--text-secondary);
+    white-space: nowrap;
+    scroll-snap-align: center;
+
+    @media (min-width: 768px) {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
     &:hover {
-      background: var(--surface-50);
+      background: var(--magary-tabs-hover-bg, var(--surface-50));
       color: var(--text-primary);
     }
     &.active {
-      background: var(--surface-50);
-      color: var(--text-primary);
+      background: var(
+        --magary-tabs-active-bg,
+        var(--surface-50, rgba(15, 23, 42, 0.52))
+      );
+      color: var(--magary-tabs-active-color, var(--text-primary));
       height: auto; /* Removed fixed height that might break layout */
     }
 
@@ -53,6 +93,7 @@
   justify-content: var(--position-content);
   align-items: stretch;
   min-width: 0;
+  max-width: 100%;
   background: var(--background);
 
   > * {
@@ -80,5 +121,50 @@
       opacity: 1;
       transform: translateX(0);
     }
+  }
+}
+
+.tab-headers.tab-headers-show-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-400) transparent;
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--surface-400);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--surface-500);
+    background-clip: content-box;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-headers button,
+  .tab-content.animated {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .tab-headers {
+    scroll-padding-inline: 0.5rem;
+  }
+
+  .tab-headers button {
+    padding: 0.85rem 1rem;
+    font-size: 0.875rem;
   }
 }

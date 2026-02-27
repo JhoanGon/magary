@@ -126,5 +126,18 @@ describe('MagarySplitButton behavior', () => {
     expect(component.isOpen()).toBe(false);
     expect(document.activeElement).toBe(trigger);
   });
+
+  it('applies custom background and text colors through CSS variables', () => {
+    fixture.componentRef.setInput('backgroundColor', '#0f766e');
+    fixture.componentRef.setInput('textColor', '#ecfeff');
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement.querySelector(
+      '.magary-split-button',
+    ) as HTMLElement;
+
+    expect(host.style.getPropertyValue('--split-button-bg')).toBe('#0f766e');
+    expect(host.style.getPropertyValue('--split-button-text')).toBe('#ecfeff');
+  });
 });
 

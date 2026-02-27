@@ -1,4 +1,4 @@
-<div class="container">
+﻿<div class="container">
   <div class="header">
     <h1>CascadeSelect</h1>
     <p>CascadeSelect muestra una estructura anidada de opciones.</p>
@@ -8,7 +8,7 @@
   <div class="section">
     <div class="section-header">
       <h2>Importar</h2>
-      <p>Importa el componente en tu módulo o componente standalone.</p>
+      <p>Importa el componente en el componente standalone.</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -20,9 +20,9 @@
   <!-- Basic Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Uso Básico</h2>
+      <h2>Uso Basico</h2>
       <p>
-        Comportamiento estándar donde solo los nodos hoja (ciudades) son
+        Comportamiento estandar donde solo los nodos hoja (ciudades) son
         seleccionables.
       </p>
     </div>
@@ -272,6 +272,36 @@
               </td>
             </tr>
             <tr>
+              <td><code>loading</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Muestra spinner en el trigger y bloquea interacción.</td>
+            </tr>
+            <tr>
+              <td><code>size</code></td>
+              <td><code>'small' | 'normal' | 'large'</code></td>
+              <td><code>'normal'</code></td>
+              <td>Tamaño visual del control.</td>
+            </tr>
+            <tr>
+              <td><code>invalid</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>Activa estado visual de error.</td>
+            </tr>
+            <tr>
+              <td><code>error</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>Mensaje de error mostrado debajo del control.</td>
+            </tr>
+            <tr>
+              <td><code>helpText</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>Texto de ayuda cuando no hay error.</td>
+            </tr>
+            <tr>
               <td><code>width</code></td>
               <td><code>string</code></td>
               <td><code>100%</code></td>
@@ -283,4 +313,3 @@
     </div>
   </div>
 </div>
-

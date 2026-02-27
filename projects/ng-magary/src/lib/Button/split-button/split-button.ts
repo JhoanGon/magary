@@ -1,8 +1,11 @@
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   HostListener,
+  OnDestroy,
   viewChild,
   viewChildren,
   inject,
@@ -22,7 +25,7 @@ import { MenuItem } from '../../Menu/api/menu.interface'; // Use api interface
   styleUrl: './split-button.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MagarySplitButton {
+export class MagarySplitButton implements OnDestroy {
   private readonly elementRef = inject(ElementRef);
   private dropdownTriggerRef =
     viewChild<ElementRef<HTMLButtonElement>>('dropdownTrigger');
@@ -35,12 +38,49 @@ export class MagarySplitButton {
   readonly model = input<MenuItem[]>([]); // Items for the dropdown
   readonly disabled = input<boolean>(false);
   readonly styleClass = input<string>('');
+  readonly backgroundColor = input<string | null>(null);
+  readonly textColor = input<string | null>(null);
+  readonly severity = input<
+    'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'help' | 'danger'
+  >('primary');
+  readonly size = input<'sm' | 'md' | 'lg'>('md');
+  readonly menuPosition = input<'start' | 'end'>('start');
+  readonly menuAriaLabel = input<string | null>(null);
+  readonly closeOnItemSelect = input(true, { transform: booleanAttribute });
 
   // Events
   readonly onClick = output<MouseEvent>();
   readonly onDropdownClick = output<MouseEvent>();
+  readonly itemClick = output<{ item: MenuItem; originalEvent: MouseEvent }>();
 
   readonly isOpen = signal(false);
+  private pendingFocusTimeout: ReturnType<typeof setTimeout> | null = null;
+  readonly hostClasses = computed(() =>
+    [
+      'magary-split-button',
+      `severity-${this.severity()}`,
+      this.size() === 'md' ? '' : `size-${this.size()}`,
+      this.styleClass().trim(),
+      this.disabled() ? 'disabled' : '',
+    ]
+      .filter(Boolean)
+      .join(' '),
+  );
+  readonly hostStyles = computed<Record<string, string>>(() => {
+    const styles: Record<string, string> = {};
+    const backgroundColor = this.backgroundColor()?.trim();
+    const textColor = this.textColor()?.trim();
+
+    if (backgroundColor) {
+      styles['--split-button-bg'] = backgroundColor;
+    }
+
+    if (textColor) {
+      styles['--split-button-text'] = textColor;
+    }
+
+    return styles;
+  });
 
   toggleDropdown(event: MouseEvent): void {
     if (this.disabled()) return;
@@ -120,13 +160,16 @@ export class MagarySplitButton {
       return;
     }
 
+    this.itemClick.emit({ item, originalEvent: event });
+
     // Execute command if exists
     if (item.command) {
       item.command({ originalEvent: event, item: item });
     }
 
-    // Close dropdown
-    this.closeDropdown();
+    if (this.closeOnItemSelect()) {
+      this.closeDropdown();
+    }
   }
 
   @HostListener('document:click', ['$event'])
@@ -143,6 +186,13 @@ export class MagarySplitButton {
   onEscape(): void {
     if (this.isOpen()) {
       this.closeDropdown(true);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.pendingFocusTimeout !== null) {
+      clearTimeout(this.pendingFocusTimeout);
+      this.pendingFocusTimeout = null;
     }
   }
 
@@ -178,7 +228,13 @@ export class MagarySplitButton {
     };
 
     if (defer) {
-      setTimeout(focus);
+      if (this.pendingFocusTimeout !== null) {
+        clearTimeout(this.pendingFocusTimeout);
+      }
+      this.pendingFocusTimeout = setTimeout(() => {
+        this.pendingFocusTimeout = null;
+        focus();
+      });
       return;
     }
 

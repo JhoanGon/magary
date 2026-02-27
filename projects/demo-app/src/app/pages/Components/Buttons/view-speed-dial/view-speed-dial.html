@@ -115,51 +115,56 @@
         }
 
         @if (section.type === "table") {
-          @if (section.tableData?.length) {
-            <div style="overflow-x: auto">
-              <table class="api-table">
+          @if (section.id === "properties" && section.tableData?.length) {
+            <div class="table-wrapper">
+              <table class="api-table api-table-properties">
                 <thead>
                   <tr>
-                    @if (section.id === "properties") {
-                      <th>Nombre</th>
-                      <th>Tipo</th>
-                      <th>Valor por Defecto</th>
-                    }
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Valor por Defecto</th>
                     <th>Descripción</th>
-                    @if (section.id === "events") {
-                      <th>Nombre</th>
-                      <th>Tipo</th>
-                    }
                   </tr>
                 </thead>
                 <tbody>
                   @for (row of section.tableData; track $index) {
                     <tr>
-                      @if (section.id === "properties") {
-                        <td>
-                          <code>{{ row.name }}</code>
-                        </td>
-                        <td>
-                          <code>{{ row.type }}</code>
-                        </td>
-                        <td>
-                          <code>{{ row.default }}</code>
-                        </td>
-                        <td>
-                          <code>{{ row.description }}</code>
-                        </td>
-                      }
-                      @if (section.id === "events") {
-                        <td>
-                          <code>{{ row.description }}</code>
-                        </td>
-                        <td>
-                          <code>{{ row.name }}</code>
-                        </td>
-                        <td>
-                          <code>{{ row.type }}</code>
-                        </td>
-                      }
+                      <td>
+                        <code>{{ row.name }}</code>
+                      </td>
+                      <td>
+                        <code>{{ row.type }}</code>
+                      </td>
+                      <td>
+                        <code>{{ row.default }}</code>
+                      </td>
+                      <td>{{ row.description }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+          @if (section.id === "events" && section.tableData?.length) {
+            <div class="table-wrapper">
+              <table class="api-table api-table-events">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (row of section.tableData; track $index) {
+                    <tr>
+                      <td>
+                        <code>{{ row.name }}</code>
+                      </td>
+                      <td>
+                        <code>{{ row.type }}</code>
+                      </td>
+                      <td>{{ row.description }}</td>
                     </tr>
                   }
                 </tbody>

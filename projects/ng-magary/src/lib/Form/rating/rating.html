@@ -2,7 +2,7 @@
   <div
     class="magary-rating-item magary-rating-cancel"
     (click)="clear($event)"
-    [class.magary-hidden]="disabled()"
+    [class.magary-hidden]="isDisabled()"
   >
     <lucide-icon [name]="iconCancel()" [size]="20"></lucide-icon>
   </div>

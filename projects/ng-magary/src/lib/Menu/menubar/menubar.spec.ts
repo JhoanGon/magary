@@ -18,7 +18,6 @@ describe('MagaryMenubar routing behavior', () => {
   });
 
   afterEach(() => {
-    fixture.destroy();
   });
 
   it('does not prevent default when route alias is provided', () => {
