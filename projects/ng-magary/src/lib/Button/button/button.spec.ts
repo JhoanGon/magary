@@ -117,5 +117,55 @@ describe('MagaryButton behavior', () => {
     fixture.detectChanges();
     expect(button.getAttribute('aria-label')).toBe('Button');
   });
+
+  it('supports text variant, icon-only mode and left icon position', () => {
+    fixture.componentRef.setInput('icon', 'arrow-left');
+    fixture.componentRef.setInput('variant', 'text');
+    fixture.componentRef.setInput('size', 'small');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
+
+    expect(button.classList.contains('p-button-text')).toBe(true);
+    expect(button.classList.contains('p-button-small')).toBe(true);
+    expect(button.classList.contains('p-button-icon-only')).toBe(true);
+
+    fixture.componentRef.setInput('label', 'Back');
+    fixture.detectChanges();
+    expect(button.classList.contains('p-button-icon-only')).toBe(false);
+    expect(button.classList.contains('p-button-icon-left')).toBe(true);
+    expect(button.classList.contains('p-button-icon-right')).toBe(false);
+  });
+
+  it('uses rounded default radius and custom background style', () => {
+    fixture.componentRef.setInput('customBackgroundColor', '#123456');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
+
+    expect(button.style.borderRadius).toBe('8px');
+    expect(button.style.background).toBe('rgb(18, 52, 86)');
+  });
+
+  it('trims aria inputs and falls back to icon-derived label', () => {
+    fixture.componentRef.setInput('ariaLabel', '   ');
+    fixture.componentRef.setInput('label', '   ');
+    fixture.componentRef.setInput('icon', 'user_check');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
+
+    expect(button.getAttribute('aria-label')).toBe('user check button');
+
+    fixture.componentRef.setInput('icon', undefined);
+    fixture.detectChanges();
+    expect(button.getAttribute('aria-label')).toBe('Button');
+  });
 });
 

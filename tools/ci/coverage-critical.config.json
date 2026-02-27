@@ -1,0 +1,26 @@
+{
+  "thresholds": {
+    "lines": 90,
+    "branches": 85
+  },
+  "projects": [
+    {
+      "name": "ng-magary-critical",
+      "summary": "coverage/ng-magary/coverage-summary.json",
+      "files": [
+        "projects/ng-magary/src/lib/Panel/tabs/tab/tab.ts",
+        "projects/ng-magary/src/lib/Panel/toolbar/toolbar.ts",
+        "projects/ng-magary/src/lib/Services/theme.service.ts"
+      ]
+    },
+    {
+      "name": "demo-app-critical",
+      "summary": "coverage/demo-app/coverage-summary.json",
+      "files": [
+        "projects/demo-app/src/app/layout/layout.ts",
+        "projects/demo-app/src/app/layout/service/pwa.service.ts",
+        "projects/demo-app/src/app/components/theme-switcher/theme-switcher.component.ts"
+      ]
+    }
+  ]
+}

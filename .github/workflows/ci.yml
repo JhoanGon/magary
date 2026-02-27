@@ -223,6 +223,11 @@ jobs:
           set -o pipefail
           pnpm run test:unit:ci 2>&1 | tee "$REPORT_DIR/unit.log"
 
+      - name: Critical coverage gate (lines >= 90, branches >= 85)
+        run: |
+          set -o pipefail
+          pnpm run test:coverage:critical 2>&1 | tee "$REPORT_DIR/coverage-critical.log"
+
       - name: Write failure report
         if: failure()
         run: |

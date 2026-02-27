@@ -63,4 +63,21 @@ describe('MagaryTab behavior', () => {
     expect(tabElement.id).toBe('profile-panel');
     expect(tabElement.getAttribute('aria-labelledby')).toBe('profile-tab');
   });
+
+  it('removes panel id and labelledby attributes when values are cleared', () => {
+    host.tab().panelId.set('temp-panel');
+    host.tab().labelledBy.set('temp-label');
+    fixture.detectChanges();
+
+    host.tab().panelId.set('');
+    host.tab().labelledBy.set('');
+    fixture.detectChanges();
+
+    const tabElement = fixture.nativeElement.querySelector(
+      'magary-tab',
+    ) as HTMLElement;
+
+    expect(tabElement.getAttribute('id')).toBeNull();
+    expect(tabElement.getAttribute('aria-labelledby')).toBeNull();
+  });
 });
