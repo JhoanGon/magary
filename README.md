@@ -54,6 +54,17 @@ This is the README shipped in `dist/ng-magary` during publish.
 - `docs/RECIPE_LOGISTICS.md`
 - `docs/RECIPE_DASHBOARD.md`
 
+## Third-Party Compliance
+
+- `THIRD_PARTY_NOTICES.md`
+- `third_party/licenses/`
+
+Validation command:
+
+```bash
+pnpm run check:third-party
+```
+
 ## Tooltip Global Styles
 
 `magaryTooltip` renders overlays in `document.body`, so consumers must load global styles:

@@ -16,7 +16,7 @@ Target package: `ng-magary@0.0.11`
 
 1. Install peer dependencies:
 ```bash
-pnpm add ng-magary @angular/cdk @angular/animations gridstack lucide-angular lucide
+pnpm add ng-magary @angular/cdk @angular/animations @atlaskit/pragmatic-drag-and-drop gridstack lucide-angular lucide
 ```
 
 2. Enable animations provider:
@@ -66,6 +66,7 @@ Recommended consumer actions:
 
 - `pnpm run check:api-contract`
 - `pnpm run check:no-any`
+- `pnpm run check:third-party`
 - `pnpm run lint`
 - `pnpm run build:lib`
 - `pnpm run build:demo`

@@ -1,4 +1,4 @@
-<div class="orderlist-controls">
+<div class="orderlist-controls" *ngIf="showControls()">
   <magary-button
     type="button"
     icon="chevrons-up"
@@ -42,7 +42,9 @@
   <ul class="orderlist-list" [ngStyle]="listStyle()">
     <li
       *ngFor="let item of value(); let i = index"
+      #orderListItem
       class="orderlist-item"
+      [class.orderlist-item-drag-enabled]="dragDrop()"
       [class.selected]="selection().includes(item)"
       (click)="onItemClick($event, item, i)"
     >

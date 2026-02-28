@@ -65,6 +65,11 @@ jobs:
           set -o pipefail
           pnpm run check:no-any 2>&1 | tee "$REPORT_DIR/check-no-any.log"
 
+      - name: Third-party compliance gate
+        run: |
+          set -o pipefail
+          pnpm run check:third-party 2>&1 | tee "$REPORT_DIR/check-third-party.log"
+
       - name: Lint
         run: |
           set -o pipefail

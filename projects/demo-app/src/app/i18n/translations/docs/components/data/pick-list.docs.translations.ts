@@ -8,7 +8,15 @@ export const PICK_LIST_DOC_TEXT = {
     'components.data.pickList.import.title': 'Importar',
     'components.data.pickList.import.desc':
       'Importa el componente en tu modulo o componente standalone.',
-    'components.data.pickList.basic.title': 'Uso Basico',
+    'components.data.pickList.basic.title': 'Uso Básico',
+    'components.data.pickList.basic.desc':
+      'PickList estandar con controles y drag-and-drop habilitados por defecto.',
+    'components.data.pickList.buttonsOnly.title': 'Solo Botones',
+    'components.data.pickList.buttonsOnly.desc':
+      'La función Drag and Drop del PickList se puede deshabilitar usando la propiedad dragDrop.',
+    'components.data.pickList.noControls.title': 'Sin Controles',
+    'components.data.pickList.noControls.desc':
+      'Los botones de transferencia pueden ser ocultados de forma independiente estableciendo las propiedades showSourceControls y showTargetControls como false.',
     'components.data.pickList.sourceHeader': 'Disponibles',
     'components.data.pickList.targetHeader': 'Seleccionados',
     'components.data.pickList.apiInputs.title': 'Propiedades (Inputs)',
@@ -24,6 +32,12 @@ export const PICK_LIST_DOC_TEXT = {
       'Texto del encabezado de la lista origen.',
     'components.data.pickList.apiInputs.targetHeader.desc':
       'Texto del encabezado de la lista destino.',
+    'components.data.pickList.apiInputs.dragDrop.desc':
+      'Habilita la capacidad de arrastrar y soltar (Pragmatic DND) para reordenar y transferir elementos.',
+    'components.data.pickList.apiInputs.showSourceControls.desc':
+      'Determina si se muestran los botones de transferencia en el sentido Fuente -> Destino.',
+    'components.data.pickList.apiInputs.showTargetControls.desc':
+      'Determina si se muestran los botones de transferencia en el sentido Destino -> Fuente.',
     'components.data.pickList.apiInputs.sourceStyle.desc':
       'Estilo inline para la lista origen.',
     'components.data.pickList.apiInputs.targetStyle.desc':
@@ -49,6 +63,14 @@ export const PICK_LIST_DOC_TEXT = {
     'components.data.pickList.import.desc':
       'Import the component in your module or standalone component.',
     'components.data.pickList.basic.title': 'Basic Usage',
+    'components.data.pickList.basic.desc':
+      'Standard PickList with buttons and drag-and-drop enabled by default.',
+    'components.data.pickList.buttonsOnly.title': 'Buttons Only',
+    'components.data.pickList.buttonsOnly.desc':
+      'The PickList drag and drop functionality can be disabled using the dragDrop property.',
+    'components.data.pickList.noControls.title': 'No Controls',
+    'components.data.pickList.noControls.desc':
+      'Transfer buttons can be hidden separately applying showSourceControls and showTargetControls properties as false.',
     'components.data.pickList.sourceHeader': 'Available',
     'components.data.pickList.targetHeader': 'Selected',
     'components.data.pickList.apiInputs.title': 'Properties (Inputs)',
@@ -64,6 +86,12 @@ export const PICK_LIST_DOC_TEXT = {
       'Header text for the source list.',
     'components.data.pickList.apiInputs.targetHeader.desc':
       'Header text for the target list.',
+    'components.data.pickList.apiInputs.dragDrop.desc':
+      'Enables Pragmatic Drag and Drop functionality to reorder and transfer items.',
+    'components.data.pickList.apiInputs.showSourceControls.desc':
+      'Whether to show the transfer buttons pushing from source to target.',
+    'components.data.pickList.apiInputs.showTargetControls.desc':
+      'Whether to show the transfer buttons pushing from target to source.',
     'components.data.pickList.apiInputs.sourceStyle.desc':
       'Inline style for source list.',
     'components.data.pickList.apiInputs.targetStyle.desc':

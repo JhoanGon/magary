@@ -23,6 +23,10 @@ describe('MagaryOrderList behavior', () => {
   let component: MagaryOrderList;
 
   const items = [{ label: 'A' }, { label: 'B' }, { label: 'C' }];
+  const dragHarness = (instance: MagaryOrderList) =>
+    instance as unknown as {
+      reorderFromDrag: (sourceIndex: number, targetIndex: number) => void;
+    };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -99,5 +103,31 @@ describe('MagaryOrderList behavior', () => {
 
     component.moveBottom();
     expect(component.value().map((item) => item.label)).toEqual(['A', 'B', 'C']);
+  });
+
+  it('reorders by drag indices and emits onReorder', () => {
+    const orders: string[][] = [];
+    component.onReorder.subscribe((list) =>
+      orders.push(list.map((item) => String(item.label ?? ''))),
+    );
+
+    dragHarness(component).reorderFromDrag(0, 2);
+
+    expect(component.value().map((item) => item.label)).toEqual(['B', 'C', 'A']);
+    expect(orders).toEqual([['B', 'C', 'A']]);
+  });
+
+  it('ignores invalid drag reorder operations', () => {
+    const orders: string[][] = [];
+    component.onReorder.subscribe((list) =>
+      orders.push(list.map((item) => String(item.label ?? ''))),
+    );
+
+    dragHarness(component).reorderFromDrag(1, 1);
+    dragHarness(component).reorderFromDrag(-1, 2);
+    dragHarness(component).reorderFromDrag(0, 9);
+
+    expect(component.value().map((item) => item.label)).toEqual(['A', 'B', 'C']);
+    expect(orders).toEqual([]);
   });
 });

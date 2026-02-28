@@ -17,6 +17,7 @@ export * from './Data/organizationchart/organizationchart-node';
 export * from './Data/picklist/picklist';
 export * from './Data/orderlist/orderlist';
 export * from './Data/dataview/dataview';
+export * from './Data/kanban/kanban';
 
 // File
 export * from './File/upload/upload';

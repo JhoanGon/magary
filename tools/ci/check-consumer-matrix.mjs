@@ -224,6 +224,7 @@ try {
         tarballPath,
         `@angular/cdk@${major}`,
         `@angular/animations@${major}`,
+        '@atlaskit/pragmatic-drag-and-drop@1.7.7',
         'lucide-angular',
         'lucide',
         'gridstack@12',

@@ -14,9 +14,9 @@ export class Installation {
   public readonly i18n = inject(DemoI18nService);
 
   readonly installCommandNpm =
-    'npm install ng-magary @angular/cdk gridstack lucide-angular lucide';
+    'npm install ng-magary @angular/cdk @angular/animations @atlaskit/pragmatic-drag-and-drop gridstack lucide-angular lucide';
   readonly installCommandPnpm =
-    'pnpm add ng-magary @angular/cdk gridstack lucide-angular lucide';
+    'pnpm add ng-magary @angular/cdk @angular/animations @atlaskit/pragmatic-drag-and-drop gridstack lucide-angular lucide';
 
   readonly appConfigIcons = `// app.config.ts
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';

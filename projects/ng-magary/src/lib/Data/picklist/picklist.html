@@ -1,9 +1,11 @@
 <div class="picklist-list-wrapper source-wrapper">
   <div class="picklist-header" *ngIf="sourceHeader()">{{ sourceHeader() }}</div>
-  <ul class="picklist-list" [ngStyle]="sourceStyle()" tabindex="0">
+  <ul #sourceList class="picklist-list" [ngStyle]="sourceStyle()" tabindex="0">
     <li
       *ngFor="let item of source()"
+      #sourceItem
       class="picklist-item"
+      [class.picklist-item-drag-enabled]="dragDrop()"
       [class.selected]="selectedSource().includes(item)"
       (click)="onSourceItemClick($event, item)"
     >
@@ -17,7 +19,7 @@
   </ul>
 </div>
 
-<div class="picklist-buttons">
+<div class="picklist-buttons" *ngIf="showSourceControls() || showTargetControls()">
   <magary-button
     type="button"
     icon="chevrons-right"
@@ -62,10 +64,12 @@
 
 <div class="picklist-list-wrapper target-wrapper">
   <div class="picklist-header" *ngIf="targetHeader()">{{ targetHeader() }}</div>
-  <ul class="picklist-list" [ngStyle]="targetStyle()" tabindex="0">
+  <ul #targetList class="picklist-list" [ngStyle]="targetStyle()" tabindex="0">
     <li
       *ngFor="let item of target()"
+      #targetItem
       class="picklist-item"
+      [class.picklist-item-drag-enabled]="dragDrop()"
       [class.selected]="selectedTarget().includes(item)"
       (click)="onTargetItemClick($event, item)"
     >

@@ -4,6 +4,10 @@
   "lib": {
     "entryFile": "src/public-api.ts"
   },
-  "assets": ["styles/**/*.scss"],
+  "assets": [
+    "styles/**/*.scss",
+    "THIRD_PARTY_NOTICES.md",
+    "third_party/licenses/**/*"
+  ],
   "allowedNonPeerDependencies": ["lucide-angular", "lucide"]
 }

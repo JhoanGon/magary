@@ -8,6 +8,7 @@ Libreria de componentes UI para Angular (standalone-first).
 - Requiere peer dependencies:
   - `@angular/cdk`
   - `@angular/animations`
+  - `@atlaskit/pragmatic-drag-and-drop`
   - `lucide-angular`
   - `lucide`
   - `gridstack`
@@ -17,14 +18,20 @@ Libreria de componentes UI para Angular (standalone-first).
 ### npm
 
 ```bash
-npm install ng-magary @angular/cdk @angular/animations gridstack lucide-angular lucide
+npm install ng-magary @angular/cdk @angular/animations @atlaskit/pragmatic-drag-and-drop gridstack lucide-angular lucide
 ```
 
 ### pnpm
 
 ```bash
-pnpm add ng-magary @angular/cdk @angular/animations gridstack lucide-angular lucide
+pnpm add ng-magary @angular/cdk @angular/animations @atlaskit/pragmatic-drag-and-drop gridstack lucide-angular lucide
 ```
+
+## Licencias de terceros
+
+`ng-magary` usa dependencias open source de terceros (por ejemplo `gridstack` y `@atlaskit/pragmatic-drag-and-drop`) bajo sus licencias respectivas.
+
+Consulta atribuciones y copias de licencia en el repositorio: `THIRD_PARTY_NOTICES.md` y `third_party/licenses/`.
 
 ## Configuracion minima recomendada
 

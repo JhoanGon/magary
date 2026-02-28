@@ -34,6 +34,8 @@ export const SETUP_DOC_TEXT = {
     'setup.attribution.desc':
       'Este proyecto usa y agradece el trabajo de las siguientes librerias open source:',
     'setup.attribution.gridstack': 'Funcionalidad de grid y drag and drop.',
+    'setup.attribution.pragmatic':
+      'Motor de drag and drop para interacciones de listas y componentes.',
     'setup.attribution.lucide': 'Set de iconos flexible y moderno.',
   },
   en: {
@@ -69,6 +71,8 @@ export const SETUP_DOC_TEXT = {
     'setup.attribution.desc':
       'This project uses and appreciates the work of these open-source libraries:',
     'setup.attribution.gridstack': 'Grid and drag-and-drop functionality.',
+    'setup.attribution.pragmatic':
+      'Drag-and-drop engine for list and component interactions.',
     'setup.attribution.lucide': 'Flexible and modern icon set.',
   },
 } as const satisfies Record<DemoLanguage, Record<string, string>>;

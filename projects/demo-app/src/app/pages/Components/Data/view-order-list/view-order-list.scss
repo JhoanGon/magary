@@ -157,20 +157,38 @@
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse-glow {
-  0% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.1); }
-  100% { opacity: 0.5; transform: scale(1); }
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
 }
 
 @media (max-width: 768px) {
   .header {
     padding: 2rem 1rem;
-    
+
     h1 {
       font-size: 2rem;
     }
@@ -182,21 +200,21 @@
 }
 
 .product-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    font-size: 0.9rem;
-    
-    .text-sm {
-        font-size: 0.8rem;
-    }
-    
-    .text-secondary {
-        color: var(--text-secondary);
-    }
-    
-    .font-bold {
-        font-weight: 600;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.9rem;
+
+  .text-sm {
+    font-size: 0.8rem;
+  }
+
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+
+  .font-bold {
+    font-weight: 600;
+  }
 }

@@ -4,6 +4,7 @@
   "peerDependencies": {
     "lucide-angular": ">=0.469.0 <1",
     "lucide": ">=0.469.0 <1",
+    "@atlaskit/pragmatic-drag-and-drop": ">=1.7.0 <2",
     "@angular/common": "^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
     "@angular/core": "^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",
     "@angular/animations": "^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0",

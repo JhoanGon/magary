@@ -121,6 +121,66 @@ export class ViewPickList {
       rating: 4,
     },
     {
+      id: '1000',
+      code: 'f230fh0g3',
+      name: 'Bamboo Watch',
+      description: 'Product Description',
+      image: 'bamboo-watch.jpg',
+      price: 65,
+      category: 'Accessories',
+      quantity: 24,
+      inventoryStatus: 'INSTOCK',
+      rating: 5,
+    },
+    {
+      id: '1001',
+      code: 'nvklal433',
+      name: 'Black Watch',
+      description: 'Product Description',
+      image: 'black-watch.jpg',
+      price: 72,
+      category: 'Accessories',
+      quantity: 61,
+      inventoryStatus: 'INSTOCK',
+      rating: 4,
+    },
+    {
+      id: '1002',
+      code: 'zz21cz3c1',
+      name: 'Blue Band',
+      description: 'Product Description',
+      image: 'blue-band.jpg',
+      price: 79,
+      category: 'Fitness',
+      quantity: 2,
+      inventoryStatus: 'LOWSTOCK',
+      rating: 3,
+    },
+    {
+      id: '1003',
+      code: '244wgerg2',
+      name: 'Blue T-Shirt',
+      description: 'Product Description',
+      image: 'blue-t-shirt.jpg',
+      price: 29,
+      category: 'Clothing',
+      quantity: 25,
+      inventoryStatus: 'INSTOCK',
+      rating: 5,
+    },
+    {
+      id: '1004',
+      code: 'h456wer53',
+      name: 'Bracelet',
+      description: 'Product Description',
+      image: 'bracelet.jpg',
+      price: 15,
+      category: 'Accessories',
+      quantity: 73,
+      inventoryStatus: 'INSTOCK',
+      rating: 4,
+    },
+    {
       id: '1005',
       code: 'av2231fwg',
       name: 'Brown Purse',
@@ -135,6 +195,14 @@ export class ViewPickList {
   ]);
 
   targetProducts = signal<Product[]>([]);
+
+  // Array for Example 2: No Drag Drop
+  sourceProducts2 = signal<Product[]>([...this.sourceProducts()]);
+  targetProducts2 = signal<Product[]>([]);
+
+  // Array for Example 3: Only Drag Drop (No Transfer Buttons)
+  sourceProducts3 = signal<Product[]>([...this.sourceProducts()]);
+  targetProducts3 = signal<Product[]>([]);
 
   // Config Documentation
   inputsConfig: PickListInputRow[] = [
@@ -161,6 +229,24 @@ export class ViewPickList {
       type: 'string',
       default: 'Target',
       descriptionKey: 'components.data.pickList.apiInputs.targetHeader.desc',
+    },
+    {
+      name: 'dragDrop',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.data.pickList.apiInputs.dragDrop.desc',
+    },
+    {
+      name: 'showSourceControls',
+      type: 'boolean',
+      default: 'true',
+      descriptionKey: 'components.data.pickList.apiInputs.showSourceControls.desc',
+    },
+    {
+      name: 'showTargetControls',
+      type: 'boolean',
+      default: 'true',
+      descriptionKey: 'components.data.pickList.apiInputs.showTargetControls.desc',
     },
     {
       name: 'sourceStyle',
@@ -201,21 +287,16 @@ export class ViewPickList {
     },
   ];
 
+  // Example 1: Basic View (Buttons + Drag & Drop)
   exampleTS = `
 import { Component, signal } from '@angular/core';
 import { MagaryPickList } from 'ng-magary';
 
 interface Product {
     id: string;
-    code: string;
     name: string;
-    description: string;
-    image: string;
-    price: number;
     category: string;
-    quantity: number;
-    inventoryStatus: string;
-    rating: number;
+    price: number;
 }
 
 @Component({
@@ -225,43 +306,19 @@ interface Product {
     templateUrl: './view-pick-list.html'
 })
 export class ViewPickList {
-    sourceProducts = signal<Product[]>([
-        {
-            id: '1000',
-            code: 'f230fh0g3',
-            name: 'Bamboo Watch',
-            description: 'Product Description',
-            image: 'bamboo-watch.jpg',
-            price: 65,
-            category: 'Accessories',
-            quantity: 24,
-            inventoryStatus: 'INSTOCK',
-            rating: 5
-        },
-        {
-            id: '1001',
-            code: 'nvklal433',
-            name: 'Black Watch',
-            description: 'Product Description',
-            image: 'black-watch.jpg',
-            price: 72,
-            category: 'Accessories',
-            quantity: 61,
-            inventoryStatus: 'INSTOCK',
-            rating: 4
-        }
+    sourceList = signal<Product[]>([
+        { id: '1000', name: 'Bamboo Watch', category: 'Accessories', price: 65 },
+        { id: '1001', name: 'Black Watch', category: 'Accessories', price: 72 }
     ]);
-
-    targetProducts = signal<Product[]>([]);
+    targetList = signal<Product[]>([]);
 }`;
 
   exampleHTML = `
-<magary-pick-list 
-    [source]="sourceProducts()" 
-    [target]="targetProducts()" 
-    sourceHeader="Available" 
-    targetHeader="Selected"
-    [sourceStyle]="{'height':'20rem'}" 
+<magary-pick-list
+    [(source)]="sourceList"
+    [(target)]="targetList"
+    [dragDrop]="true"
+    [sourceStyle]="{'height':'20rem'}"
     [targetStyle]="{'height':'20rem'}">
     <ng-template #itemTemplate let-product>
         <div class="product-item">
@@ -271,7 +328,91 @@ export class ViewPickList {
         </div>
     </ng-template>
 </magary-pick-list>
-  `;
+`;
+
+  // Example 2: Non-Draggable (Classic Buttons Only)
+  exampleButtonsOnlyTS = `
+import { Component, signal } from '@angular/core';
+import { MagaryPickList } from 'ng-magary';
+
+interface Product {
+    id: string;
+    name: string;
+}
+
+@Component({
+    selector: 'view-pick-list',
+    standalone: true,
+    imports: [ MagaryPickList ],
+    templateUrl: './view-pick-list.html'
+})
+export class ViewPickList {
+    sourceList = signal<Product[]>([
+        { id: '1002', name: 'Blue Band' },
+        { id: '1003', name: 'Blue T-Shirt' }
+    ]);
+    targetList = signal<Product[]>([]);
+}`;
+
+  exampleButtonsOnlyHTML = `
+<magary-pick-list
+    [(source)]="sourceList"
+    [(target)]="targetList"
+    [dragDrop]="false"
+    sourceHeader="Available"
+    targetHeader="Selected"
+    [sourceStyle]="{'height':'15rem'}"
+    [targetStyle]="{'height':'15rem'}">
+    <ng-template #itemTemplate let-product>
+        <div class="product-item">
+            <span class="font-bold">{{product.name}}</span>
+        </div>
+    </ng-template>
+</magary-pick-list>
+`;
+
+  // Example 3: Pure Drag & Drop (No Controls)
+  exampleNoControlsTS = `
+import { Component, signal } from '@angular/core';
+import { MagaryPickList } from 'ng-magary';
+
+interface Product {
+    id: string;
+    name: string;
+}
+
+@Component({
+    selector: 'view-pick-list',
+    standalone: true,
+    imports: [ MagaryPickList ],
+    templateUrl: './view-pick-list.html'
+})
+export class ViewPickList {
+    sourceList = signal<Product[]>([
+        { id: '1004', name: 'Bracelet' },
+        { id: '1005', name: 'Brown Purse' }
+    ]);
+    targetList = signal<Product[]>([]);
+}`;
+
+  exampleNoControlsHTML = `
+<magary-pick-list
+    [(source)]="sourceList"
+    [(target)]="targetList"
+    [dragDrop]="true"
+    [showSourceControls]="false"
+    [showTargetControls]="false"
+    sourceHeader="Available"
+    targetHeader="Selected"
+    [sourceStyle]="{'height':'15rem'}"
+    [targetStyle]="{'height':'15rem'}">
+    <ng-template #itemTemplate let-product>
+        <div class="product-item">
+            <span class="font-bold">{{product.name}}</span>
+        </div>
+    </ng-template>
+</magary-pick-list>
+`;
 
   importCode = `import { MagaryPickList } from 'ng-magary';`;
 }

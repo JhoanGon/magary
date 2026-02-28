@@ -19,9 +19,11 @@
   <div class="section">
     <div class="section-header">
       <h2>{{ t('components.data.pickList.basic.title') }}</h2>
+      <p>{{ t('components.data.pickList.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
+        <!-- Example 1: Basic View -->
         <magary-card
           [width]="'100%'"
           [shadow]="2"
@@ -30,12 +32,13 @@
         >
           <div style="padding: 1.5rem; display: flex; justify-content: center">
             <magary-pick-list
-              [source]="sourceProducts()"
-              [target]="targetProducts()"
+              [(source)]="sourceProducts"
+              [(target)]="targetProducts"
+              [dragDrop]="true"
               [sourceHeader]="t('components.data.pickList.sourceHeader')"
               [targetHeader]="t('components.data.pickList.targetHeader')"
-              [sourceStyle]="{ height: '20rem' }"
-              [targetStyle]="{ height: '20rem' }"
+              [sourceStyle]="{ height: '18rem' }"
+              [targetStyle]="{ height: '18rem' }"
             >
               <ng-template #itemTemplate let-product>
                 <div class="product-item">
@@ -66,6 +69,118 @@
         <magary-tab label="TS">
           <div class="code-block" style="margin-top: 0">
             <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
+          </div>
+        </magary-tab>
+      </magary-tabs>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ t('components.data.pickList.buttonsOnly.title') }}</h2>
+      <p>{{ t('components.data.pickList.buttonsOnly.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <!-- Example 2: Classic View (Buttons Only) -->
+        <magary-card
+          [width]="'100%'"
+          [shadow]="2"
+          [borderRadius]="'1rem'"
+          [backgroundColor]="'var(--surface-0)'"
+        >
+          <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <magary-pick-list
+              [(source)]="sourceProducts2"
+              [(target)]="targetProducts2"
+              [dragDrop]="false"
+              [sourceHeader]="t('components.data.pickList.sourceHeader')"
+              [targetHeader]="t('components.data.pickList.targetHeader')"
+              [sourceStyle]="{ height: '15rem' }"
+              [targetStyle]="{ height: '15rem' }"
+            >
+              <ng-template #itemTemplate let-product>
+                <div class="product-item">
+                  <div style="display: flex; flex-direction: column">
+                    <span class="font-bold">{{ product.name }}</span>
+                  </div>
+                </div>
+              </ng-template>
+            </magary-pick-list>
+          </div>
+        </magary-card>
+      </div>
+
+      <magary-tabs
+        [backgroundLine]="'#ed2c44'"
+        [positionContent]="'flex-start'"
+        [background]="'#282c34'"
+      >
+        <magary-tab label="HTML">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleButtonsOnlyHTML" language="xml"></code></pre>
+          </div>
+        </magary-tab>
+        <magary-tab label="TS">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleButtonsOnlyTS" language="typescript"></code></pre>
+          </div>
+        </magary-tab>
+      </magary-tabs>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ t('components.data.pickList.noControls.title') }}</h2>
+      <p>{{ t('components.data.pickList.noControls.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid" style="justify-content: flex-start">
+        <!-- Example 3: Strict DND (No Buttons) -->
+        <magary-card
+          [width]="'100%'"
+          [shadow]="2"
+          [borderRadius]="'1rem'"
+          [backgroundColor]="'var(--surface-0)'"
+        >
+          <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <magary-pick-list
+              [(source)]="sourceProducts3"
+              [(target)]="targetProducts3"
+              [dragDrop]="true"
+              [showSourceControls]="false"
+              [showTargetControls]="false"
+              [sourceHeader]="t('components.data.pickList.sourceHeader')"
+              [targetHeader]="t('components.data.pickList.targetHeader')"
+              [sourceStyle]="{ height: '15rem' }"
+              [targetStyle]="{ height: '15rem' }"
+            >
+              <ng-template #itemTemplate let-product>
+                <div class="product-item">
+                  <div style="display: flex; flex-direction: column">
+                    <span class="font-bold">{{ product.name }}</span>
+                  </div>
+                </div>
+              </ng-template>
+            </magary-pick-list>
+          </div>
+        </magary-card>
+      </div>
+
+      <magary-tabs
+        [backgroundLine]="'#ed2c44'"
+        [positionContent]="'flex-start'"
+        [background]="'#282c34'"
+      >
+        <magary-tab label="HTML">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleNoControlsHTML" language="xml"></code></pre>
+          </div>
+        </magary-tab>
+        <magary-tab label="TS">
+          <div class="code-block" style="margin-top: 0">
+            <pre><code [highlight]="exampleNoControlsTS" language="typescript"></code></pre>
           </div>
         </magary-tab>
       </magary-tabs>

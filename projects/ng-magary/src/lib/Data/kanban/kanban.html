@@ -1,0 +1,52 @@
+<section #kanbanRoot class="magary-kanban-board">
+  @for (column of columns(); track column.id; let colIndex = $index) {
+    <section
+      #kanbanColumnDropTarget
+      class="magary-kanban-column"
+      [attr.data-column-id]="column.id"
+    >
+      <header class="magary-kanban-column-header">
+        <ng-container
+          *ngTemplateOutlet="
+            kanbanColumnHeaderTemplate() || defaultHeaderTemplate;
+            context: { $implicit: column, index: colIndex }
+          "
+        ></ng-container>
+      </header>
+
+      <div class="magary-kanban-column-content">
+        @for (item of column.items; track getItemId(item); let itemIndex = $index) {
+          <article
+            class="magary-kanban-item"
+            [attr.data-column-id]="column.id"
+            [attr.data-item-id]="getItemId(item)"
+            [attr.data-item-index]="itemIndex"
+            [attr.data-magary-kanban-item]="true"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                kanbanItemTemplate() || defaultItemTemplate;
+                context: {
+                  $implicit: item,
+                  column: column,
+                  columnIndex: colIndex,
+                  itemIndex: itemIndex
+                }
+              "
+            ></ng-container>
+          </article>
+        }
+      </div>
+    </section>
+  }
+</section>
+
+<ng-template #defaultHeaderTemplate let-column>
+  <h4 class="magary-kanban-column-title">{{ column.title }}</h4>
+</ng-template>
+
+<ng-template #defaultItemTemplate let-item>
+  <div class="magary-kanban-item-default">
+    {{ getItemLabel(item) }}
+  </div>
+</ng-template>
