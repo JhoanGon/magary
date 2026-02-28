@@ -1,6 +1,6 @@
 {
   "name": "ng-magary",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "peerDependencies": {
     "lucide-angular": ">=0.469.0 <1",
     "lucide": ">=0.469.0 <1",
