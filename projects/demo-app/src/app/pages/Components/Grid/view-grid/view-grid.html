@@ -1,13 +1,13 @@
 <div class="container fade-in">
   <div class="header">
-    <h1>{{ t('components.grid.grid.title') }}</h1>
-    <p>{{ t('components.grid.grid.subtitle') }}</p>
+    <h1>{{ t("components.grid.grid.title") }}</h1>
+    <p>{{ t("components.grid.grid.subtitle") }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.grid.grid.import.title') }}</h2>
-      <p>{{ t('components.grid.grid.import.desc') }}</p>
+      <h2>{{ t("components.grid.grid.import.title") }}</h2>
+      <p>{{ t("components.grid.grid.import.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -18,20 +18,25 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.grid.grid.basic.title') }}</h2>
-      <p>{{ t('components.grid.grid.basic.desc') }}</p>
+      <h2>{{ t("components.grid.grid.basic.title") }}</h2>
+      <p>{{ t("components.grid.grid.basic.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <magary-grid [options]="basicOptions">
+        <magary-grid
+          [columns]="basicColumns"
+          [rowHeight]="basicRowHeight"
+          [gap]="basicGap"
+          [editable]="basicEditable"
+        >
           @for (item of basicWidgets; track $index) {
             <magary-grid-item
-              [x]="item.x"
-              [y]="item.y"
-              [w]="item.w"
-              [h]="item.h"
-              [noResize]="item.noResize"
-              [noMove]="item.noMove"
+              [col]="item.col"
+              [row]="item.row"
+              [cols]="item.cols"
+              [rows]="item.rows"
+              [resizable]="item.resizable"
+              [movable]="item.movable"
               [locked]="item.locked"
             >
               <div class="basic-item" style="background: var(--primary-500)">
@@ -60,8 +65,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.grid.grid.dashboard.title') }}</h2>
-      <p>{{ t('components.grid.grid.dashboard.desc') }}</p>
+      <h2>{{ t("components.grid.grid.dashboard.title") }}</h2>
+      <p>{{ t("components.grid.grid.dashboard.desc") }}</p>
     </div>
 
     <div class="section-content">
@@ -80,37 +85,44 @@
             icon="layout-grid"
             severity="info"
             (buttonClick)="addWidget('card')"
+            size="small"
           ></magary-button>
           <magary-button
             [label]="t('components.grid.grid.dashboard.add.table')"
             icon="table"
             severity="info"
             (buttonClick)="addWidget('table')"
+            size="small"
           ></magary-button>
           <magary-button
             [label]="t('components.grid.grid.dashboard.add.image')"
             icon="image"
             severity="info"
             (buttonClick)="addWidget('image')"
+            size="small"
           ></magary-button>
         </div>
 
-        <magary-grid [options]="dashboardOptions" (change)="onGridChange($event)">
+        <magary-grid
+          [columns]="dashboardColumns"
+          [rowHeight]="dashboardRowHeight"
+          [gap]="dashboardGap"
+          [editable]="dashboardEditable"
+          [options]="dashboardOptions"
+          (change)="onGridChange($event)"
+          (itemsChange)="onDashboardItemsChange($event)"
+        >
           @for (widget of dashboardWidgets(); track widget.id) {
-            <magary-grid-item
-              [id]="widget.id"
-              [x]="widget.x"
-              [y]="widget.y"
-              [w]="widget.w"
-              [h]="widget.h"
-            >
+            <magary-grid-item [item]="widget.item">
               <magary-card
                 [shadow]="2"
                 class="widget-card"
                 width="100%"
                 height="100%"
                 [padding]="
-                  widget.type === 'image' || widget.type === 'media' ? '0' : '1rem'
+                  widget.type === 'image' || widget.type === 'media'
+                    ? '0'
+                    : '1rem'
                 "
               >
                 @if (widget.type === "stats") {
@@ -139,11 +151,20 @@
                 }
 
                 @if (widget.type === "card") {
-                  <div class="profile-widget" style="align-items: flex-start; text-align: left; padding: 1rem">
+                  <div
+                    class="profile-widget"
+                    style="
+                      align-items: flex-start;
+                      text-align: left;
+                      padding: 1rem;
+                    "
+                  >
                     <h3>{{ widgetTitle(widget) }}</h3>
                     <p>{{ widgetContent(widget) }}</p>
                     <magary-button
-                      [label]="t('components.grid.grid.dashboard.widget.action')"
+                      [label]="
+                        t('components.grid.grid.dashboard.widget.action')
+                      "
                       size="small"
                       style="margin-top: auto"
                     ></magary-button>
@@ -159,7 +180,9 @@
                       flex-direction: column;
                     "
                   >
-                    <h4 style="margin: 0 0 1rem 0">{{ widgetTitle(widget) }}</h4>
+                    <h4 style="margin: 0 0 1rem 0">
+                      {{ widgetTitle(widget) }}
+                    </h4>
                     <div style="flex: 1; overflow: auto; min-height: 0">
                       <magary-table
                         [value]="resolveTableData(widget.data ?? [])"
@@ -203,12 +226,16 @@
                     <h4>{{ widgetTitle(widget) }}</h4>
                     <div class="action-buttons">
                       <magary-button
-                        [label]="t('components.grid.grid.dashboard.widget.option1')"
+                        [label]="
+                          t('components.grid.grid.dashboard.widget.option1')
+                        "
                         icon="check"
                         size="small"
                       ></magary-button>
                       <magary-button
-                        [label]="t('components.grid.grid.dashboard.widget.option2')"
+                        [label]="
+                          t('components.grid.grid.dashboard.widget.option2')
+                        "
                         icon="x"
                         severity="secondary"
                         size="small"
@@ -223,7 +250,12 @@
                     <div class="media-grid">
                       @for (img of widget.images; track img) {
                         <div class="media-item">
-                          <magary-image [src]="img" [preview]="true" width="100%" height="100%"></magary-image>
+                          <magary-image
+                            [src]="img"
+                            [preview]="true"
+                            width="100%"
+                            height="100%"
+                          ></magary-image>
                         </div>
                       }
                     </div>
@@ -232,7 +264,11 @@
 
                 @if (widget.type === "profile") {
                   <div class="profile-widget">
-                    <magary-avatar image="https://i.pravatar.cc/150" size="xlarge" shape="circle"></magary-avatar>
+                    <magary-avatar
+                      image="https://i.pravatar.cc/150"
+                      size="xlarge"
+                      shape="circle"
+                    ></magary-avatar>
                     <div class="profile-info">
                       <h3>{{ widgetName(widget) }}</h3>
                       <p>{{ widgetRole(widget) }}</p>
@@ -251,11 +287,25 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab [label]="t('components.grid.grid.tabs.html')">
-            <pre><code [highlight]="dashboardExample" language="html"></code></pre>
+          <magary-tab
+            [label]="t('components.grid.grid.dashboard.tabs.simpleHtml')"
+          >
+            <pre><code [highlight]="dashboardSimpleExample" language="html"></code></pre>
           </magary-tab>
-          <magary-tab [label]="t('components.grid.grid.tabs.ts')">
-            <pre><code [highlight]="dashboardTS" language="typescript"></code></pre>
+          <magary-tab
+            [label]="t('components.grid.grid.dashboard.tabs.simpleTs')"
+          >
+            <pre><code [highlight]="dashboardSimpleTS" language="typescript"></code></pre>
+          </magary-tab>
+          <magary-tab
+            [label]="t('components.grid.grid.dashboard.tabs.advancedHtml')"
+          >
+            <pre><code [highlight]="dashboardAdvancedExample" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab
+            [label]="t('components.grid.grid.dashboard.tabs.advancedTs')"
+          >
+            <pre><code [highlight]="dashboardAdvancedTS" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
       </div>
@@ -264,8 +314,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.grid.grid.gallery.title') }}</h2>
-      <p>{{ t('components.grid.grid.gallery.desc') }}</p>
+      <h2>{{ t("components.grid.grid.gallery.title") }}</h2>
+      <p>{{ t("components.grid.grid.gallery.desc") }}</p>
     </div>
 
     <div class="section-content">
@@ -306,8 +356,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.grid.grid.api.title') }}</h2>
-      <p>{{ t('components.grid.grid.api.desc') }}</p>
+      <h2>{{ t("components.grid.grid.api.title") }}</h2>
+      <p>{{ t("components.grid.grid.api.desc") }}</p>
     </div>
 
     <div class="section-content">
@@ -315,18 +365,24 @@
         <table class="api-table">
           <thead>
             <tr>
-              <th>{{ t('components.grid.grid.api.header.component') }}</th>
-              <th>{{ t('components.grid.grid.api.header.property') }}</th>
-              <th>{{ t('components.grid.grid.api.header.type') }}</th>
-              <th>{{ t('components.grid.grid.api.header.description') }}</th>
+              <th>{{ t("components.grid.grid.api.header.component") }}</th>
+              <th>{{ t("components.grid.grid.api.header.property") }}</th>
+              <th>{{ t("components.grid.grid.api.header.type") }}</th>
+              <th>{{ t("components.grid.grid.api.header.description") }}</th>
             </tr>
           </thead>
           <tbody>
             @for (row of apiRows; track row.component + row.property) {
               <tr>
-                <td><code>{{ row.component }}</code></td>
-                <td><code>{{ row.property }}</code></td>
-                <td><code>{{ row.type }}</code></td>
+                <td>
+                  <code>{{ row.component }}</code>
+                </td>
+                <td>
+                  <code>{{ row.property }}</code>
+                </td>
+                <td>
+                  <code>{{ row.type }}</code>
+                </td>
                 <td>{{ t(row.descriptionKey) }}</td>
               </tr>
             }

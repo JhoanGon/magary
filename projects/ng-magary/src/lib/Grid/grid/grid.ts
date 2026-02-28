@@ -16,6 +16,17 @@ export interface MagaryGridEvent {
   items: GridStackNode[];
 }
 
+export interface MagaryGridLayoutItem {
+  id?: string;
+  col: number;
+  row: number;
+  cols: number;
+  rows: number;
+  movable: boolean;
+  resizable: boolean;
+  locked: boolean;
+}
+
 @Component({
   selector: 'magary-grid',
   standalone: true,
@@ -28,12 +39,20 @@ export class MagaryGrid implements AfterViewInit, OnDestroy {
   gridStackContainer =
     viewChild.required<ElementRef<HTMLDivElement>>('gridStackContainer');
 
+  // Simple API (recommended)
+  columns = input<number | undefined>(undefined);
+  rowHeight = input<number | 'auto' | undefined>(undefined);
+  gap = input<number | string | undefined>(undefined);
+  editable = input<boolean | undefined>(undefined);
+
+  // Advanced API escape hatch
   options = input<GridStackOptions>({});
 
   // Event outputs
   change = output<MagaryGridEvent>();
   added = output<MagaryGridEvent>();
   removed = output<MagaryGridEvent>();
+  itemsChange = output<MagaryGridLayoutItem[]>();
 
   private grid?: GridStack;
   private initTimeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -48,12 +67,13 @@ export class MagaryGrid implements AfterViewInit, OnDestroy {
 
       this.initTimeoutId = null;
       this.grid = GridStack.init(
-        this.options(),
+        this.resolveOptions(),
         this.gridStackContainer().nativeElement,
       );
 
       // Bind events after initialization
       this.bindEvents();
+      this.emitItemsChange();
     });
   }
 
@@ -63,18 +83,78 @@ export class MagaryGrid implements AfterViewInit, OnDestroy {
     this.grid.on('change', (event: Event, items: GridStackNode[]) => {
       if (!this.isDestroyed) {
         this.change.emit({ event, items });
+        this.emitItemsChange();
       }
     });
     this.grid.on('added', (event: Event, items: GridStackNode[]) => {
       if (!this.isDestroyed) {
         this.added.emit({ event, items });
+        this.emitItemsChange();
       }
     });
     this.grid.on('removed', (event: Event, items: GridStackNode[]) => {
       if (!this.isDestroyed) {
         this.removed.emit({ event, items });
+        this.emitItemsChange();
       }
     });
+  }
+
+  private resolveOptions(): GridStackOptions {
+    const simpleOptions: GridStackOptions = {};
+
+    if (this.columns() !== undefined) {
+      simpleOptions.column = this.columns();
+    }
+
+    if (this.rowHeight() !== undefined) {
+      simpleOptions.cellHeight = this.rowHeight();
+    }
+
+    if (this.gap() !== undefined) {
+      simpleOptions.margin = this.gap();
+    }
+
+    const isEditable = this.editable();
+    if (isEditable !== undefined) {
+      simpleOptions.staticGrid = !isEditable;
+      if (!isEditable) {
+        simpleOptions.disableDrag = true;
+        simpleOptions.disableResize = true;
+      }
+    }
+
+    // Advanced options have precedence when both APIs are used.
+    return {
+      ...simpleOptions,
+      ...this.options(),
+    };
+  }
+
+  private emitItemsChange(): void {
+    if (!this.grid || this.isDestroyed) {
+      return;
+    }
+
+    const currentLayout = this.grid.engine.nodes.map((node) =>
+      this.mapNodeToLayoutItem(node),
+    );
+    this.itemsChange.emit(currentLayout);
+  }
+
+  private mapNodeToLayoutItem(node: GridStackNode): MagaryGridLayoutItem {
+    const rawId = node.id ?? node.el?.getAttribute('gs-id') ?? node.el?.id;
+
+    return {
+      id: rawId === undefined || rawId === null ? undefined : String(rawId),
+      col: node.x ?? 0,
+      row: node.y ?? 0,
+      cols: node.w ?? 1,
+      rows: node.h ?? 1,
+      movable: !(node.noMove ?? false),
+      resizable: !(node.noResize ?? false),
+      locked: Boolean(node.locked),
+    };
   }
 
   ngOnDestroy(): void {

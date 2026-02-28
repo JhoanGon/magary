@@ -4,6 +4,17 @@ import { MagaryGrid } from './grid';
 
 type GridEvent = { type: string };
 type GridItem = { id: string };
+type GridNode = {
+  id?: string;
+  x?: number;
+  y?: number;
+  w?: number;
+  h?: number;
+  noMove?: boolean;
+  noResize?: boolean;
+  locked?: boolean;
+  el?: HTMLElement;
+};
 type GridListeners = Record<
   string,
   (event: GridEvent, items: GridItem[]) => void
@@ -17,6 +28,9 @@ describe('MagaryGrid behavior', () => {
     on: ReturnType<typeof vi.fn>;
     destroy: ReturnType<typeof vi.fn>;
     makeWidget: ReturnType<typeof vi.fn>;
+    engine: {
+      nodes: GridNode[];
+    };
   };
   let initSpy: ReturnType<typeof vi.spyOn>;
 
@@ -41,6 +55,9 @@ describe('MagaryGrid behavior', () => {
       ),
       destroy: vi.fn(),
       makeWidget: vi.fn(),
+      engine: {
+        nodes: [],
+      },
     };
 
     initSpy = vi
@@ -75,6 +92,30 @@ describe('MagaryGrid behavior', () => {
     expect(component.getGridInstance()).toBe(gridApi);
   });
 
+  it('maps simple API inputs to GridStack options and preserves advanced override precedence', () => {
+    fixture.componentRef.setInput('columns', 12);
+    fixture.componentRef.setInput('rowHeight', 120);
+    fixture.componentRef.setInput('gap', 10);
+    fixture.componentRef.setInput('editable', false);
+    fixture.componentRef.setInput('options', {
+      margin: 8,
+      disableDrag: false,
+    });
+
+    fixture.detectChanges();
+    vi.runAllTimers();
+
+    expect(initSpy).toHaveBeenCalledTimes(1);
+    expect(initSpy.mock.calls[0][0]).toMatchObject({
+      column: 12,
+      cellHeight: 120,
+      margin: 8,
+      staticGrid: true,
+      disableDrag: false,
+      disableResize: true,
+    });
+  });
+
   it('emits change, added and removed outputs when grid callbacks are triggered', () => {
     const changeSpy = vi.fn();
     const addedSpy = vi.fn();
@@ -103,6 +144,43 @@ describe('MagaryGrid behavior', () => {
       event: { type: 'removed' },
       items: [{ id: 'widget-3' }],
     });
+  });
+
+  it('emits simplified layout through itemsChange', () => {
+    const itemsChangeSpy = vi.fn();
+    component.itemsChange.subscribe(itemsChangeSpy);
+
+    fixture.detectChanges();
+    vi.runAllTimers();
+    itemsChangeSpy.mockClear();
+
+    gridApi.engine.nodes = [
+      {
+        id: 'widget-1',
+        x: 2,
+        y: 3,
+        w: 4,
+        h: 5,
+        noMove: true,
+        noResize: false,
+        locked: true,
+      },
+    ];
+
+    listeners['change']({ type: 'change' }, [{ id: 'widget-1' }]);
+
+    expect(itemsChangeSpy).toHaveBeenCalledWith([
+      {
+        id: 'widget-1',
+        col: 2,
+        row: 3,
+        cols: 4,
+        rows: 5,
+        movable: false,
+        resizable: true,
+        locked: true,
+      },
+    ]);
   });
 
   it('registers widget only for elements that are not item-content nodes', () => {

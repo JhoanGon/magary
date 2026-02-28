@@ -18,7 +18,11 @@ export const GRID_DOC_TEXT = {
     'components.grid.grid.tabs.ts': 'TypeScript',
     'components.grid.grid.dashboard.title': 'Dashboard Interactivo',
     'components.grid.grid.dashboard.desc':
-      'Ejemplo avanzado integrando magary-card, magary-button, magary-avatar y mas. Ideal para paneles de administracion.',
+      'Ejemplo con comparacion entre API simple y avanzada integrando magary-card, magary-button, magary-avatar y mas.',
+    'components.grid.grid.dashboard.tabs.simpleHtml': 'Simple HTML',
+    'components.grid.grid.dashboard.tabs.simpleTs': 'Simple TS',
+    'components.grid.grid.dashboard.tabs.advancedHtml': 'Advanced HTML',
+    'components.grid.grid.dashboard.tabs.advancedTs': 'Advanced TS',
     'components.grid.grid.dashboard.add.card': 'Card',
     'components.grid.grid.dashboard.add.table': 'Table',
     'components.grid.grid.dashboard.add.image': 'Image',
@@ -64,10 +68,28 @@ export const GRID_DOC_TEXT = {
     'components.grid.grid.api.header.property': 'Propiedad',
     'components.grid.grid.api.header.type': 'Tipo',
     'components.grid.grid.api.header.description': 'Descripcion',
+    'components.grid.grid.api.row.columns.desc':
+      'Cantidad de columnas del grid en el modo simplificado.',
+    'components.grid.grid.api.row.rowHeight.desc':
+      'Alto base por fila en pixeles o auto.',
+    'components.grid.grid.api.row.gap.desc':
+      'Separacion entre widgets en px o valor CSS.',
+    'components.grid.grid.api.row.editable.desc':
+      'Activa o desactiva drag/resize de forma global.',
     'components.grid.grid.api.row.options.desc':
       'Opciones de configuracion de Gridstack.js.',
     'components.grid.grid.api.row.change.desc':
       'Evento emitido cuando cambia el layout.',
+    'components.grid.grid.api.row.itemsChange.desc':
+      'Emite el layout simplificado actual del grid.',
+    'components.grid.grid.api.row.item.desc':
+      'Objeto unico con posicion, tamano y bloqueos del widget.',
+    'components.grid.grid.api.row.simpleCoords.desc':
+      'Alias simplificados para posicion y tamano.',
+    'components.grid.grid.api.row.movable.desc':
+      'Permite o bloquea mover el item.',
+    'components.grid.grid.api.row.resizable.desc':
+      'Permite o bloquea redimensionar el item.',
     'components.grid.grid.api.row.coords.desc':
       'Coordenadas y dimensiones del item.',
     'components.grid.grid.api.row.noResize.desc':
@@ -94,7 +116,11 @@ export const GRID_DOC_TEXT = {
     'components.grid.grid.tabs.ts': 'TypeScript',
     'components.grid.grid.dashboard.title': 'Interactive Dashboard',
     'components.grid.grid.dashboard.desc':
-      'Advanced example integrating magary-card, magary-button, magary-avatar, and more. Ideal for admin panels.',
+      'Comparison example between simple and advanced APIs integrating magary-card, magary-button, magary-avatar, and more.',
+    'components.grid.grid.dashboard.tabs.simpleHtml': 'Simple HTML',
+    'components.grid.grid.dashboard.tabs.simpleTs': 'Simple TS',
+    'components.grid.grid.dashboard.tabs.advancedHtml': 'Advanced HTML',
+    'components.grid.grid.dashboard.tabs.advancedTs': 'Advanced TS',
     'components.grid.grid.dashboard.add.card': 'Card',
     'components.grid.grid.dashboard.add.table': 'Table',
     'components.grid.grid.dashboard.add.image': 'Image',
@@ -140,10 +166,28 @@ export const GRID_DOC_TEXT = {
     'components.grid.grid.api.header.property': 'Property',
     'components.grid.grid.api.header.type': 'Type',
     'components.grid.grid.api.header.description': 'Description',
+    'components.grid.grid.api.row.columns.desc':
+      'Grid column count for the simplified mode.',
+    'components.grid.grid.api.row.rowHeight.desc':
+      'Base row height in pixels or auto.',
+    'components.grid.grid.api.row.gap.desc':
+      'Widget spacing in px or CSS value.',
+    'components.grid.grid.api.row.editable.desc':
+      'Enables or disables drag/resize globally.',
     'components.grid.grid.api.row.options.desc':
       'Gridstack.js configuration options.',
     'components.grid.grid.api.row.change.desc':
       'Event emitted when layout changes.',
+    'components.grid.grid.api.row.itemsChange.desc':
+      'Emits the current simplified grid layout.',
+    'components.grid.grid.api.row.item.desc':
+      'Single object with position, size, and lock flags.',
+    'components.grid.grid.api.row.simpleCoords.desc':
+      'Simplified aliases for position and size.',
+    'components.grid.grid.api.row.movable.desc':
+      'Enables or blocks item movement.',
+    'components.grid.grid.api.row.resizable.desc':
+      'Enables or blocks item resizing.',
     'components.grid.grid.api.row.coords.desc':
       'Item coordinates and dimensions.',
     'components.grid.grid.api.row.noResize.desc':

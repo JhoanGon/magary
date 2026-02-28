@@ -8,6 +8,7 @@ import {
   MagaryImage,
   MagaryAvatar,
   MagaryGridEvent,
+  MagaryGridLayoutItem,
   MagaryTable,
   MagaryTabs,
   MagaryTab,
@@ -28,13 +29,13 @@ type DashboardWidgetType =
   | 'image';
 
 interface BasicWidget {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+  col: number;
+  row: number;
+  cols: number;
+  rows: number;
   contentKey: DocsTextKey;
-  noResize: boolean;
-  noMove: boolean;
+  resizable: boolean;
+  movable: boolean;
   locked: boolean;
 }
 
@@ -52,10 +53,7 @@ interface DashboardTableDisplayRow {
 
 interface DashboardWidget {
   id: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+  item: MagaryGridLayoutItem;
   type: DashboardWidgetType;
   titleKey: DocsTextKey;
   value?: string;
@@ -89,15 +87,20 @@ type GridApiRow = {
 
 const CODE_EXAMPLES = {
   import: `import { MagaryGrid, MagaryGridItem } from 'ng-magary';`,
-  basic: `<magary-grid [options]="basicOptions">
+  basic: `<magary-grid
+  [columns]="12"
+  [rowHeight]="100"
+  [gap]="10"
+  [editable]="true"
+>
   @for (item of basicWidgets; track $index) {
     <magary-grid-item
-      [x]="item.x"
-      [y]="item.y"
-      [w]="item.w"
-      [h]="item.h"
-      [noResize]="item.noResize"
-      [noMove]="item.noMove"
+      [col]="item.col"
+      [row]="item.row"
+      [cols]="item.cols"
+      [rows]="item.rows"
+      [resizable]="item.resizable"
+      [movable]="item.movable"
       [locked]="item.locked"
     >
       <div class="basic-item" style="background: var(--primary-500)">
@@ -106,15 +109,16 @@ const CODE_EXAMPLES = {
     </magary-grid-item>
   }
 </magary-grid>`,
-  dashboard: `<magary-grid [options]="dashboardOptions">
+  dashboardSimple: `<magary-grid
+  [columns]="dashboardColumns"
+  [rowHeight]="dashboardRowHeight"
+  [gap]="dashboardGap"
+  [editable]="dashboardEditable"
+  [options]="dashboardOptions"
+  (itemsChange)="onDashboardItemsChange($event)"
+>
   @for (widget of dashboardWidgets(); track widget.id) {
-    <magary-grid-item
-      [id]="widget.id"
-      [x]="widget.x"
-      [y]="widget.y"
-      [w]="widget.w"
-      [h]="widget.h"
-    >
+    <magary-grid-item [item]="widget.item">
       <magary-card
         [shadow]="2"
         [padding]="widget.type === 'image' ? '0' : '1rem'"
@@ -126,23 +130,41 @@ const CODE_EXAMPLES = {
     </magary-grid-item>
   }
 </magary-grid>`,
+  dashboardAdvanced: `<magary-grid [options]="dashboardOptions" (change)="onGridChange($event)">
+  @for (widget of dashboardWidgets(); track widget.id) {
+    <magary-grid-item
+      [id]="widget.id"
+      [x]="widget.item.col"
+      [y]="widget.item.row"
+      [w]="widget.item.cols"
+      [h]="widget.item.rows"
+    >
+      <magary-card [shadow]="2">
+        <!-- Widget content -->
+      </magary-card>
+    </magary-grid-item>
+  }
+</magary-grid>`,
   basicTS: `
-  // Options
-  basicOptions: GridStackOptions = {
-    margin: 10,
-    float: true,
-    minRow: 1,
-    cellHeight: 100,
-  };
+  // Simple API
+  basicColumns = 12;
+  basicRowHeight = 100;
+  basicGap = 10;
+  basicEditable = true;
 
   // Widgets Data
   basicWidgets = [
-    { x: 0, y: 0, w: 4, h: 2, content: 'Widget A', noResize: true },
-    { x: 4, y: 0, w: 4, h: 2, content: 'Widget B', noMove: true },
-    { x: 8, y: 0, w: 4, h: 2, content: 'Widget C', locked: true },
+    { col: 0, row: 0, cols: 4, rows: 2, content: 'Widget A', resizable: false, movable: true },
+    { col: 4, row: 0, cols: 4, rows: 2, content: 'Widget B', resizable: true, movable: false },
+    { col: 8, row: 0, cols: 4, rows: 2, content: 'Widget C', resizable: false, movable: false, locked: true },
   ];`,
-  dashboardTS: `
-  // Dashboard Options
+  dashboardSimpleTS: `
+  dashboardColumns = 12;
+  dashboardRowHeight: number | 'auto' = 'auto';
+  dashboardGap = 10;
+  dashboardEditable = true;
+
+  // You can still use advanced options when needed.
   dashboardOptions: GridStackOptions = {
     margin: 10,
     cellHeight: 'auto',
@@ -150,11 +172,20 @@ const CODE_EXAMPLES = {
     animate: true,
   };
 
-  // Signal for reactive updates
+  // Single layout object per widget.
   dashboardWidgets = signal<DashboardWidget[]>([
     {
       id: 'stats-users',
-      x: 0, y: 0, w: 3, h: 2,
+      item: {
+        id: 'stats-users',
+        col: 0,
+        row: 0,
+        cols: 3,
+        rows: 2,
+        movable: true,
+        resizable: true,
+        locked: false,
+      },
       type: 'stats',
       title: 'Total Users',
       value: '12,450'
@@ -162,15 +193,26 @@ const CODE_EXAMPLES = {
     // ... more widgets
   ]);
 
-  addWidget(type: string) {
-    // Add new widget to signal
-    this.dashboardWidgets.update(w => [...w, newWidget]);
+  onDashboardItemsChange(layout: MagaryGridLayoutItem[]) {
+    this.dashboardWidgets.update((widgets) =>
+      widgets.map((widget) => {
+        const next = layout.find((item) => item.id === widget.id);
+        return next ? { ...widget, item: next } : widget;
+      }),
+    );
   }
+  `,
+  dashboardAdvancedTS: `
+  // Advanced mode: raw GridStack options + explicit coordinates.
+  dashboardOptions: GridStackOptions = {
+    margin: 10,
+    cellHeight: 'auto',
+    float: true,
+    animate: true,
+  };
 
-  // Event Handler
   onGridChange(event: MagaryGridEvent) {
-    console.log('Layout changed:', event);
-    // { node: GridStackNode, ... }
+    console.log('Layout changed:', event.items);
   }
   `,
   galleryHTML: `
@@ -229,47 +271,47 @@ export class ViewGrid {
   readonly importExample = CODE_EXAMPLES.import;
   readonly basicExample = CODE_EXAMPLES.basic;
   readonly basicTS = CODE_EXAMPLES.basicTS;
-  readonly dashboardExample = CODE_EXAMPLES.dashboard;
-  readonly dashboardTS = CODE_EXAMPLES.dashboardTS;
+  readonly dashboardSimpleExample = CODE_EXAMPLES.dashboardSimple;
+  readonly dashboardSimpleTS = CODE_EXAMPLES.dashboardSimpleTS;
+  readonly dashboardAdvancedExample = CODE_EXAMPLES.dashboardAdvanced;
+  readonly dashboardAdvancedTS = CODE_EXAMPLES.dashboardAdvancedTS;
   readonly galleryHTML = CODE_EXAMPLES.galleryHTML;
   readonly galleryTS = CODE_EXAMPLES.galleryTS;
 
-  readonly basicOptions: GridStackOptions = {
-    margin: 10,
-    float: true,
-    minRow: 1,
-    cellHeight: 100,
-  };
+  readonly basicColumns = 12;
+  readonly basicRowHeight = 100;
+  readonly basicGap = 10;
+  readonly basicEditable = true;
 
   readonly basicWidgets: BasicWidget[] = [
     {
-      x: 0,
-      y: 0,
-      w: 4,
-      h: 2,
+      col: 0,
+      row: 0,
+      cols: 4,
+      rows: 2,
       contentKey: 'components.grid.grid.basic.widgetA',
-      noResize: true,
-      noMove: false,
+      resizable: false,
+      movable: true,
       locked: false,
     },
     {
-      x: 4,
-      y: 0,
-      w: 4,
-      h: 2,
+      col: 4,
+      row: 0,
+      cols: 4,
+      rows: 2,
       contentKey: 'components.grid.grid.basic.widgetB',
-      noResize: false,
-      noMove: true,
+      resizable: true,
+      movable: false,
       locked: false,
     },
     {
-      x: 8,
-      y: 0,
-      w: 4,
-      h: 2,
+      col: 8,
+      row: 0,
+      cols: 4,
+      rows: 2,
       contentKey: 'components.grid.grid.basic.widgetC',
-      noResize: true,
-      noMove: true,
+      resizable: false,
+      movable: false,
       locked: true,
     },
   ];
@@ -280,14 +322,24 @@ export class ViewGrid {
     float: true,
     animate: true,
   };
+  readonly dashboardColumns = 12;
+  readonly dashboardRowHeight: number | 'auto' = 'auto';
+  readonly dashboardGap = 10;
+  readonly dashboardEditable = true;
 
   readonly dashboardWidgets = signal<DashboardWidget[]>([
     {
       id: 'stats-users',
-      x: 0,
-      y: 0,
-      w: 3,
-      h: 2,
+      item: {
+        id: 'stats-users',
+        col: 0,
+        row: 0,
+        cols: 3,
+        rows: 2,
+        movable: true,
+        resizable: true,
+        locked: false,
+      },
       type: 'stats',
       titleKey: 'components.grid.grid.dashboard.widget.totalUsers',
       value: '12,450',
@@ -297,10 +349,16 @@ export class ViewGrid {
     },
     {
       id: 'stats-revenue',
-      x: 3,
-      y: 0,
-      w: 3,
-      h: 2,
+      item: {
+        id: 'stats-revenue',
+        col: 3,
+        row: 0,
+        cols: 3,
+        rows: 2,
+        movable: true,
+        resizable: true,
+        locked: false,
+      },
       type: 'stats',
       titleKey: 'components.grid.grid.dashboard.widget.revenue',
       value: '$45.2k',
@@ -310,19 +368,31 @@ export class ViewGrid {
     },
     {
       id: 'quick-actions',
-      x: 6,
-      y: 0,
-      w: 3,
-      h: 4,
+      item: {
+        id: 'quick-actions',
+        col: 6,
+        row: 0,
+        cols: 3,
+        rows: 4,
+        movable: true,
+        resizable: true,
+        locked: false,
+      },
       type: 'actions',
       titleKey: 'components.grid.grid.dashboard.widget.quickActions',
     },
     {
       id: 'media-widget',
-      x: 0,
-      y: 2,
-      w: 6,
-      h: 2,
+      item: {
+        id: 'media-widget',
+        col: 0,
+        row: 2,
+        cols: 6,
+        rows: 2,
+        movable: true,
+        resizable: true,
+        locked: false,
+      },
       type: 'media',
       titleKey: 'components.grid.grid.dashboard.widget.mediaGallery',
       images: [
@@ -333,10 +403,16 @@ export class ViewGrid {
     },
     {
       id: 'profile-card',
-      x: 9,
-      y: 0,
-      w: 3,
-      h: 4,
+      item: {
+        id: 'profile-card',
+        col: 9,
+        row: 0,
+        cols: 3,
+        rows: 4,
+        movable: true,
+        resizable: true,
+        locked: false,
+      },
       type: 'profile',
       titleKey: 'components.grid.grid.dashboard.widget.profile',
       nameKey: 'components.grid.grid.dashboard.widget.profileName',
@@ -410,6 +486,30 @@ export class ViewGrid {
   readonly apiRows: GridApiRow[] = [
     {
       component: 'magary-grid',
+      property: 'columns',
+      type: 'number',
+      descriptionKey: 'components.grid.grid.api.row.columns.desc',
+    },
+    {
+      component: 'magary-grid',
+      property: 'rowHeight',
+      type: "number | 'auto'",
+      descriptionKey: 'components.grid.grid.api.row.rowHeight.desc',
+    },
+    {
+      component: 'magary-grid',
+      property: 'gap',
+      type: 'number | string',
+      descriptionKey: 'components.grid.grid.api.row.gap.desc',
+    },
+    {
+      component: 'magary-grid',
+      property: 'editable',
+      type: 'boolean',
+      descriptionKey: 'components.grid.grid.api.row.editable.desc',
+    },
+    {
+      component: 'magary-grid',
       property: 'options',
       type: 'GridStackOptions',
       descriptionKey: 'components.grid.grid.api.row.options.desc',
@@ -419,6 +519,36 @@ export class ViewGrid {
       property: 'change',
       type: 'EventEmitter',
       descriptionKey: 'components.grid.grid.api.row.change.desc',
+    },
+    {
+      component: 'magary-grid',
+      property: 'itemsChange',
+      type: 'EventEmitter<MagaryGridLayoutItem[]>',
+      descriptionKey: 'components.grid.grid.api.row.itemsChange.desc',
+    },
+    {
+      component: 'magary-grid-item',
+      property: 'item',
+      type: 'MagaryGridLayoutItem',
+      descriptionKey: 'components.grid.grid.api.row.item.desc',
+    },
+    {
+      component: 'magary-grid-item',
+      property: 'col, row, cols, rows',
+      type: 'number',
+      descriptionKey: 'components.grid.grid.api.row.simpleCoords.desc',
+    },
+    {
+      component: 'magary-grid-item',
+      property: 'movable',
+      type: 'boolean',
+      descriptionKey: 'components.grid.grid.api.row.movable.desc',
+    },
+    {
+      component: 'magary-grid-item',
+      property: 'resizable',
+      type: 'boolean',
+      descriptionKey: 'components.grid.grid.api.row.resizable.desc',
     },
     {
       component: 'magary-grid-item',
@@ -499,10 +629,16 @@ export class ViewGrid {
     const id = `widget-${Date.now()}`;
     let newWidget: DashboardWidget = {
       id,
-      x: 0,
-      y: 0,
-      w: 4,
-      h: 4,
+      item: {
+        id,
+        col: 0,
+        row: 0,
+        cols: 4,
+        rows: 4,
+        movable: true,
+        resizable: true,
+        locked: false,
+      },
       type: 'card',
       titleKey: 'components.grid.grid.dashboard.widget.genericCard',
     };
@@ -511,8 +647,11 @@ export class ViewGrid {
       case 'card':
         newWidget = {
           ...newWidget,
-          w: 6,
-          h: 3,
+          item: {
+            ...newWidget.item,
+            cols: 6,
+            rows: 3,
+          },
           type: 'card',
           titleKey: 'components.grid.grid.dashboard.widget.genericCard',
           contentKey: 'components.grid.grid.dashboard.widget.genericCardContent',
@@ -521,8 +660,11 @@ export class ViewGrid {
       case 'table':
         newWidget = {
           ...newWidget,
-          w: 6,
-          h: 5,
+          item: {
+            ...newWidget.item,
+            cols: 6,
+            rows: 5,
+          },
           type: 'table',
           titleKey: 'components.grid.grid.dashboard.widget.dataTable',
           data: [
@@ -557,8 +699,11 @@ export class ViewGrid {
       case 'image':
         newWidget = {
           ...newWidget,
-          w: 4,
-          h: 4,
+          item: {
+            ...newWidget.item,
+            cols: 4,
+            rows: 4,
+          },
           type: 'image',
           titleKey: 'components.grid.grid.dashboard.widget.singleImage',
           src: 'https://picsum.photos/600/400?random=' + Date.now(),
@@ -567,5 +712,41 @@ export class ViewGrid {
     }
 
     this.dashboardWidgets.update((widgets) => [...widgets, newWidget]);
+  }
+
+  onDashboardItemsChange(layout: MagaryGridLayoutItem[]) {
+    this.dashboardWidgets.update((widgets) =>
+      widgets.map((widget) => {
+        const next = layout.find((item) => item.id === widget.id);
+        if (!next) {
+          return widget;
+        }
+        if (this.layoutEquals(widget.item, next)) {
+          return widget;
+        }
+        return {
+          ...widget,
+          item: {
+            ...next,
+            id: widget.id,
+          },
+        };
+      }),
+    );
+  }
+
+  private layoutEquals(
+    current: MagaryGridLayoutItem,
+    incoming: MagaryGridLayoutItem,
+  ): boolean {
+    return (
+      current.col === incoming.col &&
+      current.row === incoming.row &&
+      current.cols === incoming.cols &&
+      current.rows === incoming.rows &&
+      current.movable === incoming.movable &&
+      current.resizable === incoming.resizable &&
+      current.locked === incoming.locked
+    );
   }
 }

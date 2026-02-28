@@ -226,8 +226,15 @@ test.describe('ci smoke', () => {
     await tabButtons.first().focus();
     await tabButtons.first().press('ArrowRight');
 
-    await expect(tabButtons.nth(1)).toHaveAttribute('aria-selected', 'true');
-    await expect(tabs.getByText('Tu perfil').first()).toBeVisible();
+    const secondTabButton = tabButtons.nth(1);
+    await expect(secondTabButton).toHaveAttribute('aria-selected', 'true');
+
+    const secondTabPanelId = await secondTabButton.getAttribute('aria-controls');
+    expect(secondTabPanelId).toBeTruthy();
+
+    const secondTabPanel = tabs.locator(`#${secondTabPanelId}`);
+    await expect(secondTabPanel).toHaveAttribute('aria-hidden', 'false');
+    await expect(secondTabPanel).toBeVisible();
   });
 
   test('carousel route supports keyboard navigation and aria indicators', async ({
