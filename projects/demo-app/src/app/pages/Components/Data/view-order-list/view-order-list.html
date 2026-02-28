@@ -33,7 +33,7 @@
               [value]="products()"
               [dragDrop]="true"
               [header]="t('components.data.orderList.listHeader')"
-              [listStyle]="{ height: '15rem', width: '20rem' }"
+              [listStyle]="{ height: '15rem', 'width': '100%', 'max-width': '20rem' }"
             >
               <ng-template #itemTemplate let-product>
                 <div class="product-item">
@@ -89,7 +89,7 @@
               [showControls]="false"
               [dragDrop]="true"
               [header]="t('components.data.orderList.listHeader')"
-              [listStyle]="{ height: '15rem', width: '25rem' }"
+              [listStyle]="{ height: '15rem', 'width': '100%', 'max-width': '25rem' }"
             >
               <ng-template #itemTemplate let-product>
                 <div class="product-item">

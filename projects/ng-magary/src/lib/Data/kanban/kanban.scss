@@ -12,18 +12,26 @@
   min-height: 25rem;
   scroll-behavior: smooth;
   width: 100%;
+
+  /* Habilitar touch suave */
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
 }
 
 .magary-kanban-column {
-  flex: 1 1 320px;
-  min-width: 250px;
-  max-width: 400px;
+  flex: 0 0 auto;
+  /* Importante para que no se aprieten (squish) en mobile */
+  width: 320px;
+  /* Ancho fijo para hacer el card swipable horizontal */
+  max-width: 85vw;
+  /* No consumir toda la pantalla para ver el hint de la sig */
   display: flex;
   flex-direction: column;
   background-color: var(--surface-50);
   border-radius: var(--border-radius);
   border: 1px solid var(--surface-200);
   overflow: hidden;
+  scroll-snap-align: start;
 
   &.magary-kanban-column-over {
     background-color: var(--surface-100);
