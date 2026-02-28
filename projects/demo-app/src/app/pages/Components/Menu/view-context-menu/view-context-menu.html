@@ -1,21 +1,21 @@
 <div class="container">
   <div class="header">
-    <h1>Context Menu</h1>
-    <p>ContextMenu muestra un menú al hacer clic derecho.</p>
+    <h1>{{ t('components.menu.contextMenu.title') }}</h1>
+    <p>{{ t('components.menu.contextMenu.subtitle') }}</p>
   </div>
 
-  <!-- TARGET EXAMPLE -->
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Básico</h2>
-      <p>Haz clic derecho en el cuadro a continuación para abrir el menú.</p>
+      <h2>{{ t('components.menu.contextMenu.basic.title') }}</h2>
+      <p>{{ t('components.menu.contextMenu.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="target-area flex align-items-center justify-content-center">
-          <span style="color: var(--text-secondary)">Haz Clic Derecho</span>
+          <span style="color: var(--text-secondary)">
+            {{ t('components.menu.contextMenu.basic.target') }}
+          </span>
         </div>
-        <!-- Target via selector string -->
         <magary-context-menu [target]="'.target-area'" [model]="items()" />
       </div>
 
@@ -24,12 +24,12 @@
         [positionContent]="'flex-start'"
         [background]="'#282c34'"
       >
-        <magary-tab label="HTML">
+        <magary-tab [label]="t('components.menu.contextMenu.tabs.html')">
           <div class="code-block" style="margin-top: 0">
             <pre><code [highlight]="exampleTargetHTML" language="xml"></code></pre>
           </div>
         </magary-tab>
-        <magary-tab label="TypeScript">
+        <magary-tab [label]="t('components.menu.contextMenu.tabs.typescript')">
           <div class="code-block" style="margin-top: 0">
             <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
           </div>
@@ -38,20 +38,19 @@
     </div>
   </div>
 
-  <!-- Inputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Inputs</h2>
+      <h2>{{ t('components.menu.contextMenu.inputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ t('components.menu.contextMenu.inputs.header.name') }}</th>
+              <th>{{ t('components.menu.contextMenu.inputs.header.type') }}</th>
+              <th>{{ t('components.menu.contextMenu.inputs.header.default') }}</th>
+              <th>{{ t('components.menu.contextMenu.inputs.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -66,7 +65,7 @@
                 <td>
                   <code>{{ prop.default }}</code>
                 </td>
-                <td>{{ prop.description }}</td>
+                <td>{{ t(prop.descriptionKey) }}</td>
               </tr>
             }
           </tbody>
@@ -75,33 +74,30 @@
     </div>
   </div>
 
-  <!-- Events Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Eventos</h2>
+      <h2>{{ t('components.menu.contextMenu.events.title') }}</h2>
     </div>
     <div class="section-content">
       <p style="margin: 0; color: var(--text-secondary)">
-        Este componente no emite eventos. La interacción del usuario se maneja a
-        través de la propiedad <code>command</code> de <code>MenuItem</code>.
+        {{ t('components.menu.contextMenu.events.desc') }}
       </p>
     </div>
   </div>
 
-  <!-- MenuItem API -->
   <div class="section">
     <div class="section-header">
-      <h2>Interfaz MenuItem</h2>
-      <p>Propiedades para los elementos en el array <code>model</code>.</p>
+      <h2>{{ t('components.menu.contextMenu.menuItem.title') }}</h2>
+      <p>{{ t('components.menu.contextMenu.menuItem.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Propiedad</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ t('components.menu.contextMenu.menuItem.header.property') }}</th>
+              <th>{{ t('components.menu.contextMenu.menuItem.header.type') }}</th>
+              <th>{{ t('components.menu.contextMenu.menuItem.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -113,7 +109,7 @@
                 <td>
                   <code>{{ prop.type }}</code>
                 </td>
-                <td>{{ prop.description }}</td>
+                <td>{{ t(prop.descriptionKey) }}</td>
               </tr>
             }
           </tbody>

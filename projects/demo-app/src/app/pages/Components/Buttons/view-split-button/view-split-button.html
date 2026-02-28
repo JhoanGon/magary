@@ -1,14 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>SplitButton</h1>
-    <p>Botón que agrupa una acción por defecto y un menú desplegable.</p>
+    <h1>{{ i18n.translateDocs('components.buttons.splitButton.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.buttons.splitButton.subtitle') }}</p>
   </div>
 
-  <!-- Import -->
   <section class="section">
     <div class="section-header">
-      <h2>Importar</h2>
-      <p>Importa el componente en tu módulo o componente standalone.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.splitButton.import.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.splitButton.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,15 +16,16 @@
     </div>
   </section>
 
-  <!-- Basic Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Uso Básico</h2>
+      <h2>{{ i18n.translateDocs('components.buttons.splitButton.basic.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Por Defecto</h4>
+          <h4>
+            {{ i18n.translateDocs('components.buttons.splitButton.basic.cardTitle') }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -42,12 +42,11 @@
               "
             >
               <magary-split-button
-                label="Guardar"
+                [label]="i18n.translateDocs('components.buttons.splitButton.basic.save')"
                 icon="save"
                 [model]="saveItems"
                 (onClick)="onSave()"
-              >
-              </magary-split-button>
+              ></magary-split-button>
             </div>
           </magary-card>
         </div>
@@ -72,16 +71,17 @@
     </div>
   </div>
 
-  <!-- Severities Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Severidades</h2>
-      <p>Colores semánticos para diferentes acciones.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.splitButton.severity.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.splitButton.severity.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Colores</h4>
+          <h4>
+            {{ i18n.translateDocs('components.buttons.splitButton.severity.cardTitle') }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -98,30 +98,48 @@
               "
             >
               <magary-split-button
-                label="Secondary"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.severity.secondary'
+                  )
+                "
                 [model]="saveItems"
                 severity="secondary"
               ></magary-split-button>
               <magary-split-button
-                label="Success"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.severity.success'
+                  )
+                "
                 icon="check"
                 [model]="saveItems"
                 severity="success"
               ></magary-split-button>
               <magary-split-button
-                label="Info"
+                [label]="
+                  i18n.translateDocs('components.buttons.splitButton.severity.info')
+                "
                 icon="info"
                 [model]="saveItems"
                 severity="info"
               ></magary-split-button>
               <magary-split-button
-                label="Warning"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.severity.warning'
+                  )
+                "
                 icon="triangle-alert"
                 [model]="saveItems"
                 severity="warning"
               ></magary-split-button>
               <magary-split-button
-                label="Danger"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.severity.danger'
+                  )
+                "
                 icon="x"
                 [model]="saveItems"
                 severity="danger"
@@ -136,16 +154,17 @@
     </div>
   </div>
 
-  <!-- Custom Colors Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Colores Personalizados</h2>
-      <p>Control total de color de fondo y color de texto/iconos.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.splitButton.custom.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.splitButton.custom.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Custom</h4>
+          <h4>
+            {{ i18n.translateDocs('components.buttons.splitButton.custom.cardTitle') }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -162,7 +181,9 @@
               "
             >
               <magary-split-button
-                label="Custom"
+                [label]="
+                  i18n.translateDocs('components.buttons.splitButton.custom.label')
+                "
                 icon="palette"
                 [model]="saveItems"
                 [backgroundColor]="'#0f766e'"
@@ -178,27 +199,34 @@
     </div>
   </div>
 
-  <!-- Sizes Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Tamaños</h2>
-      <p>Diferentes tamaños disponibles.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.splitButton.sizes.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.splitButton.sizes.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Pequeño</h4>
+          <h4>
+            {{
+              i18n.translateDocs(
+                'components.buttons.splitButton.sizes.small.cardTitle'
+              )
+            }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
               <magary-split-button
-                label="Small"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.sizes.small.label'
+                  )
+                "
                 icon="minimize"
                 [model]="saveItems"
                 size="sm"
@@ -207,18 +235,26 @@
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Normal</h4>
+          <h4>
+            {{
+              i18n.translateDocs(
+                'components.buttons.splitButton.sizes.normal.cardTitle'
+              )
+            }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
               <magary-split-button
-                label="Normal"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.sizes.normal.label'
+                  )
+                "
                 icon="layout-template"
                 [model]="saveItems"
               ></magary-split-button>
@@ -226,18 +262,26 @@
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Grande</h4>
+          <h4>
+            {{
+              i18n.translateDocs(
+                'components.buttons.splitButton.sizes.large.cardTitle'
+              )
+            }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
               <magary-split-button
-                label="Large"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.sizes.large.label'
+                  )
+                "
                 icon="maximize"
                 [model]="saveItems"
                 size="lg"
@@ -252,35 +296,52 @@
     </div>
   </div>
 
-  <!-- Inputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ i18n.translateDocs('components.buttons.splitButton.apiInputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Default</th>
-              <th>Descripción</th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.apiInputs.header.name'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.apiInputs.header.type'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.apiInputs.header.default'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.apiInputs.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
             @for (item of itemsConfig; track item.name) {
               <tr>
-                <td>
-                  <code>{{ item.name }}</code>
-                </td>
-                <td>
-                  <code>{{ item.type }}</code>
-                </td>
-                <td>
-                  <code>{{ item.default }}</code>
-                </td>
-                <td>{{ item.description }}</td>
+                <td><code>{{ item.name }}</code></td>
+                <td><code>{{ item.type }}</code></td>
+                <td><code>{{ item.default }}</code></td>
+                <td>{{ i18n.translateDocs(item.descriptionKey) }}</td>
               </tr>
             }
           </tbody>
@@ -289,31 +350,44 @@
     </div>
   </div>
 
-  <!-- Outputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
+      <h2>{{ i18n.translateDocs('components.buttons.splitButton.apiOutputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.apiOutputs.header.name'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.apiOutputs.header.type'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.apiOutputs.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
             @for (item of eventsConfig; track item.name) {
               <tr>
-                <td>
-                  <code>{{ item.name }}</code>
-                </td>
-                <td>
-                  <code>{{ item.type }}</code>
-                </td>
-                <td>{{ item.description }}</td>
+                <td><code>{{ item.name }}</code></td>
+                <td><code>{{ item.type }}</code></td>
+                <td>{{ i18n.translateDocs(item.descriptionKey) }}</td>
               </tr>
             }
           </tbody>
@@ -322,32 +396,45 @@
     </div>
   </div>
 
-  <!-- MenuItem API -->
   <div class="section">
     <div class="section-header">
-      <h2>Interfaz MenuItem</h2>
-      <p>Propiedades para los elementos en el array <code>model</code>.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.splitButton.menuItem.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.splitButton.menuItem.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Propiedad</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.menuItem.header.property'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.menuItem.header.type'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.splitButton.menuItem.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
             @for (item of menuItemConfig; track item.name) {
               <tr>
-                <td>
-                  <code>{{ item.name }}</code>
-                </td>
-                <td>
-                  <code>{{ item.type }}</code>
-                </td>
-                <td>{{ item.description }}</td>
+                <td><code>{{ item.name }}</code></td>
+                <td><code>{{ item.type }}</code></td>
+                <td>{{ i18n.translateDocs(item.descriptionKey) }}</td>
               </tr>
             }
           </tbody>

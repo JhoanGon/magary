@@ -1,14 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>PickList</h1>
-    <p>Componente para reordenar y transferir elementos entre dos listas.</p>
+    <h1>{{ t('components.data.pickList.title') }}</h1>
+    <p>{{ t('components.data.pickList.subtitle') }}</p>
   </div>
 
-  <!-- Import -->
   <section class="section">
     <div class="section-header">
-      <h2>Importar</h2>
-      <p>Importa el componente en tu módulo o componente standalone.</p>
+      <h2>{{ t('components.data.pickList.import.title') }}</h2>
+      <p>{{ t('components.data.pickList.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,10 +16,9 @@
     </div>
   </section>
 
-  <!-- Basic Usage -->
   <div class="section">
     <div class="section-header">
-      <h2>Uso Básico</h2>
+      <h2>{{ t('components.data.pickList.basic.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -34,8 +32,8 @@
             <magary-pick-list
               [source]="sourceProducts()"
               [target]="targetProducts()"
-              sourceHeader="Disponibles"
-              targetHeader="Seleccionados"
+              [sourceHeader]="t('components.data.pickList.sourceHeader')"
+              [targetHeader]="t('components.data.pickList.targetHeader')"
               [sourceStyle]="{ height: '20rem' }"
               [targetStyle]="{ height: '20rem' }"
             >
@@ -74,20 +72,21 @@
     </div>
   </div>
 
-  <!-- API -->
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ t('components.data.pickList.apiInputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Default</th>
-              <th>Descripción</th>
+              <th>{{ t('components.data.pickList.apiInputs.header.name') }}</th>
+              <th>{{ t('components.data.pickList.apiInputs.header.type') }}</th>
+              <th>{{ t('components.data.pickList.apiInputs.header.default') }}</th>
+              <th>
+                {{ t('components.data.pickList.apiInputs.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -102,7 +101,7 @@
                 <td>
                   <code>{{ item.default }}</code>
                 </td>
-                <td>{{ item.description }}</td>
+                <td>{{ t(item.descriptionKey) }}</td>
               </tr>
             }
           </tbody>
@@ -113,16 +112,18 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
+      <h2>{{ t('components.data.pickList.apiOutputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ t('components.data.pickList.apiOutputs.header.name') }}</th>
+              <th>{{ t('components.data.pickList.apiOutputs.header.type') }}</th>
+              <th>
+                {{ t('components.data.pickList.apiOutputs.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -134,7 +135,7 @@
                 <td>
                   <code>{{ item.type }}</code>
                 </td>
-                <td>{{ item.description }}</td>
+                <td>{{ t(item.descriptionKey) }}</td>
               </tr>
             }
           </tbody>

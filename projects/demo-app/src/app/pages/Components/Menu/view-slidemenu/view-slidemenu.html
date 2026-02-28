@@ -1,12 +1,12 @@
 <div class="container fade-in">
   <div class="header">
-    <h1>Magary SlideMenu</h1>
-    <p>Menú de navegación deslizante para estructuras jerárquicas profundas.</p>
+    <h1>{{ t('components.menu.slidemenu.title') }}</h1>
+    <p>{{ t('components.menu.slidemenu.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ t('components.menu.slidemenu.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,10 +17,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Interactivo</h2>
-      <p>
-        Navega a través de las opciones para ver el efecto de desplazamiento.
-      </p>
+      <h2>{{ t('components.menu.slidemenu.interactive.title') }}</h2>
+      <p>{{ t('components.menu.slidemenu.interactive.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
@@ -38,10 +36,10 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.menu.slidemenu.tabs.html')">
             <pre><code [highlight]="htmlCode" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.menu.slidemenu.tabs.typescript')">
             <pre><code [highlight]="tsCode" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -51,50 +49,28 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ t('components.menu.slidemenu.apiInputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ t('components.menu.slidemenu.apiInputs.header.name') }}</th>
+              <th>{{ t('components.menu.slidemenu.apiInputs.header.type') }}</th>
+              <th>{{ t('components.menu.slidemenu.apiInputs.header.default') }}</th>
+              <th>{{ t('components.menu.slidemenu.apiInputs.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>model</code></td>
-              <td><code>MenuItem[]</code></td>
-              <td><code>[]</code></td>
-              <td>Items del menú.</td>
-            </tr>
-            <tr>
-              <td><code>menuWidth</code></td>
-              <td><code>number | string</code></td>
-              <td><code>300</code></td>
-              <td>Ancho del componente.</td>
-            </tr>
-            <tr>
-              <td><code>viewportHeight</code></td>
-              <td><code>number | string</code></td>
-              <td><code>400</code></td>
-              <td>Alto del viewport visible.</td>
-            </tr>
-            <tr>
-              <td><code>style</code></td>
-              <td><code>object</code></td>
-              <td><code>null</code></td>
-              <td>Estilos en línea.</td>
-            </tr>
-            <tr>
-              <td><code>styleClass</code></td>
-              <td><code>string</code></td>
-              <td><code>''</code></td>
-              <td>Clase CSS.</td>
-            </tr>
+            @for (row of inputsConfig; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
@@ -103,24 +79,26 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
+      <h2>{{ t('components.menu.slidemenu.apiOutputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ t('components.menu.slidemenu.apiOutputs.header.name') }}</th>
+              <th>{{ t('components.menu.slidemenu.apiOutputs.header.type') }}</th>
+              <th>{{ t('components.menu.slidemenu.apiOutputs.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>command</code></td>
-              <td><code>(event) => void</code></td>
-              <td>Callback en <code>MenuItem</code> al hacer click.</td>
-            </tr>
+            @for (row of outputsConfig; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>

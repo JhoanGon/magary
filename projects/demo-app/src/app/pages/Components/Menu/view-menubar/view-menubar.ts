@@ -1,6 +1,6 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   OnInit,
   inject,
 } from '@angular/core';
@@ -13,6 +13,21 @@ import {
   MagaryToastService,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type MenubarInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type MenubarOutputRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'app-view-menubar',
@@ -30,6 +45,9 @@ import { Highlight } from 'ngx-highlightjs';
 })
 export class ViewMenubar implements OnInit {
   private toastService: MagaryToastService = inject(MagaryToastService);
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   items: MenuItem[] = [];
 
   importRef = `import { MagaryMenubar } from 'ng-magary';`;
@@ -53,161 +71,130 @@ export class ViewMenubar implements OnInit {
                             { label: 'Video', icon: 'video' },
                         ]
                     },
-                    { 
-                        label: 'Delete', 
+                    {
+                        label: 'Delete',
                         icon: 'trash',
                         command: () => this.toastService.add({ type: 'info', title: 'Deleted', message: 'Item deleted', duration: 3000 })
                     },
                     { separator: true },
-                    { 
-                        label: 'Export', 
+                    {
+                        label: 'Export',
                         icon: 'external-link',
                          command: () => this.toastService.add({ type: 'success', title: 'Exported', message: 'Data exported', duration: 3000 })
                     }
                 ]
-            },
-            {
-                label: 'Edit',
-                icon: 'pencil',
-                items: [
-                    { label: 'Left', icon: 'align-start-vertical' },
-                    { label: 'Right', icon: 'align-end-vertical' },
-                    { label: 'Center', icon: 'align-center-vertical' },
-                    { label: 'Justify', icon: 'align-vertical-justify-center' },
-                ]
-            },
-            {
-                label: 'Users',
-                icon: 'user',
-                items: [
-                    {
-                        label: 'New',
-                        icon: 'user-plus',
-                    },
-                    {
-                        label: 'Delete',
-                        icon: 'user-minus',
-                    },
-                    {
-                        label: 'Search',
-                        icon: 'users',
-                        items: [
-                            {
-                                label: 'Filter',
-                                icon: 'funnel',
-                                items: [
-                                    { label: 'Print', icon: 'printer' }
-                                ]
-                            },
-                            {
-                                label: 'List',
-                                icon: 'list'
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                label: 'Events',
-                icon: 'calendar',
-                items: [
-                    {
-                        label: 'Edit',
-                        icon: 'pencil',
-                        items: [
-                            { label: 'Save', icon: 'save' },
-                            { label: 'Update', icon: 'refresh-cw' },
-                        ]
-                    },
-                    {
-                        label: 'Archived',
-                        icon: 'archive',
-                        items: [
-                            { label: 'Remove', icon: 'trash' }
-                        ]
-                    }
-                ]
-            },
-            {
-                label: 'Quit',
-                icon: 'power'
             }
         ];
     }
 }`;
 
+  inputsConfig: MenubarInputRow[] = [
+    {
+      name: 'model',
+      type: 'MenuItem[]',
+      default: '[]',
+      descriptionKey: 'components.menu.menubar.apiInputs.model.desc',
+    },
+    {
+      name: 'style',
+      type: 'object',
+      default: 'null',
+      descriptionKey: 'components.menu.menubar.apiInputs.style.desc',
+    },
+    {
+      name: 'styleClass',
+      type: 'string',
+      default: "''",
+      descriptionKey: 'components.menu.menubar.apiInputs.styleClass.desc',
+    },
+  ];
+
+  outputsConfig: MenubarOutputRow[] = [
+    {
+      name: 'command',
+      type: '(event: { originalEvent: Event, item: MenuItem }) => void',
+      descriptionKey: 'components.menu.menubar.apiOutputs.command.desc',
+    },
+  ];
+
   ngOnInit() {
     this.items = [
       {
-        label: 'File',
+        label: this.t('components.menu.menubar.items.file'),
         icon: 'file',
         items: [
           {
-            label: 'New',
+            label: this.t('components.menu.menubar.items.new'),
             icon: 'plus',
             items: [
-              { label: 'Bookmark', icon: 'bookmark' },
-              { label: 'Video', icon: 'video' },
+              {
+                label: this.t('components.menu.menubar.items.bookmark'),
+                icon: 'bookmark',
+              },
+              { label: this.t('components.menu.menubar.items.video'), icon: 'video' },
             ],
           },
           {
-            label: 'Delete',
+            label: this.t('components.menu.menubar.items.delete'),
             icon: 'trash',
             command: () =>
               this.toastService.add({
                 type: 'info',
-                title: 'Deleted',
-                message: 'Item deleted',
+                title: this.t('components.menu.menubar.toast.deleted.title'),
+                message: this.t('components.menu.menubar.toast.deleted.message'),
                 duration: 3000,
               }),
           },
           { separator: true },
           {
-            label: 'Export',
+            label: this.t('components.menu.menubar.items.export'),
             icon: 'external-link',
             command: () =>
               this.toastService.add({
                 type: 'success',
-                title: 'Exported',
-                message: 'Data exported',
+                title: this.t('components.menu.menubar.toast.exported.title'),
+                message: this.t('components.menu.menubar.toast.exported.message'),
                 duration: 3000,
               }),
           },
         ],
       },
       {
-        label: 'Edit',
+        label: this.t('components.menu.menubar.items.edit'),
         icon: 'pencil',
         items: [
-          { label: 'Left', icon: 'align-start-vertical' },
-          { label: 'Right', icon: 'align-end-vertical' },
-          { label: 'Center', icon: 'align-center-vertical' },
-          { label: 'Justify', icon: 'align-vertical-justify-center' },
+          { label: this.t('components.menu.menubar.items.left'), icon: 'align-start-vertical' },
+          { label: this.t('components.menu.menubar.items.right'), icon: 'align-end-vertical' },
+          { label: this.t('components.menu.menubar.items.center'), icon: 'align-center-vertical' },
+          {
+            label: this.t('components.menu.menubar.items.justify'),
+            icon: 'align-vertical-justify-center',
+          },
         ],
       },
       {
-        label: 'Users',
+        label: this.t('components.menu.menubar.items.users'),
         icon: 'user',
         items: [
           {
-            label: 'New',
+            label: this.t('components.menu.menubar.items.new'),
             icon: 'user-plus',
           },
           {
-            label: 'Delete',
+            label: this.t('components.menu.menubar.items.delete'),
             icon: 'user-minus',
           },
           {
-            label: 'Search',
+            label: this.t('components.menu.menubar.items.search'),
             icon: 'users',
             items: [
               {
-                label: 'Filter',
+                label: this.t('components.menu.menubar.items.filter'),
                 icon: 'funnel',
-                items: [{ label: 'Print', icon: 'printer' }],
+                items: [{ label: this.t('components.menu.menubar.items.print'), icon: 'printer' }],
               },
               {
-                label: 'List',
+                label: this.t('components.menu.menubar.items.list'),
                 icon: 'list',
               },
             ],
@@ -215,26 +202,26 @@ export class ViewMenubar implements OnInit {
         ],
       },
       {
-        label: 'Events',
+        label: this.t('components.menu.menubar.items.events'),
         icon: 'calendar',
         items: [
           {
-            label: 'Edit',
+            label: this.t('components.menu.menubar.items.edit'),
             icon: 'pencil',
             items: [
-              { label: 'Save', icon: 'save' },
-              { label: 'Update', icon: 'refresh-cw' },
+              { label: this.t('components.menu.menubar.items.save'), icon: 'save' },
+              { label: this.t('components.menu.menubar.items.update'), icon: 'refresh-cw' },
             ],
           },
           {
-            label: 'Archived',
+            label: this.t('components.menu.menubar.items.archived'),
             icon: 'archive',
-            items: [{ label: 'Remove', icon: 'trash' }],
+            items: [{ label: this.t('components.menu.menubar.items.remove'), icon: 'trash' }],
           },
         ],
       },
       {
-        label: 'Quit',
+        label: this.t('components.menu.menubar.items.quit'),
         icon: 'power',
       },
     ];

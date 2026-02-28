@@ -1,27 +1,24 @@
 <div class="container">
   <div class="header">
-    <h1>Galleria</h1>
-    <p>
-      Componente avanzado para mostrar galerías de imágenes con thumbnails y
-      navegación.
-    </p>
+    <h1>{{ t('components.media.galleria.title') }}</h1>
+    <p>{{ t('components.media.galleria.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ t('components.media.galleria.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
-        <pre><code [highlight]="'import { MagaryGalleria } from \'ng-magary\';'" language="typescript"></code></pre>
+        <pre><code [highlight]="importExample" language="typescript"></code></pre>
       </div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Básico (Thumbnails Abajo)</h2>
-      <p>Configuración estándar con tira de imágenes en la parte inferior.</p>
+      <h2>{{ t('components.media.galleria.basic.title') }}</h2>
+      <p>{{ t('components.media.galleria.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div
@@ -75,8 +72,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Thumbnails a la Izquierda</h2>
-      <p>La tira de imágenes se posiciona verticalmente a la izquierda.</p>
+      <h2>{{ t('components.media.galleria.left.title') }}</h2>
+      <p>{{ t('components.media.galleria.left.desc') }}</p>
     </div>
     <div class="section-content">
       <div
@@ -115,8 +112,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Indicadores (Sin Thumbnails)</h2>
-      <p>Navegación mediante indicadores circulares superpuestos.</p>
+      <h2>{{ t('components.media.galleria.indicators.title') }}</h2>
+      <p>{{ t('components.media.galleria.indicators.desc') }}</p>
     </div>
     <div class="section-content">
       <div
@@ -155,8 +152,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>AutoPlay & Circular</h2>
-      <p>Pase de diapositivas automático con bucle infinito.</p>
+      <h2>{{ t('components.media.galleria.autoplay.title') }}</h2>
+      <p>{{ t('components.media.galleria.autoplay.desc') }}</p>
     </div>
     <div class="section-content">
       <div
@@ -197,66 +194,33 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ t('components.media.galleria.apiInputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Predeterminado</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>value</code></td>
-            <td><code>unknown[]</code></td>
-            <td><code>[]</code></td>
-            <td>Array de objetos a mostrar.</td>
-          </tr>
-          <tr>
-            <td><code>showThumbnails</code></td>
-            <td><code>boolean</code></td>
-            <td><code>true</code></td>
-            <td>Muestra la cinta de miniaturas.</td>
-          </tr>
-          <tr>
-            <td><code>showIndicators</code></td>
-            <td><code>boolean</code></td>
-            <td><code>false</code></td>
-            <td>Muestra los indicadores de página.</td>
-          </tr>
-          <tr>
-            <td><code>autoPlay</code></td>
-            <td><code>boolean</code></td>
-            <td><code>false</code></td>
-            <td>Inicia el pase de diapositivas automáticamente.</td>
-          </tr>
-          <tr>
-            <td><code>itemTemplateRef</code></td>
-            <td><code>TemplateRef</code></td>
-            <td><code>null</code></td>
-            <td>Referencia a la plantilla del item principal.</td>
-          </tr>
-          <tr>
-            <td><code>thumbnailTemplateRef</code></td>
-            <td><code>TemplateRef</code></td>
-            <td><code>null</code></td>
-            <td>Referencia a la plantilla de la miniatura.</td>
-          </tr>
-          <tr>
-            <td><code>width</code></td>
-            <td><code>string</code></td>
-            <td><code>100%</code></td>
-            <td>Ancho máximo del componente (ej. '640px').</td>
-          </tr>
-        </tbody>
+          <thead>
+            <tr>
+              <th>{{ t('components.media.galleria.apiInputs.header.name') }}</th>
+              <th>{{ t('components.media.galleria.apiInputs.header.type') }}</th>
+              <th>{{ t('components.media.galleria.apiInputs.header.default') }}</th>
+              <th>
+                {{ t('components.media.galleria.apiInputs.header.description') }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of inputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
+          </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
-

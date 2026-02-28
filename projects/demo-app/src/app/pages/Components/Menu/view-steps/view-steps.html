@@ -1,22 +1,15 @@
 <div class="container fade-in">
   <div class="header">
-    <h1 class="fade-in">MagarySteps</h1>
-    <p class="fade-in">
-      Indicador de progreso que guía a los usuarios a través de una secuencia de
-      pasos.
-    </p>
+    <h1 class="fade-in">{{ t('components.menu.steps.title') }}</h1>
+    <p class="fade-in">{{ t('components.menu.steps.subtitle') }}</p>
   </div>
 
   <div class="content">
     <div class="components-grid">
-      <!-- Example 1: Linear (Read Only) -->
       <div class="section">
         <div class="section-header">
-          <h2>Secuencial (Linear)</h2>
-          <p>
-            Los pasos son de solo lectura (<code>readonly="true"</code>) y la
-            navegación se controla externamente (botones).
-          </p>
+          <h2>{{ t('components.menu.steps.linear.title') }}</h2>
+          <p>{{ t('components.menu.steps.linear.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -41,7 +34,7 @@
                 "
               >
                 <magary-button
-                  label="Back"
+                  [label]="t('components.menu.steps.navigation.back')"
                   icon="chevron-left"
                   [iconSize]="15"
                   [rounded]="true"
@@ -50,7 +43,7 @@
                 >
                 </magary-button>
                 <magary-button
-                  label="Next"
+                  [label]="t('components.menu.steps.navigation.next')"
                   icon="chevron-right"
                   [iconSize]="15"
                   iconPos="right"
@@ -80,13 +73,10 @@
         </div>
       </div>
 
-      <!-- Example 2: Interactive -->
       <div class="section">
         <div class="section-header">
-          <h2>Interactivo</h2>
-          <p>
-            Steps permite navegar entre pasos si <code>readonly</code> es falso.
-          </p>
+          <h2>{{ t('components.menu.steps.interactive.title') }}</h2>
+          <p>{{ t('components.menu.steps.interactive.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -136,13 +126,10 @@
         </div>
       </div>
 
-      <!-- Example 3: Vertical -->
       <div class="section">
         <div class="section-header">
-          <h2>Vertical</h2>
-          <p>
-            Orientación vertical usando <code>orientation="vertical"</code>.
-          </p>
+          <h2>{{ t('components.menu.steps.vertical.title') }}</h2>
+          <p>{{ t('components.menu.steps.vertical.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -152,7 +139,6 @@
             [backgroundColor]="'var(--surface-0)'"
           >
             <div style="padding: 2rem">
-              <!-- Flex container to show vertical steps clearly if full width -->
               <div style="max-width: 300px">
                 <magary-steps
                   [model]="items"
@@ -178,14 +164,10 @@
         </div>
       </div>
 
-      <!-- Example 4: Content (Wizard) -->
       <div class="section">
         <div class="section-header">
-          <h2>Contenido Dinámico (Wizard)</h2>
-          <p>
-            Ejemplo de un "Wizard" completo donde el contenido cambia según el
-            paso activo.
-          </p>
+          <h2>{{ t('components.menu.steps.content.title') }}</h2>
+          <p>{{ t('components.menu.steps.content.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -195,14 +177,12 @@
             [backgroundColor]="'var(--surface-0)'"
           >
             <div style="padding: 2rem">
-              <!-- Stepper ReadOnly (Controlled by logic) -->
               <magary-steps
                 [model]="items"
                 [activeIndex]="activeIndexContent"
                 [readonly]="true"
               ></magary-steps>
 
-              <!-- Dynamic Content Area -->
               <div
                 class="step-content"
                 style="
@@ -215,9 +195,11 @@
               >
                 <ng-container [ngSwitch]="activeIndexContent">
                   <div *ngSwitchCase="0" class="fade-in">
-                    <h3 style="margin-top: 0">Información Personal</h3>
+                    <h3 style="margin-top: 0">
+                      {{ t('components.menu.steps.content.step1.title') }}
+                    </h3>
                     <p style="color: var(--text-secondary)">
-                      Ingrese sus datos personales para comenzar el proceso.
+                      {{ t('components.menu.steps.content.step1.desc') }}
                     </p>
                     <div
                       style="
@@ -230,13 +212,15 @@
                         color: var(--text-tertiary);
                       "
                     >
-                      Formulario Paso 1
+                      {{ t('components.menu.steps.content.step1.placeholder') }}
                     </div>
                   </div>
                   <div *ngSwitchCase="1" class="fade-in">
-                    <h3 style="margin-top: 0">Selección de Asiento</h3>
+                    <h3 style="margin-top: 0">
+                      {{ t('components.menu.steps.content.step2.title') }}
+                    </h3>
                     <p style="color: var(--text-secondary)">
-                      Elija su ubicación preferida en el mapa.
+                      {{ t('components.menu.steps.content.step2.desc') }}
                     </p>
                     <div
                       style="
@@ -249,13 +233,15 @@
                         color: var(--text-tertiary);
                       "
                     >
-                      Mapa de Asientos
+                      {{ t('components.menu.steps.content.step2.placeholder') }}
                     </div>
                   </div>
                   <div *ngSwitchCase="2" class="fade-in">
-                    <h3 style="margin-top: 0">Pago</h3>
+                    <h3 style="margin-top: 0">
+                      {{ t('components.menu.steps.content.step3.title') }}
+                    </h3>
                     <p style="color: var(--text-secondary)">
-                      Seleccione su método de pago seguro.
+                      {{ t('components.menu.steps.content.step3.desc') }}
                     </p>
                     <div
                       style="
@@ -268,13 +254,15 @@
                         color: var(--text-tertiary);
                       "
                     >
-                      Pasarela de Pago
+                      {{ t('components.menu.steps.content.step3.placeholder') }}
                     </div>
                   </div>
                   <div *ngSwitchCase="3" class="fade-in">
-                    <h3 style="margin-top: 0">Confirmación</h3>
+                    <h3 style="margin-top: 0">
+                      {{ t('components.menu.steps.content.step4.title') }}
+                    </h3>
                     <p style="color: var(--text-secondary)">
-                      Revise los detalles antes de finalizar.
+                      {{ t('components.menu.steps.content.step4.desc') }}
                     </p>
                     <div
                       style="
@@ -287,13 +275,12 @@
                         color: var(--text-tertiary);
                       "
                     >
-                      Resumen de Compra
+                      {{ t('components.menu.steps.content.step4.placeholder') }}
                     </div>
                   </div>
                 </ng-container>
               </div>
 
-              <!-- Navigation Buttons -->
               <div
                 style="
                   display: flex;
@@ -303,7 +290,7 @@
                 "
               >
                 <magary-button
-                  label="Back"
+                  [label]="t('components.menu.steps.navigation.back')"
                   icon="chevron-left"
                   [iconSize]="15"
                   [rounded]="true"
@@ -312,7 +299,7 @@
                 >
                 </magary-button>
                 <magary-button
-                  label="Next"
+                  [label]="t('components.menu.steps.navigation.next')"
                   icon="chevron-right"
                   [iconSize]="15"
                   iconPos="right"
@@ -342,76 +329,60 @@
         </div>
       </div>
 
-      <!-- API Inputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Propiedades (Inputs)</h2>
-          <p>Atributos para configurar el componente.</p>
+          <h2>{{ t('components.menu.steps.apiInputs.title') }}</h2>
+          <p>{{ t('components.menu.steps.apiInputs.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Por Defecto</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.menu.steps.apiInputs.header.name') }}</th>
+                  <th>{{ t('components.menu.steps.apiInputs.header.type') }}</th>
+                  <th>{{ t('components.menu.steps.apiInputs.header.default') }}</th>
+                  <th>{{ t('components.menu.steps.apiInputs.header.description') }}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><code>model</code></td>
-                  <td><code>StepsItem[]</code></td>
-                  <td><code>null</code></td>
-                  <td>Array de pasos.</td>
-                </tr>
-                <tr>
-                  <td><code>activeIndex</code></td>
-                  <td><code>number</code></td>
-                  <td><code>0</code></td>
-                  <td>Índice del paso activo.</td>
-                </tr>
-                <tr>
-                  <td><code>readonly</code></td>
-                  <td><code>boolean</code></td>
-                  <td><code>true</code></td>
-                  <td>Si es true, no permite clickear los pasos.</td>
-                </tr>
-                <tr>
-                  <td><code>orientation</code></td>
-                  <td><code>'horizontal' | 'vertical'</code></td>
-                  <td><code>'horizontal'</code></td>
-                  <td>Orientación del componente.</td>
-                </tr>
+                @for (row of inputsConfig; track row.name) {
+                  <tr>
+                    <td><code>{{ row.name }}</code></td>
+                    <td><code>{{ row.type }}</code></td>
+                    <td><code>{{ row.default }}</code></td>
+                    <td>{{ t(row.descriptionKey) }}</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- API Outputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Eventos (Outputs)</h2>
-          <p>Eventos emitidos por el componente.</p>
+          <h2>{{ t('components.menu.steps.apiOutputs.title') }}</h2>
+          <p>{{ t('components.menu.steps.apiOutputs.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.menu.steps.apiOutputs.header.name') }}</th>
+                  <th>{{ t('components.menu.steps.apiOutputs.header.type') }}</th>
+                  <th>{{ t('components.menu.steps.apiOutputs.header.description') }}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><code>activeIndexChange</code></td>
-                  <td><code>EventEmitter&lt;number&gt;</code></td>
-                  <td>Emitido cuando cambia el paso activo.</td>
-                </tr>
+                @for (row of outputsConfig; track row.name) {
+                  <tr>
+                    <td><code>{{ row.name }}</code></td>
+                    <td><code>{{ row.type }}</code></td>
+                    <td>{{ t(row.descriptionKey) }}</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>

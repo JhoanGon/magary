@@ -1,4 +1,11 @@
-import { Component, OnInit, NgModule, computed, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  NgModule,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -14,6 +21,8 @@ import {
   MagaryTag,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 import {
   LucideAngularModule,
   Search,
@@ -54,6 +63,19 @@ interface CarouselProduct {
   rating: number;
 }
 
+type CarouselInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type CarouselOutputRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
+
 @Component({
   selector: 'app-view-carousel',
   standalone: true,
@@ -73,6 +95,9 @@ interface CarouselProduct {
   styleUrl: './view-carousel.scss',
 })
 export class ViewCarousel implements OnInit {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   products: CarouselProduct[] = [];
   responsiveOptions: CarouselResponsiveOptions[] = [];
   verticalResponsiveOptions: CarouselResponsiveOptions[] = [];
@@ -510,4 +535,125 @@ currentIndicatorStyle = signal<CarouselIndicatorStyle>('dots');
 
 navPositions: CarouselNavPosition[] = ['default', 'outside'];
 currentNavPosition = signal<CarouselNavPosition>('outside');`;
+
+  readonly inputRows: CarouselInputRow[] = [
+    {
+      name: 'value',
+      type: 'unknown[]',
+      default: '[]',
+      descriptionKey: 'components.media.carousel.apiInputs.value.desc',
+    },
+    {
+      name: 'numVisible',
+      type: 'number',
+      default: '1',
+      descriptionKey: 'components.media.carousel.apiInputs.numVisible.desc',
+    },
+    {
+      name: 'numScroll',
+      type: 'number',
+      default: '1',
+      descriptionKey: 'components.media.carousel.apiInputs.numScroll.desc',
+    },
+    {
+      name: 'circular',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.media.carousel.apiInputs.circular.desc',
+    },
+    {
+      name: 'responsiveOptions',
+      type: 'CarouselResponsiveOptions[]',
+      default: '[]',
+      descriptionKey:
+        'components.media.carousel.apiInputs.responsiveOptions.desc',
+    },
+    {
+      name: 'indicatorStyle',
+      type: 'CarouselIndicatorStyle',
+      default: "'dots'",
+      descriptionKey: 'components.media.carousel.apiInputs.indicatorStyle.desc',
+    },
+    {
+      name: 'navPosition',
+      type: 'CarouselNavPosition',
+      default: "'default'",
+      descriptionKey: 'components.media.carousel.apiInputs.navPosition.desc',
+    },
+    {
+      name: 'autoplayInterval',
+      type: 'number',
+      default: '0',
+      descriptionKey:
+        'components.media.carousel.apiInputs.autoplayInterval.desc',
+    },
+    {
+      name: 'showNavigators',
+      type: 'boolean',
+      default: 'true',
+      descriptionKey:
+        'components.media.carousel.apiInputs.showNavigators.desc',
+    },
+    {
+      name: 'showIndicators',
+      type: 'boolean',
+      default: 'true',
+      descriptionKey:
+        'components.media.carousel.apiInputs.showIndicators.desc',
+    },
+    {
+      name: 'effect',
+      type: 'CarouselEffect',
+      default: "'slide'",
+      descriptionKey: 'components.media.carousel.apiInputs.effect.desc',
+    },
+    {
+      name: 'transitionDuration',
+      type: 'number',
+      default: '300',
+      descriptionKey:
+        'components.media.carousel.apiInputs.transitionDuration.desc',
+    },
+  ];
+
+  readonly outputRows: CarouselOutputRow[] = [
+    {
+      name: 'pageChange',
+      type: 'number',
+      descriptionKey: 'components.media.carousel.apiOutputs.pageChange.desc',
+    },
+    {
+      name: 'slideChange',
+      type: 'CarouselSlideEvent<T>',
+      descriptionKey: 'components.media.carousel.apiOutputs.slideChange.desc',
+    },
+    {
+      name: 'slideChanged',
+      type: 'CarouselSlideEvent<T>',
+      descriptionKey: 'components.media.carousel.apiOutputs.slideChanged.desc',
+    },
+    {
+      name: 'itemClick',
+      type: '{ item: T; index: number }',
+      descriptionKey: 'components.media.carousel.apiOutputs.itemClick.desc',
+    },
+    {
+      name: 'autoplayStart',
+      type: 'void',
+      descriptionKey: 'components.media.carousel.apiOutputs.autoplayStart.desc',
+    },
+    {
+      name: 'autoplayStop',
+      type: 'void',
+      descriptionKey: 'components.media.carousel.apiOutputs.autoplayStop.desc',
+    },
+  ];
+
+  getIndicatorStyleLabel(style: CarouselIndicatorStyle): string {
+    return this.t(`components.media.carousel.indicatorStyle.${style}` as DocsTextKey);
+  }
+
+  getNavPositionLabel(position: CarouselNavPosition): string {
+    return this.t(`components.media.carousel.navPosition.${position}` as DocsTextKey);
+  }
 }

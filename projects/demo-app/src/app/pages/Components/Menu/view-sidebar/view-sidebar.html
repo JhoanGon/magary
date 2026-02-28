@@ -1,13 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>MagarySidebar</h1>
-    <p>Sidebar para navegacion con secciones, colapso y bloque de usuario.</p>
+    <h1>{{ t('components.menu.sidebar.title') }}</h1>
+    <p>{{ t('components.menu.sidebar.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu modulo o componente standalone.</p>
+      <h2>{{ t('components.menu.sidebar.import.title') }}</h2>
+      <p>{{ t('components.menu.sidebar.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -18,11 +18,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Basico por Secciones</h2>
-      <p>
-        Configuracion orientada a dashboard: menu por secciones, colapso y
-        bloque de usuario completo.
-      </p>
+      <h2>{{ t('components.menu.sidebar.sections.title') }}</h2>
+      <p>{{ t('components.menu.sidebar.sections.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="preview-scroll">
@@ -31,11 +28,11 @@
             [sections]="sectionsDemo"
             [showLogo]="true"
             [logoSrc]="'assets/magary_logo.png'"
-            [appTitle]="'Magary Docs'"
+            [appTitle]="t('components.menu.sidebar.menuTitle.docs')"
             [appTitleStyle]="appTitleStyle"
             [showUserSection]="true"
-            [userName]="'Juan Perez'"
-            [userEmail]="'juan@empresa.com'"
+            [userName]="t('components.menu.sidebar.user.name')"
+            [userEmail]="t('components.menu.sidebar.user.email')"
             [avatarConfig]="{
               type: 'label',
               label: 'JP',
@@ -46,23 +43,28 @@
             (onLogout)="onLogout('sections')"
           ></magary-sidebar>
           <div class="shell-content">
-            <h3>Dashboard</h3>
-            <p>
-              Area de contenido para validar la convivencia del sidebar con la
-              app principal.
-            </p>
+            <h3>{{ t('components.menu.sidebar.sections.shell.title') }}</h3>
+            <p>{{ t('components.menu.sidebar.sections.shell.desc') }}</p>
             <div class="content-cards">
               <article class="content-card">
-                <h4>Ventas</h4>
-                <p>+12.4% vs semana anterior</p>
+                <h4>{{ t('components.menu.sidebar.sections.cards.sales') }}</h4>
+                <p>{{ t('components.menu.sidebar.sections.cards.salesValue') }}</p>
               </article>
               <article class="content-card">
-                <h4>Usuarios activos</h4>
-                <p>1,248 en las ultimas 24h</p>
+                <h4>
+                  {{ t('components.menu.sidebar.sections.cards.activeUsers') }}
+                </h4>
+                <p>
+                  {{ t('components.menu.sidebar.sections.cards.activeUsersValue') }}
+                </p>
               </article>
               <article class="content-card">
-                <h4>Estado sistema</h4>
-                <p>Operativo sin incidencias.</p>
+                <h4>
+                  {{ t('components.menu.sidebar.sections.cards.systemStatus') }}
+                </h4>
+                <p>
+                  {{ t('components.menu.sidebar.sections.cards.systemStatusValue') }}
+                </p>
               </article>
             </div>
           </div>
@@ -88,21 +90,18 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Menu Unico + Brand</h2>
-      <p>
-        Variante compacta enfocada en navegacion simple y branding, sin footer
-        de usuario.
-      </p>
+      <h2>{{ t('components.menu.sidebar.menu.title') }}</h2>
+      <p>{{ t('components.menu.sidebar.menu.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="preview-scroll">
         <div class="sidebar-shell">
           <magary-sidebar
             [menu]="menuDemo"
-            [menuTitle]="'Navegacion'"
+            [menuTitle]="t('components.menu.sidebar.menuTitle.navigation')"
             [showLogo]="true"
             [logoSrc]="'assets/magary_logo.png'"
-            [appTitle]="'Menu Unico'"
+            [appTitle]="t('components.menu.sidebar.menuTitle.single')"
             [appTitleStyle]="appTitleStyle"
             [collapsible]="false"
             [showToggle]="false"
@@ -114,15 +113,12 @@
             [menuHoverColor]="'var(--surface-400)'"
           ></magary-sidebar>
           <div class="shell-content">
-            <h3>Vista Catalogo</h3>
-            <p>
-              Esta variante usa <code>menu</code> + <code>menuTitle</code> en
-              lugar de <code>sections</code>, ideal para flujos lineales.
-            </p>
+            <h3>{{ t('components.menu.sidebar.menu.shell.title') }}</h3>
+            <p>{{ t('components.menu.sidebar.menu.shell.desc') }}</p>
             <ul class="content-list">
-              <li>Modo compacto para apps administrativas.</li>
-              <li>Logo de marca configurable por posicion.</li>
-              <li>Configuracion minima para empezar rapido.</li>
+              <li>{{ t('components.menu.sidebar.menu.shell.item1') }}</li>
+              <li>{{ t('components.menu.sidebar.menu.shell.item2') }}</li>
+              <li>{{ t('components.menu.sidebar.menu.shell.item3') }}</li>
             </ul>
           </div>
         </div>
@@ -147,19 +143,18 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Footer de Usuario Opcional</h2>
-      <p>
-        Controla cada parte del footer (avatar, nombre, email y logout) para
-        adaptar el sidebar a cada producto.
-      </p>
+      <h2>{{ t('components.menu.sidebar.footer.title') }}</h2>
+      <p>{{ t('components.menu.sidebar.footer.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="event-status">
         <div class="status-item">
-          <strong>onLogout count:</strong> {{ logoutCount }}
+          <strong>{{ t('components.menu.sidebar.footer.status.count') }}:</strong>
+          {{ logoutCount }}
         </div>
         <div class="status-item">
-          <strong>Ultimo modo:</strong> {{ lastLogoutMode }}
+          <strong>{{ t('components.menu.sidebar.footer.status.mode') }}:</strong>
+          {{ lastLogoutMode }}
         </div>
       </div>
 
@@ -167,10 +162,10 @@
         <div class="sidebar-shell">
           <magary-sidebar
             [menu]="menuDemo"
-            [menuTitle]="'Cuenta'"
+            [menuTitle]="t('components.menu.sidebar.menuTitle.account')"
             [showLogo]="true"
             [logoSrc]="'assets/magary_logo.png'"
-            [appTitle]="'Perfil'"
+            [appTitle]="t('components.menu.sidebar.menuTitle.profile')"
             [appTitleStyle]="appTitleStyle"
             [collapsible]="false"
             [showToggle]="false"
@@ -182,16 +177,21 @@
             (onLogout)="onLogout('footer')"
           ></magary-sidebar>
           <div class="shell-content">
-            <h3>Configuracion de Footer</h3>
-            <p>
-              En este ejemplo solo se muestra el boton de logout, ocultando
-              avatar, nombre y email.
-            </p>
+            <h3>{{ t('components.menu.sidebar.footer.shell.title') }}</h3>
+            <p>{{ t('components.menu.sidebar.footer.shell.desc') }}</p>
             <ul class="content-list">
-              <li><code>showUserAvatar=false</code></li>
-              <li><code>showUserName=false</code></li>
-              <li><code>showUserEmail=false</code></li>
-              <li><code>showLogoutButton=true</code></li>
+              <li>
+                <code>{{ t('components.menu.sidebar.footer.shell.itemAvatar') }}</code>
+              </li>
+              <li>
+                <code>{{ t('components.menu.sidebar.footer.shell.itemName') }}</code>
+              </li>
+              <li>
+                <code>{{ t('components.menu.sidebar.footer.shell.itemEmail') }}</code>
+              </li>
+              <li>
+                <code>{{ t('components.menu.sidebar.footer.shell.itemLogout') }}</code>
+              </li>
             </ul>
           </div>
         </div>
@@ -216,45 +216,24 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades Clave</h2>
-      <p>Inputs mas usados para configurar rapido el comportamiento del sidebar.</p>
+      <h2>{{ t('components.menu.sidebar.keyProps.title') }}</h2>
+      <p>{{ t('components.menu.sidebar.keyProps.desc') }}</p>
     </div>
     <div class="section-content">
       <table class="api-table">
         <thead>
           <tr>
-            <th>Propiedad</th>
-            <th>Uso recomendado</th>
+            <th>{{ t('components.menu.sidebar.keyProps.header.property') }}</th>
+            <th>{{ t('components.menu.sidebar.keyProps.header.usage') }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><code>sections</code> / <code>menu</code></td>
-            <td>Elige una sola estrategia de navegacion por pantalla.</td>
-          </tr>
-          <tr>
-            <td><code>collapsible</code> + <code>showToggle</code></td>
-            <td>Controla si se puede plegar el sidebar en desktop.</td>
-          </tr>
-          <tr>
-            <td><code>showUserSection</code></td>
-            <td>Activa o desactiva todo el bloque inferior de usuario.</td>
-          </tr>
-          <tr>
-            <td>
-              <code>showUserAvatar</code>, <code>showUserName</code>,
-              <code>showUserEmail</code>
-            </td>
-            <td>Permiten mostrar solo los datos que tu producto necesita.</td>
-          </tr>
-          <tr>
-            <td><code>showLogoutButton</code></td>
-            <td>Deja solo accion de cierre de sesion si quieres un footer minimo.</td>
-          </tr>
-          <tr>
-            <td><code>showBrandLogo</code> + <code>brandLogoPosition</code></td>
-            <td>Agrega branding secundario en top/bottom/center.</td>
-          </tr>
+          @for (row of keyPropsRows; track row.usageKey) {
+            <tr>
+              <td [innerHTML]="row.property"></td>
+              <td>{{ t(row.usageKey) }}</td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
@@ -262,146 +241,28 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (API completa)</h2>
-      <p>Inputs principales para configurar comportamiento y look & feel.</p>
+      <h2>{{ t('components.menu.sidebar.api.title') }}</h2>
+      <p>{{ t('components.menu.sidebar.api.desc') }}</p>
     </div>
     <div class="section-content">
       <table class="api-table">
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Default</th>
-            <th>Descripcion</th>
+            <th>{{ t('components.menu.sidebar.api.header.name') }}</th>
+            <th>{{ t('components.menu.sidebar.api.header.type') }}</th>
+            <th>{{ t('components.menu.sidebar.api.header.default') }}</th>
+            <th>{{ t('components.menu.sidebar.api.header.description') }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><code>sections</code></td>
-            <td><code>SidebarSection[]</code></td>
-            <td><code>[]</code></td>
-            <td>Modo por secciones (usa paneles independientes).</td>
-          </tr>
-          <tr>
-            <td><code>menu</code></td>
-            <td><code>MenuItem[]</code></td>
-            <td><code>[]</code></td>
-            <td>Modo menu unico cuando <code>sections</code> esta vacio.</td>
-          </tr>
-          <tr>
-            <td><code>menuTitle</code></td>
-            <td><code>string</code></td>
-            <td><code>'Menu'</code></td>
-            <td>Titulo para el modo <code>menu</code>.</td>
-          </tr>
-          <tr>
-            <td><code>showUserSection</code></td>
-            <td><code>boolean</code></td>
-            <td><code>false</code></td>
-            <td>Habilita el bloque inferior del usuario.</td>
-          </tr>
-          <tr>
-            <td><code>showUserAvatar</code></td>
-            <td><code>boolean</code></td>
-            <td><code>true</code></td>
-            <td>Muestra/oculta el avatar del bloque de usuario.</td>
-          </tr>
-          <tr>
-            <td><code>showUserName</code></td>
-            <td><code>boolean</code></td>
-            <td><code>true</code></td>
-            <td>Muestra/oculta el nombre del usuario.</td>
-          </tr>
-          <tr>
-            <td><code>showUserEmail</code></td>
-            <td><code>boolean</code></td>
-            <td><code>true</code></td>
-            <td>Muestra/oculta el email del usuario.</td>
-          </tr>
-          <tr>
-            <td><code>showLogoutButton</code></td>
-            <td><code>boolean</code></td>
-            <td><code>true</code></td>
-            <td>Muestra/oculta el boton "Cerrar sesion".</td>
-          </tr>
-          <tr>
-            <td><code>userName</code></td>
-            <td><code>string</code></td>
-            <td><code>'John Doe'</code></td>
-            <td>Nombre mostrado en el bloque de usuario.</td>
-          </tr>
-          <tr>
-            <td><code>userEmail</code></td>
-            <td><code>string</code></td>
-            <td><code>'user@example.com'</code></td>
-            <td>Email mostrado en el bloque de usuario.</td>
-          </tr>
-          <tr>
-            <td><code>avatarConfig</code></td>
-            <td><code>AvatarConfig</code></td>
-            <td><code>{{ '{' }} type: 'label' {{ '}' }}</code></td>
-            <td>Configura avatar (tipo, shape, size, badge, etc).</td>
-          </tr>
-          <tr>
-            <td><code>showLogo</code></td>
-            <td><code>boolean</code></td>
-            <td><code>true</code></td>
-            <td>Muestra logo principal en header.</td>
-          </tr>
-          <tr>
-            <td><code>logoSrc</code></td>
-            <td><code>string</code></td>
-            <td><code>'assets/logo.svg'</code></td>
-            <td>Ruta del logo principal.</td>
-          </tr>
-          <tr>
-            <td><code>appTitle</code></td>
-            <td><code>string</code></td>
-            <td><code>'PRIMENG'</code></td>
-            <td>Titulo de la aplicacion en header.</td>
-          </tr>
-          <tr>
-            <td><code>showBrandLogo</code></td>
-            <td><code>boolean</code></td>
-            <td><code>false</code></td>
-            <td>Muestra logo de marca en top/bottom/center.</td>
-          </tr>
-          <tr>
-            <td><code>brandLogoPosition</code></td>
-            <td><code>'top' | 'bottom' | 'center'</code></td>
-            <td><code>'bottom'</code></td>
-            <td>Posicion del logo de marca.</td>
-          </tr>
-          <tr>
-            <td><code>menuBackgroundColor</code></td>
-            <td><code>string</code></td>
-            <td><code>'var(--surface-50)'</code></td>
-            <td>Fondo de los paneles de menu.</td>
-          </tr>
-          <tr>
-            <td><code>menuTextColor</code></td>
-            <td><code>string</code></td>
-            <td><code>'var(--text-primary)'</code></td>
-            <td>Color de texto de items y titulos.</td>
-          </tr>
-          <tr>
-            <td><code>menuHoverColor</code></td>
-            <td><code>string</code></td>
-            <td><code>'var(--surface-100)'</code></td>
-            <td>Color hover para items interactivos.</td>
-          </tr>
-          <tr>
-            <td><code>collapsible</code></td>
-            <td><code>boolean</code></td>
-            <td><code>true</code></td>
-            <td>Permite colapsar/expandir sidebar en desktop.</td>
-          </tr>
-          <tr>
-            <td><code>showToggle</code></td>
-            <td><code>boolean</code></td>
-            <td><code>true</code></td>
-            <td>Muestra boton de toggle en header.</td>
-          </tr>
+          @for (row of apiRows; track row.name) {
+            <tr>
+              <td><code>{{ row.name }}</code></td>
+              <td><code>{{ row.type }}</code></td>
+              <td><code>{{ row.default }}</code></td>
+              <td>{{ t(row.descriptionKey) }}</td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
@@ -409,32 +270,26 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos emitidos por el componente.</p>
+      <h2>{{ t('components.menu.sidebar.outputs.title') }}</h2>
+      <p>{{ t('components.menu.sidebar.outputs.desc') }}</p>
     </div>
     <div class="section-content">
       <table class="api-table">
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Descripcion</th>
+            <th>{{ t('components.menu.sidebar.outputs.header.name') }}</th>
+            <th>{{ t('components.menu.sidebar.outputs.header.type') }}</th>
+            <th>{{ t('components.menu.sidebar.outputs.header.description') }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><code>onLogout</code></td>
-            <td><code>void</code></td>
-            <td>Se emite cuando el usuario pulsa "Cerrar sesion".</td>
-          </tr>
-          <tr>
-            <td><code>closeSidebar</code></td>
-            <td><code>void</code></td>
-            <td>
-              Se emite cuando el sidebar mobile se cierra (backdrop, boton
-              close o cierre programatico).
-            </td>
-          </tr>
+          @for (row of outputsRows; track row.name) {
+            <tr>
+              <td><code>{{ row.name }}</code></td>
+              <td><code>{{ row.type }}</code></td>
+              <td>{{ t(row.descriptionKey) }}</td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
@@ -442,50 +297,28 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Estructura Esperada</h2>
-      <p>Tipos utiles para poblar el sidebar correctamente.</p>
+      <h2>{{ t('components.menu.sidebar.structure.title') }}</h2>
+      <p>{{ t('components.menu.sidebar.structure.desc') }}</p>
     </div>
     <div class="section-content">
       <ul>
-        <li>
-          <code>SidebarSection</code>: <code>title</code>, <code>icon</code>,
-          <code>items</code> y overrides opcionales de color.
-        </li>
-        <li>
-          <code>MenuItem</code>: <code>label</code>, <code>icon</code>,
-          <code>route</code>, <code>children</code>, <code>disabled</code>.
-        </li>
-        <li>
-          <code>AvatarConfig</code>: <code>type</code> (<code>image</code>,
-          <code>label</code>, <code>icon</code>) mas size/shape/badge.
-        </li>
+        @for (item of structureItems; track item) {
+          <li>{{ t(item) }}</li>
+        }
       </ul>
     </div>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Accesibilidad y Responsive</h2>
-      <p>Recomendaciones practicas para una UX solida.</p>
+      <h2>{{ t('components.menu.sidebar.a11y.title') }}</h2>
+      <p>{{ t('components.menu.sidebar.a11y.desc') }}</p>
     </div>
     <div class="section-content">
       <ul class="accessibility-list">
-        <li>
-          <strong>Mobile:</strong> usa el boton hamburguesa y backdrop para
-          cierre rapido.
-        </li>
-        <li>
-          <strong>Navegacion:</strong> define labels cortos y jerarquia clara
-          en cada seccion.
-        </li>
-        <li>
-          <strong>Contraste:</strong> valida colores de
-          <code>menuTextColor</code>/<code>menuHoverColor</code>.
-        </li>
-        <li>
-          <strong>Densidad:</strong> en sidebars largos combina secciones y
-          submenu para reducir scroll.
-        </li>
+        @for (item of a11yItems; track item) {
+          <li>{{ t(item) }}</li>
+        }
       </ul>
     </div>
   </div>

@@ -1,6 +1,6 @@
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   OnInit,
   inject,
 } from '@angular/core';
@@ -13,6 +13,21 @@ import {
   MagaryToastService,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type SlideMenuInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type SlideMenuOutputRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'app-view-slidemenu',
@@ -30,6 +45,8 @@ import { Highlight } from 'ngx-highlightjs';
 })
 export class ViewSlideMenu implements OnInit {
   private toastService = inject(MagaryToastService);
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
 
   items: MenuItem[] = [];
 
@@ -60,73 +77,126 @@ export class ViewSlideMenu implements OnInit {
       ];
   }`;
 
+  inputsConfig: SlideMenuInputRow[] = [
+    {
+      name: 'model',
+      type: 'MenuItem[]',
+      default: '[]',
+      descriptionKey: 'components.menu.slidemenu.apiInputs.model.desc',
+    },
+    {
+      name: 'menuWidth',
+      type: 'number | string',
+      default: '300',
+      descriptionKey: 'components.menu.slidemenu.apiInputs.menuWidth.desc',
+    },
+    {
+      name: 'viewportHeight',
+      type: 'number | string',
+      default: '400',
+      descriptionKey: 'components.menu.slidemenu.apiInputs.viewportHeight.desc',
+    },
+    {
+      name: 'style',
+      type: 'object',
+      default: 'null',
+      descriptionKey: 'components.menu.slidemenu.apiInputs.style.desc',
+    },
+    {
+      name: 'styleClass',
+      type: 'string',
+      default: "''",
+      descriptionKey: 'components.menu.slidemenu.apiInputs.styleClass.desc',
+    },
+  ];
+
+  outputsConfig: SlideMenuOutputRow[] = [
+    {
+      name: 'command',
+      type: '(event) => void',
+      descriptionKey: 'components.menu.slidemenu.apiOutputs.command.desc',
+    },
+  ];
+
   ngOnInit() {
     this.items = [
       {
-        label: 'Files',
+        label: this.t('components.menu.slidemenu.items.files'),
         icon: 'file',
         items: [
           {
-            label: 'New',
+            label: this.t('components.menu.slidemenu.items.new'),
             icon: 'plus',
             items: [
               {
-                label: 'Video',
+                label: this.t('components.menu.slidemenu.items.video'),
                 icon: 'video',
-                command: () => this.msg('Video Created'),
+                command: () =>
+                  this.msg(this.t('components.menu.slidemenu.toast.videoCreated')),
               },
               {
-                label: 'Audio',
+                label: this.t('components.menu.slidemenu.items.audio'),
                 icon: 'mic',
-                command: () => this.msg('Audio Created'),
+                command: () =>
+                  this.msg(this.t('components.menu.slidemenu.toast.audioCreated')),
               },
               {
-                label: 'Image',
+                label: this.t('components.menu.slidemenu.items.image'),
                 icon: 'image',
-                command: () => this.msg('Image Created'),
+                command: () =>
+                  this.msg(this.t('components.menu.slidemenu.toast.imageCreated')),
               },
             ],
           },
-          { label: 'Open', icon: 'folder-open' },
-          { label: 'Print', icon: 'printer' },
+          { label: this.t('components.menu.slidemenu.items.open'), icon: 'folder-open' },
+          { label: this.t('components.menu.slidemenu.items.print'), icon: 'printer' },
         ],
       },
       {
-        label: 'Edit',
+        label: this.t('components.menu.slidemenu.items.edit'),
         icon: 'pencil',
         items: [
-          { label: 'Undo', icon: 'undo' },
-          { label: 'Redo', icon: 'redo' },
+          { label: this.t('components.menu.slidemenu.items.undo'), icon: 'undo' },
+          { label: this.t('components.menu.slidemenu.items.redo'), icon: 'redo' },
         ],
       },
       {
-        label: 'Users',
+        label: this.t('components.menu.slidemenu.items.users'),
         icon: 'users',
         items: [
           {
-            label: 'Search',
+            label: this.t('components.menu.slidemenu.items.search'),
             icon: 'search',
             items: [
               {
-                label: 'Filter',
+                label: this.t('components.menu.slidemenu.items.filter'),
                 icon: 'funnel',
-                items: [{ label: 'Print', icon: 'printer' }],
+                items: [
+                  {
+                    label: this.t('components.menu.slidemenu.items.print'),
+                    icon: 'printer',
+                  },
+                ],
               },
               {
-                label: 'List',
+                label: this.t('components.menu.slidemenu.items.list'),
                 icon: 'list',
-                command: () => this.msg('List View'),
+                command: () =>
+                  this.msg(this.t('components.menu.slidemenu.toast.listView')),
               },
             ],
           },
         ],
       },
       {
-        label: 'Calendar',
+        label: this.t('components.menu.slidemenu.items.calendar'),
         icon: 'calendar',
         items: [
-          { label: 'Edit', icon: 'pencil' },
-          { label: 'Archived', icon: 'archive' },
+          { label: this.t('components.menu.slidemenu.items.edit'), icon: 'pencil' },
+          {
+            label: this.t('components.menu.slidemenu.items.archived'),
+            icon: 'archive',
+          },
         ],
       },
     ];
@@ -135,7 +205,7 @@ export class ViewSlideMenu implements OnInit {
   msg(text: string) {
     this.toastService.add({
       type: 'success',
-      title: 'Action',
+      title: this.t('components.menu.slidemenu.toast.title'),
       message: text,
       duration: 3000,
     });

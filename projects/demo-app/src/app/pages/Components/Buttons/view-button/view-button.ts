@@ -1,7 +1,22 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MagaryButton, MagaryCard } from 'ng-magary';
+import { Component, inject } from '@angular/core';
 import { Highlight } from 'ngx-highlightjs';
+import { MagaryButton, MagaryCard } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type ButtonInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type ButtonOutputRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 const CODE_EXAMPLES = {
   import: `import { MagaryButton } from 'ng-magary';`,
@@ -29,8 +44,7 @@ const CODE_EXAMPLES = {
   states: `<magary-button label="Normal"></magary-button>
 <magary-button label="Disabled" [disabled]="true"></magary-button>
 <magary-button label="Loading..." [loading]="true"></magary-button>`,
-  events: `<magary-button label="Click me" (buttonClick)="handleClick($event)"></magary-button>`,
-};
+} as const;
 
 @Component({
   selector: 'magary-view-button',
@@ -39,7 +53,8 @@ const CODE_EXAMPLES = {
   styleUrl: './view-button.scss',
 })
 export class ViewButton {
-  // Code Examples
+  readonly i18n = inject(DemoI18nService);
+
   readonly importExample = CODE_EXAMPLES.import;
   readonly exampleBasic = CODE_EXAMPLES.basic;
   readonly exampleSeveritys = CODE_EXAMPLES.severity;
@@ -47,7 +62,81 @@ export class ViewButton {
   readonly exampleVariants = CODE_EXAMPLES.variants;
   readonly exampleCustom = CODE_EXAMPLES.custom;
   readonly exampleState = CODE_EXAMPLES.states;
-  readonly exampleEventClick = CODE_EXAMPLES.events;
 
-  handleClick(event: Event) {}
+  readonly inputRows: ButtonInputRow[] = [
+    {
+      name: 'label',
+      type: 'string',
+      default: 'undefined',
+      descriptionKey: 'components.buttons.button.apiInputs.label.desc',
+    },
+    {
+      name: 'icon',
+      type: 'string',
+      default: 'undefined',
+      descriptionKey: 'components.buttons.button.apiInputs.icon.desc',
+    },
+    {
+      name: 'iconPos',
+      type: "'left' | 'right'",
+      default: "'left'",
+      descriptionKey: 'components.buttons.button.apiInputs.iconPos.desc',
+    },
+    {
+      name: 'severity',
+      type: "'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'help'",
+      default: "'primary'",
+      descriptionKey: 'components.buttons.button.apiInputs.severity.desc',
+    },
+    {
+      name: 'variant',
+      type: "'solid' | 'outlined' | 'text'",
+      default: "'solid'",
+      descriptionKey: 'components.buttons.button.apiInputs.variant.desc',
+    },
+    {
+      name: 'size',
+      type: "'small' | 'normal' | 'large'",
+      default: "'normal'",
+      descriptionKey: 'components.buttons.button.apiInputs.size.desc',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.buttons.button.apiInputs.disabled.desc',
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.buttons.button.apiInputs.loading.desc',
+    },
+    {
+      name: 'rounded',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.buttons.button.apiInputs.rounded.desc',
+    },
+    {
+      name: 'shadow',
+      type: 'number',
+      default: '0',
+      descriptionKey: 'components.buttons.button.apiInputs.shadow.desc',
+    },
+    {
+      name: 'iconSize',
+      type: 'number',
+      default: 'undefined',
+      descriptionKey: 'components.buttons.button.apiInputs.iconSize.desc',
+    },
+  ];
+
+  readonly outputRows: ButtonOutputRow[] = [
+    {
+      name: 'buttonClick',
+      type: 'EventEmitter<Event>',
+      descriptionKey: 'components.buttons.button.apiOutputs.buttonClick.desc',
+    },
+  ];
 }

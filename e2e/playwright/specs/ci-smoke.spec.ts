@@ -38,14 +38,12 @@ test.describe('ci smoke', () => {
     await openRoute('/components/Table', page);
 
     const templateSectionTitle = page.getByRole('heading', {
-      name: 'Templates & Inline Editing',
+      name: /Templates (?:&|and|e) Inline Editing/i,
     });
     await templateSectionTitle.scrollIntoViewIfNeeded();
     await expect(templateSectionTitle).toBeVisible();
 
-    const inlinePriceInput = page
-      .locator('input[aria-label="Edit price for Bamboo Watch"]')
-      .first();
+    const inlinePriceInput = page.locator('input[aria-label*="Bamboo Watch"]').first();
     await expect(inlinePriceInput).toBeVisible();
     await inlinePriceInput.click();
     await inlinePriceInput.fill('66');
@@ -178,7 +176,9 @@ test.describe('ci smoke', () => {
     await expect(basicTree.getByText('Work').first()).toBeVisible();
 
     const filterTree = trees.nth(1);
-    const filterInput = page.getByPlaceholder('Buscar documentos...').first();
+    const filterInput = page
+      .getByPlaceholder(/Buscar documentos\.\.\.|Search documents\.\.\./i)
+      .first();
     await expect(filterInput).toBeVisible();
     await filterInput.fill('work');
     await expect(filterTree.getByText('Work').first()).toBeVisible();
@@ -195,7 +195,9 @@ test.describe('ci smoke', () => {
 
     const firstNode = chart.locator('.magary-organizationchart-node-content').first();
     await firstNode.click();
-    await expect(page.getByText('Seleccionado:').first()).toContainText('CEO');
+    await expect(page.getByText(/Seleccionado:|Selected:/).first()).toContainText(
+      'CEO',
+    );
 
     const toggler = chart.locator('.magary-organizationchart-toggler').first();
     await expect(toggler).toHaveAttribute('aria-label', 'Collapse CEO');

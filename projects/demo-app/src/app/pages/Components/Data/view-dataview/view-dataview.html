@@ -1,27 +1,24 @@
 <div class="container">
   <div class="header">
-    <h1>DataView</h1>
-    <p>
-      DataView muestra datos en formato de cuadrícula o lista con paginación y
-      personalización.
-    </p>
+    <h1>{{ t('components.data.dataview.title') }}</h1>
+    <p>{{ t('components.data.dataview.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ t('components.data.dataview.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
-        <pre><code [highlight]="'import { MagaryDataView } from \'ng-magary\';'" language="typescript"></code></pre>
+        <pre><code [highlight]="importCode" language="typescript"></code></pre>
       </div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Básico</h2>
-      <p>Ejemplo de DataView con layout conmutable entre lista y cuadrícula.</p>
+      <h2>{{ t('components.data.dataview.basic.title') }}</h2>
+      <p>{{ t('components.data.dataview.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
@@ -31,7 +28,6 @@
           [paginator]="true"
           [rows]="6"
         >
-          <!-- Header -->
           <ng-template #header>
             <div class="flex justify-content-end gap-2">
               <magary-button
@@ -49,7 +45,6 @@
             </div>
           </ng-template>
 
-          <!-- List Item -->
           <ng-template #listItem let-product>
             <div class="col-12 p-4 border-bottom-1 surface-border">
               <div
@@ -97,7 +92,6 @@
             </div>
           </ng-template>
 
-          <!-- Grid Item -->
           <ng-template #gridItem let-product>
             <div class="col-12 sm:col-6 lg:col-4 xl:col-4 p-2">
               <div
@@ -162,51 +156,53 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ t('components.data.dataview.apiInputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Predeterminado</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>value</code></td>
-            <td><code>unknown[]</code></td>
-            <td><code>[]</code></td>
-            <td>Array de objetos a mostrar.</td>
-          </tr>
-          <tr>
-            <td><code>layout</code></td>
-            <td><code>'list' | 'grid'</code></td>
-            <td><code>'list'</code></td>
-            <td>Diseño de visualización de los datos.</td>
-          </tr>
-          <tr>
-            <td><code>paginator</code></td>
-            <td><code>boolean</code></td>
-            <td><code>false</code></td>
-            <td>Habilita el paginador.</td>
-          </tr>
-          <tr>
-            <td><code>rows</code></td>
-            <td><code>number</code></td>
-            <td><code>0</code></td>
-            <td>Número de filas par página.</td>
-          </tr>
-          <tr>
-            <td><code>emptyMessage</code></td>
-            <td><code>string</code></td>
-            <td><code>'No records found'</code></td>
-            <td>Mensaje a mostrar cuando no hay datos.</td>
-          </tr>
-        </tbody>
+          <thead>
+            <tr>
+              <th>{{ t('components.data.dataview.apiInputs.header.name') }}</th>
+              <th>{{ t('components.data.dataview.apiInputs.header.type') }}</th>
+              <th>{{ t('components.data.dataview.apiInputs.header.default') }}</th>
+              <th>
+                {{ t('components.data.dataview.apiInputs.header.description') }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>value</code></td>
+              <td><code>unknown[]</code></td>
+              <td><code>[]</code></td>
+              <td>{{ t('components.data.dataview.apiInputs.value.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>layout</code></td>
+              <td><code>'list' | 'grid'</code></td>
+              <td><code>'list'</code></td>
+              <td>{{ t('components.data.dataview.apiInputs.layout.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>paginator</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>{{ t('components.data.dataview.apiInputs.paginator.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>rows</code></td>
+              <td><code>number</code></td>
+              <td><code>0</code></td>
+              <td>{{ t('components.data.dataview.apiInputs.rows.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>emptyMessage</code></td>
+              <td><code>string</code></td>
+              <td><code>'No records found'</code></td>
+              <td>{{ t('components.data.dataview.apiInputs.emptyMessage.desc') }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -214,28 +210,29 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
+      <h2>{{ t('components.data.dataview.apiOutputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>onPage</code></td>
-            <td><code>EventEmitter&lt;PaginatorState&gt;</code></td>
-            <td>Callback invocado cuando cambia la página.</td>
-          </tr>
-        </tbody>
+          <thead>
+            <tr>
+              <th>{{ t('components.data.dataview.apiOutputs.header.name') }}</th>
+              <th>{{ t('components.data.dataview.apiOutputs.header.type') }}</th>
+              <th>
+                {{ t('components.data.dataview.apiOutputs.header.description') }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>onPage</code></td>
+              <td><code>EventEmitter&lt;PaginatorState&gt;</code></td>
+              <td>{{ t('components.data.dataview.apiOutputs.onPage.desc') }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
-

@@ -1,12 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { MagarySpeedDial, MagaryTab, MagaryTabs } from 'ng-magary';
+import { Component, inject } from '@angular/core';
 import { Highlight } from 'ngx-highlightjs';
+import { MagarySpeedDial, MagaryTab, MagaryTabs } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
 interface SpeedDialItem {
   icon: string;
   tooltip?: string;
   command?: (event?: Event) => void;
 }
+
 interface SpeedDialConfig {
   class: string;
   direction?:
@@ -24,21 +28,24 @@ interface SpeedDialConfig {
   style?: string;
   background?: string;
 }
+
 interface CodeExample {
   label: string;
   code: string;
   language: string;
 }
+
 interface SpeedDialTableRow {
   name: string;
   type: string;
-  description: string;
+  descriptionKey: DocsTextKey;
   default?: string;
 }
+
 interface Section {
   id: string;
-  title: string;
-  description: string;
+  titleKey: DocsTextKey;
+  descriptionKey: DocsTextKey;
   type: 'code' | 'demo' | 'single-demo' | 'custom-demo' | 'table' | 'list';
   content?: { code: string; language: string };
   configs?: SpeedDialConfig[];
@@ -46,8 +53,9 @@ interface Section {
   customConfig?: SpeedDialConfig;
   codeExamples?: CodeExample[];
   tableData?: SpeedDialTableRow[];
-  listItems?: string[];
+  listItemKeys?: DocsTextKey[];
 }
+
 @Component({
   selector: 'magary-view-speed-dial',
   imports: [CommonModule, MagarySpeedDial, MagaryTabs, MagaryTab, Highlight],
@@ -55,11 +63,14 @@ interface Section {
   styleUrl: './view-speed-dial.scss',
 })
 export class ViewSpeedDial {
+  readonly i18n = inject(DemoI18nService);
+
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
     positionContent: 'flex-start' as const,
     background: '#282c34',
   };
+
   readonly speedDialConfigs = {
     basic: [
       { class: 'top', direction: 'down' as const, items: 'actionItems' },
@@ -128,13 +139,13 @@ export class ViewSpeedDial {
       },
     ],
   };
+
   get sections(): Section[] {
     return [
       {
         id: 'import',
-        title: 'Import',
-        description:
-          'Importa el componente en tu módulo o componente standalone',
+        titleKey: 'components.buttons.speedDial.import.title',
+        descriptionKey: 'components.buttons.speedDial.import.desc',
         type: 'code',
         content: {
           code: "import { MagarySpeedDial } from 'ng-magary';",
@@ -143,8 +154,8 @@ export class ViewSpeedDial {
       },
       {
         id: 'basic',
-        title: 'Uso Básico',
-        description: 'Ejemplo simple con configuración por defecto',
+        titleKey: 'components.buttons.speedDial.basic.title',
+        descriptionKey: 'components.buttons.speedDial.basic.desc',
         type: 'demo',
         configs: this.speedDialConfigs.basic,
         codeExamples: [
@@ -154,8 +165,8 @@ export class ViewSpeedDial {
       },
       {
         id: 'circle',
-        title: 'Círculo',
-        description: 'Ejemplo de menu en círculo',
+        titleKey: 'components.buttons.speedDial.circle.title',
+        descriptionKey: 'components.buttons.speedDial.circle.desc',
         type: 'single-demo',
         config: {
           class: 'center',
@@ -170,8 +181,8 @@ export class ViewSpeedDial {
       },
       {
         id: 'semicircle',
-        title: 'Semi Círculo',
-        description: 'Ejemplo de menu en semicírculo',
+        titleKey: 'components.buttons.speedDial.semicircle.title',
+        descriptionKey: 'components.buttons.speedDial.semicircle.desc',
         type: 'demo',
         configs: this.speedDialConfigs.semicircle,
         codeExamples: [
@@ -181,8 +192,8 @@ export class ViewSpeedDial {
       },
       {
         id: 'quartercircle',
-        title: 'Cuarto de Círculo',
-        description: 'Ejemplo de menu en cuarto de círculo',
+        titleKey: 'components.buttons.speedDial.quartercircle.title',
+        descriptionKey: 'components.buttons.speedDial.quartercircle.desc',
         type: 'demo',
         configs: this.speedDialConfigs.quartercircle,
         codeExamples: [
@@ -196,9 +207,8 @@ export class ViewSpeedDial {
       },
       {
         id: 'tooltip',
-        title: 'Tooltip',
-        description:
-          'El tooltip es opcional, se puede agregar o quitar a gusto por cada item',
+        titleKey: 'components.buttons.speedDial.tooltip.title',
+        descriptionKey: 'components.buttons.speedDial.tooltip.desc',
         type: 'custom-demo',
         customConfig: {
           class: 'center',
@@ -215,270 +225,274 @@ export class ViewSpeedDial {
       },
       {
         id: 'properties',
-        title: 'Propiedades (Inputs)',
-        description: 'Todas las propiedades disponibles del componente',
+        titleKey: 'components.buttons.speedDial.properties.title',
+        descriptionKey: 'components.buttons.speedDial.properties.desc',
         type: 'table',
         tableData: [
           {
             name: 'items',
             type: 'SpeedDialItem[]',
             default: 'REQUIRED',
-            description:
-              'Array de objetos que definen las acciones del menú. Cada ítem incluye icono, tooltip, comando y estado.',
+            descriptionKey: 'components.buttons.speedDial.props.items.desc',
           },
           {
             name: 'icon',
             type: 'string',
             default: "'plus'",
-            description:
-              'Clase CSS del icono a mostrar en el botón principal cuando el menú está cerrado.',
+            descriptionKey: 'components.buttons.speedDial.props.icon.desc',
           },
           {
             name: 'activeIcon',
             type: 'string',
             default: "'x'",
-            description:
-              'Clase CSS del icono a mostrar en el botón principal cuando el menú está desplegado.',
+            descriptionKey: 'components.buttons.speedDial.props.activeIcon.desc',
           },
           {
             name: 'type',
             type: "'linear' | 'circle' | 'semicircle' | 'quartercircle'",
             default: "'linear'",
-            description:
-              'Define la disposición geométrica de los botones de acción al desplegarse.',
+            descriptionKey: 'components.buttons.speedDial.props.type.desc',
           },
           {
             name: 'direction',
             type: "'up' | 'down' | 'left' | 'right' | ...",
             default: 'undefined',
-            description:
-              'Dirección de despliegue. Crítico para los modos lineal y cuarto de círculo.',
+            descriptionKey: 'components.buttons.speedDial.props.direction.desc',
           },
           {
             name: 'radius',
             type: 'number',
             default: '80',
-            description:
-              'Distancia en píxeles desde el botón central hasta los ítems en modos circulares.',
+            descriptionKey: 'components.buttons.speedDial.props.radius.desc',
           },
           {
             name: 'showMask',
             type: 'boolean',
             default: 'false',
-            description:
-              'Habilita un fondo oscuro (backdrop) detrás del menú para resaltar las acciones.',
+            descriptionKey: 'components.buttons.speedDial.props.showMask.desc',
           },
           {
             name: 'background',
             type: 'string',
             default: "'#007bff'",
-            description:
-              'Color de fondo del botón disparador. Acepta valores HEX, RGB o nombres de colores.',
+            descriptionKey: 'components.buttons.speedDial.props.background.desc',
           },
-                    {
+          {
             name: 'triggerSize',
             type: 'number',
             default: '56',
-            description:
-              'Tamano (px) del boton principal que abre/cierra el speed dial.',
+            descriptionKey: 'components.buttons.speedDial.props.triggerSize.desc',
           },
           {
             name: 'itemSize',
             type: 'number',
             default: '40',
-            description:
-              'Tamano (px) de los botones de accion secundarios.',
+            descriptionKey: 'components.buttons.speedDial.props.itemSize.desc',
           },
           {
             name: 'itemGap',
             type: 'number',
             default: '64',
-            description:
-              'Separacion (px) entre el boton principal y cada item en disposiciones lineales.',
+            descriptionKey: 'components.buttons.speedDial.props.itemGap.desc',
           },
           {
             name: 'closeOnItemSelect',
             type: 'boolean',
             default: 'true',
-            description:
-              'Si es false, mantiene abierto el menu despues de seleccionar una accion.',
-          },{
+            descriptionKey:
+              'components.buttons.speedDial.props.closeOnItemSelect.desc',
+          },
+          {
             name: 'ariaLabel',
             type: 'string',
             default: "'Speed dial menu'",
-            description:
-              'Etiqueta descriptiva para lectores de pantalla, mejorando la accesibilidad.',
+            descriptionKey: 'components.buttons.speedDial.props.ariaLabel.desc',
           },
         ],
       },
       {
         id: 'events',
-        title: 'Eventos (Outputs)',
-        description: 'Eventos emitidos por el componente',
+        titleKey: 'components.buttons.speedDial.events.title',
+        descriptionKey: 'components.buttons.speedDial.events.desc',
         type: 'table',
         tableData: [
           {
             name: 'speedDialToggle',
             type: 'boolean',
-            description:
-              'Notifica cambios de visibilidad: true (abierto) o false (cerrado).',
+            descriptionKey:
+              'components.buttons.speedDial.events.speedDialToggle.desc',
           },
           {
             name: 'itemSelect',
             type: '{ item: SpeedDialItem; event: Event }',
-            description:
-              'Se emite al seleccionar una acción, proporcionando el ítem y el evento nativo.',
+            descriptionKey: 'components.buttons.speedDial.events.itemSelect.desc',
           },
         ],
       },
       {
         id: 'accessibility',
-        title: 'Accesibilidad',
-        description: 'Características de accesibilidad integradas',
+        titleKey: 'components.buttons.speedDial.accessibility.title',
+        descriptionKey: 'components.buttons.speedDial.accessibility.desc',
         type: 'list',
-        listItems: [
-          '<strong>Teclado:</strong> Soporte completo para navegación por teclado. <code>Escape</code> cierra el menú.',
-          '<strong>ARIA:</strong> Uso de <code>aria-label</code> configurable y roles apropiados.',
-          '<strong>Foco:</strong> Gestión del foco al abrir/cerrar y navegar entre ítems.',
-          '<strong>Click Outside:</strong> Cierra el menú al hacer clic fuera del componente.',
+        listItemKeys: [
+          'components.buttons.speedDial.a11y.keyboard',
+          'components.buttons.speedDial.a11y.aria',
+          'components.buttons.speedDial.a11y.focus',
+          'components.buttons.speedDial.a11y.outsideClick',
         ],
       },
     ];
   }
-  importExample = "import { MagarySpeedDial } from 'ng-magary';";
-  actionItems: SpeedDialItem[] = [
-    {
-      icon: 'pencil',
-      tooltip: 'Editar',
-      command: () => {},
-    },
-    {
-      icon: 'trash',
-      tooltip: 'Eliminar',
-      command: () => {},
-    },
-    {
-      icon: 'share-2',
-      tooltip: 'Compartir',
-      command: () => {},
-    },
-  ];
-  actionItemsTooltip: SpeedDialItem[] = [
-    {
-      icon: 'pencil',
-      tooltip: 'Editar',
-      command: () => {},
-    },
-    {
-      icon: 'trash',
-      command: () => {},
-    },
-    {
-      icon: 'share-2',
-      tooltip: '',
-      command: () => {},
-    },
-  ];
+
+  get actionItems(): SpeedDialItem[] {
+    return [
+      {
+        icon: 'pencil',
+        tooltip: this.i18n.translateDocs('components.buttons.speedDial.action.edit'),
+        command: () => {},
+      },
+      {
+        icon: 'trash',
+        tooltip: this.i18n.translateDocs('components.buttons.speedDial.action.delete'),
+        command: () => {},
+      },
+      {
+        icon: 'share-2',
+        tooltip: this.i18n.translateDocs('components.buttons.speedDial.action.share'),
+        command: () => {},
+      },
+    ];
+  }
+
+  get actionItemsTooltip(): SpeedDialItem[] {
+    return [
+      {
+        icon: 'pencil',
+        tooltip: this.i18n.translateDocs('components.buttons.speedDial.action.edit'),
+        command: () => {},
+      },
+      {
+        icon: 'trash',
+        command: () => {},
+      },
+      {
+        icon: 'share-2',
+        tooltip: '',
+        command: () => {},
+      },
+    ];
+  }
+
   exampleTs = `actionItems: SpeedDialItem[] = [
     {
       icon: 'pencil',
-      tooltip: 'Editar',
-      command: () => console.log('Editar'),
+      tooltip: 'Edit',
+      command: () => console.log('Edit'),
     },
     {
       icon: 'trash',
-      tooltip: 'Eliminar',
-      command: () => console.log('Eliminar'),
+      tooltip: 'Delete',
+      command: () => console.log('Delete'),
     },
     {
       icon: 'share-2',
-      tooltip: 'Compartir',
-      command: () => console.log('Compartir'),
+      tooltip: 'Share',
+      command: () => console.log('Share'),
     },
   ];`;
+
   exampleTooltipTs = `actionItems: SpeedDialItem[] = [
     {
       icon: 'pencil',
-      tooltip: 'Editar',
-      command: () => console.log('Editar'),
+      tooltip: 'Edit',
+      command: () => console.log('Edit'),
     },
     {
       icon: 'trash',
-      command: () => console.log('Eliminar'),
+      command: () => console.log('Delete'),
     },
     {
       icon: 'share-2',
       tooltip: '',
-      command: () => console.log('Compartir'),
+      command: () => console.log('Share'),
     },
   ];`;
-  exampleBasicHtml: string = `
+
+  exampleBasicHtml = `
   <magary-speed-dial [items]="actionItems" direction="up"></magary-speed-dial>
   <magary-speed-dial [items]="actionItems" direction="down"></magary-speed-dial>
   <magary-speed-dial [items]="actionItems" direction="left"></magary-speed-dial>
   <magary-speed-dial [items]="actionItems" direction="right"></magary-speed-dial>`;
-  exampleCircleHtml: string = `
+
+  exampleCircleHtml = `
   <magary-speed-dial
     [type]="'circle'"
     [items]="actionItems">
   </magary-speed-dial>`;
-  exampleSemiCircleHtml: string = `
+
+  exampleSemiCircleHtml = `
   <magary-speed-dial [items]="actionItems" direction="down" [type]="'semicircle'"></magary-speed-dial>
   <magary-speed-dial [items]="actionItems" direction="up" [type]="'semicircle'"></magary-speed-dial>
   <magary-speed-dial [items]="actionItems" direction="left" [type]="'semicircle'"></magary-speed-dial>
   <magary-speed-dial [items]="actionItems" direction="right" [type]="'semicircle'"></magary-speed-dial>`;
-  exampleQuarterCircleHtml: string = `
+
+  exampleQuarterCircleHtml = `
   <magary-speed-dial [items]="actionItems" direction="down-right" [type]="'quartercircle'"></magary-speed-dial>
   <magary-speed-dial [items]="actionItems" direction="up-right" [type]="'quartercircle'"></magary-speed-dial>
   <magary-speed-dial [items]="actionItems" direction="down-left" [type]="'quartercircle'"></magary-speed-dial>
   <magary-speed-dial [items]="actionItems" direction="up-left" [type]="'quartercircle'"></magary-speed-dial>`;
-  exampleTooltipHtml: string = `
+
+  exampleTooltipHtml = `
   <magary-speed-dial
     [direction]="'right'"
     [items]="actionItemsTooltip"
     [background]="'#0eb4d7'">
   </magary-speed-dial>`;
-  exampleCommand: string = `
+
+  exampleCommand = `
   items = [
     {
       icon: 'plus',
-      tooltip: 'Crear',
-      command: (e) => console.log('Crear', e)
+      tooltip: 'Create',
+      command: (e) => console.log('Create', e)
     }
   ];`;
-  exampleRandom: string = `
+
+  exampleRandom = `
   <div class="relative-container">
     <magary-speed-dial
       [items]="[
-        { icon: 'plus', tooltip: 'Nuevo', command: create },
-        { icon: 'pencil', tooltip: 'Editar', command: edit },
-        { icon: 'trash', tooltip: 'Eliminar', command: remove }
+        { icon: 'plus', tooltip: 'New', command: create },
+        { icon: 'pencil', tooltip: 'Edit', command: edit },
+        { icon: 'trash', tooltip: 'Delete', command: remove }
       ]"
       [type]="'circle'"
       [background]="'#0d6efd'"
     ></magary-speed-dial>
   </div>`;
-  trackByIndex(index: number): number {
-    return index;
-  }
-  trackBySection(index: number, section: Section): string {
+
+  trackBySection(_index: number, section: Section): string {
     return section.id;
   }
-  trackByConfig(index: number, config: SpeedDialConfig): string {
-    return `${config.class}-${config.direction}-${config.type}`;
-  }
+
   getItems(itemsName: string): SpeedDialItem[] {
     return itemsName === 'actionItemsTooltip'
       ? this.actionItemsTooltip
       : this.actionItems;
   }
+
   getCodeExamples(section: Section): CodeExample[] {
     if (section.id === 'events') {
       return [
-        { label: 'Ejemplo', code: this.exampleCommand, language: 'typescript' },
+        {
+          label: this.i18n.translateDocs(
+            'components.buttons.speedDial.events.exampleLabel',
+          ),
+          code: this.exampleCommand,
+          language: 'typescript',
+        },
       ];
     }
     return section.codeExamples || [];
   }
 }
-

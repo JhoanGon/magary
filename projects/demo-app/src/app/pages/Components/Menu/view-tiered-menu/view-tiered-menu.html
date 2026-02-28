@@ -1,13 +1,12 @@
 <div class="container">
   <div class="header">
-    <h1>Tiered Menu</h1>
-    <p>TieredMenu displays submenus in nested layers.</p>
+    <h1>{{ t('components.menu.tieredMenu.title') }}</h1>
+    <p>{{ t('components.menu.tieredMenu.subtitle') }}</p>
   </div>
 
-  <!-- INLINE EXAMPLE -->
   <div class="section">
     <div class="section-header">
-      <h2>Inline</h2>
+      <h2>{{ t('components.menu.tieredMenu.inline.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -20,12 +19,12 @@
         [positionContent]="'flex-start'"
         [background]="'#282c34'"
       >
-        <magary-tab label="HTML">
+        <magary-tab [label]="t('components.menu.tieredMenu.tabs.html')">
           <div class="code-block" style="margin-top: 0">
             <pre><code [highlight]="exampleInlineHTML" language="xml"></code></pre>
           </div>
         </magary-tab>
-        <magary-tab label="TypeScript">
+        <magary-tab [label]="t('components.menu.tieredMenu.tabs.typescript')">
           <div class="code-block" style="margin-top: 0">
             <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
           </div>
@@ -34,17 +33,16 @@
     </div>
   </div>
 
-  <!-- POPUP EXAMPLE -->
   <div class="section">
     <div class="section-header">
-      <h2>Popup</h2>
+      <h2>{{ t('components.menu.tieredMenu.popup.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="card flex justify-center gap-2">
           <magary-button
             (buttonClick)="menu.toggle($event)"
-            label="Show Menu"
+            [label]="t('components.menu.tieredMenu.popup.button')"
             icon="chevron-down"
             iconPos="right"
           ></magary-button>
@@ -56,12 +54,12 @@
         [positionContent]="'flex-start'"
         [background]="'#282c34'"
       >
-        <magary-tab label="HTML">
+        <magary-tab [label]="t('components.menu.tieredMenu.tabs.html')">
           <div class="code-block" style="margin-top: 0">
             <pre><code [highlight]="examplePopupHTML" language="xml"></code></pre>
           </div>
         </magary-tab>
-        <magary-tab label="TypeScript">
+        <magary-tab [label]="t('components.menu.tieredMenu.tabs.typescript')">
           <div class="code-block" style="margin-top: 0">
             <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
           </div>
@@ -70,21 +68,19 @@
     </div>
   </div>
 
-  <!-- API DOCS -->
-  <!-- Inputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Inputs</h2>
+      <h2>{{ t('components.menu.tieredMenu.inputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
+              <th>{{ t('components.menu.tieredMenu.inputs.header.name') }}</th>
+              <th>{{ t('components.menu.tieredMenu.inputs.header.type') }}</th>
+              <th>{{ t('components.menu.tieredMenu.inputs.header.default') }}</th>
+              <th>{{ t('components.menu.tieredMenu.inputs.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -99,7 +95,7 @@
                 <td>
                   <code>{{ prop.default }}</code>
                 </td>
-                <td>{{ prop.description }}</td>
+                <td>{{ t(prop.descriptionKey) }}</td>
               </tr>
             }
           </tbody>
@@ -108,33 +104,30 @@
     </div>
   </div>
 
-  <!-- Events Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Events</h2>
+      <h2>{{ t('components.menu.tieredMenu.events.title') }}</h2>
     </div>
     <div class="section-content">
       <p style="margin: 0; color: var(--text-secondary)">
-        This component does not emit events. User interaction is handled via the
-        <code>MenuItem</code> command property.
+        {{ t('components.menu.tieredMenu.events.desc') }}
       </p>
     </div>
   </div>
 
-  <!-- MenuItem API -->
   <div class="section">
     <div class="section-header">
-      <h2>MenuItem Interface</h2>
-      <p>Properties for the items in the <code>model</code> array.</p>
+      <h2>{{ t('components.menu.tieredMenu.menuItem.title') }}</h2>
+      <p>{{ t('components.menu.tieredMenu.menuItem.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Property</th>
-              <th>Type</th>
-              <th>Description</th>
+              <th>{{ t('components.menu.tieredMenu.menuItem.header.property') }}</th>
+              <th>{{ t('components.menu.tieredMenu.menuItem.header.type') }}</th>
+              <th>{{ t('components.menu.tieredMenu.menuItem.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -146,7 +139,7 @@
                 <td>
                   <code>{{ prop.type }}</code>
                 </td>
-                <td>{{ prop.description }}</td>
+                <td>{{ t(prop.descriptionKey) }}</td>
               </tr>
             }
           </tbody>

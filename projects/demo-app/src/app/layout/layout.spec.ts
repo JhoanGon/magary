@@ -96,4 +96,68 @@ describe('Layout', () => {
 
     expect(logSpy).toHaveBeenCalledWith('Usuario cerrando sesion...');
   });
+
+  it('handles language selection for valid and invalid values', () => {
+    const setLanguageSpy = vi.spyOn(component, 'setLanguage');
+    const i18nSetLanguageSpy = vi.spyOn(component.i18n, 'setLanguage');
+
+    component.onLanguageSelection('es');
+    component.onLanguageSelection('en');
+    component.onLanguageSelection('fr');
+    component.onLanguageSelection(null);
+
+    expect(setLanguageSpy).toHaveBeenCalledTimes(2);
+    expect(setLanguageSpy).toHaveBeenNthCalledWith(1, 'es');
+    expect(setLanguageSpy).toHaveBeenNthCalledWith(2, 'en');
+    expect(i18nSetLanguageSpy).toHaveBeenCalledTimes(2);
+    expect(i18nSetLanguageSpy).toHaveBeenNthCalledWith(1, 'es');
+    expect(i18nSetLanguageSpy).toHaveBeenNthCalledWith(2, 'en');
+  });
+
+  it('ignores scroll reset when content wrapper is not available', () => {
+    const freshFixture = TestBed.createComponent(Layout);
+    const freshComponent = freshFixture.componentInstance;
+
+    freshComponent.ngAfterViewInit();
+
+    expect(() => router.events.next(new NavigationEnd(2, '/b', '/b'))).not.toThrow();
+  });
+
+  it('translates navigation item including badge and children recursively', () => {
+    const translateSpy = vi
+      .spyOn(component.i18n, 'translateNavigation')
+      .mockImplementation((value: string) => `tx-${value}`);
+
+    const translateNavigationItem = (
+      component as unknown as {
+        translateNavigationItem: (item: {
+          label: string;
+          badge?: string;
+          children?: {
+            label: string;
+            badge?: string;
+            children?: { label: string }[];
+          }[];
+        }) => {
+          label: string;
+          badge?: string;
+          children?: { label: string; badge?: string }[];
+        };
+      }
+    ).translateNavigationItem.bind(component);
+
+    const translated = translateNavigationItem({
+      label: 'Parent',
+      badge: 'Premium',
+      children: [{ label: 'Child' }, { label: 'Child With Badge', badge: 'New' }],
+    });
+
+    expect(translated.label).toBe('tx-Parent');
+    expect(translated.badge).toBe('tx-Premium');
+    expect(translated.children?.[0].label).toBe('tx-Child');
+    expect(translated.children?.[0].badge).toBeUndefined();
+    expect(translated.children?.[1].label).toBe('tx-Child With Badge');
+    expect(translated.children?.[1].badge).toBe('tx-New');
+    expect(translateSpy).toHaveBeenCalled();
+  });
 });

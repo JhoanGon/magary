@@ -1,17 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>MagaryTable</h1>
-    <p>
-      Componente de tabla de datos con soporte para paginación, filtrado y tipos
-      de columna personalizados.
-    </p>
+    <h1>{{ t('components.data.table.title') }}</h1>
+    <p>{{ t('components.data.table.subtitle') }}</p>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone.</p>
+      <h2>{{ t('components.data.table.import.title') }}</h2>
+      <p>{{ t('components.data.table.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -20,11 +16,10 @@
     </div>
   </div>
 
-  <!-- Basic Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Básico</h2>
-      <p>Tabla simple con datos y columnas definidas.</p>
+      <h2>{{ t('components.data.table.basic.title') }}</h2>
+      <p>{{ t('components.data.table.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -50,11 +45,10 @@
     </div>
   </div>
 
-  <!-- Paginator & Filter Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Paginación y Filtrado con diseño fijo</h2>
-      <p>Tabla completa con paginación, búsqueda global y título.</p>
+      <h2>{{ t('components.data.table.paginatorFixed.title') }}</h2>
+      <p>{{ t('components.data.table.paginatorFixed.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -72,7 +66,7 @@
                 [paginator]="true"
                 [rows]="5"
                 [globalFilterFields]="['name', 'category', 'status']"
-                title="Products List"
+                [title]="t('components.data.table.demoTitle.productsList')"
                 [responsiveLayout]="false"
               >
               </magary-table>
@@ -96,17 +90,19 @@
       </div>
 
       <div class="template-guidelines">
-        <h3>Guía Visual Para Templates</h3>
+        <h3>{{ t('components.data.table.templateGuidelines.title') }}</h3>
         <p>
-          Para mantener el mismo look de <code>magary-table</code> cuando usas
-          <code>ng-template</code>, conserva estas clases:
+          {{ t('components.data.table.templateGuidelines.intro') }}
         </p>
         <ul>
-          <li><code>table-row</code> en cada fila custom.</li>
-          <li><code>table-cell-value</code> para contenido dentro de celdas.</li>
           <li>
-            Clases de layout específicas como <code>inline-edit-price-cell</code>
-            y <code>inline-edit-actions-cell</code> para anchos de columnas.
+            {{ t('components.data.table.templateGuidelines.item.row') }}
+          </li>
+          <li>
+            {{ t('components.data.table.templateGuidelines.item.cell') }}
+          </li>
+          <li>
+            {{ t('components.data.table.templateGuidelines.item.layout') }}
           </li>
         </ul>
         <div class="code-block">
@@ -118,8 +114,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Paginación y Filtrado con diseño responsivo</h2>
-      <p>Tabla completa con paginación, búsqueda global y título.</p>
+      <h2>{{ t('components.data.table.paginatorResponsive.title') }}</h2>
+      <p>{{ t('components.data.table.paginatorResponsive.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -137,7 +133,7 @@
                 [paginator]="true"
                 [rows]="5"
                 [globalFilterFields]="['name', 'category', 'status']"
-                title="Products List"
+                [title]="t('components.data.table.demoTitle.productsList')"
               >
               </magary-table>
             </div>
@@ -161,11 +157,10 @@
     </div>
   </div>
 
-  <!-- Fixed Layout Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Diseño Fijo</h2>
-      <p>Tabla con altura fija y scroll interno (responsiveLayout="false").</p>
+      <h2>{{ t('components.data.table.fixed.title') }}</h2>
+      <p>{{ t('components.data.table.fixed.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -181,7 +176,7 @@
                 [value]="products"
                 [columns]="cols"
                 [responsiveLayout]="false"
-                title="Fixed Height Table"
+                [title]="t('components.data.table.demoTitle.fixedHeightTable')"
               >
               </magary-table>
             </div>
@@ -205,11 +200,10 @@
     </div>
   </div>
 
-  <!-- Loading State Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Estado de Carga</h2>
-      <p>Muestra un estado de carga cuando no hay datos disponibles.</p>
+      <h2>{{ t('components.data.table.loading.title') }}</h2>
+      <p>{{ t('components.data.table.loading.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -225,7 +219,7 @@
                 [value]="[]"
                 [columns]="cols"
                 [loading]="true"
-                title="Loading State"
+                [title]="t('components.data.table.demoTitle.loadingState')"
               >
               </magary-table>
             </div>
@@ -249,14 +243,10 @@
     </div>
   </div>
 
-  <!-- Template / Inline Editing Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Templates & Inline Editing</h2>
-      <p>
-        Uso de <code>ng-template</code> para personalizar celdas y filas (inline
-        editing).
-      </p>
+      <h2>{{ t('components.data.table.templates.title') }}</h2>
+      <p>{{ t('components.data.table.templates.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -275,15 +265,17 @@
                 [rows]="5"
                 [rowsPerPageOptions]="[5, 10]"
               >
-                <!-- Header Template -->
                 <ng-template magaryTemplate="header">
                   <tr class="inline-edit-header-row">
-                    <th>Name</th>
-                    <th>Price (Edit)</th>
-                    <th>Actions</th>
+                    <th>{{ t('components.data.table.templates.header.name') }}</th>
+                    <th>
+                      {{ t('components.data.table.templates.header.priceEdit') }}
+                    </th>
+                    <th>
+                      {{ t('components.data.table.templates.header.actions') }}
+                    </th>
                   </tr>
                 </ng-template>
-                <!-- Body Template -->
                 <ng-template magaryTemplate="body" let-product>
                   <tr class="table-row inline-edit-row">
                     <td>
@@ -296,7 +288,7 @@
                           type="number"
                           size="small"
                           width="12rem"
-                          [ariaLabel]="'Edit price for ' + product.name"
+                          [ariaLabel]="editPriceAriaLabel(product.name)"
                           prefixIcon="dollar-sign"
                         ></magary-input>
                       </span>
@@ -334,11 +326,10 @@
     </div>
   </div>
 
-  <!-- Enterprise Recipe Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Enterprise Recipe</h2>
-      <p>Production-oriented setup with stable paging and sorting events.</p>
+      <h2>{{ t('components.data.table.enterprise.title') }}</h2>
+      <p>{{ t('components.data.table.enterprise.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -358,17 +349,21 @@
                 [rowsPerPageOptions]="[10, 25, 50]"
                 [globalFilterFields]="['name', 'category', 'status']"
                 [responsiveLayout]="false"
-                title="Inventory Control"
+                [title]="t('components.data.table.demoTitle.inventoryControl')"
                 (onPageChange)="onEnterprisePageChange($event)"
                 (onSortChange)="onEnterpriseSortChange($event)"
               ></magary-table>
               <div class="template-guidelines">
                 <p>
-                  <strong>Last page event:</strong>
+                  <strong>
+                    {{ t('components.data.table.enterprise.lastPageLabel') }}
+                  </strong>
                   {{ enterprisePageEventSummary }}
                 </p>
                 <p>
-                  <strong>Last sort event:</strong>
+                  <strong>
+                    {{ t('components.data.table.enterprise.lastSortLabel') }}
+                  </strong>
                   {{ enterpriseSortEventSummary }}
                 </p>
               </div>
@@ -393,21 +388,20 @@
     </div>
   </div>
 
-  <!-- API Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente</p>
+      <h2>{{ t('components.data.table.apiInputs.title') }}</h2>
+      <p>{{ t('components.data.table.apiInputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Valor por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ t('components.data.table.apiInputs.header.name') }}</th>
+              <th>{{ t('components.data.table.apiInputs.header.type') }}</th>
+              <th>{{ t('components.data.table.apiInputs.header.default') }}</th>
+              <th>{{ t('components.data.table.apiInputs.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -415,58 +409,61 @@
               <td><code>value</code></td>
               <td><code>unknown[]</code></td>
               <td><code>[]</code></td>
-              <td>Array de objetos a mostrar.</td>
+              <td>{{ t('components.data.table.apiInputs.value.desc') }}</td>
             </tr>
             <tr>
               <td><code>columns</code></td>
               <td><code>MagaryTableColumn[]</code></td>
               <td><code>[]</code></td>
-              <td>Configuración de columnas.</td>
+              <td>{{ t('components.data.table.apiInputs.columns.desc') }}</td>
             </tr>
             <tr>
               <td><code>columns[].sortable</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Habilita orden asc/desc por click en el encabezado.</td>
+              <td>
+                {{ t('components.data.table.apiInputs.columnsSortable.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>paginator</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Habilita la paginación.</td>
+              <td>{{ t('components.data.table.apiInputs.paginator.desc') }}</td>
             </tr>
             <tr>
               <td><code>rows</code></td>
               <td><code>number</code></td>
               <td><code>5</code></td>
-              <td>Número de filas por página.</td>
+              <td>{{ t('components.data.table.apiInputs.rows.desc') }}</td>
             </tr>
             <tr>
               <td><code>globalFilterFields</code></td>
               <td><code>string[]</code></td>
               <td><code>[]</code></td>
-              <td>Campos para la búsqueda global.</td>
+              <td>
+                {{ t('components.data.table.apiInputs.globalFilterFields.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>title</code></td>
               <td><code>string</code></td>
               <td><code>''</code></td>
-              <td>Título de la tabla.</td>
+              <td>{{ t('components.data.table.apiInputs.titleInput.desc') }}</td>
             </tr>
             <tr>
               <td><code>responsiveLayout</code></td>
               <td><code>boolean</code></td>
               <td><code>true</code></td>
               <td>
-                Define si la tabla adapta su altura al contenido (true) o tiene
-                altura fija con scroll (false).
+                {{ t('components.data.table.apiInputs.responsiveLayout.desc') }}
               </td>
             </tr>
             <tr>
               <td><code>loading</code></td>
               <td><code>boolean</code></td>
               <td><code>false</code></td>
-              <td>Muestra estado de carga (skeleton/spinner).</td>
+              <td>{{ t('components.data.table.apiInputs.loading.desc') }}</td>
             </tr>
           </tbody>
         </table>
@@ -476,17 +473,19 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos emitidos por el componente</p>
+      <h2>{{ t('components.data.table.apiOutputs.title') }}</h2>
+      <p>{{ t('components.data.table.apiOutputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ t('components.data.table.apiOutputs.header.name') }}</th>
+              <th>{{ t('components.data.table.apiOutputs.header.type') }}</th>
+              <th>
+                {{ t('components.data.table.apiOutputs.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -494,18 +493,14 @@
               <td><code>onPageChange</code></td>
               <td><code>EventEmitter&lt;PaginatorState&gt;</code></td>
               <td>
-                Se emite al cambiar de página. Retorna un objeto con:
-                <code>first</code>, <code>rows</code>, <code>page</code>,
-                <code>pageCount</code>.
+                {{ t('components.data.table.apiOutputs.onPageChange.desc') }}
               </td>
             </tr>
             <tr>
               <td><code>onSortChange</code></td>
               <td><code>EventEmitter&lt;MagaryTableSortState&gt;</code></td>
               <td>
-                Se emite al cambiar el orden. Retorna <code>field</code> y
-                <code>order</code> (<code>1</code>, <code>-1</code>,
-                <code>0</code>).
+                {{ t('components.data.table.apiOutputs.onSortChange.desc') }}
               </td>
             </tr>
           </tbody>
@@ -514,4 +509,3 @@
     </div>
   </div>
 </div>
-

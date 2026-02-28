@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   signal,
   ViewEncapsulation,
 } from '@angular/core';
@@ -9,6 +10,8 @@ import { MagaryPickList } from 'ng-magary';
 import { MagaryCard } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 interface Product {
   id: string;
@@ -22,6 +25,19 @@ interface Product {
   inventoryStatus: string;
   rating: number;
 }
+
+type PickListInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type PickListOutputRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'view-pick-list',
@@ -40,6 +56,9 @@ interface Product {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewPickList {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   sourceProducts = signal<Product[]>([
     {
       id: '1000',
@@ -118,65 +137,67 @@ export class ViewPickList {
   targetProducts = signal<Product[]>([]);
 
   // Config Documentation
-  inputsConfig = [
+  inputsConfig: PickListInputRow[] = [
     {
       name: 'source',
       type: 'unknown[]',
       default: '[]',
-      description: 'Array de elementos para la lista origen.',
+      descriptionKey: 'components.data.pickList.apiInputs.source.desc',
     },
     {
       name: 'target',
       type: 'unknown[]',
       default: '[]',
-      description: 'Array de elementos para la lista destino (seleccionados).',
+      descriptionKey: 'components.data.pickList.apiInputs.target.desc',
     },
     {
       name: 'sourceHeader',
       type: 'string',
       default: 'Source',
-      description: 'Texto del encabezado de la lista origen.',
+      descriptionKey: 'components.data.pickList.apiInputs.sourceHeader.desc',
     },
     {
       name: 'targetHeader',
       type: 'string',
       default: 'Target',
-      description: 'Texto del encabezado de la lista destino.',
+      descriptionKey: 'components.data.pickList.apiInputs.targetHeader.desc',
     },
     {
       name: 'sourceStyle',
       type: 'object',
       default: 'null',
-      description: 'Estilo inline para la lista origen.',
+      descriptionKey: 'components.data.pickList.apiInputs.sourceStyle.desc',
     },
     {
       name: 'targetStyle',
       type: 'object',
       default: 'null',
-      description: 'Estilo inline para la lista destino.',
+      descriptionKey: 'components.data.pickList.apiInputs.targetStyle.desc',
     },
   ];
 
-  outputsConfig = [
+  outputsConfig: PickListOutputRow[] = [
     {
       name: 'onMoveToTarget',
       type: 'EventEmitter',
-      description: 'Callback cuando se mueven items al target.',
+      descriptionKey: 'components.data.pickList.apiOutputs.onMoveToTarget.desc',
     },
     {
       name: 'onMoveToSource',
       type: 'EventEmitter',
-      description: 'Callback cuando se mueven items al source.',
+      descriptionKey: 'components.data.pickList.apiOutputs.onMoveToSource.desc',
     },
     {
       name: 'onMoveAllToTarget',
       type: 'EventEmitter',
-      description: 'Callback cuando se mueven todos al target.',
+      descriptionKey:
+        'components.data.pickList.apiOutputs.onMoveAllToTarget.desc',
     },
     {
       name: 'onMoveAllToSource',
       type: 'EventEmitter',
-      description: 'Callback cuando se mueven todos al source.',
+      descriptionKey:
+        'components.data.pickList.apiOutputs.onMoveAllToSource.desc',
     },
   ];
 

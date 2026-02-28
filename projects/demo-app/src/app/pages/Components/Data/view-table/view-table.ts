@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MagaryTable,
@@ -14,6 +14,8 @@ import {
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { FormsModule } from '@angular/forms';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 const STABLE_SAMPLE_DATE = new Date('2026-02-18T12:00:00.000Z');
 
@@ -196,6 +198,9 @@ onEnterpriseSortChange(event: MagaryTableSortState): void {
   styleUrls: ['./view-table.scss'],
 })
 export class ViewTable {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
     positionContent: 'flex-start' as const,
@@ -215,22 +220,37 @@ export class ViewTable {
   readonly enterpriseRecipeTsExample = CODE_EXAMPLES.enterpriseTs;
   readonly tsExample = CODE_EXAMPLES.ts;
 
-  enterprisePageEventSummary = 'No page event yet';
-  enterpriseSortEventSummary = 'No sort event yet';
+  enterprisePageEventSummary = this.t('components.data.table.enterprise.pageEvent.none');
+  enterpriseSortEventSummary = this.t('components.data.table.enterprise.sortEvent.none');
 
   onEnterprisePageChange(event: PaginatorState): void {
     this.enterprisePageEventSummary =
-      'Page ' +
+      this.t('components.data.table.enterprise.pageEvent.pageLabel') +
+      ' ' +
       (event.page + 1) +
-      ' - first: ' +
+      ' - ' +
+      this.t('components.data.table.enterprise.pageEvent.firstLabel') +
+      ': ' +
       event.first +
-      ', rows: ' +
+      ', ' +
+      this.t('components.data.table.enterprise.pageEvent.rowsLabel') +
+      ': ' +
       event.rows;
   }
 
   onEnterpriseSortChange(event: MagaryTableSortState): void {
     this.enterpriseSortEventSummary =
-      'Field: ' + (event.field ?? 'none') + ', order: ' + event.order;
+      this.t('components.data.table.enterprise.sortEvent.fieldLabel') +
+      ': ' +
+      (event.field ?? this.t('components.data.table.enterprise.sortEvent.noneField')) +
+      ', ' +
+      this.t('components.data.table.enterprise.sortEvent.orderLabel') +
+      ': ' +
+      event.order;
+  }
+
+  editPriceAriaLabel(productName: string): string {
+    return this.t('components.data.table.templates.input.editPriceFor') + productName;
   }
 
   cols: MagaryTableColumn[] = [

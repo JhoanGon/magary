@@ -1,14 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>MagaryPanelMenu</h1>
-    <p>Componente de menú lateral desplegable y personalizable</p>
+    <h1>{{ t('components.menu.panelMenu.title') }}</h1>
+    <p>{{ t('components.menu.panelMenu.subtitle') }}</p>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>
-        Importa el componente en tu módulo o úsalo como componente standalone.
-      </p>
+      <h2>{{ t('components.menu.panelMenu.import.title') }}</h2>
+      <p>{{ t('components.menu.panelMenu.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -16,15 +15,16 @@
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo mejorado con eventos</h2>
-      <p>Panel menu con funcionalidades avanzadas y manejo de eventos:</p>
+      <h2>{{ t('components.menu.panelMenu.advanced.title') }}</h2>
+      <p>{{ t('components.menu.panelMenu.advanced.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="component">
         <magary-panelmenu
-          [title]="'Menú Avanzado'"
+          [title]="'Menu Avanzado'"
           [items]="menuItems"
           [backgroundColor]="'#ffffff'"
           [textColor]="'#1f2937'"
@@ -44,176 +44,105 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.menu.panelMenu.tabs.html')">
             <pre><code [highlight]="advancedHtmlExample" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.menu.panelMenu.tabs.typescript')">
             <pre><code [highlight]="advancedTsExample" language="typescript"></code></pre>
           </magary-tab>
-          <magary-tab label="Eventos">
+          <magary-tab [label]="t('components.menu.panelMenu.tabs.events')">
             <pre><code [highlight]="eventsExample" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Estas son las entradas que puedes configurar en el componente:</p>
+      <h2>{{ t('components.menu.panelMenu.apiInputs.title') }}</h2>
+      <p>{{ t('components.menu.panelMenu.apiInputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Valor por Defecto</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>title</code></td>
-            <td><code>string</code></td>
-            <td><code>'Panel Menu'</code></td>
-            <td>Título del panel que se muestra en el header</td>
-          </tr>
-          <tr>
-            <td><code>items</code></td>
-            <td><code>MenuItem[]</code></td>
-            <td><code>[]</code></td>
-            <td>Lista de elementos que componen el menú</td>
-          </tr>
-          <tr>
-            <td><code>backgroundColor</code></td>
-            <td><code>string</code></td>
-            <td><code>'#f9fafb'</code></td>
-            <td>Color de fondo del panel</td>
-          </tr>
-          <tr>
-            <td><code>textColor</code></td>
-            <td><code>string</code></td>
-            <td><code>'#1f2937'</code></td>
-            <td>Color del texto</td>
-          </tr>
-          <tr>
-            <td><code>hoverColor</code></td>
-            <td><code>string</code></td>
-            <td><code>'#007bff'</code></td>
-            <td>Color de fondo al pasar el mouse sobre un ítem</td>
-          </tr>
-          <tr>
-            <td><code>borderRadius</code></td>
-            <td><code>string</code></td>
-            <td><code>'8px'</code></td>
-            <td>Radio del borde del panel</td>
-          </tr>
-          <tr>
-            <td><code>shadow</code></td>
-            <td><code>number</code></td>
-            <td><code>0</code></td>
-            <td>Nivel de sombra del panel</td>
-          </tr>
-          <tr>
-            <td><code>width</code></td>
-            <td><code>string</code></td>
-            <td><code>'100%'</code></td>
-            <td>Ancho del panel</td>
-          </tr>
-          <tr>
-            <td><code>allowMultipleExpanded</code></td>
-            <td><code>boolean</code></td>
-            <td><code>false</code></td>
-            <td>Permite múltiples items expandidos al mismo tiempo</td>
-          </tr>
-          <tr>
-            <td><code>defaultOpen</code></td>
-            <td><code>boolean</code></td>
-            <td><code>false</code></td>
-            <td>Si el panel debe estar abierto por defecto</td>
-          </tr>
-        </tbody>
+          <thead>
+            <tr>
+              <th>{{ t('components.menu.panelMenu.apiInputs.header.name') }}</th>
+              <th>{{ t('components.menu.panelMenu.apiInputs.header.type') }}</th>
+              <th>{{ t('components.menu.panelMenu.apiInputs.header.default') }}</th>
+              <th>{{ t('components.menu.panelMenu.apiInputs.header.description') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of inputsConfig; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
+          </tbody>
         </table>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos que emite el componente:</p>
+      <h2>{{ t('components.menu.panelMenu.apiOutputs.title') }}</h2>
+      <p>{{ t('components.menu.panelMenu.apiOutputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>menuToggle</code></td>
-            <td><code>MenuToggleEvent</code></td>
-            <td>Se emite cuando el panel se abre o se cierra</td>
-          </tr>
-          <tr>
-            <td><code>itemClick</code></td>
-            <td><code>MenuItemClickEvent</code></td>
-            <td>Se emite cuando se hace click en un item del menú</td>
-          </tr>
-          <tr>
-            <td><code>itemExpand</code></td>
-            <td><code>item: MenuItem; expanded: boolean</code></td>
-            <td>Se emite cuando un item se expande o contrae</td>
-          </tr>
-        </tbody>
+          <thead>
+            <tr>
+              <th>{{ t('components.menu.panelMenu.apiOutputs.header.name') }}</th>
+              <th>{{ t('components.menu.panelMenu.apiOutputs.header.type') }}</th>
+              <th>{{ t('components.menu.panelMenu.apiOutputs.header.description') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of outputsConfig; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
+          </tbody>
         </table>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Estructura esperada</h2>
+      <h2>{{ t('components.menu.panelMenu.structure.title') }}</h2>
     </div>
     <div class="section-content">
       <ul>
-        <li>
-          El <code>items</code> debe ser un arreglo de objetos
-          <code>MenuItem</code>.
-        </li>
-        <li>
-          Cada <code>MenuItem</code> puede tener <code>children</code> de forma
-          recursiva.
-        </li>
-        <li>
-          Cada ítem puede tener un <code>label</code>, <code>route</code> y un
-          <code>icon</code>.
-        </li>
+        @for (itemKey of structureItems; track itemKey) {
+          <li>{{ t(itemKey) }}</li>
+        }
       </ul>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Accesibilidad</h2>
+      <h2>{{ t('components.menu.panelMenu.a11y.title') }}</h2>
     </div>
     <div class="section-content">
       <ul>
-        <li>
-          <strong>Teclado:</strong> La navegación del menú puede extenderse con
-          soporte de accesibilidad de teclado.
-        </li>
-        <li>
-          <strong>Visibilidad:</strong> Cambios de color y foco en hover para
-          mejor UX.
-        </li>
-        <li>
-          <strong>Semántica:</strong> Uso de elementos como
-          <code>&lt;a&gt;</code> para enlaces semánticos.
-        </li>
+        @for (a11y of a11yItems; track a11y.titleKey) {
+          <li>
+            <strong>{{ t(a11y.titleKey) }}:</strong>
+            {{ t(a11y.descriptionKey) }}
+          </li>
+        }
       </ul>
     </div>
   </div>

@@ -7,9 +7,11 @@ import {
   MagaryTab,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 interface CodeExample {
-  label: string;
+  labelKey: DocsTextKey;
   code: string;
   language: string;
 }
@@ -17,19 +19,18 @@ interface CodeExample {
 interface ApiTableRow {
   name: string;
   type: string;
-  description: string;
+  descriptionKey: DocsTextKey;
   default?: string;
 }
 
 interface Section {
   id: string;
-  title: string;
-  description: string;
-  type: 'code' | 'demo' | 'table' | 'list';
+  titleKey: DocsTextKey;
+  descriptionKey: DocsTextKey;
+  type: 'code' | 'demo' | 'table';
   content?: { code: string; language: string };
   codeExamples?: CodeExample[];
   tableData?: ApiTableRow[];
-  listItems?: string[];
 }
 
 @Component({
@@ -40,6 +41,8 @@ interface Section {
 })
 export class ViewToast {
   private toastService = inject(MagaryToastService);
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
 
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
@@ -49,227 +52,232 @@ export class ViewToast {
 
   get sections(): Section[] {
     return [
-      {
-        id: 'import',
-        title: 'Import',
-        description:
-          'Importa el servicio y el componente en tu aplicación. El componente <magary-toast> debe colocarse en el root (ej. app.component.html).',
-        type: 'code',
-        content: {
-          code: `import { MagaryToastService, MagaryToast } from 'ng-magary';`,
+    {
+      id: 'import',
+      titleKey: 'components.messages.toast.sections.import.title',
+      descriptionKey: 'components.messages.toast.sections.import.desc',
+      type: 'code',
+      content: {
+        code: `import { MagaryToastService, MagaryToast } from 'ng-magary';`,
+        language: 'typescript',
+      },
+    },
+    {
+      id: 'basic',
+      titleKey: 'components.messages.toast.sections.basic.title',
+      descriptionKey: 'components.messages.toast.sections.basic.desc',
+      type: 'demo',
+      codeExamples: [
+        {
+          labelKey: 'components.messages.toast.tabs.html',
+          code: this.exampleBasicHtml,
+          language: 'html',
+        },
+        {
+          labelKey: 'components.messages.toast.tabs.ts',
+          code: this.exampleBasicTs,
           language: 'typescript',
         },
-      },
-      {
-        id: 'basic',
-        title: 'Uso Básico',
-        description:
-          'Inyecta el servicio MagaryToastService y utiliza el método add() para mostrar notificaciones.',
-        type: 'demo',
-        codeExamples: [
-          { label: 'HTML', code: this.exampleBasicHtml, language: 'html' },
-          { label: 'TS', code: this.exampleBasicTs, language: 'typescript' },
-        ],
-      },
-      {
-        id: 'types',
-        title: 'Tipos de Mensaje',
-        description:
-          'Existen 4 tipos de notificaciones: success, info, warning y error.',
-        type: 'demo',
-        codeExamples: [
-          { label: 'TS', code: this.exampleTypesTs, language: 'typescript' },
-        ],
-      },
-      {
-        id: 'sticky',
-        title: 'Sticky',
-        description:
-          'Las notificaciones sticky no desaparecen automáticamente, requieren acción del usuario para cerrarse.',
-        type: 'demo',
-        codeExamples: [
-          { label: 'TS', code: this.exampleStickyTs, language: 'typescript' },
-        ],
-      },
-      {
-        id: 'api-toast',
-        title: 'Toast Interface',
-        description: 'Propiedades del objeto Toast.',
-        type: 'table',
-        tableData: [
-          {
-            name: 'type',
-            type: "'success' | 'info' | 'warning' | 'error'",
-            default: "'info'",
-            description:
-              'Define el estilo visual y el icono de la notificación.',
-          },
-          {
-            name: 'title',
-            type: 'string',
-            default: '-',
-            description: 'Título de la notificación.',
-          },
-          {
-            name: 'message',
-            type: 'string',
-            default: '-',
-            description: 'Contenido del mensaje.',
-          },
-          {
-            name: 'duration',
-            type: 'number',
-            default: '3000',
-            description: 'Tiempo en ms antes del cierre automático.',
-          },
-          {
-            name: 'life',
-            type: 'number',
-            default: '3000',
-            description: 'Alias para duration (compatibilidad).',
-          },
-          {
-            name: 'sticky',
-            type: 'boolean',
-            default: 'false',
-            description: 'Si es true, no se cierra automáticamente.',
-          },
-          {
-            name: 'icon',
-            type: 'string',
-            default: '-',
-            description: 'Clase CSS para icono personalizado (ej. "user").',
-          },
-          {
-            name: 'id',
-            type: 'string',
-            default: 'auto',
-            description: 'Identificador único (opcional).',
-          },
-          {
-            name: 'data',
-            type: 'unknown',
-            default: '-',
-            description: 'Datos arbitrarios asociados al toast.',
-          },
-        ],
-      },
-      {
-        id: 'api-component',
-        title: 'MagaryToast (Component)',
-        description: 'Inputs del componente contenedor <magary-toast>.',
-        type: 'table',
-        tableData: [
-          {
-            name: 'position',
-            type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center' ...",
-            default: "'top-right'",
-            description: 'Posición de las notificaciones en pantalla.',
-          },
-          {
-            name: 'baseZIndex',
-            type: 'number',
-            default: '1100',
-            description: 'Z-index base para el contenedor.',
-          },
-          {
-            name: 'offsetX',
-            type: 'string',
-            default: "'1rem'",
-            description:
-              'Separación horizontal desde el borde en posiciones left/right.',
-          },
-          {
-            name: 'offsetY',
-            type: 'string',
-            default: "'1rem'",
-            description:
-              'Separación vertical desde el borde en posiciones top/bottom.',
-          },
-        ],
-      },
+      ],
+    },
+    {
+      id: 'types',
+      titleKey: 'components.messages.toast.sections.types.title',
+      descriptionKey: 'components.messages.toast.sections.types.desc',
+      type: 'demo',
+      codeExamples: [
+        {
+          labelKey: 'components.messages.toast.tabs.ts',
+          code: this.exampleTypesTs,
+          language: 'typescript',
+        },
+      ],
+    },
+    {
+      id: 'sticky',
+      titleKey: 'components.messages.toast.sections.sticky.title',
+      descriptionKey: 'components.messages.toast.sections.sticky.desc',
+      type: 'demo',
+      codeExamples: [
+        {
+          labelKey: 'components.messages.toast.tabs.ts',
+          code: this.exampleStickyTs,
+          language: 'typescript',
+        },
+      ],
+    },
+    {
+      id: 'api-toast',
+      titleKey: 'components.messages.toast.sections.apiToast.title',
+      descriptionKey: 'components.messages.toast.sections.apiToast.desc',
+      type: 'table',
+      tableData: [
+        {
+          name: 'type',
+          type: "'success' | 'info' | 'warning' | 'error'",
+          default: "'info'",
+          descriptionKey: 'components.messages.toast.apiToast.type.desc',
+        },
+        {
+          name: 'title',
+          type: 'string',
+          default: '-',
+          descriptionKey: 'components.messages.toast.apiToast.title.desc',
+        },
+        {
+          name: 'message',
+          type: 'string',
+          default: '-',
+          descriptionKey: 'components.messages.toast.apiToast.message.desc',
+        },
+        {
+          name: 'duration',
+          type: 'number',
+          default: '3000',
+          descriptionKey: 'components.messages.toast.apiToast.duration.desc',
+        },
+        {
+          name: 'life',
+          type: 'number',
+          default: '3000',
+          descriptionKey: 'components.messages.toast.apiToast.life.desc',
+        },
+        {
+          name: 'sticky',
+          type: 'boolean',
+          default: 'false',
+          descriptionKey: 'components.messages.toast.apiToast.sticky.desc',
+        },
+        {
+          name: 'icon',
+          type: 'string',
+          default: '-',
+          descriptionKey: 'components.messages.toast.apiToast.icon.desc',
+        },
+        {
+          name: 'id',
+          type: 'string',
+          default: 'auto',
+          descriptionKey: 'components.messages.toast.apiToast.id.desc',
+        },
+        {
+          name: 'data',
+          type: 'unknown',
+          default: '-',
+          descriptionKey: 'components.messages.toast.apiToast.data.desc',
+        },
+      ],
+    },
+    {
+      id: 'api-component',
+      titleKey: 'components.messages.toast.sections.apiComponent.title',
+      descriptionKey: 'components.messages.toast.sections.apiComponent.desc',
+      type: 'table',
+      tableData: [
+        {
+          name: 'position',
+          type: "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'center' ...",
+          default: "'top-right'",
+          descriptionKey: 'components.messages.toast.apiComponent.position.desc',
+        },
+        {
+          name: 'baseZIndex',
+          type: 'number',
+          default: '1100',
+          descriptionKey: 'components.messages.toast.apiComponent.baseZIndex.desc',
+        },
+        {
+          name: 'offsetX',
+          type: 'string',
+          default: "'1rem'",
+          descriptionKey: 'components.messages.toast.apiComponent.offsetX.desc',
+        },
+        {
+          name: 'offsetY',
+          type: 'string',
+          default: "'1rem'",
+          descriptionKey: 'components.messages.toast.apiComponent.offsetY.desc',
+        },
+      ],
+    },
     ];
   }
 
-  // Demo Actions
   showSuccess() {
     this.toastService.add({
       type: 'success',
-      title: 'Éxito',
-      message: 'Operación completada correctamente.',
+      title: this.t('components.messages.toast.toast.success.title'),
+      message: this.t('components.messages.toast.toast.success.message'),
     });
   }
 
   showInfo() {
     this.toastService.add({
       type: 'info',
-      title: 'Información',
-      message: 'Nueva versión disponible.',
+      title: this.t('components.messages.toast.toast.info.title'),
+      message: this.t('components.messages.toast.toast.info.message'),
     });
   }
 
   showWarning() {
     this.toastService.add({
       type: 'warning',
-      title: 'Advertencia',
-      message: 'Tu sesión expirará pronto.',
+      title: this.t('components.messages.toast.toast.warning.title'),
+      message: this.t('components.messages.toast.toast.warning.message'),
     });
   }
 
   showError() {
     this.toastService.add({
       type: 'error',
-      title: 'Error',
-      message: 'Ha ocurrido un error inesperado.',
+      title: this.t('components.messages.toast.toast.error.title'),
+      message: this.t('components.messages.toast.toast.error.message'),
     });
   }
 
   showSticky() {
     this.toastService.add({
       type: 'info',
-      title: 'Sticky Toast',
-      message: 'Este mensaje permanecerá hasta que lo cierres.',
+      title: this.t('components.messages.toast.toast.sticky.title'),
+      message: this.t('components.messages.toast.toast.sticky.message'),
       sticky: true,
     });
   }
 
-  // Code Examples
   exampleBasicTs = `import { Component, inject } from '@angular/core';
 import { MagaryToastService } from 'ng-magary';
 
 @Component({ ... })
 export class MyComponent {
-  // Inyección moderna del servicio
   private toastService = inject(MagaryToastService);
 
   showToast() {
     this.toastService.add({
-      type: 'success', // 'success' | 'info' | 'warning' | 'error'
-      title: 'Hola Mundo',
-      message: 'Esta es una notificación completa.',
-      duration: 5000,  // Duración personalizada (ms)
-      icon: 'rocket', // Icono personalizado
-      sticky: false,   // Auto-dismiss
+      type: 'success',
+      title: 'Hello World',
+      message: 'This is a complete notification.',
+      duration: 5000,
+      icon: 'rocket',
+      sticky: false,
     });
   }
 }`;
 
-  exampleBasicHtml = `<!-- En tu layout principal (ej. app.component.html) -->
+  exampleBasicHtml = `<!-- In your main layout (e.g. app.component.html) -->
 <magary-toast position="top-right" offsetY="5rem"></magary-toast>
 
-<!-- En tu template -->
-<magary-button (click)="showToast()" label="Mostrar Toast"></magary-button>`;
+<!-- In your template -->
+<magary-button (click)="showToast()" label="Show Toast"></magary-button>`;
 
-  exampleTypesTs = `// Diferentes tipos de mensajes
-this.toastService.add({ type: 'success', title: 'Éxito', message: 'Todo salió bien' });
-this.toastService.add({ type: 'info', title: 'Info', message: 'Información útil' });
-this.toastService.add({ type: 'warning', title: 'Cuidado', message: 'Algo no anda bien' });
-this.toastService.add({ type: 'error', title: 'Error', message: 'Falló la operación' });`;
+  exampleTypesTs = `this.toastService.add({ type: 'success', title: 'Success', message: 'All good' });
+this.toastService.add({ type: 'info', title: 'Info', message: 'Useful information' });
+this.toastService.add({ type: 'warning', title: 'Warning', message: 'Something looks wrong' });
+this.toastService.add({ type: 'error', title: 'Error', message: 'The operation failed' });`;
 
   exampleStickyTs = `this.toastService.add({
   type: 'info',
   title: 'Sticky',
-  message: 'No me iré hasta que me cierres manualmente.',
-  sticky: true // Desactiva el cierre automático
+  message: 'I will stay until manually closed.',
+  sticky: true
 });`;
 }

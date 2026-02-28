@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MagaryTree,
@@ -10,6 +10,8 @@ import { MagaryTabs, MagaryTab } from 'ng-magary';
 import { MagaryCard } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 @Component({
   selector: 'view-tree',
@@ -26,6 +28,9 @@ import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
   styleUrls: ['./view-tree.scss'],
 })
 export class ViewTree {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
     positionContent: 'flex-start' as const,
@@ -146,16 +151,20 @@ export class ViewTree {
 
   selectedFile: MagaryTreeNode | null = null;
   selectedFiles: MagaryTreeNode[] = [];
-  treeEventSummary = 'No events yet';
+  treeEventSummary = this.t('components.data.tree.events.none');
 
   onNodeSelect(event: MagaryTreeNodeSelectionEvent) {
     this.selectedFile = event.node;
-    this.treeEventSummary = `Selected: ${event.node.label ?? 'unknown node'}`;
+    this.treeEventSummary =
+      this.t('components.data.tree.events.selected') +
+      (event.node.label ?? this.t('components.data.tree.events.unknownNode'));
   }
 
   onNodeUnselect(event: MagaryTreeNodeSelectionEvent) {
     this.selectedFile = null;
-    this.treeEventSummary = `Unselected: ${event.node.label ?? 'unknown node'}`;
+    this.treeEventSummary =
+      this.t('components.data.tree.events.unselected') +
+      (event.node.label ?? this.t('components.data.tree.events.unknownNode'));
   }
 
   onNodeDrop(event: MagaryTreeNodeDropEvent) {
@@ -176,9 +185,16 @@ export class ViewTree {
       );
     }
 
-    const parentLabel = event.parent?.label ?? 'root';
-    const dragLabel = event.dragNode.label ?? 'unknown node';
-    this.treeEventSummary = `Dropped "${dragLabel}" into "${parentLabel}"`;
+    const parentLabel =
+      event.parent?.label ?? this.t('components.data.tree.events.root');
+    const dragLabel =
+      event.dragNode.label ?? this.t('components.data.tree.events.unknownNode');
+    this.treeEventSummary =
+      this.t('components.data.tree.events.droppedPrefix') +
+      dragLabel +
+      this.t('components.data.tree.events.droppedMiddle') +
+      parentLabel +
+      this.t('components.data.tree.events.droppedSuffix');
   }
 
   // Clone for DnD to avoid affecting other examples

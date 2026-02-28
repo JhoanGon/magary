@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MagarySteps,
@@ -10,6 +10,21 @@ import {
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { LucideAngularModule } from 'lucide-angular';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type StepsInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type StepsOutputRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'view-steps',
@@ -28,6 +43,9 @@ import { LucideAngularModule } from 'lucide-angular';
   styleUrls: ['./view-steps.scss'],
 })
 export class ViewSteps implements OnInit {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   items: StepsItem[] = [];
   activeIndex: number = 0;
   readOnly: boolean = false;
@@ -38,12 +56,50 @@ export class ViewSteps implements OnInit {
     background: '#282c34',
   };
 
+  inputsConfig: StepsInputRow[] = [
+    {
+      name: 'model',
+      type: 'StepsItem[]',
+      default: 'null',
+      descriptionKey: 'components.menu.steps.apiInputs.model.desc',
+    },
+    {
+      name: 'activeIndex',
+      type: 'number',
+      default: '0',
+      descriptionKey: 'components.menu.steps.apiInputs.activeIndex.desc',
+    },
+    {
+      name: 'readonly',
+      type: 'boolean',
+      default: 'true',
+      descriptionKey: 'components.menu.steps.apiInputs.readonly.desc',
+    },
+    {
+      name: 'orientation',
+      type: "'horizontal' | 'vertical'",
+      default: "'horizontal'",
+      descriptionKey: 'components.menu.steps.apiInputs.orientation.desc',
+    },
+  ];
+
+  outputsConfig: StepsOutputRow[] = [
+    {
+      name: 'activeIndexChange',
+      type: 'EventEmitter<number>',
+      descriptionKey: 'components.menu.steps.apiOutputs.activeIndexChange.desc',
+    },
+  ];
+
   ngOnInit() {
     this.items = [
-      { label: 'Personal', icon: 'user' },
-      { label: 'Seat', icon: 'monitor' },
-      { label: 'Payment', icon: 'credit-card' },
-      { label: 'Confirmation', icon: 'circle-check' },
+      { label: this.t('components.menu.steps.items.personal'), icon: 'user' },
+      { label: this.t('components.menu.steps.items.seat'), icon: 'monitor' },
+      { label: this.t('components.menu.steps.items.payment'), icon: 'credit-card' },
+      {
+        label: this.t('components.menu.steps.items.confirmation'),
+        icon: 'circle-check',
+      },
     ];
   }
 

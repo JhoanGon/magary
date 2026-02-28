@@ -1,15 +1,35 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  signal,
+  Component,
+  effect,
   inject,
+  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MagaryTieredMenu, MagaryToastService } from 'ng-magary';
-import { MenuItem } from 'ng-magary';
-import { MagaryTabs, MagaryTab } from 'ng-magary';
-import { MagaryButton } from 'ng-magary';
+import {
+  MagaryButton,
+  MagaryTab,
+  MagaryTabs,
+  MagaryTieredMenu,
+  MagaryToastService,
+  MenuItem,
+} from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type TieredMenuInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type TieredMenuMenuItemRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'app-view-tiered-menu',
@@ -27,200 +47,217 @@ import { Highlight } from 'ngx-highlightjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewTieredMenu {
-  private toastService = inject(MagaryToastService);
+  private readonly toastService = inject(MagaryToastService);
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
 
-  items = signal<MenuItem[]>([
-    {
-      label: 'File',
-      icon: 'file',
-      items: [
-        {
-          label: 'New',
-          icon: 'plus',
-          items: [
-            {
-              label: 'Document',
-              icon: 'file-text',
-              command: () =>
-                this.toastService.add({
-                  type: 'success',
-                  title: 'New Document',
-                  message: 'Created new document',
-                }),
-            },
-            {
-              label: 'Image',
-              icon: 'image',
-              command: () =>
-                this.toastService.add({
-                  type: 'success',
-                  title: 'New Image',
-                  message: 'Created new image',
-                }),
-            },
-            {
-              label: 'Video',
-              icon: 'video',
-              command: () =>
-                this.toastService.add({
-                  type: 'success',
-                  title: 'New Video',
-                  message: 'Created new video',
-                }),
-            },
-          ],
-        },
-        {
-          label: 'Open',
-          icon: 'folder-open',
-          command: () =>
-            this.toastService.add({
-              type: 'info',
-              title: 'Open',
-              message: 'Open file dialog',
-            }),
-        },
-        { separator: true },
-        {
-          label: 'Print',
-          icon: 'printer',
-          command: () =>
-            this.toastService.add({
-              type: 'warning',
-              title: 'Print',
-              message: 'Printing document',
-            }),
-        },
-      ],
-    },
-    {
-      label: 'Edit',
-      icon: 'pencil',
-      items: [
-        {
-          label: 'Copy',
-          icon: 'copy',
-          command: () =>
-            this.toastService.add({
-              type: 'info',
-              title: 'Copy',
-              message: 'Copied to clipboard',
-            }),
-        },
-        {
-          label: 'Cut',
-          icon: 'scissors',
-          command: () =>
-            this.toastService.add({
-              type: 'info',
-              title: 'Cut',
-              message: 'Cut to clipboard',
-            }),
-        },
-        {
-          label: 'Paste',
-          icon: 'clipboard',
-          command: () =>
-            this.toastService.add({
-              type: 'info',
-              title: 'Paste',
-              message: 'Pasted from clipboard',
-            }),
-        },
-      ],
-    },
-    {
-      label: 'Help',
-      icon: 'info',
-      items: [
-        {
-          label: 'About',
-          icon: 'info',
-          command: () =>
-            this.toastService.add({
-              type: 'info',
-              title: 'About',
-              message: 'Magary UI v1.0',
-            }),
-        },
-      ],
-    },
-  ]);
+  items = signal<MenuItem[]>([]);
 
-  inputs = [
+  constructor() {
+    effect(() => {
+      this.i18n.language();
+      this.items.set(this.buildMenuItems());
+    });
+  }
+
+  private buildMenuItems(): MenuItem[] {
+    return [
+      {
+        label: this.t('components.menu.tieredMenu.items.file'),
+        icon: 'file',
+        items: [
+          {
+            label: this.t('components.menu.tieredMenu.items.new'),
+            icon: 'plus',
+            items: [
+              {
+                label: this.t('components.menu.tieredMenu.items.document'),
+                icon: 'file-text',
+                command: () =>
+                  this.toastService.add({
+                    type: 'success',
+                    title: this.t('components.menu.tieredMenu.toast.newDocumentTitle'),
+                    message: this.t(
+                      'components.menu.tieredMenu.toast.newDocumentMessage',
+                    ),
+                  }),
+              },
+              {
+                label: this.t('components.menu.tieredMenu.items.image'),
+                icon: 'image',
+                command: () =>
+                  this.toastService.add({
+                    type: 'success',
+                    title: this.t('components.menu.tieredMenu.toast.newImageTitle'),
+                    message: this.t(
+                      'components.menu.tieredMenu.toast.newImageMessage',
+                    ),
+                  }),
+              },
+              {
+                label: this.t('components.menu.tieredMenu.items.video'),
+                icon: 'video',
+                command: () =>
+                  this.toastService.add({
+                    type: 'success',
+                    title: this.t('components.menu.tieredMenu.toast.newVideoTitle'),
+                    message: this.t(
+                      'components.menu.tieredMenu.toast.newVideoMessage',
+                    ),
+                  }),
+              },
+            ],
+          },
+          {
+            label: this.t('components.menu.tieredMenu.items.open'),
+            icon: 'folder-open',
+            command: () =>
+              this.toastService.add({
+                type: 'info',
+                title: this.t('components.menu.tieredMenu.toast.openTitle'),
+                message: this.t('components.menu.tieredMenu.toast.openMessage'),
+              }),
+          },
+          { separator: true },
+          {
+            label: this.t('components.menu.tieredMenu.items.print'),
+            icon: 'printer',
+            command: () =>
+              this.toastService.add({
+                type: 'warning',
+                title: this.t('components.menu.tieredMenu.toast.printTitle'),
+                message: this.t('components.menu.tieredMenu.toast.printMessage'),
+              }),
+          },
+        ],
+      },
+      {
+        label: this.t('components.menu.tieredMenu.items.edit'),
+        icon: 'pencil',
+        items: [
+          {
+            label: this.t('components.menu.tieredMenu.items.copy'),
+            icon: 'copy',
+            command: () =>
+              this.toastService.add({
+                type: 'info',
+                title: this.t('components.menu.tieredMenu.toast.copyTitle'),
+                message: this.t('components.menu.tieredMenu.toast.copyMessage'),
+              }),
+          },
+          {
+            label: this.t('components.menu.tieredMenu.items.cut'),
+            icon: 'scissors',
+            command: () =>
+              this.toastService.add({
+                type: 'info',
+                title: this.t('components.menu.tieredMenu.toast.cutTitle'),
+                message: this.t('components.menu.tieredMenu.toast.cutMessage'),
+              }),
+          },
+          {
+            label: this.t('components.menu.tieredMenu.items.paste'),
+            icon: 'clipboard',
+            command: () =>
+              this.toastService.add({
+                type: 'info',
+                title: this.t('components.menu.tieredMenu.toast.pasteTitle'),
+                message: this.t('components.menu.tieredMenu.toast.pasteMessage'),
+              }),
+          },
+        ],
+      },
+      {
+        label: this.t('components.menu.tieredMenu.items.help'),
+        icon: 'info',
+        items: [
+          {
+            label: this.t('components.menu.tieredMenu.items.about'),
+            icon: 'info',
+            command: () =>
+              this.toastService.add({
+                type: 'info',
+                title: this.t('components.menu.tieredMenu.toast.aboutTitle'),
+                message: this.t('components.menu.tieredMenu.toast.aboutMessage'),
+              }),
+          },
+        ],
+      },
+    ];
+  }
+
+  inputs: TieredMenuInputRow[] = [
     {
       name: 'model',
       type: 'MenuItem[]',
       default: '[]',
-      description: 'An array of menu items.',
+      descriptionKey: 'components.menu.tieredMenu.inputs.model.desc',
     },
     {
       name: 'popup',
       type: 'boolean',
       default: 'false',
-      description: 'Defines if the menu is in popup mode.',
+      descriptionKey: 'components.menu.tieredMenu.inputs.popup.desc',
     },
     {
       name: 'style',
       type: 'object',
       default: 'null',
-      description: 'Inline style of the component.',
+      descriptionKey: 'components.menu.tieredMenu.inputs.style.desc',
     },
     {
       name: 'styleClass',
       type: 'string',
       default: 'null',
-      description: 'Style class of the component.',
+      descriptionKey: 'components.menu.tieredMenu.inputs.styleClass.desc',
     },
   ];
 
-  eventsConfig = [];
-
-  menuItemConfig = [
+  menuItemConfig: TieredMenuMenuItemRow[] = [
     {
       name: 'label',
       type: 'string',
-      description: 'Text to display for the menu item.',
+      descriptionKey: 'components.menu.tieredMenu.menuItem.label.desc',
     },
     {
       name: 'icon',
       type: 'string',
-      description: 'Icon name (Lucide) to display.',
+      descriptionKey: 'components.menu.tieredMenu.menuItem.icon.desc',
     },
     {
       name: 'items',
       type: 'MenuItem[]',
-      description: 'Array of submenu items.',
+      descriptionKey: 'components.menu.tieredMenu.menuItem.items.desc',
     },
     {
       name: 'command',
       type: 'function',
-      description: 'Callback to execute when the item is clicked.',
+      descriptionKey: 'components.menu.tieredMenu.menuItem.command.desc',
     },
     {
       name: 'url',
       type: 'string',
-      description: 'External link to navigate to.',
+      descriptionKey: 'components.menu.tieredMenu.menuItem.url.desc',
     },
     {
       name: 'routerLink',
       type: '(string | number)[] | string',
-      description: 'Router link for internal navigation.',
+      descriptionKey: 'components.menu.tieredMenu.menuItem.routerLink.desc',
     },
     {
       name: 'disabled',
       type: 'boolean',
-      description: 'If true, the item is disabled.',
+      descriptionKey: 'components.menu.tieredMenu.menuItem.disabled.desc',
     },
     {
       name: 'separator',
       type: 'boolean',
-      description: 'If true, displays a separator instead of an item.',
+      descriptionKey: 'components.menu.tieredMenu.menuItem.separator.desc',
     },
     {
       name: 'expanded',
       type: 'boolean',
-      description: 'Visibility of the submenu.',
+      descriptionKey: 'components.menu.tieredMenu.menuItem.expanded.desc',
     },
   ];
 
@@ -243,10 +280,10 @@ export class MyComponent {
           label: 'File',
           icon: 'file',
           items: [
-              { 
-                  label: 'New', 
+              {
+                  label: 'New',
                   icon: 'plus',
-                  command: () => this.toastService.add({ type: 'success', title: 'New', message: 'Item clicked' }) 
+                  command: () => this.toastService.add({ type: 'success', title: 'New', message: 'Item clicked' })
               },
               { label: 'Open', icon: 'folder-open' }
           ]

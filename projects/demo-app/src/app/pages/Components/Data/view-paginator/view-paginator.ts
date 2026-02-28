@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryPaginator, PaginatorState, MagaryCard } from 'ng-magary';
 import { MagaryTabs } from 'ng-magary';
 import { MagaryTab } from 'ng-magary';
 
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 @Component({
   selector: 'view-paginator',
@@ -21,6 +23,9 @@ import { Highlight } from 'ngx-highlightjs';
   styleUrls: ['./view-paginator.scss'],
 })
 export class ViewPaginator {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
     positionContent: 'flex-start' as const,

@@ -1,14 +1,29 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  signal,
+  Component,
+  effect,
   inject,
+  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryContextMenu } from 'ng-magary';
-import { MenuItem, MagaryToastService } from 'ng-magary';
-import { MagaryTabs, MagaryTab } from 'ng-magary';
+import { MagaryTab, MagaryTabs, MagaryToastService, MenuItem } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type ContextMenuInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type ContextMenuMenuItemRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'app-view-context-menu',
@@ -25,122 +40,160 @@ import { Highlight } from 'ngx-highlightjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewContextMenu {
-  private toastService = inject(MagaryToastService);
+  private readonly toastService = inject(MagaryToastService);
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
 
-  // Model for the context menu
-  items = signal<MenuItem[]>([
-    {
-      label: 'View',
-      icon: 'eye',
-      items: [
-        {
-          label: 'Large Icons',
-          icon: 'maximize',
-          command: () => this.toast('View changed to Large Icons'),
-        },
-        {
-          label: 'List', // No icon
-          command: () => this.toast('View changed to List'),
-        },
-      ],
-    },
-    { separator: true },
-    {
-      label: 'Sort By',
-      icon: 'arrow-up-down',
-      items: [
-        {
-          label: 'Name',
-          icon: 'a-large-small',
-          command: () => this.toast('Sorted by Name'),
-        },
-        {
-          label: 'Date',
-          icon: 'calendar',
-          command: () => this.toast('Sorted by Date'),
-        },
-      ],
-    },
-    { separator: true },
-    {
-      label: 'Refresh',
-      icon: 'refresh-ccw',
-      command: () => this.toast('Refreshed'),
-    },
-    { separator: true },
-    {
-      label: 'Properties',
-      icon: 'settings-2',
-      command: () => this.toast('Properties clicked'),
-    },
-  ]);
+  items = signal<MenuItem[]>([]);
 
-  toast(msg: string) {
+  constructor() {
+    effect(() => {
+      this.i18n.language();
+      this.items.set(this.buildMenuItems());
+    });
+  }
+
+  private buildMenuItems(): MenuItem[] {
+    return [
+      {
+        label: this.t('components.menu.contextMenu.items.view'),
+        icon: 'eye',
+        items: [
+          {
+            label: this.t('components.menu.contextMenu.items.largeIcons'),
+            icon: 'maximize',
+            command: () =>
+              this.toast(this.t('components.menu.contextMenu.toast.viewLargeIcons')),
+          },
+          {
+            label: this.t('components.menu.contextMenu.items.list'),
+            command: () =>
+              this.toast(this.t('components.menu.contextMenu.toast.viewList')),
+          },
+        ],
+      },
+      { separator: true },
+      {
+        label: this.t('components.menu.contextMenu.items.sortBy'),
+        icon: 'arrow-up-down',
+        items: [
+          {
+            label: this.t('components.menu.contextMenu.items.name'),
+            icon: 'a-large-small',
+            command: () =>
+              this.toast(this.t('components.menu.contextMenu.toast.sortedByName')),
+          },
+          {
+            label: this.t('components.menu.contextMenu.items.date'),
+            icon: 'calendar',
+            command: () =>
+              this.toast(this.t('components.menu.contextMenu.toast.sortedByDate')),
+          },
+        ],
+      },
+      { separator: true },
+      {
+        label: this.t('components.menu.contextMenu.items.refresh'),
+        icon: 'refresh-ccw',
+        command: () =>
+          this.toast(this.t('components.menu.contextMenu.toast.refreshed')),
+      },
+      { separator: true },
+      {
+        label: this.t('components.menu.contextMenu.items.properties'),
+        icon: 'settings-2',
+        command: () =>
+          this.toast(this.t('components.menu.contextMenu.toast.propertiesClicked')),
+      },
+    ];
+  }
+
+  private toast(msg: string) {
     this.toastService.add({
       type: 'info',
-      title: 'Context Menu',
+      title: this.t('components.menu.contextMenu.toast.title'),
       message: msg,
     });
   }
 
-  inputs = [
+  inputs: ContextMenuInputRow[] = [
     {
       name: 'model',
       type: 'MenuItem[]',
       default: '[]',
-      description: 'Array de elementos del menú.',
+      descriptionKey: 'components.menu.contextMenu.inputs.model.desc',
     },
     {
       name: 'global',
       type: 'boolean',
       default: 'false',
-      description: 'Adjunta el menú al evento de context menu del documento.',
+      descriptionKey: 'components.menu.contextMenu.inputs.global.desc',
     },
     {
       name: 'target',
       type: 'ElementRef | string',
       default: 'null',
-      description: 'Adjunta el menú a un elemento específico.',
+      descriptionKey: 'components.menu.contextMenu.inputs.target.desc',
     },
     {
       name: 'style',
       type: 'object',
       default: 'null',
-      description: 'Estilo en línea del componente.',
+      descriptionKey: 'components.menu.contextMenu.inputs.style.desc',
     },
     {
       name: 'styleClass',
       type: 'string',
       default: 'null',
-      description: 'Clase de estilo del componente.',
+      descriptionKey: 'components.menu.contextMenu.inputs.styleClass.desc',
     },
   ];
 
-  menuItemConfig = [
-    { name: 'label', type: 'string', description: 'Texto a mostrar.' },
-    { name: 'icon', type: 'string', description: 'Nombre del icono (Lucide).' },
+  menuItemConfig: ContextMenuMenuItemRow[] = [
+    {
+      name: 'label',
+      type: 'string',
+      descriptionKey: 'components.menu.contextMenu.menuItem.label.desc',
+    },
+    {
+      name: 'icon',
+      type: 'string',
+      descriptionKey: 'components.menu.contextMenu.menuItem.icon.desc',
+    },
     {
       name: 'items',
       type: 'MenuItem[]',
-      description: 'Elementos del submenú.',
+      descriptionKey: 'components.menu.contextMenu.menuItem.items.desc',
     },
     {
       name: 'command',
       type: 'function',
-      description: 'Callback al hacer clic.',
+      descriptionKey: 'components.menu.contextMenu.menuItem.command.desc',
     },
-    { name: 'url', type: 'string', description: 'Enlace externo.' },
+    {
+      name: 'url',
+      type: 'string',
+      descriptionKey: 'components.menu.contextMenu.menuItem.url.desc',
+    },
     {
       name: 'routerLink',
       type: '(string | number)[]',
-      description: 'Enlace del router.',
+      descriptionKey: 'components.menu.contextMenu.menuItem.routerLink.desc',
     },
-    { name: 'disabled', type: 'boolean', description: 'Estado deshabilitado.' },
-    { name: 'separator', type: 'boolean', description: 'Línea separadora.' },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      descriptionKey: 'components.menu.contextMenu.menuItem.disabled.desc',
+    },
+    {
+      name: 'separator',
+      type: 'boolean',
+      descriptionKey: 'components.menu.contextMenu.menuItem.separator.desc',
+    },
     {
       name: 'expanded',
       type: 'boolean',
-      description: 'Visibilidad del submenú.',
+      descriptionKey: 'components.menu.contextMenu.menuItem.expanded.desc',
     },
   ];
 
@@ -159,8 +212,8 @@ export class MyComponent {
   private toastService = inject(MagaryToastService);
 
   items = signal<MenuItem[]>([
-     { 
-         label: 'View', 
+     {
+         label: 'View',
          icon: 'eye',
          command: () => this.toastService.add({ type: 'info', title: 'View', message: 'View clicked' })
      }

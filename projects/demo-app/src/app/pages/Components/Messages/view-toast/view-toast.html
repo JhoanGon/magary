@@ -1,70 +1,67 @@
 <div class="container">
   <div class="header">
-    <h1>Toast</h1>
-    <p>
-      Notificaciones flotantes con estilo premium, animaciones fluidas y soporte
-      para múltiples tipos de mensajes.
-    </p>
+    <h1>{{ t('components.messages.toast.title') }}</h1>
+    <p>{{ t('components.messages.toast.subtitle') }}</p>
   </div>
 
   @for (section of sections; track section.id) {
     <div class="section" [attr.id]="'section-' + section.id">
       <div class="section-header">
-        <h2>{{ section.title }}</h2>
-        <p>{{ section.description }}</p>
+        <h2>{{ t(section.titleKey) }}</h2>
+        <p>{{ t(section.descriptionKey) }}</p>
       </div>
 
       <div class="section-content">
-        @if (section.type === "code") {
+        @if (section.type === 'code') {
           <div class="code-block">
             <pre><code [highlight]="section.content!.code" [language]="section.content!.language"></code></pre>
           </div>
         }
 
-        @if (section.type === "demo") {
+        @if (section.type === 'demo') {
           <div class="demo-card">
             <div class="demo-actions">
-              @if (section.id === "basic") {
+              @if (section.id === 'basic') {
                 <magary-button
                   (click)="showSuccess()"
                   variant="solid"
                   severity="help"
-                  >Mostrar Notificación</magary-button
-                >
+                  [label]="t('components.messages.toast.buttons.show')"
+                ></magary-button>
               }
-              @if (section.id === "types") {
+              @if (section.id === 'types') {
                 <magary-button
                   (click)="showSuccess()"
                   variant="solid"
                   severity="success"
-                  >Success</magary-button
-                >
+                  [label]="t('components.messages.toast.buttons.success')"
+                ></magary-button>
                 <magary-button
                   (click)="showInfo()"
                   variant="solid"
                   severity="info"
-                  >Info</magary-button
-                >
+                  [label]="t('components.messages.toast.buttons.info')"
+                ></magary-button>
                 <magary-button
                   (click)="showWarning()"
                   variant="solid"
                   severity="warning"
-                  >Warning</magary-button
-                >
+                  [label]="t('components.messages.toast.buttons.warning')"
+                ></magary-button>
                 <magary-button
                   (click)="showError()"
                   variant="solid"
                   severity="danger"
-                  >Error</magary-button
-                >
+                  [label]="t('components.messages.toast.buttons.error')"
+                ></magary-button>
               }
-              @if (section.id === "sticky") {
+              @if (section.id === 'sticky') {
                 <magary-button
                   (click)="showSticky()"
                   variant="outlined"
                   severity="help"
-                  >Mostrar Sticky</magary-button
-                >
+                  [label]="t('components.messages.toast.buttons.sticky')"
+                ></magary-button>
               }
             </div>
           </div>
@@ -76,8 +73,8 @@
                 [positionContent]="tabsConfig.positionContent"
                 [background]="tabsConfig.background"
               >
-                @for (example of section.codeExamples; track example.label) {
-                  <magary-tab [label]="example.label">
+                @for (example of section.codeExamples; track example.labelKey) {
+                  <magary-tab [label]="t(example.labelKey)">
                     <pre><code [highlight]="example.code" [language]="example.language"></code></pre>
                   </magary-tab>
                 }
@@ -86,15 +83,17 @@
           }
         }
 
-        @if (section.type === "table") {
+        @if (section.type === 'table') {
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Default</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.messages.toast.table.header.name') }}</th>
+                  <th>{{ t('components.messages.toast.table.header.type') }}</th>
+                  <th>{{ t('components.messages.toast.table.header.default') }}</th>
+                  <th>
+                    {{ t('components.messages.toast.table.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -109,7 +108,7 @@
                     <td>
                       <code>{{ row.default }}</code>
                     </td>
-                    <td>{{ row.description }}</td>
+                    <td>{{ t(row.descriptionKey) }}</td>
                   </tr>
                 }
               </tbody>

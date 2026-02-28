@@ -1,14 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>MagaryMessage</h1>
-    <p>Componente para mostrar mensajes y alertas en línea.</p>
+    <h1>{{ t('components.messages.message.title') }}</h1>
+    <p>{{ t('components.messages.message.subtitle') }}</p>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone.</p>
+      <h2>{{ t('components.messages.message.import.title') }}</h2>
+      <p>{{ t('components.messages.message.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,44 +16,43 @@
     </div>
   </div>
 
-  <!-- Basic Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Severidades</h2>
-      <p>Diferentes niveles de severidad para comunicar el estado.</p>
+      <h2>{{ t('components.messages.message.severity.title') }}</h2>
+      <p>{{ t('components.messages.message.severity.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item" style="width: 100%; max-width: 600px">
           <magary-message
             severity="success"
-            text="Success"
-            detail="Message Content"
+            [text]="t('components.messages.message.severity.success')"
+            [detail]="t('components.messages.message.severity.detail')"
           ></magary-message>
           <magary-message
             severity="info"
-            text="Info"
-            detail="Message Content"
+            [text]="t('components.messages.message.severity.info')"
+            [detail]="t('components.messages.message.severity.detail')"
           ></magary-message>
           <magary-message
             severity="warn"
-            text="Warning"
-            detail="Message Content"
+            [text]="t('components.messages.message.severity.warning')"
+            [detail]="t('components.messages.message.severity.detail')"
           ></magary-message>
           <magary-message
             severity="error"
-            text="Error"
-            detail="Message Content"
+            [text]="t('components.messages.message.severity.error')"
+            [detail]="t('components.messages.message.severity.detail')"
           ></magary-message>
           <magary-message
             severity="secondary"
-            text="Secondary"
-            detail="Message Content"
+            [text]="t('components.messages.message.severity.secondary')"
+            [detail]="t('components.messages.message.severity.detail')"
           ></magary-message>
           <magary-message
             severity="contrast"
-            text="Contrast"
-            detail="Message Content"
+            [text]="t('components.messages.message.severity.contrast')"
+            [detail]="t('components.messages.message.severity.detail')"
           ></magary-message>
         </div>
       </div>
@@ -64,7 +62,7 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.messages.message.tabs.html')">
             <pre><code [highlight]="exampleBasic" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -72,19 +70,18 @@
     </div>
   </div>
 
-  <!-- Closable Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Cerrable</h2>
-      <p>Mensajes que pueden ser descartados por el usuario.</p>
+      <h2>{{ t('components.messages.message.closable.title') }}</h2>
+      <p>{{ t('components.messages.message.closable.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item" style="width: 100%; max-width: 600px">
           <magary-message
             severity="info"
-            text="Closable Message"
-            detail="Click the X to close me"
+            [text]="t('components.messages.message.closable.text')"
+            [detail]="t('components.messages.message.closable.detail')"
             [closable]="true"
             (onClose)="onClose($event)"
           >
@@ -97,10 +94,10 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.messages.message.tabs.html')">
             <pre><code [highlight]="exampleClosable" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.messages.message.tabs.ts')">
             <pre><code [highlight]="importExample" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -108,19 +105,18 @@
     </div>
   </div>
 
-  <!-- Custom Icon Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Icono Personalizado</h2>
-      <p>Usa cualquier clase de icono compatible (ej: FontAwesome).</p>
+      <h2>{{ t('components.messages.message.custom.title') }}</h2>
+      <p>{{ t('components.messages.message.custom.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item" style="width: 100%; max-width: 600px">
           <magary-message
             severity="secondary"
-            text="System Update"
-            detail="Configuration required"
+            [text]="t('components.messages.message.custom.text')"
+            [detail]="t('components.messages.message.custom.detail')"
             icon="settings"
           ></magary-message>
         </div>
@@ -131,11 +127,10 @@
     </div>
   </div>
 
-  <!-- Dynamic / Animation Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Animaciones</h2>
-      <p>Entrada y Salida suave utilizando Angular Animations.</p>
+      <h2>{{ t('components.messages.message.animation.title') }}</h2>
+      <p>{{ t('components.messages.message.animation.desc') }}</p>
     </div>
     <div class="section-content">
       <div
@@ -143,12 +138,12 @@
         style="display: flex; gap: 1rem; margin-bottom: 2rem"
       >
         <magary-button
-          label="Mostrar Mensajes"
+          [label]="t('components.messages.message.animation.show')"
           (buttonClick)="showViaService()"
           severity="success"
         ></magary-button>
         <magary-button
-          label="Limpiar"
+          [label]="t('components.messages.message.animation.clear')"
           (buttonClick)="clear()"
           severity="secondary"
           variant="outlined"
@@ -163,8 +158,8 @@
           @for (msg of msgs; track $index) {
             <magary-message
               [severity]="msg.severity"
-              [text]="msg.text"
-              [detail]="msg.detail"
+              [text]="t(msg.textKey)"
+              [detail]="t(msg.detailKey)"
             ></magary-message>
           }
         </div>
@@ -172,67 +167,35 @@
     </div>
   </div>
 
-  <!-- API Documentation -->
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente.</p>
+      <h2>{{ t('components.messages.message.apiInputs.title') }}</h2>
+      <p>{{ t('components.messages.message.apiInputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Valor por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ t('components.messages.message.apiInputs.header.name') }}</th>
+              <th>{{ t('components.messages.message.apiInputs.header.type') }}</th>
+              <th>
+                {{ t('components.messages.message.apiInputs.header.default') }}
+              </th>
+              <th>
+                {{ t('components.messages.message.apiInputs.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>severity</code></td>
-              <td>
-                <code
-                  >'success' | 'info' | 'warn' | 'error' | 'secondary' |
-                  'contrast'</code
-                >
-              </td>
-              <td><code>'info'</code></td>
-              <td>Nivel de severidad del mensaje.</td>
-            </tr>
-            <tr>
-              <td><code>text</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Texto principal (resumen) del mensaje.</td>
-            </tr>
-            <tr>
-              <td><code>detail</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Texto detallado del mensaje.</td>
-            </tr>
-            <tr>
-              <td><code>icon</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Clase CSS del icono personalizado.</td>
-            </tr>
-            <tr>
-              <td><code>closable</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Si es verdadero, muestra un botón de cerrar.</td>
-            </tr>
-            <tr>
-              <td><code>life</code></td>
-              <td><code>number</code></td>
-              <td><code>undefined</code></td>
-              <td>
-                Tiempo en milisegundos para cerrar automáticamente el mensaje.
-              </td>
-            </tr>
+            @for (row of inputsConfig; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
@@ -240,25 +203,29 @@
   </div>
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos emitidos por el componente.</p>
+      <h2>{{ t('components.messages.message.apiOutputs.title') }}</h2>
+      <p>{{ t('components.messages.message.apiOutputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ t('components.messages.message.apiOutputs.header.name') }}</th>
+              <th>{{ t('components.messages.message.apiOutputs.header.type') }}</th>
+              <th>
+                {{ t('components.messages.message.apiOutputs.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>onClose</code></td>
-              <td><code>EventEmitter&lt;Event&gt;</code></td>
-              <td>Se emite cuando el usuario cierra el mensaje.</td>
-            </tr>
+            @for (row of outputsConfig; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>

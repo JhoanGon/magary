@@ -1,18 +1,15 @@
 <div class="container fade-in">
   <div class="header">
-    <h1 class="fade-in">Organization Chart</h1>
-    <p class="fade-in">
-      Visualización de datos jerárquicos en estructura de árbol.
-    </p>
+    <h1 class="fade-in">{{ t('components.data.organizationChart.title') }}</h1>
+    <p class="fade-in">{{ t('components.data.organizationChart.subtitle') }}</p>
   </div>
 
   <div class="content">
     <div class="components-grid">
-      <!-- Example 1: Basic -->
       <div class="section">
         <div class="section-header">
-          <h2>Básico</h2>
-          <p>Ejemplo básico con estructura jerárquica y selección.</p>
+          <h2>{{ t('components.data.organizationChart.basic.title') }}</h2>
+          <p>{{ t('components.data.organizationChart.basic.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -25,7 +22,7 @@
               <magary-organization-chart
                 [value]="data1"
                 selectionMode="single"
-                chartAriaLabel="Company organization chart"
+                [chartAriaLabel]="t('components.data.organizationChart.basic.chartAriaLabel')"
                 [selection]="selectedNode"
                 [collapsible]="true"
                 (onNodeSelect)="onNodeSelect($event)"
@@ -44,7 +41,8 @@
                     text-align: center;
                   "
                 >
-                  Seleccionado: <strong>{{ selectedNode.label }}</strong>
+                  {{ t('components.data.organizationChart.selectedLabel') }}
+                  <strong>{{ selectedNode.label }}</strong>
                 </div>
               }
 
@@ -57,7 +55,8 @@
                   text-align: center;
                 "
               >
-                Evento: <strong>{{ chartEventSummary }}</strong>
+                {{ t('components.data.organizationChart.eventLabel') }}
+                <strong>{{ chartEventSummary }}</strong>
               </div>
             </div>
           </magary-card>
@@ -79,25 +78,32 @@
         </div>
       </div>
 
-      <!-- API Inputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Propiedades (Inputs)</h2>
+          <h2>{{ t('components.data.organizationChart.apiInputs.title') }}</h2>
         </div>
         <div class="section-content">
           <div
             class="table-wrapper"
             tabindex="0"
             role="region"
-            aria-label="Tabla de propiedades del componente OrganizationChart"
+            [attr.aria-label]="t('components.data.organizationChart.aria.inputsTable')"
           >
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Default</th>
-                  <th>Descripción</th>
+                  <th>
+                    {{ t('components.data.organizationChart.apiInputs.header.name') }}
+                  </th>
+                  <th>
+                    {{ t('components.data.organizationChart.apiInputs.header.type') }}
+                  </th>
+                  <th>
+                    {{ t('components.data.organizationChart.apiInputs.header.default') }}
+                  </th>
+                  <th>
+                    {{ t('components.data.organizationChart.apiInputs.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -105,31 +111,41 @@
                   <td><code>value</code></td>
                   <td><code>TreeNode[]</code></td>
                   <td><code>null</code></td>
-                  <td>Array de nodos raíz.</td>
+                  <td>{{ t('components.data.organizationChart.apiInputs.value.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>selectionMode</code></td>
                   <td><code>'single' | 'multiple'</code></td>
                   <td><code>null</code></td>
-                  <td>Modo de selección.</td>
+                  <td>
+                    {{ t('components.data.organizationChart.apiInputs.selectionMode.desc') }}
+                  </td>
                 </tr>
                 <tr>
                   <td><code>selection</code></td>
-                  <td><code>MagaryTreeNode | MagaryTreeNode[] | Record&lt;string, boolean&gt; | null</code></td>
+                  <td>
+                    <code
+                      >MagaryTreeNode | MagaryTreeNode[] | Record&lt;string, boolean&gt; | null</code
+                    >
+                  </td>
                   <td><code>null</code></td>
-                  <td>Nodo o nodos seleccionados.</td>
+                  <td>{{ t('components.data.organizationChart.apiInputs.selection.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>collapsible</code></td>
                   <td><code>boolean</code></td>
                   <td><code>false</code></td>
-                  <td>Permite colapsar ramas.</td>
+                  <td>
+                    {{ t('components.data.organizationChart.apiInputs.collapsible.desc') }}
+                  </td>
                 </tr>
                 <tr>
                   <td><code>chartAriaLabel</code></td>
                   <td><code>string</code></td>
                   <td><code>'Organization chart'</code></td>
-                  <td>Etiqueta accesible del arbol organizacional.</td>
+                  <td>
+                    {{ t('components.data.organizationChart.apiInputs.chartAriaLabel.desc') }}
+                  </td>
                 </tr>
               </tbody>
             </table>

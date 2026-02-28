@@ -1,10 +1,7 @@
 <div class="container">
   <div class="header">
-    <h1>Magary Speed Dial</h1>
-    <p>
-      Componente de menú flotante interactivo para accesos rápidos y acciones
-      frecuentes.
-    </p>
+    <h1>{{ i18n.translateDocs('components.buttons.speedDial.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.buttons.speedDial.subtitle') }}</p>
   </div>
 
   @for (section of sections; track section.id) {
@@ -14,18 +11,20 @@
       [attr.aria-labelledby]="'section-' + section.id"
     >
       <div class="section-header">
-        <h2 [id]="'section-' + section.id">{{ section.title }}</h2>
-        <p>{{ section.description }}</p>
+        <h2 [id]="'section-' + section.id">
+          {{ i18n.translateDocs(section.titleKey) }}
+        </h2>
+        <p>{{ i18n.translateDocs(section.descriptionKey) }}</p>
       </div>
 
       <div class="section-content">
-        @if (section.type === "code") {
+        @if (section.type === 'code') {
           <div class="code-block">
             <pre><code [highlight]="section.content!.code" [language]="section.content!.language"></code></pre>
           </div>
         }
 
-        @if (section.type === "demo") {
+        @if (section.type === 'demo') {
           <div class="speed-dial-container">
             @for (config of section.configs; track config.class) {
               <magary-speed-dial
@@ -34,19 +33,18 @@
                 [direction]="config.direction!"
                 [type]="config.type || 'linear'"
                 [showMask]="config.showMask ?? false"
-              >
-              </magary-speed-dial>
+              ></magary-speed-dial>
             }
           </div>
 
-          @if (section.codeExamples?.length) {
+          @if (getCodeExamples(section).length) {
             <div class="code-block">
               <magary-tabs
                 [backgroundLine]="tabsConfig.backgroundLine"
                 [positionContent]="tabsConfig.positionContent"
                 [background]="tabsConfig.background"
               >
-                @for (example of section.codeExamples; track example.label) {
+                @for (example of getCodeExamples(section); track example.label) {
                   <magary-tab [label]="example.label">
                     <pre><code [highlight]="example.code" [language]="example.language"></code></pre>
                   </magary-tab>
@@ -56,25 +54,24 @@
           }
         }
 
-        @if (section.type === "single-demo") {
+        @if (section.type === 'single-demo') {
           <div class="speed-dial-container">
             <magary-speed-dial
               [class]="section.config!.class"
               [type]="section.config!.type!"
               [items]="getItems(section.config!.items)"
               [showMask]="section.config!.showMask!"
-            >
-            </magary-speed-dial>
+            ></magary-speed-dial>
           </div>
 
-          @if (section.codeExamples?.length) {
+          @if (getCodeExamples(section).length) {
             <div class="code-block">
               <magary-tabs
                 [backgroundLine]="tabsConfig.backgroundLine"
                 [positionContent]="tabsConfig.positionContent"
                 [background]="tabsConfig.background"
               >
-                @for (example of section.codeExamples; track example.label) {
+                @for (example of getCodeExamples(section); track example.label) {
                   <magary-tab [label]="example.label">
                     <pre><code [highlight]="example.code" [language]="example.language"></code></pre>
                   </magary-tab>
@@ -84,7 +81,7 @@
           }
         }
 
-        @if (section.type === "custom-demo") {
+        @if (section.type === 'custom-demo') {
           <div class="speed-dial-container" style="height: 80px">
             <magary-speed-dial
               [class]="section.customConfig!.class"
@@ -93,18 +90,17 @@
               [items]="getItems(section.customConfig!.items)"
               [showMask]="section.customConfig!.showMask!"
               [background]="section.customConfig!.background!"
-            >
-            </magary-speed-dial>
+            ></magary-speed-dial>
           </div>
 
-          @if (section.codeExamples?.length) {
+          @if (getCodeExamples(section).length) {
             <div class="code-block">
               <magary-tabs
                 [backgroundLine]="tabsConfig.backgroundLine"
                 [positionContent]="tabsConfig.positionContent"
                 [background]="tabsConfig.background"
               >
-                @for (example of section.codeExamples; track example.label) {
+                @for (example of getCodeExamples(section); track example.label) {
                   <magary-tab [label]="example.label">
                     <pre><code [highlight]="example.code" [language]="example.language"></code></pre>
                   </magary-tab>
@@ -114,75 +110,109 @@
           }
         }
 
-        @if (section.type === "table") {
-          @if (section.id === "properties" && section.tableData?.length) {
+        @if (section.type === 'table') {
+          @if (section.id === 'properties' && section.tableData?.length) {
             <div class="table-wrapper">
               <table class="api-table api-table-properties">
                 <thead>
                   <tr>
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                    <th>Valor por Defecto</th>
-                    <th>Descripción</th>
+                    <th>
+                      {{
+                        i18n.translateDocs(
+                          'components.buttons.speedDial.table.header.name'
+                        )
+                      }}
+                    </th>
+                    <th>
+                      {{
+                        i18n.translateDocs(
+                          'components.buttons.speedDial.table.header.type'
+                        )
+                      }}
+                    </th>
+                    <th>
+                      {{
+                        i18n.translateDocs(
+                          'components.buttons.speedDial.table.header.default'
+                        )
+                      }}
+                    </th>
+                    <th>
+                      {{
+                        i18n.translateDocs(
+                          'components.buttons.speedDial.table.header.description'
+                        )
+                      }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  @for (row of section.tableData; track $index) {
+                  @for (row of section.tableData; track row.name) {
                     <tr>
-                      <td>
-                        <code>{{ row.name }}</code>
-                      </td>
-                      <td>
-                        <code>{{ row.type }}</code>
-                      </td>
-                      <td>
-                        <code>{{ row.default }}</code>
-                      </td>
-                      <td>{{ row.description }}</td>
+                      <td><code>{{ row.name }}</code></td>
+                      <td><code>{{ row.type }}</code></td>
+                      <td><code>{{ row.default }}</code></td>
+                      <td>{{ i18n.translateDocs(row.descriptionKey) }}</td>
                     </tr>
                   }
                 </tbody>
               </table>
             </div>
           }
-          @if (section.id === "events" && section.tableData?.length) {
+
+          @if (section.id === 'events' && section.tableData?.length) {
             <div class="table-wrapper">
               <table class="api-table api-table-events">
                 <thead>
                   <tr>
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                    <th>Descripción</th>
+                    <th>
+                      {{
+                        i18n.translateDocs(
+                          'components.buttons.speedDial.table.events.header.name'
+                        )
+                      }}
+                    </th>
+                    <th>
+                      {{
+                        i18n.translateDocs(
+                          'components.buttons.speedDial.table.events.header.type'
+                        )
+                      }}
+                    </th>
+                    <th>
+                      {{
+                        i18n.translateDocs(
+                          'components.buttons.speedDial.table.events.header.description'
+                        )
+                      }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  @for (row of section.tableData; track $index) {
+                  @for (row of section.tableData; track row.name) {
                     <tr>
-                      <td>
-                        <code>{{ row.name }}</code>
-                      </td>
-                      <td>
-                        <code>{{ row.type }}</code>
-                      </td>
-                      <td>{{ row.description }}</td>
+                      <td><code>{{ row.name }}</code></td>
+                      <td><code>{{ row.type }}</code></td>
+                      <td>{{ i18n.translateDocs(row.descriptionKey) }}</td>
                     </tr>
                   }
                 </tbody>
               </table>
             </div>
           }
-          @if (section.id === "events") {
+
+          @if (section.id === 'events') {
             <div class="code-block">
               <pre><code [highlight]="exampleCommand" language="typescript"></code></pre>
             </div>
           }
         }
 
-        @if (section.type === "list") {
-          @if (section.listItems?.length) {
+        @if (section.type === 'list') {
+          @if (section.listItemKeys?.length) {
             <ul class="accessibility-list">
-              @for (item of section.listItems; track $index) {
-                <li [innerHTML]="item"></li>
+              @for (itemKey of section.listItemKeys; track itemKey) {
+                <li [innerHTML]="i18n.translateDocs(itemKey)"></li>
               }
             </ul>
           }
@@ -193,8 +223,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplos Completos</h2>
-      <p>Casos de uso comunes para integrar en tu aplicación</p>
+      <h2>{{ i18n.translateDocs('components.buttons.speedDial.complete.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.speedDial.complete.desc') }}</p>
 
       <div class="code-block">
         <pre><code [highlight]="exampleRandom" language="html"></code></pre>

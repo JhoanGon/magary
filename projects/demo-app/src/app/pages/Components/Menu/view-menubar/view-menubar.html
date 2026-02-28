@@ -1,12 +1,12 @@
 <div class="container fade-in">
   <div class="header">
-    <h1>Magary Menubar</h1>
-    <p>Menú de navegación horizontal con soporte para submenús anidados.</p>
+    <h1>{{ t('components.menu.menubar.title') }}</h1>
+    <p>{{ t('components.menu.menubar.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ t('components.menu.menubar.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,8 +17,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Básico</h2>
-      <p>Menú con submenús anidados.</p>
+      <h2>{{ t('components.menu.menubar.basic.title') }}</h2>
+      <p>{{ t('components.menu.menubar.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
@@ -31,10 +31,10 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.menu.menubar.tabs.html')">
             <pre><code [highlight]="basicHTML" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.menu.menubar.tabs.typescript')">
             <pre><code [highlight]="basicTS" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -44,73 +44,58 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente</p>
+      <h2>{{ t('components.menu.menubar.apiInputs.title') }}</h2>
+      <p>{{ t('components.menu.menubar.apiInputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ t('components.menu.menubar.apiInputs.header.name') }}</th>
+              <th>{{ t('components.menu.menubar.apiInputs.header.type') }}</th>
+              <th>{{ t('components.menu.menubar.apiInputs.header.default') }}</th>
+              <th>{{ t('components.menu.menubar.apiInputs.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>model</code></td>
-              <td><code>MenuItem[]</code></td>
-              <td><code>[]</code></td>
-              <td>Array de objetos MenuItem para renderizar el menú.</td>
-            </tr>
-            <tr>
-              <td><code>style</code></td>
-              <td><code>object</code></td>
-              <td><code>null</code></td>
-              <td>Estilos en línea.</td>
-            </tr>
-            <tr>
-              <td><code>styleClass</code></td>
-              <td><code>string</code></td>
-              <td><code>''</code></td>
-              <td>Clase CSS personalizada.</td>
-            </tr>
+            @for (row of inputsConfig; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos gestionados a través del modelo <code>MenuItem</code></p>
+      <h2>{{ t('components.menu.menubar.apiOutputs.title') }}</h2>
+      <p>{{ t('components.menu.menubar.apiOutputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ t('components.menu.menubar.apiOutputs.header.name') }}</th>
+              <th>{{ t('components.menu.menubar.apiOutputs.header.type') }}</th>
+              <th>{{ t('components.menu.menubar.apiOutputs.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>command</code></td>
-              <td>
-                <code
-                  >(event: &#123; originalEvent: Event, item: MenuItem &#125;)
-                  => void</code
-                >
-              </td>
-              <td>
-                Callback que se ejecuta cuando se hace click en un item del
-                menú. Defínase dentro del objeto <code>MenuItem</code>.
-              </td>
-            </tr>
+            @for (row of outputsConfig; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>

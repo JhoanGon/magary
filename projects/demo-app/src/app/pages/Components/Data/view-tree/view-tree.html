@@ -1,18 +1,15 @@
 <div class="container fade-in">
   <div class="header">
-    <h1 class="fade-in">Magary Tree</h1>
-    <p class="fade-in">
-      Magary Tree muestra datos jerárquicos con soporte para selección.
-    </p>
+    <h1 class="fade-in">{{ t('components.data.tree.title') }}</h1>
+    <p class="fade-in">{{ t('components.data.tree.subtitle') }}</p>
   </div>
 
   <div class="content">
     <div class="components-grid">
-      <!-- Example 1: Basic Tree -->
       <div class="section">
         <div class="section-header">
-          <h2>Ejemplo Básico</h2>
-          <p>Árbol estándar con selección única.</p>
+          <h2>{{ t('components.data.tree.basic.title') }}</h2>
+          <p>{{ t('components.data.tree.basic.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -26,7 +23,7 @@
                 [value]="files"
                 selectionMode="single"
                 [selection]="selectedFile"
-                treeAriaLabel="Basic file tree"
+                [treeAriaLabel]="t('components.data.tree.basic.treeAriaLabel')"
                 (onNodeSelect)="onNodeSelect($event)"
                 (onNodeUnselect)="onNodeUnselect($event)"
               >
@@ -41,7 +38,8 @@
                     border-radius: 4px;
                   "
                 >
-                  Seleccionado: <strong>{{ selectedFile.label }}</strong>
+                  {{ t('components.data.tree.selectedLabel') }}
+                  <strong>{{ selectedFile.label }}</strong>
                 </div>
               }
 
@@ -53,7 +51,8 @@
                   border-radius: 4px;
                 "
               >
-                Evento: <strong>{{ treeEventSummary }}</strong>
+                {{ t('components.data.tree.eventLabel') }}
+                <strong>{{ treeEventSummary }}</strong>
               </div>
             </div>
           </magary-card>
@@ -75,11 +74,10 @@
         </div>
       </div>
 
-      <!-- Example 2: Filter -->
       <div class="section">
         <div class="section-header">
-          <h2>Filtrado</h2>
-          <p>Búsqueda integrada para filtrar nodos.</p>
+          <h2>{{ t('components.data.tree.filter.title') }}</h2>
+          <p>{{ t('components.data.tree.filter.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -92,8 +90,8 @@
               <magary-tree
                 [value]="files"
                 [filter]="true"
-                filterPlaceholder="Buscar documentos..."
-                filterAriaLabel="Buscar en el arbol de documentos"
+                [filterPlaceholder]="t('components.data.tree.filter.placeholder')"
+                [filterAriaLabel]="t('components.data.tree.filter.ariaLabel')"
                 selectionMode="single"
               >
               </magary-tree>
@@ -114,11 +112,10 @@
         </div>
       </div>
 
-      <!-- Example 3: Drag & Drop -->
       <div class="section">
         <div class="section-header">
-          <h2>Drag & Drop</h2>
-          <p>Reordenamiento de nodos mediante arrastrar y soltar.</p>
+          <h2>{{ t('components.data.tree.dragDrop.title') }}</h2>
+          <p>{{ t('components.data.tree.dragDrop.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -145,7 +142,8 @@
                   border-radius: 4px;
                 "
               >
-                Evento: <strong>{{ treeEventSummary }}</strong>
+                {{ t('components.data.tree.eventLabel') }}
+                <strong>{{ treeEventSummary }}</strong>
               </div>
             </div>
           </magary-card>
@@ -164,26 +162,27 @@
         </div>
       </div>
 
-      <!-- API Inputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Propiedades (Inputs)</h2>
-          <p>Atributos para controlar el comportamiento del componente.</p>
+          <h2>{{ t('components.data.tree.apiInputs.title') }}</h2>
+          <p>{{ t('components.data.tree.apiInputs.desc') }}</p>
         </div>
         <div class="section-content">
           <div
             class="table-wrapper"
             tabindex="0"
             role="region"
-            aria-label="Tabla de propiedades del componente Tree"
+            [attr.aria-label]="t('components.data.tree.aria.inputsTable')"
           >
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Por Defecto</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.data.tree.apiInputs.header.name') }}</th>
+                  <th>{{ t('components.data.tree.apiInputs.header.type') }}</th>
+                  <th>{{ t('components.data.tree.apiInputs.header.default') }}</th>
+                  <th>
+                    {{ t('components.data.tree.apiInputs.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -191,55 +190,61 @@
                   <td><code>value</code></td>
                   <td><code>TreeNode[]</code></td>
                   <td><code>[]</code></td>
-                  <td>Array de nodos del árbol a mostrar.</td>
+                  <td>{{ t('components.data.tree.apiInputs.value.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>selectionMode</code></td>
                   <td><code>'single' | 'multiple' | 'checkbox'</code></td>
                   <td><code>null</code></td>
-                  <td>Define el modo de selección.</td>
+                  <td>{{ t('components.data.tree.apiInputs.selectionMode.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>selection</code></td>
-                  <td><code>MagaryTreeNode | MagaryTreeNode[] | Record&lt;string, boolean&gt; | null</code></td>
+                  <td>
+                    <code
+                      >MagaryTreeNode | MagaryTreeNode[] | Record&lt;string, boolean&gt; | null</code
+                    >
+                  </td>
                   <td><code>null</code></td>
-                  <td>Enlace para el/los nodo(s) seleccionado(s).</td>
+                  <td>{{ t('components.data.tree.apiInputs.selection.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>filterPlaceholder</code></td>
                   <td><code>string</code></td>
                   <td><code>'Search...'</code></td>
-                  <td>Texto del input de filtrado.</td>
+                  <td>
+                    {{ t('components.data.tree.apiInputs.filterPlaceholder.desc') }}
+                  </td>
                 </tr>
                 <tr>
                   <td><code>filterMode</code></td>
                   <td><code>'lenient' | 'strict'</code></td>
                   <td><code>'lenient'</code></td>
-                  <td>Define si el filtro es parcial o exacto.</td>
+                  <td>{{ t('components.data.tree.apiInputs.filterMode.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>filter</code></td>
                   <td><code>boolean</code></td>
                   <td><code>false</code></td>
-                  <td>Habilita la barra de búsqueda.</td>
+                  <td>{{ t('components.data.tree.apiInputs.filter.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>draggable</code></td>
                   <td><code>boolean</code></td>
                   <td><code>false</code></td>
-                  <td>Permite arrastrar nodos.</td>
+                  <td>{{ t('components.data.tree.apiInputs.draggable.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>droppable</code></td>
                   <td><code>boolean</code></td>
                   <td><code>false</code></td>
-                  <td>Permite soltar nodos.</td>
+                  <td>{{ t('components.data.tree.apiInputs.droppable.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>validateDrop</code></td>
                   <td><code>boolean</code></td>
                   <td><code>false</code></td>
-                  <td>Valida drop para evitar soltar sobre si mismo/descendientes.</td>
+                  <td>{{ t('components.data.tree.apiInputs.validateDrop.desc') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -247,52 +252,57 @@
         </div>
       </div>
 
-      <!-- API Outputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Eventos (Outputs)</h2>
-          <p>Eventos emitidos por el componente.</p>
+          <h2>{{ t('components.data.tree.apiOutputs.title') }}</h2>
+          <p>{{ t('components.data.tree.apiOutputs.desc') }}</p>
         </div>
         <div class="section-content">
           <div
             class="table-wrapper"
             tabindex="0"
             role="region"
-            aria-label="Tabla de eventos del componente Tree"
+            [attr.aria-label]="t('components.data.tree.aria.outputsTable')"
           >
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.data.tree.apiOutputs.header.name') }}</th>
+                  <th>{{ t('components.data.tree.apiOutputs.header.type') }}</th>
+                  <th>
+                    {{ t('components.data.tree.apiOutputs.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><code>onNodeSelect</code></td>
                   <td><code>EventEmitter&lt;MagaryTreeNodeSelectionEvent&gt;</code></td>
-                  <td>Callback al seleccionar un nodo.</td>
+                  <td>{{ t('components.data.tree.apiOutputs.onNodeSelect.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>onNodeUnselect</code></td>
                   <td><code>EventEmitter&lt;MagaryTreeNodeSelectionEvent&gt;</code></td>
-                  <td>Callback al deseleccionar un nodo.</td>
+                  <td>
+                    {{ t('components.data.tree.apiOutputs.onNodeUnselect.desc') }}
+                  </td>
                 </tr>
                 <tr>
                   <td><code>onNodeExpand</code></td>
                   <td><code>EventEmitter&lt;MagaryTreeNode&gt;</code></td>
-                  <td>Callback al expandir un nodo.</td>
+                  <td>{{ t('components.data.tree.apiOutputs.onNodeExpand.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>onNodeCollapse</code></td>
                   <td><code>EventEmitter&lt;MagaryTreeNode&gt;</code></td>
-                  <td>Callback al colapsar un nodo.</td>
+                  <td>
+                    {{ t('components.data.tree.apiOutputs.onNodeCollapse.desc') }}
+                  </td>
                 </tr>
                 <tr>
                   <td><code>onNodeDrop</code></td>
                   <td><code>EventEmitter&lt;MagaryTreeNodeDropEvent&gt;</code></td>
-                  <td>Callback de drag and drop con parent y dragNode.</td>
+                  <td>{{ t('components.data.tree.apiOutputs.onNodeDrop.desc') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -302,4 +312,3 @@
     </div>
   </div>
 </div>
-

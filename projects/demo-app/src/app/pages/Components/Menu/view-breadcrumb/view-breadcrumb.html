@@ -1,19 +1,15 @@
 <div class="container fade-in">
   <div class="header">
-    <h1 class="fade-in">MagaryBreadcrumb</h1>
-    <p class="fade-in">
-      Indica la ubicación de la página actual dentro de una jerarquía de
-      navegación.
-    </p>
+    <h1 class="fade-in">{{ t('components.menu.breadcrumb.title') }}</h1>
+    <p class="fade-in">{{ t('components.menu.breadcrumb.subtitle') }}</p>
   </div>
 
   <div class="content">
     <div class="components-grid">
-      <!-- Example 1: Basic -->
       <div class="section">
         <div class="section-header">
-          <h2>Ejemplo Básico</h2>
-          <p>Uso estándar con un icono de inicio y rutas.</p>
+          <h2>{{ t('components.menu.breadcrumb.basic.title') }}</h2>
+          <p>{{ t('components.menu.breadcrumb.basic.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -23,10 +19,7 @@
             [backgroundColor]="'var(--surface-0)'"
           >
             <div style="padding: 2rem">
-              <magary-breadcrumb
-                [model]="items"
-                [home]="house"
-              ></magary-breadcrumb>
+              <magary-breadcrumb [model]="items" [home]="house"></magary-breadcrumb>
             </div>
           </magary-card>
 
@@ -47,76 +40,64 @@
         </div>
       </div>
 
-      <!-- API Inputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Propiedades (Inputs)</h2>
-          <p>Atributos para configurar el componente.</p>
+          <h2>{{ t('components.menu.breadcrumb.apiInputs.title') }}</h2>
+          <p>{{ t('components.menu.breadcrumb.apiInputs.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Por Defecto</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.menu.breadcrumb.apiInputs.header.name') }}</th>
+                  <th>{{ t('components.menu.breadcrumb.apiInputs.header.type') }}</th>
+                  <th>{{ t('components.menu.breadcrumb.apiInputs.header.default') }}</th>
+                  <th>
+                    {{ t('components.menu.breadcrumb.apiInputs.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><code>model</code></td>
-                  <td><code>BreadcrumbItem[]</code></td>
-                  <td><code>null</code></td>
-                  <td>Array de items del menú.</td>
-                </tr>
-                <tr>
-                  <td><code>home</code></td>
-                  <td><code>BreadcrumbItem</code></td>
-                  <td><code>null</code></td>
-                  <td>Item inicial, usualmente el home.</td>
-                </tr>
-                <tr>
-                  <td><code>style</code></td>
-                  <td><code>object</code></td>
-                  <td><code>null</code></td>
-                  <td>Estilos inline del componente.</td>
-                </tr>
-                <tr>
-                  <td><code>styleClass</code></td>
-                  <td><code>string</code></td>
-                  <td><code>null</code></td>
-                  <td>Clase CSS externa.</td>
-                </tr>
+                @for (row of inputsConfig; track row.name) {
+                  <tr>
+                    <td><code>{{ row.name }}</code></td>
+                    <td><code>{{ row.type }}</code></td>
+                    <td><code>{{ row.default }}</code></td>
+                    <td>{{ t(row.descriptionKey) }}</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- API Outputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Eventos (Outputs)</h2>
-          <p>Eventos emitidos por el componente.</p>
+          <h2>{{ t('components.menu.breadcrumb.apiOutputs.title') }}</h2>
+          <p>{{ t('components.menu.breadcrumb.apiOutputs.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.menu.breadcrumb.apiOutputs.header.name') }}</th>
+                  <th>{{ t('components.menu.breadcrumb.apiOutputs.header.type') }}</th>
+                  <th>
+                    {{ t('components.menu.breadcrumb.apiOutputs.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><code>onItemClick</code></td>
-                  <td><code>EventEmitter</code></td>
-                  <td>Callback invocado al hacer click en un item.</td>
-                </tr>
+                @for (row of outputsConfig; track row.name) {
+                  <tr>
+                    <td><code>{{ row.name }}</code></td>
+                    <td><code>{{ row.type }}</code></td>
+                    <td>{{ t(row.descriptionKey) }}</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>

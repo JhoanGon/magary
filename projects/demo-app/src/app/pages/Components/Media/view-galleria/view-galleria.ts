@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -8,6 +8,15 @@ import {
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type GalleriaInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'app-view-galleria',
@@ -24,6 +33,9 @@ import { MagaryTabs, MagaryTab } from 'ng-magary';
   styleUrl: './view-galleria.scss',
 })
 export class ViewGalleria implements OnInit {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   images: GalleriaItem[] = [];
 
   responsiveOptions: GalleriaResponsiveOptions[] = [
@@ -132,4 +144,52 @@ export class ViewGalleria {
 </magary-galleria>`;
 
   codeTSAutoPlay = `// Same TS logic`;
+
+  readonly importExample = `import { MagaryGalleria } from 'ng-magary';`;
+
+  readonly inputRows: GalleriaInputRow[] = [
+    {
+      name: 'value',
+      type: 'unknown[]',
+      default: '[]',
+      descriptionKey: 'components.media.galleria.apiInputs.value.desc',
+    },
+    {
+      name: 'showThumbnails',
+      type: 'boolean',
+      default: 'true',
+      descriptionKey: 'components.media.galleria.apiInputs.showThumbnails.desc',
+    },
+    {
+      name: 'showIndicators',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.media.galleria.apiInputs.showIndicators.desc',
+    },
+    {
+      name: 'autoPlay',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.media.galleria.apiInputs.autoPlay.desc',
+    },
+    {
+      name: 'itemTemplateRef',
+      type: 'TemplateRef',
+      default: 'null',
+      descriptionKey: 'components.media.galleria.apiInputs.itemTemplateRef.desc',
+    },
+    {
+      name: 'thumbnailTemplateRef',
+      type: 'TemplateRef',
+      default: 'null',
+      descriptionKey:
+        'components.media.galleria.apiInputs.thumbnailTemplateRef.desc',
+    },
+    {
+      name: 'width',
+      type: 'string',
+      default: '100%',
+      descriptionKey: 'components.media.galleria.apiInputs.width.desc',
+    },
+  ];
 }

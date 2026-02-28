@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryTimeline } from 'ng-magary';
 import { MagaryCard } from 'ng-magary';
@@ -7,6 +7,8 @@ import { MagaryButton } from 'ng-magary';
 import { MagaryImage } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { LucideAngularModule } from 'lucide-angular';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 interface TimelineEvent {
   status: string;
@@ -36,6 +38,9 @@ interface TimelineEvent {
   encapsulation: ViewEncapsulation.None,
 })
 export class ViewTimeline {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   events: TimelineEvent[] = [];
 
   horizontalEvents: string[] = [];

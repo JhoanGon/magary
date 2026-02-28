@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MagaryOrganizationChart,
@@ -7,6 +7,8 @@ import {
 } from 'ng-magary';
 import { MagaryCard, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 @Component({
   selector: 'view-organizationchart',
@@ -23,6 +25,9 @@ import { Highlight } from 'ngx-highlightjs';
   styleUrls: ['./view-organizationchart.scss'],
 })
 export class ViewOrganizationChart {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
     positionContent: 'flex-start' as const,
@@ -72,7 +77,7 @@ export class ViewOrganizationChart {
   ];
 
   selectedNode: MagaryTreeNode | null = null;
-  chartEventSummary = 'No events yet';
+  chartEventSummary = this.t('components.data.organizationChart.events.none');
 
   exampleHTML = `
 <magary-organization-chart 
@@ -117,19 +122,29 @@ export class MyComponent {
 
   onNodeSelect(event: MagaryTreeNodeSelectionEvent) {
     this.selectedNode = event.node;
-    this.chartEventSummary = `Selected: ${event.node.label ?? 'unknown node'}`;
+    this.chartEventSummary =
+      this.t('components.data.organizationChart.events.selected') +
+      (event.node.label ??
+        this.t('components.data.organizationChart.events.unknownNode'));
   }
 
   onNodeUnselect(event: MagaryTreeNodeSelectionEvent) {
     this.selectedNode = null;
-    this.chartEventSummary = `Unselected: ${event.node.label ?? 'unknown node'}`;
+    this.chartEventSummary =
+      this.t('components.data.organizationChart.events.unselected') +
+      (event.node.label ??
+        this.t('components.data.organizationChart.events.unknownNode'));
   }
 
   onNodeExpand(node: MagaryTreeNode) {
-    this.chartEventSummary = `Expanded: ${node.label ?? 'unknown node'}`;
+    this.chartEventSummary =
+      this.t('components.data.organizationChart.events.expanded') +
+      (node.label ?? this.t('components.data.organizationChart.events.unknownNode'));
   }
 
   onNodeCollapse(node: MagaryTreeNode) {
-    this.chartEventSummary = `Collapsed: ${node.label ?? 'unknown node'}`;
+    this.chartEventSummary =
+      this.t('components.data.organizationChart.events.collapsed') +
+      (node.label ?? this.t('components.data.organizationChart.events.unknownNode'));
   }
 }

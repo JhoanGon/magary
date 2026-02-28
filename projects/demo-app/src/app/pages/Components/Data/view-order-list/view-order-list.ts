@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   signal,
   ViewEncapsulation,
 } from '@angular/core';
@@ -9,6 +10,8 @@ import { MagaryOrderList } from 'ng-magary';
 import { MagaryCard } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 interface Product {
   id: string;
@@ -22,6 +25,19 @@ interface Product {
   inventoryStatus: string;
   rating: number;
 }
+
+type OrderListInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type OrderListOutputRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'view-order-list',
@@ -40,6 +56,9 @@ interface Product {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewOrderList {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   products = signal<Product[]>([
     {
       id: '1000',
@@ -79,44 +98,44 @@ export class ViewOrderList {
     },
   ]);
 
-  // Config Documentation
-  inputsConfig = [
+  inputsConfig: OrderListInputRow[] = [
     {
       name: 'value',
       type: 'unknown[]',
       default: '[]',
-      description: 'Array de elementos a ordenar.',
+      descriptionKey: 'components.data.orderList.apiInputs.value.desc',
     },
     {
       name: 'selection',
       type: 'unknown[]',
       default: '[]',
-      description: 'Elementos seleccionados.',
+      descriptionKey: 'components.data.orderList.apiInputs.selection.desc',
     },
     {
       name: 'header',
       type: 'string',
       default: 'null',
-      description: 'Texto del encabezado.',
+      descriptionKey: 'components.data.orderList.apiInputs.header.desc',
     },
     {
       name: 'listStyle',
       type: 'object',
       default: 'null',
-      description: 'Estilo inline para la lista.',
+      descriptionKey: 'components.data.orderList.apiInputs.listStyle.desc',
     },
   ];
 
-  outputsConfig = [
+  outputsConfig: OrderListOutputRow[] = [
     {
       name: 'onReorder',
       type: 'EventEmitter',
-      description: 'Callback al reordenar la lista.',
+      descriptionKey: 'components.data.orderList.apiOutputs.onReorder.desc',
     },
     {
       name: 'onSelectionChange',
       type: 'EventEmitter',
-      description: 'Callback al cambiar la selección.',
+      descriptionKey:
+        'components.data.orderList.apiOutputs.onSelectionChange.desc',
     },
   ];
 

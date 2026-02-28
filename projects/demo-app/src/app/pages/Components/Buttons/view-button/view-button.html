@@ -1,14 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>MagaryButton</h1>
-    <p>Componente de botón versátil y personalizable.</p>
+    <h1>{{ i18n.translateDocs('components.buttons.button.title') }}</h1>
+    <p>{{ i18n.translateDocs('components.buttons.button.subtitle') }}</p>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.button.import.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,15 +16,16 @@
     </div>
   </div>
 
-  <!-- Basic Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Básico</h2>
+      <h2>{{ i18n.translateDocs('components.buttons.button.basic.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Default</h4>
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.basic.cardTitle') }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -41,15 +41,23 @@
                 justify-content: center;
               "
             >
-              <magary-button label="Button"></magary-button>
               <magary-button
-                label="Home"
+                [label]="
+                  i18n.translateDocs('components.buttons.button.basic.label.button')
+                "
+              ></magary-button>
+              <magary-button
+                [label]="
+                  i18n.translateDocs('components.buttons.button.basic.label.home')
+                "
                 icon="house"
                 [iconSize]="15"
               ></magary-button>
               <magary-button icon="heart" [iconSize]="15"></magary-button>
               <magary-button
-                label="Loading..."
+                [label]="
+                  i18n.translateDocs('components.buttons.button.basic.label.loading')
+                "
                 [loading]="true"
               ></magary-button>
             </div>
@@ -62,16 +70,17 @@
     </div>
   </div>
 
-  <!-- Severity Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Severidad</h2>
-      <p>Colores semánticos para diferentes acciones.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.button.severity.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.severity.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Colores</h4>
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.severity.cardTitle') }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -87,16 +96,56 @@
                 justify-content: center;
               "
             >
-              <magary-button label="Primary" severity="primary"></magary-button>
               <magary-button
-                label="Secondary"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.button.severity.primary'
+                  )
+                "
+                severity="primary"
+              ></magary-button>
+              <magary-button
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.button.severity.secondary'
+                  )
+                "
                 severity="secondary"
               ></magary-button>
-              <magary-button label="Success" severity="success"></magary-button>
-              <magary-button label="Info" severity="info"></magary-button>
-              <magary-button label="Warning" severity="warning"></magary-button>
-              <magary-button label="Danger" severity="danger"></magary-button>
-              <magary-button label="Help" severity="help"></magary-button>
+              <magary-button
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.button.severity.success'
+                  )
+                "
+                severity="success"
+              ></magary-button>
+              <magary-button
+                [label]="
+                  i18n.translateDocs('components.buttons.button.severity.info')
+                "
+                severity="info"
+              ></magary-button>
+              <magary-button
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.button.severity.warning'
+                  )
+                "
+                severity="warning"
+              ></magary-button>
+              <magary-button
+                [label]="
+                  i18n.translateDocs('components.buttons.button.severity.danger')
+                "
+                severity="danger"
+              ></magary-button>
+              <magary-button
+                [label]="
+                  i18n.translateDocs('components.buttons.button.severity.help')
+                "
+                severity="help"
+              ></magary-button>
             </div>
           </magary-card>
         </div>
@@ -107,27 +156,32 @@
     </div>
   </div>
 
-  <!-- Sizes Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Tamaños</h2>
-      <p>Diferentes tamaños disponibles.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.button.sizes.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.sizes.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Small</h4>
+          <h4>
+            {{
+              i18n.translateDocs('components.buttons.button.sizes.small.cardTitle')
+            }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
               <magary-button
-                label="Small"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.button.sizes.small.cardTitle'
+                  )
+                "
                 size="small"
                 severity="primary"
               ></magary-button>
@@ -135,18 +189,26 @@
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Normal</h4>
+          <h4>
+            {{
+              i18n.translateDocs(
+                'components.buttons.button.sizes.normal.cardTitle'
+              )
+            }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
               <magary-button
-                label="Normal"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.button.sizes.normal.cardTitle'
+                  )
+                "
                 size="normal"
                 severity="primary"
               ></magary-button>
@@ -154,18 +216,24 @@
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Large</h4>
+          <h4>
+            {{
+              i18n.translateDocs('components.buttons.button.sizes.large.cardTitle')
+            }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
               <magary-button
-                label="Large"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.button.sizes.large.cardTitle'
+                  )
+                "
                 size="large"
                 severity="primary"
               ></magary-button>
@@ -179,42 +247,50 @@
     </div>
   </div>
 
-  <!-- Variants Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Variantes</h2>
-      <p>Estilos visuales alternativos.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.button.variants.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.variants.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Solid</h4>
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.variants.solid') }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
-              <magary-button label="Solid" variant="solid"></magary-button>
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
+              <magary-button
+                [label]="
+                  i18n.translateDocs('components.buttons.button.variants.solid')
+                "
+                variant="solid"
+              ></magary-button>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Outlined</h4>
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.variants.outlined') }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
               <magary-button
-                label="Outlined"
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.button.variants.outlined'
+                  )
+                "
                 variant="outlined"
                 severity="secondary"
               ></magary-button>
@@ -222,18 +298,20 @@
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>Text</h4>
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.variants.text') }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
               <magary-button
-                label="Text"
+                [label]="
+                  i18n.translateDocs('components.buttons.button.variants.text')
+                "
                 variant="text"
                 severity="secondary"
               ></magary-button>
@@ -247,16 +325,17 @@
     </div>
   </div>
 
-  <!-- Custom Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Personalización</h2>
-      <p>Opciones adicionales de estilo.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.button.custom.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.custom.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Sombras</h4>
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.custom.shadows') }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -272,39 +351,58 @@
                 justify-content: center;
               "
             >
-              <magary-button label="Shadow 1" [shadow]="1"></magary-button>
-              <magary-button label="Shadow 3" [shadow]="3"></magary-button>
-            </div>
-          </magary-card>
-        </div>
-        <div class="demo-item">
-          <h4>Redondeado</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
-              <magary-button label="Rounded" [rounded]="true"></magary-button>
-            </div>
-          </magary-card>
-        </div>
-        <div class="demo-item">
-          <h4>Icon Size</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
               <magary-button
-                label="32px Icon"
+                [label]="
+                  i18n.translateDocs('components.buttons.button.custom.shadow1')
+                "
+                [shadow]="1"
+              ></magary-button>
+              <magary-button
+                [label]="
+                  i18n.translateDocs('components.buttons.button.custom.shadow3')
+                "
+                [shadow]="3"
+              ></magary-button>
+            </div>
+          </magary-card>
+        </div>
+        <div class="demo-item">
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.custom.rounded') }}
+          </h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
+              <magary-button
+                [label]="
+                  i18n.translateDocs(
+                    'components.buttons.button.custom.roundedButton'
+                  )
+                "
+                [rounded]="true"
+              ></magary-button>
+            </div>
+          </magary-card>
+        </div>
+        <div class="demo-item">
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.custom.iconSize') }}
+          </h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
+              <magary-button
+                [label]="
+                  i18n.translateDocs('components.buttons.button.custom.icon32')
+                "
                 icon="heart"
                 [iconSize]="32"
               ></magary-button>
@@ -318,57 +416,65 @@
     </div>
   </div>
 
-  <!-- States Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Estados</h2>
-      <p>Estados interactivos del botón.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.button.states.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.states.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Normal</h4>
+          <h4>{{ i18n.translateDocs('components.buttons.button.states.normal') }}</h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
-              <magary-button label="Normal"></magary-button>
-            </div>
-          </magary-card>
-        </div>
-        <div class="demo-item">
-          <h4>Disabled</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
-              <magary-button label="Disabled" [disabled]="true"></magary-button>
-            </div>
-          </magary-card>
-        </div>
-        <div class="demo-item">
-          <h4>Loading</h4>
-          <magary-card
-            [width]="'100%'"
-            [shadow]="2"
-            [borderRadius]="'1rem'"
-            [backgroundColor]="'var(--surface-0)'"
-          >
-            <div
-              style="padding: 1.5rem; display: flex; justify-content: center"
-            >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
               <magary-button
-                label="Loading..."
+                [label]="
+                  i18n.translateDocs('components.buttons.button.states.normal')
+                "
+              ></magary-button>
+            </div>
+          </magary-card>
+        </div>
+        <div class="demo-item">
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.states.disabled') }}
+          </h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
+              <magary-button
+                [label]="
+                  i18n.translateDocs('components.buttons.button.states.disabled')
+                "
+                [disabled]="true"
+              ></magary-button>
+            </div>
+          </magary-card>
+        </div>
+        <div class="demo-item">
+          <h4>
+            {{ i18n.translateDocs('components.buttons.button.states.loading') }}
+          </h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem; display: flex; justify-content: center">
+              <magary-button
+                [label]="
+                  i18n.translateDocs('components.buttons.button.basic.label.loading')
+                "
                 [loading]="true"
               ></magary-button>
             </div>
@@ -381,152 +487,122 @@
     </div>
   </div>
 
-  <!-- Inputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente</p>
+      <h2>{{ i18n.translateDocs('components.buttons.button.apiInputs.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.apiInputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Valor por Defecto</th>
-              <th>Descripción</th>
+              <th>
+                {{ i18n.translateDocs('components.buttons.button.apiInputs.header.name') }}
+              </th>
+              <th>
+                {{ i18n.translateDocs('components.buttons.button.apiInputs.header.type') }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.button.apiInputs.header.default'
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.button.apiInputs.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>label</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Texto del botón.</td>
-            </tr>
-            <tr>
-              <td><code>icon</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Clase del icono (ej: 'house').</td>
-            </tr>
-            <tr>
-              <td><code>iconPos</code></td>
-              <td><code>'left' | 'right'</code></td>
-              <td><code>'left'</code></td>
-              <td>Posición del icono.</td>
-            </tr>
-            <tr>
-              <td><code>severity</code></td>
-              <td>
-                <code
-                  >'primary' | 'secondary' | 'success' | 'info' | 'warning' |
-                  'danger' | 'help'</code
-                >
-              </td>
-              <td><code>'primary'</code></td>
-              <td>Color semántico del botón.</td>
-            </tr>
-            <tr>
-              <td><code>variant</code></td>
-              <td><code>'solid' | 'outlined' | 'text'</code></td>
-              <td><code>'solid'</code></td>
-              <td>Estilo visual del botón.</td>
-            </tr>
-            <tr>
-              <td><code>size</code></td>
-              <td><code>'small' | 'normal' | 'large'</code></td>
-              <td><code>'normal'</code></td>
-              <td>Tamaño del botón.</td>
-            </tr>
-            <tr>
-              <td><code>disabled</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Deshabilita el botón.</td>
-            </tr>
-            <tr>
-              <td><code>loading</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Muestra un indicador de carga.</td>
-            </tr>
-            <tr>
-              <td><code>rounded</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Bordes completamente redondeados.</td>
-            </tr>
-            <tr>
-              <td><code>shadow</code></td>
-              <td><code>number</code></td>
-              <td><code>0</code></td>
-              <td>Nivel de sombra (1-5).</td>
-            </tr>
-            <tr>
-              <td><code>iconSize</code></td>
-              <td><code>number</code></td>
-              <td><code>undefined</code></td>
-              <td>Tamaño del icono en píxeles.</td>
-            </tr>
+            @for (row of inputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ i18n.translateDocs(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- Outputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos emitidos por el componente</p>
+      <h2>{{ i18n.translateDocs('components.buttons.button.apiOutputs.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.apiOutputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>
+                {{
+                  i18n.translateDocs('components.buttons.button.apiOutputs.header.name')
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs('components.buttons.button.apiOutputs.header.type')
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    'components.buttons.button.apiOutputs.header.description'
+                  )
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>buttonClick</code></td>
-              <td><code>EventEmitter&lt;Event&gt;</code></td>
-              <td>Se emite cuando se hace click en el botón.</td>
-            </tr>
+            @for (row of outputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td>{{ i18n.translateDocs(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- Accessibility Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Accesibilidad</h2>
-      <p>Consideraciones para lectores de pantalla y navegación por teclado.</p>
+      <h2>{{ i18n.translateDocs('components.buttons.button.a11y.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.a11y.desc') }}</p>
     </div>
     <div class="section-content">
       <ul class="accessibility-list">
         <li>
-          <strong>Teclado:</strong> El botón es completamente navegable mediante
-          la tecla Tab y activable con Enter o Espacio.
+          <strong>
+            {{ i18n.translateDocs('components.buttons.button.a11y.keyboard.title') }}:
+          </strong>
+          {{ i18n.translateDocs('components.buttons.button.a11y.keyboard.desc') }}
         </li>
         <li>
-          <strong>ARIA:</strong> Se utilizan atributos ARIA adecuados,
-          incluyendo <code>aria-label</code> si no hay texto visible.
+          <strong>{{ i18n.translateDocs('components.buttons.button.a11y.aria.title') }}:</strong>
+          {{ i18n.translateDocs('components.buttons.button.a11y.aria.desc') }}
         </li>
         <li>
-          <strong>Foco:</strong> El estado de foco es visible y claro para la
-          navegación por teclado.
+          <strong>{{ i18n.translateDocs('components.buttons.button.a11y.focus.title') }}:</strong>
+          {{ i18n.translateDocs('components.buttons.button.a11y.focus.desc') }}
         </li>
         <li>
-          <strong>Contraste:</strong> Los colores por defecto cumplen con los
-          estándares de contraste WCAG AA.
+          <strong>
+            {{ i18n.translateDocs('components.buttons.button.a11y.contrast.title') }}:
+          </strong>
+          {{ i18n.translateDocs('components.buttons.button.a11y.contrast.desc') }}
         </li>
       </ul>
     </div>

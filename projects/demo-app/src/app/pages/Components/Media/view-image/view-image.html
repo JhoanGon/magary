@@ -1,17 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>MagaryImage</h1>
-    <p>
-      Componente para mostrar imágenes con funcionalidades avanzadas como
-      previsualización, zoom y rotación.
-    </p>
+    <h1>{{ t('components.media.image.title') }}</h1>
+    <p>{{ t('components.media.image.subtitle') }}</p>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone.</p>
+      <h2>{{ t('components.media.image.import.title') }}</h2>
+      <p>{{ t('components.media.image.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -20,16 +16,15 @@
     </div>
   </div>
 
-  <!-- Basic Example Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Básico</h2>
-      <p>Visualización simple de una imagen.</p>
+      <h2>{{ t('components.media.image.basic.title') }}</h2>
+      <p>{{ t('components.media.image.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h3>Basic</h3>
+          <h3>{{ t('components.media.image.basic.cardTitle') }}</h3>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -42,7 +37,7 @@
             >
               <magary-image
                 src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg"
-                alt="Basic Image"
+                [alt]="t('components.media.image.basic.alt')"
                 width="250"
                 [preview]="false"
                 [loading]="'lazy'"
@@ -69,19 +64,15 @@
     </div>
   </div>
 
-  <!-- Preview Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Previsualización (Premium)</h2>
-      <p>
-        Habilita la previsualización a pantalla completa con zoom, rotación y
-        descarga.
-      </p>
+      <h2>{{ t('components.media.image.preview.title') }}</h2>
+      <p>{{ t('components.media.image.preview.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h3>Preview Mode</h3>
+          <h3>{{ t('components.media.image.preview.cardTitle') }}</h3>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -94,7 +85,7 @@
             >
               <magary-image
                 src="https://primefaces.org/cdn/primeng/images/galleria/galleria12.jpg"
-                alt="Preview Image"
+                [alt]="t('components.media.image.preview.alt')"
                 width="250"
                 [preview]="true"
                 [loading]="'lazy'"
@@ -121,108 +112,82 @@
     </div>
   </div>
 
-  <!-- Inputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente.</p>
+      <h2>{{ t('components.media.image.apiInputs.title') }}</h2>
+      <p>{{ t('components.media.image.apiInputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Valor por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ t('components.media.image.apiInputs.header.name') }}</th>
+              <th>{{ t('components.media.image.apiInputs.header.type') }}</th>
+              <th>{{ t('components.media.image.apiInputs.header.default') }}</th>
+              <th>{{ t('components.media.image.apiInputs.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>src</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>URL de la imagen.</td>
-            </tr>
-            <tr>
-              <td><code>alt</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Texto alternativo para la imagen.</td>
-            </tr>
-            <tr>
-              <td><code>width</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Ancho de la imagen (ej: '100%', '250px').</td>
-            </tr>
-            <tr>
-              <td><code>height</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Alto de la imagen.</td>
-            </tr>
-            <tr>
-              <td><code>preview</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Habilita el modo de previsualización al hacer click.</td>
-            </tr>
+            @for (row of inputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- Outputs Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos emitidos por el componente.</p>
+      <h2>{{ t('components.media.image.apiOutputs.title') }}</h2>
+      <p>{{ t('components.media.image.apiOutputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ t('components.media.image.apiOutputs.header.name') }}</th>
+              <th>{{ t('components.media.image.apiOutputs.header.type') }}</th>
+              <th>
+                {{ t('components.media.image.apiOutputs.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>onLoad</code></td>
-              <td><code>EventEmitter&lt;Event&gt;</code></td>
-              <td>Se emite cuando la imagen se carga exitosamente.</td>
-            </tr>
-            <tr>
-              <td><code>onError</code></td>
-              <td><code>EventEmitter&lt;Event&gt;</code></td>
-              <td>Se emite si ocurre un error al cargar la imagen.</td>
-            </tr>
+            @for (row of outputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- Accessibility Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Accesibilidad</h2>
-      <p>Consideraciones para lectores de pantalla y navegación por teclado.</p>
+      <h2>{{ t('components.media.image.a11y.title') }}</h2>
+      <p>{{ t('components.media.image.a11y.desc') }}</p>
     </div>
     <div class="section-content">
       <ul class="accessibility-list">
         <li>
-          <strong>Texto Alternativo:</strong> Utiliza siempre la propiedad
-          <code>alt</code> para describir la imagen.
+          <strong>{{ t('components.media.image.a11y.alt.title') }}:</strong>
+          {{ t('components.media.image.a11y.alt.desc') }}
         </li>
         <li>
-          <strong>Teclado:</strong> En modo previsualización, los controles de
-          zoom y rotación son accesibles por teclado.
+          <strong>{{ t('components.media.image.a11y.keyboard.title') }}:</strong>
+          {{ t('components.media.image.a11y.keyboard.desc') }}
         </li>
       </ul>
     </div>

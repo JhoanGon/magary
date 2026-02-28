@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -10,6 +10,8 @@ import {
   MagaryTab,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 type ProductInventoryStatus = 'INSTOCK' | 'LOWSTOCK' | 'OUTOFSTOCK';
 
@@ -44,6 +46,9 @@ interface DataViewProduct {
   styleUrl: './view-dataview.scss',
 })
 export class ViewDataView {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   layout = signal<'list' | 'grid'>('grid');
 
   products: DataViewProduct[] = [
@@ -265,4 +270,6 @@ export class ViewDataView {
         }
     }
 }`;
+
+  importCode = `import { MagaryDataView } from 'ng-magary';`;
 }

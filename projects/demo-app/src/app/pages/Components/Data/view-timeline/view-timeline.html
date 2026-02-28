@@ -1,18 +1,15 @@
 <div class="container fade-in">
   <div class="header">
-    <h1 class="fade-in">MagaryTimeline</h1>
-    <p class="fade-in">
-      MagaryTimeline visualiza una serie de eventos en orden cronológico.
-    </p>
+    <h1 class="fade-in">{{ t('components.data.timeline.title') }}</h1>
+    <p class="fade-in">{{ t('components.data.timeline.subtitle') }}</p>
   </div>
 
   <div class="content">
     <div class="components-grid">
-      <!-- Example 1: Basic Timeline -->
       <div class="section">
         <div class="section-header">
-          <h2>Timeline Básico</h2>
-          <p>Timeline vertical por defecto con alineación a la izquierda.</p>
+          <h2>{{ t('components.data.timeline.basic.title') }}</h2>
+          <p>{{ t('components.data.timeline.basic.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -50,11 +47,10 @@
         </div>
       </div>
 
-      <!-- Example 2: Alternate Align with Icons -->
       <div class="section">
         <div class="section-header">
-          <h2>Alineación Alternada y Marcadores Personalizados</h2>
-          <p>Timeline con alineación alternada e iconos personalizados.</p>
+          <h2>{{ t('components.data.timeline.alternate.title') }}</h2>
+          <p>{{ t('components.data.timeline.alternate.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -85,13 +81,11 @@
                         gap: 0.5rem;
                       "
                     >
-                      <!-- Header and Date inside Card -->
                       <div style="display: flex; flex-direction: column">
                         <strong>{{ event.status }}</strong>
                         <small class="text-secondary">{{ event.date }}</small>
                       </div>
 
-                      <!-- Image if exists -->
                       @if (event.image) {
                         <div style="margin-top: 0.5rem">
                           <magary-image
@@ -103,14 +97,12 @@
                         </div>
                       }
 
-                      <!-- Description -->
                       <p style="margin: 0; color: var(--text-color-secondary)">
                         {{ event.description }}
                       </p>
 
-                      <!-- Button -->
                       <magary-button
-                        label="Read more"
+                        [label]="t('components.data.timeline.readMore')"
                         variant="text"
                         [style]="{ 'padding-left': '0' }"
                       ></magary-button>
@@ -118,7 +110,6 @@
                   </magary-card>
                 </ng-template>
                 <ng-template #opposite let-event>
-                  <!-- Opposite is empty in this layout style -->
                   &nbsp;
                 </ng-template>
                 <ng-template #marker let-event>
@@ -154,11 +145,10 @@
         </div>
       </div>
 
-      <!-- Example 3: Horizontal Timeline -->
       <div class="section">
         <div class="section-header">
-          <h2>Timeline Horizontal</h2>
-          <p>Visualización horizontal de eventos.</p>
+          <h2>{{ t('components.data.timeline.horizontal.title') }}</h2>
+          <p>{{ t('components.data.timeline.horizontal.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -198,21 +188,24 @@
         </div>
       </div>
 
-      <!-- API Inputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Propiedades (Inputs)</h2>
-          <p>Atributos para controlar el comportamiento del componente.</p>
+          <h2>{{ t('components.data.timeline.apiInputs.title') }}</h2>
+          <p>{{ t('components.data.timeline.apiInputs.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Por Defecto</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.data.timeline.apiInputs.header.name') }}</th>
+                  <th>{{ t('components.data.timeline.apiInputs.header.type') }}</th>
+                  <th>
+                    {{ t('components.data.timeline.apiInputs.header.default') }}
+                  </th>
+                  <th>
+                    {{ t('components.data.timeline.apiInputs.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -220,23 +213,21 @@
                   <td><code>value</code></td>
                   <td><code>unknown[]</code></td>
                   <td><code>[]</code></td>
-                  <td>Array de eventos a mostrar.</td>
+                  <td>{{ t('components.data.timeline.apiInputs.value.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>layout</code></td>
                   <td><code>'vertical' | 'horizontal'</code></td>
                   <td><code>'vertical'</code></td>
-                  <td>Orientación del timeline.</td>
+                  <td>{{ t('components.data.timeline.apiInputs.layout.desc') }}</td>
                 </tr>
                 <tr>
                   <td><code>align</code></td>
                   <td>
-                    <code
-                      >'left' | 'right' | 'top' | 'bottom' | 'alternate'</code
-                    >
+                    <code>'left' | 'right' | 'top' | 'bottom' | 'alternate'</code>
                   </td>
                   <td><code>'left'</code></td>
-                  <td>Alineación del contenido y posición.</td>
+                  <td>{{ t('components.data.timeline.apiInputs.align.desc') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -244,37 +235,44 @@
         </div>
       </div>
 
-      <!-- API Templates -->
       <div class="section">
         <div class="section-header">
-          <h2>Templates</h2>
-          <p>Templates disponibles para personalizar el contenido.</p>
+          <h2>{{ t('components.data.timeline.apiTemplates.title') }}</h2>
+          <p>{{ t('components.data.timeline.apiTemplates.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Contexto</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.data.timeline.apiTemplates.header.name') }}</th>
+                  <th>
+                    {{ t('components.data.timeline.apiTemplates.header.context') }}
+                  </th>
+                  <th>
+                    {{ t('components.data.timeline.apiTemplates.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><code>content</code></td>
                   <td><code>$implicit: item</code></td>
-                  <td>Template para el contenido principal del evento.</td>
+                  <td>
+                    {{ t('components.data.timeline.apiTemplates.content.desc') }}
+                  </td>
                 </tr>
                 <tr>
                   <td><code>opposite</code></td>
                   <td><code>$implicit: item</code></td>
-                  <td>Template para el lado opuesto (ej. fecha).</td>
+                  <td>
+                    {{ t('components.data.timeline.apiTemplates.opposite.desc') }}
+                  </td>
                 </tr>
                 <tr>
                   <td><code>marker</code></td>
                   <td><code>$implicit: item</code></td>
-                  <td>Template para el marcador central.</td>
+                  <td>{{ t('components.data.timeline.apiTemplates.marker.desc') }}</td>
                 </tr>
               </tbody>
             </table>
@@ -284,4 +282,3 @@
     </div>
   </div>
 </div>
-

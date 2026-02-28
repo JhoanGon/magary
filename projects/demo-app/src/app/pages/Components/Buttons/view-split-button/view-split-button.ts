@@ -1,12 +1,33 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Highlight } from 'ngx-highlightjs';
+import { MagaryCard, MagaryTab, MagaryTabs } from 'ng-magary';
 import {
   MagarySplitButton,
-  MenuItem,
   MagaryToastService,
+  MenuItem,
 } from 'ng-magary';
-import { MagaryCard, MagaryTabs, MagaryTab } from 'ng-magary';
-import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type SplitButtonInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type SplitButtonOutputRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
+
+type SplitButtonMenuItemRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'view-split-button',
@@ -23,195 +44,192 @@ import { Highlight } from 'ngx-highlightjs';
   styleUrl: './view-split-button.scss',
 })
 export class ViewSplitButton {
-  private toastService = inject(MagaryToastService);
+  private readonly toastService = inject(MagaryToastService);
+  readonly i18n = inject(DemoI18nService);
 
-  saveItems: MenuItem[] = [
-    {
-      label: 'Update',
-      icon: 'refresh-cw',
-      command: () => this.save('Update', 'info'),
-    },
-    {
-      label: 'Delete',
-      icon: 'trash',
-      command: () => this.save('Delete', 'error'),
-    },
-    {
-      label: 'Export',
-      icon: 'download',
-      command: () => this.save('Export', 'success'),
-    },
-  ];
-
-  nestedItems: MenuItem[] = [
-    { label: 'Website', icon: 'globe' },
-    { label: 'App', icon: 'smartphone' },
-  ];
+  get saveItems(): MenuItem[] {
+    return [
+      {
+        label: this.i18n.translateDocs('components.buttons.splitButton.action.update'),
+        icon: 'refresh-cw',
+        command: () =>
+          this.save('components.buttons.splitButton.action.update', 'info'),
+      },
+      {
+        label: this.i18n.translateDocs('components.buttons.splitButton.action.delete'),
+        icon: 'trash',
+        command: () =>
+          this.save('components.buttons.splitButton.action.delete', 'error'),
+      },
+      {
+        label: this.i18n.translateDocs('components.buttons.splitButton.action.export'),
+        icon: 'download',
+        command: () =>
+          this.save('components.buttons.splitButton.action.export', 'success'),
+      },
+    ];
+  }
 
   save(
-    action: string,
+    actionKey: DocsTextKey,
     type: 'success' | 'info' | 'warning' | 'error' = 'info',
   ) {
     this.toastService.add({
       type,
-      title: action,
-      message: `Data ${action.toLowerCase()}d successfully`,
+      title: this.i18n.translateDocs(actionKey),
+      message: this.i18n.translateDocs('components.buttons.splitButton.toast.actionMessage'),
     });
   }
 
   onSave() {
     this.toastService.add({
       type: 'success',
-      title: 'Saved',
-      message: 'Default action triggered',
+      title: this.i18n.translateDocs('components.buttons.splitButton.toast.savedTitle'),
+      message: this.i18n.translateDocs('components.buttons.splitButton.toast.savedMessage'),
     });
   }
 
-  // Documentation
-  itemsConfig = [
+  readonly itemsConfig: SplitButtonInputRow[] = [
     {
       name: 'label',
       type: 'string',
       default: 'Save',
-      description: 'Text to display on the default button.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.label.desc',
     },
     {
       name: 'icon',
       type: 'string',
       default: 'null',
-      description: 'Nombre del icono (Lucide) para el botón principal.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.icon.desc',
     },
     {
       name: 'iconSize',
       type: 'number',
       default: '18',
-      description: 'Tamaño del icono en píxeles.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.iconSize.desc',
     },
     {
       name: 'model',
       type: 'MenuItem[]',
       default: '[]',
-      description: 'Array of menu items for the dropdown.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.model.desc',
     },
     {
       name: 'disabled',
       type: 'boolean',
       default: 'false',
-      description:
-        'When present, it specifies that the component should be disabled.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.disabled.desc',
     },
     {
       name: 'styleClass',
       type: 'string',
       default: 'null',
-      description: 'External styling class.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.styleClass.desc',
     },
     {
       name: 'backgroundColor',
       type: 'string | null',
       default: 'null',
-      description:
-        'Custom background color for the split button root (overrides severity color).',
+      descriptionKey:
+        'components.buttons.splitButton.apiInputs.backgroundColor.desc',
     },
     {
       name: 'textColor',
       type: 'string | null',
       default: 'null',
-      description: 'Custom text/icon color for the split button root.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.textColor.desc',
     },
     {
       name: 'severity',
       type: "'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'help' | 'danger'",
       default: "'primary'",
-      description: 'Semantic color preset for the split button.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.severity.desc',
     },
     {
       name: 'size',
       type: "'sm' | 'md' | 'lg'",
       default: "'md'",
-      description: 'Controls component size and spacing.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.size.desc',
     },
     {
       name: 'menuPosition',
       type: "'start' | 'end'",
       default: "'start'",
-      description: 'Dropdown alignment relative to the trigger.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.menuPosition.desc',
     },
     {
       name: 'menuAriaLabel',
       type: 'string | null',
       default: 'null',
-      description: 'Custom accessible label for the action menu.',
+      descriptionKey: 'components.buttons.splitButton.apiInputs.menuAriaLabel.desc',
     },
     {
       name: 'closeOnItemSelect',
       type: 'boolean',
       default: 'true',
-      description: 'Close dropdown automatically after selecting an item.',
+      descriptionKey:
+        'components.buttons.splitButton.apiInputs.closeOnItemSelect.desc',
     },
   ];
 
-  eventsConfig = [
+  readonly eventsConfig: SplitButtonOutputRow[] = [
     {
       name: 'onClick',
       type: 'EventEmitter<MouseEvent>',
-      description:
-        'Callback to invoke when the default (main) button is clicked.',
+      descriptionKey: 'components.buttons.splitButton.apiOutputs.onClick.desc',
     },
     {
       name: 'onDropdownClick',
       type: 'EventEmitter<MouseEvent>',
-      description:
-        'Callback to invoke when the dropdown trigger button is clicked.',
+      descriptionKey:
+        'components.buttons.splitButton.apiOutputs.onDropdownClick.desc',
     },
     {
       name: 'itemClick',
       type: 'EventEmitter<{ item: MenuItem; originalEvent: MouseEvent }>',
-      description:
-        'Emits when any dropdown item is activated (before command execution).',
+      descriptionKey: 'components.buttons.splitButton.apiOutputs.itemClick.desc',
     },
   ];
 
-  menuItemConfig = [
+  readonly menuItemConfig: SplitButtonMenuItemRow[] = [
     {
       name: 'label',
       type: 'string',
-      description: 'Text to display for the menu item.',
+      descriptionKey: 'components.buttons.splitButton.menuItem.label.desc',
     },
     {
       name: 'icon',
       type: 'string',
-      description: 'Icon name (Lucide) to display.',
+      descriptionKey: 'components.buttons.splitButton.menuItem.icon.desc',
     },
     {
       name: 'command',
       type: '(event: { originalEvent: Event, item: MenuItem }) => void',
-      description: 'Callback to execute when the item is clicked.',
+      descriptionKey: 'components.buttons.splitButton.menuItem.command.desc',
     },
     {
       name: 'url',
       type: 'string',
-      description: 'External link to navigate to.',
+      descriptionKey: 'components.buttons.splitButton.menuItem.url.desc',
     },
     {
       name: 'routerLink',
       type: '(string | number)[] | string',
-      description: 'Router link for internal navigation.',
+      descriptionKey: 'components.buttons.splitButton.menuItem.routerLink.desc',
     },
     {
       name: 'disabled',
       type: 'boolean',
-      description: 'If true, the item is disabled.',
+      descriptionKey: 'components.buttons.splitButton.menuItem.disabled.desc',
     },
   ];
 
-  // Code Examples
   importCode = `import { MagarySplitButton } from 'ng-magary';`;
 
-  basicUsageCode = `<magary-split-button 
-  label="Save" 
-  icon="save" 
-  [model]="saveItems" 
+  basicUsageCode = `<magary-split-button
+  label="Save"
+  icon="save"
+  [model]="saveItems"
   (onClick)="onSave()">
 </magary-split-button>`;
 
