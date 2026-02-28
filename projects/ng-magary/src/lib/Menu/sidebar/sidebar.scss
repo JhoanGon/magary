@@ -136,14 +136,17 @@
   &::-webkit-scrollbar {
     width: 0.6rem;
   }
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
+
   &::-webkit-scrollbar-thumb {
     background: var(--sidebar-scrollbar-thumb);
     border-radius: 999px;
     border: 2px solid transparent;
     background-clip: content-box;
+
     &:hover {
       background: var(--surface-500);
       background-clip: content-box;
@@ -234,6 +237,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
     .email {
       color: var(--sidebar-text-secondary);
       font-size: 0.75rem;
@@ -278,7 +282,8 @@
 // Mobile Elements
 .hamburger-button {
   display: none;
-  position: fixed;
+  position: absolute;
+  /* Changed from fixed to absolute for better iOS Safari stability */
   top: 0.5rem;
   left: 0.5rem;
   z-index: 1002;
@@ -309,6 +314,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -389,6 +395,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .sidebar,
   .sidebar-backdrop,
   .header-toggle,
