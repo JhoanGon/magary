@@ -1,4 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MagaryTooltip,
@@ -9,6 +13,15 @@ import {
   MagaryTab,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type TooltipInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'view-tooltip',
@@ -28,6 +41,9 @@ import { Highlight } from 'ngx-highlightjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewTooltip {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
     positionContent: 'flex-start' as const,
@@ -36,6 +52,27 @@ export class ViewTooltip {
 
   readonly importRef = `import { MagaryTooltip } from 'ng-magary';`;
   readonly tooltipGlobalStylesRef = `@use 'ng-magary/styles/tooltip.scss';`;
+
+  readonly inputRows: TooltipInputRow[] = [
+    {
+      name: 'magaryTooltip',
+      type: 'string',
+      default: 'undefined',
+      descriptionKey: 'components.overlay.tooltip.api.magaryTooltip.desc',
+    },
+    {
+      name: 'tooltipPosition',
+      type: '"top" | "bottom" | "left" | "right"',
+      default: '"top"',
+      descriptionKey: 'components.overlay.tooltip.api.tooltipPosition.desc',
+    },
+    {
+      name: 'tooltipDisabled',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.overlay.tooltip.api.tooltipDisabled.desc',
+    },
+  ];
 
   readonly exampleHTML = `
 <!-- Basic -->

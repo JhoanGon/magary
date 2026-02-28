@@ -1,14 +1,12 @@
 <div class="container fade-in">
   <div class="header">
-    <h1>Magary OverlayPanel</h1>
-    <p>
-      Un panel flotante posicionado relativo a un elemento objetivo (Popover).
-    </p>
+    <h1>{{ t('components.overlay.overlayPanel.title') }}</h1>
+    <p>{{ t('components.overlay.overlayPanel.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ t('components.overlay.overlayPanel.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -19,8 +17,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Básico</h2>
-      <p>Haga clic en el botón para mostrar el panel superpuesto.</p>
+      <h2>{{ t('components.overlay.overlayPanel.basic.title') }}</h2>
+      <p>{{ t('components.overlay.overlayPanel.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
@@ -34,22 +32,20 @@
         >
           <magary-button
             (buttonClick)="op.toggle($event)"
-            label="Toggle Overlay"
+            [label]="t('components.overlay.overlayPanel.basic.button')"
           ></magary-button>
 
           <magary-overlaypanel
             #op
-            panelAriaLabel="Información rápida"
+            [panelAriaLabel]="t('components.overlay.overlayPanel.basic.panelAria')"
             (onShow)="onOverlayShow()"
             (onHide)="onOverlayHide()"
           >
             <div style="width: 300px">
-              <h4 style="margin-top: 0">Contenido Personalizado</h4>
-              <p>
-                OverlayPanel puede contener cualquier contenido HTML o
-                componentes Angular. Se ajusta automáticamente y se cierra al
-                hacer clic fuera.
-              </p>
+              <h4 style="margin-top: 0">
+                {{ t('components.overlay.overlayPanel.basic.contentTitle') }}
+              </h4>
+              <p>{{ t('components.overlay.overlayPanel.basic.contentBody') }}</p>
             </div>
           </magary-overlaypanel>
         </div>
@@ -59,12 +55,14 @@
           [backgroundLine]="'#ed2c44'"
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
-          tabListAriaLabel="Overlay basic example code"
+          [tabListAriaLabel]="
+            t('components.overlay.overlayPanel.basic.codeAria')
+          "
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.overlay.overlayPanel.tabs.html')">
             <pre><code [highlight]="codeBasic" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.overlay.overlayPanel.tabs.ts')">
             <pre><code [highlight]="tsCode" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -74,8 +72,8 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Integración (Selección)</h2>
-      <p>Ejemplo de uso para mostrar detalles de un elemento.</p>
+      <h2>{{ t('components.overlay.overlayPanel.selection.title') }}</h2>
+      <p>{{ t('components.overlay.overlayPanel.selection.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
@@ -87,16 +85,15 @@
             padding: 2rem;
           "
         >
-          <!-- Using simple buttons for simulation instead of full table to avoid dependency issues in demo -->
           <magary-button
             (buttonClick)="selectProduct($event, products[0], op2)"
             icon="image"
-            label="Ver Imagen (Bamboo Watch)"
+            [label]="t('components.overlay.overlayPanel.selection.button1')"
           ></magary-button>
           <magary-button
             (buttonClick)="selectProduct($event, products[1], op2)"
             icon="image"
-            label="Ver Imagen (Black Watch)"
+            [label]="t('components.overlay.overlayPanel.selection.button2')"
             severity="secondary"
           ></magary-button>
         </div>
@@ -104,7 +101,7 @@
         <magary-overlaypanel
           #op2
           [showCloseIcon]="true"
-          panelAriaLabel="Detalle del producto"
+          [panelAriaLabel]="t('components.overlay.overlayPanel.selection.panelAria')"
         >
           @if (selectedProduct) {
             <div style="text-align: center; padding: 1rem">
@@ -124,14 +121,16 @@
               />
               <span class="font-bold block">{{ selectedProduct.name }}</span>
               <span class="block text-secondary" style="margin-top: 0.5rem"
-                >{{ selectedProduct.price }} USD</span
+                >{{ selectedProduct.price }}
+                {{ t('components.overlay.overlayPanel.selection.currency') }}</span
               >
             </div>
           }
         </magary-overlaypanel>
 
         <p style="margin-top: 1rem; color: var(--text-secondary)">
-          Estado evento: {{ overlayEventSummary }}
+          {{ t('components.overlay.overlayPanel.selection.eventStatus') }}:
+          {{ overlayEventSummary }}
         </p>
       </div>
       <div class="code-block" style="margin-top: 1rem">
@@ -139,12 +138,14 @@
           [backgroundLine]="'#ed2c44'"
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
-          tabListAriaLabel="Overlay selection example code"
+          [tabListAriaLabel]="
+            t('components.overlay.overlayPanel.selection.codeAria')
+          "
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.overlay.overlayPanel.tabs.html')">
             <pre><code [highlight]="codeTable" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.overlay.overlayPanel.tabs.ts')">
             <pre><code [highlight]="tsCode" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -154,44 +155,32 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ t('components.overlay.overlayPanel.api.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ t('components.overlay.overlayPanel.api.header.name') }}</th>
+              <th>{{ t('components.overlay.overlayPanel.api.header.type') }}</th>
+              <th>
+                {{ t('components.overlay.overlayPanel.api.header.default') }}
+              </th>
+              <th>
+                {{ t('components.overlay.overlayPanel.api.header.description') }}
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>dismissable</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Si es verdadero, se cierra al hacer clic fuera.</td>
-            </tr>
-            <tr>
-              <td><code>showCloseIcon</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Muestra un icono para cerrar el panel.</td>
-            </tr>
-            <tr>
-              <td><code>closeOnEscape</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Cierra el panel al presionar Escape.</td>
-            </tr>
-            <tr>
-              <td><code>panelAriaLabel</code></td>
-              <td><code>string</code></td>
-              <td><code>'Overlay panel'</code></td>
-              <td>Etiqueta accesible aplicada al contenedor del panel.</td>
-            </tr>
+            @for (row of inputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>

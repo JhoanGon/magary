@@ -1,17 +1,13 @@
 <div class="container fade-in">
   <div class="header">
-    <h1>Magary Grid</h1>
-    <p>
-      Sistema de layout dinámico Drag & Drop impulsado por Gridstack.js. Crea
-      dashboards, galerías y paneles interactivos.
-    </p>
+    <h1>{{ t('components.grid.grid.title') }}</h1>
+    <p>{{ t('components.grid.grid.subtitle') }}</p>
   </div>
 
-  <!-- Import Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
-      <p>Importa el módulo en tu componente standalone.</p>
+      <h2>{{ t('components.grid.grid.import.title') }}</h2>
+      <p>{{ t('components.grid.grid.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -20,11 +16,10 @@
     </div>
   </div>
 
-  <!-- Basic Usage Section -->
   <div class="section">
     <div class="section-header">
-      <h2>Uso Básico</h2>
-      <p>Grid simple con widgets estáticos o bloqueados.</p>
+      <h2>{{ t('components.grid.grid.basic.title') }}</h2>
+      <p>{{ t('components.grid.grid.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
@@ -40,7 +35,7 @@
               [locked]="item.locked"
             >
               <div class="basic-item" style="background: var(--primary-500)">
-                {{ item.content }}
+                {{ t(item.contentKey) }}
               </div>
             </magary-grid-item>
           }
@@ -52,10 +47,10 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.grid.grid.tabs.html')">
             <pre><code [highlight]="basicExample" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.grid.grid.tabs.ts')">
             <pre><code [highlight]="basicTS" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -63,15 +58,10 @@
     </div>
   </div>
 
-  <!-- Dashboard Example -->
   <div class="section">
     <div class="section-header">
-      <h2>Dashboard Interactivo</h2>
-      <p>
-        Ejemplo avanzado integrando <code>magary-card</code>,
-        <code>magary-button</code>, <code>magary-avatar</code> y más. Ideal para
-        paneles de administración.
-      </p>
+      <h2>{{ t('components.grid.grid.dashboard.title') }}</h2>
+      <p>{{ t('components.grid.grid.dashboard.desc') }}</p>
     </div>
 
     <div class="section-content">
@@ -86,29 +76,26 @@
           "
         >
           <magary-button
-            label="Card"
+            [label]="t('components.grid.grid.dashboard.add.card')"
             icon="layout-grid"
             severity="info"
             (buttonClick)="addWidget('card')"
           ></magary-button>
           <magary-button
-            label="Table"
+            [label]="t('components.grid.grid.dashboard.add.table')"
             icon="table"
             severity="info"
             (buttonClick)="addWidget('table')"
           ></magary-button>
           <magary-button
-            label="Image"
+            [label]="t('components.grid.grid.dashboard.add.image')"
             icon="image"
             severity="info"
             (buttonClick)="addWidget('image')"
           ></magary-button>
         </div>
 
-        <magary-grid
-          [options]="dashboardOptions"
-          (change)="onGridChange($event)"
-        >
+        <magary-grid [options]="dashboardOptions" (change)="onGridChange($event)">
           @for (widget of dashboardWidgets(); track widget.id) {
             <magary-grid-item
               [id]="widget.id"
@@ -123,16 +110,13 @@
                 width="100%"
                 height="100%"
                 [padding]="
-                  widget.type === 'image' || widget.type === 'media'
-                    ? '0'
-                    : '1rem'
+                  widget.type === 'image' || widget.type === 'media' ? '0' : '1rem'
                 "
               >
-                <!-- Stats Widget (Legacy) -->
                 @if (widget.type === "stats") {
                   <div class="stats-widget">
                     <div class="stats-info">
-                      <span class="stats-title">{{ widget.title }}</span>
+                      <span class="stats-title">{{ widgetTitle(widget) }}</span>
                       <span class="stats-value">{{ widget.value }}</span>
                       <span
                         class="stats-trend"
@@ -154,27 +138,18 @@
                   </div>
                 }
 
-                <!-- Generic Card Widget -->
                 @if (widget.type === "card") {
-                  <div
-                    class="profile-widget"
-                    style="
-                      align-items: flex-start;
-                      text-align: left;
-                      padding: 1rem;
-                    "
-                  >
-                    <h3>{{ widget.title }}</h3>
-                    <p>{{ widget.content }}</p>
+                  <div class="profile-widget" style="align-items: flex-start; text-align: left; padding: 1rem">
+                    <h3>{{ widgetTitle(widget) }}</h3>
+                    <p>{{ widgetContent(widget) }}</p>
                     <magary-button
-                      label="Action"
+                      [label]="t('components.grid.grid.dashboard.widget.action')"
                       size="small"
                       style="margin-top: auto"
                     ></magary-button>
                   </div>
                 }
 
-                <!-- Table Widget -->
                 @if (widget.type === "table") {
                   <div
                     style="
@@ -184,10 +159,10 @@
                       flex-direction: column;
                     "
                   >
-                    <h4 style="margin: 0 0 1rem 0">{{ widget.title }}</h4>
+                    <h4 style="margin: 0 0 1rem 0">{{ widgetTitle(widget) }}</h4>
                     <div style="flex: 1; overflow: auto; min-height: 0">
                       <magary-table
-                        [value]="widget.data ?? []"
+                        [value]="resolveTableData(widget.data ?? [])"
                         [columns]="tableColumns"
                         [paginator]="false"
                         [rows]="5"
@@ -197,7 +172,6 @@
                   </div>
                 }
 
-                <!-- Image Widget (Single) -->
                 @if (widget.type === "image") {
                   <div
                     style="
@@ -208,7 +182,7 @@
                     "
                   >
                     <h4 style="margin: 0; padding: 1rem 1rem 0.5rem 1rem">
-                      {{ widget.title }}
+                      {{ widgetTitle(widget) }}
                     </h4>
                     <div style="flex: 1; min-height: 0; overflow: hidden">
                       <magary-image
@@ -224,18 +198,17 @@
                   </div>
                 }
 
-                <!-- Legacy Widgets (Actions, Media, Profile) -->
                 @if (widget.type === "actions") {
                   <div class="actions-widget">
-                    <h4>{{ widget.title }}</h4>
+                    <h4>{{ widgetTitle(widget) }}</h4>
                     <div class="action-buttons">
                       <magary-button
-                        label="Option 1"
+                        [label]="t('components.grid.grid.dashboard.widget.option1')"
                         icon="check"
                         size="small"
                       ></magary-button>
                       <magary-button
-                        label="Option 2"
+                        [label]="t('components.grid.grid.dashboard.widget.option2')"
                         icon="x"
                         severity="secondary"
                         size="small"
@@ -246,16 +219,11 @@
 
                 @if (widget.type === "media") {
                   <div class="media-widget">
-                    <h4>{{ widget.title }}</h4>
+                    <h4>{{ widgetTitle(widget) }}</h4>
                     <div class="media-grid">
                       @for (img of widget.images; track img) {
                         <div class="media-item">
-                          <magary-image
-                            [src]="img"
-                            [preview]="true"
-                            width="100%"
-                            height="100%"
-                          ></magary-image>
+                          <magary-image [src]="img" [preview]="true" width="100%" height="100%"></magary-image>
                         </div>
                       }
                     </div>
@@ -264,14 +232,10 @@
 
                 @if (widget.type === "profile") {
                   <div class="profile-widget">
-                    <magary-avatar
-                      image="https://i.pravatar.cc/150"
-                      size="xlarge"
-                      shape="circle"
-                    ></magary-avatar>
+                    <magary-avatar image="https://i.pravatar.cc/150" size="xlarge" shape="circle"></magary-avatar>
                     <div class="profile-info">
-                      <h3>{{ widget.name }}</h3>
-                      <p>{{ widget.role }}</p>
+                      <h3>{{ widgetName(widget) }}</h3>
+                      <p>{{ widgetRole(widget) }}</p>
                     </div>
                   </div>
                 }
@@ -287,10 +251,10 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.grid.grid.tabs.html')">
             <pre><code [highlight]="dashboardExample" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.grid.grid.tabs.ts')">
             <pre><code [highlight]="dashboardTS" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -298,14 +262,10 @@
     </div>
   </div>
 
-  <!-- Image Gallery Example -->
   <div class="section">
     <div class="section-header">
-      <h2>Galería Reordenable</h2>
-      <p>
-        Grid de imágenes usando <code>magary-image</code>. ¡Arrástralas para
-        cambiar el orden!
-      </p>
+      <h2>{{ t('components.grid.grid.gallery.title') }}</h2>
+      <p>{{ t('components.grid.grid.gallery.desc') }}</p>
     </div>
 
     <div class="section-content">
@@ -316,7 +276,7 @@
               <div class="gallery-item">
                 <magary-image
                   [src]="img.src"
-                  [alt]="img.alt"
+                  [alt]="t(img.altKey)"
                   [preview]="true"
                   width="100%"
                   height="100%"
@@ -333,10 +293,10 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.grid.grid.tabs.html')">
             <pre><code [highlight]="galleryHTML" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.grid.grid.tabs.ts')">
             <pre><code [highlight]="galleryTS" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -344,14 +304,10 @@
     </div>
   </div>
 
-  <!-- API Section -->
   <div class="section">
     <div class="section-header">
-      <h2>API Reference</h2>
-      <p>
-        Inputs y Outputs disponibles para <code>magary-grid</code> y
-        <code>magary-grid-item</code>.
-      </p>
+      <h2>{{ t('components.grid.grid.api.title') }}</h2>
+      <p>{{ t('components.grid.grid.api.desc') }}</p>
     </div>
 
     <div class="section-content">
@@ -359,49 +315,21 @@
         <table class="api-table">
           <thead>
             <tr>
-              <th>Componente</th>
-              <th>Propiedad</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ t('components.grid.grid.api.header.component') }}</th>
+              <th>{{ t('components.grid.grid.api.header.property') }}</th>
+              <th>{{ t('components.grid.grid.api.header.type') }}</th>
+              <th>{{ t('components.grid.grid.api.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>magary-grid</code></td>
-              <td><code>options</code></td>
-              <td><code>GridStackOptions</code></td>
-              <td>Opciones de configuración de Gridstack.js.</td>
-            </tr>
-            <tr>
-              <td><code>magary-grid</code></td>
-              <td><code>change</code></td>
-              <td><code>EventEmitter</code></td>
-              <td>Evento emitido cuando cambia el layout.</td>
-            </tr>
-            <tr>
-              <td><code>magary-grid-item</code></td>
-              <td><code>x, y, w, h</code></td>
-              <td><code>number</code></td>
-              <td>Coordenadas y dimensiones del item.</td>
-            </tr>
-            <tr>
-              <td><code>magary-grid-item</code></td>
-              <td><code>noResize</code></td>
-              <td><code>boolean</code></td>
-              <td>Deshabilita el redimensionamiento del item.</td>
-            </tr>
-            <tr>
-              <td><code>magary-grid-item</code></td>
-              <td><code>noMove</code></td>
-              <td><code>boolean</code></td>
-              <td>Deshabilita el movimiento del item.</td>
-            </tr>
-            <tr>
-              <td><code>magary-grid-item</code></td>
-              <td><code>locked</code></td>
-              <td><code>boolean</code></td>
-              <td>Bloquea completamente el item.</td>
-            </tr>
+            @for (row of apiRows; track row.component + row.property) {
+              <tr>
+                <td><code>{{ row.component }}</code></td>
+                <td><code>{{ row.property }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>

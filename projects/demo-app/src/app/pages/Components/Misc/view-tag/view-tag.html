@@ -1,21 +1,15 @@
 <div class="container fade-in">
   <div class="header">
-    <h1 class="fade-in">MagaryTag</h1>
-    <p class="fade-in">
-      Etiquetas para categorizar contenido o indicar estado.
-    </p>
+    <h1 class="fade-in">{{ t('components.misc.tag.title') }}</h1>
+    <p class="fade-in">{{ t('components.misc.tag.subtitle') }}</p>
   </div>
 
   <div class="content">
     <div class="components-grid">
-      <!-- Example 1: Basic & Severities -->
       <div class="section">
         <div class="section-header">
-          <h2>Estados & Severidad</h2>
-          <p>
-            Varios estados predefinidos para comunicar semántica (éxito, error,
-            info, etc.).
-          </p>
+          <h2>{{ t('components.misc.tag.states.title') }}</h2>
+          <p>{{ t('components.misc.tag.states.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -33,26 +27,40 @@
                 align-items: center;
               "
             >
-              <magary-tag value="Primary"></magary-tag>
-              <magary-tag severity="secondary" value="Secondary"></magary-tag>
-              <magary-tag severity="success" value="Success"></magary-tag>
-              <magary-tag severity="info" value="Info"></magary-tag>
-              <magary-tag severity="warning" value="Warning"></magary-tag>
-              <magary-tag severity="danger" value="Danger"></magary-tag>
-              <magary-tag severity="contrast" value="Contrast"></magary-tag>
+              <magary-tag [value]="t('components.misc.tag.demo.primary')"></magary-tag>
+              <magary-tag
+                severity="secondary"
+                [value]="t('components.misc.tag.demo.secondary')"
+              ></magary-tag>
+              <magary-tag
+                severity="success"
+                [value]="t('components.misc.tag.demo.success')"
+              ></magary-tag>
+              <magary-tag
+                severity="info"
+                [value]="t('components.misc.tag.demo.info')"
+              ></magary-tag>
+              <magary-tag
+                severity="warning"
+                [value]="t('components.misc.tag.demo.warning')"
+              ></magary-tag>
+              <magary-tag
+                severity="danger"
+                [value]="t('components.misc.tag.demo.danger')"
+              ></magary-tag>
+              <magary-tag
+                severity="contrast"
+                [value]="t('components.misc.tag.demo.contrast')"
+              ></magary-tag>
             </div>
           </magary-card>
         </div>
       </div>
 
-      <!-- Example 2: Rounded & Icons -->
       <div class="section">
         <div class="section-header">
-          <h2>Redondeado & Iconos</h2>
-          <p>
-            Opcionalmente bordes completamente redondeados (píldoras) e iconos
-            integrados.
-          </p>
+          <h2>{{ t('components.misc.tag.rounded.title') }}</h2>
+          <p>{{ t('components.misc.tag.rounded.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -70,16 +78,19 @@
                 align-items: center;
               "
             >
-              <magary-tag value="Rounded" [rounded]="true"></magary-tag>
+              <magary-tag
+                [value]="t('components.misc.tag.demo.rounded')"
+                [rounded]="true"
+              ></magary-tag>
               <magary-tag
                 severity="success"
-                value="Score Top"
+                [value]="t('components.misc.tag.demo.scoreTop')"
                 [rounded]="true"
               ></magary-tag>
 
               <magary-tag
                 severity="warning"
-                value="Pending"
+                [value]="t('components.misc.tag.demo.pending')"
                 [rounded]="true"
                 icon="clock"
               ></magary-tag>
@@ -92,7 +103,7 @@
               [positionContent]="tabsConfig.positionContent"
               [background]="tabsConfig.background"
             >
-              <magary-tab label="HTML">
+              <magary-tab [label]="t('components.misc.tag.tabs.html')">
                 <pre><code [highlight]="exampleHTML" language="html"></code></pre>
               </magary-tab>
             </magary-tabs>
@@ -100,53 +111,31 @@
         </div>
       </div>
 
-      <!-- API Inputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Propiedades (Inputs)</h2>
-          <p>Configuración del componente Tag.</p>
+          <h2>{{ t('components.misc.tag.api.title') }}</h2>
+          <p>{{ t('components.misc.tag.api.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Defecto</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.misc.tag.api.header.name') }}</th>
+                  <th>{{ t('components.misc.tag.api.header.type') }}</th>
+                  <th>{{ t('components.misc.tag.api.header.default') }}</th>
+                  <th>{{ t('components.misc.tag.api.header.description') }}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><code>value</code></td>
-                  <td><code>string</code></td>
-                  <td><code>undefined</code></td>
-                  <td>Texto a mostrar.</td>
-                </tr>
-                <tr>
-                  <td><code>severity</code></td>
-                  <td>
-                    <code
-                      >"success" | "info" | "warning" | "danger" | "secondary" |
-                      "contrast"</code
-                    >
-                  </td>
-                  <td><code>"info"</code></td>
-                  <td>Color semántico de la etiqueta.</td>
-                </tr>
-                <tr>
-                  <td><code>rounded</code></td>
-                  <td><code>boolean</code></td>
-                  <td><code>false</code></td>
-                  <td>Si es verdadero, redondea completamente los bordes.</td>
-                </tr>
-                <tr>
-                  <td><code>icon</code></td>
-                  <td><code>string</code></td>
-                  <td><code>undefined</code></td>
-                  <td>Clase del icono a mostrar.</td>
-                </tr>
+                @for (row of apiRows; track row.name) {
+                  <tr>
+                    <td><code>{{ row.name }}</code></td>
+                    <td><code>{{ row.type }}</code></td>
+                    <td><code>{{ row.default }}</code></td>
+                    <td>{{ t(row.descriptionKey) }}</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>

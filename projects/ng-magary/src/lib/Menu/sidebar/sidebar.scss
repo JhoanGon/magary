@@ -37,7 +37,7 @@
   justify-content: space-between;
   border-bottom: 1px solid var(--sidebar-border);
   flex-shrink: 0;
-  
+
   &.collapsed-header {
     justify-content: center;
     padding: 0;
@@ -54,7 +54,7 @@
     height: 32px;
     width: auto;
   }
-  
+
   .collapsed-logo {
     height: 32px;
     width: 32px;
@@ -72,7 +72,7 @@
     color: var(--sidebar-title-color, transparent); // Fallback
     font-style: var(--sidebar-title-font-style, italic);
   }
-  
+
   .header-toggle {
     background: transparent;
     border: 1px solid transparent;
@@ -84,7 +84,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     &:hover {
       background: var(--hover-bg);
       color: var(--sidebar-text);
@@ -94,7 +94,7 @@
       outline: 2px solid var(--primary-400);
       outline-offset: 2px;
     }
-    
+
     &.collapsed {
       font-size: 1.25rem;
     }
@@ -131,7 +131,7 @@
   padding: 1rem;
   scrollbar-width: thin;
   scrollbar-color: var(--sidebar-scrollbar-thumb) transparent;
-  
+
   // Custom Scrollbar
   &::-webkit-scrollbar {
     width: 0.6rem;
@@ -164,16 +164,16 @@
   align-items: center;
   padding: 1rem;
   transition: all 0.3s ease;
-  
+
   &.bottom {
     margin-top: auto;
   }
-  
+
   &.top {
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--sidebar-border);
   }
-  
+
   &.center {
     position: absolute;
     top: 50%;
@@ -183,7 +183,7 @@
     pointer-events: none;
     z-index: 0;
   }
-  
+
   .brand-logo {
     max-width: 100%;
     height: auto;
@@ -191,10 +191,10 @@
     object-fit: contain;
     transition: all 0.3s ease;
   }
-  
+
   &.collapsed {
     padding: 0.5rem;
-    
+
     .brand-logo {
       max-height: 40px;
     }
@@ -225,7 +225,7 @@
   .user-details {
     flex: 1;
     min-width: 0; // Truncate text
-    
+
     .username {
       font-weight: 600;
       color: var(--sidebar-text);
@@ -269,7 +269,7 @@
     outline: 2px solid var(--primary-400);
     outline-offset: 2px;
   }
-  
+
   i {
     font-size: 1rem;
   }
@@ -279,14 +279,14 @@
 .hamburger-button {
   display: none;
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  top: 0.5rem;
+  left: 0.5rem;
   z-index: 1002;
   background: var(--surface-0);
   border: 1px solid var(--surface-200);
   border-radius: 8px;
-  padding: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  padding: 0.4rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   color: var(--sidebar-text);
 
@@ -306,31 +306,35 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 // Collapsed State
 .sidebar.collapsed {
   width: 80px;
-  
+
   .user-section {
     padding: 1rem 0.5rem;
-    
+
     .user-info {
       justify-content: center;
       padding: 0.5rem;
-      
+
       .user-avatar {
         margin-right: 0;
       }
     }
   }
-  
+
   .logout-button {
     justify-content: center;
     padding: 0.75rem;
-    
+
     i {
       font-size: 1.2rem;
     }
@@ -351,22 +355,22 @@
     width: 85%; // Slightly narrower on mobile
     max-width: 300px;
     border-radius: 0 var(--sidebar-radius) var(--sidebar-radius) 0;
-    
+
     &.open {
       transform: translateX(0);
       box-shadow: 0 10px 40px rgba(2, 6, 23, 0.26);
     }
-    
+
     // Disable collapse on mobile
     &.collapsed {
       width: 85%;
       max-width: 300px;
-      
+
       .sidebar-header {
         justify-content: space-between;
         padding: 0 1.5rem;
       }
-      
+
       .user-section .user-info .user-avatar {
         margin-right: 1rem;
       }
@@ -378,7 +382,7 @@
       display: inline-flex;
     }
   }
-  
+
   .header-toggle {
     display: none !important; // Hide toggle on mobile
   }

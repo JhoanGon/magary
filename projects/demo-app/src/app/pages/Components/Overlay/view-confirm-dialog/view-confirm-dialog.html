@@ -1,31 +1,27 @@
 <div class="container fade-in">
   <div class="header">
-    <h1 class="fade-in">ConfirmDialog</h1>
-    <p class="fade-in">
-      Diálogo de confirmación avanzado con integración de servicios.
-    </p>
+    <h1 class="fade-in">{{ t('components.overlay.confirmDialog.title') }}</h1>
+    <p class="fade-in">{{ t('components.overlay.confirmDialog.subtitle') }}</p>
   </div>
 
   <div class="content">
     <div class="components-grid">
-      <!-- Import -->
       <div class="section">
         <div class="section-header">
-          <h2>Importar</h2>
-          <p>Módulos necesarios.</p>
+          <h2>{{ t('components.overlay.confirmDialog.import.title') }}</h2>
+          <p>{{ t('components.overlay.confirmDialog.import.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="code-block">
-            <pre><code [highlight]="'import { MagaryConfirmDialog, MagaryConfirmationService } from \'ng-magary\';'" language="typescript"></code></pre>
+            <pre><code [highlight]="importCode" language="typescript"></code></pre>
           </div>
         </div>
       </div>
 
-      <!-- Example 1: Basic -->
       <div class="section">
         <div class="section-header">
-          <h2>Básico</h2>
-          <p>Uso básico con el servicio de confirmación.</p>
+          <h2>{{ t('components.overlay.confirmDialog.basic.title') }}</h2>
+          <p>{{ t('components.overlay.confirmDialog.basic.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -45,12 +41,12 @@
               <magary-confirm-dialog></magary-confirm-dialog>
               <magary-button
                 (buttonClick)="confirm1()"
-                label="Confirmar Acción"
+                [label]="t('components.overlay.confirmDialog.basic.confirmAction')"
                 icon="circle-check"
               ></magary-button>
               <magary-button
                 (buttonClick)="confirm2()"
-                label="Eliminar"
+                [label]="t('components.overlay.confirmDialog.basic.delete')"
                 severity="danger"
                 icon="trash-2"
               ></magary-button>
@@ -63,10 +59,10 @@
               [positionContent]="tabsConfig.positionContent"
               [background]="tabsConfig.background"
             >
-              <magary-tab label="HTML">
+              <magary-tab [label]="t('components.overlay.confirmDialog.tabs.html')">
                 <pre><code [highlight]="exampleHTML" language="html"></code></pre>
               </magary-tab>
-              <magary-tab label="TS">
+              <magary-tab [label]="t('components.overlay.confirmDialog.tabs.ts')">
                 <pre><code [highlight]="exampleTS" language="typescript"></code></pre>
               </magary-tab>
             </magary-tabs>
@@ -74,61 +70,33 @@
         </div>
       </div>
 
-      <!-- API -->
       <div class="section">
         <div class="section-header">
-          <h2>Confirmation Object (Service)</h2>
-          <p>
-            Propiedades del objeto pasado a
-            <code>confirmationService.confirm()</code>.
-          </p>
+          <h2>{{ t('components.overlay.confirmDialog.service.title') }}</h2>
+          <p>{{ t('components.overlay.confirmDialog.service.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Propiedad</th>
-                  <th>Tipo</th>
-                  <th>Descripción</th>
+                  <th>
+                    {{ t('components.overlay.confirmDialog.service.header.property') }}
+                  </th>
+                  <th>{{ t('components.overlay.confirmDialog.service.header.type') }}</th>
+                  <th>
+                    {{ t('components.overlay.confirmDialog.service.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>header</td>
-                  <td>string</td>
-                  <td>Título del diálogo.</td>
-                </tr>
-                <tr>
-                  <td>message</td>
-                  <td>string</td>
-                  <td>Mensaje principal.</td>
-                </tr>
-                <tr>
-                  <td>icon</td>
-                  <td>string</td>
-                  <td>Icono a mostrar (Lucide).</td>
-                </tr>
-                <tr>
-                  <td>accept</td>
-                  <td>Function</td>
-                  <td>Callback al aceptar.</td>
-                </tr>
-                <tr>
-                  <td>reject</td>
-                  <td>Function</td>
-                  <td>Callback al rechazar.</td>
-                </tr>
-                <tr>
-                  <td>acceptLabel</td>
-                  <td>string</td>
-                  <td>Texto botón aceptar.</td>
-                </tr>
-                <tr>
-                  <td>rejectLabel</td>
-                  <td>string</td>
-                  <td>Texto botón cancelar.</td>
-                </tr>
+                @for (row of serviceRows; track row.property) {
+                  <tr>
+                    <td>{{ row.property }}</td>
+                    <td>{{ row.type }}</td>
+                    <td>{{ t(row.descriptionKey) }}</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>

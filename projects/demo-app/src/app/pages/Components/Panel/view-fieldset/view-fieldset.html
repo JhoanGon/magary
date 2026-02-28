@@ -1,15 +1,12 @@
 <div class="container">
   <div class="header">
-    <h1>Fieldset</h1>
-    <p>
-      Fieldset es un componente de agrupación con un área de contenido y una
-      leyenda.
-    </p>
+    <h1>{{ t('components.panel.fieldset.title') }}</h1>
+    <p>{{ t('components.panel.fieldset.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ t('components.panel.fieldset.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -20,20 +17,14 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Básico</h2>
-      <p>Un fieldset simple con una leyenda.</p>
+      <h2>{{ t('components.panel.fieldset.basic.title') }}</h2>
+      <p>{{ t('components.panel.fieldset.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <magary-fieldset legend="Header">
+        <magary-fieldset [legend]="t('components.panel.fieldset.basic.legend')">
           <p style="margin: 0; line-height: 1.5; color: var(--text-secondary)">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            {{ t('components.panel.fieldset.lorem') }}
           </p>
         </magary-fieldset>
       </div>
@@ -43,7 +34,7 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.panel.fieldset.tabs.html')">
             <pre><code [highlight]="codeBasic" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -53,20 +44,17 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Colapsable</h2>
-      <p>El contenido puede colapsarse haciendo clic en la leyenda.</p>
+      <h2>{{ t('components.panel.fieldset.toggle.title') }}</h2>
+      <p>{{ t('components.panel.fieldset.toggle.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
-        <magary-fieldset legend="Toggleable" [toggleable]="true">
+        <magary-fieldset
+          [legend]="t('components.panel.fieldset.toggle.legend')"
+          [toggleable]="true"
+        >
           <p style="margin: 0; line-height: 1.5; color: var(--text-secondary)">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            {{ t('components.panel.fieldset.lorem') }}
           </p>
         </magary-fieldset>
       </div>
@@ -76,7 +64,7 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.panel.fieldset.tabs.html')">
             <pre><code [highlight]="codeToggleable" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -86,39 +74,29 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ t('components.panel.fieldset.inputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Predeterminado</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>legend</code></td>
-            <td><code>string</code></td>
-            <td><code>null</code></td>
-            <td>Texto del encabezado.</td>
-          </tr>
-          <tr>
-            <td><code>toggleable</code></td>
-            <td><code>boolean</code></td>
-            <td><code>false</code></td>
-            <td>Cuando está habilitado, el contenido se puede alternar.</td>
-          </tr>
-          <tr>
-            <td><code>collapsed</code></td>
-            <td><code>boolean</code></td>
-            <td><code>false</code></td>
-            <td>Define el estado inicial colapsado.</td>
-          </tr>
-        </tbody>
+          <thead>
+            <tr>
+              <th>{{ t('components.panel.fieldset.table.header.name') }}</th>
+              <th>{{ t('components.panel.fieldset.table.header.type') }}</th>
+              <th>{{ t('components.panel.fieldset.table.header.default') }}</th>
+              <th>{{ t('components.panel.fieldset.table.header.description') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of inputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
+          </tbody>
         </table>
       </div>
     </div>
@@ -126,37 +104,29 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
+      <h2>{{ t('components.panel.fieldset.outputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>onBeforeToggle</code></td>
-            <td><code>EventEmitter&lt;unknown&gt;</code></td>
-            <td>
-              Callback que se invoca antes de cambiar el estado de colapso.
-            </td>
-          </tr>
-          <tr>
-            <td><code>onAfterToggle</code></td>
-            <td><code>EventEmitter&lt;unknown&gt;</code></td>
-            <td>
-              Callback que se invoca después de cambiar el estado de colapso.
-            </td>
-          </tr>
-        </tbody>
+          <thead>
+            <tr>
+              <th>{{ t('components.panel.fieldset.table.header.name') }}</th>
+              <th>{{ t('components.panel.fieldset.table.header.type') }}</th>
+              <th>{{ t('components.panel.fieldset.table.header.description') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of outputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
+          </tbody>
         </table>
       </div>
     </div>
   </div>
 </div>
-

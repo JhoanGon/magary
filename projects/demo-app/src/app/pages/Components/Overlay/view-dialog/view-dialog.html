@@ -1,17 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>MagaryDialog</h1>
-    <p class="subtitle">
-      Componente de superposición premium con soporte para Glassmorphism,
-      animaciones y control total.
-    </p>
+    <h1>{{ t('components.overlay.dialog.title') }}</h1>
+    <p class="subtitle">{{ t('components.overlay.dialog.subtitle') }}</p>
   </div>
 
-  <!-- Import -->
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone</p>
+      <h2>{{ t('components.overlay.dialog.import.title') }}</h2>
+      <p>{{ t('components.overlay.dialog.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -20,15 +16,14 @@
     </div>
   </div>
 
-  <!-- Basic -->
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Básico</h2>
+      <h2>{{ t('components.overlay.dialog.basic.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Basic Dialog</h4>
+          <h4>{{ t('components.overlay.dialog.basic.cardTitle') }}</h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -40,13 +35,13 @@
             >
               <magary-button
                 (buttonClick)="visible = true"
-                label="Show Basic Dialog"
+                [label]="t('components.overlay.dialog.basic.button')"
               ></magary-button>
             </div>
           </magary-card>
 
           <magary-dialog
-            header="Basic Dialog"
+            [header]="t('components.overlay.dialog.basic.header')"
             [(visible)]="visible"
             width="min(90vw, 48rem)"
             [backgroundColor]="demoDialogBackground"
@@ -59,20 +54,17 @@
             [resizable]="true"
             [draggable]="false"
           >
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
+            <p>{{ t('components.overlay.dialog.basic.content') }}</p>
             <div slot="footer">
               <magary-button
                 (buttonClick)="visible = false"
-                label="Cancel"
+                [label]="t('components.overlay.dialog.basic.cancel')"
                 severity="secondary"
                 variant="text"
               ></magary-button>
               <magary-button
                 (buttonClick)="visible = false"
-                label="Ok"
+                [label]="t('components.overlay.dialog.basic.ok')"
                 severity="primary"
               ></magary-button>
             </div>
@@ -85,7 +77,7 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.overlay.dialog.tabs.html')">
             <pre><code [highlight]="exampleBasic" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -93,15 +85,14 @@
     </div>
   </div>
 
-  <!-- Modal -->
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo Modal</h2>
+      <h2>{{ t('components.overlay.dialog.modal.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Modal Dialog</h4>
+          <h4>{{ t('components.overlay.dialog.modal.cardTitle') }}</h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -113,14 +104,14 @@
             >
               <magary-button
                 (buttonClick)="visibleModal = true"
-                label="Show Modal Dialog"
+                [label]="t('components.overlay.dialog.modal.button')"
                 severity="info"
               ></magary-button>
             </div>
           </magary-card>
 
           <magary-dialog
-            header="Modal Dialog"
+            [header]="t('components.overlay.dialog.modal.header')"
             [(visible)]="visibleModal"
             [modal]="true"
             width="min(90vw, 48rem)"
@@ -133,10 +124,7 @@
             [dismissableMask]="false"
             [draggable]="false"
           >
-            <p>
-              Este es un diálogo modal. El fondo está bloqueado. No se cierra al
-              hacer clic fuera.
-            </p>
+            <p>{{ t('components.overlay.dialog.modal.content') }}</p>
           </magary-dialog>
         </div>
       </div>
@@ -146,7 +134,7 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.overlay.dialog.tabs.html')">
             <pre><code [highlight]="exampleModal" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -154,16 +142,15 @@
     </div>
   </div>
 
-  <!-- Draggable & Resizable Features -->
   <div class="section">
     <div class="section-header">
-      <h2>Características Avanzadas</h2>
-      <p>Ejemplos de arrastre, redimensionamiento y posicionamiento.</p>
+      <h2>{{ t('components.overlay.dialog.advanced.title') }}</h2>
+      <p>{{ t('components.overlay.dialog.advanced.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Draggable</h4>
+          <h4>{{ t('components.overlay.dialog.advanced.draggable.title') }}</h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -175,7 +162,7 @@
             >
               <magary-button
                 (buttonClick)="visibleDrag = true"
-                label="Draggable"
+                [label]="t('components.overlay.dialog.advanced.draggable.button')"
                 severity="warning"
                 icon="move"
               ></magary-button>
@@ -183,7 +170,7 @@
           </magary-card>
 
           <magary-dialog
-            header="Arrastrame"
+            [header]="t('components.overlay.dialog.advanced.draggable.header')"
             [(visible)]="visibleDrag"
             [draggable]="true"
             [modal]="false"
@@ -195,15 +182,12 @@
             [showBorder]="false"
             [showSectionBorders]="false"
           >
-            <p>
-              Este diálogo se puede arrastrar desde el encabezado. Nota que
-              [modal]="false" permite interactuar con el fondo.
-            </p>
+            <p>{{ t('components.overlay.dialog.advanced.draggable.content') }}</p>
           </magary-dialog>
         </div>
 
         <div class="demo-item">
-          <h4>Resizable</h4>
+          <h4>{{ t('components.overlay.dialog.advanced.resizable.title') }}</h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -215,7 +199,7 @@
             >
               <magary-button
                 (buttonClick)="visibleResize = true"
-                label="Resizable"
+                [label]="t('components.overlay.dialog.advanced.resizable.button')"
                 severity="success"
                 icon="maximize"
               ></magary-button>
@@ -223,7 +207,7 @@
           </magary-card>
 
           <magary-dialog
-            header="Redimensioname"
+            [header]="t('components.overlay.dialog.advanced.resizable.header')"
             [(visible)]="visibleResize"
             [resizable]="true"
             width="min(92vw, 40rem)"
@@ -236,14 +220,12 @@
             [style]="{ minHeight: '300px' }"
             [draggable]="false"
           >
-            <p>
-              Este diálogo tiene un manejador en la esquina inferior derecha.
-            </p>
+            <p>{{ t('components.overlay.dialog.advanced.resizable.content') }}</p>
           </magary-dialog>
         </div>
 
         <div class="demo-item">
-          <h4>Custom Position</h4>
+          <h4>{{ t('components.overlay.dialog.advanced.position.title') }}</h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -255,7 +237,7 @@
             >
               <magary-button
                 (buttonClick)="visiblePos = true"
-                label="Right"
+                [label]="t('components.overlay.dialog.advanced.position.button')"
                 severity="help"
                 icon="map-pin"
               ></magary-button>
@@ -263,7 +245,7 @@
           </magary-card>
 
           <magary-dialog
-            header="Posición Personalizada & Glass"
+            [header]="t('components.overlay.dialog.advanced.position.header')"
             [(visible)]="visiblePos"
             position="right"
             width="min(92vw, 32rem)"
@@ -276,15 +258,12 @@
             [draggable]="false"
             [glass]="true"
           >
-            <p>
-              Este diálogo usa <b>position="right"</b> y <b>glass="true"</b>. Ya
-              no necesitas estilos CSS manuales complejos.
-            </p>
+            <p>{{ t('components.overlay.dialog.advanced.position.content') }}</p>
           </magary-dialog>
         </div>
 
         <div class="demo-item">
-          <h4>Glass Effect</h4>
+          <h4>{{ t('components.overlay.dialog.advanced.glass.title') }}</h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -296,7 +275,7 @@
             >
               <magary-button
                 (buttonClick)="visibleGlass = true"
-                label="Glass Effect"
+                [label]="t('components.overlay.dialog.advanced.glass.button')"
                 severity="help"
                 icon="wand"
               ></magary-button>
@@ -304,7 +283,7 @@
           </magary-card>
 
           <magary-dialog
-            header="Glassmorphism Premium"
+            [header]="t('components.overlay.dialog.advanced.glass.header')"
             [(visible)]="visibleGlass"
             [glass]="true"
             width="min(92vw, 36rem)"
@@ -316,10 +295,7 @@
             [showSectionBorders]="false"
             [draggable]="false"
           >
-            <p>
-              Este diálogo utiliza el efecto <b>Glass</b> nativo. Combina
-              desenfoque de fondo con transparencia ajustada.
-            </p>
+            <p>{{ t('components.overlay.dialog.advanced.glass.content') }}</p>
           </magary-dialog>
         </div>
       </div>
@@ -330,16 +306,16 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="Draggable">
+          <magary-tab [label]="t('components.overlay.dialog.advanced.tabs.draggable')">
             <pre><code [highlight]="exampleDraggable" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="Resizable">
+          <magary-tab [label]="t('components.overlay.dialog.advanced.tabs.resizable')">
             <pre><code [highlight]="exampleResizable" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="Positioning">
+          <magary-tab [label]="t('components.overlay.dialog.advanced.tabs.positioning')">
             <pre><code [highlight]="examplePosition" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="Glass Effect">
+          <magary-tab [label]="t('components.overlay.dialog.advanced.tabs.glass')">
             <pre><code [highlight]="exampleGlass" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -347,19 +323,15 @@
     </div>
   </div>
 
-  <!-- Maximizable (Container) -->
   <div class="section">
     <div class="section-header">
-      <h2>Maximizable (Container)</h2>
-      <p>
-        El diálogo se renderiza dentro de este contenedor y se maximiza solo
-        aquí (usando <code>appendTo="local"</code>).
-      </p>
+      <h2>{{ t('components.overlay.dialog.container.title') }}</h2>
+      <p>{{ t('components.overlay.dialog.container.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Container Dialog</h4>
+          <h4>{{ t('components.overlay.dialog.container.cardTitle') }}</h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
@@ -390,14 +362,14 @@
               >
                 <magary-button
                   (buttonClick)="visibleInteractive = true"
-                  label="Show Maximizable"
+                  [label]="t('components.overlay.dialog.container.button')"
                   icon="maximize"
                 ></magary-button>
               </div>
 
               <magary-dialog
                 [(visible)]="visibleInteractive"
-                header="Container Dialog"
+                [header]="t('components.overlay.dialog.container.header')"
                 [draggable]="true"
                 [resizable]="true"
                 [maximizable]="true"
@@ -412,14 +384,14 @@
                 [showSectionBorders]="false"
                 styleClass="absolute-dialog-demo"
               >
-                <p>Soy libre, pero solo dentro de este contenedor.</p>
+                <p>{{ t('components.overlay.dialog.container.content') }}</p>
                 <div
                   slot="footer"
                   style="display: flex; justify-content: center; width: 100%"
                 >
                   <magary-button
                     (buttonClick)="visibleInteractive = false"
-                    label="Close"
+                    [label]="t('components.overlay.dialog.container.close')"
                     severity="info"
                   ></magary-button>
                 </div>
@@ -434,10 +406,10 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.overlay.dialog.container.tabs.html')">
             <pre><code [highlight]="exampleInteractive" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.overlay.dialog.container.tabs.ts')">
             <pre><code [highlight]="'visibleInteractive = false;'" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -445,174 +417,31 @@
     </div>
   </div>
 
-  <!-- Properties API -->
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente</p>
+      <h2>{{ t('components.overlay.dialog.api.title') }}</h2>
+      <p>{{ t('components.overlay.dialog.api.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Valor por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ t('components.overlay.dialog.api.header.name') }}</th>
+              <th>{{ t('components.overlay.dialog.api.header.type') }}</th>
+              <th>{{ t('components.overlay.dialog.api.header.default') }}</th>
+              <th>{{ t('components.overlay.dialog.api.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>header</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Título del diálogo.</td>
-            </tr>
-            <tr>
-              <td><code>visible</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>
-                Controla la visibilidad. <b>Importante:</b> Usar
-                <code>[(visible)]="var"</code> para que la variable se actualice
-                a <code>false</code> al cerrar. Si usas solo
-                <code>[visible]</code>, la variable quedará en
-                <code>true</code> desincronizada.
-              </td>
-            </tr>
-            <tr>
-              <td><code>modal</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Si es true, muestra una máscara que bloquea el fondo.</td>
-            </tr>
-            <tr>
-              <td><code>maximizable</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Habilita el botón y la funcionalidad de maximizar.</td>
-            </tr>
-            <tr>
-              <td><code>dismissableMask</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Si es true, cierra el diálogo al hacer click fuera.</td>
-            </tr>
-            <tr>
-              <td><code>closeOnEscape</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Si es true, permite cerrar el dialogo con la tecla Escape.</td>
-            </tr>
-            <tr>
-              <td><code>trapFocus</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Mantiene el foco de teclado dentro del dialogo mientras esta abierto.</td>
-            </tr>
-            <tr>
-              <td><code>autoFocus</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Enfoca automaticamente el primer elemento interactivo al abrir.</td>
-            </tr>
-            <tr>
-              <td><code>ariaLabel</code></td>
-              <td><code>string</code></td>
-              <td><code>'Dialog'</code></td>
-              <td>
-                Nombre accesible para lectores de pantalla cuando no se define
-                <code>header</code>.
-              </td>
-            </tr>
-            <tr>
-              <td><code>draggable</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Habilita el arrastre del diálogo desde el encabezado.</td>
-            </tr>
-            <tr>
-              <td><code>resizable</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Habilita el redimensionamiento del diálogo.</td>
-            </tr>
-            <tr>
-              <td><code>appendTo</code></td>
-              <td><code>'body' | 'local'</code></td>
-              <td><code>'body'</code></td>
-              <td>
-                Define dónde se adjunta el diálogo. 'local' permite restringirlo
-                a un contenedor relativo.
-              </td>
-            </tr>
-            <tr>
-              <td><code>position</code></td>
-              <td><code>string</code></td>
-              <td><code>'center'</code></td>
-              <td>
-                Posición del diálogo: 'center', 'top', 'bottom', 'left',
-                'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'.
-              </td>
-            </tr>
-            <tr>
-              <td><code>width</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Ancho del diálogo (ej. '50vw', '300px').</td>
-            </tr>
-            <tr>
-              <td><code>height</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Alto del diálogo (ej. '50vh', 'auto').</td>
-            </tr>
-            <tr>
-              <td><code>backgroundColor</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Color de fondo personalizado del dialogo.</td>
-            </tr>
-            <tr>
-              <td><code>headerBackground</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Color de fondo del encabezado.</td>
-            </tr>
-            <tr>
-              <td><code>contentBackground</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Color de fondo del contenido.</td>
-            </tr>
-            <tr>
-              <td><code>footerBackground</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Color de fondo del footer.</td>
-            </tr>
-            <tr>
-              <td><code>showBorder</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Muestra u oculta el borde externo del dialogo.</td>
-            </tr>
-            <tr>
-              <td><code>showSectionBorders</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Muestra u oculta las lineas separadoras entre header, content y footer.</td>
-            </tr>
-            <tr>
-              <td><code>glass</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>
-                Aplica un efecto de Glassmorphism (desenfoque y transparencia)
-                al diálogo.
-              </td>
-            </tr>
+            @for (row of inputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>

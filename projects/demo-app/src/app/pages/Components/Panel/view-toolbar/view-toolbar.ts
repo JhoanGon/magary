@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MagaryToolbar,
@@ -8,6 +8,15 @@ import {
   MagaryTab,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type ToolbarInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'app-view-toolbar',
@@ -25,6 +34,9 @@ import { Highlight } from 'ngx-highlightjs';
   styleUrl: './view-toolbar.scss',
 })
 export class ViewToolbar {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   codeBasic = `<magary-toolbar>
     <div start>
         <magary-button label="New" icon="plus" class="mr-2"></magary-button>
@@ -39,4 +51,19 @@ export class ViewToolbar {
         <magary-input placeholder="Search..." icon="search"></magary-input>
     </div>
 </magary-toolbar>`;
+
+  readonly inputRows: ToolbarInputRow[] = [
+    {
+      name: 'style',
+      type: 'object',
+      default: 'null',
+      descriptionKey: 'components.panel.toolbar.inputs.style.desc',
+    },
+    {
+      name: 'styleClass',
+      type: 'string',
+      default: 'null',
+      descriptionKey: 'components.panel.toolbar.inputs.styleClass.desc',
+    },
+  ];
 }

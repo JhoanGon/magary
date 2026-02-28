@@ -1,14 +1,12 @@
 <div class="container">
   <div class="header">
-    <h1>Toolbar</h1>
-    <p>
-      Toolbar es un componente de agrupación para botones y otros contenidos.
-    </p>
+    <h1>{{ t('components.panel.toolbar.title') }}</h1>
+    <p>{{ t('components.panel.toolbar.subtitle') }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>Importación</h2>
+      <h2>{{ t('components.panel.toolbar.import.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -19,27 +17,33 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Básico</h2>
-      <p>Toolbar con grupos start, center y end.</p>
+      <h2>{{ t('components.panel.toolbar.basic.title') }}</h2>
+      <p>{{ t('components.panel.toolbar.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-content">
         <magary-toolbar>
           <div start class="flex align-items-center gap-2">
-            <magary-button label="New" icon="plus"></magary-button>
             <magary-button
-              label="Upload"
+              [label]="t('components.panel.toolbar.basic.new')"
+              icon="plus"
+            ></magary-button>
+            <magary-button
+              [label]="t('components.panel.toolbar.basic.upload')"
               icon="upload"
               severity="secondary"
             ></magary-button>
           </div>
           <div center>
-            <span style="font-weight: 600; color: var(--text-secondary)"
-              >Gestión de Archivos</span
-            >
+            <span style="font-weight: 600; color: var(--text-secondary)">
+              {{ t('components.panel.toolbar.basic.centerTitle') }}
+            </span>
           </div>
           <div end class="flex align-items-center gap-2">
-            <magary-input placeholder="Search..." icon="search"></magary-input>
+            <magary-input
+              [placeholder]="t('components.panel.toolbar.basic.searchPlaceholder')"
+              icon="search"
+            ></magary-input>
             <magary-button
               icon="settings"
               severity="secondary"
@@ -54,7 +58,7 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.panel.toolbar.tabs.html')">
             <pre><code [highlight]="codeBasic" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
@@ -64,33 +68,29 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
+      <h2>{{ t('components.panel.toolbar.inputs.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Predeterminado</th>
-            <th>Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>style</code></td>
-            <td><code>object</code></td>
-            <td><code>null</code></td>
-            <td>Estilos en línea del componente.</td>
-          </tr>
-          <tr>
-            <td><code>styleClass</code></td>
-            <td><code>string</code></td>
-            <td><code>null</code></td>
-            <td>Clase CSS del componente.</td>
-          </tr>
-        </tbody>
+          <thead>
+            <tr>
+              <th>{{ t('components.panel.toolbar.table.header.name') }}</th>
+              <th>{{ t('components.panel.toolbar.table.header.type') }}</th>
+              <th>{{ t('components.panel.toolbar.table.header.default') }}</th>
+              <th>{{ t('components.panel.toolbar.table.header.description') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of inputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
+          </tbody>
         </table>
       </div>
     </div>

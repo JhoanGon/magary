@@ -11,7 +11,7 @@
   <div class="main-content">
     <!-- HEADER -->
     <div class="header">
-      <h1 class="main-title">Magary</h1>
+      <h1 class="main-title">{{ i18n.translateUi('brandName') }}</h1>
       <p class="subtitle">{{ i18n.translateUi('landingSubtitle') }}</p>
     </div>
 
@@ -25,7 +25,7 @@
         <div class="logo-inner">
           <img
             ngSrc="/assets/magary_logo.webp"
-            alt="Magary Logo"
+            [alt]="i18n.translateUi('logoAlt')"
             class="logo-img"
             width="220"
             height="320"

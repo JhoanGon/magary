@@ -1,14 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>Skeleton</h1>
-    <p>Skeleton is a placeholder to display a loading state.</p>
+    <h1>{{ t('components.misc.skeleton.title') }}</h1>
+    <p>{{ t('components.misc.skeleton.subtitle') }}</p>
   </div>
 
-  <!-- Import -->
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Import the component to use it in your application.</p>
+      <h2>{{ t('components.misc.skeleton.import.title') }}</h2>
+      <p>{{ t('components.misc.skeleton.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -17,11 +16,10 @@
     </div>
   </div>
 
-  <!-- Basic -->
   <div class="section">
     <div class="section-header">
-      <h2>Basic</h2>
-      <p>Basic usage with different dimensions.</p>
+      <h2>{{ t('components.misc.skeleton.basic.title') }}</h2>
+      <p>{{ t('components.misc.skeleton.basic.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="example-preview">
@@ -34,11 +32,10 @@
     </div>
   </div>
 
-  <!-- Shapes -->
   <div class="section">
     <div class="section-header">
-      <h2>Shapes</h2>
-      <p>Skeleton supports rectangle and circle shapes.</p>
+      <h2>{{ t('components.misc.skeleton.shapes.title') }}</h2>
+      <p>{{ t('components.misc.skeleton.shapes.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="example-preview">
@@ -55,11 +52,10 @@
     </div>
   </div>
 
-  <!-- Card Example -->
   <div class="section">
     <div class="section-header">
-      <h2>Card Example</h2>
-      <p>A complex example simulating a card loading state.</p>
+      <h2>{{ t('components.misc.skeleton.card.title') }}</h2>
+      <p>{{ t('components.misc.skeleton.card.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="example-preview">
@@ -95,60 +91,31 @@
     </div>
   </div>
 
-  <!-- API -->
   <div class="section">
     <div class="section-header">
-      <h2>API</h2>
-      <p>Properties and events available for the component.</p>
+      <h2>{{ t('components.misc.skeleton.api.title') }}</h2>
+      <p>{{ t('components.misc.skeleton.api.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Default</th>
-              <th>Description</th>
+              <th>{{ t('components.misc.skeleton.api.header.name') }}</th>
+              <th>{{ t('components.misc.skeleton.api.header.type') }}</th>
+              <th>{{ t('components.misc.skeleton.api.header.default') }}</th>
+              <th>{{ t('components.misc.skeleton.api.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>shape</td>
-              <td><code>string</code></td>
-              <td><code>rectangle</code></td>
-              <td>Shape of the element. Options: 'rectangle' | 'circle'.</td>
-            </tr>
-            <tr>
-              <td>size</td>
-              <td><code>string</code></td>
-              <td><code>null</code></td>
-              <td>Size of the element, shortcut for width and height.</td>
-            </tr>
-            <tr>
-              <td>width</td>
-              <td><code>string</code></td>
-              <td><code>100%</code></td>
-              <td>Width of the element.</td>
-            </tr>
-            <tr>
-              <td>height</td>
-              <td><code>string</code></td>
-              <td><code>1rem</code></td>
-              <td>Height of the element.</td>
-            </tr>
-            <tr>
-              <td>borderRadius</td>
-              <td><code>string</code></td>
-              <td><code>null</code></td>
-              <td>Border radius of the element.</td>
-            </tr>
-            <tr>
-              <td>animation</td>
-              <td><code>string</code></td>
-              <td><code>shimmer</code></td>
-              <td>Type of the animation. Options: 'shimmer' | 'none'.</td>
-            </tr>
+            @for (row of apiRows; track row.name) {
+              <tr>
+                <td>{{ row.name }}</td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>

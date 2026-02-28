@@ -1,18 +1,15 @@
 <div class="container fade-in">
   <div class="header">
-    <h1 class="fade-in">MagaryDivider</h1>
-    <p class="fade-in">
-      Separa contenido visualmente en los ejes vertical u horizontal.
-    </p>
+    <h1 class="fade-in">{{ t('components.misc.divider.title') }}</h1>
+    <p class="fade-in">{{ t('components.misc.divider.subtitle') }}</p>
   </div>
 
   <div class="content">
     <div class="components-grid">
-      <!-- Example 1: Basic Horizontal -->
       <div class="section">
         <div class="section-header">
-          <h2>Horizontal</h2>
-          <p>Divisor predeterminado para separación vertical de bloques.</p>
+          <h2>{{ t('components.misc.divider.horizontal.title') }}</h2>
+          <p>{{ t('components.misc.divider.horizontal.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -22,27 +19,15 @@
             [backgroundColor]="'var(--surface-0)'"
           >
             <div style="padding: 2rem">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
+              <p>{{ t('components.misc.divider.horizontal.paragraph1') }}</p>
               <magary-divider></magary-divider>
-              <p>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat.
-              </p>
+              <p>{{ t('components.misc.divider.horizontal.paragraph2') }}</p>
 
               <magary-divider type="dashed"></magary-divider>
-              <p>
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur.
-              </p>
+              <p>{{ t('components.misc.divider.horizontal.paragraph3') }}</p>
 
               <magary-divider type="dotted"></magary-divider>
-              <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium.
-              </p>
+              <p>{{ t('components.misc.divider.horizontal.paragraph4') }}</p>
             </div>
           </magary-card>
 
@@ -52,7 +37,7 @@
               [positionContent]="tabsConfig.positionContent"
               [background]="tabsConfig.background"
             >
-              <magary-tab label="HTML">
+              <magary-tab [label]="t('components.misc.divider.tabs.html')">
                 <pre><code [highlight]="exampleHTML" language="html"></code></pre>
               </magary-tab>
             </magary-tabs>
@@ -60,14 +45,10 @@
         </div>
       </div>
 
-      <!-- Example 2: With Content -->
       <div class="section">
         <div class="section-header">
-          <h2>Con Contenido</h2>
-          <p>
-            Puedes añadir texto o contenido que se alineará según la propiedad
-            <code>align</code>.
-          </p>
+          <h2>{{ t('components.misc.divider.content.title') }}</h2>
+          <p>{{ t('components.misc.divider.content.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -77,30 +58,30 @@
             [backgroundColor]="'var(--surface-0)'"
           >
             <div style="padding: 2rem">
-              <p>Contenido Superior</p>
+              <p>{{ t('components.misc.divider.content.top') }}</p>
               <magary-divider align="left">
                 <span style="display: flex; align-items: center; gap: 0.5rem">
-                  Izquierda
+                  {{ t('components.misc.divider.content.left') }}
                 </span>
               </magary-divider>
-              <p>Contenido Medio</p>
-              <magary-divider align="center">Centro</magary-divider>
-              <p>Contenido Inferior</p>
-              <magary-divider align="right">Derecha</magary-divider>
-              <p>Fin</p>
+              <p>{{ t('components.misc.divider.content.middle') }}</p>
+              <magary-divider align="center">{{
+                t('components.misc.divider.content.center')
+              }}</magary-divider>
+              <p>{{ t('components.misc.divider.content.bottom') }}</p>
+              <magary-divider align="right">{{
+                t('components.misc.divider.content.right')
+              }}</magary-divider>
+              <p>{{ t('components.misc.divider.content.end') }}</p>
             </div>
           </magary-card>
         </div>
       </div>
 
-      <!-- Example 3: Vertical -->
       <div class="section">
         <div class="section-header">
-          <h2>Vertical</h2>
-          <p>
-            Para usar un divisor vertical, el contenedor padre debe tener
-            <code>display: flex</code>.
-          </p>
+          <h2>{{ t('components.misc.divider.vertical.title') }}</h2>
+          <p>{{ t('components.misc.divider.vertical.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -118,13 +99,13 @@
                 height: 15rem;
               "
             >
-              <span>Opción 1</span>
+              <span>{{ t('components.misc.divider.vertical.option1') }}</span>
               <magary-divider layout="vertical"></magary-divider>
-              <span>Opción 2</span>
+              <span>{{ t('components.misc.divider.vertical.option2') }}</span>
               <magary-divider layout="vertical" type="dashed"
                 >OR</magary-divider
               >
-              <span>Opción 3</span>
+              <span>{{ t('components.misc.divider.vertical.option3') }}</span>
             </div>
           </magary-card>
 
@@ -134,7 +115,7 @@
               [positionContent]="tabsConfig.positionContent"
               [background]="tabsConfig.background"
             >
-              <magary-tab label="HTML">
+              <magary-tab [label]="t('components.misc.divider.tabs.html')">
                 <pre><code [highlight]="exampleVerticalHTML" language="html"></code></pre>
               </magary-tab>
             </magary-tabs>
@@ -142,44 +123,31 @@
         </div>
       </div>
 
-      <!-- API Inputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Propiedades (Inputs)</h2>
-          <p>Configuración del componente Divider.</p>
+          <h2>{{ t('components.misc.divider.api.title') }}</h2>
+          <p>{{ t('components.misc.divider.api.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Defecto</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.misc.divider.api.header.name') }}</th>
+                  <th>{{ t('components.misc.divider.api.header.type') }}</th>
+                  <th>{{ t('components.misc.divider.api.header.default') }}</th>
+                  <th>{{ t('components.misc.divider.api.header.description') }}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><code>layout</code></td>
-                  <td><code>"horizontal" | "vertical"</code></td>
-                  <td><code>"horizontal"</code></td>
-                  <td>Orientación del divisor.</td>
-                </tr>
-                <tr>
-                  <td><code>type</code></td>
-                  <td><code>"solid" | "dashed" | "dotted"</code></td>
-                  <td><code>"solid"</code></td>
-                  <td>Estilo de la línea.</td>
-                </tr>
-                <tr>
-                  <td><code>align</code></td>
-                  <td>
-                    <code>"left" | "center" | "right" | "top" | "bottom"</code>
-                  </td>
-                  <td><code>"center"</code></td>
-                  <td>Alineación del contenido.</td>
-                </tr>
+                @for (row of inputsConfig; track row.name) {
+                  <tr>
+                    <td><code>{{ row.name }}</code></td>
+                    <td><code>{{ row.type }}</code></td>
+                    <td><code>{{ row.default }}</code></td>
+                    <td>{{ t(row.descriptionKey) }}</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>

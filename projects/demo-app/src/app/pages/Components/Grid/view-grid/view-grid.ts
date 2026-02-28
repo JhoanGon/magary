@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MagaryGrid,
@@ -15,6 +15,8 @@ import {
 import { Highlight } from 'ngx-highlightjs';
 import { FormsModule } from '@angular/forms';
 import { GridStackOptions } from 'gridstack';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 
 type DashboardWidgetType =
   | 'stats'
@@ -30,13 +32,19 @@ interface BasicWidget {
   y: number;
   w: number;
   h: number;
-  content: string;
+  contentKey: DocsTextKey;
   noResize: boolean;
   noMove: boolean;
   locked: boolean;
 }
 
 interface DashboardTableRow {
+  id: number;
+  nameKey: DocsTextKey;
+  statusKey: DocsTextKey;
+}
+
+interface DashboardTableDisplayRow {
   id: number;
   name: string;
   status: string;
@@ -49,15 +57,15 @@ interface DashboardWidget {
   w: number;
   h: number;
   type: DashboardWidgetType;
-  title: string;
+  titleKey: DocsTextKey;
   value?: string;
   icon?: string;
   color?: string;
   trend?: string;
   images?: string[];
-  name?: string;
-  role?: string;
-  content?: string;
+  nameKey?: DocsTextKey;
+  roleKey?: DocsTextKey;
+  contentKey?: DocsTextKey;
   data?: DashboardTableRow[];
   src?: string;
 }
@@ -69,8 +77,15 @@ interface GalleryImage {
   w: number;
   h: number;
   src: string;
-  alt: string;
+  altKey: DocsTextKey;
 }
+
+type GridApiRow = {
+  component: string;
+  property: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
 
 const CODE_EXAMPLES = {
   import: `import { MagaryGrid, MagaryGridItem } from 'ng-magary';`,
@@ -208,7 +223,9 @@ const CODE_EXAMPLES = {
   styleUrl: './view-grid.scss',
 })
 export class ViewGrid {
-  // Examples Code
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   readonly importExample = CODE_EXAMPLES.import;
   readonly basicExample = CODE_EXAMPLES.basic;
   readonly basicTS = CODE_EXAMPLES.basicTS;
@@ -217,22 +234,20 @@ export class ViewGrid {
   readonly galleryHTML = CODE_EXAMPLES.galleryHTML;
   readonly galleryTS = CODE_EXAMPLES.galleryTS;
 
-  // 1. Basic Example Data
-  basicOptions: GridStackOptions = {
+  readonly basicOptions: GridStackOptions = {
     margin: 10,
     float: true,
     minRow: 1,
     cellHeight: 100,
   };
 
-  // 2. Data for Basic Usage (Static/Locked)
-  basicWidgets: BasicWidget[] = [
+  readonly basicWidgets: BasicWidget[] = [
     {
       x: 0,
       y: 0,
       w: 4,
       h: 2,
-      content: 'Widget A (No Resize)',
+      contentKey: 'components.grid.grid.basic.widgetA',
       noResize: true,
       noMove: false,
       locked: false,
@@ -242,7 +257,7 @@ export class ViewGrid {
       y: 0,
       w: 4,
       h: 2,
-      content: 'Widget B (No Move)',
+      contentKey: 'components.grid.grid.basic.widgetB',
       noResize: false,
       noMove: true,
       locked: false,
@@ -252,22 +267,21 @@ export class ViewGrid {
       y: 0,
       w: 4,
       h: 2,
-      content: 'Widget C (Locked & Static)',
+      contentKey: 'components.grid.grid.basic.widgetC',
       noResize: true,
       noMove: true,
       locked: true,
     },
   ];
 
-  // 3. Dashboard Example Data (Interactive)
-  dashboardOptions: GridStackOptions = {
+  readonly dashboardOptions: GridStackOptions = {
     margin: 10,
     cellHeight: 'auto',
     float: true,
     animate: true,
   };
 
-  dashboardWidgets = signal<DashboardWidget[]>([
+  readonly dashboardWidgets = signal<DashboardWidget[]>([
     {
       id: 'stats-users',
       x: 0,
@@ -275,7 +289,7 @@ export class ViewGrid {
       w: 3,
       h: 2,
       type: 'stats',
-      title: 'Total Users',
+      titleKey: 'components.grid.grid.dashboard.widget.totalUsers',
       value: '12,450',
       icon: 'users',
       color: 'primary',
@@ -288,7 +302,7 @@ export class ViewGrid {
       w: 3,
       h: 2,
       type: 'stats',
-      title: 'Revenue',
+      titleKey: 'components.grid.grid.dashboard.widget.revenue',
       value: '$45.2k',
       icon: 'dollar-sign',
       color: 'success',
@@ -301,7 +315,7 @@ export class ViewGrid {
       w: 3,
       h: 4,
       type: 'actions',
-      title: 'Quick Actions',
+      titleKey: 'components.grid.grid.dashboard.widget.quickActions',
     },
     {
       id: 'media-widget',
@@ -310,7 +324,7 @@ export class ViewGrid {
       w: 6,
       h: 2,
       type: 'media',
-      title: 'Media Gallery',
+      titleKey: 'components.grid.grid.dashboard.widget.mediaGallery',
       images: [
         'https://picsum.photos/id/10/300/200',
         'https://picsum.photos/id/11/300/200',
@@ -324,20 +338,19 @@ export class ViewGrid {
       w: 3,
       h: 4,
       type: 'profile',
-      title: 'Profile',
-      name: 'Admin User',
-      role: 'Administrator',
+      titleKey: 'components.grid.grid.dashboard.widget.profile',
+      nameKey: 'components.grid.grid.dashboard.widget.profileName',
+      roleKey: 'components.grid.grid.dashboard.widget.profileRole',
     },
   ]);
 
-  // Gallery Example Data
-  galleryOptions: GridStackOptions = {
+  readonly galleryOptions: GridStackOptions = {
     margin: 5,
     cellHeight: 150,
     float: true,
   };
 
-  galleryImages: GalleryImage[] = [
+  readonly galleryImages: GalleryImage[] = [
     {
       id: 'img1',
       x: 0,
@@ -345,7 +358,7 @@ export class ViewGrid {
       w: 4,
       h: 2,
       src: 'https://picsum.photos/id/1015/400/400',
-      alt: 'River',
+      altKey: 'components.grid.grid.gallery.alt.river',
     },
     {
       id: 'img2',
@@ -354,7 +367,7 @@ export class ViewGrid {
       w: 4,
       h: 2,
       src: 'https://picsum.photos/id/1016/400/400',
-      alt: 'Canyon',
+      altKey: 'components.grid.grid.gallery.alt.canyon',
     },
     {
       id: 'img3',
@@ -363,7 +376,7 @@ export class ViewGrid {
       w: 8,
       h: 2,
       src: 'https://picsum.photos/id/1018/800/400',
-      alt: 'Mountains',
+      altKey: 'components.grid.grid.gallery.alt.mountains',
     },
     {
       id: 'img4',
@@ -372,7 +385,7 @@ export class ViewGrid {
       w: 4,
       h: 1,
       src: 'https://picsum.photos/id/1019/800/400',
-      alt: 'Forest',
+      altKey: 'components.grid.grid.gallery.alt.forest',
     },
     {
       id: 'img5',
@@ -381,7 +394,7 @@ export class ViewGrid {
       w: 4,
       h: 2,
       src: 'https://picsum.photos/id/1020/400/400',
-      alt: 'Bear',
+      altKey: 'components.grid.grid.gallery.alt.bear',
     },
     {
       id: 'img6',
@@ -390,22 +403,97 @@ export class ViewGrid {
       w: 4,
       h: 1,
       src: 'https://picsum.photos/id/1019/800/400',
-      alt: 'Forest',
+      altKey: 'components.grid.grid.gallery.alt.forest',
     },
   ];
 
-  onGridChange(event: MagaryGridEvent) {}
+  readonly apiRows: GridApiRow[] = [
+    {
+      component: 'magary-grid',
+      property: 'options',
+      type: 'GridStackOptions',
+      descriptionKey: 'components.grid.grid.api.row.options.desc',
+    },
+    {
+      component: 'magary-grid',
+      property: 'change',
+      type: 'EventEmitter',
+      descriptionKey: 'components.grid.grid.api.row.change.desc',
+    },
+    {
+      component: 'magary-grid-item',
+      property: 'x, y, w, h',
+      type: 'number',
+      descriptionKey: 'components.grid.grid.api.row.coords.desc',
+    },
+    {
+      component: 'magary-grid-item',
+      property: 'noResize',
+      type: 'boolean',
+      descriptionKey: 'components.grid.grid.api.row.noResize.desc',
+    },
+    {
+      component: 'magary-grid-item',
+      property: 'noMove',
+      type: 'boolean',
+      descriptionKey: 'components.grid.grid.api.row.noMove.desc',
+    },
+    {
+      component: 'magary-grid-item',
+      property: 'locked',
+      type: 'boolean',
+      descriptionKey: 'components.grid.grid.api.row.locked.desc',
+    },
+  ];
 
-  // Table config
-  tableColumns: Array<{
-    field: keyof DashboardTableRow;
+  get tableColumns(): Array<{
+    field: keyof DashboardTableDisplayRow;
     header: string;
     sortable?: boolean;
-  }> = [
-    { field: 'id', header: 'ID', sortable: true },
-    { field: 'name', header: 'Name', sortable: true },
-    { field: 'status', header: 'Status' },
-  ];
+  }> {
+    return [
+      {
+        field: 'id',
+        header: this.t('components.grid.grid.table.header.id'),
+        sortable: true,
+      },
+      {
+        field: 'name',
+        header: this.t('components.grid.grid.table.header.name'),
+        sortable: true,
+      },
+      {
+        field: 'status',
+        header: this.t('components.grid.grid.table.header.status'),
+      },
+    ];
+  }
+
+  onGridChange(_event: MagaryGridEvent) {}
+
+  widgetTitle(widget: DashboardWidget): string {
+    return this.t(widget.titleKey);
+  }
+
+  widgetName(widget: DashboardWidget): string {
+    return widget.nameKey ? this.t(widget.nameKey) : '';
+  }
+
+  widgetRole(widget: DashboardWidget): string {
+    return widget.roleKey ? this.t(widget.roleKey) : '';
+  }
+
+  widgetContent(widget: DashboardWidget): string {
+    return widget.contentKey ? this.t(widget.contentKey) : '';
+  }
+
+  resolveTableData(rows: DashboardTableRow[]): DashboardTableDisplayRow[] {
+    return rows.map((row) => ({
+      id: row.id,
+      name: this.t(row.nameKey),
+      status: this.t(row.statusKey),
+    }));
+  }
 
   addWidget(type: 'card' | 'table' | 'image') {
     const id = `widget-${Date.now()}`;
@@ -416,7 +504,7 @@ export class ViewGrid {
       w: 4,
       h: 4,
       type: 'card',
-      title: 'Generic Card',
+      titleKey: 'components.grid.grid.dashboard.widget.genericCard',
     };
 
     switch (type) {
@@ -426,8 +514,8 @@ export class ViewGrid {
           w: 6,
           h: 3,
           type: 'card',
-          title: 'Generic Card',
-          content: 'This is a standard Magary Card.',
+          titleKey: 'components.grid.grid.dashboard.widget.genericCard',
+          contentKey: 'components.grid.grid.dashboard.widget.genericCardContent',
         };
         break;
       case 'table':
@@ -436,13 +524,33 @@ export class ViewGrid {
           w: 6,
           h: 5,
           type: 'table',
-          title: 'Data Table',
+          titleKey: 'components.grid.grid.dashboard.widget.dataTable',
           data: [
-            { id: 101, name: 'Project A', status: 'Active' },
-            { id: 102, name: 'Project B', status: 'Pending' },
-            { id: 103, name: 'Project C', status: 'Completed' },
-            { id: 104, name: 'Project D', status: 'Active' },
-            { id: 105, name: 'Project E', status: 'Delayed' },
+            {
+              id: 101,
+              nameKey: 'components.grid.grid.table.row.projectA',
+              statusKey: 'components.grid.grid.table.status.active',
+            },
+            {
+              id: 102,
+              nameKey: 'components.grid.grid.table.row.projectB',
+              statusKey: 'components.grid.grid.table.status.pending',
+            },
+            {
+              id: 103,
+              nameKey: 'components.grid.grid.table.row.projectC',
+              statusKey: 'components.grid.grid.table.status.completed',
+            },
+            {
+              id: 104,
+              nameKey: 'components.grid.grid.table.row.projectD',
+              statusKey: 'components.grid.grid.table.status.active',
+            },
+            {
+              id: 105,
+              nameKey: 'components.grid.grid.table.row.projectE',
+              statusKey: 'components.grid.grid.table.status.delayed',
+            },
           ],
         };
         break;
@@ -452,7 +560,7 @@ export class ViewGrid {
           w: 4,
           h: 4,
           type: 'image',
-          title: 'Single Image',
+          titleKey: 'components.grid.grid.dashboard.widget.singleImage',
           src: 'https://picsum.photos/600/400?random=' + Date.now(),
         };
         break;

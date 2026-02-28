@@ -1,6 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type TabInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
 @Component({
   selector: 'magary-view-tab',
   imports: [MagaryTabs, MagaryTab, Highlight],
@@ -8,6 +18,9 @@ import { Highlight } from 'ngx-highlightjs';
   styleUrl: './view-tab.scss',
 })
 export class ViewTab {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   importExample = "import { MagaryTabs, MagaryTab } from 'ng-magary';";
   exampleTab = `
   <magary-tabs
@@ -58,4 +71,55 @@ export class ViewTab {
     // ...
   })
   export class MyComponent {}`;
+
+  readonly inputRows: TabInputRow[] = [
+    {
+      name: 'lineColor',
+      type: 'string',
+      default: "'#06b6d4'",
+      descriptionKey: 'components.panel.tab.inputs.lineColor.desc',
+    },
+    {
+      name: 'activeBg',
+      type: 'string | null',
+      default: 'null',
+      descriptionKey: 'components.panel.tab.inputs.activeBg.desc',
+    },
+    {
+      name: 'activeText',
+      type: 'string | null',
+      default: 'null',
+      descriptionKey: 'components.panel.tab.inputs.activeText.desc',
+    },
+    {
+      name: 'hoverBg',
+      type: 'string | null',
+      default: 'null',
+      descriptionKey: 'components.panel.tab.inputs.hoverBg.desc',
+    },
+    {
+      name: 'positionContent',
+      type: 'string',
+      default: "'center'",
+      descriptionKey: 'components.panel.tab.inputs.positionContent.desc',
+    },
+    {
+      name: 'panelWidth',
+      type: "'auto' | 'full'",
+      default: "'full'",
+      descriptionKey: 'components.panel.tab.inputs.panelWidth.desc',
+    },
+    {
+      name: 'tabListAriaLabel',
+      type: 'string',
+      default: "'Tabs'",
+      descriptionKey: 'components.panel.tab.inputs.tabListAriaLabel.desc',
+    },
+    {
+      name: 'backgroundLine / activeTabBackground / activeTabTextColor',
+      type: 'string | null',
+      default: 'null',
+      descriptionKey: 'components.panel.tab.inputs.legacy.desc',
+    },
+  ];
 }

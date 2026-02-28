@@ -1,11 +1,12 @@
-﻿<div class="container">
+<div class="container">
   <div class="header">
-    <h1>MagaryTabs</h1>
+    <h1>{{ t('components.panel.tab.title') }}</h1>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone</p>
+      <h2>{{ t('components.panel.tab.import.title') }}</h2>
+      <p>{{ t('components.panel.tab.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -13,9 +14,10 @@
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo básico</h2>
+      <h2>{{ t('components.panel.tab.basic.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
@@ -26,21 +28,21 @@
           [hoverBg]="'#25364b'"
           [positionContent]="'flex-start'"
           [padding]="'2rem'"
-          tabListAriaLabel="Main sections"
+          [tabListAriaLabel]="t('components.panel.tab.basic.aria')"
         >
-          <magary-tab label="Inicio">
-            <h2>Bienvenido</h2>
-            <p>Contenido de la pestaña de inicio.</p>
+          <magary-tab [label]="t('components.panel.tab.basic.tab1')">
+            <h2>{{ t('components.panel.tab.basic.tab1Heading') }}</h2>
+            <p>{{ t('components.panel.tab.basic.tab1Body') }}</p>
           </magary-tab>
-          <magary-tab label="Perfil">
-            <h2>Tu perfil</h2>
-            <p>Detalles personales, ajustes, etc.</p>
+          <magary-tab [label]="t('components.panel.tab.basic.tab2')">
+            <h2>{{ t('components.panel.tab.basic.tab2Heading') }}</h2>
+            <p>{{ t('components.panel.tab.basic.tab2Body') }}</p>
           </magary-tab>
-          <magary-tab label="Ayuda">
-            <p>Aquí puedes encontrar asistencia.</p>
+          <magary-tab [label]="t('components.panel.tab.basic.tab3')">
+            <p>{{ t('components.panel.tab.basic.tab3Body') }}</p>
           </magary-tab>
-          <magary-tab label="Contacto">
-            <p>Aquí puedes encontrar los numeros de contacto.</p>
+          <magary-tab [label]="t('components.panel.tab.basic.tab4')">
+            <p>{{ t('components.panel.tab.basic.tab4Body') }}</p>
           </magary-tab>
         </magary-tabs>
       </div>
@@ -49,149 +51,81 @@
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente</p>
+      <h2>{{ t('components.panel.tab.inputs.title') }}</h2>
+      <p>{{ t('components.panel.tab.inputs.desc') }}</p>
     </div>
     <div class="section-content">
       <table class="api-table">
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Tipo</th>
-            <th>Valor por Defecto</th>
-            <th>Descripción</th>
+            <th>{{ t('components.panel.tab.table.header.name') }}</th>
+            <th>{{ t('components.panel.tab.table.header.type') }}</th>
+            <th>{{ t('components.panel.tab.table.header.default') }}</th>
+            <th>{{ t('components.panel.tab.table.header.description') }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><code>lineColor</code></td>
-            <td><code>string</code></td>
-            <td><code>'#06b6d4'</code></td>
-            <td>Color de la línea que indica la pestaña activa</td>
-          </tr>
-          <tr>
-            <td><code>activeBg</code></td>
-            <td><code>string | null</code></td>
-            <td><code>null</code></td>
-            <td>Color de fondo para la pestaña activa.</td>
-          </tr>
-          <tr>
-            <td><code>activeText</code></td>
-            <td><code>string | null</code></td>
-            <td><code>null</code></td>
-            <td>Color de texto para la pestaña activa.</td>
-          </tr>
-          <tr>
-            <td><code>hoverBg</code></td>
-            <td><code>string | null</code></td>
-            <td><code>null</code></td>
-            <td>Color de fondo al pasar el cursor sobre cada pestaña.</td>
-          </tr>
-          <tr>
-            <td><code>positionContent</code></td>
-            <td><code>string</code></td>
-            <td><code>'center'</code></td>
-            <td>
-              Posición del contenido, se utiliza los mismos que con
-              justify-content
-            </td>
-          </tr>
-          <tr>
-            <td><code>panelWidth</code></td>
-            <td><code>'auto' | 'full'</code></td>
-            <td><code>'full'</code></td>
-            <td>
-              Controla el ancho del panel activo. El valor por defecto
-              <code>'full'</code> evita huecos visuales y estira el contenido al
-              ancho disponible.
-            </td>
-          </tr>
-          <tr>
-            <td><code>tabListAriaLabel</code></td>
-            <td><code>string</code></td>
-            <td><code>'Tabs'</code></td>
-            <td>Etiqueta accesible para el contenedor <code>tablist</code>.</td>
-          </tr>
-          <tr>
-            <td>
-              <code>backgroundLine</code> / <code>activeTabBackground</code> /
-              <code>activeTabTextColor</code>
-            </td>
-            <td><code>string | null</code></td>
-            <td><code>null</code></td>
-            <td>
-              Inputs legacy soportados por compatibilidad (preferir
-              <code>lineColor</code>, <code>activeBg</code> y
-              <code>activeText</code>).
-            </td>
-          </tr>
+          @for (row of inputRows; track row.name) {
+            <tr>
+              <td><code>{{ row.name }}</code></td>
+              <td><code>{{ row.type }}</code></td>
+              <td><code>{{ row.default }}</code></td>
+              <td>{{ t(row.descriptionKey) }}</td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Eventos (Outputs)</h2>
-      <p>Eventos emitidos por el componente</p>
+      <h2>{{ t('components.panel.tab.outputs.title') }}</h2>
+      <p>{{ t('components.panel.tab.outputs.desc') }}</p>
     </div>
     <div class="section-content">
-      <p>
-        Este componente no emite eventos directamente, pero puedes reaccionar a
-        los cambios en las pestañas internas.
-      </p>
+      <p>{{ t('components.panel.tab.outputs.body') }}</p>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Contenido Esperado</h2>
-      <p>
-        Este componente espera recibir uno o más componentes
-        <code>&lt;magary-tab&gt;</code> como hijos.
-      </p>
+      <h2>{{ t('components.panel.tab.expected.title') }}</h2>
+      <p>{{ t('components.panel.tab.expected.desc') }}</p>
     </div>
     <div class="section-content">
       <ul>
-        <li>
-          Cada <code>&lt;magary-tab&gt;</code> debe tener una propiedad
-          <code>label</code>.
-        </li>
-        <li>
-          El contenido dentro de cada tab se mostrará solo cuando esté activa.
-        </li>
+        <li>{{ t('components.panel.tab.expected.item1') }}</li>
+        <li>{{ t('components.panel.tab.expected.item2') }}</li>
       </ul>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Accesibilidad</h2>
-      <p>Características de accesibilidad implementadas</p>
+      <h2>{{ t('components.panel.tab.a11y.title') }}</h2>
+      <p>{{ t('components.panel.tab.a11y.desc') }}</p>
     </div>
     <div class="section-content">
       <ul class="accessibility-list">
-        <li>
-          <strong>Teclado:</strong> Soporta Tab, ArrowLeft, ArrowRight, Home y
-          End
-        </li>
-        <li>
-          <strong>Activación:</strong> Las pestañas se activan con Enter o Click
-        </li>
-        <li><strong>Foco:</strong> Las pestañas muestran foco visual</li>
-        <li>
-          <strong>Semántica:</strong> Botones con estructura clara y etiquetas
-          visibles
-        </li>
+        <li>{{ t('components.panel.tab.a11y.keyboard') }}</li>
+        <li>{{ t('components.panel.tab.a11y.activation') }}</li>
+        <li>{{ t('components.panel.tab.a11y.focus') }}</li>
+        <li>{{ t('components.panel.tab.a11y.semantic') }}</li>
       </ul>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplos Completos</h2>
-      <p>Casos de uso comunes</p>
+      <h2>{{ t('components.panel.tab.examples.title') }}</h2>
+      <p>{{ t('components.panel.tab.examples.desc') }}</p>
     </div>
     <div class="section-content">
-      <h4>Pestañas Básicas</h4>
+      <h4>{{ t('components.panel.tab.examples.basic') }}</h4>
       <div class="code-block">
         <magary-tabs
           [lineColor]="'#ed2c44'"
@@ -200,12 +134,12 @@
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
           [heightLine]="'2px'"
-          tabListAriaLabel="Code samples"
+          [tabListAriaLabel]="t('components.panel.tab.examples.codeAria')"
         >
-          <magary-tab label="HTML">
+          <magary-tab [label]="t('components.panel.tab.tabs.html')">
             <pre><code [highlight]="exampleBasicHTML" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.panel.tab.tabs.ts')">
             <pre><code [highlight]="exampleBasicTS" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>

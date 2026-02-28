@@ -1,7 +1,20 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryTag, MagaryCard, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type TagInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'view-tag',
@@ -19,11 +32,41 @@ import { Highlight } from 'ngx-highlightjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewTag {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
     positionContent: 'flex-start' as const,
     background: '#282c34',
   };
+
+  readonly apiRows: TagInputRow[] = [
+    {
+      name: 'value',
+      type: 'string',
+      default: 'undefined',
+      descriptionKey: 'components.misc.tag.api.value.desc',
+    },
+    {
+      name: 'severity',
+      type: '"success" | "info" | "warning" | "danger" | "secondary" | "contrast"',
+      default: '"info"',
+      descriptionKey: 'components.misc.tag.api.severity.desc',
+    },
+    {
+      name: 'rounded',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.misc.tag.api.rounded.desc',
+    },
+    {
+      name: 'icon',
+      type: 'string',
+      default: 'undefined',
+      descriptionKey: 'components.misc.tag.api.icon.desc',
+    },
+  ];
 
   readonly exampleHTML = `
 <!-- Basic -->

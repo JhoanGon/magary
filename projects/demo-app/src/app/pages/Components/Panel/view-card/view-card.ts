@@ -8,6 +8,9 @@ import {
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { LucideAngularModule } from 'lucide-angular';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
 const CODE_EXAMPLES = {
   BASIC_CARD: `
   <magary-card
@@ -45,6 +48,20 @@ const CODE_EXAMPLES = {
     </div>
   </magary-card>`,
 } as const;
+
+type CardInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
+
+type CardEventRow = {
+  name: string;
+  type: string;
+  descriptionKey: DocsTextKey;
+};
+
 @Component({
   selector: 'magary-view-card',
   imports: [
@@ -60,14 +77,19 @@ const CODE_EXAMPLES = {
 })
 export class ViewCard {
   private toastService: MagaryToastService = inject(MagaryToastService);
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   lastClickedCard = '';
   showAlert = false;
   alertMessage = '';
   alertType: 'success' | 'warning' | 'error' | 'info' = 'success';
+
   readonly importExample = "import { MagaryCard } from 'ng-magary';";
   readonly exampleBasic = CODE_EXAMPLES.BASIC_CARD;
   readonly exampleImageTop = CODE_EXAMPLES.IMAGE_TOP;
-  exampleImageRight = `
+
+  readonly exampleImageRight = `
   <magary-card
     [img]="'/assets/Magary.png'"
     [positionImage]="'right'"
@@ -89,7 +111,8 @@ export class ViewCard {
       <magary-button label="Click" severity="primary"></magary-button>
     </div>
   </magary-card>`;
-  exampleAdvanced1 = `
+
+  readonly exampleAdvanced1 = `
   <magary-card
     [width]="'280px'"
     [height]="'300px'"
@@ -104,10 +127,11 @@ export class ViewCard {
     </div>
     <p>Esta tarjeta tiene una altura fija de 300px y padding personalizado.</p>
     <div slot="footer">
-      <magary-button label="Acción" severity="secondary"></magary-button>
+      <magary-button label="Accion" severity="secondary"></magary-button>
     </div>
   </magary-card>`;
-  exampleAdvanced2 = `
+
+  readonly exampleAdvanced2 = `
   <magary-card
     [img]="'/assets/Magary.png'"
     [positionImage]="'top'"
@@ -124,10 +148,11 @@ export class ViewCard {
     </div>
     <p>La imagen se ajusta completamente sin recortes.</p>
     <div slot="footer">
-      <magary-button label="Ver más" severity="primary"></magary-button>
+      <magary-button label="Ver mas" severity="primary"></magary-button>
     </div>
   </magary-card>`;
-  exampleStates1 = `
+
+  readonly exampleStates1 = `
   <magary-card
     [width]="'280px'"
     [shadow]="2"
@@ -140,10 +165,11 @@ export class ViewCard {
     </div>
     <p>Esta tarjeta responde a clicks y eventos de teclado.</p>
     <div slot="footer">
-      <span style="color: #0066cc;">Haz click aquí</span>
+      <span style="color: #0066cc;">Haz click aqui</span>
     </div>
   </magary-card>`;
-  exampleStates2 = `
+
+  readonly exampleStates2 = `
   <magary-card
     [width]="'280px'"
     [shadow]="2"
@@ -160,7 +186,8 @@ export class ViewCard {
       <magary-button label="Procesar" severity="primary"></magary-button>
     </div>
   </magary-card>`;
-  exampleVariants = `
+
+  readonly exampleVariants = `
   <!-- Variant Outlined -->
   <magary-card
     [width]="'280px'"
@@ -173,7 +200,7 @@ export class ViewCard {
     </div>
     <p>Tarjeta con borde y sin sombra.</p>
     <div slot="footer">
-      <magary-button label="Acción" severity="primary"></magary-button>
+      <magary-button label="Accion" severity="primary"></magary-button>
     </div>
   </magary-card>
   <!-- Variant Filled -->
@@ -189,10 +216,11 @@ export class ViewCard {
     </div>
     <p>Tarjeta con fondo gris, sin sombra y borde personalizado.</p>
     <div slot="footer">
-      <magary-button label="Acción" severity="secondary"></magary-button>
+      <magary-button label="Accion" severity="secondary"></magary-button>
     </div>
   </magary-card>`;
-  exampleEvents = `
+
+  readonly exampleEvents = `
   <!-- En el template -->
   <magary-card
     [clickable]="true"
@@ -207,22 +235,24 @@ export class ViewCard {
   onCardClick(event: CustomEvent) {
     console.log('Card clicked!', event.detail);
   }`;
-  exampleNotifications = `
+
+  readonly exampleNotifications = `
   onCardClick(event: Event): void {
     try {
       const customEvent = event as CustomEvent;
-      this.showToastNotification('¡Card clickeada exitosamente!');
+      this.showToastNotification('Card clickeada exitosamente!');
       this.showToastNotification('Card Interactive: Has clickeado una tarjeta de Magary', 'success');
     } catch (error) {
       console.warn('Error handling card click:', error);
       this.showToastNotification('Error al procesar el click', 'error');
     }
   }`;
-  exampleNotificationsTS = `
+
+  readonly exampleNotificationsTS = `
   private showToastNotification(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'success'): void {
     this.toastService.add({
       type: type,
-      title: type === 'success' ? 'Éxito' : type === 'error' ? 'Error' : type === 'warning' ? 'Alerta' : 'Información',
+      title: type === 'success' ? 'Exito' : type === 'error' ? 'Error' : type === 'warning' ? 'Alerta' : 'Informacion',
       message: message,
       duration: 3000,
     });
@@ -230,20 +260,21 @@ export class ViewCard {
   onDemoButtonClick(action: string): void {
     switch (action) {
       case 'success':
-        this.showToastNotification('¡Acción exitosa!', 'success');
+        this.showToastNotification('Accion exitosa!', 'success');
         break;
       case 'error':
-        this.showToastNotification('¡Error en la acción!', 'error');
+        this.showToastNotification('Error en la accion!', 'error');
         break;
       case 'info':
-        this.showToastNotification('Información importante', 'info');
+        this.showToastNotification('Informacion importante', 'info');
         break;
       case 'warning':
         this.showToastNotification('Alerta importante', 'warning');
         break;
     }
   }`;
-  exampleNotificationsHTML = `
+
+  readonly exampleNotificationsHTML = `
   <!-- El contenedor <magary-toast> vive en el layout global -->
 
   <!-- Uso con MagaryButton dentro de Cards -->
@@ -251,7 +282,7 @@ export class ViewCard {
     <div slot="header">
       <h3>Success Actions</h3>
     </div>
-    <p>Estas acciones muestran notificaciones de éxito cuando se completan correctamente.</p>
+    <p>Estas acciones muestran notificaciones de exito cuando se completan correctamente.</p>
     <div slot="footer">
       <magary-button
         label="Success Toast"
@@ -262,13 +293,126 @@ export class ViewCard {
     </div>
   </magary-card>`;
 
-  onCardClick(event: Event): void {
+  readonly inputRows: CardInputRow[] = [
+    { name: 'img', type: 'string', default: 'undefined', descriptionKey: 'components.panel.card.inputs.img.desc' },
+    {
+      name: 'positionImage',
+      type: "'left' | 'right' | 'top' | 'bottom'",
+      default: "'top'",
+      descriptionKey: 'components.panel.card.inputs.positionImage.desc',
+    },
+    { name: 'shadow', type: 'number', default: '1', descriptionKey: 'components.panel.card.inputs.shadow.desc' },
+    { name: 'width', type: 'string', default: "'250px'", descriptionKey: 'components.panel.card.inputs.width.desc' },
+    { name: 'padding', type: 'string', default: "'1rem'", descriptionKey: 'components.panel.card.inputs.padding.desc' },
+    { name: 'gap', type: 'string', default: "'1rem'", descriptionKey: 'components.panel.card.inputs.gap.desc' },
+    {
+      name: 'borderRadius',
+      type: 'string',
+      default: "'0.75rem'",
+      descriptionKey: 'components.panel.card.inputs.borderRadius.desc',
+    },
+    {
+      name: 'imageSize',
+      type: 'string',
+      default: "'500px'",
+      descriptionKey: 'components.panel.card.inputs.imageSize.desc',
+    },
+    {
+      name: 'backgroundColor',
+      type: 'string',
+      default: "'#fff'",
+      descriptionKey: 'components.panel.card.inputs.backgroundColor.desc',
+    },
+    { name: 'height', type: 'string', default: "'auto'", descriptionKey: 'components.panel.card.inputs.height.desc' },
+    {
+      name: 'responsive',
+      type: 'boolean',
+      default: 'true',
+      descriptionKey: 'components.panel.card.inputs.responsive.desc',
+    },
+    {
+      name: 'altText',
+      type: 'string',
+      default: "'Card image'",
+      descriptionKey: 'components.panel.card.inputs.altText.desc',
+    },
+    {
+      name: 'imageFit',
+      type: "'cover' | 'contain' | 'fill' | 'scale-down' | 'none'",
+      default: "'cover'",
+      descriptionKey: 'components.panel.card.inputs.imageFit.desc',
+    },
+    {
+      name: 'clickable',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.panel.card.inputs.clickable.desc',
+    },
+    {
+      name: 'loading',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.panel.card.inputs.loading.desc',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.panel.card.inputs.disabled.desc',
+    },
+    {
+      name: 'variant',
+      type: "'elevated' | 'outlined' | 'filled'",
+      default: "'elevated'",
+      descriptionKey: 'components.panel.card.inputs.variant.desc',
+    },
+    {
+      name: 'loadingText',
+      type: 'string',
+      default: "'Cargando...'",
+      descriptionKey: 'components.panel.card.inputs.loadingText.desc',
+    },
+    {
+      name: 'hoverEffect',
+      type: 'boolean',
+      default: 'true',
+      descriptionKey: 'components.panel.card.inputs.hoverEffect.desc',
+    },
+    {
+      name: 'border',
+      type: 'string',
+      default: 'undefined',
+      descriptionKey: 'components.panel.card.inputs.border.desc',
+    },
+    {
+      name: 'badge',
+      type: 'string',
+      default: 'undefined',
+      descriptionKey: 'components.panel.card.inputs.badge.desc',
+    },
+    {
+      name: 'badgeColor',
+      type: 'string',
+      default: "'var(--primary-500)'",
+      descriptionKey: 'components.panel.card.inputs.badgeColor.desc',
+    },
+  ];
+
+  readonly eventRows: CardEventRow[] = [
+    {
+      name: 'cardClick',
+      type: 'CustomEvent',
+      descriptionKey: 'components.panel.card.events.cardClick.desc',
+    },
+  ];
+
+  onCardClick(_: Event): void {
     try {
-      this.lastClickedCard = `Card clickeada a las ${new Date().toLocaleTimeString()}`;
-      this.showToastNotification('¡Card clickeada exitosamente!');
+      this.lastClickedCard = `${this.t('components.panel.card.status.clickedAt')} ${new Date().toLocaleTimeString()}`;
+      this.showToastNotification(this.t('components.panel.card.toast.cardClicked'));
       this.showNotificationIfAllowed();
-    } catch (error: unknown) {
-      this.showToastNotification('Error al procesar el click', 'error');
+    } catch {
+      this.showToastNotification(this.t('components.panel.card.toast.cardError'), 'error');
     }
   }
 
@@ -276,17 +420,17 @@ export class ViewCard {
     message: string,
     type: 'success' | 'error' | 'info' | 'warning' = 'success',
   ): void {
+    const titleByType: Record<'success' | 'error' | 'info' | 'warning', string> = {
+      success: this.t('components.panel.card.toast.successTitle'),
+      error: this.t('components.panel.card.toast.errorTitle'),
+      warning: this.t('components.panel.card.toast.warningTitle'),
+      info: this.t('components.panel.card.toast.infoTitle'),
+    };
+
     this.toastService.add({
-      type: type,
-      title:
-        type === 'success'
-          ? 'Éxito'
-          : type === 'error'
-            ? 'Error'
-            : type === 'warning'
-              ? 'Alerta'
-              : 'Información',
-      message: message,
+      type,
+      title: titleByType[type],
+      message,
       duration: 3000,
     });
   }
@@ -294,31 +438,37 @@ export class ViewCard {
   closeAlert(): void {
     this.showAlert = false;
   }
+
   onDemoButtonClick(action: string): void {
     switch (action) {
       case 'success':
-        this.showToastNotification('¡Acción exitosa!', 'success');
+        this.showToastNotification(this.t('components.panel.card.toast.actionSuccess'), 'success');
         break;
       case 'error':
-        this.showToastNotification('¡Error en la acción!', 'error');
+        this.showToastNotification(this.t('components.panel.card.toast.actionError'), 'error');
         break;
       case 'info':
-        this.showToastNotification('Información importante', 'info');
+        this.showToastNotification(this.t('components.panel.card.toast.actionInfo'), 'info');
         break;
       case 'warning':
-        this.showToastNotification('Alerta importante', 'warning');
+        this.showToastNotification(this.t('components.panel.card.toast.actionWarning'), 'warning');
         break;
     }
   }
+
   private showNotificationIfAllowed(): void {
     if (!('Notification' in window)) return;
+
     if (Notification.permission === 'granted') {
-      new Notification('Card clickeada!', {
-        body: 'Has hecho click en una tarjeta de Magary',
+      new Notification(this.t('components.panel.card.notification.title'), {
+        body: this.t('components.panel.card.notification.body'),
         icon: '/assets/Magary.png',
         tag: 'magary-card-click',
       });
-    } else if (Notification.permission !== 'denied') {
+      return;
+    }
+
+    if (Notification.permission !== 'denied') {
       Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
           this.showNotificationIfAllowed();

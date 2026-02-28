@@ -1,18 +1,15 @@
 <div class="container fade-in">
   <div class="header">
-    <h1 class="fade-in">MagaryTooltip</h1>
-    <p class="fade-in">
-      Directiva para mostrar información contextual flotante.
-    </p>
+    <h1 class="fade-in">{{ t('components.overlay.tooltip.title') }}</h1>
+    <p class="fade-in">{{ t('components.overlay.tooltip.subtitle') }}</p>
   </div>
 
   <div class="content">
     <div class="components-grid">
-      <!-- Import -->
       <div class="section">
         <div class="section-header">
-          <h2>Importar</h2>
-          <p>Módulos necesarios para utilizar este componente.</p>
+          <h2>{{ t('components.overlay.tooltip.import.title') }}</h2>
+          <p>{{ t('components.overlay.tooltip.import.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="code-block">
@@ -29,28 +26,23 @@
             "
           >
             <p style="margin: 0; color: var(--text-secondary)">
-              <strong>Nota:</strong> Para que el Tooltip se visualice
-              correctamente, agrega este import global en tu
-              <code>styles.scss</code>:
+              <strong>{{ t('components.overlay.tooltip.import.noteTitle') }}:</strong>
+              {{ t('components.overlay.tooltip.import.noteBody') }}
             </p>
             <div class="code-block" style="margin-top: 0.5rem">
               <pre><code [highlight]="tooltipGlobalStylesRef" language="scss"></code></pre>
             </div>
             <p style="margin-top: 0.5rem; color: var(--text-secondary)">
-              Esta directiva renderiza el overlay en <code>document.body</code>,
-              por eso requiere estilos globales.
+              {{ t('components.overlay.tooltip.import.noteFooter') }}
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Example 1: Positions -->
       <div class="section">
         <div class="section-header">
-          <h2>Posicionamiento</h2>
-          <p>
-            Soporta las 4 direcciones principales: top, bottom, left, right.
-          </p>
+          <h2>{{ t('components.overlay.tooltip.position.title') }}</h2>
+          <p>{{ t('components.overlay.tooltip.position.desc') }}</p>
         </div>
         <div class="section-content">
           <magary-card
@@ -69,8 +61,8 @@
               "
             >
               <magary-input
-                placeholder="Hover Input!"
-                magaryTooltip="Username required"
+                [placeholder]="t('components.overlay.tooltip.position.inputPlaceholder')"
+                [magaryTooltip]="t('components.overlay.tooltip.position.inputTooltip')"
                 style="max-width: 250px"
               ></magary-input>
 
@@ -83,23 +75,23 @@
                 "
               >
                 <magary-button
-                  label="Top"
-                  magaryTooltip="Tooltip on Top"
+                  [label]="t('components.overlay.tooltip.position.top')"
+                  [magaryTooltip]="t('components.overlay.tooltip.position.topTip')"
                   tooltipPosition="top"
                 ></magary-button>
                 <magary-button
-                  label="Bottom"
-                  magaryTooltip="Tooltip on Bottom"
+                  [label]="t('components.overlay.tooltip.position.bottom')"
+                  [magaryTooltip]="t('components.overlay.tooltip.position.bottomTip')"
                   tooltipPosition="bottom"
                 ></magary-button>
                 <magary-button
-                  label="Left"
-                  magaryTooltip="Tooltip on Left"
+                  [label]="t('components.overlay.tooltip.position.left')"
+                  [magaryTooltip]="t('components.overlay.tooltip.position.leftTip')"
                   tooltipPosition="left"
                 ></magary-button>
                 <magary-button
-                  label="Right"
-                  magaryTooltip="Tooltip on Right"
+                  [label]="t('components.overlay.tooltip.position.right')"
+                  [magaryTooltip]="t('components.overlay.tooltip.position.rightTip')"
                   tooltipPosition="right"
                 ></magary-button>
               </div>
@@ -112,7 +104,7 @@
               [positionContent]="tabsConfig.positionContent"
               [background]="tabsConfig.background"
             >
-              <magary-tab label="HTML">
+              <magary-tab [label]="t('components.overlay.tooltip.tabs.html')">
                 <pre><code [highlight]="exampleHTML" language="html"></code></pre>
               </magary-tab>
             </magary-tabs>
@@ -120,42 +112,33 @@
         </div>
       </div>
 
-      <!-- API Inputs -->
       <div class="section">
         <div class="section-header">
-          <h2>Propiedades (Inputs)</h2>
-          <p>Configuración de la directiva.</p>
+          <h2>{{ t('components.overlay.tooltip.api.title') }}</h2>
+          <p>{{ t('components.overlay.tooltip.api.desc') }}</p>
         </div>
         <div class="section-content">
           <div class="table-wrapper">
             <table class="api-table">
               <thead>
                 <tr>
-                  <th>Nombre</th>
-                  <th>Tipo</th>
-                  <th>Defecto</th>
-                  <th>Descripción</th>
+                  <th>{{ t('components.overlay.tooltip.api.header.name') }}</th>
+                  <th>{{ t('components.overlay.tooltip.api.header.type') }}</th>
+                  <th>{{ t('components.overlay.tooltip.api.header.default') }}</th>
+                  <th>
+                    {{ t('components.overlay.tooltip.api.header.description') }}
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><code>magaryTooltip</code></td>
-                  <td><code>string</code></td>
-                  <td><code>undefined</code></td>
-                  <td>Texto a mostrar en el tooltip.</td>
-                </tr>
-                <tr>
-                  <td><code>tooltipPosition</code></td>
-                  <td><code>"top" | "bottom" | "left" | "right"</code></td>
-                  <td><code>"top"</code></td>
-                  <td>Posición relativa al elemento.</td>
-                </tr>
-                <tr>
-                  <td><code>tooltipDisabled</code></td>
-                  <td><code>boolean</code></td>
-                  <td><code>false</code></td>
-                  <td>Deshabilita la aparicion del tooltip.</td>
-                </tr>
+                @for (row of inputRows; track row.name) {
+                  <tr>
+                    <td><code>{{ row.name }}</code></td>
+                    <td><code>{{ row.type }}</code></td>
+                    <td><code>{{ row.default }}</code></td>
+                    <td>{{ t(row.descriptionKey) }}</td>
+                  </tr>
+                }
               </tbody>
             </table>
           </div>
@@ -164,5 +147,3 @@
     </div>
   </div>
 </div>
-
-

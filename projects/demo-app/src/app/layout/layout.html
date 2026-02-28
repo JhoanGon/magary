@@ -2,9 +2,9 @@
   <magary-sidebar
     [sections]="sidebarSections()"
     [showUserSection]="true"
-    [userName]="'Juan Perez'"
-    [userEmail]="'juan@empresa.com'"
-    [appTitle]="'Magary'"
+    [userName]="i18n.translateUi('demoUserName')"
+    [userEmail]="i18n.translateUi('demoUserEmail')"
+    [appTitle]="i18n.translateUi('brandName')"
     [logoSrc]="'/assets/magary_logo.webp'"
     [showLogo]="true"
     [showBrandLogo]="true"
@@ -35,7 +35,10 @@
   <main class="main-container">
     <header class="top-bar">
       <div class="app-branding" routerLink="/" style="cursor: pointer">
-        Magary <span class="highlight">{{ i18n.translateUi('demoBadge') }} v{{ version }}</span>
+        {{ i18n.translateUi("brandName") }}
+        <span class="highlight"
+          >{{ i18n.translateUi("demoBadge") }} v{{ version }}</span
+        >
       </div>
 
       <div class="top-actions">
@@ -64,6 +67,7 @@
             variant="outlined"
             [rounded]="true"
             [iconSize]="17"
+            size="small"
             (buttonClick)="pwaService.install()"
             styleClass="pwa-install-btn"
           ></magary-button>

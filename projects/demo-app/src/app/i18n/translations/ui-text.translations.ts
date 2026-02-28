@@ -2,6 +2,10 @@ import { DemoLanguage } from '../types';
 
 export const UI_TEXT = {
   es: {
+    brandName: 'Magary',
+    logoAlt: 'Logo de Magary',
+    demoUserName: 'Juan Perez',
+    demoUserEmail: 'juan@empresa.com',
     demoBadge: 'Demo Alfa',
     installApp: 'Instalar app',
     landingSubtitle: 'Componentes modernos para Angular',
@@ -12,6 +16,10 @@ export const UI_TEXT = {
     closeSidebarLabel: 'Cerrar menu lateral',
   },
   en: {
+    brandName: 'Magary',
+    logoAlt: 'Magary Logo',
+    demoUserName: 'Juan Perez',
+    demoUserEmail: 'juan@empresa.com',
     demoBadge: 'Demo Alpha',
     installApp: 'Install app',
     landingSubtitle: 'Modern Angular Components',

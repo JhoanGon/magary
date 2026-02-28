@@ -1,7 +1,20 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryDivider, MagaryCard, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type DividerInputRow = {
+  name: string;
+  type: string;
+  default: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'view-divider',
@@ -19,12 +32,35 @@ import { Highlight } from 'ngx-highlightjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewDivider {
-  // Config for tabs in code blocks
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
     positionContent: 'flex-start' as const,
     background: '#282c34',
   };
+
+  readonly inputsConfig: DividerInputRow[] = [
+    {
+      name: 'layout',
+      type: '"horizontal" | "vertical"',
+      default: '"horizontal"',
+      descriptionKey: 'components.misc.divider.api.layout.desc',
+    },
+    {
+      name: 'type',
+      type: '"solid" | "dashed" | "dotted"',
+      default: '"solid"',
+      descriptionKey: 'components.misc.divider.api.type.desc',
+    },
+    {
+      name: 'align',
+      type: '"left" | "center" | "right" | "top" | "bottom"',
+      default: '"center"',
+      descriptionKey: 'components.misc.divider.api.align.desc',
+    },
+  ];
 
   readonly exampleHTML = `
 <!-- Horizontal (Default) -->

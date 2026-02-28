@@ -8,6 +8,16 @@ import {
   MagaryTab,
 } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
+import { inject } from '@angular/core';
+import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
+import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+
+type AccordionRow = {
+  name: string;
+  type: string;
+  default?: string;
+  descriptionKey: DocsTextKey;
+};
 
 @Component({
   selector: 'view-accordion',
@@ -26,6 +36,9 @@ import { Highlight } from 'ngx-highlightjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewAccordion {
+  readonly i18n = inject(DemoI18nService);
+  readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
+
   // Config for tabs
   readonly tabsConfig = {
     backgroundLine: '#ed2c44',
@@ -88,6 +101,49 @@ export class ViewAccordion {
     </magary-accordion-tab>
 </magary-accordion>
 `;
+
+  readonly accordionRows: AccordionRow[] = [
+    {
+      name: 'multiple',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.panel.accordion.inputs.multiple.desc',
+    },
+  ];
+
+  readonly tabRows: AccordionRow[] = [
+    {
+      name: 'header',
+      type: 'string',
+      default: 'undefined',
+      descriptionKey: 'components.panel.accordion.inputs.header.desc',
+    },
+    {
+      name: 'disabled',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.panel.accordion.inputs.disabled.desc',
+    },
+    {
+      name: 'selected',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.panel.accordion.inputs.selected.desc',
+    },
+  ];
+
+  readonly outputRows: AccordionRow[] = [
+    {
+      name: 'onOpen',
+      type: 'EventEmitter',
+      descriptionKey: 'components.panel.accordion.outputs.onOpen.desc',
+    },
+    {
+      name: 'onClose',
+      type: 'EventEmitter',
+      descriptionKey: 'components.panel.accordion.outputs.onClose.desc',
+    },
+  ];
 
   onTabClose(event: unknown) {
     console.log('Tab Closed', event);

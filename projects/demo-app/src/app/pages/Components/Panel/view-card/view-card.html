@@ -1,11 +1,12 @@
 <div class="container">
   <div class="header">
-    <h1>MagaryCard</h1>
+    <h1>{{ t('components.panel.card.title') }}</h1>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Import</h2>
-      <p>Importa el componente en tu módulo o componente standalone</p>
+      <h2>{{ t('components.panel.card.import.title') }}</h2>
+      <p>{{ t('components.panel.card.import.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -13,14 +14,15 @@
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo básico</h2>
+      <h2>{{ t('components.panel.card.basic.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Default</h4>
+          <h4>{{ t('components.panel.card.basic.variant') }}</h4>
           <magary-card
             [width]="'300px'"
             [shadow]="3"
@@ -28,14 +30,11 @@
             [backgroundColor]="'var(--surface-0)'"
           >
             <div slot="header">
-              <h3 class="card-title">Basic Card</h3>
+              <h3 class="card-title">{{ t('components.panel.card.basic.header') }}</h3>
             </div>
-            <p class="card-text">
-              A simple card with a clean layout, perfect for displaying content
-              in a structured way.
-            </p>
+            <p class="card-text">{{ t('components.panel.card.basic.body') }}</p>
             <div slot="footer">
-              <magary-button label="Explore" severity="primary"></magary-button>
+              <magary-button [label]="t('components.panel.card.basic.button')" severity="primary"></magary-button>
             </div>
           </magary-card>
         </div>
@@ -45,18 +44,17 @@
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplo con imagen</h2>
+      <h2>{{ t('components.panel.card.image.title') }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Imagen Arriba</h4>
+          <h4>{{ t('components.panel.card.image.topVariant') }}</h4>
           <magary-card
-            [img]="
-              'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60'
-            "
+            [img]="'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60'"
             [positionImage]="'top'"
             [imageSize]="'200px'"
             [width]="'300px'"
@@ -67,27 +65,23 @@
             [imageFit]="'cover'"
           >
             <div slot="header">
-              <h3 class="card-title">Artistic Vision</h3>
+              <h3 class="card-title">{{ t('components.panel.card.image.topHeader') }}</h3>
             </div>
-            <p class="card-text">
-              Discover the beauty of abstract art and how it influences modern
-              design trends.
-            </p>
+            <p class="card-text">{{ t('components.panel.card.image.topBody') }}</p>
             <div slot="footer">
               <magary-button
-                label="View Gallery"
+                [label]="t('components.panel.card.image.topButton')"
                 severity="secondary"
                 variant="outlined"
               ></magary-button>
             </div>
           </magary-card>
         </div>
+
         <div class="demo-item">
-          <h4>Imagen a la derecha</h4>
+          <h4>{{ t('components.panel.card.image.rightVariant') }}</h4>
           <magary-card
-            [img]="
-              'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&auto=format&fit=crop&q=60'
-            "
+            [img]="'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&auto=format&fit=crop&q=60'"
             [positionImage]="'right'"
             [imageSize]="'140px'"
             [width]="'400px'"
@@ -100,15 +94,12 @@
             [responsive]="true"
           >
             <div slot="header">
-              <h3 class="card-title">Team Collaboration</h3>
+              <h3 class="card-title">{{ t('components.panel.card.image.rightHeader') }}</h3>
             </div>
-            <p class="card-text">
-              Boost productivity with our new collaboration tools designed for
-              remote teams.
-            </p>
+            <p class="card-text">{{ t('components.panel.card.image.rightBody') }}</p>
             <div slot="footer">
               <magary-button
-                label="Learn More"
+                [label]="t('components.panel.card.image.rightButton')"
                 severity="primary"
                 size="small"
               ></magary-button>
@@ -116,37 +107,35 @@
           </magary-card>
         </div>
       </div>
+
       <div class="code-block">
         <magary-tabs
           [backgroundLine]="'#ed2c44'"
           [positionContent]="'flex-start'"
           [background]="'#282c34'"
         >
-          <magary-tab label="Imagen Arriba">
+          <magary-tab [label]="t('components.panel.card.tabs.imageTop')">
             <pre><code [highlight]="exampleImageTop" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="Imagen a la Derecha">
+          <magary-tab [label]="t('components.panel.card.tabs.imageRight')">
             <pre><code [highlight]="exampleImageRight" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Premium Product Card</h2>
-      <p>
-        Ejemplo de una tarjeta de producto con estilo premium y hover effects
-      </p>
+      <h2>{{ t('components.panel.card.premium.title') }}</h2>
+      <p>{{ t('components.panel.card.premium.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Product Card</h4>
+          <h4>{{ t('components.panel.card.premium.variant') }}</h4>
           <magary-card
-            [img]="
-              'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D'
-            "
+            [img]="'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHxlbnwwfHwwfHx8MA%3D%3D'"
             [positionImage]="'top'"
             [imageSize]="'200px'"
             [width]="'300px'"
@@ -158,44 +147,31 @@
           >
             <div slot="header">
               <div class="card-header-flex">
-                <h3 class="card-title">Headphones Pro</h3>
-                <span
-                  class="tag"
-                  style="
-                    background: var(--primary-100);
-                    color: var(--primary-700);
-                  "
-                  >$299</span
-                >
+                <h3 class="card-title">{{ t('components.panel.card.premium.header') }}</h3>
+                <span class="tag" style="background: var(--primary-100); color: var(--primary-700)">$299</span>
               </div>
             </div>
-            <p class="card-text">
-              Experience premium sound quality with our latest noise-cancelling
-              technology.
-            </p>
+            <p class="card-text">{{ t('components.panel.card.premium.body') }}</p>
             <div slot="footer" class="card-footer-flex">
               <magary-button
-                label="Add to Cart"
+                [label]="t('components.panel.card.premium.buttonPrimary')"
                 severity="primary"
                 style="flex: 1"
               ></magary-button>
-              <magary-button
-                icon="heart"
-                severity="secondary"
-                variant="outlined"
-              ></magary-button>
+              <magary-button icon="heart" severity="secondary" variant="outlined"></magary-button>
             </div>
           </magary-card>
         </div>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Ejemplos Avanzados</h2>
+      <h2>{{ t('components.panel.card.advanced.title') }}</h2>
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Con altura fija</h4>
+          <h4>{{ t('components.panel.card.advanced.fixedVariant') }}</h4>
           <magary-card
             [width]="'280px'"
             [height]="'300px'"
@@ -206,23 +182,18 @@
             [gap]="'1.2rem'"
           >
             <div slot="header">
-              <h3 class="card-title">Fixed Height</h3>
+              <h3 class="card-title">{{ t('components.panel.card.advanced.fixedHeader') }}</h3>
             </div>
-            <p class="card-text">
-              This card maintains a fixed height of 300px regardless of content,
-              useful for grid layouts.
-            </p>
+            <p class="card-text">{{ t('components.panel.card.advanced.fixedBody') }}</p>
             <div slot="footer">
-              <magary-button label="Action" severity="primary"></magary-button>
+              <magary-button [label]="t('components.panel.card.advanced.fixedButton')" severity="primary"></magary-button>
             </div>
           </magary-card>
         </div>
         <div class="demo-item">
-          <h4>ImageFit: contain</h4>
+          <h4>{{ t('components.panel.card.advanced.containVariant') }}</h4>
           <magary-card
-            [img]="
-              'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60'
-            "
+            [img]="'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60'"
             [positionImage]="'top'"
             [imageSize]="'200px'"
             [width]="'280px'"
@@ -236,45 +207,36 @@
             [imageFit]="'contain'"
           >
             <div slot="header">
-              <h3 class="card-title">Full Contain</h3>
+              <h3 class="card-title">{{ t('components.panel.card.advanced.containHeader') }}</h3>
             </div>
-            <p class="card-text">
-              The image fits perfectly within the container without cropping.
-            </p>
+            <p class="card-text">{{ t('components.panel.card.advanced.containBody') }}</p>
             <div slot="footer">
-              <magary-button
-                label="View Details"
-                severity="primary"
-              ></magary-button>
+              <magary-button [label]="t('components.panel.card.advanced.containButton')" severity="primary"></magary-button>
             </div>
           </magary-card>
         </div>
       </div>
       <div class="code-block">
-        <magary-tabs
-          [backgroundLine]="'#ed2c44'"
-          [positionContent]="'flex-start'"
-          [background]="'#282c34'"
-        >
-          <magary-tab label="Altura Fija">
+        <magary-tabs [backgroundLine]="'#ed2c44'" [positionContent]="'flex-start'" [background]="'#282c34'">
+          <magary-tab [label]="t('components.panel.card.tabs.fixedHeight')">
             <pre><code [highlight]="exampleAdvanced1" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="Imagen Contain">
+          <magary-tab [label]="t('components.panel.card.tabs.imageContain')">
             <pre><code [highlight]="exampleAdvanced2" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Estados y Variantes</h2>
-      <p>Explora las diferentes interacciones y estilos visuales disponibles</p>
+      <h2>{{ t('components.panel.card.states.title') }}</h2>
+      <p>{{ t('components.panel.card.states.desc') }}</p>
     </div>
     <div class="section-content">
-      <!-- Interactive States Group -->
       <div class="variant-group">
-        <h3 class="group-title">Estados Interactivos</h3>
+        <h3 class="group-title">{{ t('components.panel.card.states.interactiveGroup') }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
             <div class="card-wrapper">
@@ -289,29 +251,22 @@
               >
                 <div slot="header">
                   <div class="card-header-flex">
-                    <h3 class="card-title">Clickable</h3>
-                    <i style="color: var(--primary-500)"
-                      ><lucide-icon name="mouse-pointer-2"></lucide-icon
-                    ></i>
+                    <h3 class="card-title">{{ t('components.panel.card.states.interactiveHeader') }}</h3>
+                    <i style="color: var(--primary-500)"><lucide-icon name="mouse-pointer-2"></lucide-icon></i>
                   </div>
                 </div>
-                <p class="card-text">
-                  Tarjeta interactiva que responde a eventos de click y teclado.
-                  Ideal para navegación.
-                </p>
+                <p class="card-text">{{ t('components.panel.card.states.interactiveBody') }}</p>
                 <div slot="footer">
-                  <span class="link-action">Probar interacción &rarr;</span>
+                  <span class="link-action">{{ t('components.panel.card.states.interactiveAction') }}</span>
                   @if (lastClickedCard) {
-                    <div class="status-message success fade-in">
-                      {{ lastClickedCard }}
-                    </div>
+                    <div class="status-message success fade-in">{{ lastClickedCard }}</div>
                   }
                 </div>
               </magary-card>
             </div>
             <div class="item-label">
-              <h4>Interactive</h4>
-              <p>Soporte completo para eventos</p>
+              <h4>{{ t('components.panel.card.states.interactiveLabel') }}</h4>
+              <p>{{ t('components.panel.card.states.interactiveLabelDesc') }}</p>
             </div>
           </div>
 
@@ -327,23 +282,17 @@
                 [loadingText]="'Procesando...'"
               >
                 <div slot="header">
-                  <h3 class="card-title">Loading State</h3>
+                  <h3 class="card-title">{{ t('components.panel.card.states.loadingHeader') }}</h3>
                 </div>
-                <p class="card-text">
-                  El contenido se oculta automáticamente bajo una capa de carga
-                  elegante.
-                </p>
+                <p class="card-text">{{ t('components.panel.card.states.loadingBody') }}</p>
                 <div slot="footer">
-                  <magary-button
-                    label="Wait"
-                    severity="secondary"
-                  ></magary-button>
+                  <magary-button [label]="t('components.panel.card.states.loadingButton')" severity="secondary"></magary-button>
                 </div>
               </magary-card>
             </div>
             <div class="item-label">
-              <h4>Loading</h4>
-              <p>Overlay de carga integrado</p>
+              <h4>{{ t('components.panel.card.states.loadingLabel') }}</h4>
+              <p>{{ t('components.panel.card.states.loadingLabelDesc') }}</p>
             </div>
           </div>
 
@@ -359,20 +308,14 @@
               >
                 <div slot="header">
                   <div class="card-header-flex">
-                    <h3 class="card-title" style="color: var(--text-secondary)">
-                      Disabled
-                    </h3>
-                    <i style="color: var(--text-secondary)"
-                      ><lucide-icon name="lock"></lucide-icon
-                    ></i>
+                    <h3 class="card-title" style="color: var(--text-secondary)">{{ t('components.panel.card.states.disabledHeader') }}</h3>
+                    <i style="color: var(--text-secondary)"><lucide-icon name="lock"></lucide-icon></i>
                   </div>
                 </div>
-                <p class="card-text" style="color: var(--text-secondary)">
-                  Estado visual para contenido no disponible o restringido.
-                </p>
+                <p class="card-text" style="color: var(--text-secondary)">{{ t('components.panel.card.states.disabledBody') }}</p>
                 <div slot="footer">
                   <magary-button
-                    label="Locked"
+                    [label]="t('components.panel.card.states.disabledButton')"
                     severity="secondary"
                     [disabled]="true"
                     variant="outlined"
@@ -382,16 +325,15 @@
               </magary-card>
             </div>
             <div class="item-label">
-              <h4>Disabled</h4>
-              <p>Indicador visual de estado inactivo</p>
+              <h4>{{ t('components.panel.card.states.disabledLabel') }}</h4>
+              <p>{{ t('components.panel.card.states.disabledLabelDesc') }}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Visual Variants Group -->
       <div class="variant-group">
-        <h3 class="group-title">Variantes Visuales</h3>
+        <h3 class="group-title">{{ t('components.panel.card.states.visualGroup') }}</h3>
         <div class="demo-grid">
           <div class="demo-item">
             <div class="card-wrapper">
@@ -404,15 +346,12 @@
                 [border]="'1px solid var(--surface-200)'"
               >
                 <div slot="header">
-                  <h3 class="card-title">Outlined</h3>
+                  <h3 class="card-title">{{ t('components.panel.card.states.outlinedHeader') }}</h3>
                 </div>
-                <p class="card-text">
-                  Diseño limpio con borde sutil, perfecto para contenido
-                  secundario o agrupaciones.
-                </p>
+                <p class="card-text">{{ t('components.panel.card.states.outlinedBody') }}</p>
                 <div slot="footer">
                   <magary-button
-                    label="Ver detalles"
+                    [label]="t('components.panel.card.states.outlinedButton')"
                     severity="secondary"
                     variant="outlined"
                     size="small"
@@ -421,8 +360,8 @@
               </magary-card>
             </div>
             <div class="item-label">
-              <h4>Outlined</h4>
-              <p>Borde sutil sin sombra</p>
+              <h4>{{ t('components.panel.card.states.outlinedLabel') }}</h4>
+              <p>{{ t('components.panel.card.states.outlinedLabelDesc') }}</p>
             </div>
           </div>
 
@@ -439,23 +378,17 @@
                 [backgroundColor]="'var(--surface-0)'"
               >
                 <div slot="header">
-                  <h3 class="card-title">Filled</h3>
+                  <h3 class="card-title">{{ t('components.panel.card.states.filledHeader') }}</h3>
                 </div>
-                <p class="card-text">
-                  Fondo sólido sutil que destaca sin elevarse de la superficie.
-                </p>
+                <p class="card-text">{{ t('components.panel.card.states.filledBody') }}</p>
                 <div slot="footer">
-                  <magary-button
-                    label="Acción"
-                    severity="secondary"
-                    size="small"
-                  ></magary-button>
+                  <magary-button [label]="t('components.panel.card.states.filledButton')" severity="secondary" size="small"></magary-button>
                 </div>
               </magary-card>
             </div>
             <div class="item-label">
-              <h4>Filled</h4>
-              <p>Fondo sólido plano</p>
+              <h4>{{ t('components.panel.card.states.filledLabel') }}</h4>
+              <p>{{ t('components.panel.card.states.filledLabelDesc') }}</p>
             </div>
           </div>
 
@@ -470,56 +403,47 @@
                 [backgroundColor]="'var(--surface-0)'"
               >
                 <div slot="header">
-                  <h3 class="card-title">Elevated</h3>
+                  <h3 class="card-title">{{ t('components.panel.card.states.elevatedHeader') }}</h3>
                 </div>
-                <p class="card-text">
-                  Alta elevación para contenido destacado o modal.
-                </p>
+                <p class="card-text">{{ t('components.panel.card.states.elevatedBody') }}</p>
                 <div slot="footer">
-                  <magary-button
-                    label="Destacado"
-                    severity="primary"
-                    size="small"
-                  ></magary-button>
+                  <magary-button [label]="t('components.panel.card.states.elevatedButton')" severity="primary" size="small"></magary-button>
                 </div>
               </magary-card>
             </div>
             <div class="item-label">
-              <h4>High Elevation</h4>
-              <p>Sombra profunda (Shadow 4)</p>
+              <h4>{{ t('components.panel.card.states.elevatedLabel') }}</h4>
+              <p>{{ t('components.panel.card.states.elevatedLabelDesc') }}</p>
             </div>
           </div>
         </div>
       </div>
 
       <div class="code-block">
-        <magary-tabs
-          [backgroundLine]="'#ed2c44'"
-          [positionContent]="'flex-start'"
-          [background]="'#282c34'"
-        >
-          <magary-tab label="Clickeable">
+        <magary-tabs [backgroundLine]="'#ed2c44'" [positionContent]="'flex-start'" [background]="'#282c34'">
+          <magary-tab [label]="t('components.panel.card.tabs.clickable')">
             <pre><code [highlight]="exampleStates1" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="Loading">
+          <magary-tab [label]="t('components.panel.card.tabs.loading')">
             <pre><code [highlight]="exampleStates2" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="Variantes">
+          <magary-tab [label]="t('components.panel.card.tabs.variants')">
             <pre><code [highlight]="exampleVariants" language="html"></code></pre>
           </magary-tab>
         </magary-tabs>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Demo: Integración con Notificaciones</h2>
-      <p>Cards interactivas con notificaciones integradas</p>
+      <h2>{{ t('components.panel.card.notifications.title') }}</h2>
+      <p>{{ t('components.panel.card.notifications.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>Notificaciones de Éxito</h4>
+          <h4>{{ t('components.panel.card.notifications.successTitle') }}</h4>
           <magary-card
             [width]="'280px'"
             [height]="'230px'"
@@ -531,19 +455,14 @@
           >
             <div slot="header">
               <div class="card-header-flex">
-                <h3 class="card-title">Success Actions</h3>
-                <i class="icon-success"
-                  ><lucide-icon name="circle-check"></lucide-icon
-                ></i>
+                <h3 class="card-title">{{ t('components.panel.card.notifications.successHeader') }}</h3>
+                <i class="icon-success"><lucide-icon name="circle-check"></lucide-icon></i>
               </div>
             </div>
-            <p class="card-text">
-              These actions trigger success notifications when completed
-              successfully.
-            </p>
+            <p class="card-text">{{ t('components.panel.card.notifications.successBody') }}</p>
             <div slot="footer">
               <magary-button
-                label="Success Toast"
+                [label]="t('components.panel.card.notifications.successButton')"
                 severity="success"
                 size="small"
                 (click)="onDemoButtonClick('success'); $event.stopPropagation()"
@@ -551,8 +470,9 @@
             </div>
           </magary-card>
         </div>
+
         <div class="demo-item">
-          <h4>Notificaciones de Error</h4>
+          <h4>{{ t('components.panel.card.notifications.errorTitle') }}</h4>
           <magary-card
             [width]="'280px'"
             [height]="'230px'"
@@ -564,19 +484,14 @@
           >
             <div slot="header">
               <div class="card-header-flex">
-                <h3 class="card-title">Error Actions</h3>
-                <i class="icon-error"
-                  ><lucide-icon name="circle-x"></lucide-icon
-                ></i>
+                <h3 class="card-title">{{ t('components.panel.card.notifications.errorHeader') }}</h3>
+                <i class="icon-error"><lucide-icon name="circle-x"></lucide-icon></i>
               </div>
             </div>
-            <p class="card-text">
-              These actions might fail and will display appropriate error
-              notifications.
-            </p>
+            <p class="card-text">{{ t('components.panel.card.notifications.errorBody') }}</p>
             <div slot="footer">
               <magary-button
-                label="Error Toast"
+                [label]="t('components.panel.card.notifications.errorButton')"
                 severity="danger"
                 size="small"
                 (click)="onDemoButtonClick('error'); $event.stopPropagation()"
@@ -584,8 +499,9 @@
             </div>
           </magary-card>
         </div>
+
         <div class="demo-item">
-          <h4>Información y Alertas</h4>
+          <h4>{{ t('components.panel.card.notifications.infoTitle') }}</h4>
           <magary-card
             [width]="'280px'"
             [height]="'230px'"
@@ -597,278 +513,137 @@
           >
             <div slot="header">
               <div class="card-header-flex">
-                <h3 class="card-title">Info & Alerts</h3>
+                <h3 class="card-title">{{ t('components.panel.card.notifications.infoHeader') }}</h3>
                 <i class="icon-info"><lucide-icon name="info"></lucide-icon></i>
               </div>
             </div>
-            <p class="card-text">
-              Important information and system alerts for the user.
-            </p>
+            <p class="card-text">{{ t('components.panel.card.notifications.infoBody') }}</p>
             <div slot="footer">
               <div class="footer-buttons">
                 <magary-button
-                  label="Info Toast"
+                  [label]="t('components.panel.card.notifications.infoButton')"
                   severity="info"
                   size="small"
                   (click)="onDemoButtonClick('info'); $event.stopPropagation()"
                 ></magary-button>
                 <magary-button
-                  label="Alert"
+                  [label]="t('components.panel.card.notifications.warningButton')"
                   severity="warning"
                   size="small"
-                  (click)="
-                    onDemoButtonClick('warning'); $event.stopPropagation()
-                  "
+                  (click)="onDemoButtonClick('warning'); $event.stopPropagation()"
                 ></magary-button>
               </div>
             </div>
           </magary-card>
         </div>
       </div>
+
       <div class="code-block">
-        <magary-tabs
-          [backgroundLine]="'#ed2c44'"
-          [positionContent]="'flex-start'"
-          [background]="'#282c34'"
-        >
-          <magary-tab label="HTML">
+        <magary-tabs [backgroundLine]="'#ed2c44'" [positionContent]="'flex-start'" [background]="'#282c34'">
+          <magary-tab [label]="t('components.panel.card.tabs.html')">
             <pre><code [highlight]="exampleNotificationsHTML" language="html"></code></pre>
           </magary-tab>
-          <magary-tab label="TypeScript">
+          <magary-tab [label]="t('components.panel.card.tabs.ts')">
             <pre><code [highlight]="exampleNotificationsTS" language="typescript"></code></pre>
           </magary-tab>
-          <magary-tab label="Eventos">
+          <magary-tab [label]="t('components.panel.card.tabs.events')">
             <pre><code [highlight]="exampleNotifications" language="typescript"></code></pre>
           </magary-tab>
         </magary-tabs>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Propiedades (Inputs)</h2>
-      <p>Todas las propiedades disponibles del componente</p>
+      <h2>{{ t('components.panel.card.inputs.title') }}</h2>
+      <p>{{ t('components.panel.card.inputs.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Valor por Defecto</th>
-              <th>Descripción</th>
+              <th>{{ t('components.panel.card.table.header.name') }}</th>
+              <th>{{ t('components.panel.card.table.header.type') }}</th>
+              <th>{{ t('components.panel.card.table.header.default') }}</th>
+              <th>{{ t('components.panel.card.table.header.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>img</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>URL de la imagen a mostrar</td>
-            </tr>
-            <tr>
-              <td><code>positionImage</code></td>
-              <td><code>'left' | 'right' | 'top' | 'bottom'</code></td>
-              <td><code>'top'</code></td>
-              <td>Posición de la imagen respecto al contenido</td>
-            </tr>
-            <tr>
-              <td><code>shadow</code></td>
-              <td><code>number</code></td>
-              <td><code>1</code></td>
-              <td>Nivel de sombra aplicado (0-5)</td>
-            </tr>
-            <tr>
-              <td><code>width</code></td>
-              <td><code>string</code></td>
-              <td><code>'250px'</code></td>
-              <td>Ancho de la tarjeta</td>
-            </tr>
-            <tr>
-              <td><code>padding</code></td>
-              <td><code>string</code></td>
-              <td><code>'1rem'</code></td>
-              <td>Espaciado interno de la tarjeta</td>
-            </tr>
-            <tr>
-              <td><code>gap</code></td>
-              <td><code>string</code></td>
-              <td><code>'1rem'</code></td>
-              <td>Espacio entre elementos internos</td>
-            </tr>
-            <tr>
-              <td><code>borderRadius</code></td>
-              <td><code>string</code></td>
-              <td><code>'0.75rem'</code></td>
-              <td>Radio del borde de la tarjeta</td>
-            </tr>
-            <tr>
-              <td><code>imageSize</code></td>
-              <td><code>string</code></td>
-              <td><code>'500px'</code></td>
-              <td>Altura máxima de la imagen (para top/bottom)</td>
-            </tr>
-            <tr>
-              <td><code>backgroundColor</code></td>
-              <td><code>string</code></td>
-              <td><code>'#fff'</code></td>
-              <td>Color de fondo de la tarjeta</td>
-            </tr>
-            <tr>
-              <td><code>height</code></td>
-              <td><code>string</code></td>
-              <td><code>'auto'</code></td>
-              <td>Altura de la tarjeta</td>
-            </tr>
-            <tr>
-              <td><code>responsive</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Habilita el comportamiento responsive</td>
-            </tr>
-            <tr>
-              <td><code>altText</code></td>
-              <td><code>string</code></td>
-              <td><code>'Card image'</code></td>
-              <td>Texto alternativo para la imagen (accesibilidad)</td>
-            </tr>
-            <tr>
-              <td><code>imageFit</code></td>
-              <td>
-                <code
-                  >'cover' | 'contain' | 'fill' | 'scale-down' | 'none'</code
-                >
-              </td>
-              <td><code>'cover'</code></td>
-              <td>Modo de ajuste de la imagen</td>
-            </tr>
-            <tr>
-              <td><code>clickable</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Hace la tarjeta clickeable</td>
-            </tr>
-            <tr>
-              <td><code>loading</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Muestra estado de carga</td>
-            </tr>
-            <tr>
-              <td><code>disabled</code></td>
-              <td><code>boolean</code></td>
-              <td><code>false</code></td>
-              <td>Deshabilita la tarjeta</td>
-            </tr>
-            <tr>
-              <td><code>variant</code></td>
-              <td><code>'elevated' | 'outlined' | 'filled'</code></td>
-              <td><code>'elevated'</code></td>
-              <td>Variante visual de la tarjeta</td>
-            </tr>
-            <tr>
-              <td><code>loadingText</code></td>
-              <td><code>string</code></td>
-              <td><code>'Cargando...'</code></td>
-              <td>Texto mostrado durante la carga</td>
-            </tr>
-            <tr>
-              <td><code>hoverEffect</code></td>
-              <td><code>boolean</code></td>
-              <td><code>true</code></td>
-              <td>Habilita el efecto de elevación al pasar el mouse</td>
-            </tr>
-            <tr>
-              <td><code>border</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Estilo CSS completo del borde (ej: '1px solid red')</td>
-            </tr>
-            <tr>
-              <td><code>badge</code></td>
-              <td><code>string</code></td>
-              <td><code>undefined</code></td>
-              <td>Texto del badge mostrado en la esquina superior derecha</td>
-            </tr>
-            <tr>
-              <td><code>badgeColor</code></td>
-              <td><code>string</code></td>
-              <td><code>'var(--primary-500)'</code></td>
-              <td>Color de fondo del badge</td>
-            </tr>
+            @for (row of inputRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td><code>{{ row.default }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Eventos</h2>
-      <p>Eventos que emite el componente</p>
+      <h2>{{ t('components.panel.card.events.title') }}</h2>
+      <p>{{ t('components.panel.card.events.desc') }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Descripción</th>
+              <th>{{ t('components.panel.card.table.header.name') }}</th>
+              <th>{{ t('components.panel.card.table.header.type') }}</th>
+              <th>{{ t('components.panel.card.events.table.description') }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td><code>cardClick</code></td>
-              <td><code>CustomEvent</code></td>
-              <td>Se emite cuando se hace click en una tarjeta clickeable</td>
-            </tr>
+            @for (row of eventRows; track row.name) {
+              <tr>
+                <td><code>{{ row.name }}</code></td>
+                <td><code>{{ row.type }}</code></td>
+                <td>{{ t(row.descriptionKey) }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
-      <h4>Ejemplo de uso de eventos:</h4>
+      <h4>{{ t('components.panel.card.events.example') }}</h4>
       <div class="code-block">
         <pre><code [highlight]="exampleEvents" language="html"></code></pre>
       </div>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Slots (Contenido)</h2>
-      <p>Contenido personalizable dentro del componente</p>
+      <h2>{{ t('components.panel.card.slots.title') }}</h2>
+      <p>{{ t('components.panel.card.slots.desc') }}</p>
     </div>
     <div class="section-content">
       <ul>
-        <li><code>slot="header"</code>: Área del encabezado</li>
-        <li><code>slot="footer"</code>: Área del pie de página</li>
-        <li>Contenido libre entre ambos slots</li>
+        <li><code>slot="header"</code>: {{ t('components.panel.card.slots.header') }}</li>
+        <li><code>slot="footer"</code>: {{ t('components.panel.card.slots.footer') }}</li>
+        <li>{{ t('components.panel.card.slots.free') }}</li>
       </ul>
     </div>
   </div>
+
   <div class="section">
     <div class="section-header">
-      <h2>Accesibilidad</h2>
-      <p>Características de accesibilidad implementadas</p>
+      <h2>{{ t('components.panel.card.a11y.title') }}</h2>
+      <p>{{ t('components.panel.card.a11y.desc') }}</p>
     </div>
     <div class="section-content">
       <ul class="accessibility-list">
-        <li>
-          <strong>Semántica:</strong> Estructura clara con imagen y contenido
-        </li>
-        <li>
-          <strong>Responsive:</strong> Imagen y contenido se adaptan a su
-          posición
-        </li>
-        <li>
-          <strong>Contraste:</strong> Personalizable con
-          <code>backgroundColor</code>
-        </li>
-        <li>
-          <strong>Imagen:</strong> Incluye atributo <code>alt</code> accesible
-        </li>
-        <li>
-          <strong>Badge:</strong> Elemento visual para estados o etiquetas
-        </li>
+        <li>{{ t('components.panel.card.a11y.semantic') }}</li>
+        <li>{{ t('components.panel.card.a11y.responsive') }}</li>
+        <li>{{ t('components.panel.card.a11y.contrast') }}</li>
+        <li>{{ t('components.panel.card.a11y.image') }}</li>
+        <li>{{ t('components.panel.card.a11y.badge') }}</li>
       </ul>
     </div>
   </div>
