@@ -24,6 +24,7 @@ import {
     :host {
       display: none;
       min-width: 0;
+      max-width: 100%;
       flex: 0 0 var(--tab-panel-width, 100%);
     }
 

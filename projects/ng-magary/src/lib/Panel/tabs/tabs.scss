@@ -1,3 +1,10 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 .tabs {
   border: 1px solid var(--surface-200);
   border-radius: var(--border-radius);
@@ -8,6 +15,7 @@
   max-width: 100%;
   min-width: 0;
 }
+
 .tab-headers {
   display: flex;
   border-bottom: 1px solid var(--surface-200);
@@ -33,10 +41,8 @@
     position: absolute;
     bottom: 0;
     height: var(--height-line);
-    background-color: var(
-      --magary-tabs-line-color,
-      var(--background-color-line, var(--primary-500))
-    );
+    background-color: var(--magary-tabs-line-color,
+        var(--background-color-line, var(--primary-500)));
     transition:
       left 0.4s ease-in-out,
       width 0.4s ease-in-out;
@@ -45,9 +51,10 @@
     z-index: 2;
     pointer-events: none;
   }
+
   button {
-    flex: 0 0 auto;
-    min-width: max-content;
+    flex: 1 1 0;
+    min-width: 0;
     padding: 0.9rem 1.1rem;
     background: none;
     border: none;
@@ -62,22 +69,17 @@
     white-space: nowrap;
     scroll-snap-align: center;
 
-    @media (min-width: 768px) {
-      flex: 1 1 0;
-      min-width: 0;
-    }
-
     &:hover {
       background: var(--magary-tabs-hover-bg, var(--surface-50));
       color: var(--text-primary);
     }
+
     &.active {
-      background: var(
-        --magary-tabs-active-bg,
-        var(--surface-50, rgba(15, 23, 42, 0.52))
-      );
+      background: var(--magary-tabs-active-bg,
+          var(--surface-50, rgba(15, 23, 42, 0.52)));
       color: var(--magary-tabs-active-color, var(--text-primary));
-      height: auto; /* Removed fixed height that might break layout */
+      height: auto;
+      /* Removed fixed height that might break layout */
     }
 
     &:focus-visible {
@@ -86,6 +88,7 @@
     }
   }
 }
+
 .tab-content {
   width: 100%;
   padding: var(--padding);
@@ -96,7 +99,7 @@
   max-width: 100%;
   background: var(--background);
 
-  > * {
+  >* {
     min-width: 0;
   }
 
@@ -104,7 +107,7 @@
     display: none;
   }
 
-  > .magary-tab-active {
+  >.magary-tab-active {
     display: block;
     flex: 0 0 var(--tab-panel-width, 100%);
   }
@@ -112,11 +115,13 @@
   &.animated {
     animation: slideIn 0.7s ease-out;
   }
+
   @keyframes slideIn {
     from {
       opacity: 0;
       transform: translateX(10px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
@@ -151,6 +156,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .tab-headers button,
   .tab-content.animated {
     transition: none !important;
