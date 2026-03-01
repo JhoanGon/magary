@@ -15,7 +15,8 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
   width: var(--sidebar-width);
   background: var(--sidebar-bg);
   border-right: 1px solid var(--sidebar-border);
@@ -128,6 +129,10 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  /* Obligatory for Chrome Mobile since body has none */
+  -webkit-overflow-scrolling: touch;
+  /* GPU acceleration on Safari/iOS */
   padding: 1rem;
   scrollbar-width: thin;
   scrollbar-color: var(--sidebar-scrollbar-thumb) transparent;
@@ -360,7 +365,8 @@
     transform: translateX(-100%);
     width: 85%; // Slightly narrower on mobile
     max-width: 300px;
-    border-radius: 0 var(--sidebar-radius) var(--sidebar-radius) 0;
+    /* Redondear solo la esquina superior derecha, dejar la inferior recta contra el borde del celular */
+    border-radius: 0 var(--sidebar-radius) 0 0;
 
     &.open {
       transform: translateX(0);
