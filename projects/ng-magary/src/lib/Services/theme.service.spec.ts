@@ -67,9 +67,14 @@ describe('MagaryThemeService behavior', () => {
   it('toggleTheme cycles through supported themes', () => {
     const service = TestBed.inject(MagaryThemeService);
 
+    // green (index 3) → next is neo (index 4)
     service.setTheme('green');
     service.toggleTheme();
+    expect(service.currentTheme()).toBe('neo');
 
+    // liquid (last) → wraps around to light (first)
+    service.setTheme('liquid');
+    service.toggleTheme();
     expect(service.currentTheme()).toBe('light');
   });
 
