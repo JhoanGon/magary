@@ -12,6 +12,8 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+# Magary Monetization (Private Assets - cloned at build time)
+/projects/demo-app/src/premium/
 
 # IDEs and editors
 .idea/
