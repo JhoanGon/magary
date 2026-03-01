@@ -365,4 +365,10 @@ test.describe('ci a11y smoke', () => {
     await expect(page.locator('.magary-overlaypanel[role="dialog"]:visible')).toHaveCount(0);
     await expect(trigger).toHaveAttribute('aria-expanded', 'false');
   });
+
+  test('premium themes gallery has no serious/critical a11y violations', async ({
+    page,
+  }) => {
+    await expectNoSeriousA11yIssues(page, '/premium/themes');
+  });
 });

@@ -395,4 +395,19 @@ test.describe('ci smoke', () => {
 
     await expect(trigger).toContainText('Sydney');
   });
+
+  test('premium themes gallery renders all theme cards', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await openRoute('/premium/themes', page);
+
+    const grid = page.locator('.themes-grid');
+    await expect(grid).toBeVisible();
+
+    const cards = grid.locator('magary-card');
+    await expect(cards).toHaveCount(8);
+
+    const firstPreviewBtn = page.getByRole('button', { name: /Live Preview|Vista Previa/i }).first();
+    await expect(firstPreviewBtn).toBeVisible();
+    await firstPreviewBtn.click();
+  });
 });

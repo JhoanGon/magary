@@ -11,17 +11,23 @@ import {
   UTILITIES_DOC_TEXT,
   UtilitiesDocsTextKey,
 } from './docs/utilities.docs.translations';
+import {
+  PREMIUM_DOC_TEXT,
+  PremiumDocsTextKey,
+} from './docs/premium.docs.translations';
 
 const DOC_TEXT_ES = {
   ...GETTING_STARTED_DOC_TEXT.es,
   ...COMPONENTS_DOC_TEXT.es,
   ...UTILITIES_DOC_TEXT.es,
+  ...PREMIUM_DOC_TEXT.es,
 };
 
 const DOC_TEXT_EN = {
   ...GETTING_STARTED_DOC_TEXT.en,
   ...COMPONENTS_DOC_TEXT.en,
   ...UTILITIES_DOC_TEXT.en,
+  ...PREMIUM_DOC_TEXT.en,
 };
 
 export const DOC_TEXT = {
@@ -32,4 +38,5 @@ export const DOC_TEXT = {
 export type DocsTextKey =
   | GettingStartedDocsTextKey
   | ComponentsDocsTextKey
-  | UtilitiesDocsTextKey;
+  | UtilitiesDocsTextKey
+  | PremiumDocsTextKey;

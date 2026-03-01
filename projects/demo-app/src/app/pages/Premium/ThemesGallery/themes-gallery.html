@@ -1,11 +1,19 @@
 <div class="themes-container">
-  <h2>Premium Themes</h2>
-  <p>Preview and unlock complete style systems for your application.</p>
-  
-  <div class="themes-grid">
-    <magary-card *ngFor="let theme of premiumThemes" class="theme-card">
+  <h2>{{ i18n.translateDocs('premium.themes.title') }}</h2>
+  <p>{{ i18n.translateDocs('premium.themes.subtitle') }}</p>
+
+  <div
+    class="themes-grid"
+    role="list"
+    [attr.aria-label]="i18n.translateDocs('premium.themes.grid.label')"
+  >
+    <magary-card
+      *ngFor="let theme of premiumThemes"
+      class="theme-card"
+      role="listitem"
+    >
       <div class="card-header" [attr.data-preview-theme]="theme.id">
-        <div class="preview-mockup">
+        <div class="preview-mockup" aria-hidden="true">
           <div class="mock-nav"></div>
           <div class="mock-content">
             <div class="mock-title"></div>
@@ -19,19 +27,21 @@
         <h3>{{ theme.name }}</h3>
         <p>{{ theme.description }}</p>
         <div class="card-actions">
-          <magary-button 
-            label="Live Preview" 
-            variant="outlined" 
+          <magary-button
+            [label]="i18n.translateDocs('premium.themes.preview')"
+            variant="outlined"
             size="small"
-            (click)="previewTheme(theme.id)">
-          </magary-button>
-          <magary-button 
-            label="Buy Theme" 
-            severity="premium" 
+            [attr.aria-label]="i18n.translateDocs('premium.themes.preview') + ' ' + theme.name"
+            (click)="previewTheme(theme.id)"
+          ></magary-button>
+          <magary-button
+            [label]="i18n.translateDocs('premium.themes.buy')"
+            severity="premium"
             size="small"
             icon="shopping-cart"
-            [iconSize]="12">
-          </magary-button>
+            [iconSize]="12"
+            [attr.aria-label]="i18n.translateDocs('premium.themes.buy') + ' ' + theme.name"
+          ></magary-button>
         </div>
       </div>
     </magary-card>

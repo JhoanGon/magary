@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryCard, MagaryButton, MagaryThemeService } from 'ng-magary';
+import { DemoI18nService } from '../../../i18n/demo-i18n.service';
 
 @Component({
   selector: 'app-themes-gallery',
@@ -10,6 +11,7 @@ import { MagaryCard, MagaryButton, MagaryThemeService } from 'ng-magary';
   styleUrl: './themes-gallery.scss',
 })
 export default class ThemesGallery {
+  public readonly i18n = inject(DemoI18nService);
   private readonly themeService = inject(MagaryThemeService);
 
   readonly premiumThemes = [
