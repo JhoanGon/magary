@@ -23,7 +23,7 @@
   &.is-open .trigger-button {
     transform: scale(1.015);
     background-color: var(--trigger-bg, var(--surface-700));
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -48,15 +48,13 @@
   outline: none;
   position: relative;
   line-height: 0; // Fix alignment
-  
+
   &:hover {
     transform: scale(1.03);
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
-    background-color: color-mix(
-      in srgb,
-      var(--trigger-bg, var(--surface-700)) 88%,
-      #000 12%
-    );
+    background-color: color-mix(in srgb,
+        var(--trigger-bg, var(--surface-700)) 88%,
+        #000 12%);
   }
 
   &:active {
@@ -64,13 +62,14 @@
   }
 
   &:focus-visible {
-     box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-400, #22d3ee) 40%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-400, #22d3ee) 40%, transparent);
   }
 
   lucide-icon {
     width: 1.5rem;
     height: 1.5rem;
-    display: flex; /* Ensures SVG is flex-centered if needed */
+    display: flex;
+    /* Ensures SVG is flex-centered if needed */
     line-height: 1;
   }
 }
@@ -114,7 +113,7 @@
     opacity: 0;
     transform: translate3d(0, 0, 0) scale(0.78);
     backface-visibility: hidden;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,7 +123,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: var(--surface-700); 
+    background-color: var(--surface-700);
     color: var(--surface-0);
     border: none;
     box-shadow: var(--speed-dial-shadow-item);
@@ -143,27 +142,27 @@
     &:hover:not(:disabled) {
       background-color: var(--surface-600);
       transform: scale(1.06);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
-    
+
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
       filter: grayscale(1);
     }
-    
+
     lucide-icon {
-        width: 1.25rem;
-        height: 1.25rem;
-        display: flex;
+      width: 1.25rem;
+      height: 1.25rem;
+      display: flex;
     }
   }
 
   // Tooltip
   .action-tooltip {
     position: absolute;
-    background-color: var(--surface-900, #1f2937);
-    color: var(--text-color, #fff);
+    background-color: var(--text-primary);
+    color: var(--surface-0);
     padding: 0.35rem 0.75rem;
     border-radius: 6px;
     font-size: 0.85rem;
@@ -174,9 +173,9 @@
     transition: opacity 0.2s, transform 0.2s;
     pointer-events: none;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    
+
     top: 50%;
-    left: auto; 
+    left: auto;
     right: 125%; // Left of the button
     transform: translateY(-50%) translateX(10px);
   }
@@ -200,12 +199,15 @@
   &[data-direction="up"] li {
     transform: translateY(calc(var(--speed-dial-item-gap) * (var(--i) + 1) * -1)) scale(1);
   }
+
   &[data-direction="down"] li {
     transform: translateY(calc(var(--speed-dial-item-gap) * (var(--i) + 1))) scale(1);
   }
+
   &[data-direction="left"] li {
     transform: translateX(calc(var(--speed-dial-item-gap) * (var(--i) + 1) * -1)) scale(1);
   }
+
   &[data-direction="right"] li {
     transform: translateX(calc(var(--speed-dial-item-gap) * (var(--i) + 1))) scale(1);
   }
@@ -216,37 +218,40 @@
   }
 
   &[data-direction="left"] .item-semicircle {
-     --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
-     transform: rotate(calc(var(--angle) - 180deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) - 180deg) * -1)) scale(1);
+    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+    transform: rotate(calc(var(--angle) - 180deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) - 180deg) * -1)) scale(1);
   }
-  
+
   &[data-direction="right"] .item-semicircle {
-     --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
-     transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1);
+    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+    transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1);
   }
-  
+
   &[data-direction="down"] .item-semicircle {
-     --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
-     transform: rotate(calc(var(--angle) + 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 90deg) * -1)) scale(1);
+    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+    transform: rotate(calc(var(--angle) + 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 90deg) * -1)) scale(1);
   }
-  
+
   &[data-direction="up"] .item-semicircle {
-     --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
-     transform: rotate(calc(var(--angle) - 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) - 90deg) * -1)) scale(1);
+    --angle: calc(var(--i) * (180deg / (var(--item-count) - 1)));
+    transform: rotate(calc(var(--angle) - 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) - 90deg) * -1)) scale(1);
   }
 
   &[data-direction="up-right"] .item-quartercircle {
     --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
     transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(1);
   }
+
   &[data-direction="down-right"] .item-quartercircle {
     --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
     transform: rotate(calc(var(--angle) + 90deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 90deg) * -1)) scale(1);
   }
+
   &[data-direction="down-left"] .item-quartercircle {
     --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
     transform: rotate(calc(var(--angle) + 180deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 180deg) * -1)) scale(1);
   }
+
   &[data-direction="up-left"] .item-quartercircle {
     --angle: calc(var(--i) * (90deg / (var(--item-count) - 1)));
     transform: rotate(calc(var(--angle) + 270deg)) translateY(calc(var(--radius) * -1)) rotate(calc((var(--angle) + 270deg) * -1)) scale(1);
@@ -259,11 +264,18 @@
     --speed-dial-item-size: 2.25rem;
     --speed-dial-item-gap: 3.5rem;
   }
-  .trigger-button { font-size: 1.25rem; }
-  .speed-dial-items .action-button { font-size: 0.9rem; }
+
+  .trigger-button {
+    font-size: 1.25rem;
+  }
+
+  .speed-dial-items .action-button {
+    font-size: 0.9rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .speed-dial-container,
   .trigger-button,
   .speed-dial-items li,

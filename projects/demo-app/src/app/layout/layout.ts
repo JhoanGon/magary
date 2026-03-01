@@ -43,7 +43,6 @@ import {
     RouterOutlet,
     MagaryToast,
     MagaryButton,
-    MagarySplitButton,
     MagarySpeedDial,
     MagarySegmented,
     ThemeSwitcherComponent,

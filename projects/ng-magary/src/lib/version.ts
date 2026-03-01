@@ -1,1 +1,1 @@
-export const MAGARY_VERSION = '0.20';
+export const MAGARY_VERSION = '0.0.21';
