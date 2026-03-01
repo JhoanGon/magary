@@ -7,6 +7,8 @@
   [![Angular Compatibility](https://img.shields.io/badge/Angular-v17_|_v18_|_v19_|_v20_|_v21-dd0031.svg?logo=angular)](https://angular.dev)
   [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
   [![Build Status](https://img.shields.io/badge/CI-Passing-success.svg)](#)
+  [![Sponsor](https://img.shields.io/badge/Sponsor-GitHub-ea4aaa?style=flat&logo=github)](https://github.com/sponsors/JhoanGon)
+  [![BuyMeACoffee](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/praiddev)
 </div>
 
 ---

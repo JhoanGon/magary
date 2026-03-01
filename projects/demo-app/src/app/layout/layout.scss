@@ -287,4 +287,31 @@
   .content-wrapper {
     padding: 1rem;
   }
+
+  .desktop-sponsor-btn {
+    display: none; // Hide on mobile
+  }
+}
+
+.floating-sponsor-btn {
+  display: none; // Hidden on desktop by default
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  @media (max-width: 768px) {
+    display: block; // Show on mobile
+  }
 }
