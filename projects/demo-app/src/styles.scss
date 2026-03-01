@@ -371,11 +371,6 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  overscroll-behavior-y: none;
-  /* Prevents rubber-banding on the entire document in iOS */
-}
 
 body {
   font-family: var(--font-family);
