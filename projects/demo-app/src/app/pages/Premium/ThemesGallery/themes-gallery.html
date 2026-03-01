@@ -1,0 +1,39 @@
+<div class="themes-container">
+  <h2>Premium Themes</h2>
+  <p>Preview and unlock complete style systems for your application.</p>
+  
+  <div class="themes-grid">
+    <magary-card *ngFor="let theme of premiumThemes" class="theme-card">
+      <div class="card-header" [attr.data-preview-theme]="theme.id">
+        <div class="preview-mockup">
+          <div class="mock-nav"></div>
+          <div class="mock-content">
+            <div class="mock-title"></div>
+            <div class="mock-line"></div>
+            <div class="mock-line short"></div>
+            <magary-button label="Button" size="small"></magary-button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3>{{ theme.name }}</h3>
+        <p>{{ theme.description }}</p>
+        <div class="card-actions">
+          <magary-button 
+            label="Live Preview" 
+            variant="outlined" 
+            size="small"
+            (click)="previewTheme(theme.id)">
+          </magary-button>
+          <magary-button 
+            label="Buy Theme" 
+            severity="premium" 
+            size="small"
+            icon="shopping-cart"
+            [iconSize]="12">
+          </magary-button>
+        </div>
+      </div>
+    </magary-card>
+  </div>
+</div>

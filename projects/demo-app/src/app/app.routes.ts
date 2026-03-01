@@ -36,6 +36,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'premium',
+        loadChildren: () =>
+          import('./pages/Premium/premium.routes').then(
+            (m) => m.PREMIUM_ROUTES,
+          ),
+      },
+      {
         path: 'theming',
         loadComponent: () =>
           import('./pages/Utilities/view-theming/view-theming').then(
@@ -51,6 +58,6 @@ export const routes: Routes = [
       },
     ],
   },
-  // RedirecciÃ³n de rutas no encontradas al Landing
+  // Redirección de rutas no encontradas al Landing
   { path: '**', redirectTo: '' },
 ];

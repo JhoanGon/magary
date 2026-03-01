@@ -11,11 +11,14 @@ export const INSTALLATION_DOC_TEXT = {
     'installation.step2.title': 'Configurar app (iconos + animaciones)',
     'installation.step2.desc':
       'Magary usa iconos Lucide y componentes con animaciones de Angular. Configura ambos providers en app.config.ts.',
-    'installation.step3.title': 'Estilos globales (solo tooltip)',
+    'installation.step3.title': 'Estilos Base Globales',
     'installation.step3.desc':
-      'Si usas magaryTooltip, agrega estas clases globales en styles.scss.',
-    'installation.step4.title': 'Usar componentes',
+      'Importa el sistema central de estilos de Magary en tu hoja de estilos principal (styles.scss).',
+    'installation.step4.title': 'Estilos Tooltip (Opcional)',
     'installation.step4.desc':
+      'Si usas magaryTooltip, agrega estas clases globales en styles.scss.',
+    'installation.step5.title': 'Usar componentes',
+    'installation.step5.desc':
       'Importa los componentes de ng-magary directamente en tus componentes standalone.',
     'installation.tooltipComment': 'styles.scss (solo si usas magaryTooltip)',
   },
@@ -29,11 +32,14 @@ export const INSTALLATION_DOC_TEXT = {
     'installation.step2.title': 'Configure app (icons + animations)',
     'installation.step2.desc':
       'Magary uses Lucide icons and Angular animations. Configure both providers in app.config.ts.',
-    'installation.step3.title': 'Global styles (tooltip only)',
+    'installation.step3.title': 'Setup Core Styles',
     'installation.step3.desc':
-      'If you use magaryTooltip, add these global classes in styles.scss.',
-    'installation.step4.title': 'Use components',
+      'Import the Magary core CSS layer into your global stylesheet (styles.scss).',
+    'installation.step4.title': 'Tooltip styles (Optional)',
     'installation.step4.desc':
+      'If you use magaryTooltip, add these global classes in styles.scss.',
+    'installation.step5.title': 'Use components',
+    'installation.step5.desc':
       'Import ng-magary components directly into your standalone components.',
     'installation.tooltipComment': 'styles.scss (only if you use magaryTooltip)',
   },

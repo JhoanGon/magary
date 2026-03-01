@@ -1,8 +1,8 @@
 import { Injectable, signal, effect, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-export type Theme = 'light' | 'dark' | 'purple' | 'green';
-const SUPPORTED_THEMES: Theme[] = ['light', 'dark', 'purple', 'green'];
+export type Theme = 'light' | 'dark' | 'purple' | 'green' | 'neo' | 'midnight' | 'cyberpunk' | 'cotton' | 'liquid';
+const SUPPORTED_THEMES: Theme[] = ['light', 'dark', 'purple', 'green', 'neo', 'midnight', 'cyberpunk', 'cotton', 'liquid'];
 
 @Injectable({
   providedIn: 'root',

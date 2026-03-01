@@ -45,6 +45,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 export const appConfig: ApplicationConfig = {
   providers: [provideAnimations()],
 };`;
+  readonly setupStyles = `// src/styles.scss
+@use "ng-magary/styles/magary-core.scss";`;
 
   get tooltipStyles(): string {
     return `/* ${this.i18n.translateDocs('installation.tooltipComment')} */

@@ -14,7 +14,8 @@ type ButtonSeverity =
   | 'info'
   | 'warning'
   | 'danger'
-  | 'help';
+  | 'help'
+  | 'premium';
 type ButtonVariant = 'solid' | 'text' | 'outlined';
 type ButtonSize = 'small' | 'normal' | 'large';
 type IconPosition = 'left' | 'right';

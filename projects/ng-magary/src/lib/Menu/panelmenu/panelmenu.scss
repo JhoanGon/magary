@@ -14,6 +14,7 @@
   border-radius: var(--panel-radius);
   box-shadow: var(--panel-shadow);
 }
+
 .panel-header {
   font-weight: bold;
   cursor: pointer;
@@ -28,28 +29,35 @@
   transition:
     background var(--panel-transition),
     color var(--panel-transition);
+
   &:hover {
     background: var(--panel-header-hover);
   }
+
   &.header-hovered {
     background: var(--panel-hover);
-    color: #ffffff;
+    color: var(--panel-hover-text, #ffffff);
   }
+
   .header-icon {
     margin-right: 0.75rem;
     width: 16px;
     text-align: center;
   }
+
   .header-title {
     flex: 1;
   }
+
   .arrow {
     transition: transform 0.3s ease;
+
     &.open {
       transform: rotate(180deg);
     }
   }
 }
+
 .panel-items {
   list-style: none;
   padding-left: 2px;
@@ -64,6 +72,7 @@
     opacity 0.3s ease,
     transform 0.3s ease,
     margin-top 0.3s ease;
+
   &.expanded {
     opacity: 1;
     transform: scaleY(1);
@@ -71,11 +80,13 @@
     max-height: 1000px;
   }
 }
+
 :host-context(.panel-menu:not(.open)) .panel-items {
   max-height: 0;
   opacity: 0;
   pointer-events: none;
 }
+
 .menu-item-base {
   display: flex;
   align-items: center;
@@ -88,57 +99,70 @@
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+
   &:hover,
   &.item-hovered {
-    color: #ffffff;
+    color: var(--panel-hover-text, #ffffff);
     background: var(--panel-hover);
-    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    /* Softened shadow globally */
   }
+
   &.disabled {
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
   }
+
   .item-icon {
     width: 15px;
     text-align: center;
     margin-right: 0.75rem;
     flex-shrink: 0;
   }
+
   .item-label {
     flex: 1;
   }
 }
+
 .panel-items li a {
   @extend .menu-item-base;
 }
+
 .menu-item {
   padding-bottom: 10px;
 }
+
 .category-item,
 .sub-category-item {
   @extend .menu-item-base;
   justify-content: space-between;
   font-weight: 500;
   padding-left: 30px;
+
   .sub-arrow {
     transition: transform 0.3s ease;
     flex-shrink: 0;
+
     &.expanded {
       transform: rotate(180deg);
     }
   }
 }
+
 .sub-category-item {
   padding-left: 1.5rem;
   font-weight: normal;
   font-size: 0.95rem;
 }
+
 .item-icon {
   width: 15px;
   text-align: center;
   margin-right: 0.75rem;
 }
+
 .sub-items {
   list-style: none;
   padding-left: 1rem;
@@ -150,15 +174,18 @@
     max-height 0.3s ease,
     opacity 0.3s ease,
     padding 0.3s ease;
+
   &.expanded {
     max-height: 500px;
     opacity: 1;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
   }
+
   li a {
     padding-left: 1.5rem;
     font-size: 0.9rem;
+
     &:hover,
     &.item-hovered {
       background: rgba(0, 123, 255, 0.1);
@@ -167,6 +194,7 @@
     }
   }
 }
+
 .sub-sub-items {
   list-style: none;
   padding-left: 1.5rem;
@@ -178,15 +206,18 @@
     max-height 0.3s ease,
     opacity 0.3s ease,
     padding 0.3s ease;
+
   &.expanded {
     max-height: 300px;
     opacity: 1;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
   }
+
   li a {
     padding-left: 2rem;
     font-size: 0.85rem;
+
     &:hover,
     &.item-hovered {
       background: rgba(0, 123, 255, 0.08);
@@ -195,17 +226,19 @@
     }
   }
 }
+
 @for $i from 1 through 7 {
   .shadow-#{$i} {
-    box-shadow: 0
-      #{2 +
-      $i *
-      2}px
-      #{4 +
-      $i *
-      2}px
-      rgba(0, 0, 0, 0.1 + $i * 0.05);
+    box-shadow: 0 #{2 +
+ $i * 2
   }
+
+  px #{4 +
+ $i * 2
+}
+
+px rgba(0, 0, 0, 0.1 + $i * 0.05);
+}
 }
 
 // Badge Styles
@@ -225,15 +258,19 @@
   &.badge-info {
     background-color: var(--info);
   }
+
   &.badge-success {
     background-color: var(--success);
   }
+
   &.badge-warning {
     background-color: var(--warning);
   }
+
   &.badge-danger {
     background-color: var(--danger);
   }
+
   &.badge-contrast {
     background-color: var(--surface-900);
     color: var(--surface-0);
@@ -242,6 +279,7 @@
 
 // Collapsed State Styles
 .panel-menu.collapsed {
+
   // Hide header content except maybe icon if we had one, but here we just hide text/arrow
   .panel-header {
     padding: 10px 0;
@@ -276,7 +314,7 @@
 
     &:hover {
       background: var(--panel-hover) !important; // Restore hover color
-      color: #ffffff;
+      color: var(--panel-hover-text, #ffffff);
     }
 
     .item-label,
