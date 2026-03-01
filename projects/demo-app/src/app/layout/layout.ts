@@ -17,9 +17,13 @@ import {
 import {
   Sidebar,
   MagaryToast,
+  MAGARY_VERSION,
+  MagarySplitButton,
+  MagarySpeedDial,
   MagaryButton,
   MagarySegmented,
-  MAGARY_VERSION,
+  MenuItem,
+  SpeedDialItem
 } from 'ng-magary';
 import { ThemeSwitcherComponent } from '../components/theme-switcher/theme-switcher.component';
 import { SIDEBAR_SECTIONS } from './config/sidebar.config';
@@ -39,6 +43,8 @@ import {
     RouterOutlet,
     MagaryToast,
     MagaryButton,
+    MagarySplitButton,
+    MagarySpeedDial,
     MagarySegmented,
     ThemeSwitcherComponent,
     RouterLink,
@@ -63,6 +69,41 @@ export class Layout implements AfterViewInit {
     { label: 'ES', value: 'es' },
     { label: 'EN', value: 'en' },
   ];
+
+  sponsorMenuItems: MenuItem[] = [
+    {
+      label: 'GitHub Sponsors',
+      icon: 'github',
+      command: () => {
+        window.open('https://github.com/sponsors/JhoanGon', '_blank');
+      }
+    },
+    {
+      label: 'Buy Me a Coffee',
+      icon: 'coffee',
+      command: () => {
+        window.open('https://buymeacoffee.com/praiddev', '_blank');
+      }
+    }
+  ];
+
+  sponsorDialItems: SpeedDialItem[] = [
+    {
+      icon: 'github',
+      tooltip: 'GitHub Sponsors',
+      command: () => {
+        window.open('https://github.com/sponsors/JhoanGon', '_blank');
+      }
+    },
+    {
+      icon: 'coffee',
+      tooltip: 'Buy Me a Coffee',
+      command: () => {
+        window.open('https://buymeacoffee.com/praiddev', '_blank');
+      }
+    }
+  ];
+
   isSidebarOpen = signal(false);
 
   ngAfterViewInit() {
