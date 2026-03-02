@@ -17,6 +17,7 @@ import {
   model,
   output,
   viewChild,
+  viewChildren,
   contentChildren,
   effect,
 } from '@angular/core';
@@ -190,6 +191,9 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
   templates = contentChildren(TemplateRef);
   containerRef = viewChild<ElementRef>('galleriaContainer');
   currentImageRef = viewChild<ElementRef>('currentImage');
+  private previewDialog = viewChild<ElementRef<HTMLDialogElement>>('previewDialog');
+  private thumbItems = viewChildren<ElementRef>('thumbItem');
+  private previewThumbItems = viewChildren<ElementRef>('previewThumbItem');
 
   // Templates Inputs
   itemTemplateRef = input<TemplateRef<unknown> | undefined>();
@@ -237,6 +241,11 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.applyTheme();
+    requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      this.scrollThumbIntoView(this.activeIndex());
+    });
+  });
   }
 
   // Computed properties
@@ -300,7 +309,51 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
 
     this.resetProgress();
     this.preloadNearbyImages(index);
+    queueMicrotask(() => {
+  requestAnimationFrame(() => this.scrollThumbIntoView(index));
+});
   }
+
+  private scrollThumbIntoView(index: number) {
+    // Scroll main galleria thumbnail
+    const thumb = this.thumbItems()?.[index]?.nativeElement;
+    if (thumb) {
+      this.scrollElementInContainer(thumb);
+    }
+    // Scroll preview dialog thumbnail
+    const previewThumb = this.previewThumbItems()?.[index]?.nativeElement;
+    if (previewThumb) {
+      this.scrollElementInContainer(previewThumb);
+    }
+  }
+
+  private scrollElementInContainer(el: HTMLElement) {
+  const container = el.closest(
+    '.galleria-thumbnail-wrapper, .galleria-thumbnail-container, .galleria-preview-thumbnails'
+  ) as HTMLElement | null;
+  if (!container) return;
+
+  const cRect = container.getBoundingClientRect();
+  const eRect = el.getBoundingClientRect();
+
+  // si el contenedor realmente puede scrollear verticalmente, usa top
+  const canScrollY = container.scrollHeight > container.clientHeight + 1;
+  const canScrollX = container.scrollWidth > container.clientWidth + 1;
+
+  if (canScrollY && !canScrollX) {
+    const delta = ((eRect.top + eRect.bottom) / 2) - ((cRect.top + cRect.bottom) / 2);
+    const target = container.scrollTop + delta;
+    const max = container.scrollHeight - container.clientHeight;
+    container.scrollTo({ top: Math.max(0, Math.min(max, target)), behavior: 'smooth' });
+    return;
+  }
+
+  // default horizontal
+  const delta = ((eRect.left + eRect.right) / 2) - ((cRect.left + cRect.right) / 2);
+  const target = container.scrollLeft + delta;
+  const max = container.scrollWidth - container.clientWidth;
+  container.scrollTo({ left: Math.max(0, Math.min(max, target)), behavior: 'smooth' });
+}
 
   onThumbnailClick(index: number) {
     const wasPlaying = this.isPlaying();
@@ -376,7 +429,7 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
     this.progressValue.set(0);
   }
 
-  // Fullscreen
+  // Fullscreen (Preview Dialog Overlay)
   toggleFullScreen() {
     if (isPlatformBrowser(this.platformId)) {
       const newState = !this.isFullscreen();
@@ -384,28 +437,34 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
       this.onFullScreenChange.emit(newState);
 
       if (newState) {
-        const elem = this.containerRef()?.nativeElement;
-        if (elem?.requestFullscreen) {
-          elem.requestFullscreen();
-        } else if (elem?.webkitRequestFullscreen) {
-          elem.webkitRequestFullscreen();
-        } else if (elem?.mozRequestFullScreen) {
-          elem.mozRequestFullScreen();
-        }
+        this.openPreviewDialog();
       } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        } else if (
-          (document as DocumentWithFullscreenFallback).webkitExitFullscreen
-        ) {
-          (document as DocumentWithFullscreenFallback).webkitExitFullscreen?.();
-        } else if (
-          (document as DocumentWithFullscreenFallback).mozCancelFullScreen
-        ) {
-          (document as DocumentWithFullscreenFallback).mozCancelFullScreen?.();
-        }
+        this.closePreviewDialog();
       }
     }
+  }
+
+  openPreviewDialog() {
+    const dialog = this.previewDialog()?.nativeElement;
+    if (dialog && !dialog.open) {
+      dialog.showModal();
+    }
+  }
+
+  closePreviewDialog() {
+    const dialog = this.previewDialog()?.nativeElement;
+    if (dialog?.open) {
+      dialog.close();
+    }
+    if (this.isFullscreen()) {
+      this.isFullscreen.set(false);
+      this.onFullScreenChange.emit(false);
+    }
+    if (this.presentationMode()) {
+      this.presentationMode.set(false);
+      this.stopSlideShow();
+    }
+    this.resetZoom();
   }
 
   // Presentation mode
@@ -563,15 +622,12 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  @HostListener('document:fullscreenchange')
-  onFullScreenChangeHandler() {
-    const isFull = !!document.fullscreenElement;
-    this.isFullscreen.set(isFull);
-
-    // If we exited fullscreen and we were in presentation mode, exit presentation mode too
-    if (!isFull && this.presentationMode()) {
-      this.presentationMode.set(false);
-      this.stopSlideShow();
+  // Keyboard listener for dialog overlay
+  @HostListener('document:keydown', ['$event'])
+  onDocumentKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Escape' && this.isFullscreen()) {
+      event.preventDefault();
+      this.closePreviewDialog();
     }
   }
 

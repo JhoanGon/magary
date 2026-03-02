@@ -351,6 +351,7 @@
         <div class="galleria-thumbnail-items">
           @for (item of value(); track $index; let i = $index) {
             <div
+              #thumbItem
               class="galleria-thumbnail-item"
               [class.galleria-thumbnail-item-active]="i === activeIndex()"
               (click)="onThumbnailClick(i)"
@@ -392,3 +393,105 @@
     </div>
   }
 </div>
+
+<!-- Preview Dialog Overlay (replaces native fullscreen) -->
+<dialog
+  #previewDialog
+  class="galleria-preview-dialog"
+  (click)="closePreviewDialog()"
+  (cancel)="closePreviewDialog()"
+>
+  <!-- Toolbar -->
+  <div class="galleria-preview-toolbar" (click)="$event.stopPropagation()">
+    @if (enableZoom()) {
+      <button class="galleria-preview-action" (click)="zoomOut()" aria-label="Zoom out">
+        <lucide-icon name="zoom-out"></lucide-icon>
+      </button>
+      <button class="galleria-preview-action" (click)="zoomIn()" aria-label="Zoom in">
+        <lucide-icon name="zoom-in"></lucide-icon>
+      </button>
+    }
+    @if (isZoomed()) {
+      <button class="galleria-preview-action" (click)="resetZoom()" aria-label="Reset zoom">
+        <lucide-icon name="rotate-ccw"></lucide-icon>
+      </button>
+    }
+    @if (showDownloadButton()) {
+      <button class="galleria-preview-action" (click)="downloadImage()" aria-label="Download">
+        <lucide-icon name="download"></lucide-icon>
+      </button>
+    }
+    <button class="galleria-preview-action" (click)="closePreviewDialog()" aria-label="Close">
+      <lucide-icon name="x"></lucide-icon>
+    </button>
+  </div>
+
+  <!-- Gallery Content -->
+  <div class="galleria-preview-content" (click)="$event.stopPropagation()">
+    <!-- Image Area -->
+    <div class="galleria-preview-item-area">
+      <!-- Navigation: Prev -->
+      @if (showItemNavigators() && canGoPrev()) {
+        <button class="galleria-preview-nav galleria-preview-prev" (click)="prev()" aria-label="Previous">
+          <lucide-icon name="chevron-left"></lucide-icon>
+        </button>
+      }
+
+      <!-- Active Image -->
+      @if (activeItem()) {
+        @if (!activeItem()?.type || activeItem()?.type === 'image') {
+          <img
+            [src]="activeItem()?.src"
+            [alt]="activeItem()?.alt || activeItem()?.title || 'Gallery image'"
+            class="galleria-preview-image"
+            [style.transform]="transformStyle()"
+            (dblclick)="onImageDoubleClick()"
+            draggable="false"
+          />
+        }
+        @if (activeItem()?.type === 'video') {
+          <video
+            [src]="activeItem()?.videoUrl || activeItem()?.src"
+            controls
+            [poster]="activeItem()?.thumbnail || activeItem()?.src"
+            class="galleria-preview-image"
+          ></video>
+        }
+      }
+
+      <!-- Navigation: Next -->
+      @if (showItemNavigators() && canGoNext()) {
+        <button class="galleria-preview-nav galleria-preview-next" (click)="next()" aria-label="Next">
+          <lucide-icon name="chevron-right"></lucide-icon>
+        </button>
+      }
+    </div>
+
+    <!-- Image Counter -->
+    @if (showImageCounter()) {
+      <div class="galleria-preview-counter">
+        {{ imageCounter() }}
+      </div>
+    }
+
+    <!-- Thumbnails -->
+    @if (showThumbnails() && value() && value().length > 1) {
+      <div class="galleria-preview-thumbnails">
+        @for (item of value(); track $index; let i = $index) {
+          <div
+            #previewThumbItem
+            class="galleria-preview-thumb"
+            [class.active]="i === activeIndex()"
+            (click)="onThumbnailClick(i)"
+          >
+            <img
+              [src]="item.thumbnail || item.src"
+              [alt]="item.alt || 'Thumbnail ' + (i + 1)"
+              draggable="false"
+            />
+          </div>
+        }
+      </div>
+    }
+  </div>
+</dialog>
