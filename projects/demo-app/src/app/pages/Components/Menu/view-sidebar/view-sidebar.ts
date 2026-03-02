@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, ViewEncapsulation } from '@angular/core';
 import {
   Sidebar as MagarySidebar,
   MenuItem,
@@ -39,6 +39,7 @@ type SidebarOutputRow = {
   imports: [MagarySidebar, MagaryTabs, MagaryTab, Highlight],
   templateUrl: './view-sidebar.html',
   styleUrl: './view-sidebar.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ViewSidebar {
   readonly i18n = inject(DemoI18nService);
