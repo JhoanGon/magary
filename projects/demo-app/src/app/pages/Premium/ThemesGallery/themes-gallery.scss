@@ -83,7 +83,7 @@
         }
 
         &[data-preview-theme="purple"] {
-            background: #2d1b4e;
+            background: #4f2c8f;
             border-bottom: 1px solid #5b3ea8;
 
             .mock-nav,
@@ -94,7 +94,7 @@
         }
 
         &[data-preview-theme="green"] {
-            background: #14532d;
+            background: #208849;
             border-bottom: 1px solid #16a34a;
 
             .mock-nav,
@@ -194,6 +194,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         h3 {
             font-size: 1.25rem;
@@ -214,10 +215,27 @@
             display: flex;
             gap: 1rem;
             margin-top: auto;
+            width: 230px;
 
             magary-button {
                 flex: 1;
             }
+
+            @media (max-width: 768px) {
+                width: 260px;
+            }
+
+            @media (max-width: 480px) {
+                width: 190px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            align-items: center;
+        }
+
+        @media (max-width: 480px) {
+            align-items: center;
         }
     }
 }

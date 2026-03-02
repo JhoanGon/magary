@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MagaryCard, MagaryButton, MagaryThemeService } from 'ng-magary';
 import { DemoI18nService } from '../../../i18n/demo-i18n.service';
 
 @Component({
   selector: 'app-themes-gallery',
   standalone: true,
-  imports: [CommonModule, MagaryCard, MagaryButton],
+  imports: [MagaryCard, MagaryButton],
   templateUrl: './themes-gallery.html',
   styleUrl: './themes-gallery.scss',
 })

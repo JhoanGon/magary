@@ -41,6 +41,8 @@ export class MagaryButton {
   readonly disabled = input<boolean>(false);
   readonly variant = input<ButtonVariant>('solid');
   readonly size = input<ButtonSize>('normal');
+  readonly width = input<string>('auto');
+  readonly height = input<string>('auto');
   readonly ariaLabel = input<string>();
   readonly onClick = output<Event>();
   readonly buttonClick = output<Event>();
@@ -66,6 +68,8 @@ export class MagaryButton {
   readonly buttonStyles = computed(() => ({
     'border-radius': this.rounded() ? '22px' : '8px',
     background: this.customBackgroundColor() || undefined,
+    width: this.width() || undefined,
+    height: this.height() || undefined,
   }));
   readonly effectiveAriaLabel = computed(() => {
     const customAriaLabel = this.ariaLabel()?.trim();

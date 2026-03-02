@@ -14,7 +14,7 @@ export const PREMIUM_DOC_TEXT = {
     'premium.themes.subtitle':
       'Preview and unlock complete style systems for your application.',
     'premium.themes.preview': 'Live Preview',
-    'premium.themes.buy': 'Buy Theme',
+    'premium.themes.buy': 'Buy',
     'premium.themes.grid.label': 'Premium themes gallery',
   },
 } as const satisfies Record<DemoLanguage, Record<string, string>>;
