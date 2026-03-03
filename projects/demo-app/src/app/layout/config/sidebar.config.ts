@@ -38,7 +38,7 @@ export const SIDEBAR_SECTIONS: SidebarSection[] = [
       },
       {
         label: 'Blocks (Preview)',
-        icon: 'layout',
+        icon: 'layers',
         route: '/premium/blocks',
         badge: 'Pro'
       }

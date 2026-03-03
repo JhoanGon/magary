@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DemoI18nService } from '../../../i18n/demo-i18n.service';
 import { Hero1Component } from '../../../../premium/blocks/hero/hero-1/hero-1.component';
 import { Pricing1Component } from '../../../../premium/blocks/pricing/pricing-1/pricing-1.component';
-import { DemoI18nService } from '../../../i18n/demo-i18n.service';
 
 @Component({
   selector: 'mg-blocks-gallery',

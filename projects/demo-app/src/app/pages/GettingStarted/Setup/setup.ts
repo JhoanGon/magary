@@ -26,45 +26,36 @@ export class Setup {
 
   readonly iconInstall = `npm install lucide-angular lucide`;
   readonly angularJsonConfig = `// app.config.ts
-import { ApplicationConfig } from '@angular/core';
-import { LucideIconProvider, LUCIDE_ICONS, icons } from 'lucide-angular';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { LucideAngularModule, icons, LucideIconData } from 'lucide-angular';
+
+const kebabCase = (value: string) =>
+  value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+const lucideIcons = Object.entries(icons).reduce(
+  (acc, [key, icon]) => {
+    acc[key] = icon;
+    acc[kebabCase(key)] = icon;
+    return acc;
+  },
+  {} as Record<string, LucideIconData>,
+);
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    // ...
-    { provide: LUCIDE_ICONS, useValue: new LucideIconProvider(icons) }
+    importProvidersFrom(LucideAngularModule.pick(lucideIcons))
   ]
 };`;
-  readonly moduleConfig = `// app.module.ts (Modules)
-import { NgModule } from '@angular/core';
-import { LucideIconProvider, LUCIDE_ICONS, icons } from 'lucide-angular';
-
-@NgModule({
-  providers: [
-    { provide: LUCIDE_ICONS, useValue: new LucideIconProvider(icons) }
-  ]
-})
-export class AppModule { }`;
 
   readonly animationsConfig = `// app.config.ts (Standalone)
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimations(),
+    provideAnimationsAsync(),
     // other providers...
   ]
 };`;
-  readonly moduleAnimationsConfig = `// app.module.ts (Modules / Angular 14-16)
-import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-@NgModule({
-  imports: [
-    BrowserAnimationsModule
-  ]
-})
-export class AppModule { }`;
 
   readonly cssVariables = `:root {
   /* Primary Palette */
@@ -84,14 +75,26 @@ export class AppModule { }`;
 }`;
 
   readonly integrationStandalone = `// app.config.ts
-import { ApplicationConfig } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { LucideIconProvider, LUCIDE_ICONS, icons } from 'lucide-angular';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { LucideAngularModule, icons, LucideIconData } from 'lucide-angular';
+
+const kebabCase = (value: string) =>
+  value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+const lucideIcons = Object.entries(icons).reduce(
+  (acc, [key, icon]) => {
+    acc[key] = icon;
+    acc[kebabCase(key)] = icon;
+    return acc;
+  },
+  {} as Record<string, LucideIconData>,
+);
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimations(),
-    { provide: LUCIDE_ICONS, useValue: new LucideIconProvider(icons) }
+    provideAnimationsAsync(),
+    importProvidersFrom(LucideAngularModule.pick(lucideIcons))
   ]
 };`;
 

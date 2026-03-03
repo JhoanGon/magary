@@ -20,7 +20,7 @@ export class Installation {
 
   readonly appConfigIcons = `// app.config.ts
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { LucideAngularModule, icons } from 'lucide-angular';
+import { LucideAngularModule, icons, LucideIconData } from 'lucide-angular';
 
 const kebabCase = (value: string) =>
   value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -31,7 +31,7 @@ const lucideIcons = Object.entries(icons).reduce(
     acc[kebabCase(key)] = icon;
     return acc;
   },
-  {} as Record<string, unknown>,
+  {} as Record<string, LucideIconData>,
 );
 
 export const appConfig: ApplicationConfig = {
@@ -40,35 +40,18 @@ export const appConfig: ApplicationConfig = {
 
   readonly appConfigAnimations = `// app.config.ts
 import { ApplicationConfig } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideAnimations()],
+  providers: [provideAnimationsAsync()],
 };`;
   readonly setupStyles = `// src/styles.scss
-@use "ng-magary/styles/magary-core.scss";`;
+@use "ng-magary/styles/magary-core.scss";
+@use "ng-magary/styles/tooltip.scss";`;
 
   get tooltipStyles(): string {
     return `/* ${this.i18n.translateDocs('installation.tooltipComment')} */
-.magary-tooltip {
-  position: absolute;
-  padding: 0.5rem 0.75rem;
-  background: var(--surface-900);
-  color: var(--surface-0);
-  border-radius: var(--border-radius);
-  font-size: 0.875rem;
-  font-weight: 500;
-  box-shadow: var(--shadow-md);
-  pointer-events: none;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-  white-space: nowrap;
-}
-
-.magary-tooltip.magary-tooltip-visible {
-  opacity: 1;
-}`;
+@use "ng-magary/styles/tooltip.scss";`;
   }
 
   readonly componentImport = `import { Component } from '@angular/core';

@@ -19,7 +19,7 @@ const legacyIconAliases: Record<string, string> = {
   'check-circle': 'circle-check',
   'circle-help': 'circle-question-mark',
   'help-circle': 'circle-question-mark',
-  layout: 'layout-grid',
+  layout: 'layout-template',
   sliders: 'sliders-vertical',
 };
 
