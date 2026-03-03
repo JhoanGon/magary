@@ -53,6 +53,41 @@ export default class ThemesGallery {
       id: 'green',
       name: 'Forest',
       description: 'A soothing emerald green theme ideal for health and finance tools.',
+    },
+    {
+      id: 'minimalist',
+      name: 'High-End Minimalist',
+      description: 'Pure white, pitch black, zero border radius, and sharp typography.',
+    },
+    {
+      id: 'synthwave',
+      name: 'Synthwave Neon',
+      description: 'Deep purple background with glowing cyan and hot pink accents.',
+    },
+    {
+      id: 'nord',
+      name: 'Nord Frost',
+      description: 'A famous arctic, blue-gray palette with frosty, pastel UI semantics.',
+    },
+    {
+      id: 'solarized',
+      name: 'Solarized Light',
+      description: 'A precision-crafted vanilla/sand palette optimized for low eye strain.',
+    },
+    {
+      id: 'neumorphism',
+      name: 'Neumorphic Soft',
+      description: 'Extruded UI elements using dual drop-shadows on solid matte backgrounds.',
+    },
+    {
+      id: 'hacker',
+      name: 'Retro Terminal',
+      description: 'Pitch black background with glowing green matrix phosphor text and borders.',
+    },
+    {
+      id: 'earth',
+      name: 'Warm Earth',
+      description: 'Cozy terracotta, sand, and sepia tones for lifestyle and organic brands.',
     }
   ];
 

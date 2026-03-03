@@ -9,6 +9,7 @@
         margin-bottom: 0.5rem;
         background: var(--gradient-text);
         -webkit-background-clip: text;
+        background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
@@ -67,7 +68,7 @@
             .mock-content .mock-title,
             .mock-content .mock-line {
                 background: #000;
-                border-radius: 0;
+                border-radius: var(--magary-field-radius);
             }
         }
 
@@ -79,6 +80,7 @@
             .mock-content .mock-title,
             .mock-content .mock-line {
                 background: #1e293b;
+                border-radius: var(--magary-field-radius);
             }
         }
 
@@ -90,6 +92,7 @@
             .mock-content .mock-title,
             .mock-content .mock-line {
                 background: #5b3ea8;
+                border-radius: var(--magary-field-radius);
             }
         }
 
@@ -101,6 +104,7 @@
             .mock-content .mock-title,
             .mock-content .mock-line {
                 background: #16a34a;
+                border-radius: var(--magary-field-radius);
             }
         }
 
@@ -115,6 +119,7 @@
                 background: #18181b;
                 border: 1px solid #27272a;
                 box-shadow: 0 0 10px rgba(6, 182, 212, 0.1);
+                border-radius: var(--magary-field-radius);
             }
         }
 
@@ -128,7 +133,7 @@
             .mock-content .mock-line {
                 background: #ffffff;
                 border: 1px solid #fce7f3;
-                border-radius: 1rem;
+                border-radius: var(--magary-field-radius);
                 box-shadow: 0 4px 6px rgba(244, 114, 182, 0.1);
             }
         }
@@ -143,6 +148,159 @@
                 background: rgba(139, 92, 246, 0.2);
                 backdrop-filter: blur(10px);
                 border: 1px solid rgba(139, 92, 246, 0.1);
+                border-radius: var(--magary-field-radius);
+            }
+        }
+
+        &[data-preview-theme="minimalist"] {
+            background: #fafafa;
+            border-bottom: 2px solid #111111;
+
+            .mock-nav {
+                background: #e5e5e5;
+                border: 1px solid #d4d4d4;
+                border-radius: var(--magary-field-radius) var(--magary-field-radius) 0 0;
+            }
+
+            .mock-content .mock-title,
+            .mock-content .mock-line {
+                background: #e5e5e5;
+                border: 1px solid #d4d4d4;
+                border-radius: var(--magary-field-radius);
+            }
+
+            .mock-title {
+                background: #111111;
+            }
+        }
+
+        &[data-preview-theme="synthwave"] {
+            background: #282a36;
+            border-bottom: 2px solid #ff79c6;
+            box-shadow: inset 0 0 15px rgba(255, 121, 198, 0.2);
+
+            .mock-nav {
+                background: #44475a;
+                border: 1px solid #6272a4;
+                border-radius: var(--magary-field-radius) var(--magary-field-radius) 0 0;
+            }
+
+            .mock-content .mock-title,
+            .mock-content .mock-line {
+                background: #44475a;
+                border: 1px solid #6272a4;
+                border-radius: var(--magary-field-radius);
+            }
+
+            .mock-title {
+                background: #8be9fd;
+                box-shadow: 0 0 5px #8be9fd;
+            }
+        }
+
+        &[data-preview-theme="nord"] {
+            background: #262d3b;
+            border-bottom: 3px solid #88c0d0;
+
+            .mock-nav {
+                background: #3b4252;
+                border-radius: var(--magary-field-radius) var(--magary-field-radius) 0 0;
+            }
+
+            .mock-content .mock-title,
+            .mock-content .mock-line {
+                background: #3b4252;
+                border-radius: var(--magary-field-radius);
+            }
+
+            .mock-title {
+                background: #d8dee9;
+            }
+        }
+
+        &[data-preview-theme="solarized"] {
+            background: #fffbf0;
+            border-bottom: 2px solid #cb4b16;
+
+            .mock-nav {
+                background: #eee8d5;
+                border-radius: var(--magary-field-radius) var(--magary-field-radius) 0 0;
+            }
+
+            .mock-content .mock-title,
+            .mock-content .mock-line {
+                background: #eee8d5;
+                border-radius: var(--magary-field-radius);
+            }
+
+            .mock-title {
+                background: #586e75;
+            }
+        }
+
+        &[data-preview-theme="neumorphism"] {
+            background: #cfd8e6;
+            border-bottom: 1px solid transparent;
+
+            .mock-nav {
+                background: #e0e5ec;
+                box-shadow: 5px 5px 10px #bec3c9, -5px -5px 10px #ffffff;
+                border-radius: var(--magary-field-radius) var(--magary-field-radius) 0 0;
+            }
+
+            .mock-content .mock-title,
+            .mock-content .mock-line {
+                background: #e0e5ec;
+                box-shadow: 5px 5px 10px #bec3c9, -5px -5px 10px #ffffff;
+                border-radius: var(--magary-field-radius);
+            }
+
+            .mock-title {
+                box-shadow: inset 3px 3px 6px #bec3c9, inset -3px -3px 6px #ffffff;
+            }
+        }
+
+        &[data-preview-theme="hacker"] {
+            background: #000000;
+            border-bottom: 2px solid #00ff00;
+            box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.2);
+
+            .mock-nav {
+                background: transparent;
+                border: 1px solid rgba(0, 255, 0, 0.3);
+                border-radius: var(--magary-field-radius) var(--magary-field-radius) 0 0;
+            }
+
+            .mock-content .mock-title,
+            .mock-content .mock-line {
+                background: transparent;
+                border: 1px solid rgba(0, 255, 0, 0.3);
+                border-radius: var(--magary-field-radius);
+            }
+
+            .mock-title {
+                background: #00ff00;
+                box-shadow: 0 0 5px #00ff00;
+            }
+        }
+
+        &[data-preview-theme="earth"] {
+            background: #f4ede4;
+            border-bottom: 3px solid #d97757;
+
+            .mock-nav {
+                background: #e8dbce;
+                border-radius: var(--magary-field-radius) var(--magary-field-radius) 0 0;
+            }
+
+            .mock-content .mock-title,
+            .mock-content .mock-line {
+                background: #e8dbce;
+                border-radius: var(--magary-field-radius);
+            }
+
+            .mock-title {
+                background: #614a3e;
             }
         }
     }
