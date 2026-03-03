@@ -1,0 +1,179 @@
+.mg-premium-pricing {
+    padding: 6rem 2rem;
+    background: var(--surface-0, #ffffff);
+    color: var(--text-primary, #333333);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80vh;
+
+    .mg-pricing-header {
+        text-align: center;
+        max-width: 600px;
+        margin-bottom: 4rem;
+
+        .mg-section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--text-primary, #333333);
+        }
+
+        .mg-section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary, #666666);
+            line-height: 1.6;
+        }
+    }
+
+    .mg-pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        max-width: 1200px;
+        width: 100%;
+        align-items: center;
+
+        @media (max-width: 992px) {
+            grid-template-columns: 1fr;
+            max-width: 450px;
+        }
+    }
+
+    /* We are now targeting magary-card component */
+    magary-card.mg-pricing-card {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        /* Host transitions for hovering handled by magary-card, 
+           but we inject our shadow adjustments if needed */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Middle Highlighted Card */
+        &.featured {
+            z-index: 2;
+
+            .featured-badge {
+                position: absolute;
+                top: -3.5rem;
+                /* pull it up outside the header padding since we can't absolute position outside slot easily */
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--primary-500, #007bff);
+                color: var(--surface-0, #ffffff);
+                padding: 0.25rem 1rem;
+                border-radius: 1rem;
+                font-size: 0.875rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                white-space: nowrap;
+            }
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--surface-200, #e0e0e0);
+
+            .tier-name {
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+                color: var(--text-primary, #333333);
+            }
+
+            .tier-desc {
+                color: var(--text-secondary, #666666);
+                font-size: 0.875rem;
+                margin-bottom: 1.5rem;
+                min-height: 40px;
+            }
+
+            .price {
+                display: flex;
+                justify-content: center;
+                align-items: baseline;
+                gap: 0.25rem;
+
+                .currency {
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    color: var(--text-secondary, #666666);
+                    align-self: flex-start;
+                    margin-top: 0.25rem;
+                }
+
+                .amount {
+                    font-size: 4rem;
+                    font-weight: 800;
+                    line-height: 1;
+                    color: var(--text-primary, #333333);
+                }
+
+                .period {
+                    font-size: 1rem;
+                    color: var(--text-secondary, #666666);
+                }
+            }
+        }
+
+        .card-features {
+            flex: 1;
+            margin-bottom: 2rem;
+
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    color: var(--text-primary, #333333);
+                    font-size: 0.95rem;
+
+                    .icon {
+                        color: var(--primary-500, #007bff);
+                        width: 1.25rem;
+                        height: 1.25rem;
+                        flex-shrink: 0;
+                    }
+
+                    &.disabled {
+                        color: var(--text-tertiary, #999999);
+                        text-decoration: line-through;
+
+                        .icon {
+                            color: var(--text-tertiary, #999999);
+                        }
+                    }
+                }
+            }
+        }
+
+        .card-action {
+            display: flex;
+            justify-content: center;
+
+            ::ng-deep magary-button {
+                width: 100%;
+
+                .mg-button {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}

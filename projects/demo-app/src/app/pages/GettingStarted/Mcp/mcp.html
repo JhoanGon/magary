@@ -21,8 +21,11 @@
       </div>
       <div class="step-content">
         <p>{{ i18n.translateDocs('mcp.step1.desc') }}</p>
-        <div class="code-block">
-          <pre><code [highlight]="endpoint" language="bash"></code></pre>
+        <div>
+          <p class="block-label">{{ i18n.translateDocs('mcp.step1.recommended') }}</p>
+          <div class="code-block">
+            <pre><code [highlight]="baseCommand" language="bash"></code></pre>
+          </div>
         </div>
       </div>
     </magary-card>
@@ -43,20 +46,51 @@
       </div>
       <div class="step-content">
         <p>{{ i18n.translateDocs('mcp.step2.desc') }}</p>
-        <div class="code-grid">
-          <div>
-            <p class="block-label">{{ i18n.translateDocs('mcp.step2.recommended') }}</p>
-            <div class="code-block">
-              <pre><code [highlight]="recommendedBridgeConfig" language="json"></code></pre>
+        
+        <magary-tabs>
+          <!-- VS Code -->
+          <magary-tab [label]="i18n.translateDocs('mcp.step2.vscode')">
+            <p style="margin-left: 1rem; margin-top: 1rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--surface-600)">{{ i18n.translateDocs('mcp.step2.vscode.desc') }}</p>
+            <div class="code-block" style="margin-top: 0">
+              <pre><code [highlight]="universalJsonConfig" language="json"></code></pre>
             </div>
-          </div>
-          <div>
-            <p class="block-label">{{ i18n.translateDocs('mcp.step2.alternative') }}</p>
-            <div class="code-block">
-              <pre><code [highlight]="directRemoteConfig" language="json"></code></pre>
+          </magary-tab>
+
+          <!-- Cursor -->
+          <magary-tab [label]="i18n.translateDocs('mcp.step2.cursor')">
+            <p style="margin-left: 1rem; margin-top: 1rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--surface-600)">{{ i18n.translateDocs('mcp.step2.cursor.desc') }}</p>
+            <div class="code-block" style="margin-top: 0">
+              <pre><code [highlight]="codexAddCommand" language="bash"></code></pre>
             </div>
-          </div>
-        </div>
+          </magary-tab>
+
+          <!-- Windsurf -->
+          <magary-tab [label]="i18n.translateDocs('mcp.step2.windsurf')">
+            <p style="margin-left: 1rem; margin-top: 1rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--surface-600)">{{ i18n.translateDocs('mcp.step2.windsurf.desc') }}</p>
+            <div class="code-block" style="margin-top: 0">
+              <pre><code [highlight]="universalJsonConfig" language="json"></code></pre>
+            </div>
+          </magary-tab>
+
+          <!-- Claude -->
+          <magary-tab [label]="i18n.translateDocs('mcp.step2.claude')">
+            <p style="margin-left: 1rem; margin-top: 1rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--surface-600)">{{ i18n.translateDocs('mcp.step2.claude.desc') }}</p>
+            <div class="code-block" style="margin-bottom: 1rem; margin-top: 0">
+              <pre><code [highlight]="claudePathConfig" language="bash"></code></pre>
+            </div>
+            <div class="code-block">
+              <pre><code [highlight]="claudeConfig" language="json"></code></pre>
+            </div>
+          </magary-tab>
+
+          <!-- Antigravity -->
+          <magary-tab [label]="i18n.translateDocs('mcp.step2.antigravity')">
+            <p style="margin-left: 1rem; margin-top: 1rem; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--surface-600)">{{ i18n.translateDocs('mcp.step2.antigravity.desc') }}</p>
+            <div class="code-block" style="margin-top: 0">
+              <pre><code [highlight]="universalJsonConfig" language="json"></code></pre>
+            </div>
+          </magary-tab>
+        </magary-tabs>
       </div>
     </magary-card>
 
@@ -112,52 +146,12 @@
         </div>
       </div>
       <div class="step-content">
-        <ul class="info-list">
-          <li>{{ i18n.translateDocs('mcp.step4.vscode') }}</li>
-          <li>{{ i18n.translateDocs('mcp.step4.cursor') }}</li>
-          <li>{{ i18n.translateDocs('mcp.step4.claude') }}</li>
-          <li>{{ i18n.translateDocs('mcp.step4.antigravity') }}</li>
-        </ul>
-        <div class="code-grid">
-          <div>
-            <p class="block-label">{{ i18n.translateDocs('mcp.step4.claudePaths') }}</p>
-            <div class="code-block">
-              <pre><code [highlight]="claudePathConfig" language="bash"></code></pre>
-            </div>
-          </div>
-          <div>
-            <p class="block-label">{{ i18n.translateDocs('mcp.step4.recommendedJson') }}</p>
-            <div class="code-block">
-              <pre><code [highlight]="recommendedBridgeConfig" language="json"></code></pre>
-            </div>
-          </div>
-        </div>
-      </div>
-    </magary-card>
-
-    <magary-card
-      [width]="'100%'"
-      [shadow]="3"
-      [borderRadius]="'1rem'"
-      [backgroundColor]="'var(--surface-0)'"
-      [border]="'1px solid var(--surface-200)'"
-      class="step-card"
-    >
-      <div slot="header">
-        <div class="step-header">
-          <span class="step-number">5</span>
-          <h3>{{ i18n.translateDocs('mcp.step5.title') }}</h3>
-        </div>
-      </div>
-      <div class="step-content">
-        <p>{{ i18n.translateDocs('mcp.step5.desc') }}</p>
+        <p>{{ i18n.translateDocs('mcp.step4.desc') }}</p>
         <div class="code-block">
           <pre><code [highlight]="verificationPrompts" language="bash"></code></pre>
         </div>
         <ul class="info-list">
-          <li>{{ i18n.translateDocs('mcp.step5.tip1') }}</li>
-          <li>{{ i18n.translateDocs('mcp.step5.tip2') }}</li>
-          <li>{{ i18n.translateDocs('mcp.step5.tip3') }}</li>
+          <li>{{ i18n.translateDocs('mcp.step4.tip1') }}</li>
         </ul>
       </div>
     </magary-card>

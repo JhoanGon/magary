@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { ErrorCode, ListResourcesRequestSchema, McpError, ReadResourceRequestSchema, ListPromptsRequestSchema, GetPromptRequestSchema, } from '@modelcontextprotocol/sdk/types.js';
+import { CallToolRequestSchema, ErrorCode, ListResourcesRequestSchema, ListToolsRequestSchema, McpError, ReadResourceRequestSchema, ListPromptsRequestSchema, GetPromptRequestSchema, } from '@modelcontextprotocol/sdk/types.js';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -22,11 +22,46 @@ class MagaryMcpServer {
         });
         this.setupResourceHandlers();
         this.setupPromptHandlers();
+        this.setupToolHandlers();
         // Error handling
         this.server.onerror = (error) => console.error('[MCP Error]', error);
         process.on('SIGINT', async () => {
             await this.server.close();
             process.exit(0);
+        });
+    }
+    setupToolHandlers() {
+        this.server.setRequestHandler(ListToolsRequestSchema, async () => {
+            return {
+                tools: [
+                    {
+                        name: 'get_catalog',
+                        description: 'Returns the Magary UI component catalog and descriptions',
+                        inputSchema: {
+                            type: 'object',
+                            properties: {},
+                        },
+                    },
+                ],
+            };
+        });
+        this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
+            if (request.params.name === 'get_catalog') {
+                const catalog = this.components.map((c) => ({
+                    name: c.name,
+                    selector: c.selector,
+                    description: c.description,
+                }));
+                return {
+                    content: [
+                        {
+                            type: 'text',
+                            text: JSON.stringify(catalog, null, 2),
+                        },
+                    ],
+                };
+            }
+            throw new McpError(ErrorCode.MethodNotFound, `Tool not found: ${request.params.name}`);
         });
     }
     async init() {

@@ -1,0 +1,68 @@
+<section class="mg-premium-hero">
+  <div class="mg-hero-container">
+    <div class="mg-hero-content">
+      <div class="mg-hero-badge">
+        <span class="badge-text">New UI Blocks</span>
+        <a href="#" class="badge-link">See what's new &rarr;</a>
+      </div>
+      
+      <h1 class="mg-hero-title">
+        Build Faster with<br/>
+        <span class="mg-gradient-text">Magary Premium</span>
+      </h1>
+      
+      <p class="mg-hero-subtitle">
+        A premium, customizable, and accessible UI kit built exclusively for modern Angular applications.
+        Accelerate your development without compromising on bespoke design.
+      </p>
+      
+      <div class="mg-hero-actions">
+        <magary-button label="Get Started" severity="primary" size="large" [shadow]="2"></magary-button>
+        <magary-button label="View Components" severity="secondary" variant="outlined" size="large"></magary-button>
+      </div>
+      
+      <p class="mg-hero-disclaimer">Free community version also available via npm.</p>
+    </div>
+
+    <div class="mg-hero-visual">
+       <div class="mg-glow-blob top-right"></div>
+       <div class="mg-glow-blob bottom-left"></div>
+       
+       <magary-card 
+         class="mg-glass-card fade-in-up"
+         [width]="'100%'"
+         [padding]="'0'"
+         [backgroundColor]="'var(--glass-bg, rgba(255, 255, 255, 0.8))'"
+         [border]="'var(--glass-border, 1px solid rgba(255, 255, 255, 0.3))'"
+         [borderRadius]="'var(--magary-field-radius, 1rem)'"
+         [shadow]="4"
+         [hoverEffect]="true"
+       >
+           <div slot="header" class="mg-glass-header">
+               <div class="circles">
+                   <div class="circle red"></div>
+                   <div class="circle yellow"></div>
+                   <div class="circle green"></div>
+               </div>
+           </div>
+           <div class="mg-glass-body">
+               <div class="skeleton-line title w-60"></div>
+               <div class="skeleton-line w-100"></div>
+               <div class="skeleton-line w-80"></div>
+               
+               <div class="skeleton-box">
+                  <div class="skeleton-avatar"></div>
+                  <div class="skeleton-text-group">
+                      <div class="skeleton-line w-40"></div>
+                      <div class="skeleton-line w-20"></div>
+                  </div>
+               </div>
+               
+               <div class="glass-actions">
+                 <magary-button label="Subscribe Now" severity="primary"></magary-button>
+               </div>
+           </div>
+       </magary-card>
+    </div>
+  </div>
+</section>

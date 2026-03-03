@@ -5,9 +5,9 @@
     "inputs": [
       {
         "name": "style",
-        "type": "unknown",
+        "type": "Record<string, string | number> | null",
         "required": false,
-        "defaultValue": ""
+        "defaultValue": "null"
       },
       {
         "name": "styleClass",
@@ -18,7 +18,7 @@
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryToolbar (magary-toolbar)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Panel\\toolbar\\toolbar.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Panel\\toolbar\\toolbar.ts"
   },
   {
     "name": "MagaryCard",
@@ -153,17 +153,35 @@
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryCard (magary-card)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Panel\\card\\card.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Panel\\card\\card.ts"
   },
   {
     "name": "MagaryTabs",
     "selector": "magary-tabs",
     "inputs": [
       {
-        "name": "backgroundLine",
+        "name": "tabListAriaLabel",
         "type": "string",
         "required": false,
-        "defaultValue": "'#000'"
+        "defaultValue": "'Tabs'"
+      },
+      {
+        "name": "lineColor",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'var(--primary-500"
+      },
+      {
+        "name": "backgroundLine",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "hoverBg",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
       },
       {
         "name": "positionContent",
@@ -187,12 +205,48 @@
         "name": "heightLine",
         "type": "string",
         "required": false,
-        "defaultValue": "'5px'"
+        "defaultValue": "'2px'"
+      },
+      {
+        "name": "panelWidth",
+        "type": "'auto' | 'full'",
+        "required": false,
+        "defaultValue": "'full'"
+      },
+      {
+        "name": "activeBg",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "activeText",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "activeTabBackground",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "activeTabTextColor",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "showHeaderScrollbar",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
       }
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryTabs (magary-tabs)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Panel\\tabs\\tabs.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Panel\\tabs\\tabs.ts"
   },
   {
     "name": "MagaryAccordion",
@@ -216,7 +270,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryAccordion (magary-accordion)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Panel\\accordion\\accordion.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Panel\\accordion\\accordion.ts"
   },
   {
     "name": "MagaryAccordionTab",
@@ -237,7 +291,7 @@
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryAccordionTab (magary-accordion-tab)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Panel\\accordion\\accordion-tab.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Panel\\accordion\\accordion-tab.ts"
   },
   {
     "name": "MagaryFieldset",
@@ -267,287 +321,37 @@
       }
     ],
     "description": "Magary UI Component: MagaryFieldset (magary-fieldset)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Panel\\fieldset\\fieldset.ts"
-  },
-  {
-    "name": "MagaryMessage",
-    "selector": "magary-message",
-    "inputs": [
-      {
-        "name": "text",
-        "type": "string | undefined",
-        "required": false,
-        "defaultValue": "undefined"
-      },
-      {
-        "name": "detail",
-        "type": "string | undefined",
-        "required": false,
-        "defaultValue": "undefined"
-      },
-      {
-        "name": "icon",
-        "type": "string | undefined",
-        "required": false,
-        "defaultValue": "undefined"
-      },
-      {
-        "name": "closable",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "life",
-        "type": "number | undefined",
-        "required": false,
-        "defaultValue": "undefined"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "onClose",
-        "description": "Event emitter for onClose"
-      }
-    ],
-    "description": "Magary UI Component: MagaryMessage (magary-message)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Messages\\message\\message.ts"
-  },
-  {
-    "name": "MagaryToast",
-    "selector": "magary-toast",
-    "inputs": [
-      {
-        "name": "baseZIndex",
-        "type": "number",
-        "required": false,
-        "defaultValue": "1000"
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MagaryToast (magary-toast)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Misc\\toast\\toast.ts"
-  },
-  {
-    "name": "MagaryToastItem",
-    "selector": "magary-toast-item",
-    "inputs": [
-      {
-        "name": "toast",
-        "type": "Toast",
-        "required": true
-      }
-    ],
-    "outputs": [
-      {
-        "name": "onClose",
-        "description": "Event emitter for onClose"
-      }
-    ],
-    "description": "Magary UI Component: MagaryToastItem (magary-toast-item)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Misc\\toast\\toast-item.ts"
-  },
-  {
-    "name": "MagaryTag",
-    "selector": "magary-tag",
-    "inputs": [
-      {
-        "name": "severity",
-        "type": "TagSeverity",
-        "required": false,
-        "defaultValue": "'info'"
-      },
-      {
-        "name": "value",
-        "type": "string | undefined",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "icon",
-        "type": "string | undefined",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "rounded",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MagaryTag (magary-tag)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Misc\\tag\\tag.ts"
-  },
-  {
-    "name": "MagarySkeleton",
-    "selector": "magary-skeleton",
-    "inputs": [
-      {
-        "name": "shape",
-        "type": "'rectangle' | 'circle'",
-        "required": false,
-        "defaultValue": "'rectangle'"
-      },
-      {
-        "name": "size",
-        "type": "string | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "width",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'100%'"
-      },
-      {
-        "name": "height",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'1rem'"
-      },
-      {
-        "name": "borderRadius",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'4px'"
-      },
-      {
-        "name": "animation",
-        "type": "'shimmer' | 'none'",
-        "required": false,
-        "defaultValue": "'shimmer'"
-      },
-      {
-        "name": "styleClass",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MagarySkeleton (magary-skeleton)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Misc\\skeleton\\skeleton.ts"
-  },
-  {
-    "name": "MagaryDivider",
-    "selector": "magary-divider",
-    "inputs": [
-      {
-        "name": "layout",
-        "type": "DividerLayout",
-        "required": false,
-        "defaultValue": "'horizontal'"
-      },
-      {
-        "name": "align",
-        "type": "DividerAlign",
-        "required": false,
-        "defaultValue": "'center'"
-      },
-      {
-        "name": "type",
-        "type": "DividerType",
-        "required": false,
-        "defaultValue": "'solid'"
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MagaryDivider (magary-divider)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Misc\\divider\\divider.ts"
-  },
-  {
-    "name": "MagaryAvatar",
-    "selector": "magary-avatar",
-    "inputs": [
-      {
-        "name": "label",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "image",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "icon",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "shape",
-        "type": "AvatarShape",
-        "required": false,
-        "defaultValue": "'square'"
-      },
-      {
-        "name": "size",
-        "type": "AvatarSize",
-        "required": false,
-        "defaultValue": "'normal'"
-      },
-      {
-        "name": "badgeValue",
-        "type": "string | number",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "badgeSeverity",
-        "type": "BadgeSeverity",
-        "required": false,
-        "defaultValue": "'danger'"
-      },
-      {
-        "name": "customStyle",
-        "type": "Record<string, unknown>",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "alt",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'Avatar'"
-      },
-      {
-        "name": "clickable",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "loading",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "disabled",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "avatarClick",
-        "description": "Event emitter for avatarClick"
-      }
-    ],
-    "description": "Magary UI Component: MagaryAvatar (magary-avatar)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Misc\\avatar\\avatar.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Panel\\fieldset\\fieldset.ts"
   },
   {
     "name": "MagaryOverlayPanel",
     "selector": "magary-overlaypanel",
-    "inputs": [],
+    "inputs": [
+      {
+        "name": "dismissable",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      },
+      {
+        "name": "showCloseIcon",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "closeOnEscape",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      },
+      {
+        "name": "panelAriaLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Overlay panel'"
+      }
+    ],
     "outputs": [
       {
         "name": "onShow",
@@ -559,7 +363,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryOverlayPanel (magary-overlaypanel)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Overlay\\overlaypanel\\overlaypanel.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Overlay\\overlaypanel\\overlaypanel.ts"
   },
   {
     "name": "MagaryDialog",
@@ -608,14 +412,32 @@
         "defaultValue": "false, { transform: booleanAttribute }"
       },
       {
+        "name": "trapFocus",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      },
+      {
+        "name": "autoFocus",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Dialog'"
+      },
+      {
         "name": "style",
-        "type": "unknown",
+        "type": "Record<string, unknown> | null",
         "required": false,
         "defaultValue": "null"
       },
       {
         "name": "contentStyle",
-        "type": "unknown",
+        "type": "Record<string, unknown> | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -650,6 +472,36 @@
         "defaultValue": "undefined"
       },
       {
+        "name": "headerBackground",
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "contentBackground",
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "footerBackground",
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "showBorder",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      },
+      {
+        "name": "showSectionBorders",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      },
+      {
         "name": "glass",
         "type": "inferred",
         "required": false,
@@ -667,7 +519,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryDialog (magary-dialog)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Overlay\\dialog\\dialog.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Overlay\\dialog\\dialog.ts"
   },
   {
     "name": "MagaryConfirmDialog",
@@ -748,7 +600,654 @@
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryConfirmDialog (magary-confirm-dialog)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Overlay\\confirm-dialog\\confirm-dialog.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Overlay\\confirm-dialog\\confirm-dialog.ts"
+  },
+  {
+    "name": "TieredMenuItemDirective",
+    "selector": "[appTieredMenuItem]",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "popup",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "item",
+        "type": "MenuItem",
+        "required": true
+      },
+      {
+        "name": "parent",
+        "type": "MagaryTieredMenu",
+        "required": true
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: TieredMenuItemDirective ([appTieredMenuItem])",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Menu\\tieredmenu\\tiered-menu.ts"
+  },
+  {
+    "name": "MagarySlideMenu",
+    "selector": "magary-slidemenu",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "menuWidth",
+        "type": "number | string",
+        "required": false,
+        "defaultValue": "300"
+      },
+      {
+        "name": "viewportHeight",
+        "type": "number | string",
+        "required": false,
+        "defaultValue": "400"
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MagarySlideMenu (magary-slidemenu)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Menu\\slidemenu\\slidemenu.ts"
+  },
+  {
+    "name": "MagarySteps",
+    "selector": "magary-steps",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "StepsItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "activeIndex",
+        "type": "number",
+        "required": false,
+        "defaultValue": "0"
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true"
+      },
+      {
+        "name": "style",
+        "type": "NavStyleMap | null | undefined",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "styleClass",
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical'",
+        "required": false,
+        "defaultValue": "'horizontal'"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "activeIndexChange",
+        "description": "Event emitter for activeIndexChange"
+      }
+    ],
+    "description": "Magary UI Component: MagarySteps (magary-steps)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Menu\\steps\\steps.ts"
+  },
+  {
+    "name": "Sidebar",
+    "selector": "magary-sidebar",
+    "inputs": [
+      {
+        "name": "sections",
+        "type": "SidebarSection[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "menu",
+        "type": "MenuItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "menuTitle",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Menu'"
+      },
+      {
+        "name": "showUserSection",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "showUserAvatar",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true"
+      },
+      {
+        "name": "showUserName",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true"
+      },
+      {
+        "name": "showUserEmail",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true"
+      },
+      {
+        "name": "showLogoutButton",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true"
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'John Doe'"
+      },
+      {
+        "name": "userEmail",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'user@example.com'"
+      },
+      {
+        "name": "logoSrc",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'assets/logo.svg'"
+      },
+      {
+        "name": "appTitle",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'PRIMENG'"
+      },
+      {
+        "name": "appTitleClass",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "appTitleStyle",
+        "type": "Record<string, unknown> | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "menuBackgroundColor",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'var(--surface-50"
+      },
+      {
+        "name": "menuTextColor",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'var(--text-primary"
+      },
+      {
+        "name": "menuHoverColor",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'var(--surface-100"
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true"
+      },
+      {
+        "name": "showToggle",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true"
+      },
+      {
+        "name": "showLogo",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "true"
+      },
+      {
+        "name": "showBrandLogo",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "brandLogoSrc",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "brandLogoPosition",
+        "type": "'top' | 'bottom' | 'center'",
+        "required": false,
+        "defaultValue": "'bottom'"
+      },
+      {
+        "name": "logoWidth",
+        "type": "number",
+        "required": false,
+        "defaultValue": "32"
+      },
+      {
+        "name": "logoHeight",
+        "type": "number",
+        "required": false,
+        "defaultValue": "32"
+      },
+      {
+        "name": "brandLogoWidth",
+        "type": "number",
+        "required": false,
+        "defaultValue": "200"
+      },
+      {
+        "name": "brandLogoHeight",
+        "type": "number",
+        "required": false,
+        "defaultValue": "100"
+      },
+      {
+        "name": "navigationLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Primary navigation'"
+      },
+      {
+        "name": "mobileMenuButtonLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Open sidebar navigation'"
+      },
+      {
+        "name": "closeButtonLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Close sidebar'"
+      },
+      {
+        "name": "closeOnEscape",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      },
+      {
+        "name": "trapFocus",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onLogout",
+        "description": "Event emitter for onLogout"
+      },
+      {
+        "name": "closeSidebar",
+        "description": "Event emitter for closeSidebar"
+      }
+    ],
+    "description": "Magary UI Component: Sidebar (magary-sidebar)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Menu\\sidebar\\sidebar.ts"
+  },
+  {
+    "name": "MenubarItemDirective",
+    "selector": "[appMenubarItem]",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "item",
+        "type": "MenuItem",
+        "required": true
+      },
+      {
+        "name": "parent",
+        "type": "MagaryMenubar",
+        "required": true
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MenubarItemDirective ([appMenubarItem])",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Menu\\menubar\\menubar.ts"
+  },
+  {
+    "name": "MagaryPanelmenu",
+    "selector": "magary-panelmenu",
+    "inputs": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Panel Menu'"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "iconClass",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "items",
+        "type": "MenuItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'#f9fafb'"
+      },
+      {
+        "name": "textColor",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'#1f2937'"
+      },
+      {
+        "name": "borderRadius",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'8px'"
+      },
+      {
+        "name": "shadow",
+        "type": "number",
+        "required": false,
+        "defaultValue": "0"
+      },
+      {
+        "name": "width",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'100%'"
+      },
+      {
+        "name": "hoverColor",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'#007bff'"
+      },
+      {
+        "name": "allowMultipleExpanded",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "collapsed",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "menuToggle",
+        "description": "Event emitter for menuToggle"
+      },
+      {
+        "name": "itemClick",
+        "description": "Event emitter for itemClick"
+      },
+      {
+        "name": "itemExpand",
+        "description": "Event emitter for itemExpand"
+      },
+      {
+        "name": "expandSidebar",
+        "description": "Event emitter for expandSidebar"
+      }
+    ],
+    "description": "Magary UI Component: MagaryPanelmenu (magary-panelmenu)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Menu\\panelmenu\\panelmenu.ts"
+  },
+  {
+    "name": "MegaMenuItemDirective",
+    "selector": "[appMegaMenuItem]",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical'",
+        "required": false,
+        "defaultValue": "'horizontal'"
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "item",
+        "type": "MenuItem",
+        "required": true
+      },
+      {
+        "name": "parent",
+        "type": "MagaryMegaMenu",
+        "required": true
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MegaMenuItemDirective ([appMegaMenuItem])",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Menu\\megamenu\\megamenu.ts"
+  },
+  {
+    "name": "MagaryContextMenu",
+    "selector": "magary-context-menu",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "styleClass",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "global",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "target",
+        "type": "string | ElementRef<HTMLElement> | HTMLElement | null",
+        "required": false,
+        "defaultValue": "null"
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MagaryContextMenu (magary-context-menu)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Menu\\contextmenu\\context-menu.ts"
+  },
+  {
+    "name": "MagaryBreadcrumb",
+    "selector": "magary-breadcrumb",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "BreadcrumbItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "home",
+        "type": "BreadcrumbItem | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "style",
+        "type": "NavStyleMap | null | undefined",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "styleClass",
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onItemClick",
+        "description": "Event emitter for onItemClick"
+      }
+    ],
+    "description": "Magary UI Component: MagaryBreadcrumb (magary-breadcrumb)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Menu\\breadcrumb\\breadcrumb.ts"
+  },
+  {
+    "name": "MagaryMessage",
+    "selector": "magary-message",
+    "inputs": [
+      {
+        "name": "text",
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "detail",
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "icon",
+        "type": "string | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "closable",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "life",
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onClose",
+        "description": "Event emitter for onClose"
+      }
+    ],
+    "description": "Magary UI Component: MagaryMessage (magary-message)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Messages\\message\\message.ts"
   },
   {
     "name": "MagaryImage",
@@ -802,7 +1301,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryImage (magary-image)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Media\\image\\image.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Media\\image\\image.ts"
   },
   {
     "name": "GalleriaIconsModule",
@@ -1020,9 +1519,9 @@
       },
       {
         "name": "containerStyle",
-        "type": "unknown",
+        "type": "GalleriaContainerStyle | null",
         "required": false,
-        "defaultValue": ""
+        "defaultValue": "null"
       },
       {
         "name": "containerClass",
@@ -1094,7 +1593,7 @@
       }
     ],
     "description": "Magary UI Component: GalleriaIconsModule (magary-galleria)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Media\\galleria\\galleria.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Media\\galleria\\galleria.ts"
   },
   {
     "name": "CarouselIconsModule",
@@ -1522,427 +2021,83 @@
       }
     ],
     "description": "Magary UI Component: CarouselIconsModule (magary-carousel)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Media\\carousel\\carousel.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Media\\carousel\\carousel.ts"
   },
   {
-    "name": "TieredMenuItemDirective",
-    "selector": "[appTieredMenuItem]",
+    "name": "MagaryTag",
+    "selector": "magary-tag",
     "inputs": [
       {
-        "name": "model",
-        "type": "MenuItem[]",
+        "name": "severity",
+        "type": "TagSeverity",
         "required": false,
-        "defaultValue": "[]"
+        "defaultValue": "'info'"
       },
       {
-        "name": "popup",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "style",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "styleClass",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      },
-      {
-        "name": "item",
-        "type": "MenuItem",
-        "required": true
-      },
-      {
-        "name": "parent",
-        "type": "MagaryTieredMenu",
-        "required": true
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: TieredMenuItemDirective ([appTieredMenuItem])",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Menu\\tieredmenu\\tiered-menu.ts"
-  },
-  {
-    "name": "MagarySteps",
-    "selector": "magary-steps",
-    "inputs": [
-      {
-        "name": "model",
-        "type": "StepsItem[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "activeIndex",
-        "type": "number",
-        "required": false,
-        "defaultValue": "0"
-      },
-      {
-        "name": "readonly",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "true"
-      },
-      {
-        "name": "style",
-        "type": "{ [klass: string]: unknown } | null | undefined",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "styleClass",
+        "name": "value",
         "type": "string | undefined",
-        "required": false,
-        "defaultValue": "undefined"
-      },
-      {
-        "name": "orientation",
-        "type": "'horizontal' | 'vertical'",
-        "required": false,
-        "defaultValue": "'horizontal'"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "activeIndexChange",
-        "description": "Event emitter for activeIndexChange"
-      }
-    ],
-    "description": "Magary UI Component: MagarySteps (magary-steps)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Menu\\steps\\steps.ts"
-  },
-  {
-    "name": "MagarySlideMenu",
-    "selector": "magary-slidemenu",
-    "inputs": [
-      {
-        "name": "model",
-        "type": "MenuItem[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "style",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "styleClass",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      },
-      {
-        "name": "menuWidth",
-        "type": "number | string",
-        "required": false,
-        "defaultValue": "300"
-      },
-      {
-        "name": "viewportHeight",
-        "type": "number | string",
-        "required": false,
-        "defaultValue": "400"
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MagarySlideMenu (magary-slidemenu)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Menu\\slidemenu\\slidemenu.ts"
-  },
-  {
-    "name": "Sidebar",
-    "selector": "magary-sidebar",
-    "inputs": [
-      {
-        "name": "sections",
-        "type": "SidebarSection[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "menu",
-        "type": "MenuItem[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "menuTitle",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'Menu'"
-      },
-      {
-        "name": "showUserSection",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "userName",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'John Doe'"
-      },
-      {
-        "name": "userEmail",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'user@example.com'"
-      },
-      {
-        "name": "logoSrc",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'assets/logo.svg'"
-      },
-      {
-        "name": "appTitle",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'PRIMENG'"
-      },
-      {
-        "name": "appTitleClass",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      },
-      {
-        "name": "appTitleStyle",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "menuBackgroundColor",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'var(--surface-50"
-      },
-      {
-        "name": "menuTextColor",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'var(--text-primary"
-      },
-      {
-        "name": "menuHoverColor",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'var(--surface-100"
-      },
-      {
-        "name": "collapsible",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "true"
-      },
-      {
-        "name": "showToggle",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "true"
-      },
-      {
-        "name": "showLogo",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "true"
-      },
-      {
-        "name": "showBrandLogo",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "brandLogoSrc",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      },
-      {
-        "name": "brandLogoPosition",
-        "type": "'top' | 'bottom' | 'center'",
-        "required": false,
-        "defaultValue": "'bottom'"
-      },
-      {
-        "name": "logoWidth",
-        "type": "number",
-        "required": false,
-        "defaultValue": "32"
-      },
-      {
-        "name": "logoHeight",
-        "type": "number",
-        "required": false,
-        "defaultValue": "32"
-      },
-      {
-        "name": "brandLogoWidth",
-        "type": "number",
-        "required": false,
-        "defaultValue": "200"
-      },
-      {
-        "name": "brandLogoHeight",
-        "type": "number",
-        "required": false,
-        "defaultValue": "100"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "Logout",
-        "description": "Event emitter for Logout"
-      },
-      {
-        "name": "closeSidebar",
-        "description": "Event emitter for closeSidebar"
-      }
-    ],
-    "description": "Magary UI Component: Sidebar (magary-sidebar)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Menu\\sidebar\\sidebar.ts"
-  },
-  {
-    "name": "MenubarItemDirective",
-    "selector": "[appMenubarItem]",
-    "inputs": [
-      {
-        "name": "model",
-        "type": "MenuItem[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "style",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "styleClass",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      },
-      {
-        "name": "item",
-        "type": "MenuItem",
-        "required": true
-      },
-      {
-        "name": "parent",
-        "type": "MagaryMenubar",
-        "required": true
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MenubarItemDirective ([appMenubarItem])",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Menu\\menubar\\menubar.ts"
-  },
-  {
-    "name": "MegaMenuItemDirective",
-    "selector": "[appMegaMenuItem]",
-    "inputs": [
-      {
-        "name": "model",
-        "type": "MenuItem[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "orientation",
-        "type": "'horizontal' | 'vertical'",
-        "required": false,
-        "defaultValue": "'horizontal'"
-      },
-      {
-        "name": "style",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "styleClass",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      },
-      {
-        "name": "item",
-        "type": "MenuItem",
-        "required": true
-      },
-      {
-        "name": "parent",
-        "type": "MagaryMegaMenu",
-        "required": true
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MegaMenuItemDirective ([appMegaMenuItem])",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Menu\\megamenu\\megamenu.ts"
-  },
-  {
-    "name": "MagaryPanelmenu",
-    "selector": "magary-panelmenu",
-    "inputs": [
-      {
-        "name": "title",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'Panel Menu'"
-      },
-      {
-        "name": "icon",
-        "type": "string",
         "required": false,
         "defaultValue": ""
       },
       {
-        "name": "iconClass",
-        "type": "string",
+        "name": "icon",
+        "type": "string | undefined",
         "required": false,
-        "defaultValue": "''"
+        "defaultValue": ""
       },
       {
-        "name": "items",
-        "type": "MenuItem[]",
+        "name": "rounded",
+        "type": "boolean",
         "required": false,
-        "defaultValue": "[]"
+        "defaultValue": "false"
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MagaryTag (magary-tag)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Misc\\tag\\tag.ts"
+  },
+  {
+    "name": "MagaryDivider",
+    "selector": "magary-divider",
+    "inputs": [
+      {
+        "name": "layout",
+        "type": "DividerLayout",
+        "required": false,
+        "defaultValue": "'horizontal'"
       },
       {
-        "name": "backgroundColor",
-        "type": "string",
+        "name": "align",
+        "type": "DividerAlign",
         "required": false,
-        "defaultValue": "'#f9fafb'"
+        "defaultValue": "'center'"
       },
       {
-        "name": "textColor",
-        "type": "string",
+        "name": "type",
+        "type": "DividerType",
         "required": false,
-        "defaultValue": "'#1f2937'"
+        "defaultValue": "'solid'"
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MagaryDivider (magary-divider)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Misc\\divider\\divider.ts"
+  },
+  {
+    "name": "MagarySkeleton",
+    "selector": "magary-skeleton",
+    "inputs": [
+      {
+        "name": "shape",
+        "type": "'rectangle' | 'circle'",
+        "required": false,
+        "defaultValue": "'rectangle'"
       },
       {
-        "name": "borderRadius",
-        "type": "string",
+        "name": "size",
+        "type": "string | null",
         "required": false,
-        "defaultValue": "'8px'"
-      },
-      {
-        "name": "shadow",
-        "type": "number",
-        "required": false,
-        "defaultValue": "0"
+        "defaultValue": "null"
       },
       {
         "name": "width",
@@ -1951,132 +2106,166 @@
         "defaultValue": "'100%'"
       },
       {
-        "name": "hoverColor",
+        "name": "height",
         "type": "string",
         "required": false,
-        "defaultValue": "'#007bff'"
+        "defaultValue": "'1rem'"
       },
       {
-        "name": "allowMultipleExpanded",
-        "type": "boolean",
+        "name": "borderRadius",
+        "type": "string",
         "required": false,
-        "defaultValue": "false"
+        "defaultValue": "'4px'"
       },
       {
-        "name": "defaultOpen",
-        "type": "boolean",
+        "name": "animation",
+        "type": "'shimmer' | 'none'",
         "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "collapsed",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "menuToggle",
-        "description": "Event emitter for menuToggle"
-      },
-      {
-        "name": "itemClick",
-        "description": "Event emitter for itemClick"
-      },
-      {
-        "name": "itemExpand",
-        "description": "Event emitter for itemExpand"
-      },
-      {
-        "name": "expandSidebar",
-        "description": "Event emitter for expandSidebar"
-      }
-    ],
-    "description": "Magary UI Component: MagaryPanelmenu (magary-panelmenu)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Menu\\panelmenu\\panelmenu.ts"
-  },
-  {
-    "name": "MagaryContextMenu",
-    "selector": "magary-context-menu",
-    "inputs": [
-      {
-        "name": "model",
-        "type": "MenuItem[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "style",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
+        "defaultValue": "'shimmer'"
       },
       {
         "name": "styleClass",
-        "type": "string | null",
+        "type": "string",
         "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "global",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "target",
-        "type": "unknown",
-        "required": false,
-        "defaultValue": "null"
+        "defaultValue": "''"
       }
     ],
     "outputs": [],
-    "description": "Magary UI Component: MagaryContextMenu (magary-context-menu)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Menu\\contextmenu\\context-menu.ts"
+    "description": "Magary UI Component: MagarySkeleton (magary-skeleton)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Misc\\skeleton\\skeleton.ts"
   },
   {
-    "name": "MagaryBreadcrumb",
-    "selector": "magary-breadcrumb",
+    "name": "MagaryAvatar",
+    "selector": "magary-avatar",
     "inputs": [
       {
-        "name": "model",
-        "type": "BreadcrumbItem[]",
+        "name": "label",
+        "type": "string",
         "required": false,
-        "defaultValue": "[]"
+        "defaultValue": ""
       },
       {
-        "name": "home",
-        "type": "BreadcrumbItem | undefined",
+        "name": "image",
+        "type": "string",
         "required": false,
-        "defaultValue": "undefined"
+        "defaultValue": ""
       },
       {
-        "name": "style",
-        "type": "{ [klass: string]: unknown } | null | undefined",
+        "name": "icon",
+        "type": "string",
         "required": false,
-        "defaultValue": "null"
+        "defaultValue": ""
       },
       {
-        "name": "styleClass",
-        "type": "string | undefined",
+        "name": "shape",
+        "type": "AvatarShape",
         "required": false,
-        "defaultValue": "undefined"
+        "defaultValue": "'square'"
+      },
+      {
+        "name": "size",
+        "type": "AvatarSize",
+        "required": false,
+        "defaultValue": "'normal'"
+      },
+      {
+        "name": "badgeValue",
+        "type": "string | number",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "badgeSeverity",
+        "type": "BadgeSeverity",
+        "required": false,
+        "defaultValue": "'danger'"
+      },
+      {
+        "name": "customStyle",
+        "type": "Record<string, unknown>",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "alt",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Avatar'"
+      },
+      {
+        "name": "clickable",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
       }
     ],
     "outputs": [
       {
-        "name": "onItemClick",
-        "description": "Event emitter for onItemClick"
+        "name": "avatarClick",
+        "description": "Event emitter for avatarClick"
       }
     ],
-    "description": "Magary UI Component: MagaryBreadcrumb (magary-breadcrumb)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Menu\\breadcrumb\\breadcrumb.ts"
+    "description": "Magary UI Component: MagaryAvatar (magary-avatar)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Misc\\avatar\\avatar.ts"
   },
   {
     "name": "MagaryGridItem",
     "selector": "magary-grid-item",
     "inputs": [
+      {
+        "name": "item",
+        "type": "MagaryGridLayoutItem | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "col",
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "row",
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "cols",
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "rows",
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "movable",
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "resizable",
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
       {
         "name": "x",
         "type": "number | undefined",
@@ -2109,31 +2298,101 @@
       },
       {
         "name": "noResize",
-        "type": "boolean",
+        "type": "boolean | undefined",
         "required": false,
-        "defaultValue": "false"
+        "defaultValue": "undefined"
       },
       {
         "name": "noMove",
-        "type": "boolean",
+        "type": "boolean | undefined",
         "required": false,
-        "defaultValue": "false"
+        "defaultValue": "undefined"
       },
       {
         "name": "locked",
-        "type": "boolean",
+        "type": "boolean | undefined",
         "required": false,
-        "defaultValue": "false"
+        "defaultValue": "undefined"
       }
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryGridItem (magary-grid-item)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Grid\\grid-item\\grid-item.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Grid\\grid-item\\grid-item.ts"
+  },
+  {
+    "name": "MagaryToast",
+    "selector": "magary-toast",
+    "inputs": [
+      {
+        "name": "baseZIndex",
+        "type": "number",
+        "required": false,
+        "defaultValue": "1100"
+      },
+      {
+        "name": "offsetX",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'1rem'"
+      },
+      {
+        "name": "offsetY",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'1rem'"
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MagaryToast (magary-toast)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Misc\\toast\\toast.ts"
+  },
+  {
+    "name": "MagaryToastItem",
+    "selector": "magary-toast-item",
+    "inputs": [
+      {
+        "name": "toast",
+        "type": "Toast",
+        "required": true
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onClose",
+        "description": "Event emitter for onClose"
+      }
+    ],
+    "description": "Magary UI Component: MagaryToastItem (magary-toast-item)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Misc\\toast\\toast-item.ts"
   },
   {
     "name": "MagaryGrid",
     "selector": "magary-grid",
     "inputs": [
+      {
+        "name": "columns",
+        "type": "number | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "rowHeight",
+        "type": "number | 'auto' | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "gap",
+        "type": "number | string | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
+      {
+        "name": "editable",
+        "type": "boolean | undefined",
+        "required": false,
+        "defaultValue": "undefined"
+      },
       {
         "name": "options",
         "type": "GridStackOptions",
@@ -2153,10 +2412,127 @@
       {
         "name": "removed",
         "description": "Event emitter for removed"
+      },
+      {
+        "name": "itemsChange",
+        "description": "Event emitter for itemsChange"
       }
     ],
     "description": "Magary UI Component: MagaryGrid (magary-grid)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Grid\\grid\\grid.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Grid\\grid\\grid.ts"
+  },
+  {
+    "name": "MagarySwitch",
+    "selector": "magary-switch",
+    "inputs": [
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "change",
+        "description": "Event emitter for change"
+      }
+    ],
+    "description": "Magary UI Component: MagarySwitch (magary-switch)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\switch\\switch.ts"
+  },
+  {
+    "name": "MagarySelect",
+    "selector": "magary-select",
+    "inputs": [
+      {
+        "name": "options",
+        "type": "MagarySelectOption[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "optionLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "optionValue",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Select an option'"
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "size",
+        "type": "SelectSize",
+        "required": false,
+        "defaultValue": "'normal'"
+      },
+      {
+        "name": "disabled",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "loading",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "invalid",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "filter",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "showClear",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MagarySelect (magary-select)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\select\\select.ts"
   },
   {
     "name": "MagaryTextArea",
@@ -2201,7 +2577,129 @@
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryTextArea (magary-textarea)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\textarea\\textarea.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\textarea\\textarea.ts"
+  },
+  {
+    "name": "MagarySegmented",
+    "selector": "magary-segmented",
+    "inputs": [
+      {
+        "name": "options",
+        "type": "MagarySegmentedOption[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "optionLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "optionValue",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Segmented control'"
+      },
+      {
+        "name": "size",
+        "type": "SegmentedSize",
+        "required": false,
+        "defaultValue": "'normal'"
+      },
+      {
+        "name": "fullWidth",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "disabled",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "change",
+        "description": "Event emitter for change"
+      }
+    ],
+    "description": "Magary UI Component: MagarySegmented (magary-segmented)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\segmented\\segmented.ts"
+  },
+  {
+    "name": "MagarySlider",
+    "selector": "magary-slider",
+    "inputs": [
+      {
+        "name": "min",
+        "type": "number",
+        "required": false,
+        "defaultValue": "0"
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "required": false,
+        "defaultValue": "100"
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "required": false,
+        "defaultValue": "1"
+      },
+      {
+        "name": "range",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical'",
+        "required": false,
+        "defaultValue": "'horizontal'"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onChange",
+        "description": "Event emitter for onChange"
+      },
+      {
+        "name": "onSlideEnd",
+        "description": "Event emitter for onSlideEnd"
+      }
+    ],
+    "description": "Magary UI Component: MagarySlider (magary-slider)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\slider\\slider.ts"
   },
   {
     "name": "MagaryRating",
@@ -2261,240 +2759,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryRating (magary-rating)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\rating\\rating.ts"
-  },
-  {
-    "name": "MagarySwitch",
-    "selector": "magary-switch",
-    "inputs": [
-      {
-        "name": "disabled",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "label",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "change",
-        "description": "Event emitter for change"
-      }
-    ],
-    "description": "Magary UI Component: MagarySwitch (magary-switch)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\switch\\switch.ts"
-  },
-  {
-    "name": "MagaryRadioButton",
-    "selector": "magary-radio",
-    "inputs": [
-      {
-        "name": "value",
-        "type": "unknown",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "name",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "label",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "inputId",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "disabled",
-        "type": "inferred",
-        "required": false,
-        "defaultValue": "false, { transform: booleanAttribute }"
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MagaryRadioButton (magary-radio)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\radio\\radio.ts"
-  },
-  {
-    "name": "MagaryRadioGroup",
-    "selector": "magary-radio-group",
-    "inputs": [
-      {
-        "name": "options",
-        "type": "unknown[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "layout",
-        "type": "'vertical' | 'horizontal'",
-        "required": false,
-        "defaultValue": "'vertical'"
-      },
-      {
-        "name": "name",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "optionLabel",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "optionValue",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "disabled",
-        "type": "inferred",
-        "required": false,
-        "defaultValue": "false, { transform: booleanAttribute }"
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MagaryRadioGroup (magary-radio-group)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\radio\\radio-group.ts"
-  },
-  {
-    "name": "MagarySlider",
-    "selector": "magary-slider",
-    "inputs": [
-      {
-        "name": "min",
-        "type": "number",
-        "required": false,
-        "defaultValue": "0"
-      },
-      {
-        "name": "max",
-        "type": "number",
-        "required": false,
-        "defaultValue": "100"
-      },
-      {
-        "name": "step",
-        "type": "number",
-        "required": false,
-        "defaultValue": "1"
-      },
-      {
-        "name": "range",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "orientation",
-        "type": "'horizontal' | 'vertical'",
-        "required": false,
-        "defaultValue": "'horizontal'"
-      },
-      {
-        "name": "disabled",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "style",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "styleClass",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "onChange",
-        "description": "Event emitter for onChange"
-      },
-      {
-        "name": "onSlideEnd",
-        "description": "Event emitter for onSlideEnd"
-      }
-    ],
-    "description": "Magary UI Component: MagarySlider (magary-slider)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\slider\\slider.ts"
-  },
-  {
-    "name": "MagarySelect",
-    "selector": "magary-select",
-    "inputs": [
-      {
-        "name": "options",
-        "type": "unknown[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "optionLabel",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "optionValue",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "placeholder",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'Select an option'"
-      },
-      {
-        "name": "disabled",
-        "type": "inferred",
-        "required": false,
-        "defaultValue": "false, { transform: booleanAttribute }"
-      },
-      {
-        "name": "loading",
-        "type": "inferred",
-        "required": false,
-        "defaultValue": "false, { transform: booleanAttribute }"
-      },
-      {
-        "name": "filter",
-        "type": "inferred",
-        "required": false,
-        "defaultValue": "false, { transform: booleanAttribute }"
-      },
-      {
-        "name": "showClear",
-        "type": "inferred",
-        "required": false,
-        "defaultValue": "false, { transform: booleanAttribute }"
-      }
-    ],
-    "outputs": [],
-    "description": "Magary UI Component: MagarySelect (magary-select)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\select\\select.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\rating\\rating.ts"
   },
   {
     "name": "MagaryInputNumber",
@@ -2622,7 +2887,7 @@
       },
       {
         "name": "inputStyle",
-        "type": "{ [klass: string]: unknown } | null",
+        "type": "Record<string, unknown> | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -2634,7 +2899,7 @@
       },
       {
         "name": "style",
-        "type": "{ [klass: string]: unknown } | null",
+        "type": "Record<string, unknown> | null",
         "required": false,
         "defaultValue": "null"
       },
@@ -2712,7 +2977,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryInputNumber (magary-input-number)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\inputnumber\\input-number.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\inputnumber\\input-number.ts"
   },
   {
     "name": "MagaryInput",
@@ -2785,6 +3050,12 @@
         "defaultValue": "''"
       },
       {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
         "name": "helpText",
         "type": "string",
         "required": false,
@@ -2830,7 +3101,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryInput (magary-input)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\input\\input.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\input\\input.ts"
   },
   {
     "name": "MagaryDatePicker",
@@ -2874,7 +3145,135 @@
       }
     ],
     "description": "Magary UI Component: MagaryDatePicker (magary-datepicker)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\datepicker\\datepicker.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\datepicker\\datepicker.ts"
+  },
+  {
+    "name": "MagaryRadioButton",
+    "selector": "magary-radio",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "unknown",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "inputId",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "disabled",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MagaryRadioButton (magary-radio)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\radio\\radio.ts"
+  },
+  {
+    "name": "MagaryRadioGroup",
+    "selector": "magary-radio-group",
+    "inputs": [
+      {
+        "name": "options",
+        "type": "RadioOption[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "layout",
+        "type": "'vertical' | 'horizontal'",
+        "required": false,
+        "defaultValue": "'vertical'"
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "optionLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "optionValue",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "disabled",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      }
+    ],
+    "outputs": [],
+    "description": "Magary UI Component: MagaryRadioGroup (magary-radio-group)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\radio\\radio-group.ts"
+  },
+  {
+    "name": "MagaryCheckbox",
+    "selector": "magary-checkbox",
+    "inputs": [
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "value",
+        "type": "unknown",
+        "required": false,
+        "defaultValue": "null"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "change",
+        "description": "Event emitter for change"
+      }
+    ],
+    "description": "Magary UI Component: MagaryCheckbox (magary-checkbox)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\checkbox\\checkbox.ts"
   },
   {
     "name": "MagaryCascadeSelect",
@@ -2882,7 +3281,7 @@
     "inputs": [
       {
         "name": "options",
-        "type": "unknown[]",
+        "type": "CascadeSelectOption[]",
         "required": false,
         "defaultValue": "[]"
       },
@@ -2917,6 +3316,36 @@
         "defaultValue": "'Select an option'"
       },
       {
+        "name": "size",
+        "type": "CascadeSelectSize",
+        "required": false,
+        "defaultValue": "'normal'"
+      },
+      {
+        "name": "loading",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "invalid",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
         "name": "disabledInput",
         "type": "boolean",
         "required": false,
@@ -2937,7 +3366,7 @@
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryCascadeSelect (magary-cascade-select)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\cascade-select\\cascade-select.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Form\\cascade-select\\cascade-select.ts"
   },
   {
     "name": "MagaryUpload",
@@ -3041,99 +3470,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryUpload (magary-upload)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\File\\upload\\upload.ts"
-  },
-  {
-    "name": "MagarySplitButton",
-    "selector": "magary-split-button",
-    "inputs": [
-      {
-        "name": "label",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'Save'"
-      },
-      {
-        "name": "icon",
-        "type": "string",
-        "required": false,
-        "defaultValue": ""
-      },
-      {
-        "name": "iconSize",
-        "type": "number",
-        "required": false,
-        "defaultValue": "18"
-      },
-      {
-        "name": "model",
-        "type": "MenuItem[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "disabled",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "styleClass",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "onClick",
-        "description": "Event emitter for onClick"
-      },
-      {
-        "name": "onDropdownClick",
-        "description": "Event emitter for onDropdownClick"
-      }
-    ],
-    "description": "Magary UI Component: MagarySplitButton (magary-split-button)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Button\\split-button\\split-button.ts"
-  },
-  {
-    "name": "MagaryCheckbox",
-    "selector": "magary-checkbox",
-    "inputs": [
-      {
-        "name": "disabled",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "required",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "label",
-        "type": "string",
-        "required": false,
-        "defaultValue": "''"
-      },
-      {
-        "name": "value",
-        "type": "unknown",
-        "required": false,
-        "defaultValue": "null"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "change",
-        "description": "Event emitter for change"
-      }
-    ],
-    "description": "Magary UI Component: MagaryCheckbox (magary-checkbox)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Form\\checkbox\\checkbox.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\File\\upload\\upload.ts"
   },
   {
     "name": "MagarySpeedDial",
@@ -3182,6 +3519,30 @@
         "defaultValue": "null"
       },
       {
+        "name": "triggerSize",
+        "type": "number",
+        "required": false,
+        "defaultValue": "56"
+      },
+      {
+        "name": "itemSize",
+        "type": "number",
+        "required": false,
+        "defaultValue": "40"
+      },
+      {
+        "name": "itemGap",
+        "type": "number",
+        "required": false,
+        "defaultValue": "64"
+      },
+      {
+        "name": "closeOnItemSelect",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      },
+      {
         "name": "ariaLabel",
         "type": "string",
         "required": false,
@@ -3204,150 +3565,7 @@
       }
     ],
     "description": "Magary UI Component: MagarySpeedDial (magary-speed-dial)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Button\\speed-dial\\speed-dial.ts"
-  },
-  {
-    "name": "MagaryUITreeNode",
-    "selector": "magary-uitree-node",
-    "inputs": [
-      {
-        "name": "selectionMode",
-        "type": "string | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "selection",
-        "type": "unknown",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "draggable",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "droppable",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "node",
-        "type": "MagaryTreeNode",
-        "required": true
-      }
-    ],
-    "outputs": [
-      {
-        "name": "nodeSelect",
-        "description": "Event emitter for nodeSelect"
-      },
-      {
-        "name": "nodeUnselect",
-        "description": "Event emitter for nodeUnselect"
-      },
-      {
-        "name": "nodeExpand",
-        "description": "Event emitter for nodeExpand"
-      },
-      {
-        "name": "nodeCollapse",
-        "description": "Event emitter for nodeCollapse"
-      },
-      {
-        "name": "nodeDrop",
-        "description": "Event emitter for nodeDrop"
-      }
-    ],
-    "description": "Magary UI Component: MagaryUITreeNode (magary-uitree-node)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\tree\\uitree-node.ts"
-  },
-  {
-    "name": "MagaryTree",
-    "selector": "magary-tree",
-    "inputs": [
-      {
-        "name": "value",
-        "type": "MagaryTreeNode[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "selectionMode",
-        "type": "'single' | 'multiple' | 'checkbox' | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "selection",
-        "type": "unknown",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "filter",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "filterPlaceholder",
-        "type": "string",
-        "required": false,
-        "defaultValue": "'Search...'"
-      },
-      {
-        "name": "filterMode",
-        "type": "'lenient' | 'strict'",
-        "required": false,
-        "defaultValue": "'lenient'"
-      },
-      {
-        "name": "draggable",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "droppable",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "validateDrop",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "onNodeSelect",
-        "description": "Event emitter for onNodeSelect"
-      },
-      {
-        "name": "onNodeUnselect",
-        "description": "Event emitter for onNodeUnselect"
-      },
-      {
-        "name": "onNodeExpand",
-        "description": "Event emitter for onNodeExpand"
-      },
-      {
-        "name": "onNodeCollapse",
-        "description": "Event emitter for onNodeCollapse"
-      },
-      {
-        "name": "onNodeDrop",
-        "description": "Event emitter for onNodeDrop"
-      }
-    ],
-    "description": "Magary UI Component: MagaryTree (magary-tree)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\tree\\tree.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Button\\speed-dial\\speed-dial.ts"
   },
   {
     "name": "MagaryButton",
@@ -3426,6 +3644,18 @@
         "defaultValue": "'normal'"
       },
       {
+        "name": "width",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'auto'"
+      },
+      {
+        "name": "height",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'auto'"
+      },
+      {
         "name": "ariaLabel",
         "type": "string",
         "required": false,
@@ -3434,12 +3664,171 @@
     ],
     "outputs": [
       {
+        "name": "onClick",
+        "description": "Event emitter for onClick"
+      },
+      {
         "name": "buttonClick",
         "description": "Event emitter for buttonClick"
       }
     ],
     "description": "Magary UI Component: MagaryButton (magary-button)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Button\\button\\button.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Button\\button\\button.ts"
+  },
+  {
+    "name": "MagaryUITreeNode",
+    "selector": "magary-uitree-node",
+    "inputs": [
+      {
+        "name": "selectionMode",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "selection",
+        "type": "MagaryTreeSelectionValue",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "draggable",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "droppable",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "node",
+        "type": "MagaryTreeNode",
+        "required": true
+      }
+    ],
+    "outputs": [
+      {
+        "name": "nodeSelect",
+        "description": "Event emitter for nodeSelect"
+      },
+      {
+        "name": "nodeUnselect",
+        "description": "Event emitter for nodeUnselect"
+      },
+      {
+        "name": "nodeExpand",
+        "description": "Event emitter for nodeExpand"
+      },
+      {
+        "name": "nodeCollapse",
+        "description": "Event emitter for nodeCollapse"
+      },
+      {
+        "name": "nodeDrop",
+        "description": "Event emitter for nodeDrop"
+      }
+    ],
+    "description": "Magary UI Component: MagaryUITreeNode (magary-uitree-node)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\tree\\uitree-node.ts"
+  },
+  {
+    "name": "MagaryTree",
+    "selector": "magary-tree",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "MagaryTreeNode[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "selectionMode",
+        "type": "'single' | 'multiple' | 'checkbox' | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "selection",
+        "type": "MagaryTreeSelectionValue",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "filter",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "filterPlaceholder",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Search...'"
+      },
+      {
+        "name": "filterAriaLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Filter tree nodes'"
+      },
+      {
+        "name": "filterMode",
+        "type": "'lenient' | 'strict'",
+        "required": false,
+        "defaultValue": "'lenient'"
+      },
+      {
+        "name": "draggable",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "droppable",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "validateDrop",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "treeAriaLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Tree data'"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onNodeSelect",
+        "description": "Event emitter for onNodeSelect"
+      },
+      {
+        "name": "onNodeUnselect",
+        "description": "Event emitter for onNodeUnselect"
+      },
+      {
+        "name": "onNodeExpand",
+        "description": "Event emitter for onNodeExpand"
+      },
+      {
+        "name": "onNodeCollapse",
+        "description": "Event emitter for onNodeCollapse"
+      },
+      {
+        "name": "onNodeDrop",
+        "description": "Event emitter for onNodeDrop"
+      }
+    ],
+    "description": "Magary UI Component: MagaryTree (magary-tree)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\tree\\tree.ts"
   },
   {
     "name": "MagaryTimeline",
@@ -3466,7 +3855,101 @@
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryTimeline (magary-timeline)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\timeline\\timeline.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\timeline\\timeline.ts"
+  },
+  {
+    "name": "MagarySplitButton",
+    "selector": "magary-split-button",
+    "inputs": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Save'"
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": false,
+        "defaultValue": ""
+      },
+      {
+        "name": "iconSize",
+        "type": "number",
+        "required": false,
+        "defaultValue": "18"
+      },
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false,
+        "defaultValue": "''"
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "textColor",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg'",
+        "required": false,
+        "defaultValue": "'md'"
+      },
+      {
+        "name": "menuPosition",
+        "type": "'start' | 'end'",
+        "required": false,
+        "defaultValue": "'start'"
+      },
+      {
+        "name": "menuAriaLabel",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "closeOnItemSelect",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onClick",
+        "description": "Event emitter for onClick"
+      },
+      {
+        "name": "onDropdownClick",
+        "description": "Event emitter for onDropdownClick"
+      },
+      {
+        "name": "itemClick",
+        "description": "Event emitter for itemClick"
+      }
+    ],
+    "description": "Magary UI Component: MagarySplitButton (magary-split-button)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Button\\split-button\\split-button.ts"
   },
   {
     "name": "MagaryTable",
@@ -3474,7 +3957,7 @@
     "inputs": [
       {
         "name": "value",
-        "type": "unknown[]",
+        "type": "MagaryTableRow[]",
         "required": false,
         "defaultValue": "[]"
       },
@@ -3531,10 +4014,14 @@
       {
         "name": "onPageChange",
         "description": "Event emitter for onPageChange"
+      },
+      {
+        "name": "onSortChange",
+        "description": "Event emitter for onSortChange"
       }
     ],
     "description": "Magary UI Component: MagaryTable (magary-table)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\table\\table.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\table\\table.ts"
   },
   {
     "name": "MagaryPickList",
@@ -3553,18 +4040,6 @@
         "defaultValue": "'Target'"
       },
       {
-        "name": "sourceStyle",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "targetStyle",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
         "name": "showSourceControls",
         "type": "boolean",
         "required": false,
@@ -3575,6 +4050,12 @@
         "type": "boolean",
         "required": false,
         "defaultValue": "true"
+      },
+      {
+        "name": "dragDrop",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
       }
     ],
     "outputs": [
@@ -3596,142 +4077,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryPickList (magary-pick-list)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\picklist\\picklist.ts"
-  },
-  {
-    "name": "MagaryOrganizationChart",
-    "selector": "magary-organization-chart",
-    "inputs": [
-      {
-        "name": "value",
-        "type": "MagaryTreeNode[]",
-        "required": false,
-        "defaultValue": "[]"
-      },
-      {
-        "name": "selectionMode",
-        "type": "string | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "selection",
-        "type": "unknown",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "collapsible",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "onNodeSelect",
-        "description": "Event emitter for onNodeSelect"
-      },
-      {
-        "name": "onNodeUnselect",
-        "description": "Event emitter for onNodeUnselect"
-      },
-      {
-        "name": "onNodeExpand",
-        "description": "Event emitter for onNodeExpand"
-      },
-      {
-        "name": "onNodeCollapse",
-        "description": "Event emitter for onNodeCollapse"
-      }
-    ],
-    "description": "Magary UI Component: MagaryOrganizationChart (magary-organization-chart)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\organizationchart\\organizationchart.ts"
-  },
-  {
-    "name": "MagaryOrganizationChartNode",
-    "selector": "[magary-organizationchart-node]",
-    "inputs": [
-      {
-        "name": "selectionMode",
-        "type": "string | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "selection",
-        "type": "unknown",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "collapsible",
-        "type": "boolean",
-        "required": false,
-        "defaultValue": "false"
-      },
-      {
-        "name": "itemTemplate",
-        "type": "TemplateRef<unknown> | null | undefined",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "node",
-        "type": "MagaryTreeNode",
-        "required": true
-      }
-    ],
-    "outputs": [
-      {
-        "name": "nodeSelect",
-        "description": "Event emitter for nodeSelect"
-      },
-      {
-        "name": "nodeUnselect",
-        "description": "Event emitter for nodeUnselect"
-      },
-      {
-        "name": "nodeExpand",
-        "description": "Event emitter for nodeExpand"
-      },
-      {
-        "name": "nodeCollapse",
-        "description": "Event emitter for nodeCollapse"
-      }
-    ],
-    "description": "Magary UI Component: MagaryOrganizationChartNode ([magary-organizationchart-node])",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\organizationchart\\organizationchart-node.ts"
-  },
-  {
-    "name": "MagaryOrderList",
-    "selector": "magary-order-list",
-    "inputs": [
-      {
-        "name": "header",
-        "type": "string | null",
-        "required": false,
-        "defaultValue": "null"
-      },
-      {
-        "name": "listStyle",
-        "type": "{ [klass: string]: unknown } | null",
-        "required": false,
-        "defaultValue": "null"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "onReorder",
-        "description": "Event emitter for onReorder"
-      },
-      {
-        "name": "onSelectionChange",
-        "description": "Event emitter for onSelectionChange"
-      }
-    ],
-    "description": "Magary UI Component: MagaryOrderList (magary-order-list)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\orderlist\\orderlist.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\picklist\\picklist.ts"
   },
   {
     "name": "MagaryPaginator",
@@ -3780,12 +4126,177 @@
       }
     ],
     "description": "Magary UI Component: MagaryPaginator (magary-paginator)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\paginator\\paginator.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\paginator\\paginator.ts"
+  },
+  {
+    "name": "MagaryOrderList",
+    "selector": "magary-order-list",
+    "inputs": [
+      {
+        "name": "header",
+        "type": "string | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "dragDrop",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "showControls",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onReorder",
+        "description": "Event emitter for onReorder"
+      },
+      {
+        "name": "onSelectionChange",
+        "description": "Event emitter for onSelectionChange"
+      }
+    ],
+    "description": "Magary UI Component: MagaryOrderList (magary-order-list)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\orderlist\\orderlist.ts"
+  },
+  {
+    "name": "MagaryOrganizationChart",
+    "selector": "magary-organization-chart",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "MagaryTreeNode[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "selectionMode",
+        "type": "'single' | 'multiple' | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "selection",
+        "type": "MagaryTreeSelectionValue",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "collapsible",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "false, { transform: booleanAttribute }"
+      },
+      {
+        "name": "chartAriaLabel",
+        "type": "string",
+        "required": false,
+        "defaultValue": "'Organization chart'"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onNodeSelect",
+        "description": "Event emitter for onNodeSelect"
+      },
+      {
+        "name": "onNodeUnselect",
+        "description": "Event emitter for onNodeUnselect"
+      },
+      {
+        "name": "onNodeExpand",
+        "description": "Event emitter for onNodeExpand"
+      },
+      {
+        "name": "onNodeCollapse",
+        "description": "Event emitter for onNodeCollapse"
+      }
+    ],
+    "description": "Magary UI Component: MagaryOrganizationChart (magary-organization-chart)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\organizationchart\\organizationchart.ts"
+  },
+  {
+    "name": "MagaryOrganizationChartNode",
+    "selector": "[magary-organizationchart-node]",
+    "inputs": [
+      {
+        "name": "level",
+        "type": "number",
+        "required": false,
+        "defaultValue": "1"
+      },
+      {
+        "name": "selectionMode",
+        "type": "'single' | 'multiple' | null",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "selection",
+        "type": "MagaryTreeSelectionValue",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean",
+        "required": false,
+        "defaultValue": "false"
+      },
+      {
+        "name": "itemTemplate",
+        "type": "TemplateRef<unknown> | null | undefined",
+        "required": false,
+        "defaultValue": "null"
+      },
+      {
+        "name": "node",
+        "type": "MagaryTreeNode",
+        "required": true
+      }
+    ],
+    "outputs": [
+      {
+        "name": "nodeSelect",
+        "description": "Event emitter for nodeSelect"
+      },
+      {
+        "name": "nodeUnselect",
+        "description": "Event emitter for nodeUnselect"
+      },
+      {
+        "name": "nodeExpand",
+        "description": "Event emitter for nodeExpand"
+      },
+      {
+        "name": "nodeCollapse",
+        "description": "Event emitter for nodeCollapse"
+      }
+    ],
+    "description": "Magary UI Component: MagaryOrganizationChartNode ([magary-organizationchart-node])",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\organizationchart\\organizationchart-node.ts"
   },
   {
     "name": "MagaryDataView",
     "selector": "magary-dataview",
     "inputs": [
+      {
+        "name": "value",
+        "type": "MagaryDataViewItem[]",
+        "required": false,
+        "defaultValue": "[]"
+      },
+      {
+        "name": "layout",
+        "type": "'list' | 'grid'",
+        "required": false,
+        "defaultValue": "'list'"
+      },
       {
         "name": "paginator",
         "type": "boolean",
@@ -3839,12 +4350,6 @@
         "type": "boolean",
         "required": false,
         "defaultValue": "false"
-      },
-      {
-        "name": "trackBy",
-        "type": "unknown",
-        "required": false,
-        "defaultValue": "(index: number, item: unknown) => item"
       }
     ],
     "outputs": [
@@ -3854,7 +4359,7 @@
       }
     ],
     "description": "Magary UI Component: MagaryDataView (magary-dataview)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Data\\dataview\\dataview.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\dataview\\dataview.ts"
   },
   {
     "name": "MagaryTab",
@@ -3869,6 +4374,30 @@
     ],
     "outputs": [],
     "description": "Magary UI Component: MagaryTab (magary-tab)",
-    "filePath": "C:\\Users\\sebas\\Documents\\GitHub\\magary\\projects\\ng-magary\\src\\lib\\Panel\\tabs\\tab\\tab.ts"
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Panel\\tabs\\tab\\tab.ts"
+  },
+  {
+    "name": "MagaryKanban",
+    "selector": "magary-kanban",
+    "inputs": [
+      {
+        "name": "dragDrop",
+        "type": "inferred",
+        "required": false,
+        "defaultValue": "true, { transform: booleanAttribute }"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onColumnsChange",
+        "description": "Event emitter for onColumnsChange"
+      },
+      {
+        "name": "onMove",
+        "description": "Event emitter for onMove"
+      }
+    ],
+    "description": "Magary UI Component: MagaryKanban (magary-kanban)",
+    "filePath": "C:\\dev\\magary\\magary\\projects\\ng-magary\\src\\lib\\Data\\kanban\\kanban.ts"
   }
 ]

@@ -35,6 +35,12 @@ export const SIDEBAR_SECTIONS: SidebarSection[] = [
         icon: 'palette',
         route: '/premium/themes',
         badge: 'Nuevo'
+      },
+      {
+        label: 'Blocks (Preview)',
+        icon: 'layout',
+        route: '/premium/blocks',
+        badge: 'Pro'
       }
     ],
     hoverColor: 'var(--premium-500)' // Always Gold Premium Color

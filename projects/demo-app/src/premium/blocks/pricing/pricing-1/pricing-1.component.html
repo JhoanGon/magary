@@ -1,0 +1,111 @@
+<section class="mg-premium-pricing">
+  <div class="mg-pricing-header">
+    <h2 class="mg-section-title">Simple, transparent pricing</h2>
+    <p class="mg-section-subtitle">No surprise fees. Upgrade or cancel anytime to fit your needs.</p>
+  </div>
+
+  <div class="mg-pricing-grid">
+    <!-- Basic Tier -->
+    <magary-card 
+      class="mg-pricing-card"
+      [width]="'100%'"
+      [backgroundColor]="'var(--surface-50, #fcfcfc)'"
+      [border]="'1px solid var(--surface-200, #e0e0e0)'"
+      [borderRadius]="'var(--magary-field-radius, 1rem)'"
+      [padding]="'2.5rem 2rem'"
+      [shadow]="1"
+      [hoverEffect]="true"
+    >
+      <div slot="header" class="card-header">
+        <h3 class="tier-name">Starter</h3>
+        <p class="tier-desc">Perfect for side projects and individual developers.</p>
+        <div class="price">
+          <span class="currency">$</span>
+          <span class="amount">0</span>
+          <span class="period">/mo</span>
+        </div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> Up to 3 users</li>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> Basic community support</li>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> 5GB Storage limit</li>
+          <li class="disabled"><svg class="icon x" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg> Custom Domains</li>
+        </ul>
+      </div>
+      <div slot="footer" class="card-action">
+        <magary-button label="Get Started" variant="outlined" severity="secondary" size="large"></magary-button>
+      </div>
+    </magary-card>
+
+    <!-- Pro Tier (Highlighted) -->
+    <magary-card 
+      class="mg-pricing-card featured"
+      [width]="'100%'"
+      [backgroundColor]="'var(--surface-0, #ffffff)'"
+      [border]="'2px solid var(--primary-500, #007bff)'"
+      [borderRadius]="'var(--magary-field-radius, 1rem)'"
+      [padding]="'3.5rem 2rem'"
+      [shadow]="4"
+      [hoverEffect]="true"
+    >
+      <!-- We can't put absolute positioning outside slots easily in shadow DOM, so we put it in the header -->
+      <div slot="header" style="position: relative;">
+          <div class="featured-badge">Most Popular</div>
+          <div class="card-header">
+            <h3 class="tier-name">Pro</h3>
+            <p class="tier-desc">Everything you need to scale your growing business.</p>
+            <div class="price">
+              <span class="currency">$</span>
+              <span class="amount">29</span>
+              <span class="period">/mo</span>
+            </div>
+          </div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> Unlimited team users</li>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> Priority email support</li>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> 100GB Storage limit</li>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> Custom Domains & SSL</li>
+        </ul>
+      </div>
+      <div slot="footer" class="card-action">
+        <magary-button label="Start Free Trial" severity="primary" size="large" [shadow]="1"></magary-button>
+      </div>
+    </magary-card>
+
+    <!-- Enterprise Tier -->
+    <magary-card 
+      class="mg-pricing-card"
+      [width]="'100%'"
+      [backgroundColor]="'var(--surface-50, #fcfcfc)'"
+      [border]="'1px solid var(--surface-200, #e0e0e0)'"
+      [borderRadius]="'var(--magary-field-radius, 1rem)'"
+      [padding]="'2.5rem 2rem'"
+      [shadow]="1"
+      [hoverEffect]="true"
+    >
+      <div slot="header" class="card-header">
+        <h3 class="tier-name">Enterprise</h3>
+        <p class="tier-desc">Advanced features and compliance for large organizations.</p>
+        <div class="price">
+          <span class="currency">$</span>
+          <span class="amount">99</span>
+          <span class="period">/mo</span>
+        </div>
+      </div>
+      <div class="card-features">
+        <ul>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> Dedicated account manager</li>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> 24/7 Phone support</li>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> Unlimited Storage & Bandwidth</li>
+          <li><svg class="icon check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg> SSO & Advanced Role Auth</li>
+        </ul>
+      </div>
+      <div slot="footer" class="card-action">
+        <magary-button label="Contact Sales" variant="outlined" severity="secondary" size="large"></magary-button>
+      </div>
+    </magary-card>
+  </div>
+</section>

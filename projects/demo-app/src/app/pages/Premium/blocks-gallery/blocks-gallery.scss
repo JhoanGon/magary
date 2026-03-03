@@ -1,0 +1,68 @@
+.blocks-gallery-page {
+    padding: 4rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    .gallery-header {
+        text-align: center;
+        margin-bottom: 5rem;
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary, #333333);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: var(--text-secondary, #666666);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+    }
+
+    .block-preview-section {
+        margin-bottom: 6rem;
+        background: var(--surface-50, #fcfcfc);
+        border: 1px solid var(--surface-200, #e0e0e0);
+        border-radius: var(--magary-field-radius, 1rem);
+        overflow: hidden;
+        position: relative;
+        box-shadow: var(--shadow-sm, 0 4px 6px rgba(0, 0, 0, 0.05));
+
+        .block-preview-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--surface-200, #e0e0e0);
+            background: var(--surface-100, #f5f5f5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h2 {
+                margin: 0;
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: var(--text-primary, #333333);
+            }
+
+            .block-category {
+                background: var(--primary-100, #e0f0ff);
+                color: var(--primary-600, #0056b3);
+                padding: 0.25rem 0.75rem;
+                border-radius: 2rem;
+                font-size: 0.875rem;
+                font-weight: 500;
+            }
+        }
+
+        .block-preview-container {
+            background: var(--surface-0, #ffffff);
+            /* Make sure blocks render fully independent of global layout constraints */
+            position: relative;
+            min-height: 50vh;
+            overflow-x: hidden;
+        }
+    }
+}

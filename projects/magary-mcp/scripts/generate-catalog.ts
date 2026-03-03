@@ -1,4 +1,4 @@
-import { ComponentScanner } from '../src/component-scanner.ts';
+import { ComponentScanner } from '../src/component-scanner.js';
 import * as path from 'path';
 import * as fs from 'fs';
 import { fileURLToPath } from 'url';
