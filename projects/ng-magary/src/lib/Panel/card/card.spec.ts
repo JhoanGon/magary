@@ -15,37 +15,34 @@ describe('MagaryCard behavior', () => {
     fixture.detectChanges();
   });
 
-  it('dispatches cardClick custom event when interactive', () => {
+  it('emits cardClick output when interactive', () => {
     fixture.componentRef.setInput('clickable', true);
     fixture.detectChanges();
 
     const card = fixture.nativeElement.querySelector('article.card') as HTMLElement;
-    const customEvents: CustomEvent[] = [];
-    card.addEventListener('cardClick', (event) =>
-      customEvents.push(event as CustomEvent),
-    );
+    const emittedEvents: Event[] = [];
+    const subscription = component.cardClick.subscribe((event) => emittedEvents.push(event));
 
     card.click();
     fixture.detectChanges();
 
-    expect(customEvents).toHaveLength(1);
-    expect(customEvents[0].detail.event).toBeTruthy();
+    expect(emittedEvents).toHaveLength(1);
+    expect(emittedEvents[0]).toBeInstanceOf(Event);
+    subscription.unsubscribe();
   });
 
-  it('does not dispatch cardClick when disabled or loading', () => {
+  it('does not emit cardClick when disabled or loading', () => {
     fixture.componentRef.setInput('clickable', true);
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
 
     const card = fixture.nativeElement.querySelector('article.card') as HTMLElement;
-    const customEvents: CustomEvent[] = [];
-    card.addEventListener('cardClick', (event) =>
-      customEvents.push(event as CustomEvent),
-    );
+    const emittedEvents: Event[] = [];
+    const subscription = component.cardClick.subscribe((event) => emittedEvents.push(event));
 
     card.click();
     fixture.detectChanges();
-    expect(customEvents).toHaveLength(0);
+    expect(emittedEvents).toHaveLength(0);
 
     fixture.componentRef.setInput('disabled', false);
     fixture.componentRef.setInput('loading', true);
@@ -53,36 +50,33 @@ describe('MagaryCard behavior', () => {
 
     card.click();
     fixture.detectChanges();
-    expect(customEvents).toHaveLength(0);
+    expect(emittedEvents).toHaveLength(0);
+    subscription.unsubscribe();
   });
 
   it('supports keyboard activation with Enter and Space', () => {
     fixture.componentRef.setInput('clickable', true);
     fixture.detectChanges();
 
-    const card = fixture.nativeElement.querySelector('article.card') as HTMLElement;
-    const customEvents: CustomEvent[] = [];
-    card.addEventListener('cardClick', (event) =>
-      customEvents.push(event as CustomEvent),
-    );
+    const emittedEvents: Event[] = [];
+    const subscription = component.cardClick.subscribe((event) => emittedEvents.push(event));
 
     const enterEvent = {
       key: 'Enter',
       preventDefault: vi.fn(),
-      target: card,
     } as unknown as KeyboardEvent;
     component.onCardKeydown(enterEvent);
 
     const spaceEvent = {
       key: ' ',
       preventDefault: vi.fn(),
-      target: card,
     } as unknown as KeyboardEvent;
     component.onCardKeydown(spaceEvent);
 
     expect(enterEvent.preventDefault).toHaveBeenCalledTimes(1);
     expect(spaceEvent.preventDefault).toHaveBeenCalledTimes(1);
-    expect(customEvents).toHaveLength(2);
+    expect(emittedEvents).toHaveLength(2);
+    subscription.unsubscribe();
   });
 
   it('renders loading overlay, badge and variant/layout classes from inputs', () => {
@@ -116,5 +110,13 @@ describe('MagaryCard behavior', () => {
     expect(badge.textContent?.trim()).toBe('NEW');
     expect(overlay.textContent).toContain('Procesando...');
     expect(image).toBeTruthy();
+  });
+
+  it('uses custom aria label when provided', () => {
+    fixture.componentRef.setInput('ariaLabel', 'Product summary card');
+    fixture.detectChanges();
+
+    const card = fixture.nativeElement.querySelector('article.card') as HTMLElement;
+    expect(card.getAttribute('aria-label')).toBe('Product summary card');
   });
 });

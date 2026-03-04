@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   input,
+  output,
   ChangeDetectionStrategy,
 } from '@angular/core';
 type ImagePosition = 'left' | 'right' | 'top' | 'bottom';
@@ -39,6 +40,7 @@ export class MagaryCard {
   readonly clickable = input<boolean>(false);
   readonly loading = input<boolean>(false);
   readonly disabled = input<boolean>(false);
+  readonly ariaLabel = input<string>();
   readonly variant = input<CardVariant>('elevated');
   readonly loadingText = input<string>('Cargando...');
   readonly hoverEffect = input<boolean>(true);
@@ -101,24 +103,27 @@ export class MagaryCard {
 
   readonly showLoadingOverlay = computed(() => this.loading());
 
+  readonly effectiveAriaLabel = computed(() => {
+    const providedAriaLabel = this.ariaLabel()?.trim();
+    if (providedAriaLabel) {
+      return providedAriaLabel;
+    }
+
+    return (
+      'Card with ' +
+      (this.hasImage() ? 'image and ' : '') +
+      'content' +
+      (this.clickable() ? '. Clickable' : '') +
+      (this.loading() ? '. Loading' : '') +
+      (this.disabled() ? '. Disabled' : '')
+    );
+  });
+
+  readonly cardClick = output<Event>();
+
   onCardClick(event: Event) {
     if (this.isInteractive()) {
-      const dispatchTarget =
-        event.currentTarget instanceof HTMLElement
-          ? event.currentTarget
-          : event.target instanceof HTMLElement
-            ? event.target
-            : null;
-
-      if (!dispatchTarget) {
-        return;
-      }
-
-      const cardClickEvent = new CustomEvent('cardClick', {
-        detail: { event },
-        bubbles: true,
-      });
-      dispatchTarget.dispatchEvent(cardClickEvent);
+      this.cardClick.emit(event);
     }
   }
 

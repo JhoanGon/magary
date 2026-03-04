@@ -232,14 +232,13 @@ export class ViewCard {
     <p>Haz click para ver el evento.</p>
   </magary-card>
   <!-- En el componente TypeScript -->
-  onCardClick(event: CustomEvent) {
-    console.log('Card clicked!', event.detail);
+  onCardClick(event: Event) {
+    console.log('Card clicked!', event);
   }`;
 
   readonly exampleNotifications = `
   onCardClick(event: Event): void {
     try {
-      const customEvent = event as CustomEvent;
       this.showToastNotification('Card clickeada exitosamente!');
       this.showToastNotification('Card Interactive: Has clickeado una tarjeta de Magary', 'success');
     } catch (error) {
@@ -302,7 +301,7 @@ export class ViewCard {
       descriptionKey: 'components.panel.card.inputs.positionImage.desc',
     },
     { name: 'shadow', type: 'number', default: '1', descriptionKey: 'components.panel.card.inputs.shadow.desc' },
-    { name: 'width', type: 'string', default: "'250px'", descriptionKey: 'components.panel.card.inputs.width.desc' },
+    { name: 'width', type: 'string', default: "'100%'", descriptionKey: 'components.panel.card.inputs.width.desc' },
     { name: 'padding', type: 'string', default: "'1rem'", descriptionKey: 'components.panel.card.inputs.padding.desc' },
     { name: 'gap', type: 'string', default: "'1rem'", descriptionKey: 'components.panel.card.inputs.gap.desc' },
     {
@@ -314,13 +313,13 @@ export class ViewCard {
     {
       name: 'imageSize',
       type: 'string',
-      default: "'500px'",
+      default: "'200px'",
       descriptionKey: 'components.panel.card.inputs.imageSize.desc',
     },
     {
       name: 'backgroundColor',
       type: 'string',
-      default: "'#fff'",
+      default: 'undefined',
       descriptionKey: 'components.panel.card.inputs.backgroundColor.desc',
     },
     { name: 'height', type: 'string', default: "'auto'", descriptionKey: 'components.panel.card.inputs.height.desc' },
@@ -335,6 +334,12 @@ export class ViewCard {
       type: 'string',
       default: "'Card image'",
       descriptionKey: 'components.panel.card.inputs.altText.desc',
+    },
+    {
+      name: 'ariaLabel',
+      type: 'string',
+      default: 'undefined',
+      descriptionKey: 'components.panel.card.inputs.ariaLabel.desc',
     },
     {
       name: 'imageFit',
@@ -401,7 +406,7 @@ export class ViewCard {
   readonly eventRows: CardEventRow[] = [
     {
       name: 'cardClick',
-      type: 'CustomEvent',
+      type: 'Event',
       descriptionKey: 'components.panel.card.events.cardClick.desc',
     },
   ];

@@ -160,6 +160,8 @@ export const CARD_DOC_TEXT = {
       'Habilita el comportamiento responsive.',
     'components.panel.card.inputs.altText.desc':
       'Texto alternativo para la imagen (accesibilidad).',
+    'components.panel.card.inputs.ariaLabel.desc':
+      'Etiqueta ARIA personalizada para la tarjeta.',
     'components.panel.card.inputs.imageFit.desc':
       'Modo de ajuste de la imagen.',
     'components.panel.card.inputs.clickable.desc':
@@ -359,6 +361,8 @@ export const CARD_DOC_TEXT = {
       'Enables responsive behavior.',
     'components.panel.card.inputs.altText.desc':
       'Alternative text for image (accessibility).',
+    'components.panel.card.inputs.ariaLabel.desc':
+      'Custom ARIA label for the card.',
     'components.panel.card.inputs.imageFit.desc': 'Image fit mode.',
     'components.panel.card.inputs.clickable.desc': 'Makes card clickable.',
     'components.panel.card.inputs.loading.desc': 'Shows loading state.',

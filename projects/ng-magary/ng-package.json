@@ -5,6 +5,7 @@
     "entryFile": "src/public-api.ts"
   },
   "assets": [
+    "LICENSE",
     "styles/**/*.scss",
     "THIRD_PARTY_NOTICES.md",
     "third_party/licenses/**/*"
