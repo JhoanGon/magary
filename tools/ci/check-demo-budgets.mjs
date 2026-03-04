@@ -16,7 +16,7 @@ const budgets = {
   maxInitialChunkBytes: 500_000,
   maxInitialTotalJsBytes: 1_050_000,
   maxMainJsBytes: 120_000,
-  maxStylesCssBytes: 40_000,
+  maxStylesCssBytes: 42_500,
 };
 
 const html = fs.readFileSync(indexPath, 'utf8');

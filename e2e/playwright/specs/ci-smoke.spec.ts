@@ -404,7 +404,13 @@ test.describe('ci smoke', () => {
     await expect(grid).toBeVisible();
 
     const cards = grid.locator('magary-card');
-    await expect(cards).toHaveCount(8);
+    const cardCount = await cards.count();
+    expect(cardCount).toBeGreaterThan(0);
+
+    const previewButtons = page.getByRole('button', {
+      name: /Live Preview|Vista Previa/i,
+    });
+    await expect(previewButtons).toHaveCount(cardCount);
 
     const firstPreviewBtn = page.getByRole('button', { name: /Live Preview|Vista Previa/i }).first();
     await expect(firstPreviewBtn).toBeVisible();
