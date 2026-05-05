@@ -20,6 +20,7 @@ let tabsInstanceSequence = 0;
 
 @Component({
   selector: 'magary-tabs',
+  standalone: true,
   imports: [],
   templateUrl: './tabs.html',
   styleUrl: './tabs.scss',

@@ -7,7 +7,7 @@ export const MESSAGE_DOC_TEXT = {
       'Componente para mostrar mensajes y alertas en linea.',
     'components.messages.message.import.title': 'Import',
     'components.messages.message.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.messages.message.severity.title': 'Severidades',
     'components.messages.message.severity.desc':
       'Diferentes niveles de severidad para comunicar el estado.',
@@ -79,7 +79,7 @@ export const MESSAGE_DOC_TEXT = {
       'Component to display inline messages and alerts.',
     'components.messages.message.import.title': 'Import',
     'components.messages.message.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.messages.message.severity.title': 'Severities',
     'components.messages.message.severity.desc':
       'Different severity levels to communicate status.',

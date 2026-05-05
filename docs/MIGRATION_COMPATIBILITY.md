@@ -24,7 +24,7 @@ pnpm add ng-magary @angular/cdk @angular/animations @atlaskit/pragmatic-drag-and
 import { provideAnimations } from '@angular/platform-browser/animations';
 ```
 
-3. Register Lucide icon provider in your app config/module.
+3. Register the Lucide icon provider in your standalone `app.config.ts`.
 
 4. Load tooltip global styles:
 ```scss

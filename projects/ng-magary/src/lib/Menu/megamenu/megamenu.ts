@@ -3,7 +3,6 @@ import {
   Component,
   Directive,
   ElementRef,
-  HostListener,
   OnDestroy,
   Renderer2,
   ViewEncapsulation,
@@ -21,12 +20,14 @@ import { MenuItem } from '../api/menu.interface';
 @Directive({
   selector: '[appMegaMenuItem]',
   standalone: true,
+  host: {
+    '(mouseenter)': 'onMouseEnter()',
+  },
 })
 export class MegaMenuItemDirective {
   item = input.required<MenuItem>();
   parent = input.required<MagaryMegaMenu>();
 
-  @HostListener('mouseenter')
   onMouseEnter() {
     if (this.item().disabled) return;
     this.parent().onItemHover(this.item());

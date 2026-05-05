@@ -1,7 +1,6 @@
 import {
   Directive,
   ElementRef,
-  HostListener,
   booleanAttribute,
   input,
   OnDestroy,
@@ -14,6 +13,13 @@ import { DOCUMENT } from '@angular/common';
 @Directive({
   selector: '[magaryTooltip]',
   standalone: true,
+  host: {
+    '(mouseenter)': 'onMouseEnter()',
+    '(mouseleave)': 'onMouseLeave()',
+    '(focus)': 'onFocus()',
+    '(blur)': 'onBlur()',
+    '(keydown.escape)': 'onEscape()',
+  },
 })
 export class MagaryTooltip implements OnDestroy {
   private static instanceSequence = 0;
@@ -26,37 +32,35 @@ export class MagaryTooltip implements OnDestroy {
   private scrollUnlisten: (() => void) | null = null;
   private resizeUnlisten: (() => void) | null = null;
   private keydownUnlisten: (() => void) | null = null;
+  private readonly defaultView: Window | null;
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
     private zone: NgZone,
     @Inject(DOCUMENT) private document: Document,
-  ) {}
+  ) {
+    this.defaultView = this.document.defaultView;
+  }
 
-  @HostListener('mouseenter')
   onMouseEnter() {
     if (!this.text() || this.tooltipDisabled()) return;
     this.show();
   }
 
-  @HostListener('mouseleave')
   onMouseLeave() {
     this.hide();
   }
 
-  @HostListener('focus')
   onFocus() {
     if (!this.text() || this.tooltipDisabled()) return;
     this.show();
   }
 
-  @HostListener('blur')
   onBlur() {
     this.hide();
   }
 
-  @HostListener('keydown.escape')
   onEscape() {
     this.hide();
   }
@@ -105,7 +109,8 @@ export class MagaryTooltip implements OnDestroy {
   }
 
   align() {
-    if (!this.tooltipElement) return;
+    const view = this.defaultView;
+    if (!this.tooltipElement || !view) return;
 
     const hostRect = this.hostElement.getBoundingClientRect();
     const tooltipRect = this.tooltipElement.getBoundingClientRect();
@@ -134,15 +139,15 @@ export class MagaryTooltip implements OnDestroy {
     }
 
     // Add scroll offset
-    const scrollY = window.scrollY;
-    const scrollX = window.scrollX;
+    const scrollY = view.scrollY;
+    const scrollX = view.scrollX;
     top += scrollY;
     left += scrollX;
 
     const viewportTop = scrollY + 8;
-    const viewportBottom = scrollY + window.innerHeight - 8;
+    const viewportBottom = scrollY + view.innerHeight - 8;
     const viewportLeft = scrollX + 8;
-    const viewportRight = scrollX + window.innerWidth - 8;
+    const viewportRight = scrollX + view.innerWidth - 8;
 
     // Fallback placement if initial position overflows viewport.
     if (this.tooltipPosition() === 'top' && top < viewportTop) {
@@ -170,11 +175,16 @@ export class MagaryTooltip implements OnDestroy {
   }
 
   bindEvents() {
+    const view = this.defaultView;
+    if (!view) {
+      return;
+    }
+
     this.zone.runOutsideAngular(() => {
-      this.resizeUnlisten = this.renderer.listen(window, 'resize', () =>
+      this.resizeUnlisten = this.renderer.listen(view, 'resize', () =>
         this.hide(),
       );
-      this.scrollUnlisten = this.renderer.listen(window, 'scroll', () =>
+      this.scrollUnlisten = this.renderer.listen(view, 'scroll', () =>
         this.hide(),
       );
       this.keydownUnlisten = this.renderer.listen(

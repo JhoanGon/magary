@@ -30,8 +30,10 @@ describe('ViewInput', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it('documents input usage through Angular forms bindings', () => {
     expect(component).toBeTruthy();
+    expect(component.exampleBasic).toContain('[(ngModel)]');
+    expect(component.exampleForms).toContain('formControlName="name"');
   });
 });
 

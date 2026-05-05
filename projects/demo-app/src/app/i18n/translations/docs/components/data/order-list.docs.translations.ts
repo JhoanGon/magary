@@ -7,7 +7,7 @@ export const ORDER_LIST_DOC_TEXT = {
       'Componente para reordenar una lista de items.',
     'components.data.orderList.import.title': 'Importar',
     'components.data.orderList.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.data.orderList.basic.title': 'Uso Basico',
     'components.data.orderList.noControls.title': 'Lista sin controles',
     'components.data.orderList.noControls.desc': 'Puedes ocultar las flechas laterales usando la propiedad [showControls]="false". Ideal para vistas compartidas.',
@@ -64,7 +64,7 @@ export const ORDER_LIST_DOC_TEXT = {
       'Component to reorder a list of items.',
     'components.data.orderList.import.title': 'Import',
     'components.data.orderList.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.data.orderList.basic.title': 'Basic Usage',
     'components.data.orderList.noControls.title': 'List without controls',
     'components.data.orderList.noControls.desc': 'You can hide the side arrows by setting the [showControls]="false" property. Ideal for shared views.',

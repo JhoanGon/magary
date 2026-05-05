@@ -4,19 +4,20 @@
   [attr.aria-label]="chartAriaLabel()"
 >
   <table class="magary-organizationchart-table" [attr.aria-label]="chartAriaLabel()">
-    <tbody
-      magary-organizationchart-node
-      *ngFor="let node of value()"
-      [node]="node"
-      [level]="1"
-      [selectionMode]="selectionMode()"
-      [selection]="selection()"
-      [collapsible]="collapsible()"
-      [itemTemplate]="template()"
-      (nodeSelect)="onNodeSelect.emit($event)"
-      (nodeUnselect)="onNodeUnselect.emit($event)"
-      (nodeExpand)="onNodeExpand.emit($event)"
-      (nodeCollapse)="onNodeCollapse.emit($event)"
-    ></tbody>
+    @for (node of value(); track node.key ?? $index) {
+      <tbody
+        magary-organizationchart-node
+        [node]="node"
+        [level]="1"
+        [selectionMode]="selectionMode()"
+        [selection]="selection()"
+        [collapsible]="collapsible()"
+        [itemTemplate]="template()"
+        (nodeSelect)="onNodeSelect.emit($event)"
+        (nodeUnselect)="onNodeUnselect.emit($event)"
+        (nodeExpand)="onNodeExpand.emit($event)"
+        (nodeCollapse)="onNodeCollapse.emit($event)"
+      ></tbody>
+    }
   </table>
 </div>

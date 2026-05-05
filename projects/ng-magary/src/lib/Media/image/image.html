@@ -1,6 +1,6 @@
 <div
   class="magary-image-content"
-  [ngStyle]="{ width: width(), height: height() }"
+  [style]="{ width: width(), height: height() }"
 >
   <img
     [src]="src()"
@@ -11,7 +11,7 @@
     [loading]="loading()"
     (load)="onImageLoad($event)"
     (error)="onImageError($event)"
-    [ngStyle]="preview() ? { cursor: 'pointer' } : {}"
+    [style]="preview() ? { cursor: 'pointer' } : {}"
     (click)="onPreviewImageClick($event)"
   />
 </div>
@@ -46,7 +46,7 @@
     <img
       [src]="src()"
       [alt]="alt()"
-      [ngStyle]="imagePreviewStyle()"
+      [style]="imagePreviewStyle()"
       class="preview-image"
     />
   </div>

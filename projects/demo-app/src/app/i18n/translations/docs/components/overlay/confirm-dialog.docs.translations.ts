@@ -6,16 +6,15 @@ export const CONFIRM_DIALOG_DOC_TEXT = {
     'components.overlay.confirmDialog.subtitle':
       'Dialogo de confirmacion avanzado con integracion de servicios.',
     'components.overlay.confirmDialog.import.title': 'Importar',
-    'components.overlay.confirmDialog.import.desc': 'Modulos necesarios.',
+    'components.overlay.confirmDialog.import.desc': 'Imports y provider necesarios.',
     'components.overlay.confirmDialog.basic.title': 'Basico',
     'components.overlay.confirmDialog.basic.desc':
       'Uso basico con el servicio de confirmacion.',
     'components.overlay.confirmDialog.basic.confirmAction': 'Confirmar Accion',
     'components.overlay.confirmDialog.basic.delete': 'Eliminar',
-    'components.overlay.confirmDialog.service.title':
-      'Confirmation Object (Service)',
+    'components.overlay.confirmDialog.service.title': 'MagaryConfirmation',
     'components.overlay.confirmDialog.service.desc':
-      'Propiedades del objeto pasado a confirmationService.confirm().',
+      'Propiedades del contrato publico pasado a confirmationService.confirm().',
     'components.overlay.confirmDialog.service.header.property': 'Propiedad',
     'components.overlay.confirmDialog.service.header.type': 'Tipo',
     'components.overlay.confirmDialog.service.header.description': 'Descripcion',
@@ -49,16 +48,15 @@ export const CONFIRM_DIALOG_DOC_TEXT = {
     'components.overlay.confirmDialog.subtitle':
       'Advanced confirmation dialog with service integration.',
     'components.overlay.confirmDialog.import.title': 'Import',
-    'components.overlay.confirmDialog.import.desc': 'Required modules.',
+    'components.overlay.confirmDialog.import.desc': 'Required imports and provider.',
     'components.overlay.confirmDialog.basic.title': 'Basic',
     'components.overlay.confirmDialog.basic.desc':
       'Basic usage with confirmation service.',
     'components.overlay.confirmDialog.basic.confirmAction': 'Confirm Action',
     'components.overlay.confirmDialog.basic.delete': 'Delete',
-    'components.overlay.confirmDialog.service.title':
-      'Confirmation Object (Service)',
+    'components.overlay.confirmDialog.service.title': 'MagaryConfirmation',
     'components.overlay.confirmDialog.service.desc':
-      'Properties of object passed to confirmationService.confirm().',
+      'Properties of the public contract passed to confirmationService.confirm().',
     'components.overlay.confirmDialog.service.header.property': 'Property',
     'components.overlay.confirmDialog.service.header.type': 'Type',
     'components.overlay.confirmDialog.service.header.description': 'Description',

@@ -43,7 +43,7 @@
                 [placeholder]="
                   i18n.translateDocs('components.form.input.basic.placeholder')
                 "
-                [(value)]="inputValue"
+                [(ngModel)]="inputValue"
               ></magary-input>
             </div>
             <div
@@ -55,13 +55,60 @@
               "
             >
               {{ i18n.translateDocs('components.form.input.basic.valueLabel') }}:
-              {{ inputValue() }}
+              {{ inputValue }}
             </div>
           </magary-card>
         </div>
       </div>
       <div class="code-block">
         <pre><code [highlight]="exampleBasic" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ i18n.translateDocs('components.form.input.forms.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.input.forms.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h4>{{ i18n.translateDocs('components.form.input.forms.demoTitle') }}</h4>
+          <magary-card
+            [width]="'100%'"
+            [shadow]="2"
+            [borderRadius]="'1rem'"
+            [backgroundColor]="'var(--surface-0)'"
+          >
+            <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+              <form [formGroup]="profileForm">
+                <magary-input
+                  formControlName="name"
+                  [label]="i18n.translateDocs('components.form.input.basic.label')"
+                  [errorMessage]="
+                    i18n.translateDocs('components.form.input.forms.errorMessage')
+                  "
+                  [helpText]="i18n.translateDocs('components.form.input.forms.helpText')"
+                ></magary-input>
+              </form>
+            </div>
+            <div
+              slot="footer"
+              style="
+                text-align: center;
+                color: var(--text-primary);
+                font-size: 0.9rem;
+              "
+            >
+              {{ i18n.translateDocs('components.form.input.basic.valueLabel') }}:
+              {{ profileName }}
+            </div>
+          </magary-card>
+        </div>
+      </div>
+      <div class="code-block">
+        <pre><code [highlight]="exampleForms" language="html"></code></pre>
       </div>
     </div>
   </div>
@@ -281,17 +328,18 @@
           <h4>{{ i18n.translateDocs('components.form.input.validation.error.cardTitle') }}</h4>
           <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
-              <magary-input
-                [label]="
-                  i18n.translateDocs('components.form.input.validation.error.label')
-                "
-                [error]="
-                  i18n.translateDocs('components.form.input.validation.error.message')
-                "
-                [value]="
-                  i18n.translateDocs('components.form.input.validation.error.value')
-                "
-              ></magary-input>
+                <magary-input
+                  [label]="
+                    i18n.translateDocs('components.form.input.validation.error.label')
+                  "
+                  [invalid]="true"
+                  [errorMessage]="
+                    i18n.translateDocs('components.form.input.validation.error.message')
+                  "
+                  [ngModel]="
+                    i18n.translateDocs('components.form.input.validation.error.value')
+                  "
+                ></magary-input>
             </div>
           </magary-card>
         </div>
@@ -301,15 +349,15 @@
           </h4>
           <magary-card [width]="'100%'" [shadow]="2" [borderRadius]="'1rem'" [backgroundColor]="'var(--surface-0)'">
             <div style="padding: 1.5rem">
-              <magary-input
-                [label]="
-                  i18n.translateDocs('components.form.input.validation.success.label')
-                "
-                [success]="true"
-                [value]="
-                  i18n.translateDocs('components.form.input.validation.success.value')
-                "
-              ></magary-input>
+                <magary-input
+                  [label]="
+                    i18n.translateDocs('components.form.input.validation.success.label')
+                  "
+                  [success]="true"
+                  [ngModel]="
+                    i18n.translateDocs('components.form.input.validation.success.value')
+                  "
+                ></magary-input>
             </div>
           </magary-card>
         </div>
@@ -446,7 +494,7 @@
                   i18n.translateDocs('components.form.input.states.disabled.label')
                 "
                 [disabled]="true"
-                [value]="
+                [ngModel]="
                   i18n.translateDocs('components.form.input.states.disabled.value')
                 "
               ></magary-input>
@@ -464,7 +512,7 @@
                   i18n.translateDocs('components.form.input.states.readonly.label')
                 "
                 [readonly]="true"
-                [value]="
+                [ngModel]="
                   i18n.translateDocs('components.form.input.states.readonly.value')
                 "
               ></magary-input>
@@ -509,14 +557,16 @@
           <tbody>
             <tr><td><code>label</code></td><td><code>string</code></td><td><code>undefined</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.label.desc') }}</td></tr>
             <tr><td><code>placeholder</code></td><td><code>string</code></td><td><code>undefined</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.placeholder.desc') }}</td></tr>
-            <tr><td><code>value</code></td><td><code>string</code></td><td><code>''</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.value.desc') }}</td></tr>
+            <tr><td><code>ngModel / formControlName</code></td><td><code>ControlValueAccessor</code></td><td><code>-</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.forms.desc') }}</td></tr>
             <tr><td><code>type</code></td><td><code>string</code></td><td><code>'text'</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.type.desc') }}</td></tr>
             <tr><td><code>size</code></td><td><code>'small' | 'normal' | 'large'</code></td><td><code>'normal'</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.size.desc') }}</td></tr>
             <tr><td><code>variant</code></td><td><code>'outlined' | 'filled' | 'underlined'</code></td><td><code>'outlined'</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.variant.desc') }}</td></tr>
             <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.disabled.desc') }}</td></tr>
             <tr><td><code>readonly</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.readonly.desc') }}</td></tr>
             <tr><td><code>required</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.required.desc') }}</td></tr>
-            <tr><td><code>error</code></td><td><code>string</code></td><td><code>undefined</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.error.desc') }}</td></tr>
+            <tr><td><code>invalid</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.invalid.desc') }}</td></tr>
+            <tr><td><code>errorMessage</code></td><td><code>string</code></td><td><code>''</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.errorMessage.desc') }}</td></tr>
+            <tr><td><code>helpText</code></td><td><code>string</code></td><td><code>''</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.helpText.desc') }}</td></tr>
             <tr><td><code>success</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.success.desc') }}</td></tr>
             <tr><td><code>loading</code></td><td><code>boolean</code></td><td><code>false</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.loading.desc') }}</td></tr>
             <tr><td><code>prefixIcon</code></td><td><code>string</code></td><td><code>undefined</code></td><td>{{ i18n.translateDocs('components.form.input.apiInputs.prefixIcon.desc') }}</td></tr>
@@ -549,7 +599,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td><code>valueChange</code></td><td><code>EventEmitter&lt;string&gt;</code></td><td>{{ i18n.translateDocs('components.form.input.apiOutputs.valueChange.desc') }}</td></tr>
             <tr><td><code>iconClick</code></td><td><code>EventEmitter&lt;'prefix' | 'suffix'&gt;</code></td><td>{{ i18n.translateDocs('components.form.input.apiOutputs.iconClick.desc') }}</td></tr>
             <tr><td><code>inputFocus</code></td><td><code>EventEmitter&lt;FocusEvent&gt;</code></td><td>{{ i18n.translateDocs('components.form.input.apiOutputs.inputFocus.desc') }}</td></tr>
             <tr><td><code>inputBlur</code></td><td><code>EventEmitter&lt;FocusEvent&gt;</code></td><td>{{ i18n.translateDocs('components.form.input.apiOutputs.inputBlur.desc') }}</td></tr>

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
-export interface Confirmation {
+/** Public payload accepted by MagaryConfirmationService.confirm(). */
+export interface MagaryConfirmation {
   message?: string;
   key?: string;
   icon?: string;
@@ -23,13 +24,13 @@ export interface Confirmation {
   providedIn: 'root',
 })
 export class MagaryConfirmationService {
-  private requireConfirmationSource = new Subject<Confirmation | null>();
-  private acceptConfirmationSource = new Subject<Confirmation | null>();
+  private requireConfirmationSource = new Subject<MagaryConfirmation | null>();
+  private acceptConfirmationSource = new Subject<MagaryConfirmation | null>();
 
   requireConfirmation$ = this.requireConfirmationSource.asObservable();
   acceptConfirmation$ = this.acceptConfirmationSource.asObservable();
 
-  confirm(confirmation: Confirmation) {
+  confirm(confirmation: MagaryConfirmation) {
     this.requireConfirmationSource.next(confirmation);
     return this;
   }

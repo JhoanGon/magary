@@ -7,7 +7,7 @@ export const SPLIT_BUTTON_DOC_TEXT = {
       'Boton que agrupa una accion por defecto y un menu desplegable.',
     'components.buttons.splitButton.import.title': 'Importar',
     'components.buttons.splitButton.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.buttons.splitButton.basic.title': 'Uso Basico',
     'components.buttons.splitButton.basic.cardTitle': 'Por defecto',
     'components.buttons.splitButton.basic.save': 'Guardar',
@@ -108,7 +108,7 @@ export const SPLIT_BUTTON_DOC_TEXT = {
       'Button that combines a default action with a dropdown menu.',
     'components.buttons.splitButton.import.title': 'Import',
     'components.buttons.splitButton.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.buttons.splitButton.basic.title': 'Basic Usage',
     'components.buttons.splitButton.basic.cardTitle': 'Default',
     'components.buttons.splitButton.basic.save': 'Save',

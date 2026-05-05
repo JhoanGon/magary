@@ -4,10 +4,10 @@ export const SEGMENTED_DOC_TEXT = {
   es: {
     'components.form.segmented.title': 'MagarySegmented',
     'components.form.segmented.subtitle':
-      'Control segmentado para seleccionar una opcion unica con animacion fluida y apariencia glass.',
+      'Control segmentado CVA-first para Angular Forms con una sola fuente de verdad.',
     'components.form.segmented.import.title': 'Import',
     'components.form.segmented.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.form.segmented.basic.title': 'Basico',
     'components.form.segmented.basic.desc':
       'Ejemplo para casos como selector de idioma.',
@@ -27,7 +27,7 @@ export const SEGMENTED_DOC_TEXT = {
     'components.form.segmented.sizes.ariaPlansFullWidth': 'Planes full width',
     'components.form.segmented.forms.title': 'Integracion con Forms',
     'components.form.segmented.forms.desc':
-      'Compatible con ControlValueAccessor.',
+      'Usa ngModel, formControl o formControlName; no expone un contrato paralelo de valor.',
     'components.form.segmented.forms.modelLabel': 'ngModel',
     'components.form.segmented.forms.ariaBinding': 'Locale form binding',
     'components.form.segmented.api.title': 'API',
@@ -38,8 +38,8 @@ export const SEGMENTED_DOC_TEXT = {
     'components.form.segmented.api.header.description': 'Descripcion',
     'components.form.segmented.api.options.desc':
       'Lista de opciones del control.',
-    'components.form.segmented.api.value.desc':
-      'Valor seleccionado (two-way binding).',
+    'components.form.segmented.api.compareWith.desc':
+      'Personaliza la comparacion cuando trabajas con valores objeto.',
     'components.form.segmented.api.optionLabel.desc':
       'Propiedad para mostrar texto cuando hay opciones objeto.',
     'components.form.segmented.api.optionValue.desc':
@@ -54,10 +54,10 @@ export const SEGMENTED_DOC_TEXT = {
   en: {
     'components.form.segmented.title': 'MagarySegmented',
     'components.form.segmented.subtitle':
-      'Segmented control to select a single option with smooth animation and glass styling.',
+      'CVA-first segmented control for Angular Forms with a single source of truth.',
     'components.form.segmented.import.title': 'Import',
     'components.form.segmented.import.desc':
-      'Import the component into your module or standalone component.',
+      'Import the component into your standalone component.',
     'components.form.segmented.basic.title': 'Basic',
     'components.form.segmented.basic.desc':
       'Example for scenarios such as language selection.',
@@ -77,7 +77,7 @@ export const SEGMENTED_DOC_TEXT = {
     'components.form.segmented.sizes.ariaPlansFullWidth': 'Plans full width',
     'components.form.segmented.forms.title': 'Forms Integration',
     'components.form.segmented.forms.desc':
-      'Compatible with ControlValueAccessor.',
+      'Use ngModel, formControl, or formControlName without a parallel value contract.',
     'components.form.segmented.forms.modelLabel': 'ngModel',
     'components.form.segmented.forms.ariaBinding': 'Locale form binding',
     'components.form.segmented.api.title': 'API',
@@ -87,8 +87,8 @@ export const SEGMENTED_DOC_TEXT = {
     'components.form.segmented.api.header.default': 'Default',
     'components.form.segmented.api.header.description': 'Description',
     'components.form.segmented.api.options.desc': 'Control options list.',
-    'components.form.segmented.api.value.desc':
-      'Selected value (two-way binding).',
+    'components.form.segmented.api.compareWith.desc':
+      'Customizes equality when you work with object values.',
     'components.form.segmented.api.optionLabel.desc':
       'Property used to show label text for object options.',
     'components.form.segmented.api.optionValue.desc':

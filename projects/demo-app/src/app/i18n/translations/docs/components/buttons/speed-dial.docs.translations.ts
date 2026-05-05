@@ -7,7 +7,7 @@ export const SPEED_DIAL_DOC_TEXT = {
       'Componente de menu flotante para accesos rapidos y acciones frecuentes.',
     'components.buttons.speedDial.import.title': 'Import',
     'components.buttons.speedDial.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.buttons.speedDial.basic.title': 'Uso Basico',
     'components.buttons.speedDial.basic.desc':
       'Ejemplo simple con configuracion por defecto.',
@@ -90,7 +90,7 @@ export const SPEED_DIAL_DOC_TEXT = {
       'Floating menu component for quick access and frequent actions.',
     'components.buttons.speedDial.import.title': 'Import',
     'components.buttons.speedDial.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.buttons.speedDial.basic.title': 'Basic Usage',
     'components.buttons.speedDial.basic.desc':
       'Simple example with default configuration.',

@@ -13,6 +13,7 @@ import {
 
 @Component({
   selector: 'magary-toast',
+  standalone: true,
   imports: [CommonModule, MagaryToastItem],
   templateUrl: './toast.html',
   styleUrl: './toast.scss',

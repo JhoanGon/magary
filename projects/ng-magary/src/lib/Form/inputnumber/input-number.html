@@ -4,7 +4,7 @@
 
 <span
   class="magary-inputnumber"
-  [ngClass]="{
+  [class]="{
     'magary-inputnumber-buttons-stacked':
       showButtons() && buttonLayout() === 'stacked',
     'magary-inputnumber-buttons-horizontal':
@@ -18,12 +18,14 @@
   <input
     #input
     type="text"
-    [attr.id]="inputId()"
+    [attr.id]="resolvedInputId()"
     [attr.name]="name()"
     [attr.placeholder]="placeholder()"
     [attr.size]="size()"
     [attr.maxlength]="maxlength()"
     [attr.tabindex]="tabindex()"
+    [attr.aria-invalid]="isInvalid() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
     [disabled]="isDisabled()"
     [readonly]="readonly()"
     [value]="formattedValue()"
@@ -32,8 +34,8 @@
     (blur)="onInputBlur($event)"
     (keydown)="onInputKeyDown($event)"
     class="magary-inputnumber-input"
-    [ngClass]="inputStyleClass()"
-    [ngStyle]="inputStyle()"
+    [class]="inputStyleClass()"
+    [style]="inputStyle()"
   />
 
   <!-- Stacked Layout: Botones verticales dentro del input -->
@@ -42,7 +44,7 @@
       <button
         type="button"
         class="magary-inputnumber-button magary-inputnumber-button-up"
-        [ngClass]="incrementButtonClass()"
+        [class]="incrementButtonClass()"
         [disabled]="isDisabled() || (max() !== null && value()! >= max()!)"
         (click)="spin($event, 1)"
         tabindex="-1"
@@ -55,7 +57,7 @@
       <button
         type="button"
         class="magary-inputnumber-button magary-inputnumber-button-down"
-        [ngClass]="decrementButtonClass()"
+        [class]="decrementButtonClass()"
         [disabled]="isDisabled() || (min() !== null && value()! <= min()!)"
         (click)="spin($event, -1)"
         tabindex="-1"
@@ -74,7 +76,7 @@
     <button
       type="button"
       class="magary-inputnumber-button magary-inputnumber-button-down"
-      [ngClass]="decrementButtonClass()"
+      [class]="decrementButtonClass()"
       [disabled]="isDisabled() || (min() !== null && value()! <= min()!)"
       (click)="spin($event, -1)"
       tabindex="-1"
@@ -89,7 +91,7 @@
     <button
       type="button"
       class="magary-inputnumber-button magary-inputnumber-button-up"
-      [ngClass]="incrementButtonClass()"
+      [class]="incrementButtonClass()"
       [disabled]="isDisabled() || (max() !== null && value()! >= max()!)"
       (click)="spin($event, 1)"
       tabindex="-1"
@@ -101,3 +103,15 @@
     </button>
   }
 </span>
+
+@if (hasVisibleErrorMessage() || helpText()) {
+  <div class="magary-inputnumber-message">
+    @if (hasVisibleErrorMessage()) {
+      <span class="error-message" [id]="errorMessageId" role="alert">
+        {{ errorMessage() }}
+      </span>
+    } @else if (helpText()) {
+      <span class="help-message" [id]="helpMessageId">{{ helpText() }}</span>
+    }
+  </div>
+}

@@ -25,6 +25,7 @@ export interface AvatarClickEvent {
 import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'magary-avatar',
+  standalone: true,
   imports: [CommonModule, NgOptimizedImage, LucideAngularModule],
   templateUrl: './avatar.html',
   styleUrl: './avatar.scss',

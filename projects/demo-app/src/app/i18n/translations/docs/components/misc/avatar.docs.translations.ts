@@ -5,7 +5,7 @@ export const AVATAR_DOC_TEXT = {
     'components.misc.avatar.title': 'MagaryAvatar',
     'components.misc.avatar.import.title': 'Import',
     'components.misc.avatar.import.desc':
-      'Importa el componente en tu modulo o usalo como componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.misc.avatar.basic.title': 'Ejemplos basicos',
     'components.misc.avatar.basic.desc': 'Tamanos y formas disponibles.',
     'components.misc.avatar.basic.card.sizes': 'Tamanos',
@@ -78,7 +78,7 @@ export const AVATAR_DOC_TEXT = {
     'components.misc.avatar.title': 'MagaryAvatar',
     'components.misc.avatar.import.title': 'Import',
     'components.misc.avatar.import.desc':
-      'Import the component in your module or use it as a standalone component.',
+      'Import the component in your standalone component.',
     'components.misc.avatar.basic.title': 'Basic examples',
     'components.misc.avatar.basic.desc': 'Available sizes and shapes.',
     'components.misc.avatar.basic.card.sizes': 'Sizes',

@@ -7,6 +7,7 @@ import {
   MagaryCascadeSelect,
   MagaryTab,
   MagaryTabs,
+  type MagarySelectValue,
 } from 'ng-magary';
 import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 
@@ -140,6 +141,7 @@ export class ViewCascadeSelect {
   optionLabel="cname"
   optionGroupLabel="name"
   [optionGroupChildren]="['states', 'cities']"
+  [compareWith]="compareCascadeByCode"
   [style]="{ minWidth: '14rem' }"
   placeholder="Select a city"
 ></magary-cascade-select>`;
@@ -151,6 +153,7 @@ export class ViewCascadeSelect {
   optionLabel="cname"
   optionGroupLabel="name"
   [optionGroupChildren]="['states', 'cities']"
+  [compareWith]="compareCascadeByCode"
   [optionGroupSelectable]="true"
   placeholder="Select a city or region"
 ></magary-cascade-select>`;
@@ -171,7 +174,10 @@ countries = [
       }
     ]
   }
-];`;
+];
+
+compareCascadeByCode = (option, value) =>
+  resolveCascadeCode(option) === resolveCascadeCode(value);`;
 
   get selectedPathBasic(): string {
     return this.buildPath(this.selectedCityBasic);
@@ -210,6 +216,10 @@ countries = [
 
   onCityChange(_event: CascadeSelection) {}
 
+  compareCascadeByCode = (option: unknown, value: unknown): boolean => {
+    return this.resolveCascadeCode(option) === this.resolveCascadeCode(value);
+  };
+
   private isCascadeCountry(
     option: CascadeSelection,
   ): option is CascadeCountryOption {
@@ -231,5 +241,14 @@ countries = [
 
     const candidate = option as { cname?: unknown };
     return typeof candidate.cname === 'string';
+  }
+
+  private resolveCascadeCode(option: CascadeSelection | MagarySelectValue | unknown): string | null {
+    if (!option || typeof option !== 'object') {
+      return null;
+    }
+
+    const candidate = option as { code?: unknown };
+    return typeof candidate.code === 'string' ? candidate.code : null;
   }
 }

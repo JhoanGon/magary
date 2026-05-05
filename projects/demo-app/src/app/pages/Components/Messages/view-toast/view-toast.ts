@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MagaryButton,
   MagaryToastService,
@@ -35,9 +35,11 @@ interface Section {
 
 @Component({
   selector: 'app-view-toast',
+  standalone: true,
   imports: [CommonModule, MagaryButton, Highlight, MagaryTabs, MagaryTab],
   templateUrl: './view-toast.html',
   styleUrl: './view-toast.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewToast {
   private toastService = inject(MagaryToastService);
@@ -58,7 +60,7 @@ export class ViewToast {
       descriptionKey: 'components.messages.toast.sections.import.desc',
       type: 'code',
       content: {
-        code: `import { MagaryToastService, MagaryToast } from 'ng-magary';`,
+        code: `import { MagaryToast, MagaryToastService, type MagaryToastMessage } from 'ng-magary';`,
         language: 'typescript',
       },
     },
@@ -245,21 +247,23 @@ export class ViewToast {
   }
 
   exampleBasicTs = `import { Component, inject } from '@angular/core';
-import { MagaryToastService } from 'ng-magary';
+import { MagaryToastService, type MagaryToastMessage } from 'ng-magary';
 
 @Component({ ... })
 export class MyComponent {
   private toastService = inject(MagaryToastService);
 
   showToast() {
-    this.toastService.add({
+    const toast: MagaryToastMessage = {
       type: 'success',
       title: 'Hello World',
       message: 'This is a complete notification.',
       duration: 5000,
       icon: 'rocket',
       sticky: false,
-    });
+    };
+
+    this.toastService.add(toast);
   }
 }`;
 

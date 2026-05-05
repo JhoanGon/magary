@@ -1,4 +1,5 @@
-import { Component, effect, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { AvatarClickEvent, MagaryAvatar } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
@@ -24,11 +25,14 @@ type LastClickState =
 
 @Component({
   selector: 'magary-view-avatar',
+  standalone: true,
   imports: [MagaryAvatar, Highlight],
   templateUrl: './view-avatar.html',
   styleUrl: './view-avatar.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewAvatar {
+  private readonly document = inject(DOCUMENT);
   readonly i18n = inject(DemoI18nService);
   readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
 
@@ -182,14 +186,14 @@ export class ViewAvatar {
       this.lastAvatarClick = this.getLastClickText();
 
       if (severity === 'danger') {
-        alert(
+        this.document.defaultView?.alert(
           this.t('components.misc.avatar.alert.criticalPrefix') +
             value +
             this.t('components.misc.avatar.alert.criticalSuffix') +
             '!',
         );
       } else if (severity === 'info') {
-        alert(
+        this.document.defaultView?.alert(
           this.t('components.misc.avatar.alert.messagesPrefix') +
             value +
             this.t('components.misc.avatar.alert.messagesSuffix'),

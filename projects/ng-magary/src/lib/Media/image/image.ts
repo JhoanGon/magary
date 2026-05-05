@@ -7,16 +7,17 @@ import {
   OnDestroy,
   signal,
   computed,
+  inject,
 } from '@angular/core';
 
-import { CommonModule, NgStyle } from '@angular/common';
+import { CommonModule, DOCUMENT, NgStyle } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { ElementRef, viewChild } from '@angular/core';
 
 @Component({
   selector: 'magary-image',
   standalone: true,
-  imports: [CommonModule, NgStyle, LucideAngularModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './image.html',
   styleUrls: ['./image.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -26,6 +27,7 @@ import { ElementRef, viewChild } from '@angular/core';
   },
 })
 export class MagaryImage implements OnDestroy {
+  private readonly document = inject(DOCUMENT);
   private dialog = viewChild<ElementRef<HTMLDialogElement>>('previewDialog');
   private destroyed = false;
 
@@ -120,7 +122,7 @@ export class MagaryImage implements OnDestroy {
   download() {
     const src = this.src();
     if (src) {
-      const link = document.createElement('a');
+      const link = this.document.createElement('a');
       link.href = src;
       link.download = this.alt() || 'image';
       link.click();

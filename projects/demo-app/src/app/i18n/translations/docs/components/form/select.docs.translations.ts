@@ -7,7 +7,7 @@ export const SELECT_DOC_TEXT = {
       'Componente de seleccion nativo estilizado compatible con Reactive Forms y soporte para objetos complejos.',
     'components.form.select.import.title': 'Importacion',
     'components.form.select.import.desc':
-      'Importa el modulo en tu componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.form.select.basic.title': 'Uso Basico',
     'components.form.select.basic.desc':
       'Select simple con opciones primitivas o de objetos.',
@@ -52,6 +52,14 @@ export const SELECT_DOC_TEXT = {
       'Nombre de la propiedad a usar como etiqueta.',
     'components.form.select.api.optionValue.desc':
       'Nombre de la propiedad a usar como valor.',
+    'components.form.select.api.inputId.desc':
+      'Id estable del trigger para formularios y labels externos.',
+    'components.form.select.api.ariaLabel.desc':
+      'Nombre accesible directo cuando no usas ariaLabelledby.',
+    'components.form.select.api.ariaLabelledby.desc':
+      'Referencia a un label externo que nombra el control.',
+    'components.form.select.api.ariaDescribedby.desc':
+      'Ids externos que se combinan con helpText/errorMessage.',
     'components.form.select.api.placeholder.desc':
       'Texto a mostrar cuando no hay seleccion.',
     'components.form.select.api.disabled.desc':
@@ -61,7 +69,7 @@ export const SELECT_DOC_TEXT = {
     'components.form.select.api.size.desc': 'Tamano visual del control.',
     'components.form.select.api.invalid.desc':
       'Marca el control como invalido y activa estado de error.',
-    'components.form.select.api.error.desc':
+    'components.form.select.api.errorMessage.desc':
       'Mensaje de error mostrado debajo del select.',
     'components.form.select.api.helpText.desc':
       'Texto de ayuda cuando no hay error.',
@@ -69,6 +77,8 @@ export const SELECT_DOC_TEXT = {
       'Habilita el input de busqueda.',
     'components.form.select.api.showClear.desc':
       'Muestra boton para limpiar seleccion.',
+    'components.form.select.api.compareWith.desc':
+      'Funcion para comparar valores complejos cuando no basta Object.is.',
   },
   en: {
     'components.form.select.title': 'Magary Select',
@@ -76,7 +86,7 @@ export const SELECT_DOC_TEXT = {
       'Styled native select component compatible with Reactive Forms and complex object options.',
     'components.form.select.import.title': 'Import',
     'components.form.select.import.desc':
-      'Import the module in your standalone component.',
+      'Import the component in your standalone component.',
     'components.form.select.basic.title': 'Basic Usage',
     'components.form.select.basic.desc':
       'Simple select with primitive or object options.',
@@ -118,6 +128,14 @@ export const SELECT_DOC_TEXT = {
       'Object property name used as label.',
     'components.form.select.api.optionValue.desc':
       'Object property name used as value.',
+    'components.form.select.api.inputId.desc':
+      'Stable trigger id for forms and external labels.',
+    'components.form.select.api.ariaLabel.desc':
+      'Direct accessible name when ariaLabelledby is not used.',
+    'components.form.select.api.ariaLabelledby.desc':
+      'References an external label that names the control.',
+    'components.form.select.api.ariaDescribedby.desc':
+      'External ids combined with helpText/errorMessage.',
     'components.form.select.api.placeholder.desc':
       'Text shown when no option is selected.',
     'components.form.select.api.disabled.desc':
@@ -127,12 +145,14 @@ export const SELECT_DOC_TEXT = {
     'components.form.select.api.size.desc': 'Visual size of the control.',
     'components.form.select.api.invalid.desc':
       'Marks control invalid and enables error state.',
-    'components.form.select.api.error.desc':
+    'components.form.select.api.errorMessage.desc':
       'Error message shown below the select.',
     'components.form.select.api.helpText.desc':
       'Help text shown when there is no error.',
     'components.form.select.api.filter.desc': 'Enables search input.',
     'components.form.select.api.showClear.desc':
       'Shows a button to clear selection.',
+    'components.form.select.api.compareWith.desc':
+      'Function used to compare complex values when Object.is is not enough.',
   },
 } as const satisfies Record<DemoLanguage, Record<string, string>>;

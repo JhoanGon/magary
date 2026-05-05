@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { Highlight } from 'ngx-highlightjs';
 import {
   MagaryButton,
+  type MagaryConfirmation,
   MagaryConfirmDialog,
   MagaryConfirmationService,
   MagaryCard,
@@ -35,7 +36,6 @@ type ConfirmDialogServiceRow = {
     MagaryTabs,
     MagaryTab,
   ],
-  providers: [MagaryConfirmationService],
   templateUrl: './view-confirm-dialog.html',
   styleUrl: './view-confirm-dialog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -52,7 +52,7 @@ export class ViewConfirmDialog {
   };
 
   readonly importCode =
-    "import { MagaryConfirmDialog, MagaryConfirmationService } from 'ng-magary';";
+    "import { MagaryConfirmDialog, MagaryConfirmationService, type MagaryConfirmation } from 'ng-magary';";
 
   readonly serviceRows: ConfirmDialogServiceRow[] = [
     {
@@ -99,18 +99,22 @@ export class ViewConfirmDialog {
 <magary-button (buttonClick)="confirm1()" label="Confirm"></magary-button>
 `;
 
-  readonly exampleTS = `
-constructor(private confirmationService: MagaryConfirmationService) {}
+  readonly exampleTS = `import { inject } from '@angular/core';
+import { MagaryConfirmationService, type MagaryConfirmation } from 'ng-magary';
+
+private readonly confirmationService = inject(MagaryConfirmationService);
 
 confirm1() {
-  this.confirmationService.confirm({
+  const confirmation: MagaryConfirmation = {
       header: 'Confirmation',
       message: 'Are you sure?',
       icon: 'triangle-alert',
       accept: () => {
           // Accepted
       }
-  });
+  };
+
+  this.confirmationService.confirm(confirmation);
 }
 `;
 

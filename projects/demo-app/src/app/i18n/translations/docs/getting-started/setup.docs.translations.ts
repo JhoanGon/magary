@@ -18,7 +18,7 @@ export const SETUP_DOC_TEXT = {
     'setup.step2.modules': 'Modulos (AppModule)',
     'setup.step3.title': 'Animaciones',
     'setup.step3.desc':
-      'Para que las animaciones (ripples y transiciones) funcionen, provee el modulo de animaciones en app.config.ts o app.module.ts.',
+      'Para que las animaciones (ripples y transiciones) funcionen, provee soporte de animaciones en app.config.ts.',
     'setup.step3.standalone': 'Standalone (AppConfig)',
     'setup.step3.modules': 'Modulos (AppModule)',
     'setup.step4.title': 'Ejemplos de integracion (demo app)',
@@ -55,7 +55,7 @@ export const SETUP_DOC_TEXT = {
     'setup.step2.modules': 'Modules (AppModule)',
     'setup.step3.title': 'Animations',
     'setup.step3.desc':
-      'To enable animations (ripples and transitions), provide animation support in app.config.ts or app.module.ts.',
+      'To enable animations (ripples and transitions), provide animation support in app.config.ts.',
     'setup.step3.standalone': 'Standalone (AppConfig)',
     'setup.step3.modules': 'Modules (AppModule)',
     'setup.step4.title': 'Integration examples (demo app)',

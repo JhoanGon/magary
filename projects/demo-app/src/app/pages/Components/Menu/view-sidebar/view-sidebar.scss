@@ -160,6 +160,24 @@
     background: var(--surface-0);
     border-left: 1px solid var(--surface-200);
 
+    .shell-selection {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.8rem;
+      margin-bottom: 1rem;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--primary-400) 32%, transparent);
+      background: color-mix(in srgb, var(--primary-500) 14%, var(--surface-0));
+      color: var(--text-primary);
+      font-size: 0.85rem;
+    }
+
+    .shell-selection-label {
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
     h3 {
       margin: 0 0 0.75rem;
       font-size: 1.125rem;

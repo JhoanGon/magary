@@ -2,14 +2,16 @@
   ChangeDetectionStrategy,
   Component,
   computed,
+  forwardRef,
+  inject,
   input,
+  Injector,
   output,
   signal,
-  model,
   effect,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
 export type InputType =
@@ -27,13 +29,21 @@ export type InputVariant = 'filled' | 'outlined' | 'underlined';
 
 @Component({
   selector: 'magary-input',
-  imports: [CommonModule, FormsModule, LucideAngularModule],
+  standalone: true,
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './input.html',
   styleUrl: './input.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MagaryInput),
+      multi: true,
+    },
+  ],
 })
-export class MagaryInput {
-  value = model<string>('');
+export class MagaryInput implements ControlValueAccessor {
+  readonly value = signal('');
   placeholder = input<string>('');
   type = input<InputType>('text');
   size = input<InputSize>('normal');
@@ -44,7 +54,8 @@ export class MagaryInput {
   required = input<boolean>(false);
   loading = input<boolean>(false);
 
-  error = input<string>('');
+  invalid = input<boolean>(false);
+  errorMessage = input<string>('');
   success = input<boolean>(false);
 
   label = input<string>('');
@@ -61,12 +72,10 @@ export class MagaryInput {
   inputBlur = output<FocusEvent>();
   iconClick = output<'prefix' | 'suffix'>();
 
-  private _internalError = signal<string>('');
-
-  effectiveError = computed(() => this.error() || this._internalError());
-  hasEffectiveError = computed(() => this.effectiveError().trim().length > 0);
-
   private focused = signal(false);
+  private readonly formDisabled = signal(false);
+  readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
+  private readonly injector = inject(Injector);
 
   private showPassword = signal(false);
 
@@ -86,12 +95,12 @@ export class MagaryInput {
     const classes = ['magary-input-field'];
     classes.push(`input-${this.variant()}`);
     classes.push(`input-${this.size()}`);
-    const hasError = this.hasEffectiveError();
+    const isInvalid = this.isInvalid();
 
-    if (this.disabled()) classes.push('input-disabled');
+    if (this.isDisabled()) classes.push('input-disabled');
     if (this.readonly()) classes.push('input-readonly');
-    if (hasError) classes.push('input-error');
-    if (this.success() && !hasError) classes.push('input-success');
+    if (isInvalid) classes.push('input-error');
+    if (this.success() && !isInvalid) classes.push('input-success');
     if (this.focused()) classes.push('input-focused');
     if (this.loading()) classes.push('input-loading');
 
@@ -118,18 +127,6 @@ export class MagaryInput {
 
     if (!this.label() && this.placeholder()) {
       return this.placeholder();
-    }
-
-    return null;
-  });
-
-  describedBy = computed(() => {
-    if (this.hasEffectiveError()) {
-      return this.errorMessageId;
-    }
-
-    if (this.helpText().trim().length > 0) {
-      return this.helpMessageId;
     }
 
     return null;
@@ -173,16 +170,17 @@ export class MagaryInput {
   });
 
   onInput(event: Event): void {
+    if (this.isDisabled() || this.readonly()) {
+      return;
+    }
+
     const target = event.target;
     if (!(target instanceof HTMLInputElement)) {
       return;
     }
 
     this.value.set(target.value);
-
-    if (this._internalError()) {
-      this._internalError.set('');
-    }
+    this.onChange(target.value);
   }
 
   onFocus(event: FocusEvent): void {
@@ -192,32 +190,8 @@ export class MagaryInput {
 
   onBlur(event: FocusEvent): void {
     this.focused.set(false);
-    this.validateInput();
+    this.markAsTouched();
     this.inputBlur.emit(event);
-  }
-
-  private validateInput(): void {
-    if (this.disabled() || this.readonly()) {
-      this._internalError.set('');
-      return;
-    }
-
-    const value = this.toComparableString(this.value() as unknown).trim();
-
-    if (this.required() && value.length === 0) {
-      this._internalError.set('Campo obligatorio');
-      return;
-    }
-
-    if (this.type() === 'email' && value.length > 0) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(value)) {
-        this._internalError.set('Correo electrónico inválido');
-        return;
-      }
-    }
-
-    this._internalError.set('');
   }
 
   private toComparableString(value: unknown): string {
@@ -273,7 +247,74 @@ export class MagaryInput {
   }
 
   private isInteractionBlocked(): boolean {
-    return this.disabled() || this.loading();
+    return this.isDisabled() || this.loading();
+  }
+
+  isInvalid(): boolean {
+    return this.invalid() || this.hasControlError();
+  }
+
+  hasVisibleErrorMessage(): boolean {
+    return this.isInvalid() && this.errorMessage().trim().length > 0;
+  }
+
+  describedBy(): string | null {
+    if (this.hasVisibleErrorMessage()) {
+      return this.errorMessageId;
+    }
+
+    if (this.helpText().trim().length > 0) {
+      return this.helpMessageId;
+    }
+
+    return null;
+  }
+
+  writeValue(value: string | number | null): void {
+    this.value.set(this.toComparableString(value));
+  }
+
+  registerOnChange(fn: (value: string) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.formDisabled.set(isDisabled);
+  }
+
+  private onChange: (value: string) => void = () => {};
+  private onTouched: () => void = () => {};
+  private touched = false;
+  private resolvedNgControl: NgControl | null | undefined;
+
+  private markAsTouched(): void {
+    if (this.touched) {
+      return;
+    }
+
+    this.touched = true;
+    this.onTouched();
+  }
+
+  private hasControlError(): boolean {
+    const control = this.getNgControl()?.control;
+    return !!control && control.invalid && control.touched;
+  }
+
+  private getNgControl(): NgControl | null {
+    if (this.resolvedNgControl !== undefined) {
+      return this.resolvedNgControl;
+    }
+
+    this.resolvedNgControl = this.injector.get(NgControl, null, {
+      self: true,
+      optional: true,
+    });
+    return this.resolvedNgControl;
   }
 }
 

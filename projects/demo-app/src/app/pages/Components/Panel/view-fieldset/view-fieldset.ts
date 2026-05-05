@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryFieldset, MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
@@ -24,6 +24,7 @@ type FieldsetOutputRow = {
   imports: [CommonModule, MagaryFieldset, MagaryTabs, MagaryTab, Highlight],
   templateUrl: './view-fieldset.html',
   styleUrl: './view-fieldset.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewFieldset {
   readonly i18n = inject(DemoI18nService);

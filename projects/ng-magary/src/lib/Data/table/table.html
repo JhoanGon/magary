@@ -16,7 +16,8 @@
             <magary-input
               placeholder="Search..."
               prefixIcon="search"
-              (valueChange)="onSearch($event)"
+              [ngModel]="searchTerm()"
+              (ngModelChange)="onSearch($event)"
               width="250px"
               size="small"
             >
@@ -108,7 +109,7 @@
                         </magary-avatar>
                       }
                       @case ("badge") {
-                        <span class="magary-badge" [ngClass]="getBadgeClass(row, col.field)">
+                        <span class="magary-badge" [class]="getBadgeClass(row, col.field)">
                           {{ resolveFieldDataAsString(row, col.field) }}
                         </span>
                       }

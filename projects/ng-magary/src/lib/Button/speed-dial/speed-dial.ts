@@ -8,7 +8,6 @@ import {
   output,
   signal,
   ElementRef,
-  HostListener,
   ChangeDetectionStrategy,
   inject,
 } from '@angular/core';
@@ -26,10 +25,15 @@ type SpeedDialDirection =
   | 'down-right';
 @Component({
   selector: 'magary-speed-dial',
+  standalone: true,
   imports: [CommonModule, LucideAngularModule],
   templateUrl: './speed-dial.html',
   styleUrl: './speed-dial.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(document:click)': 'onDocumentClick($event)',
+    '(document:keydown.escape)': 'onEscapeKeydown()',
+  },
 })
 export class MagarySpeedDial implements OnDestroy {
   private readonly elementRef = inject(ElementRef);
@@ -139,7 +143,6 @@ export class MagarySpeedDial implements OnDestroy {
   trackByItem(index: number, item: SpeedDialItem): string {
     return item.id || `${item.icon}-${index}`;
   }
-  @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     if (!this.isOpen()) {
       return;
@@ -151,7 +154,6 @@ export class MagarySpeedDial implements OnDestroy {
       this.emitToggle(false);
     }
   }
-  @HostListener('document:keydown.escape')
   onEscapeKeydown(): void {
     if (this.isOpen()) {
       this.isOpen.set(false);

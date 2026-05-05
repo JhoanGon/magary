@@ -1,7 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MagarySelect, MagaryTabs, MagaryTab } from 'ng-magary';
+import {
+  MagarySelect,
+  type MagarySelectCompareWith,
+  type MagarySelectValue,
+  MagaryTabs,
+  MagaryTab,
+} from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 
@@ -76,7 +82,7 @@ export class ViewSelect {
   [options]="cities"
   placeholder="Required"
   invalid
-  error="Selecciona una ciudad válida">
+  errorMessage="Selecciona una ciudad válida">
 </magary-select>`;
 
   basicTS = `cities = ['New York', 'London', 'Paris'];`;
@@ -116,6 +122,7 @@ selectedUserId = '1';`;
   optionLabel="name"
   filter
   showClear
+  [compareWith]="compareCountryByCode"
   [(ngModel)]="selectedCountry"
   placeholder="Select a country (with filter)">
 </magary-select>`;
@@ -128,5 +135,21 @@ countries = [
 ];
 
 // Stores the selected Object
-selectedCountry = null;`;
+selectedCountry = null;
+
+compareCountryByCode = (option: MagarySelectValue, value: MagarySelectValue) =>
+  resolveCountryCode(option) === resolveCountryCode(value);`;
+
+  compareCountryByCode: MagarySelectCompareWith = (option, value): boolean => {
+    return this.resolveCountryCode(option) === this.resolveCountryCode(value);
+  };
+
+  private resolveCountryCode(value: MagarySelectValue): string | null {
+    if (!value || typeof value !== 'object') {
+      return null;
+    }
+
+    const candidate = value as { code?: unknown };
+    return typeof candidate.code === 'string' ? candidate.code : null;
+  }
 }

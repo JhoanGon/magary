@@ -211,6 +211,42 @@ describe('MagaryPanelmenu behavior', () => {
     expect(rootAnchors[0].textContent).toContain('Routed Item');
   });
 
+  it('renders external urls and triggers command callbacks for action items', () => {
+    const commandSpy = vi.fn();
+    fixture.componentRef.setInput('items', [
+      {
+        label: 'Docs',
+        url: 'https://magary.dev',
+        target: '_blank',
+      },
+      {
+        label: 'Refresh',
+        icon: 'refresh-cw',
+        command: commandSpy,
+      },
+    ]);
+    fixture.detectChanges();
+
+    getHeader().click();
+    fixture.detectChanges();
+
+    const anchors = fixture.nativeElement.querySelectorAll(
+      '.panel-items > .menu-item > a',
+    ) as NodeListOf<HTMLAnchorElement>;
+    const buttons = fixture.nativeElement.querySelectorAll(
+      '.panel-items > .menu-item > button.menu-item-base',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    expect(anchors).toHaveLength(1);
+    expect(anchors[0].getAttribute('href')).toContain('https://magary.dev');
+    expect(anchors[0].getAttribute('target')).toBe('_blank');
+
+    buttons[0].click();
+    fixture.detectChanges();
+
+    expect(commandSpy).toHaveBeenCalledTimes(1);
+  });
+
   it('blocks click events for disabled items', () => {
     getHeader().click();
     fixture.detectChanges();
@@ -230,6 +266,92 @@ describe('MagaryPanelmenu behavior', () => {
     fixture.detectChanges();
 
     expect(clickEvents).toHaveLength(0);
+  });
+
+  it('renders list mode as open and can hide header', () => {
+    fixture.componentRef.setInput('mode', 'list');
+    fixture.componentRef.setInput('showHeader', false);
+    fixture.detectChanges();
+
+    const panel = fixture.nativeElement.querySelector('.panel-menu') as HTMLElement;
+    const header = fixture.nativeElement.querySelector(
+      '.panel-header',
+    ) as HTMLElement | null;
+    const items = fixture.nativeElement.querySelector('.panel-items') as HTMLElement;
+
+    expect(component.isPanelOpen()).toBe(true);
+    expect(panel.classList.contains('mode-list')).toBe(true);
+    expect(panel.classList.contains('header-hidden')).toBe(true);
+    expect(header).toBeNull();
+    expect(items.classList.contains('expanded')).toBe(true);
+  });
+
+  it('renders recursive nested levels beyond the third level', () => {
+    fixture.componentRef.setInput('items', [
+      {
+        label: 'Workspace',
+        children: [
+          {
+            label: 'Team',
+            children: [
+              {
+                label: 'Members',
+                children: [{ label: 'Directory' }],
+              },
+            ],
+          },
+        ],
+      },
+    ]);
+    fixture.detectChanges();
+
+    getHeader().click();
+    fixture.detectChanges();
+
+    const workspaceToggle = fixture.nativeElement.querySelector(
+      '.category-item',
+    ) as HTMLButtonElement;
+    workspaceToggle.click();
+    fixture.detectChanges();
+
+    const teamToggle = fixture.nativeElement.querySelector(
+      '.sub-category-item',
+    ) as HTMLButtonElement;
+    teamToggle.click();
+    fixture.detectChanges();
+
+    const nestedToggle = fixture.nativeElement.querySelectorAll(
+      '.sub-category-item',
+    )[1] as HTMLButtonElement;
+    nestedToggle.click();
+    fixture.detectChanges();
+
+    const directory = fixture.nativeElement.querySelector(
+      '.sub-sub-items .menu-item-leaf',
+    ) as HTMLElement | null;
+    expect(directory?.textContent).toContain('Directory');
+  });
+
+  it('renders emoji, separator and badgeValue content', () => {
+    fixture.componentRef.setInput('items', [
+      { label: 'Home', icon: 'house', emoji: '🔥', badgeValue: 8, badgeSeverity: 'danger' },
+      { separator: true, label: 'Management' },
+      { label: 'Billing', icon: 'wallet' },
+    ]);
+    fixture.detectChanges();
+
+    getHeader().click();
+    fixture.detectChanges();
+
+    const emoji = fixture.nativeElement.querySelector('.item-emoji') as HTMLElement;
+    const badge = fixture.nativeElement.querySelector('.menu-badge') as HTMLElement;
+    const separator = fixture.nativeElement.querySelector(
+      '.menu-separator',
+    ) as HTMLElement;
+
+    expect(emoji.textContent?.trim()).toBe('🔥');
+    expect(badge.textContent?.trim()).toBe('8');
+    expect(separator.textContent?.trim()).toBe('Management');
   });
 });
 

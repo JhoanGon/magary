@@ -1,16 +1,18 @@
 <div
   class="magary-datepicker"
   [class.disabled]="isDisabled()"
+  [class.invalid]="isInvalid()"
   (click)="onContainerClick($event)"
 >
   <div class="input-group">
     <input
-      [id]="triggerId"
+      [id]="resolvedInputId()"
       type="text"
       [placeholder]="placeholder() || 'dd/mm/yyyy'"
       [value]="formattedValue()"
       [disabled]="isDisabled()"
       (focus)="open()"
+      (blur)="onInputBlur()"
       (input)="onInput($event)"
       (keydown)="onTriggerKeydown($event)"
       class="datepicker-input"
@@ -19,6 +21,10 @@
       aria-haspopup="dialog"
       [attr.aria-expanded]="isOpen()"
       [attr.aria-controls]="isOpen() ? panelId : null"
+      [attr.aria-label]="resolvedAriaLabel()"
+      [attr.aria-labelledby]="ariaLabelledby() || null"
+      [attr.aria-invalid]="isInvalid() ? 'true' : null"
+      [attr.aria-describedby]="describedBy()"
     />
     <button
       type="button"
@@ -172,5 +178,15 @@
         </div>
       }
     </div>
+  }
+
+  @if (hasVisibleErrorMessage()) {
+    <span class="datepicker-message error-message" [id]="errorMessageId" role="alert">
+      {{ errorMessage() }}
+    </span>
+  } @else if (helpText().trim().length > 0) {
+    <span class="datepicker-message help-message" [id]="helpMessageId">
+      {{ helpText() }}
+    </span>
   }
 </div>

@@ -58,6 +58,18 @@
             "
           ></magary-datepicker>
         </div>
+
+        <div class="field">
+          <label>
+            {{ i18n.translateDocs('components.form.datepicker.basic.label.validation') }}
+          </label>
+          <magary-datepicker
+            invalid
+            errorMessage="Please choose a valid date"
+            helpText="Use the calendar or type dd/mm/yyyy"
+            placeholder="Required"
+          ></magary-datepicker>
+        </div>
       </div>
 
       <div class="code-block" style="margin-top: 1rem">
@@ -201,6 +213,38 @@
               <td>{{ i18n.translateDocs('components.form.datepicker.api.ngModel.desc') }}</td>
             </tr>
             <tr>
+              <td><code>inputId</code></td>
+              <td><code>string</code></td>
+              <td><code>auto</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.inputId.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>ariaLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.ariaLabel.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>ariaLabelledby</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.ariaLabelledby.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>ariaDescribedby</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.ariaDescribedby.desc') }}
+              </td>
+            </tr>
+            <tr>
               <td><code>selectionMode</code></td>
               <td><code>'single' | 'range'</code></td>
               <td><code>single</code></td>
@@ -236,6 +280,30 @@
                 {{
                   i18n.translateDocs('components.form.datepicker.api.placeholder.desc')
                 }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>invalid</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.invalid.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>errorMessage</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.errorMessage.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>helpText</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.datepicker.api.helpText.desc') }}
               </td>
             </tr>
             <tr>

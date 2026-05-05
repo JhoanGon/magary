@@ -1,7 +1,7 @@
 <div
   class="magary-slidemenu"
-  [ngClass]="styleClass()"
-  [ngStyle]="containerStyle()"
+  [class]="styleClass()"
+  [style]="containerStyle()"
 >
   <div class="magary-slidemenu-wrapper" [@slideAnimation]="currentIndex()">
     @for (view of [currentIndex()]; track view) {

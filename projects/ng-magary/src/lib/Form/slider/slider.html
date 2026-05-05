@@ -1,11 +1,12 @@
 <div
   class="magary-slider-rail"
+  [attr.aria-describedby]="describedBy()"
   (click)="onBarClick($event)"
   (touchstart)="onBarTouchStart($event)"
 >
   <div
     class="magary-slider-range"
-    [ngStyle]="
+    [style]="
       orientation() === 'horizontal'
         ? { left: rangeStartPos() + '%', width: rangeWidth() + '%' }
         : { bottom: rangeStartPos() + '%', height: rangeWidth() + '%' }
@@ -19,11 +20,13 @@
       role="slider"
       [tabindex]="isDisabled() ? -1 : 0"
       [attr.aria-label]="'Slider value'"
+      [attr.aria-describedby]="describedBy()"
+      [attr.aria-invalid]="isInvalid() ? 'true' : null"
       [attr.aria-orientation]="orientation()"
       [attr.aria-valuemin]="min()"
       [attr.aria-valuemax]="max()"
       [attr.aria-valuenow]="getHandleAriaValue(0)"
-      [ngStyle]="
+      [style]="
         orientation() === 'horizontal'
           ? { left: handle1Pos() + '%' }
           : { bottom: handle1Pos() + '%' }
@@ -41,11 +44,13 @@
       role="slider"
       [tabindex]="isDisabled() ? -1 : 0"
       [attr.aria-label]="'Slider range start'"
+      [attr.aria-describedby]="describedBy()"
+      [attr.aria-invalid]="isInvalid() ? 'true' : null"
       [attr.aria-orientation]="orientation()"
       [attr.aria-valuemin]="min()"
       [attr.aria-valuemax]="max()"
       [attr.aria-valuenow]="getHandleAriaValue(0)"
-      [ngStyle]="
+      [style]="
         orientation() === 'horizontal'
           ? { left: handle1Pos() + '%' }
           : { bottom: handle1Pos() + '%' }
@@ -62,11 +67,13 @@
       role="slider"
       [tabindex]="isDisabled() ? -1 : 0"
       [attr.aria-label]="'Slider range end'"
+      [attr.aria-describedby]="describedBy()"
+      [attr.aria-invalid]="isInvalid() ? 'true' : null"
       [attr.aria-orientation]="orientation()"
       [attr.aria-valuemin]="min()"
       [attr.aria-valuemax]="max()"
       [attr.aria-valuenow]="getHandleAriaValue(1)"
-      [ngStyle]="
+      [style]="
         orientation() === 'horizontal'
           ? { left: handle2Pos() + '%' }
           : { bottom: handle2Pos() + '%' }
@@ -79,3 +86,15 @@
     </span>
   }
 </div>
+
+@if (hasVisibleErrorMessage() || helpText()) {
+  <div class="magary-slider-message">
+    @if (hasVisibleErrorMessage()) {
+      <span class="error-message" [id]="errorMessageId" role="alert">
+        {{ errorMessage() }}
+      </span>
+    } @else if (helpText()) {
+      <span class="help-message" [id]="helpMessageId">{{ helpText() }}</span>
+    }
+  </div>
+}

@@ -37,6 +37,7 @@ import { OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'magary-upload',
+  standalone: true,
   imports: [CommonModule, MagaryButton, LucideAngularModule],
   templateUrl: './upload.html',
   styleUrl: './upload.scss',

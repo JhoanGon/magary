@@ -1,10 +1,10 @@
 <div class="magary-cascade-field" [style.width]="width()">
   <div
-    [id]="triggerId"
+    [id]="resolvedInputId()"
     class="magary-cascade-select"
     [class.disabled]="disabled()"
     [class.loading]="loading()"
-    [class.invalid]="hasError()"
+    [class.invalid]="isInvalid()"
     [class.open]="isOpen()"
     [class.size-small]="size() === 'small'"
     [class.size-normal]="size() === 'normal'"
@@ -15,9 +15,10 @@
     [attr.aria-expanded]="isOpen()"
     [attr.aria-disabled]="isInteractionDisabled()"
     [attr.aria-label]="resolvedAriaLabel()"
+    [attr.aria-labelledby]="ariaLabelledby() || null"
     [attr.aria-controls]="listboxId"
     [attr.aria-activedescendant]="activeDescendantId()"
-    [attr.aria-invalid]="hasError() ? 'true' : null"
+    [attr.aria-invalid]="isInvalid() ? 'true' : null"
     [attr.aria-describedby]="describedBy()"
     (click)="toggle()"
     (keydown)="onTriggerKeydown($event)"
@@ -50,10 +51,10 @@
                 [class.active]="isPathActive(createPath(parentPath, $index))"
                 [class.expanded]="isGroupExpanded(createPath(parentPath, $index))"
                 [class.selectable]="isSelectableOption(option)"
-                [class.selected]="getOptionValue(option) === value()"
+                [class.selected]="isOptionSelected(option)"
                 [id]="getOptionId(createPath(parentPath, $index))"
                 role="option"
-                [attr.aria-selected]="getOptionValue(option) === value()"
+                [attr.aria-selected]="isOptionSelected(option)"
                 [style.padding-inline-start.rem]="0.75 + depth * 0.75"
                 (mouseenter)="onOptionMouseEnter(option, createPath(parentPath, $index))"
                 (click)="selectOption(option, $event, createPath(parentPath, $index))"
@@ -100,10 +101,10 @@
     }
   </div>
 
-  @if (hasError()) {
+  @if (hasVisibleErrorMessage()) {
     <span class="cascade-message error-message" [id]="errorMessageId" role="alert">
       <lucide-icon name="circle-alert" [size]="16"></lucide-icon>
-      {{ errorMessage() }}
+      {{ resolvedErrorMessage() }}
     </span>
   } @else if (helpText().trim().length > 0) {
     <span class="cascade-message help-message" [id]="helpMessageId">

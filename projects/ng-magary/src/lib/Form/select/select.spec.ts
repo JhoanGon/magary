@@ -211,13 +211,63 @@ describe('MagarySelect behavior', () => {
     ).toBe('Pick one item');
 
     fixture.componentRef.setInput('invalid', true);
-    fixture.componentRef.setInput('error', 'Invalid option');
+    fixture.componentRef.setInput('errorMessage', 'Invalid option');
     fixture.detectChanges();
 
     expect(root.getAttribute('aria-invalid')).toBe('true');
     expect(
       fixture.nativeElement.querySelector('.error-message')?.textContent,
     ).toContain('Invalid option');
+  });
+
+  it('uses compareWith to resolve object selections without shared reference', () => {
+    fixture.componentRef.setInput('options', [
+      { code: 'US', name: 'United States' },
+      { code: 'CA', name: 'Canada' },
+    ]);
+    fixture.componentRef.setInput('optionLabel', 'name');
+    fixture.componentRef.setInput(
+      'compareWith',
+      (option: unknown, value: unknown) =>
+        (option as { code?: string } | null)?.code ===
+        (value as { code?: string } | null)?.code,
+    );
+    component.writeValue({ code: 'CA', name: 'Canada from API' });
+    fixture.detectChanges();
+
+    expect(component.selectedLabel()).toBe('Canada');
+
+    component.open();
+    fixture.detectChanges();
+
+    const selectedOption = document.querySelector(
+      '.cdk-overlay-container .select-item.selected',
+    ) as HTMLElement | null;
+    expect(selectedOption?.textContent).toContain('Canada');
+
+    component.close();
+  });
+
+  it('combines external describedBy ids with generated help and error ids', () => {
+    fixture.componentRef.setInput('inputId', 'country-select');
+    fixture.componentRef.setInput('ariaDescribedby', 'external-select-help');
+    fixture.componentRef.setInput('helpText', 'Choose one country');
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement.querySelector(
+      '.magary-select-container',
+    ) as HTMLElement;
+
+    expect(root.id).toBe('country-select');
+    expect(root.getAttribute('aria-describedby')).toContain('external-select-help');
+    expect(root.getAttribute('aria-describedby')).toContain('-help');
+
+    fixture.componentRef.setInput('invalid', true);
+    fixture.componentRef.setInput('errorMessage', 'Country is required');
+    fixture.detectChanges();
+
+    expect(root.getAttribute('aria-describedby')).toContain('external-select-help');
+    expect(root.getAttribute('aria-describedby')).toContain('-error');
   });
 });
 

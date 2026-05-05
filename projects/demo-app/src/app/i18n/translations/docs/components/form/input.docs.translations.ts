@@ -7,12 +7,18 @@ export const INPUT_DOC_TEXT = {
       'Componente de entrada de texto altamente personalizable.',
     'components.form.input.import.title': 'Import',
     'components.form.input.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.form.input.basic.title': 'Ejemplo Basico',
     'components.form.input.basic.demoTitle': 'Default',
     'components.form.input.basic.label': 'Nombre',
     'components.form.input.basic.placeholder': 'Escribe tu nombre',
     'components.form.input.basic.valueLabel': 'Valor',
+    'components.form.input.forms.title': 'Integracion con Forms',
+    'components.form.input.forms.desc':
+      'Usa ngModel, formControl o formControlName directamente via ControlValueAccessor.',
+    'components.form.input.forms.demoTitle': 'Reactive Forms',
+    'components.form.input.forms.errorMessage': 'El nombre es obligatorio',
+    'components.form.input.forms.helpText': 'Se usa en tu perfil publico',
     'components.form.input.types.title': 'Tipos',
     'components.form.input.types.desc':
       'Diferentes tipos de input soportados.',
@@ -91,7 +97,8 @@ export const INPUT_DOC_TEXT = {
     'components.form.input.apiInputs.label.desc': 'Etiqueta del input.',
     'components.form.input.apiInputs.placeholder.desc':
       'Texto de ayuda temporal.',
-    'components.form.input.apiInputs.value.desc': 'Valor del input.',
+    'components.form.input.apiInputs.forms.desc':
+      'Contrato de formularios canonico mediante ControlValueAccessor.',
     'components.form.input.apiInputs.type.desc':
       'Tipo de input (text, email, password, etc).',
     'components.form.input.apiInputs.size.desc': 'Tamano del componente.',
@@ -101,7 +108,12 @@ export const INPUT_DOC_TEXT = {
     'components.form.input.apiInputs.readonly.desc': 'Modo solo lectura.',
     'components.form.input.apiInputs.required.desc':
       'Marca el campo como obligatorio.',
-    'components.form.input.apiInputs.error.desc': 'Mensaje de error.',
+    'components.form.input.apiInputs.invalid.desc':
+      'Fuerza el estado visual invalido sin reemplazar Angular Forms.',
+    'components.form.input.apiInputs.errorMessage.desc':
+      'Mensaje de error mostrado cuando el control esta invalido.',
+    'components.form.input.apiInputs.helpText.desc':
+      'Texto de apoyo visible cuando no hay error.',
     'components.form.input.apiInputs.success.desc': 'Indica estado de exito.',
     'components.form.input.apiInputs.loading.desc':
       'Muestra indicador de carga.',
@@ -145,12 +157,18 @@ export const INPUT_DOC_TEXT = {
       'Highly customizable text input component.',
     'components.form.input.import.title': 'Import',
     'components.form.input.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.form.input.basic.title': 'Basic Example',
     'components.form.input.basic.demoTitle': 'Default',
     'components.form.input.basic.label': 'Name',
     'components.form.input.basic.placeholder': 'Type your name',
     'components.form.input.basic.valueLabel': 'Value',
+    'components.form.input.forms.title': 'Forms Integration',
+    'components.form.input.forms.desc':
+      'Use ngModel, formControl, or formControlName directly through ControlValueAccessor.',
+    'components.form.input.forms.demoTitle': 'Reactive Forms',
+    'components.form.input.forms.errorMessage': 'Name is required',
+    'components.form.input.forms.helpText': 'Used in your public profile',
     'components.form.input.types.title': 'Types',
     'components.form.input.types.desc': 'Different supported input types.',
     'components.form.input.types.text.cardTitle': 'Text',
@@ -226,7 +244,8 @@ export const INPUT_DOC_TEXT = {
     'components.form.input.apiInputs.label.desc': 'Input label.',
     'components.form.input.apiInputs.placeholder.desc':
       'Temporary helper text.',
-    'components.form.input.apiInputs.value.desc': 'Input value.',
+    'components.form.input.apiInputs.forms.desc':
+      'Canonical forms contract through ControlValueAccessor.',
     'components.form.input.apiInputs.type.desc':
       'Input type (text, email, password, etc).',
     'components.form.input.apiInputs.size.desc': 'Component size.',
@@ -235,7 +254,12 @@ export const INPUT_DOC_TEXT = {
     'components.form.input.apiInputs.readonly.desc': 'Read-only mode.',
     'components.form.input.apiInputs.required.desc':
       'Marks the field as required.',
-    'components.form.input.apiInputs.error.desc': 'Error message.',
+    'components.form.input.apiInputs.invalid.desc':
+      'Forces the invalid visual state without replacing Angular Forms.',
+    'components.form.input.apiInputs.errorMessage.desc':
+      'Error message shown when the control is invalid.',
+    'components.form.input.apiInputs.helpText.desc':
+      'Supporting text shown when there is no error.',
     'components.form.input.apiInputs.success.desc': 'Indicates success state.',
     'components.form.input.apiInputs.loading.desc':
       'Shows loading indicator.',

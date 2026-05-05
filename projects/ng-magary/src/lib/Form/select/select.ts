@@ -8,9 +8,11 @@ import {
   signal,
   viewChild,
   effect,
+  inject,
+  Injector,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -19,6 +21,10 @@ type SelectPrimitiveOption = string | number | boolean;
 type SelectSize = 'small' | 'normal' | 'large';
 export type MagarySelectOption = SelectPrimitiveOption | SelectObjectOption;
 export type MagarySelectValue = SelectPrimitiveOption | SelectObjectOption | null;
+export type MagarySelectCompareWith = (
+  optionValue: MagarySelectValue,
+  modelValue: MagarySelectValue,
+) => boolean;
 
 @Component({
   selector: 'magary-select',
@@ -35,20 +41,25 @@ export type MagarySelectValue = SelectPrimitiveOption | SelectObjectOption | nul
   ],
 })
 export class MagarySelect implements ControlValueAccessor {
+  private readonly document = inject(DOCUMENT);
   // Signal Inputs
   readonly options = input<MagarySelectOption[]>([]);
   readonly optionLabel = input<string>();
   readonly optionValue = input<string>();
   readonly placeholder = input<string>('Select an option');
+  readonly inputId = input<string>('');
   readonly ariaLabel = input<string>('');
+  readonly ariaLabelledby = input<string>('');
+  readonly ariaDescribedby = input<string>('');
   readonly size = input<SelectSize>('normal');
   readonly disabled = input(false, { transform: booleanAttribute });
   readonly loading = input(false, { transform: booleanAttribute });
   readonly invalid = input(false, { transform: booleanAttribute });
-  readonly error = input<string>('');
+  readonly errorMessage = input<string>('');
   readonly helpText = input<string>('');
   readonly filter = input(false, { transform: booleanAttribute });
   readonly showClear = input(false, { transform: booleanAttribute });
+  readonly compareWith = input<MagarySelectCompareWith>(Object.is);
 
   private readonly formDisabled = signal(false);
   readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
@@ -65,14 +76,19 @@ export class MagarySelect implements ControlValueAccessor {
   readonly filterInputRef = viewChild<ElementRef<HTMLInputElement>>('filterInput');
   readonly triggerWidth = signal<number | string>('auto');
   private readonly uniqueId = `magary-select-${Math.random().toString(36).substring(2, 11)}`;
-  readonly triggerId = `${this.uniqueId}-trigger`;
+  readonly resolvedInputId = computed(() => this.inputId().trim() || `${this.uniqueId}-trigger`);
   readonly listboxId = `${this.uniqueId}-listbox`;
   readonly errorMessageId = `${this.uniqueId}-error`;
   readonly helpMessageId = `${this.uniqueId}-help`;
+  private readonly injector = inject(Injector);
   readonly listboxLabel = computed(() =>
     this.placeholder().trim().length > 0 ? `${this.placeholder()} options` : 'Select options',
   );
   readonly resolvedAriaLabel = computed(() => {
+    if (this.ariaLabelledby().trim().length > 0) {
+      return null;
+    }
+
     const explicitLabel = this.ariaLabel().trim();
     if (explicitLabel.length > 0) {
       return explicitLabel;
@@ -97,26 +113,32 @@ export class MagarySelect implements ControlValueAccessor {
 
     return this.getOptionId(index);
   });
-  readonly hasError = computed(() => this.invalid() || this.error().trim().length > 0);
-  readonly errorMessage = computed(() => {
-    const message = this.error().trim();
+  readonly isInvalid = computed(() => this.invalid() || this.hasControlError());
+  readonly hasVisibleErrorMessage = computed(() => {
+    return this.isInvalid() && this.errorMessage().trim().length > 0;
+  });
+  readonly resolvedErrorMessage = computed(() => {
+    const message = this.errorMessage().trim();
     return message.length > 0 ? message : 'Invalid selection';
   });
   readonly describedBy = computed(() => {
-    if (this.hasError()) {
-      return this.errorMessageId;
+    const ids = [this.ariaDescribedby().trim()];
+
+    if (this.hasVisibleErrorMessage()) {
+      ids.push(this.errorMessageId);
+    } else if (this.helpText().trim().length > 0) {
+      ids.push(this.helpMessageId);
     }
 
-    if (this.helpText().trim().length > 0) {
-      return this.helpMessageId;
-    }
-
-    return null;
+    const filteredIds = ids.filter((id) => id.length > 0);
+    return filteredIds.length > 0 ? filteredIds.join(' ') : null;
   });
 
   // CVA Callbacks
   private onChange: (value: MagarySelectValue) => void = () => {};
   private onTouched: () => void = () => {};
+  private touched = false;
+  private resolvedNgControl: NgControl | null | undefined;
 
   // Computed Helpers
   readonly visibleOptions = computed(() => {
@@ -135,7 +157,9 @@ export class MagarySelect implements ControlValueAccessor {
     if (val === null || val === undefined || val === '') return '';
     const opts = this.options();
 
-    const selectedOption = opts.find((opt) => this.getValue(opt) === val);
+    const selectedOption = opts.find((opt) =>
+      this.valuesEqual(this.getValue(opt), val),
+    );
     return selectedOption ? this.getLabel(selectedOption) : '';
   });
 
@@ -197,7 +221,7 @@ export class MagarySelect implements ControlValueAccessor {
       }
 
       queueMicrotask(() => {
-        const activeElement = document.getElementById(activeId);
+        const activeElement = this.document.getElementById(activeId);
         if (
           activeElement &&
           typeof activeElement.scrollIntoView === 'function'
@@ -234,7 +258,7 @@ export class MagarySelect implements ControlValueAccessor {
   close(): void {
     this.isOpen.set(false);
     this.focused.set(false);
-    this.onTouched();
+    this.markAsTouched();
   }
 
   selectOption(option: MagarySelectOption): void {
@@ -287,7 +311,7 @@ export class MagarySelect implements ControlValueAccessor {
     event.stopPropagation();
     this.value.set(null);
     this.onChange(null);
-    this.onTouched();
+    this.markAsTouched();
   }
 
   onTriggerKeydown(event: KeyboardEvent): void {
@@ -462,10 +486,36 @@ export class MagarySelect implements ControlValueAccessor {
   }
 
   private valuesEqual(left: MagarySelectValue, right: MagarySelectValue): boolean {
-    return Object.is(left, right);
+    return this.compareWith()(left, right);
   }
 
   private isObjectOption(option: MagarySelectOption): option is SelectObjectOption {
     return typeof option === 'object' && option !== null;
+  }
+
+  private markAsTouched(): void {
+    if (this.touched) {
+      return;
+    }
+
+    this.touched = true;
+    this.onTouched();
+  }
+
+  private hasControlError(): boolean {
+    const control = this.getNgControl()?.control;
+    return !!control && control.invalid && control.touched;
+  }
+
+  private getNgControl(): NgControl | null {
+    if (this.resolvedNgControl !== undefined) {
+      return this.resolvedNgControl;
+    }
+
+    this.resolvedNgControl = this.injector.get(NgControl, null, {
+      self: true,
+      optional: true,
+    });
+    return this.resolvedNgControl;
   }
 }

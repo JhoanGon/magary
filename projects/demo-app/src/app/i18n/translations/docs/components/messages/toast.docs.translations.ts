@@ -7,7 +7,7 @@ export const TOAST_DOC_TEXT = {
       'Notificaciones flotantes con estilo premium, animaciones fluidas y soporte para multiples tipos de mensajes.',
     'components.messages.toast.sections.import.title': 'Import',
     'components.messages.toast.sections.import.desc':
-      'Importa el servicio y el componente en tu aplicacion. El componente <magary-toast> debe colocarse en el root (ej. app.component.html).',
+      'Importa el servicio y el componente en tu aplicacion standalone. El componente <magary-toast> debe colocarse en el root (ej. app.component.html).',
     'components.messages.toast.sections.basic.title': 'Uso Basico',
     'components.messages.toast.sections.basic.desc':
       'Inyecta MagaryToastService y usa add() para mostrar notificaciones.',
@@ -17,9 +17,9 @@ export const TOAST_DOC_TEXT = {
     'components.messages.toast.sections.sticky.title': 'Sticky',
     'components.messages.toast.sections.sticky.desc':
       'Las notificaciones sticky no desaparecen automaticamente y requieren accion del usuario para cerrarse.',
-    'components.messages.toast.sections.apiToast.title': 'Toast Interface',
+    'components.messages.toast.sections.apiToast.title': 'MagaryToastMessage',
     'components.messages.toast.sections.apiToast.desc':
-      'Propiedades del objeto Toast.',
+      'Propiedades del contrato publico MagaryToastMessage.',
     'components.messages.toast.sections.apiComponent.title':
       'MagaryToast (Component)',
     'components.messages.toast.sections.apiComponent.desc':
@@ -81,7 +81,7 @@ export const TOAST_DOC_TEXT = {
       'Floating notifications with premium styling, smooth animations, and support for multiple message types.',
     'components.messages.toast.sections.import.title': 'Import',
     'components.messages.toast.sections.import.desc':
-      'Import the service and the component in your application. Place <magary-toast> in the root (e.g. app.component.html).',
+      'Import the service and the component in your standalone application. Place <magary-toast> in the root (e.g. app.component.html).',
     'components.messages.toast.sections.basic.title': 'Basic Usage',
     'components.messages.toast.sections.basic.desc':
       'Inject MagaryToastService and use add() to display notifications.',
@@ -91,9 +91,9 @@ export const TOAST_DOC_TEXT = {
     'components.messages.toast.sections.sticky.title': 'Sticky',
     'components.messages.toast.sections.sticky.desc':
       'Sticky notifications do not close automatically and require user action.',
-    'components.messages.toast.sections.apiToast.title': 'Toast Interface',
+    'components.messages.toast.sections.apiToast.title': 'MagaryToastMessage',
     'components.messages.toast.sections.apiToast.desc':
-      'Properties of the Toast object.',
+      'Properties of the public MagaryToastMessage contract.',
     'components.messages.toast.sections.apiComponent.title':
       'MagaryToast (Component)',
     'components.messages.toast.sections.apiComponent.desc':

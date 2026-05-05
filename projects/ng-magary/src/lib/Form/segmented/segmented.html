@@ -7,7 +7,9 @@
   [class.size-large]="size() === 'large'"
   role="radiogroup"
   [attr.aria-label]="ariaLabel()"
+  [attr.aria-describedby]="describedBy()"
   [attr.aria-disabled]="isDisabled() ? 'true' : null"
+  [attr.aria-invalid]="isInvalid() ? 'true' : null"
 >
   <span
     class="segment-indicator"
@@ -34,3 +36,15 @@
     </button>
   }
 </div>
+
+@if (hasVisibleErrorMessage() || helpText()) {
+  <div class="magary-segmented-message">
+    @if (hasVisibleErrorMessage()) {
+      <span class="error-message" [id]="errorMessageId" role="alert">
+        {{ errorMessage() }}
+      </span>
+    } @else if (helpText()) {
+      <span class="help-message" [id]="helpMessageId">{{ helpText() }}</span>
+    }
+  </div>
+}

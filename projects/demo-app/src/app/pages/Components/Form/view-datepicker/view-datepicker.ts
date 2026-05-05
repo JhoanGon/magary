@@ -29,7 +29,14 @@ import { FormsModule } from '@angular/forms';`;
 
   basicHTML = `<magary-datepicker [(ngModel)]="date" placeholder="Select a date"></magary-datepicker>
 
-<magary-datepicker disabled placeholder="Disabled"></magary-datepicker>`;
+<magary-datepicker disabled placeholder="Disabled"></magary-datepicker>
+
+<magary-datepicker
+  invalid
+  errorMessage="Please choose a valid date"
+  helpText="Use the calendar or type dd/mm/yyyy"
+  placeholder="Required">
+</magary-datepicker>`;
 
   basicTS = `date: Date | null = null;`;
 

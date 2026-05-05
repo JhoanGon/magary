@@ -100,7 +100,7 @@
                 )
               "
               invalid
-              [error]="
+              [errorMessage]="
                 i18n.translateDocs('components.form.select.basic.errorMessage')
               "
             ></magary-select>
@@ -193,6 +193,7 @@
               "
               filter
               showClear
+              [compareWith]="compareCountryByCode"
               [(ngModel)]="selectedCountry"
             ></magary-select>
             <p>
@@ -274,6 +275,30 @@
               <td>{{ i18n.translateDocs('components.form.select.api.optionValue.desc') }}</td>
             </tr>
             <tr>
+              <td><code>inputId</code></td>
+              <td><code>string</code></td>
+              <td><code>auto</code></td>
+              <td>{{ i18n.translateDocs('components.form.select.api.inputId.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>ariaLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>{{ i18n.translateDocs('components.form.select.api.ariaLabel.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>ariaLabelledby</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>{{ i18n.translateDocs('components.form.select.api.ariaLabelledby.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>ariaDescribedby</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>{{ i18n.translateDocs('components.form.select.api.ariaDescribedby.desc') }}</td>
+            </tr>
+            <tr>
               <td><code>placeholder</code></td>
               <td><code>string</code></td>
               <td><code>Select...</code></td>
@@ -304,10 +329,10 @@
               <td>{{ i18n.translateDocs('components.form.select.api.invalid.desc') }}</td>
             </tr>
             <tr>
-              <td><code>error</code></td>
+              <td><code>errorMessage</code></td>
               <td><code>string</code></td>
               <td><code>''</code></td>
-              <td>{{ i18n.translateDocs('components.form.select.api.error.desc') }}</td>
+              <td>{{ i18n.translateDocs('components.form.select.api.errorMessage.desc') }}</td>
             </tr>
             <tr>
               <td><code>helpText</code></td>
@@ -326,6 +351,12 @@
               <td><code>boolean</code></td>
               <td><code>false</code></td>
               <td>{{ i18n.translateDocs('components.form.select.api.showClear.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>compareWith</code></td>
+              <td><code>(optionValue, modelValue) =&gt; boolean</code></td>
+              <td><code>Object.is</code></td>
+              <td>{{ i18n.translateDocs('components.form.select.api.compareWith.desc') }}</td>
             </tr>
           </tbody>
         </table>

@@ -28,7 +28,7 @@ import {
   template: `
     <li
       class="magary-treenode"
-      [ngClass]="node().styleClass || ''"
+      [class]="node().styleClass || ''"
       role="treeitem"
       [attr.data-node-key]="node().key || null"
       [attr.aria-expanded]="!isLeaf ? !!isExpanded : null"
@@ -46,79 +46,74 @@ import {
         (click)="onNodeClick($event)"
         (keydown)="onNodeKeydown($event)"
       >
-        <!-- Toggler -->
-        <button
-          type="button"
-          class="magary-tree-toggler"
-          [class.expanded]="isExpanded"
-          [attr.aria-label]="getTogglerAriaLabel()"
-          (click)="toggle($event)"
-          *ngIf="!isLeaf"
-        >
-          <lucide-icon name="chevron-right" [size]="16"></lucide-icon>
-        </button>
-        <span class="magary-tree-toggler-placeholder" *ngIf="isLeaf"></span>
-
-        <!-- Checkbox (if mode is checkbox) -->
-        <div
-          class="magary-treenode-checkbox"
-          *ngIf="selectionMode() === 'checkbox'"
-          (click)="onCheckboxClick($event)"
-        >
-          <div
-            class="magary-checkbox-box"
-            [class.highlight]="isSelected() || node().partialSelected"
+        @if (!isLeaf) {
+          <button
+            type="button"
+            class="magary-tree-toggler"
+            [class.expanded]="isExpanded"
+            [attr.aria-label]="getTogglerAriaLabel()"
+            (click)="toggle($event)"
           >
-            <lucide-icon
-              name="check"
-              [size]="12"
-              *ngIf="isSelected()"
-            ></lucide-icon>
-            <lucide-icon
-              name="minus"
-              [size]="12"
-              *ngIf="node().partialSelected && !isSelected()"
-            ></lucide-icon>
+            <lucide-icon name="chevron-right" [size]="16"></lucide-icon>
+          </button>
+        } @else {
+          <span class="magary-tree-toggler-placeholder"></span>
+        }
+
+        @if (selectionMode() === 'checkbox') {
+          <div
+            class="magary-treenode-checkbox"
+            (click)="onCheckboxClick($event)"
+          >
+            <div
+              class="magary-checkbox-box"
+              [class.highlight]="isSelected() || node().partialSelected"
+            >
+              @if (isSelected()) {
+                <lucide-icon name="check" [size]="12"></lucide-icon>
+              }
+              @if (node().partialSelected && !isSelected()) {
+                <lucide-icon name="minus" [size]="12"></lucide-icon>
+              }
+            </div>
           </div>
-        </div>
+        }
 
-        <!-- Icon -->
-        <span
-          class="magary-treenode-icon"
-          *ngIf="node().icon || node().expandedIcon || node().collapsedIcon"
-        >
-          <lucide-icon [name]="getIcon()" [size]="16"></lucide-icon>
-        </span>
+        @if (node().icon || node().expandedIcon || node().collapsedIcon) {
+          <span class="magary-treenode-icon">
+            <lucide-icon [name]="getIcon()" [size]="16"></lucide-icon>
+          </span>
+        }
 
-        <!-- Label -->
         <span class="magary-treenode-label">{{ node().label }}</span>
       </div>
 
-      <!-- Children (Recursion) -->
-      <ul
-        class="magary-treenode-children"
-        *ngIf="isExpanded && !isLeaf"
-        role="group"
-        cdkDropList
-        [cdkDropListDisabled]="!droppable()"
-        [cdkDropListData]="node().children || []"
-        (cdkDropListDropped)="onDrop($event)"
-      >
-        <magary-uitree-node
-          *ngFor="let childNode of node().children"
-          [node]="childNode"
-          [selectionMode]="selectionMode()"
-          [selection]="selection()"
-          [draggable]="draggable()"
-          [droppable]="droppable()"
-          (nodeSelect)="nodeSelect.emit($event)"
-          (nodeUnselect)="nodeUnselect.emit($event)"
-          (nodeExpand)="nodeExpand.emit($event)"
-          (nodeCollapse)="nodeCollapse.emit($event)"
-          (nodeDrop)="nodeDrop.emit($event)"
+      @if (isExpanded && !isLeaf) {
+        <ul
+          class="magary-treenode-children"
+          role="group"
+          cdkDropList
+          [cdkDropListDisabled]="!droppable()"
+          [cdkDropListData]="node().children || []"
+          (cdkDropListDropped)="onDrop($event)"
         >
-        </magary-uitree-node>
-      </ul>
+          @for (childNode of node().children; track childNode.key ?? $index) {
+            <magary-uitree-node
+              [node]="childNode"
+              [selectionMode]="selectionMode()"
+              [selection]="selection()"
+              [draggable]="draggable()"
+              [droppable]="droppable()"
+              (nodeSelect)="nodeSelect.emit($event)"
+              (nodeUnselect)="nodeUnselect.emit($event)"
+              (nodeExpand)="nodeExpand.emit($event)"
+              (nodeCollapse)="nodeCollapse.emit($event)"
+              (nodeDrop)="nodeDrop.emit($event)"
+            >
+            </magary-uitree-node>
+          }
+        </ul>
+      }
     </li>
   `,
   host: {

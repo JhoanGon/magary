@@ -6,18 +6,19 @@ import {
   signal,
   forwardRef,
   ElementRef,
-  HostListener,
   inject,
   computed,
   viewChild,
+  Injector,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
 type CascadeSelectOption = Record<string, unknown>;
 type CascadeSelectSize = 'small' | 'normal' | 'large';
 type CascadePath = number[];
+type CascadeSelectCompareWith = (optionValue: unknown, modelValue: unknown) => boolean;
 
 interface CascadeVisibleNode {
   option: CascadeSelectOption;
@@ -42,13 +43,19 @@ interface CascadeVisibleNode {
       multi: true,
     },
   ],
+  host: {
+    '(document:keydown.escape)': 'onEscape()',
+    '(document:click)': 'onDocumentClick($event)',
+  },
 })
 export class MagaryCascadeSelect implements ControlValueAccessor {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private readonly document = inject(DOCUMENT);
   private readonly uniqueId = `magary-cascade-select-${Math.random().toString(36).substring(2, 11)}`;
-  readonly triggerId = `${this.uniqueId}-trigger`;
+  readonly resolvedInputId = computed(() => this.inputId().trim() || `${this.uniqueId}-trigger`);
   readonly listboxId = `${this.uniqueId}-listbox`;
   readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
+  private readonly injector = inject(Injector);
 
   public options = input<CascadeSelectOption[]>([]);
   public optionLabel = input<string>('label');
@@ -56,11 +63,16 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
   public optionGroupLabel = input<string[] | string | null>(null);
   public optionGroupChildren = input<string[]>(['children']);
   public placeholder = input<string>('Select an option');
+  public inputId = input<string>('');
+  public ariaLabel = input<string>('');
+  public ariaLabelledby = input<string>('');
+  public ariaDescribedby = input<string>('');
   public size = input<CascadeSelectSize>('normal');
   public loading = input(false, { transform: booleanAttribute });
   public invalid = input(false, { transform: booleanAttribute });
-  public error = input<string>('');
+  public errorMessage = input<string>('');
   public helpText = input<string>('');
+  public compareWith = input<CascadeSelectCompareWith>(Object.is);
   // Input externo: [disabled]="true"
   protected disabledInput = input<boolean>(false, { alias: 'disabled' });
   public width = input<string>('100%');
@@ -73,26 +85,39 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
   public disabled = computed(() => this._disabled() || this.disabledInput());
   public isInteractionDisabled = computed(() => this.disabled() || this.loading());
   public resolvedAriaLabel = computed(() => {
+    if (this.ariaLabelledby().trim().length > 0) {
+      return null;
+    }
+
+    const explicitLabel = this.ariaLabel().trim();
+    if (explicitLabel.length > 0) {
+      return explicitLabel;
+    }
+
     const placeholder = this.placeholder().trim();
     return placeholder.length > 0 ? placeholder : 'Select option';
   });
-  public hasError = computed(() => this.invalid() || this.error().trim().length > 0);
-  public errorMessage = computed(() => {
-    const message = this.error().trim();
+  public isInvalid = computed(() => this.invalid() || this.hasControlError());
+  public hasVisibleErrorMessage = computed(() => {
+    return this.isInvalid() && this.errorMessage().trim().length > 0;
+  });
+  public resolvedErrorMessage = computed(() => {
+    const message = this.errorMessage().trim();
     return message.length > 0 ? message : 'Invalid selection';
   });
   public errorMessageId = `${this.uniqueId}-error`;
   public helpMessageId = `${this.uniqueId}-help`;
   public describedBy = computed(() => {
-    if (this.hasError()) {
-      return this.errorMessageId;
+    const ids = [this.ariaDescribedby().trim()];
+
+    if (this.hasVisibleErrorMessage()) {
+      ids.push(this.errorMessageId);
+    } else if (this.helpText().trim().length > 0) {
+      ids.push(this.helpMessageId);
     }
 
-    if (this.helpText().trim().length > 0) {
-      return this.helpMessageId;
-    }
-
-    return null;
+    const filteredIds = ids.filter((id) => id.length > 0);
+    return filteredIds.length > 0 ? filteredIds.join(' ') : null;
   });
 
   public isOpen = signal(false);
@@ -125,6 +150,8 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
 
   private onChange: (value: unknown) => void = () => {};
   private onTouched: () => void = () => {};
+  private touched = false;
+  private resolvedNgControl: NgControl | null | undefined;
 
   public selectedLabel = computed(() => {
     const val = this.value();
@@ -134,7 +161,7 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
 
     const findLabel = (opts: CascadeSelectOption[]): string | null => {
       for (const opt of opts) {
-        if (this.getOptionValue(opt) === val) {
+        if (this.valuesEqual(this.getOptionValue(opt), val)) {
           return this.getOptionLabel(opt);
         }
         const children = this.getOptionChildren(opt);
@@ -340,6 +367,10 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
     return !this.isOptionGroup(option) || this.optionGroupSelectable();
   }
 
+  public isOptionSelected(option: CascadeSelectOption): boolean {
+    return this.valuesEqual(this.getOptionValue(option), this.value());
+  }
+
   public onOptionMouseEnter(option: CascadeSelectOption, path: CascadePath): void {
     const key = this.pathToKey(path);
     this.setActivePath(key);
@@ -351,7 +382,6 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
     }
   }
 
-  @HostListener('document:keydown.escape')
   public onEscape(): void {
     if (!this.isOpen()) {
       return;
@@ -360,7 +390,6 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
     this.closePanel();
   }
 
-  @HostListener('document:click', ['$event'])
   public onDocumentClick(event: Event) {
     if (!this.elementRef.nativeElement.contains(event.target as Node | null)) {
       this.closePanel();
@@ -552,7 +581,7 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
 
     queueMicrotask(() => {
       const optionId = this.getOptionIdFromKey(key);
-      const optionElement = document.getElementById(optionId);
+      const optionElement = this.document.getElementById(optionId);
       if (
         optionElement &&
         this.elementRef.nativeElement.contains(optionElement)
@@ -564,7 +593,7 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
   }
 
   private focusTrigger(): void {
-    const triggerElement = document.getElementById(this.triggerId);
+    const triggerElement = this.document.getElementById(this.resolvedInputId());
     if (
       triggerElement &&
       this.elementRef.nativeElement.contains(triggerElement)
@@ -624,7 +653,7 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
       const option = options[index];
       const path = [...parentPath, index];
 
-      if (Object.is(this.getOptionValue(option), targetValue)) {
+      if (this.valuesEqual(this.getOptionValue(option), targetValue)) {
         return path;
       }
 
@@ -644,6 +673,36 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
     this.isOpen.set(false);
     this.activePathKey.set(null);
     this.expandedGroupKeys.set([]);
+    this.markAsTouched();
+  }
+
+  private valuesEqual(left: unknown, right: unknown): boolean {
+    return this.compareWith()(left, right);
+  }
+
+  private markAsTouched(): void {
+    if (this.touched) {
+      return;
+    }
+
+    this.touched = true;
     this.onTouched();
+  }
+
+  private hasControlError(): boolean {
+    const control = this.getNgControl()?.control;
+    return !!control && control.invalid && control.touched;
+  }
+
+  private getNgControl(): NgControl | null {
+    if (this.resolvedNgControl !== undefined) {
+      return this.resolvedNgControl;
+    }
+
+    this.resolvedNgControl = this.injector.get(NgControl, null, {
+      self: true,
+      optional: true,
+    });
+    return this.resolvedNgControl;
   }
 }

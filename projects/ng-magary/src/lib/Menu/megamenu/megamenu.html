@@ -1,4 +1,4 @@
-<div [ngClass]="containerClass()" [style]="style()">
+<div [class]="containerClass()" [style]="style()">
   <ul class="magary-megamenu-root-list">
     @for (category of processedModel(); track category.label) {
       <li
@@ -6,7 +6,7 @@
         [item]="category"
         [parent]="this"
         class="magary-menuitem"
-        [ngClass]="{ 'magary-menuitem-active': category.expanded }"
+        [class]="{ 'magary-menuitem-active': category.expanded }"
       >
         <a
           class="magary-menuitem-link"

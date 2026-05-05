@@ -1,19 +1,23 @@
 <div
   class="magary-radio-container"
   [class.disabled]="isDisabled()"
-  [class.checked]="checked()"
+  [class.checked]="isChecked()"
+  [class.invalid]="isInvalid()"
   (click)="select($event)"
 >
-  <div class="radio-box" [class.focused]="focused()">
+  <div class="radio-box" [class.focused]="focused()" [class.invalid]="isInvalid()">
     <div class="radio-icon"></div>
     <input
       #inputElement
       type="radio"
       class="hidden-input"
-      [attr.id]="inputId()"
+      [attr.id]="resolvedInputId()"
       [attr.name]="name()"
-      [attr.aria-label]="label()"
-      [checked]="checked()"
+      [attr.aria-label]="ariaLabel() || label() || null"
+      [attr.aria-labelledby]="ariaLabelledby() || null"
+      [attr.aria-describedby]="ariaDescribedby() || null"
+      [attr.aria-checked]="isChecked() ? 'true' : 'false'"
+      [checked]="isChecked()"
       [disabled]="isDisabled()"
       (focus)="onInputFocus()"
       (blur)="onInputBlur()"
@@ -24,7 +28,7 @@
 
   @if (label()) {
     <label
-      [attr.for]="inputId()"
+      [attr.for]="resolvedInputId()"
       class="radio-label"
       [class.disabled]="isDisabled()"
     >

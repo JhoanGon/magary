@@ -1,6 +1,6 @@
 <div
   #container
-  [ngClass]="containerClass()"
+  [class]="containerClass()"
   [class.magary-tieredmenu-popup]="popup()"
   [class.magary-tieredmenu-visible]="visible()"
   [style]="style()"
@@ -14,7 +14,7 @@
         [item]="item"
         [parent]="this"
         class="magary-menuitem"
-        [ngClass]="{
+        [class]="{
           'magary-menuitem-active': item.expanded,
           'magary-menu-separator': item.separator,
         }"
@@ -76,7 +76,7 @@
       [item]="child"
       [parent]="this"
       class="magary-menuitem"
-      [ngClass]="{
+      [class]="{
         'magary-menuitem-active': child.expanded,
         'magary-menu-separator': child.separator,
       }"

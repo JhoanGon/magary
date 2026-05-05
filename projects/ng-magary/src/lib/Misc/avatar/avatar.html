@@ -1,7 +1,7 @@
 <div
   class="avatar-wrapper"
-  [ngClass]="avatarClasses()"
-  [ngStyle]="customStyle()"
+  [class]="avatarClasses()"
+  [style]="customStyle()"
   [attr.aria-label]="alt()"
   [attr.role]="clickable() ? 'button' : null"
   [attr.tabindex]="clickable() && !disabled() ? '0' : null"
@@ -19,7 +19,7 @@
         [ngSrc]="image() || ''"
         [alt]="alt()"
         class="avatar-img"
-        [ngClass]="shape()"
+        [class]="shape()"
         [width]="sizePixels()"
         [height]="sizePixels()"
         (error)="onImageError()"
@@ -36,7 +36,7 @@
   @if (badgeValue()) {
     <div
       class="badge"
-      [ngClass]="badgeSeverity()"
+      [class]="badgeSeverity()"
       [attr.aria-label]="'Badge: ' + badgeValue()"
       (click)="onBadgeClick($event)"
     >

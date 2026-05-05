@@ -43,6 +43,14 @@ export const CASCADE_SELECT_DOC_TEXT = {
       'Propiedades usadas como opciones hijas de un grupo.',
     'components.form.cascadeSelect.api.optionGroupSelectable.desc':
       'Permite seleccionar grupos de opciones (padres).',
+    'components.form.cascadeSelect.api.inputId.desc':
+      'Id estable del trigger para labels y formularios.',
+    'components.form.cascadeSelect.api.ariaLabel.desc':
+      'Nombre accesible directo cuando no usas ariaLabelledby.',
+    'components.form.cascadeSelect.api.ariaLabelledby.desc':
+      'Referencia a un label externo para nombrar el control.',
+    'components.form.cascadeSelect.api.ariaDescribedby.desc':
+      'Ids externos que se combinan con helpText/errorMessage.',
     'components.form.cascadeSelect.api.placeholder.desc':
       'Texto mostrado cuando no hay seleccion.',
     'components.form.cascadeSelect.api.disabled.desc': 'Deshabilita el componente.',
@@ -51,11 +59,13 @@ export const CASCADE_SELECT_DOC_TEXT = {
     'components.form.cascadeSelect.api.size.desc': 'Tamano visual del control.',
     'components.form.cascadeSelect.api.invalid.desc':
       'Activa estado visual de error.',
-    'components.form.cascadeSelect.api.error.desc':
+    'components.form.cascadeSelect.api.errorMessage.desc':
       'Mensaje de error mostrado debajo del control.',
     'components.form.cascadeSelect.api.helpText.desc':
       'Texto de ayuda cuando no hay error.',
     'components.form.cascadeSelect.api.width.desc': 'Ancho del componente.',
+    'components.form.cascadeSelect.api.compareWith.desc':
+      'Funcion para comparar valores complejos cuando no usas optionValue.',
   },
   en: {
     'components.form.cascadeSelect.title': 'Cascade Select',
@@ -96,6 +106,14 @@ export const CASCADE_SELECT_DOC_TEXT = {
       'Property names used as child options in a group.',
     'components.form.cascadeSelect.api.optionGroupSelectable.desc':
       'Allows selecting option groups (parents).',
+    'components.form.cascadeSelect.api.inputId.desc':
+      'Stable trigger id for labels and forms.',
+    'components.form.cascadeSelect.api.ariaLabel.desc':
+      'Direct accessible name when ariaLabelledby is not used.',
+    'components.form.cascadeSelect.api.ariaLabelledby.desc':
+      'References an external label that names the control.',
+    'components.form.cascadeSelect.api.ariaDescribedby.desc':
+      'External ids combined with helpText/errorMessage.',
     'components.form.cascadeSelect.api.placeholder.desc':
       'Text shown when no option is selected.',
     'components.form.cascadeSelect.api.disabled.desc': 'Disables the component.',
@@ -104,10 +122,12 @@ export const CASCADE_SELECT_DOC_TEXT = {
     'components.form.cascadeSelect.api.size.desc': 'Visual control size.',
     'components.form.cascadeSelect.api.invalid.desc':
       'Enables visual error state.',
-    'components.form.cascadeSelect.api.error.desc':
+    'components.form.cascadeSelect.api.errorMessage.desc':
       'Error message shown below the control.',
     'components.form.cascadeSelect.api.helpText.desc':
       'Help text shown when there is no error.',
     'components.form.cascadeSelect.api.width.desc': 'Component width.',
+    'components.form.cascadeSelect.api.compareWith.desc':
+      'Function used to compare complex values when optionValue is not used.',
   },
 } as const satisfies Record<DemoLanguage, Record<string, string>>;

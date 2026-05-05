@@ -11,8 +11,6 @@ import {
   Inject,
   PLATFORM_ID,
   AfterViewInit,
-  HostListener,
-  NgModule,
   input,
   model,
   output,
@@ -20,23 +18,11 @@ import {
   viewChildren,
   contentChildren,
   effect,
+  inject,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   LucideAngularModule,
-  Play,
-  Pause,
-  Maximize,
-  Minimize,
-  Download,
-  Share2,
-  ZoomIn,
-  ZoomOut,
-  RotateCcw,
-  ChevronLeft,
-  ChevronRight,
-  X,
-  MonitorPlay,
 } from 'lucide-angular';
 
 export interface GalleriaItem {
@@ -71,32 +57,10 @@ interface DocumentWithFullscreenFallback extends Document {
   mozCancelFullScreen?: () => void;
 }
 
-@NgModule({
-  imports: [
-    LucideAngularModule.pick({
-      Play,
-      Pause,
-      Maximize,
-      Minimize,
-      Download,
-      Share2,
-      ZoomIn,
-      ZoomOut,
-      RotateCcw,
-      ChevronLeft,
-      ChevronRight,
-      X,
-      MonitorPlay,
-    }),
-  ],
-  exports: [LucideAngularModule],
-})
-export class GalleriaIconsModule {}
-
 @Component({
   selector: 'magary-galleria',
   standalone: true,
-  imports: [CommonModule, GalleriaIconsModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './galleria.html',
   styleUrls: ['./galleria.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -114,9 +78,14 @@ export class GalleriaIconsModule {}
     '[class.magary-galleria-presentation-mode]': 'presentationMode()',
     '[style.width]': '"100%"',
     '[style.max-width]': 'width()',
+    '(document:mousemove)': 'onMouseMove($event)',
+    '(document:mouseup)': 'onMouseUp()',
+    '(document:keydown)': 'handleKeyboardEvent($event); onDocumentKeyDown($event)',
   },
 })
 export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
+  private readonly document = inject(DOCUMENT);
+  private readonly defaultView = this.document.defaultView;
   // Core inputs
   value = input<GalleriaItem[]>([]);
   activeIndex = model<number>(0);
@@ -548,7 +517,6 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
     if (this.isPanning && this.isZoomed()) {
       const deltaX = event.clientX - this.lastPanX;
@@ -562,13 +530,11 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  @HostListener('document:mouseup')
   onMouseUp() {
     this.isPanning = false;
   }
 
   // Keyboard navigation
-  @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (!this.enableKeyboardNavigation()) return;
 
@@ -623,7 +589,6 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
   }
 
   // Keyboard listener for dialog overlay
-  @HostListener('document:keydown', ['$event'])
   onDocumentKeyDown(event: KeyboardEvent) {
     if (event.key === 'Escape' && this.isFullscreen()) {
       event.preventDefault();
@@ -707,13 +672,14 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
     if (!item) return;
 
     this.onShare.emit({ item, index: this.activeIndex() });
+    const navigatorApi = this.defaultView?.navigator;
 
     if (
       isPlatformBrowser(this.platformId) &&
-      typeof navigator.share === 'function'
+      typeof navigatorApi?.share === 'function'
     ) {
       try {
-        await navigator.share({
+        await navigatorApi.share({
           title: item.title || 'Image',
           text: item.description || '',
           url: item.src,
@@ -735,7 +701,7 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
     this.onDownload.emit({ item, index: this.activeIndex() });
 
     if (isPlatformBrowser(this.platformId)) {
-      const link = document.createElement('a');
+      const link = this.document.createElement('a');
       link.href = item.src;
       link.download = item.title || `image-${this.activeIndex() + 1}`;
       link.click();
@@ -743,8 +709,9 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
   }
 
   copyToClipboard(text: string) {
-    if (isPlatformBrowser(this.platformId) && navigator.clipboard) {
-      navigator.clipboard.writeText(text);
+    const navigatorApi = this.defaultView?.navigator;
+    if (isPlatformBrowser(this.platformId) && navigatorApi?.clipboard) {
+      navigatorApi.clipboard.writeText(text);
     }
   }
 

@@ -13,20 +13,20 @@ export const SIDEBAR_SECTIONS: SidebarSection[] = [
   },
   {
     title: 'Componentes',
-    icon: 'blocks', // or 'box', 'cubes' is not standard Lucide. 'blocks' represents components well.
+    icon: 'blocks',
     iconClass: 'lucide-bounce',
     items: COMPONENTS_ITEMS_CONFIG,
     hoverColor: 'var(--primary-500)',
   },
   {
     title: 'Utilidades',
-    icon: 'wrench', // 'tools' is not standard Lucide. 'wrench' is widely used for utilities.
+    icon: 'wrench',
     iconClass: 'lucide-spin',
     items: UTILITIES_ITEMS_CONFIG,
     hoverColor: 'var(--primary-500)',
   },
   {
-    title: '✨ Premium',
+    title: 'Premium',
     icon: 'crown',
     iconClass: 'lucide-pulse',
     items: [
@@ -34,15 +34,15 @@ export const SIDEBAR_SECTIONS: SidebarSection[] = [
         label: 'Themes',
         icon: 'palette',
         route: '/premium/themes',
-        badge: 'Nuevo'
+        badge: 'Nuevo',
       },
       {
         label: 'Blocks (Preview)',
         icon: 'layers',
         route: '/premium/blocks',
-        badge: 'Pro'
-      }
+        badge: 'Pro',
+      },
     ],
-    hoverColor: 'var(--premium-500)' // Always Gold Premium Color
+    hoverColor: 'var(--premium-500)',
   },
 ];

@@ -4,21 +4,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
   booleanAttribute,
   computed,
   effect,
   forwardRef,
   inject,
   input,
-  model,
+  Injector,
   output,
   signal,
   viewChildren,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
-type SegmentedObjectOption = Record<string, unknown>;
+export type SegmentedObjectOption = Record<string, unknown>;
 type SegmentedPrimitiveOption = string | number | boolean;
 type SegmentedSize = 'small' | 'normal' | 'large';
 
@@ -29,6 +28,10 @@ export type MagarySegmentedValue =
   | SegmentedPrimitiveOption
   | SegmentedObjectOption
   | null;
+export type MagarySegmentedCompareWith = (
+  left: MagarySegmentedValue,
+  right: MagarySegmentedValue,
+) => boolean;
 
 @Component({
   selector: 'magary-segmented',
@@ -44,6 +47,10 @@ export type MagarySegmentedValue =
       multi: true,
     },
   ],
+  host: {
+    '(window:resize)': 'onWindowResize()',
+    '[class.magary-invalid]': 'isInvalid()',
+  },
 })
 export class MagarySegmented implements ControlValueAccessor, AfterViewInit {
   readonly options = input<MagarySegmentedOption[]>([]);
@@ -53,11 +60,16 @@ export class MagarySegmented implements ControlValueAccessor, AfterViewInit {
   readonly size = input<SegmentedSize>('normal');
   readonly fullWidth = input(false, { transform: booleanAttribute });
   readonly disabled = input(false, { transform: booleanAttribute });
-  readonly value = model<MagarySegmentedValue>(null);
+  readonly invalid = input(false, { transform: booleanAttribute });
+  readonly errorMessage = input<string>('');
+  readonly helpText = input<string>('');
+  readonly compareWith = input<MagarySegmentedCompareWith | null>(null);
+  readonly value = signal<MagarySegmentedValue>(null);
   readonly change = output<MagarySegmentedValue>();
   readonly optionButtons = viewChildren<ElementRef<HTMLButtonElement>>('optionButton');
 
   private readonly document = inject(DOCUMENT);
+  private readonly injector = inject(Injector);
   private readonly formDisabled = signal(false);
   readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
   readonly indicatorLeft = signal(0);
@@ -82,9 +94,13 @@ export class MagarySegmented implements ControlValueAccessor, AfterViewInit {
   });
 
   private readonly uniqueId = `magary-segmented-${Math.random().toString(36).substring(2, 11)}`;
+  readonly errorMessageId = `${this.uniqueId}-error`;
+  readonly helpMessageId = `${this.uniqueId}-help`;
 
   private onChange: (value: MagarySegmentedValue) => void = () => {};
   private onTouched: () => void = () => {};
+  private touched = false;
+  private resolvedNgControl: NgControl | null | undefined;
 
   constructor() {
     effect(() => {
@@ -102,7 +118,26 @@ export class MagarySegmented implements ControlValueAccessor, AfterViewInit {
     this.syncIndicator();
   }
 
-  @HostListener('window:resize')
+  isInvalid(): boolean {
+    return this.invalid() || this.hasControlError();
+  }
+
+  hasVisibleErrorMessage(): boolean {
+    return this.isInvalid() && this.errorMessage().trim().length > 0;
+  }
+
+  describedBy(): string | null {
+    if (this.hasVisibleErrorMessage()) {
+      return this.errorMessageId;
+    }
+
+    if (this.helpText().trim().length > 0) {
+      return this.helpMessageId;
+    }
+
+    return null;
+  }
+
   onWindowResize(): void {
     this.syncIndicator();
   }
@@ -114,7 +149,7 @@ export class MagarySegmented implements ControlValueAccessor, AfterViewInit {
 
     const nextValue = this.getValue(option);
     if (this.valuesEqual(nextValue, this.value())) {
-      this.onTouched();
+      this.markAsTouched();
       return;
     }
 
@@ -232,7 +267,7 @@ export class MagarySegmented implements ControlValueAccessor, AfterViewInit {
     this.value.set(nextValue);
     this.change.emit(nextValue);
     this.onChange(nextValue);
-    this.onTouched();
+    this.markAsTouched();
     this.syncIndicator();
   }
 
@@ -282,10 +317,41 @@ export class MagarySegmented implements ControlValueAccessor, AfterViewInit {
     left: MagarySegmentedValue,
     right: MagarySegmentedValue,
   ): boolean {
+    const compareWith = this.compareWith();
+    if (compareWith) {
+      return compareWith(left, right);
+    }
+
     return Object.is(left, right);
   }
 
   private isObjectOption(option: MagarySegmentedOption): option is SegmentedObjectOption {
     return typeof option === 'object' && option !== null;
+  }
+
+  private markAsTouched(): void {
+    if (this.touched) {
+      return;
+    }
+
+    this.touched = true;
+    this.onTouched();
+  }
+
+  private hasControlError(): boolean {
+    const control = this.getNgControl()?.control;
+    return !!control && control.invalid && control.touched;
+  }
+
+  private getNgControl(): NgControl | null {
+    if (this.resolvedNgControl !== undefined) {
+      return this.resolvedNgControl;
+    }
+
+    this.resolvedNgControl = this.injector.get(NgControl, null, {
+      self: true,
+      optional: true,
+    });
+    return this.resolvedNgControl;
   }
 }

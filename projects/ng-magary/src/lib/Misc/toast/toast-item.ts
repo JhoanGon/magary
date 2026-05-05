@@ -7,17 +7,18 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { LucideAngularModule } from 'lucide-angular';
-import { Toast } from './toast.service';
+import { MagaryToastMessage } from './toast.service';
 
 @Component({
   selector: 'magary-toast-item',
+  standalone: true,
   imports: [CommonModule, LucideAngularModule],
   templateUrl: './toast-item.html',
   styleUrl: './toast-item.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class MagaryToastItem {
-  toast = input.required<Toast>();
+  toast = input.required<MagaryToastMessage>();
   onClose = output<string>();
 
   iconClass = computed(() => {

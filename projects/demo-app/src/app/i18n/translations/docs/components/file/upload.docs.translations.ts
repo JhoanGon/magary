@@ -7,7 +7,7 @@ export const UPLOAD_DOC_TEXT = {
       'Componente avanzado de carga de archivos con soporte drag and drop, carga multiple y validaciones.',
     'components.file.upload.import.title': 'Import',
     'components.file.upload.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.file.upload.basic.title': 'Ejemplo Basico',
     'components.file.upload.basic.desc':
       'Uso simple con boton de seleccion.',
@@ -73,7 +73,7 @@ export const UPLOAD_DOC_TEXT = {
       'Advanced file upload component with drag and drop, multi-file support, and validations.',
     'components.file.upload.import.title': 'Import',
     'components.file.upload.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.file.upload.basic.title': 'Basic Example',
     'components.file.upload.basic.desc':
       'Simple usage with file selection button.',

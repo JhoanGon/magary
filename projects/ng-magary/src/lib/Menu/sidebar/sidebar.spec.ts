@@ -1,9 +1,11 @@
-﻿import { importProvidersFrom } from '@angular/core';
+import { Component, importProvidersFrom } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MenuItem } from '../api/menu.interface';
-import { Sidebar } from './sidebar';
+import { MagaryPanelmenu } from '../panelmenu/panelmenu';
+import { MagarySidebar } from './sidebar';
 
 const kebabCase = (value: string) =>
   value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -17,9 +19,23 @@ const lucideIcons = Object.entries(icons).reduce(
   {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
 
-describe('Sidebar behavior', () => {
-  let fixture: ComponentFixture<Sidebar>;
-  let component: Sidebar;
+@Component({
+  imports: [MagarySidebar],
+  template: `
+    <magary-sidebar [showLogo]="false" [menu]="[]" [showEmptyState]="true">
+      <div sidebar-header-start class="slot-header-start">Header Start</div>
+      <button sidebar-empty-action type="button" class="empty-action">
+        Create nav
+      </button>
+      <div sidebar-content-bottom class="slot-content-bottom">Bottom Slot</div>
+    </magary-sidebar>
+  `,
+})
+class SidebarProjectionHost {}
+
+describe('MagarySidebar behavior', () => {
+  let fixture: ComponentFixture<MagarySidebar>;
+  let component: MagarySidebar;
 
   const menu: MenuItem[] = [
     { label: 'Dashboard', icon: 'house' },
@@ -32,14 +48,14 @@ describe('Sidebar behavior', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Sidebar],
+        imports: [MagarySidebar],
       providers: [
         provideRouter([]),
         importProvidersFrom(LucideAngularModule.pick(lucideIcons)),
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Sidebar);
+    fixture = TestBed.createComponent(MagarySidebar);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('showLogo', false);
     fixture.componentRef.setInput('showUserSection', true);
@@ -200,6 +216,11 @@ describe('Sidebar behavior', () => {
   });
 
   it('provides accessible labels for icon-only controls', () => {
+    fixture.componentRef.setInput('logoutLabel', 'Cerrar sesion');
+    fixture.componentRef.setInput('expandButtonLabel', 'Expandir sidebar');
+    fixture.componentRef.setInput('collapseButtonLabel', 'Colapsar sidebar');
+    fixture.detectChanges();
+
     const hamburger = fixture.nativeElement.querySelector(
       '.hamburger-button',
     ) as HTMLButtonElement;
@@ -232,6 +253,23 @@ describe('Sidebar behavior', () => {
       '.header-toggle.expanded',
     ) as HTMLButtonElement;
     expect(collapseToggle.getAttribute('aria-label')).toBe('Colapsar sidebar');
+  });
+
+  it('renders a brand link and configurable logo alt text', () => {
+    fixture.componentRef.setInput('showLogo', true);
+    fixture.componentRef.setInput('logoAlt', 'Magary Home');
+    fixture.componentRef.setInput('brandRoute', '/home');
+    fixture.detectChanges();
+
+    const brandLink = fixture.nativeElement.querySelector(
+      '.header-brand-link',
+    ) as HTMLAnchorElement | null;
+    const logo = fixture.nativeElement.querySelector(
+      '.header-brand-link .logo',
+    ) as HTMLImageElement | null;
+
+    expect(brandLink).not.toBeNull();
+    expect(logo?.getAttribute('alt')).toBe('Magary Home');
   });
 
   it('locks and restores body scroll when mobile sidebar opens/closes', () => {
@@ -315,5 +353,232 @@ describe('Sidebar behavior', () => {
     expect(document.activeElement).toBe(firstFocusable);
     expect(tabEvent.preventDefault).toHaveBeenCalled();
   });
-});
 
+  it('applies style classes and style objects by sidebar zone', () => {
+    fixture.componentRef.setInput('rootStyleClass', 'custom-root');
+    fixture.componentRef.setInput('rootStyle', { borderRadius: '18px' });
+    fixture.componentRef.setInput('headerStyleClass', 'custom-header');
+    fixture.componentRef.setInput('headerStyle', { minHeight: '72px' });
+    fixture.componentRef.setInput('contentStyleClass', 'custom-content');
+    fixture.componentRef.setInput('contentStyle', { paddingTop: '2rem' });
+    fixture.componentRef.setInput('userSectionStyleClass', 'custom-user');
+    fixture.componentRef.setInput('userSectionStyle', { marginTop: '2rem' });
+    fixture.detectChanges();
+
+    const sidebar = fixture.nativeElement.querySelector('.sidebar') as HTMLElement;
+    const header = fixture.nativeElement.querySelector(
+      '.sidebar-header',
+    ) as HTMLElement;
+    const content = fixture.nativeElement.querySelector(
+      '.sidebar-content',
+    ) as HTMLElement;
+    const userSection = fixture.nativeElement.querySelector(
+      '.user-section',
+    ) as HTMLElement;
+
+    expect(sidebar.classList.contains('custom-root')).toBe(true);
+    expect(sidebar.style.borderRadius).toBe('18px');
+    expect(header.classList.contains('custom-header')).toBe(true);
+    expect(header.style.minHeight).toBe('72px');
+    expect(content.classList.contains('custom-content')).toBe(true);
+    expect(content.style.paddingTop).toBe('2rem');
+    expect(userSection.classList.contains('custom-user')).toBe(true);
+    expect(userSection.style.marginTop).toBe('2rem');
+  });
+
+  it('passes menu panel configuration through to the inner panel menu', () => {
+    fixture.componentRef.setInput('menuPanelStyleClass', 'custom-panel');
+    fixture.componentRef.setInput('menuPanelStyle', {
+      '--panel-hover-text': '#112233',
+    });
+    fixture.componentRef.setInput('menuPanelBorderRadius', '12px');
+    fixture.componentRef.setInput('menuPanelShadow', 4);
+    fixture.componentRef.setInput('menuActiveIndicator', false);
+    fixture.detectChanges();
+
+    const panelMenu = fixture.debugElement.query(
+      By.directive(MagaryPanelmenu),
+    ).componentInstance as MagaryPanelmenu;
+
+    expect(panelMenu.styleClass()).toContain('sidebar-panel-menu');
+    expect(panelMenu.styleClass()).toContain('custom-panel');
+    expect(panelMenu.style()).toEqual({ '--panel-hover-text': '#112233' });
+    expect(panelMenu.borderRadius()).toBe('12px');
+    expect(panelMenu.shadow()).toBe(4);
+    expect(panelMenu.activeIndicator()).toBe(false);
+  });
+
+  it('forwards inner menu events in single-menu mode', () => {
+    const panelMenu = fixture.debugElement.query(
+      By.directive(MagaryPanelmenu),
+    ).componentInstance as MagaryPanelmenu;
+    let toggleEvent: unknown;
+    let clickEvent: unknown;
+    let expandEvent: unknown;
+
+    component.menuToggle.subscribe((event) => {
+      toggleEvent = event;
+    });
+    component.menuItemClick.subscribe((event) => {
+      clickEvent = event;
+    });
+    component.menuItemExpand.subscribe((event) => {
+      expandEvent = event;
+    });
+
+    panelMenu.menuToggle.emit({ isOpen: true, menuTitle: 'Menu' });
+    panelMenu.itemClick.emit({
+      item: menu[0],
+      level: 0,
+      path: ['Dashboard'],
+    });
+    panelMenu.itemExpand.emit({ item: menu[1], expanded: true });
+
+    expect(toggleEvent).toMatchObject({ source: 'menu', isOpen: true });
+    expect(clickEvent).toMatchObject({
+      source: 'menu',
+      level: 0,
+      path: ['Dashboard'],
+    });
+    expect(expandEvent).toMatchObject({
+      source: 'menu',
+      expanded: true,
+    });
+  });
+
+  it('forwards section context when a section panel emits events', () => {
+    fixture.componentRef.setInput('sections', [
+      {
+        title: 'Section A',
+        icon: 'folder',
+        items: [{ label: 'Item A' }],
+      },
+    ]);
+    fixture.componentRef.setInput('menu', []);
+    fixture.detectChanges();
+
+    const panelMenu = fixture.debugElement.query(
+      By.directive(MagaryPanelmenu),
+    ).componentInstance as MagaryPanelmenu;
+    let toggleEvent: unknown;
+
+    component.menuToggle.subscribe((event) => {
+      toggleEvent = event;
+    });
+
+    panelMenu.menuToggle.emit({ isOpen: true, menuTitle: 'Section A' });
+
+    expect(toggleEvent).toMatchObject({
+      source: 'section',
+      sectionTitle: 'Section A',
+      isOpen: true,
+    });
+  });
+
+  it('maps layout and title inputs to css variables and mode classes', () => {
+    fixture.componentRef.setInput('layoutMode', 'rail');
+    fixture.componentRef.setInput('titleColor', '#112233');
+    fixture.componentRef.setInput('titleFontFamily', 'Poppins');
+    fixture.componentRef.setInput('titleFontWeight', 700);
+    fixture.componentRef.setInput('titleFontStyle', 'normal');
+    fixture.componentRef.setInput('titleSize', '1.1rem');
+    fixture.componentRef.setInput('sidebarWidth', '96px');
+    fixture.componentRef.setInput('sidebarBorder', '1px solid #112233');
+    fixture.componentRef.setInput('sidebarShadow', 'none');
+    fixture.componentRef.setInput('sidebarBackground', '#ffffff');
+    fixture.detectChanges();
+
+    const sidebar = fixture.nativeElement.querySelector('.sidebar') as HTMLElement;
+    const panelMenu = fixture.nativeElement.querySelector('.panel-menu') as HTMLElement;
+
+    expect(sidebar.classList.contains('layout-rail')).toBe(true);
+    expect(panelMenu.classList.contains('mode-rail-icons')).toBe(true);
+    expect(sidebar.style.getPropertyValue('--sidebar-width').trim()).toBe('96px');
+    expect(sidebar.style.getPropertyValue('--sidebar-border').trim()).toBe(
+      '1px solid #112233',
+    );
+    expect(sidebar.style.getPropertyValue('--sidebar-bg').trim()).toBe('#ffffff');
+    expect(sidebar.style.getPropertyValue('--sidebar-shadow').trim()).toBe('none');
+    expect(sidebar.style.getPropertyValue('--sidebar-title-color').trim()).toBe(
+      '#112233',
+    );
+    expect(
+      sidebar.style.getPropertyValue('--sidebar-title-font-family').trim(),
+    ).toBe('Poppins');
+    expect(
+      sidebar.style.getPropertyValue('--sidebar-title-font-weight').trim(),
+    ).toBe('700');
+    expect(
+      sidebar.style.getPropertyValue('--sidebar-title-font-style').trim(),
+    ).toBe('normal');
+    expect(sidebar.style.getPropertyValue('--sidebar-title-size').trim()).toBe(
+      '1.1rem',
+    );
+  });
+
+  it('filters menu items using menuFilters and activeMenuFilter', () => {
+    fixture.componentRef.setInput('sections', []);
+    fixture.componentRef.setInput('menu', [
+      { label: 'Home', icon: 'house', group: 'favorites' },
+      { label: 'Apps', icon: 'package', group: 'apps' },
+      { label: 'Shared', icon: 'users' },
+    ]);
+    fixture.componentRef.setInput('menuFilters', [
+      { label: 'Favorites', value: 'favorites' },
+      { label: 'Apps', value: 'apps' },
+    ]);
+    fixture.detectChanges();
+
+    const panelMenu = fixture.debugElement.query(
+      By.directive(MagaryPanelmenu),
+    ).componentInstance as MagaryPanelmenu;
+    panelMenu.isOpen.set(true);
+    fixture.detectChanges();
+
+    let menuText = (
+      fixture.nativeElement.querySelector('.panel-items') as HTMLElement
+    ).textContent;
+    expect(menuText).toContain('Home');
+    expect(menuText).toContain('Shared');
+    expect(menuText).not.toContain('Apps');
+
+    component.onMenuFilterChange('apps');
+    fixture.detectChanges();
+
+    const panelMenuAfterFilter = fixture.debugElement.query(
+      By.directive(MagaryPanelmenu),
+    ).componentInstance as MagaryPanelmenu;
+    panelMenuAfterFilter.isOpen.set(true);
+    fixture.detectChanges();
+
+    menuText = (
+      fixture.nativeElement.querySelector('.panel-items') as HTMLElement
+    ).textContent;
+    expect(menuText).toContain('Apps');
+    expect(menuText).toContain('Shared');
+    expect(menuText).not.toContain('Home');
+  });
+
+  it('renders premium projection slots and empty state actions', () => {
+    const hostFixture = TestBed.createComponent(SidebarProjectionHost);
+    hostFixture.detectChanges();
+
+    const headerSlot = hostFixture.nativeElement.querySelector(
+      '.slot-header-start',
+    ) as HTMLElement | null;
+    const emptyState = hostFixture.nativeElement.querySelector(
+      '.menu-empty-state',
+    ) as HTMLElement | null;
+    const emptyAction = hostFixture.nativeElement.querySelector(
+      '.empty-action',
+    ) as HTMLButtonElement | null;
+    const bottomSlot = hostFixture.nativeElement.querySelector(
+      '.slot-content-bottom',
+    ) as HTMLElement | null;
+
+    expect(headerSlot?.textContent).toContain('Header Start');
+    expect(emptyState).not.toBeNull();
+    expect(emptyAction?.textContent).toContain('Create nav');
+    expect(bottomSlot?.textContent).toContain('Bottom Slot');
+  });
+});

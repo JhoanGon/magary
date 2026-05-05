@@ -7,7 +7,7 @@ export const TOOLTIP_DOC_TEXT = {
       'Directiva para mostrar informacion contextual flotante.',
     'components.overlay.tooltip.import.title': 'Importar',
     'components.overlay.tooltip.import.desc':
-      'Modulos necesarios para utilizar este componente.',
+      'Imports necesarios para utilizar este componente.',
     'components.overlay.tooltip.import.noteTitle': 'Nota',
     'components.overlay.tooltip.import.noteBody':
       'Para que el Tooltip se visualice correctamente, agrega este import global en styles.scss.',
@@ -47,7 +47,7 @@ export const TOOLTIP_DOC_TEXT = {
       'Directive to show floating contextual information.',
     'components.overlay.tooltip.import.title': 'Import',
     'components.overlay.tooltip.import.desc':
-      'Required modules to use this component.',
+      'Required imports to use this component.',
     'components.overlay.tooltip.import.noteTitle': 'Note',
     'components.overlay.tooltip.import.noteBody':
       'To render Tooltip correctly, add this global import in styles.scss.',

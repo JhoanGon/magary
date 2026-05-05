@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MagaryTabs, MagaryTab } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
 import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
@@ -13,9 +13,11 @@ type TabInputRow = {
 
 @Component({
   selector: 'magary-view-tab',
+  standalone: true,
   imports: [MagaryTabs, MagaryTab, Highlight],
   templateUrl: './view-tab.html',
   styleUrl: './view-tab.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewTab {
   readonly i18n = inject(DemoI18nService);

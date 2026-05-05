@@ -8,6 +8,49 @@ import { PwaService } from './service/pwa.service';
 
 class RouterStub {
   readonly events = new Subject<unknown>();
+  url = '/';
+
+  createUrlTree(
+    commands: readonly unknown[],
+    extras?: { queryParams?: Record<string, unknown> },
+  ) {
+    return {
+      commands: [...commands],
+      queryParams: extras?.queryParams ?? null,
+    };
+  }
+
+  serializeUrl(urlTree: {
+    commands?: readonly unknown[];
+    queryParams?: Record<string, unknown> | null;
+  }): string {
+    const path = (urlTree.commands ?? [])
+      .map((segment) => `${segment}`.replace(/^\/+|\/+$/g, ''))
+      .filter(Boolean)
+      .join('/');
+
+    const query =
+      urlTree.queryParams && Object.keys(urlTree.queryParams).length > 0
+        ? `?${new URLSearchParams(
+            Object.entries(urlTree.queryParams).reduce(
+              (params, [key, value]) => ({
+                ...params,
+                [key]: `${value}`,
+              }),
+              {} as Record<string, string>,
+            ),
+          ).toString()}`
+        : '';
+
+    return `/${path}${query}`;
+  }
+
+  isActive(urlTree: {
+    commands?: readonly unknown[];
+    queryParams?: Record<string, unknown> | null;
+  }): boolean {
+    return this.serializeUrl(urlTree) === this.url;
+  }
 }
 
 const pwaServiceStub = {

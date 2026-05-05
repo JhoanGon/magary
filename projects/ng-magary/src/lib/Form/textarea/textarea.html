@@ -1,14 +1,20 @@
 <div class="magary-textarea-wrapper">
   <textarea
     #textarea
+    [id]="resolvedInputId()"
     [value]="value()"
     [attr.rows]="rows()"
     [attr.cols]="cols()"
     [attr.placeholder]="placeholder()"
     [attr.maxlength]="maxlength()"
+    [attr.aria-label]="ariaLabel() || null"
+    [attr.aria-labelledby]="ariaLabelledby() || null"
+    [attr.aria-describedby]="describedBy()"
+    [attr.aria-invalid]="isInvalid() ? 'true' : null"
     [disabled]="isDisabled()"
     [class.magary-textarea]="true"
     [class.disabled]="isDisabled()"
+    [class.invalid]="isInvalid()"
     [class.auto-resize]="autoResize()"
     (input)="onInput($event)"
     (blur)="onBlur()"
@@ -18,6 +24,18 @@
   @if (showCounter() || maxlength()) {
     <div class="character-counter">
       {{ length() }} {{ maxlength() ? "/ " + maxlength() : "" }}
+    </div>
+  }
+
+  @if (hasVisibleErrorMessage() || helpText()) {
+    <div class="textarea-message">
+      @if (hasVisibleErrorMessage()) {
+        <span class="error-message" [id]="errorMessageId" role="alert">
+          {{ errorMessage() }}
+        </span>
+      } @else if (helpText()) {
+        <span class="help-message" [id]="helpMessageId">{{ helpText() }}</span>
+      }
     </div>
   }
 </div>

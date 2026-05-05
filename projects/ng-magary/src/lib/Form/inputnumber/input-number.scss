@@ -19,8 +19,15 @@
   );
 }
 
+:host(.magary-inputnumber-invalid) {
+  --inputnumber-border: var(--danger-500, #ef4444);
+  --inputnumber-border-hover: var(--danger-600, #dc2626);
+  --inputnumber-border-focus: var(--danger-500, #ef4444);
+}
+
 .magary-inputnumber {
   display: inline-flex;
+  flex-direction: column;
   position: relative;
   min-height: var(--inputnumber-height);
 
@@ -66,6 +73,21 @@
       opacity: 0.75;
     }
   }
+}
+
+.magary-inputnumber-message {
+  display: flex;
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.error-message {
+  color: var(--danger-600, #dc2626);
+}
+
+.help-message {
+  color: var(--inputnumber-muted);
 }
 
 .magary-inputnumber-buttons-stacked.magary-inputnumber {

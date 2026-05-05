@@ -1,8 +1,8 @@
 <button
   type="button"
   [disabled]="isDisabled()"
-  [ngStyle]="buttonStyles()"
-  [ngClass]="buttonClasses()"
+  [style]="buttonStyles()"
+  [class]="buttonClasses()"
   [attr.aria-label]="effectiveAriaLabel()"
   [attr.aria-busy]="loading() ? 'true' : null"
   [attr.aria-disabled]="isDisabled() ? 'true' : null"

@@ -1,6 +1,6 @@
 <article
-  [ngClass]="cardClasses()"
-  [ngStyle]="cardStyles()"
+  [class]="cardClasses()"
+  [style]="cardStyles()"
   [attr.role]="clickable() ? 'button' : 'region'"
   [attr.tabindex]="isInteractive() ? '0' : null"
   [attr.aria-label]="effectiveAriaLabel()"
@@ -14,7 +14,7 @@
       <img
         class="card-img"
         [ngSrc]="img() || ''"
-        [ngStyle]="imageStyles()"
+        [style]="imageStyles()"
         [alt]="altText()"
         fill
       />

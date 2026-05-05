@@ -11,7 +11,7 @@
     <div
       #container
       class="magary-dialog"
-      [ngClass]="styleClass()"
+      [class]="styleClass()"
       [class.magary-dialog-maximized]="maximized()"
       [class.magary-dialog-dragging]="dragging()"
       [class.magary-dialog-glass]="glass()"
@@ -23,7 +23,7 @@
       [style.--magary-dialog-header-bg]="headerBackground()"
       [style.--magary-dialog-content-bg]="contentBackground()"
       [style.--magary-dialog-footer-bg]="footerBackground()"
-      [ngStyle]="style()"
+      [style]="style()"
       [@dialogAnimation]
       (@dialogAnimation.start)="handleDialogAnimationStart($event)"
       (@dialogAnimation.done)="handleDialogAnimationDone($event)"
@@ -66,7 +66,7 @@
       }
 
       <!-- Content -->
-      <div #content class="magary-dialog-content" [ngStyle]="contentStyle()">
+      <div #content class="magary-dialog-content" [style]="contentStyle()">
         <ng-content></ng-content>
       </div>
 

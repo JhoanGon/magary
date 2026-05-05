@@ -1,5 +1,6 @@
-﻿import { importProvidersFrom } from '@angular/core';
+﻿import { Component, importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryInput } from './input';
 
@@ -14,6 +15,25 @@ const lucideIcons = Object.entries(icons).reduce(
   },
   {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
+
+@Component({
+  standalone: true,
+  imports: [MagaryInput, ReactiveFormsModule],
+  template: `
+    <magary-input
+      [formControl]="control"
+      label="Email"
+      errorMessage="Email is required"
+      helpText="We will never share it"
+    ></magary-input>
+  `,
+})
+class InputReactiveHostComponent {
+  readonly control = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required],
+  });
+}
 
 describe('MagaryInput behavior', () => {
   let fixture: ComponentFixture<MagaryInput>;
@@ -30,70 +50,94 @@ describe('MagaryInput behavior', () => {
     fixture.detectChanges();
   });
 
-  it('updates value and emits focus/blur events from the native input', () => {
+  it('writes incoming values and propagates user changes through ControlValueAccessor', () => {
+    const onChange = vi.fn<(value: string) => void>();
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+
+    component.registerOnChange(onChange);
+    component.writeValue(65);
+    fixture.detectChanges();
+
+    expect(input.value).toBe('65');
+
+    input.value = 'Jhoan';
+    input.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(onChange).toHaveBeenCalledWith('Jhoan');
+  });
+
+  it('marks the control as touched on blur and emits focus/blur events', () => {
     const focusEvents: FocusEvent[] = [];
     const blurEvents: FocusEvent[] = [];
+    const onTouched = vi.fn();
 
     component.inputFocus.subscribe((event) => focusEvents.push(event));
     component.inputBlur.subscribe((event) => blurEvents.push(event));
+    component.registerOnTouched(onTouched);
 
-    const input = fixture.nativeElement.querySelector(
-      'input',
-    ) as HTMLInputElement;
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
 
     input.dispatchEvent(new FocusEvent('focus'));
-    input.value = 'Jhoan';
-    input.dispatchEvent(new Event('input'));
     input.dispatchEvent(new FocusEvent('blur'));
     fixture.detectChanges();
 
-    expect(component.value()).toBe('Jhoan');
     expect(focusEvents).toHaveLength(1);
     expect(blurEvents).toHaveLength(1);
+    expect(onTouched).toHaveBeenCalledTimes(1);
   });
 
-  it('shows required validation error and clears it after input', () => {
+  it('does not invent internal validation errors for required or email rules', () => {
     fixture.componentRef.setInput('required', true);
-    fixture.detectChanges();
-
-    const input = fixture.nativeElement.querySelector(
-      'input',
-    ) as HTMLInputElement;
-
-    input.dispatchEvent(new FocusEvent('blur'));
-    fixture.detectChanges();
-
-    expect(component.effectiveError().toLowerCase()).toContain('obligatorio');
-
-    input.value = 'valid value';
-    input.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    expect(component.effectiveError()).toBe('');
-  });
-
-  it('shows internal email validation error and clears it on new input', () => {
     fixture.componentRef.setInput('type', 'email');
     fixture.detectChanges();
 
-    const input = fixture.nativeElement.querySelector(
-      'input',
-    ) as HTMLInputElement;
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
 
     input.value = 'invalid-email';
     input.dispatchEvent(new Event('input'));
     input.dispatchEvent(new FocusEvent('blur'));
     fixture.detectChanges();
 
-    expect(component.effectiveError().length).toBeGreaterThan(0);
-    expect(component.effectiveError()).toBe('Correo electrónico inválido');
+    expect(fixture.nativeElement.querySelector('.error-message')).toBeNull();
+    expect(input.getAttribute('aria-invalid')).toBeNull();
+  });
 
-    input.value = 'valid@email.com';
-    input.dispatchEvent(new Event('input'));
+  it('reflects Angular Forms invalid state after touch and restores help text when valid', async () => {
+    await TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [InputReactiveHostComponent],
+      providers: [importProvidersFrom(LucideAngularModule.pick(lucideIcons))],
+    }).compileComponents();
+
+    const hostFixture = TestBed.createComponent(InputReactiveHostComponent);
+    hostFixture.detectChanges();
+
+    const hostComponent = hostFixture.componentInstance;
+    const input = hostFixture.nativeElement.querySelector('input') as HTMLInputElement;
+
+    expect(input.getAttribute('aria-describedby')).toContain('-help');
+    expect(input.getAttribute('aria-invalid')).toBeNull();
+
     input.dispatchEvent(new FocusEvent('blur'));
-    fixture.detectChanges();
+    hostFixture.detectChanges();
 
-    expect(component.effectiveError()).toBe('');
+    expect(hostComponent.control.touched).toBe(true);
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+    expect(
+      hostFixture.nativeElement.querySelector('.error-message')?.textContent,
+    ).toContain('Email is required');
+
+    input.value = 'hello@magary.dev';
+    input.dispatchEvent(new Event('input'));
+    hostFixture.detectChanges();
+
+    expect(hostComponent.control.valid).toBe(true);
+    expect(input.getAttribute('aria-invalid')).toBeNull();
+    expect(hostFixture.nativeElement.querySelector('.error-message')).toBeNull();
+    expect(
+      hostFixture.nativeElement.querySelector('.help-message')?.textContent,
+    ).toContain('We will never share it');
   });
 
   it('toggles password visibility and blocks toggle when readonly', () => {
@@ -160,29 +204,21 @@ describe('MagaryInput behavior', () => {
     expect(iconEvents).toEqual(['prefix', 'suffix']);
   });
 
-  it('sets aria attributes and message ids for help and error states', () => {
+  it('sets aria attributes and message ids for explicit help and error states', () => {
     fixture.componentRef.setInput('helpText', 'Only letters allowed');
-    fixture.componentRef.setInput('required', true);
+    fixture.componentRef.setInput('errorMessage', 'External error');
+    fixture.componentRef.setInput('invalid', true);
     fixture.detectChanges();
 
-    const input = fixture.nativeElement.querySelector(
-      'input',
-    ) as HTMLInputElement;
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
     const helpMessage = fixture.nativeElement.querySelector(
       '.help-message',
     ) as HTMLElement;
-
-    expect(helpMessage.getAttribute('id')).toBe(component.helpMessageId);
-    expect(input.getAttribute('aria-describedby')).toBe(component.helpMessageId);
-    expect(input.getAttribute('aria-invalid')).toBeNull();
-    expect(input.getAttribute('aria-required')).toBe('true');
-
-    fixture.componentRef.setInput('error', 'External error');
-    fixture.detectChanges();
-
     const errorMessage = fixture.nativeElement.querySelector(
       '.error-message',
     ) as HTMLElement;
+
+    expect(helpMessage).toBeNull();
     expect(errorMessage.getAttribute('id')).toBe(component.errorMessageId);
     expect(errorMessage.getAttribute('role')).toBe('alert');
     expect(input.getAttribute('aria-describedby')).toBe(component.errorMessageId);
@@ -212,26 +248,36 @@ describe('MagaryInput behavior', () => {
     expect(input.getAttribute('inputmode')).toBe('email');
   });
 
-  it('supports numeric model values on blur without throwing trim errors', () => {
+  it('combines disabled input and ControlValueAccessor disabled state', () => {
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+
+    component.setDisabledState(true);
+    fixture.detectChanges();
+    expect(input.disabled).toBe(true);
+
+    component.setDisabledState(false);
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+    expect(input.disabled).toBe(true);
+
+    fixture.componentRef.setInput('disabled', false);
+    fixture.detectChanges();
+    expect(input.disabled).toBe(false);
+  });
+
+  it('supports numeric incoming values on blur without runtime errors', () => {
     fixture.componentRef.setInput('type', 'number');
-    fixture.componentRef.setInput('required', true);
-    (
-      component.value as unknown as {
-        set: (value: unknown) => void;
-      }
-    ).set(65);
+    component.writeValue(65);
     fixture.detectChanges();
 
-    const input = fixture.nativeElement.querySelector(
-      'input',
-    ) as HTMLInputElement;
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
 
     expect(() => {
       input.dispatchEvent(new FocusEvent('blur'));
       fixture.detectChanges();
     }).not.toThrow();
 
-    expect(component.effectiveError()).toBe('');
+    expect(input.value).toBe('65');
   });
 });
 

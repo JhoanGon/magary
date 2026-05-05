@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Highlight } from 'ngx-highlightjs';
 import { MagaryCard, MagaryInput } from 'ng-magary';
 import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
@@ -12,10 +12,18 @@ const CODE_EXAMPLES = {
     <magary-input
       [label]="'Name'"
       [placeholder]="'Type your name'"
-      [(value)]="inputValue"
+      [(ngModel)]="inputValue"
     ></magary-input>
   </div>
 </magary-card>`,
+  forms: `<form [formGroup]="profileForm">
+  <magary-input
+    formControlName="name"
+    [label]="'Name'"
+    [errorMessage]="'Name is required'"
+    [helpText]="'Used in your public profile'"
+  ></magary-input>
+</form>`,
   types: `<magary-input [type]="'text'" [label]="'Text'" [placeholder]="'Normal text'"></magary-input>
 <magary-input [type]="'email'" [label]="'Email'" [placeholder]="'user@email.com'"></magary-input>
 <magary-input [type]="'password'" [label]="'Password'" [placeholder]="'********'"></magary-input>
@@ -26,34 +34,47 @@ const CODE_EXAMPLES = {
   variants: `<magary-input [variant]="'outlined'" [label]="'Outlined'" [placeholder]="'Outlined'"></magary-input>
 <magary-input [variant]="'filled'" [label]="'Filled'" [placeholder]="'Filled'"></magary-input>
 <magary-input [variant]="'underlined'" [label]="'Underlined'" [placeholder]="'Underlined'"></magary-input>`,
-  validation: `<magary-input [label]="'Error'" [error]="'Error message'" [value]="'Invalid'"></magary-input>
-<magary-input [label]="'Success'" [success]="true" [value]="'Valid'"></magary-input>
+  validation: `<magary-input [label]="'Error'" [invalid]="true" [errorMessage]="'Error message'" [ngModel]="'Invalid'"></magary-input>
+<magary-input [label]="'Success'" [success]="true" [ngModel]="'Valid'"></magary-input>
 <magary-input [label]="'Required'" [required]="true" [placeholder]="'Required field'"></magary-input>`,
   icons: `<magary-input [label]="'Prefix'" [prefixIcon]="'user'" [placeholder]="'User'"></magary-input>
 <magary-input [label]="'Suffix'" [suffixIcon]="'search'" [placeholder]="'Search'"></magary-input>
 <magary-input [label]="'Both'" [prefixIcon]="'mail'" [suffixIcon]="'check'" [placeholder]="'Email'"></magary-input>
 <magary-input [label]="'Loading'" [loading]="true" [placeholder]="'Loading...'"></magary-input>`,
   states: `<magary-input [label]="'Normal'" [placeholder]="'Normal'"></magary-input>
-<magary-input [label]="'Disabled'" [disabled]="true" [value]="'Disabled'"></magary-input>
-<magary-input [label]="'Read only'" [readonly]="true" [value]="'Read only'"></magary-input>`,
+<magary-input [label]="'Disabled'" [disabled]="true" [ngModel]="'Disabled'"></magary-input>
+<magary-input [label]="'Read only'" [readonly]="true" [ngModel]="'Read only'"></magary-input>`,
 };
 
 @Component({
   selector: 'app-view-input',
-  imports: [CommonModule, FormsModule, MagaryInput, MagaryCard, Highlight],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MagaryInput,
+    MagaryCard,
+    Highlight,
+  ],
   templateUrl: './view-input.html',
   styleUrl: './view-input.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewInput {
   readonly i18n = inject(DemoI18nService);
 
-  inputValue = signal('');
-  emailValue = signal('');
-  passwordValue = signal('');
-  searchValue = signal('');
+  inputValue = '';
+  readonly profileForm = new FormGroup({
+    name: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+  });
 
   readonly importExample = CODE_EXAMPLES.import;
   readonly exampleBasic = CODE_EXAMPLES.basic;
+  readonly exampleForms = CODE_EXAMPLES.forms;
   readonly exampleTypes = CODE_EXAMPLES.types;
   readonly exampleSizes = CODE_EXAMPLES.sizes;
   readonly exampleVariants = CODE_EXAMPLES.variants;
@@ -61,7 +82,7 @@ export class ViewInput {
   readonly exampleIcons = CODE_EXAMPLES.icons;
   readonly exampleStates = CODE_EXAMPLES.states;
 
-  onInputChange(value: string) {
-    this.inputValue.set(value);
+  get profileName(): string {
+    return this.profileForm.controls.name.value;
   }
 }

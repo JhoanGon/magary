@@ -7,7 +7,7 @@ export const IMAGE_DOC_TEXT = {
       'Componente para mostrar imagenes con funcionalidades avanzadas como previsualizacion, zoom y rotacion.',
     'components.media.image.import.title': 'Import',
     'components.media.image.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.media.image.basic.title': 'Ejemplo Basico',
     'components.media.image.basic.desc':
       'Visualizacion simple de una imagen.',
@@ -59,7 +59,7 @@ export const IMAGE_DOC_TEXT = {
       'Component to render images with advanced features such as preview, zoom, and rotation.',
     'components.media.image.import.title': 'Import',
     'components.media.image.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.media.image.basic.title': 'Basic Example',
     'components.media.image.basic.desc': 'Simple image rendering.',
     'components.media.image.basic.cardTitle': 'Basic',

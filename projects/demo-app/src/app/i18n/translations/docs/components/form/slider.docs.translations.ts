@@ -4,11 +4,11 @@ export const SLIDER_DOC_TEXT = {
   es: {
     'components.form.slider.title': 'Magary Slider',
     'components.form.slider.subtitle':
-      'Componente para seleccionar un valor o rango arrastrando un control.',
+      'Slider CVA-first para ngModel y Angular Reactive Forms.',
     'components.form.slider.import.title': 'Importacion',
     'components.form.slider.basic.title': 'Basico',
     'components.form.slider.basic.desc':
-      'Configuracion por defecto de seleccion de valor unico.',
+      'Configuracion de valor unico enlazada mediante Angular Forms.',
     'components.form.slider.basic.valueLabel': 'Valor',
     'components.form.slider.steps.title': 'Steps',
     'components.form.slider.steps.desc':
@@ -36,11 +36,11 @@ export const SLIDER_DOC_TEXT = {
   en: {
     'components.form.slider.title': 'Magary Slider',
     'components.form.slider.subtitle':
-      'Input component to select a value or range by dragging a handle.',
+      'CVA-first slider for ngModel and Angular Reactive Forms.',
     'components.form.slider.import.title': 'Import',
     'components.form.slider.basic.title': 'Basic',
     'components.form.slider.basic.desc':
-      'Default single-value selection configuration.',
+      'Single-value configuration bound through Angular Forms.',
     'components.form.slider.basic.valueLabel': 'Value',
     'components.form.slider.steps.title': 'Steps',
     'components.form.slider.steps.desc':

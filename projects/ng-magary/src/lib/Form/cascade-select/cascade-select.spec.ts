@@ -1,5 +1,6 @@
-import { importProvidersFrom } from '@angular/core';
+import { Component, importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryCascadeSelect } from './cascade-select';
 
@@ -14,6 +15,44 @@ const lucideIcons = Object.entries(icons).reduce(
   },
   {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
+
+@Component({
+  standalone: true,
+  imports: [ReactiveFormsModule, MagaryCascadeSelect],
+  template: `
+    <magary-cascade-select
+      inputId="region-select"
+      ariaDescribedby="external-cascade-help"
+      helpText="Choose a region"
+      errorMessage="Region is required"
+      [options]="options"
+      optionLabel="cname"
+      optionGroupLabel="name"
+      [optionGroupChildren]="['states', 'cities']"
+      optionValue="code"
+      [formControl]="control"
+    />
+  `,
+})
+class CascadeSelectReactiveHost {
+  readonly control = new FormControl<string | null>(null, {
+    validators: [Validators.required],
+    nonNullable: false,
+  });
+
+  readonly options = [
+    {
+      name: 'United States',
+      code: 'US',
+      states: [
+        {
+          name: 'Texas',
+          cities: [{ cname: 'Austin', code: 'US-AU' }],
+        },
+      ],
+    },
+  ];
+}
 
 describe('MagaryCascadeSelect behavior', () => {
   let fixture: ComponentFixture<MagaryCascadeSelect>;
@@ -161,7 +200,7 @@ describe('MagaryCascadeSelect behavior', () => {
 
     fixture.componentRef.setInput('loading', false);
     fixture.componentRef.setInput('invalid', true);
-    fixture.componentRef.setInput('error', 'Invalid selection');
+    fixture.componentRef.setInput('errorMessage', 'Invalid selection');
     fixture.detectChanges();
 
     expect(root.getAttribute('aria-invalid')).toBe('true');
@@ -198,5 +237,54 @@ describe('MagaryCascadeSelect behavior', () => {
 
     expect(component.value()).toBe('US-AU');
     expect(component.isOpen()).toBe(false);
+  });
+
+  it('uses compareWith to resolve complex values without shared reference', () => {
+    fixture.componentRef.setInput('optionValue', null);
+    fixture.componentRef.setInput('compareWith', (option: unknown, value: unknown) => {
+      return (
+        (option as { code?: string } | null)?.code ===
+        (value as { code?: string } | null)?.code
+      );
+    });
+    fixture.detectChanges();
+
+    component.writeValue({ code: 'CA-TO', cname: 'Toronto from API' });
+    fixture.detectChanges();
+
+    expect(component.selectedLabel()).toBe('Toronto');
+
+    component.toggle();
+    fixture.detectChanges();
+
+    const selectedOption = fixture.nativeElement.querySelector(
+      '.select-item.selected',
+    ) as HTMLElement | null;
+    expect(selectedOption?.textContent).toContain('Toronto');
+  });
+
+  it('reflects Angular Forms invalid state and combines describedBy ids', async () => {
+    await TestBed.resetTestingModule()
+      .configureTestingModule({
+        imports: [CascadeSelectReactiveHost],
+        providers: [importProvidersFrom(LucideAngularModule.pick(lucideIcons))],
+      })
+      .compileComponents();
+
+    const hostFixture = TestBed.createComponent(CascadeSelectReactiveHost);
+    hostFixture.componentInstance.control.markAsTouched();
+    hostFixture.detectChanges();
+
+    const root = hostFixture.nativeElement.querySelector(
+      '.magary-cascade-select',
+    ) as HTMLElement;
+
+    expect(root.id).toBe('region-select');
+    expect(root.getAttribute('aria-invalid')).toBe('true');
+    expect(root.getAttribute('aria-describedby')).toContain('external-cascade-help');
+    expect(root.getAttribute('aria-describedby')).toContain('-error');
+    expect(
+      hostFixture.nativeElement.querySelector('.error-message')?.textContent,
+    ).toContain('Region is required');
   });
 });

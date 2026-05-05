@@ -4,7 +4,6 @@ import {
   Component,
   computed,
   ElementRef,
-  HostListener,
   OnDestroy,
   viewChild,
   viewChildren,
@@ -24,6 +23,10 @@ import { MenuItem } from '../../Menu/api/menu.interface'; // Use api interface
   templateUrl: './split-button.html',
   styleUrl: './split-button.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(document:click)': 'onDocumentClick($event)',
+    '(document:keydown.escape)': 'onEscape()',
+  },
 })
 export class MagarySplitButton implements OnDestroy {
   private readonly elementRef = inject(ElementRef);
@@ -172,7 +175,6 @@ export class MagarySplitButton implements OnDestroy {
     }
   }
 
-  @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     if (
       this.isOpen() &&
@@ -182,7 +184,6 @@ export class MagarySplitButton implements OnDestroy {
     }
   }
 
-  @HostListener('document:keydown.escape')
   onEscape(): void {
     if (this.isOpen()) {
       this.closeDropdown(true);

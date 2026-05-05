@@ -16,7 +16,7 @@ import { MagaryDialog } from '../dialog/dialog';
 import { MagaryButton } from '../../Button/button/button';
 import {
   MagaryConfirmationService,
-  Confirmation,
+  MagaryConfirmation,
 } from './confirmation.service';
 import { Subscription } from 'rxjs';
 
@@ -49,7 +49,7 @@ export class MagaryConfirmDialog implements OnDestroy {
 
   // State
   visible = signal<boolean>(false);
-  confirmation = signal<Confirmation | null>(null);
+  confirmation = signal<MagaryConfirmation | null>(null);
 
   private subscription: Subscription;
   private confirmationService = inject(MagaryConfirmationService);

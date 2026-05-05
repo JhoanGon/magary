@@ -3,18 +3,38 @@
   [class.vertical]="layout() === 'vertical'"
   [class.horizontal]="layout() === 'horizontal'"
   [class.disabled]="isDisabled()"
+  [class.invalid]="isInvalid()"
   role="radiogroup"
   [attr.aria-label]="groupAriaLabel()"
+  [attr.aria-labelledby]="ariaLabelledby() || null"
+  [attr.aria-describedby]="describedBy()"
   [attr.aria-disabled]="isDisabled()"
+  [attr.aria-invalid]="isInvalid() ? 'true' : null"
 >
-  @for (option of options(); track $index) {
+  @for (option of options(); track $index; let index = $index) {
     <magary-radio
       [name]="groupName()"
       [value]="getOptionValue(option)"
       [label]="getOptionLabel(option)"
-      [ngModel]="value()"
-      (ngModelChange)="onRadioChange($event)"
-      [disabled]="isDisabled()"
+      [inputId]="getRadioInputId(index)"
+      [checked]="isOptionSelected(option)"
+      [invalid]="isInvalid()"
+      [ariaDescribedby]="describedBy() || ''"
+      [disabled]="isOptionDisabled(option)"
+      (selectionChange)="onRadioChange($event)"
+      (blurred)="onRadioBlur()"
     ></magary-radio>
+  }
+
+  @if (hasVisibleErrorMessage() || helpText()) {
+    <div class="radio-group-message">
+      @if (hasVisibleErrorMessage()) {
+        <span class="error-message" [id]="errorMessageId" role="alert">
+          {{ errorMessage() }}
+        </span>
+      } @else if (helpText()) {
+        <span class="help-message" [id]="helpMessageId">{{ helpText() }}</span>
+      }
+    </div>
   }
 </div>

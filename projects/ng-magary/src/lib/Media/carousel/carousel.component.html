@@ -1,7 +1,7 @@
 <div
   #carouselWrapper
   class="magary-carousel-wrapper"
-  [ngClass]="contentClass()"
+  [class]="contentClass()"
   [attr.aria-live]="autoplayInterval() > 0 ? 'off' : 'polite'"
   [attr.tabindex]="keyboard() && !isEmpty() ? 0 : -1"
 >
@@ -92,7 +92,7 @@
           <div
             #trackElement
             class="magary-carousel-track"
-            [ngStyle]="transformStyle()"
+            [style]="transformStyle()"
             [class.is-dragging]="_isDragging()"
             [style.gap]="_activeSpaceBetween() + 'px'"
             [attr.role]="'list'"
@@ -238,7 +238,7 @@
         <div
           class="magary-carousel-indicators"
           [attr.id]="indicatorsId"
-          [ngClass]="indicatorsContentClass()"
+          [class]="indicatorsContentClass()"
           [attr.data-style]="indicatorStyle()"
           [attr.data-position]="indicatorPosition()"
           [attr.role]="isTabIndicatorStyle() ? 'tablist' : 'group'"

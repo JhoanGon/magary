@@ -111,6 +111,51 @@
 
   <div class="section">
     <div class="section-header">
+      <h2>{{ i18n.translateDocs('components.form.textarea.validation.title') }}</h2>
+      <p>{{ i18n.translateDocs('components.form.textarea.validation.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <div class="demo-content">
+        <div class="field">
+          <label id="bio-label" for="bio-field">
+            {{ i18n.translateDocs('components.form.textarea.validation.label') }}
+          </label>
+          <magary-textarea
+            [formControl]="bioControl"
+            inputId="bio-field"
+            ariaLabelledby="bio-label"
+            [errorMessage]="
+              i18n.translateDocs('components.form.textarea.validation.errorMessage')
+            "
+            [helpText]="
+              i18n.translateDocs('components.form.textarea.validation.helpText')
+            "
+            [placeholder]="
+              i18n.translateDocs('components.form.textarea.validation.placeholder')
+            "
+          ></magary-textarea>
+        </div>
+      </div>
+
+      <div class="code-block" style="margin-top: 1rem">
+        <magary-tabs
+          [backgroundLine]="'#ed2c44'"
+          [positionContent]="'flex-start'"
+          [background]="'#282c34'"
+        >
+          <magary-tab label="HTML">
+            <pre><code [highlight]="validationHTML" language="html"></code></pre>
+          </magary-tab>
+          <magary-tab label="TypeScript">
+            <pre><code [highlight]="validationTS" language="typescript"></code></pre>
+          </magary-tab>
+        </magary-tabs>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
       <h2>{{ i18n.translateDocs('components.form.textarea.api.title') }}</h2>
       <p>{{ i18n.translateDocs('components.form.textarea.api.desc') }}</p>
     </div>
@@ -134,6 +179,36 @@
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td><code>inputId</code></td>
+              <td><code>string</code></td>
+              <td><code>auto</code></td>
+              <td>{{ i18n.translateDocs('components.form.textarea.api.inputId.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>ariaLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.textarea.api.ariaLabel.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>ariaLabelledby</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.textarea.api.ariaLabelledby.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>ariaDescribedby</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.textarea.api.ariaDescribedby.desc') }}
+              </td>
+            </tr>
             <tr>
               <td><code>rows</code></td>
               <td><code>number</code></td>
@@ -185,6 +260,26 @@
               <td>
                 {{ i18n.translateDocs('components.form.textarea.api.disabled.desc') }}
               </td>
+            </tr>
+            <tr>
+              <td><code>invalid</code></td>
+              <td><code>boolean</code></td>
+              <td><code>false</code></td>
+              <td>{{ i18n.translateDocs('components.form.textarea.api.invalid.desc') }}</td>
+            </tr>
+            <tr>
+              <td><code>errorMessage</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.textarea.api.errorMessage.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>helpText</code></td>
+              <td><code>string</code></td>
+              <td><code>-</code></td>
+              <td>{{ i18n.translateDocs('components.form.textarea.api.helpText.desc') }}</td>
             </tr>
           </tbody>
         </table>

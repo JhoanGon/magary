@@ -47,7 +47,7 @@ export const appConfig: ApplicationConfig = {
   ]
 };`;
 
-  readonly animationsConfig = `// app.config.ts (Standalone)
+  readonly animationsConfig = `// app.config.ts
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
@@ -98,25 +98,24 @@ export const appConfig: ApplicationConfig = {
   ]
 };`;
 
-  readonly integrationForms = `// reactive-form bridge for Magary controls
+  readonly integrationForms = `// CVA-first integration for Magary controls
 this.form = this.fb.group({
-  city: [''],
-  notes: ['']
+  name: [''],
+  accepted: [false],
+  notifications: [false]
 });
 
 // template
-<magary-select
-  [options]="cities"
-  [value]="form.controls.city.value ?? ''"
-  (valueChange)="form.controls.city.setValue($event)"
-></magary-select>
-
-<magary-input
-  [value]="form.controls.notes.value ?? ''"
-  (valueChange)="form.controls.notes.setValue($event)"
-></magary-input>`;
+<form [formGroup]="form">
+  <magary-input formControlName="name"></magary-input>
+  <magary-checkbox formControlName="accepted"></magary-checkbox>
+  <magary-switch formControlName="notifications"></magary-switch>
+</form>`;
 
   readonly integrationOverlay = `// overlay + feedback integration
+private readonly confirmService = inject(MagaryConfirmationService);
+private readonly toastService = inject(MagaryToastService);
+
 confirmService.confirm({
   message: 'Delete item?',
   accept: () => toastService.add({

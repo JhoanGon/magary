@@ -43,6 +43,7 @@
                   optionLabel="cname"
                   optionGroupLabel="name"
                   [optionGroupChildren]="['states', 'cities']"
+                  [compareWith]="compareCascadeByCode"
                   [placeholder]="
                     i18n.translateDocs(
                       'components.form.cascadeSelect.basic.placeholder'
@@ -134,6 +135,7 @@
                   optionLabel="cname"
                   optionGroupLabel="name"
                   [optionGroupChildren]="['states', 'cities']"
+                  [compareWith]="compareCascadeByCode"
                   [optionGroupSelectable]="true"
                   [placeholder]="
                     i18n.translateDocs(
@@ -305,6 +307,38 @@
               </td>
             </tr>
             <tr>
+              <td><code>inputId</code></td>
+              <td><code>string</code></td>
+              <td><code>auto</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.inputId.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>ariaLabel</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.ariaLabel.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>ariaLabelledby</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.ariaLabelledby.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>ariaDescribedby</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.ariaDescribedby.desc') }}
+              </td>
+            </tr>
+            <tr>
               <td><code>placeholder</code></td>
               <td><code>string</code></td>
               <td><code>Select an option</code></td>
@@ -355,11 +389,11 @@
               </td>
             </tr>
             <tr>
-              <td><code>error</code></td>
+              <td><code>errorMessage</code></td>
               <td><code>string</code></td>
               <td><code>''</code></td>
               <td>
-                {{ i18n.translateDocs('components.form.cascadeSelect.api.error.desc') }}
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.errorMessage.desc') }}
               </td>
             </tr>
             <tr>
@@ -378,6 +412,14 @@
               <td><code>100%</code></td>
               <td>
                 {{ i18n.translateDocs('components.form.cascadeSelect.api.width.desc') }}
+              </td>
+            </tr>
+            <tr>
+              <td><code>compareWith</code></td>
+              <td><code>(optionValue, modelValue) =&gt; boolean</code></td>
+              <td><code>Object.is</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.cascadeSelect.api.compareWith.desc') }}
               </td>
             </tr>
           </tbody>

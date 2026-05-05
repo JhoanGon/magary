@@ -1,5 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   signal,
@@ -15,7 +17,7 @@ import {
   RouterLink,
 } from '@angular/router';
 import {
-  Sidebar,
+  MagarySidebar,
   MagaryToast,
   MAGARY_VERSION,
   MagarySplitButton,
@@ -39,7 +41,8 @@ import {
   selector: 'magary-layout',
   imports: [
     CommonModule,
-    Sidebar,
+    FormsModule,
+    MagarySidebar,
     RouterOutlet,
     MagaryToast,
     MagaryButton,
@@ -50,9 +53,11 @@ import {
   ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Layout implements AfterViewInit {
   contentWrapper = viewChild<ElementRef<HTMLElement>>('contentWrapper');
+  private readonly document = inject(DOCUMENT);
   private readonly router = inject(Router);
   public readonly pwaService = inject(PwaService);
   public readonly i18n = inject(DemoI18nService);
@@ -74,16 +79,16 @@ export class Layout implements AfterViewInit {
       label: 'GitHub Sponsors',
       icon: 'github',
       command: () => {
-        window.open('https://github.com/sponsors/JhoanGon', '_blank');
-      }
+        this.openExternalUrl('https://github.com/sponsors/JhoanGon');
+      },
     },
     {
       label: 'Buy Me a Coffee',
       icon: 'coffee',
       command: () => {
-        window.open('https://buymeacoffee.com/praiddev', '_blank');
-      }
-    }
+        this.openExternalUrl('https://buymeacoffee.com/praiddev');
+      },
+    },
   ];
 
   sponsorDialItems: SpeedDialItem[] = [
@@ -91,16 +96,16 @@ export class Layout implements AfterViewInit {
       icon: 'github',
       tooltip: 'GitHub Sponsors',
       command: () => {
-        window.open('https://github.com/sponsors/JhoanGon', '_blank');
-      }
+        this.openExternalUrl('https://github.com/sponsors/JhoanGon');
+      },
     },
     {
       icon: 'coffee',
       tooltip: 'Buy Me a Coffee',
       command: () => {
-        window.open('https://buymeacoffee.com/praiddev', '_blank');
-      }
-    }
+        this.openExternalUrl('https://buymeacoffee.com/praiddev');
+      },
+    },
   ];
 
   isSidebarOpen = signal(false);
@@ -136,6 +141,10 @@ export class Layout implements AfterViewInit {
 
   handleLogout() {
     console.log('Usuario cerrando sesion...');
+  }
+
+  private openExternalUrl(url: string) {
+    this.document.defaultView?.open(url, '_blank');
   }
 
   private translateSidebarSection(section: SidebarSection): SidebarSection {

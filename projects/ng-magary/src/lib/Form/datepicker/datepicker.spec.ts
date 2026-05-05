@@ -1,5 +1,7 @@
-﻿import { importProvidersFrom } from '@angular/core';
+﻿import { Component } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryDatePicker } from './datepicker';
 
@@ -14,6 +16,26 @@ const lucideIcons = Object.entries(icons).reduce(
   },
   {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
+
+@Component({
+  standalone: true,
+  imports: [ReactiveFormsModule, MagaryDatePicker],
+  template: `
+    <magary-datepicker
+      inputId="booking-date"
+      ariaDescribedby="external-date-help"
+      helpText="Pick a booking date"
+      errorMessage="Date is required"
+      [formControl]="control"
+    />
+  `,
+})
+class DatepickerReactiveHost {
+  readonly control = new FormControl<Date | null>(null, {
+    validators: [Validators.required],
+    nonNullable: false,
+  });
+}
 
 describe('MagaryDatePicker behavior', () => {
   let fixture: ComponentFixture<MagaryDatePicker>;
@@ -165,6 +187,68 @@ describe('MagaryDatePicker behavior', () => {
 
     expect(component.currentView()).toBe('month');
     expect(component.viewDate().getFullYear()).toBe(2029);
+  });
+
+  it('marks the control as touched when the trigger input blurs', () => {
+    let touchedCalls = 0;
+    component.registerOnTouched(() => {
+      touchedCalls += 1;
+    });
+
+    const input = fixture.nativeElement.querySelector(
+      '.datepicker-input',
+    ) as HTMLInputElement;
+    input.dispatchEvent(new FocusEvent('blur'));
+    fixture.detectChanges();
+
+    expect(touchedCalls).toBe(1);
+  });
+
+  it('marks the control as touched after completing a single-date selection', () => {
+    let touchedCalls = 0;
+    component.registerOnTouched(() => {
+      touchedCalls += 1;
+    });
+
+    component.open();
+    fixture.detectChanges();
+
+    const activeDate = component.activeDate();
+    expect(activeDate).toBeTruthy();
+    if (!activeDate) {
+      return;
+    }
+
+    component.selectDate(activeDate);
+    fixture.detectChanges();
+
+    expect(touchedCalls).toBe(1);
+    expect(component.isOpen()).toBe(false);
+  });
+
+  it('reflects Angular Forms invalid state and combines describedBy ids', async () => {
+    await TestBed.resetTestingModule()
+      .configureTestingModule({
+        imports: [DatepickerReactiveHost],
+        providers: [importProvidersFrom(LucideAngularModule.pick(lucideIcons))],
+      })
+      .compileComponents();
+
+    const hostFixture = TestBed.createComponent(DatepickerReactiveHost);
+    hostFixture.componentInstance.control.markAsTouched();
+    hostFixture.detectChanges();
+
+    const input = hostFixture.nativeElement.querySelector(
+      '.datepicker-input',
+    ) as HTMLInputElement;
+
+    expect(input.id).toBe('booking-date');
+    expect(input.getAttribute('aria-invalid')).toBe('true');
+    expect(input.getAttribute('aria-describedby')).toContain('external-date-help');
+    expect(input.getAttribute('aria-describedby')).toContain('-error');
+    expect(
+      hostFixture.nativeElement.querySelector('.error-message')?.textContent,
+    ).toContain('Date is required');
   });
 });
 

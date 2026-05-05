@@ -1,5 +1,25 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MagarySlider } from './slider';
+
+@Component({
+  standalone: true,
+  imports: [MagarySlider, ReactiveFormsModule],
+  template: `
+    <magary-slider
+      [formControl]="control"
+      errorMessage="Pick at least 10"
+      helpText="Choose a value between 0 and 100"
+    ></magary-slider>
+  `,
+})
+class SliderReactiveHostComponent {
+  readonly control = new FormControl(0, {
+    nonNullable: true,
+    validators: [Validators.min(10)],
+  });
+}
 
 describe('MagarySlider behavior', () => {
   let fixture: ComponentFixture<MagarySlider>;
@@ -113,5 +133,71 @@ describe('MagarySlider behavior', () => {
     expect(component.value()).toBe(11);
     expect(slideEndEvents).toHaveLength(1);
     expect(slideEndEvents[0].value).toBe(11);
+  });
+
+  it('marks the control as touched when the interaction ends', () => {
+    const onTouched = vi.fn();
+    component.registerOnTouched(onTouched);
+
+    const rail = fixture.nativeElement.querySelector(
+      '.magary-slider-rail',
+    ) as HTMLElement;
+
+    Object.defineProperty(rail, 'getBoundingClientRect', {
+      configurable: true,
+      value: () =>
+        ({
+          left: 0,
+          top: 0,
+          right: 100,
+          bottom: 20,
+          width: 100,
+          height: 20,
+          x: 0,
+          y: 0,
+          toJSON: () => ({}),
+        }) as DOMRect,
+    });
+
+    component.onBarClick(new MouseEvent('click', { clientX: 50, clientY: 10 }));
+    fixture.detectChanges();
+
+    expect(onTouched).toHaveBeenCalledTimes(1);
+  });
+
+  it('reflects Angular Forms invalid state after touch and restores help text when valid', async () => {
+    await TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [SliderReactiveHostComponent],
+    }).compileComponents();
+
+    const hostFixture = TestBed.createComponent(SliderReactiveHostComponent);
+    hostFixture.detectChanges();
+
+    const hostComponent = hostFixture.componentInstance;
+    const handle = hostFixture.nativeElement.querySelector(
+      '.magary-slider-handle',
+    ) as HTMLElement;
+
+    expect(handle.getAttribute('aria-describedby')).toContain('-help');
+    expect(handle.getAttribute('aria-invalid')).toBeNull();
+
+    handle.dispatchEvent(new FocusEvent('blur'));
+    hostFixture.detectChanges();
+
+    expect(hostComponent.control.touched).toBe(true);
+    expect(handle.getAttribute('aria-invalid')).toBe('true');
+    expect(
+      hostFixture.nativeElement.querySelector('.error-message')?.textContent,
+    ).toContain('Pick at least 10');
+
+    hostComponent.control.setValue(20);
+    hostFixture.detectChanges();
+
+    expect(handle.getAttribute('aria-invalid')).toBeNull();
+    expect(hostFixture.nativeElement.querySelector('.error-message')).toBeNull();
+    expect(
+      hostFixture.nativeElement.querySelector('.help-message')?.textContent,
+    ).toContain('Choose a value between 0 and 100');
   });
 });

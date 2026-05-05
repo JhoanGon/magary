@@ -3,7 +3,6 @@ import {
   Component,
   Directive,
   ElementRef,
-  HostListener,
   OnDestroy,
   Renderer2,
   ViewChild,
@@ -22,6 +21,9 @@ import { MenuItem } from '../api/menu.interface';
 @Directive({
   selector: '[appMenubarItem]',
   standalone: true,
+  host: {
+    '(mouseenter)': 'onMouseEnter()',
+  },
 })
 export class MenubarItemDirective {
   item = input.required<MenuItem>();
@@ -29,7 +31,6 @@ export class MenubarItemDirective {
 
   constructor(private el: ElementRef) {}
 
-  @HostListener('mouseenter')
   onMouseEnter() {
     if (this.item().disabled) return;
     this.parent().onItemHover(this.item());

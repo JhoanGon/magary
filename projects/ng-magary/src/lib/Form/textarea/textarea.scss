@@ -4,9 +4,11 @@
   --textarea-border: var(--surface-300, #cbd5e1);
   --textarea-border-hover: var(--primary-400, #38bdf8);
   --textarea-border-focus: var(--primary-500, #06b6d4);
+  --textarea-border-error: var(--danger-500, #ef4444);
   --textarea-bg: var(--surface-0, #ffffff);
   --textarea-text: var(--text-primary, #0f172a);
   --textarea-muted: var(--text-secondary, #64748b);
+  --textarea-error-text: var(--danger-600, #dc2626);
   --textarea-radius: var(--magary-field-radius, var(--border-radius, 0.625rem));
   --textarea-padding-x: var(--magary-field-padding-x, 0.875rem);
   --textarea-focus-ring: color-mix(
@@ -29,6 +31,18 @@
   font-size: 0.75rem;
   color: var(--textarea-muted);
   margin-top: 0;
+}
+
+.textarea-message {
+  font-size: 0.8125rem;
+}
+
+.error-message {
+  color: var(--textarea-error-text);
+}
+
+.help-message {
+  color: var(--textarea-muted);
 }
 
 .magary-textarea {
@@ -70,6 +84,15 @@
   &.auto-resize {
     overflow: hidden;
     resize: none;
+  }
+
+  &.invalid {
+    border-color: var(--textarea-border-error);
+  }
+
+  &.invalid:focus:not(:disabled) {
+    border-color: var(--textarea-border-error);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--textarea-border-error) 18%, transparent);
   }
 
   &::placeholder {

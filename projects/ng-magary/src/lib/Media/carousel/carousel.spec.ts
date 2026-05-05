@@ -1,7 +1,7 @@
 import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
-import { MagaryCarouselComponent } from './carousel';
+import { MagaryCarousel } from './carousel';
 
 const kebabCase = (value: string) =>
   value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -21,9 +21,9 @@ const lucideIcons = Object.entries(icons).reduce(
   {} as Record<string, LucideIconData>,
 );
 
-describe('MagaryCarouselComponent', () => {
-  let fixture: ComponentFixture<MagaryCarouselComponent<CarouselItem>>;
-  let component: MagaryCarouselComponent<CarouselItem>;
+describe('MagaryCarousel', () => {
+  let fixture: ComponentFixture<MagaryCarousel<CarouselItem>>;
+  let component: MagaryCarousel<CarouselItem>;
 
   const items = Array.from({ length: 6 }, (_, index) => ({
     id: index + 1,
@@ -32,14 +32,14 @@ describe('MagaryCarouselComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MagaryCarouselComponent],
+      imports: [MagaryCarousel],
       providers: [
         importProvidersFrom(LucideAngularModule.pick(lucideIcons)),
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(
-      MagaryCarouselComponent<CarouselItem>,
+      MagaryCarousel<CarouselItem>,
     );
     component = fixture.componentInstance;
     fixture.componentRef.setInput('value', items);

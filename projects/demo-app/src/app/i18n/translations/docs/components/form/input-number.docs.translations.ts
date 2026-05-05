@@ -4,11 +4,11 @@ export const INPUT_NUMBER_DOC_TEXT = {
   es: {
     'components.form.inputNumber.title': 'Magary InputNumber',
     'components.form.inputNumber.subtitle':
-      'Componente de entrada para valores numericos con formato y validacion.',
+      'Componente numerico CVA-first para usar con ngModel, formControl y formControlName.',
     'components.form.inputNumber.import.title': 'Importacion',
     'components.form.inputNumber.examples.title': 'Ejemplos',
     'components.form.inputNumber.examples.desc':
-      'Diferentes configuraciones de formato y layout.',
+      'Usa Angular Forms como contrato canonico y conserva outputs semanticos opcionales.',
     'components.form.inputNumber.examples.basic.label': 'Basico',
     'components.form.inputNumber.examples.basic.placeholder': '0-100',
     'components.form.inputNumber.examples.currency.label': 'Moneda (USD)',
@@ -22,7 +22,6 @@ export const INPUT_NUMBER_DOC_TEXT = {
     'components.form.inputNumber.inputs.header.type': 'Tipo',
     'components.form.inputNumber.inputs.header.default': 'Por defecto',
     'components.form.inputNumber.inputs.header.description': 'Descripcion',
-    'components.form.inputNumber.inputs.value.desc': 'Valor del componente.',
     'components.form.inputNumber.inputs.format.desc':
       'Si se debe formatear el valor.',
     'components.form.inputNumber.inputs.showButtons.desc':
@@ -50,6 +49,12 @@ export const INPUT_NUMBER_DOC_TEXT = {
       'Minimo de decimales.',
     'components.form.inputNumber.inputs.maxFractionDigits.desc':
       'Maximo de decimales.',
+    'components.form.inputNumber.inputs.invalid.desc':
+      'Fuerza el estado visual invalido sin reemplazar Angular Forms.',
+    'components.form.inputNumber.inputs.errorMessage.desc':
+      'Mensaje mostrado cuando el control esta invalido.',
+    'components.form.inputNumber.inputs.helpText.desc':
+      'Texto de ayuda mostrado cuando no hay error visible.',
     'components.form.inputNumber.outputs.title': 'Eventos (Outputs)',
     'components.form.inputNumber.outputs.desc':
       'Eventos emitidos por el componente.',
@@ -68,11 +73,11 @@ export const INPUT_NUMBER_DOC_TEXT = {
   en: {
     'components.form.inputNumber.title': 'Magary InputNumber',
     'components.form.inputNumber.subtitle':
-      'Input component for numeric values with formatting and validation.',
+      'CVA-first numeric input for ngModel, formControl, and formControlName.',
     'components.form.inputNumber.import.title': 'Import',
     'components.form.inputNumber.examples.title': 'Examples',
     'components.form.inputNumber.examples.desc':
-      'Different formatting and layout configurations.',
+      'Use Angular Forms as the canonical contract while keeping optional semantic outputs.',
     'components.form.inputNumber.examples.basic.label': 'Basic',
     'components.form.inputNumber.examples.basic.placeholder': '0-100',
     'components.form.inputNumber.examples.currency.label': 'Currency (USD)',
@@ -86,7 +91,6 @@ export const INPUT_NUMBER_DOC_TEXT = {
     'components.form.inputNumber.inputs.header.type': 'Type',
     'components.form.inputNumber.inputs.header.default': 'Default',
     'components.form.inputNumber.inputs.header.description': 'Description',
-    'components.form.inputNumber.inputs.value.desc': 'Component value.',
     'components.form.inputNumber.inputs.format.desc':
       'Whether the value should be formatted.',
     'components.form.inputNumber.inputs.showButtons.desc':
@@ -114,6 +118,12 @@ export const INPUT_NUMBER_DOC_TEXT = {
       'Minimum fraction digits.',
     'components.form.inputNumber.inputs.maxFractionDigits.desc':
       'Maximum fraction digits.',
+    'components.form.inputNumber.inputs.invalid.desc':
+      'Forces the invalid visual state without replacing Angular Forms.',
+    'components.form.inputNumber.inputs.errorMessage.desc':
+      'Message shown when the control is invalid.',
+    'components.form.inputNumber.inputs.helpText.desc':
+      'Helper text shown when no error is visible.',
     'components.form.inputNumber.outputs.title': 'Events (Outputs)',
     'components.form.inputNumber.outputs.desc':
       'Events emitted by the component.',

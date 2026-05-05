@@ -5,7 +5,7 @@ export const CARD_DOC_TEXT = {
     'components.panel.card.title': 'MagaryCard',
     'components.panel.card.import.title': 'Import',
     'components.panel.card.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.panel.card.basic.title': 'Ejemplo basico',
     'components.panel.card.basic.variant': 'Default',
     'components.panel.card.basic.header': 'Basic Card',
@@ -213,7 +213,7 @@ export const CARD_DOC_TEXT = {
     'components.panel.card.title': 'MagaryCard',
     'components.panel.card.import.title': 'Import',
     'components.panel.card.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.panel.card.basic.title': 'Basic Example',
     'components.panel.card.basic.variant': 'Default',
     'components.panel.card.basic.header': 'Basic Card',

@@ -7,10 +7,11 @@ export const DATEPICKER_DOC_TEXT = {
       'Selector de fecha intuitivo con calendario popup.',
     'components.form.datepicker.import.title': 'Importacion',
     'components.form.datepicker.import.desc':
-      'Importa el modulo en tu componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.form.datepicker.basic.title': 'Uso Basico',
     'components.form.datepicker.basic.desc': 'Seleccion de fecha simple.',
     'components.form.datepicker.basic.label.date': 'Fecha',
+    'components.form.datepicker.basic.label.validation': 'Validacion',
     'components.form.datepicker.basic.placeholder.date': 'Selecciona una fecha',
     'components.form.datepicker.basic.selectedLabel': 'Seleccionado',
     'components.form.datepicker.basic.label.disabled': 'Deshabilitado',
@@ -37,10 +38,24 @@ export const DATEPICKER_DOC_TEXT = {
     'components.form.datepicker.api.header.description': 'Descripcion',
     'components.form.datepicker.api.ngModel.desc':
       'Vincula el valor de la fecha o rango.',
+    'components.form.datepicker.api.inputId.desc':
+      'Id estable del input para labels y formularios.',
+    'components.form.datepicker.api.ariaLabel.desc':
+      'Nombre accesible directo cuando no usas ariaLabelledby.',
+    'components.form.datepicker.api.ariaLabelledby.desc':
+      'Referencia a un label externo para nombrar el control.',
+    'components.form.datepicker.api.ariaDescribedby.desc':
+      'Ids externos que se combinan con helpText/errorMessage.',
     'components.form.datepicker.api.selectionMode.desc': 'Modo de seleccion.',
     'components.form.datepicker.api.minDate.desc': 'Fecha minima permitida.',
     'components.form.datepicker.api.maxDate.desc': 'Fecha maxima permitida.',
     'components.form.datepicker.api.placeholder.desc': 'Texto de ayuda.',
+    'components.form.datepicker.api.invalid.desc':
+      'Representa el estado invalido de Angular Forms.',
+    'components.form.datepicker.api.errorMessage.desc':
+      'Mensaje de error visible cuando el control es invalido.',
+    'components.form.datepicker.api.helpText.desc':
+      'Texto de ayuda visible cuando no hay error.',
     'components.form.datepicker.api.disabled.desc': 'Deshabilita el selector.',
   },
   en: {
@@ -49,10 +64,11 @@ export const DATEPICKER_DOC_TEXT = {
       'Intuitive date picker with popup calendar.',
     'components.form.datepicker.import.title': 'Import',
     'components.form.datepicker.import.desc':
-      'Import the module in your standalone component.',
+      'Import the component in your standalone component.',
     'components.form.datepicker.basic.title': 'Basic Usage',
     'components.form.datepicker.basic.desc': 'Simple date selection.',
     'components.form.datepicker.basic.label.date': 'Date',
+    'components.form.datepicker.basic.label.validation': 'Validation',
     'components.form.datepicker.basic.placeholder.date': 'Select a date',
     'components.form.datepicker.basic.selectedLabel': 'Selected',
     'components.form.datepicker.basic.label.disabled': 'Disabled',
@@ -78,10 +94,24 @@ export const DATEPICKER_DOC_TEXT = {
     'components.form.datepicker.api.header.description': 'Description',
     'components.form.datepicker.api.ngModel.desc':
       'Binds date or range value.',
+    'components.form.datepicker.api.inputId.desc':
+      'Stable input id for labels and forms.',
+    'components.form.datepicker.api.ariaLabel.desc':
+      'Direct accessible name when ariaLabelledby is not used.',
+    'components.form.datepicker.api.ariaLabelledby.desc':
+      'References an external label that names the control.',
+    'components.form.datepicker.api.ariaDescribedby.desc':
+      'External ids combined with helpText/errorMessage.',
     'components.form.datepicker.api.selectionMode.desc': 'Selection mode.',
     'components.form.datepicker.api.minDate.desc': 'Minimum allowed date.',
     'components.form.datepicker.api.maxDate.desc': 'Maximum allowed date.',
     'components.form.datepicker.api.placeholder.desc': 'Helper text.',
+    'components.form.datepicker.api.invalid.desc':
+      'Represents Angular Forms invalid state.',
+    'components.form.datepicker.api.errorMessage.desc':
+      'Visible error message when the control is invalid.',
+    'components.form.datepicker.api.helpText.desc':
+      'Visible help text when there is no error.',
     'components.form.datepicker.api.disabled.desc': 'Disables the picker.',
   },
 } as const satisfies Record<DemoLanguage, Record<string, string>>;

@@ -1,26 +1,26 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  computed,
   ElementRef,
   forwardRef,
+  inject,
+  Injector,
+  input,
   output,
+  Provider,
+  Renderer2,
+  signal,
   viewChild,
   ViewEncapsulation,
-  ChangeDetectionStrategy,
   OnDestroy,
-  Renderer2,
-  ChangeDetectorRef,
-  inject,
-  input,
-  signal,
-  computed,
-  model,
-  Provider,
 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
-  FormsModule,
+  NgControl,
 } from '@angular/forms';
 
 export const SLIDER_VALUE_ACCESSOR: Provider = {
@@ -32,7 +32,7 @@ export const SLIDER_VALUE_ACCESSOR: Provider = {
 @Component({
   selector: 'magary-slider',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
   templateUrl: './slider.html',
   styleUrl: './slider.scss',
   providers: [SLIDER_VALUE_ACCESSOR],
@@ -43,6 +43,7 @@ export const SLIDER_VALUE_ACCESSOR: Provider = {
     '[class.magary-slider-horizontal]': 'orientation() === "horizontal"',
     '[class.magary-slider-vertical]': 'orientation() === "vertical"',
     '[class.magary-disabled]': 'isDisabled()',
+    '[class.magary-invalid]': 'isInvalid()',
   },
 })
 export class MagarySlider implements ControlValueAccessor, OnDestroy {
@@ -53,6 +54,9 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
   range = input<boolean>(false);
   orientation = input<'horizontal' | 'vertical'>('horizontal');
   disabled = input<boolean>(false);
+  invalid = input<boolean>(false);
+  errorMessage = input<string>('');
+  helpText = input<string>('');
   private formDisabled = signal<boolean>(false);
   isDisabled = computed(() => this.disabled() || this.formDisabled());
   style = input<Record<string, unknown> | null>(null);
@@ -68,7 +72,7 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
   sliderHandleStart = viewChild<ElementRef<HTMLElement>>('sliderHandleStart');
   sliderHandleEnd = viewChild<ElementRef<HTMLElement>>('sliderHandleEnd');
 
-  value = model<number | number[] | null>(null);
+  readonly value = signal<number | number[] | null>(null);
 
   // Internal state
   dragging = signal<boolean>(false);
@@ -78,6 +82,12 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
   private renderer = inject(Renderer2);
   private cdr = inject(ChangeDetectorRef);
   private el = inject(ElementRef);
+  private injector = inject(Injector);
+  readonly uniqueId = `magary-slider-${Math.random().toString(36).substring(2, 11)}`;
+  readonly errorMessageId = `${this.uniqueId}-error`;
+  readonly helpMessageId = `${this.uniqueId}-help`;
+  private touched = false;
+  private resolvedNgControl: NgControl | null | undefined;
 
   private dragListener: (() => void) | null = null;
   private upListener: (() => void) | null = null;
@@ -125,6 +135,26 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
   onModelTouched: () => void = () => {};
 
   constructor() {}
+
+  isInvalid(): boolean {
+    return this.invalid() || this.hasControlError();
+  }
+
+  hasVisibleErrorMessage(): boolean {
+    return this.isInvalid() && this.errorMessage().trim().length > 0;
+  }
+
+  describedBy(): string | null {
+    if (this.hasVisibleErrorMessage()) {
+      return this.errorMessageId;
+    }
+
+    if (this.helpText().trim().length > 0) {
+      return this.helpMessageId;
+    }
+
+    return null;
+  }
 
   calculatePos(val: number): number {
     const min = this.min();
@@ -254,12 +284,12 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
 
     event.preventDefault();
     this.updateValue(nextValue, handleIdx, event);
-    this.onModelTouched();
+    this.markAsTouched();
     this.onSlideEnd.emit({ originalEvent: event, value: this.value() });
   }
 
   onHandleBlur(): void {
-    this.onModelTouched();
+    this.markAsTouched();
   }
 
   // Events
@@ -296,13 +326,13 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
     }
 
     this.updateValueFromClientPosition(touch.clientX, touch.clientY, event);
-    this.onModelTouched();
+    this.markAsTouched();
   }
 
   onBarClick(event: MouseEvent) {
     if (this.isDisabled() || this.dragging()) return;
     this.updateValueFromClientPosition(event.clientX, event.clientY, event);
-    this.onModelTouched();
+    this.markAsTouched();
   }
 
   bindDragListeners() {
@@ -394,7 +424,7 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
       this.handleIndex.set(null);
       this.unbindDragListeners();
       this.onSlideEnd.emit({ originalEvent: event, value: this.value() });
-      this.onModelTouched();
+      this.markAsTouched();
     }
   }
 
@@ -417,7 +447,7 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
       this.handleIndex.set(null);
       this.unbindTouchListeners();
       this.onSlideEnd.emit({ originalEvent: event, value: this.value() });
-      this.onModelTouched();
+      this.markAsTouched();
     }
   }
 
@@ -495,6 +525,32 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
 
   setDisabledState(isDisabled: boolean): void {
     this.formDisabled.set(isDisabled);
+  }
+
+  private markAsTouched(): void {
+    if (this.touched) {
+      return;
+    }
+
+    this.touched = true;
+    this.onModelTouched();
+  }
+
+  private hasControlError(): boolean {
+    const control = this.getNgControl()?.control;
+    return !!control && control.invalid && control.touched;
+  }
+
+  private getNgControl(): NgControl | null {
+    if (this.resolvedNgControl !== undefined) {
+      return this.resolvedNgControl;
+    }
+
+    this.resolvedNgControl = this.injector.get(NgControl, null, {
+      self: true,
+      optional: true,
+    });
+    return this.resolvedNgControl;
   }
 
   ngOnDestroy() {

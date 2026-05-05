@@ -17,39 +17,19 @@ import {
   TemplateRef,
   OnInit,
   afterNextRender,
-  NgModule,
   untracked,
   booleanAttribute,
   numberAttribute,
   AfterViewInit,
   model,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, filter, map, throttleTime } from 'rxjs/operators';
-import {
-  LucideAngularModule,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  ChevronDown,
-} from 'lucide-angular';
+import { LucideAngularModule, ChevronLeft, ChevronRight } from 'lucide-angular';
 import { MagaryButton } from '../../Button/button/button';
-
-@NgModule({
-  imports: [
-    LucideAngularModule.pick({
-      ChevronLeft,
-      ChevronRight,
-      ChevronUp,
-      ChevronDown,
-    }),
-  ],
-  exports: [LucideAngularModule],
-})
-export class CarouselIconsModule {}
 
 /**
  * Carousel responsive breakpoint options
@@ -189,7 +169,7 @@ export interface CarouselSlideEvent<T> {
 @Component({
   selector: 'magary-carousel',
   standalone: true,
-  imports: [CommonModule, MagaryButton, CarouselIconsModule],
+  imports: [CommonModule, MagaryButton, LucideAngularModule],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -197,7 +177,7 @@ export interface CarouselSlideEvent<T> {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: MagaryCarouselComponent,
+      useExisting: MagaryCarousel,
       multi: true,
     },
   ],
@@ -237,12 +217,12 @@ export interface CarouselSlideEvent<T> {
     '(keydown)': 'onKeyDown($event)',
   },
 })
-export class MagaryCarouselComponent<T>
+export class MagaryCarousel<T>
   implements OnInit, AfterViewInit, ControlValueAccessor
 {
   private static instanceSequence = 0;
   protected readonly Math = Math;
-  readonly carouselInstanceId = `magary-carousel-${++MagaryCarouselComponent.instanceSequence}`;
+  readonly carouselInstanceId = `magary-carousel-${++MagaryCarousel.instanceSequence}`;
   readonly viewportId = `${this.carouselInstanceId}-viewport`;
   readonly indicatorsId = `${this.carouselInstanceId}-indicators`;
   // ============================================================================
@@ -610,6 +590,8 @@ export class MagaryCarouselComponent<T>
   private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly elementRef = inject(ElementRef);
+  private readonly document = inject(DOCUMENT);
+  private readonly defaultView = this.document.defaultView;
 
   // ============================================================================
   // COMPUTED SIGNALS
@@ -1402,7 +1384,8 @@ export class MagaryCarouselComponent<T>
       return;
     }
 
-    const windowWidth = window.innerWidth;
+    const windowWidth =
+      this.defaultView?.innerWidth ?? Number.POSITIVE_INFINITY;
     const sortedOptions = [...this.responsiveOptions()].sort((a, b) => {
       const bpA =
         typeof a.breakpoint === 'string'
@@ -1560,12 +1543,14 @@ export class MagaryCarouselComponent<T>
     }
 
     // Resize
-    fromEvent(window, 'resize')
-      .pipe(debounceTime(150), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.applyResponsiveOptions();
-        this.update();
-      });
+    if (this.defaultView) {
+      fromEvent(this.defaultView, 'resize')
+        .pipe(debounceTime(150), takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
+          this.applyResponsiveOptions();
+          this.update();
+        });
+    }
   }
 
   private setupTouchEvents(): void {
@@ -1586,8 +1571,8 @@ export class MagaryCarouselComponent<T>
 
     // Touch move
     merge(
-      fromEvent<TouchEvent>(document, 'touchmove', { passive: false }),
-      fromEvent<MouseEvent>(document, 'mousemove'),
+      fromEvent<TouchEvent>(this.document, 'touchmove', { passive: false }),
+      fromEvent<MouseEvent>(this.document, 'mousemove'),
     )
       .pipe(
         filter(() => this._isDragging()),
@@ -1599,8 +1584,8 @@ export class MagaryCarouselComponent<T>
 
     // Touch end
     merge(
-      fromEvent<TouchEvent>(document, 'touchend'),
-      fromEvent<MouseEvent>(document, 'mouseup'),
+      fromEvent<TouchEvent>(this.document, 'touchend'),
+      fromEvent<MouseEvent>(this.document, 'mouseup'),
     )
       .pipe(
         filter(() => this._isDragging()),
@@ -1771,8 +1756,9 @@ export class MagaryCarouselComponent<T>
       }
 
       // Haptic feedback
-      if (this.hapticFeedback() && 'vibrate' in navigator) {
-        navigator.vibrate(10);
+      const navigatorApi = this.defaultView?.navigator;
+      if (this.hapticFeedback() && navigatorApi && 'vibrate' in navigatorApi) {
+        navigatorApi.vibrate(10);
       }
     } else {
       // Snap back to current position
@@ -1880,13 +1866,14 @@ export class MagaryCarouselComponent<T>
 
   private checkReducedMotion(): void {
     if (!this.respectReducedMotion()) return;
+    const view = this.defaultView;
 
-    if (typeof window.matchMedia !== 'function') {
+    if (typeof view?.matchMedia !== 'function') {
       this._reducedMotion.set(false);
       return;
     }
 
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mediaQuery = view.matchMedia('(prefers-reduced-motion: reduce)');
     this._reducedMotion.set(mediaQuery.matches);
 
     // Listen for changes
@@ -1946,7 +1933,12 @@ export class MagaryCarouselComponent<T>
   // ============================================================================
 
   private initHashNavigation(): void {
-    const hash = window.location.hash;
+    const view = this.defaultView;
+    if (!view) {
+      return;
+    }
+
+    const hash = view.location.hash;
     const prefix = this.hashPrefix();
 
     if (hash.startsWith(`#${prefix}`)) {
@@ -1957,10 +1949,10 @@ export class MagaryCarouselComponent<T>
     }
 
     // Listen to hash changes
-    fromEvent(window, 'hashchange')
+    fromEvent(view, 'hashchange')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        const newHash = window.location.hash;
+        const newHash = view.location.hash;
         if (newHash.startsWith(`#${prefix}`)) {
           const slideNum = parseInt(newHash.replace(`#${prefix}`, ''), 10);
           if (!isNaN(slideNum)) {
@@ -1971,13 +1963,18 @@ export class MagaryCarouselComponent<T>
   }
 
   private updateHash(pageIndex: number): void {
+    const view = this.defaultView;
+    if (!view) {
+      return;
+    }
+
     const prefix = this.hashPrefix();
     const newHash = `#${prefix}${pageIndex}`;
 
     if (this.history()) {
-      window.history.pushState(null, '', newHash);
+      view.history.pushState(null, '', newHash);
     } else {
-      window.location.hash = newHash;
+      view.location.hash = newHash;
     }
   }
 

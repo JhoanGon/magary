@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Highlight } from 'ngx-highlightjs';
 import { MagaryButton, MagaryCard } from 'ng-magary';
 import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
+import {
+  EDITORIAL_METADATA,
+  EditorialEntry,
+} from '../../../../generated/editorial-metadata';
 
 type ButtonInputRow = {
   name: string;
@@ -51,9 +55,13 @@ const CODE_EXAMPLES = {
   imports: [CommonModule, MagaryButton, MagaryCard, Highlight],
   templateUrl: './view-button.html',
   styleUrl: './view-button.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewButton {
   readonly i18n = inject(DemoI18nService);
+
+  /** Editorial metadata for MagaryButton, sourced from editorial.json via codegen. */
+  readonly editorialMetadata: EditorialEntry = EDITORIAL_METADATA['MagaryButton'];
 
   readonly importExample = CODE_EXAMPLES.import;
   readonly exampleBasic = CODE_EXAMPLES.basic;

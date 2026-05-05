@@ -35,15 +35,14 @@
             [options]="languageOptions"
             optionLabel="label"
             optionValue="value"
-            [value]="language()"
+            [(ngModel)]="language"
             [ariaLabel]="
               i18n.translateDocs('components.form.segmented.basic.ariaLanguage')
             "
-            (valueChange)="language.set($event)"
           ></magary-segmented>
           <span class="value-pill">
             {{ i18n.translateDocs('components.form.segmented.basic.valueLabel') }}:
-            {{ language() }}
+            {{ language }}
           </span>
         </div>
       </magary-card>
@@ -81,15 +80,14 @@
             [options]="planOptions"
             optionLabel="label"
             optionValue="value"
-            [value]="selectedPlan()"
+            [(ngModel)]="selectedPlan"
             [ariaLabel]="
               i18n.translateDocs('components.form.segmented.object.ariaPlan')
             "
-            (valueChange)="selectedPlan.set($event)"
           ></magary-segmented>
           <span class="value-pill">
             {{ i18n.translateDocs('components.form.segmented.object.planLabel') }}:
-            {{ selectedPlan() }}
+            {{ selectedPlan }}
           </span>
         </div>
       </magary-card>
@@ -116,50 +114,46 @@
             [options]="languageOptions"
             optionLabel="label"
             optionValue="value"
-            [value]="language()"
+            [(ngModel)]="smallLanguage"
             [ariaLabel]="
               i18n.translateDocs('components.form.segmented.sizes.ariaSmall')
             "
             size="small"
-            (valueChange)="language.set($event)"
           ></magary-segmented>
 
           <magary-segmented
             [options]="languageOptions"
             optionLabel="label"
             optionValue="value"
-            [value]="language()"
+            [(ngModel)]="normalLanguage"
             [ariaLabel]="
               i18n.translateDocs('components.form.segmented.sizes.ariaNormal')
             "
             size="normal"
-            (valueChange)="language.set($event)"
           ></magary-segmented>
 
           <magary-segmented
             [options]="languageOptions"
             optionLabel="label"
             optionValue="value"
-            [value]="language()"
+            [(ngModel)]="largeLanguage"
             [ariaLabel]="
               i18n.translateDocs('components.form.segmented.sizes.ariaLarge')
             "
             size="large"
-            (valueChange)="language.set($event)"
           ></magary-segmented>
 
           <magary-segmented
             [options]="planOptions"
             optionLabel="label"
             optionValue="value"
-            [value]="selectedPlan()"
+            [(ngModel)]="selectedPlan"
             [ariaLabel]="
               i18n.translateDocs(
                 'components.form.segmented.sizes.ariaPlansFullWidth'
               )
             "
             [fullWidth]="true"
-            (valueChange)="selectedPlan.set($event)"
           ></magary-segmented>
         </div>
       </magary-card>
@@ -250,10 +244,12 @@
               <td>{{ i18n.translateDocs('components.form.segmented.api.options.desc') }}</td>
             </tr>
             <tr>
-              <td><code>value</code></td>
-              <td><code>model&lt;unknown&gt;</code></td>
-              <td><code>null</code></td>
-              <td>{{ i18n.translateDocs('components.form.segmented.api.value.desc') }}</td>
+              <td><code>compareWith</code></td>
+              <td><code>(left, right) =&gt; boolean</code></td>
+              <td><code>Object.is</code></td>
+              <td>
+                {{ i18n.translateDocs('components.form.segmented.api.compareWith.desc') }}
+              </td>
             </tr>
             <tr>
               <td><code>optionLabel</code></td>

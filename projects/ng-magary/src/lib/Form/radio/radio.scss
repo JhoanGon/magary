@@ -6,6 +6,7 @@
   --radio-border-hover: var(--primary-400, #38bdf8);
   --radio-bg: var(--surface-0, #ffffff);
   --radio-active: var(--primary-500, #06b6d4);
+  --radio-error: var(--danger-500, #ef4444);
   --radio-focus-ring: color-mix(in srgb, var(--radio-active) 22%, transparent);
   --radio-text: var(--text-primary, #0f172a);
 }
@@ -51,6 +52,10 @@
   &.focused {
     box-shadow: 0 0 0 3px var(--radio-focus-ring);
     border-color: var(--radio-active);
+  }
+
+  &.invalid {
+    border-color: var(--radio-error);
   }
 }
 

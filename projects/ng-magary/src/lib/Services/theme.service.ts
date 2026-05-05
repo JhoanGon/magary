@@ -1,5 +1,5 @@
 import { Injectable, signal, effect, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 export type Theme = 'light' | 'dark' | 'purple' | 'green' | 'neo' | 'midnight' | 'cyberpunk' | 'cotton' | 'liquid';
 const SUPPORTED_THEMES: Theme[] = ['light', 'dark', 'purple', 'green', 'neo', 'midnight', 'cyberpunk', 'cotton', 'liquid'];
@@ -9,6 +9,7 @@ const SUPPORTED_THEMES: Theme[] = ['light', 'dark', 'purple', 'green', 'neo', 'm
 })
 export class MagaryThemeService {
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
 
   // Signal to track current theme
   readonly currentTheme = signal<Theme>('light');
@@ -24,7 +25,7 @@ export class MagaryThemeService {
       if (isPlatformBrowser(this.platformId)) {
         this.applyTheme(theme);
         try {
-          localStorage.setItem('magary-theme', theme);
+          this.document.defaultView?.localStorage?.setItem('magary-theme', theme);
         } catch {
           // Ignore storage access errors (private mode / blocked storage)
         }
@@ -33,9 +34,11 @@ export class MagaryThemeService {
   }
 
   private initializeTheme() {
+    const view = this.document.defaultView;
+
     // 1. Check local storage
     try {
-      const savedTheme = localStorage.getItem('magary-theme');
+      const savedTheme = view?.localStorage?.getItem('magary-theme') ?? null;
       if (this.isTheme(savedTheme)) {
         this.currentTheme.set(savedTheme);
         return;
@@ -45,13 +48,13 @@ export class MagaryThemeService {
     }
 
     // 2. Check system preference
-    const prefersDark = window.matchMedia?.('(prefers-color-scheme: dark)')
-      .matches;
+    const prefersDark =
+      view?.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
     this.currentTheme.set(prefersDark ? 'dark' : 'light');
   }
 
   private applyTheme(theme: Theme) {
-    const body = document.body;
+    const body = this.document.body;
     body.setAttribute('data-theme', theme);
   }
 

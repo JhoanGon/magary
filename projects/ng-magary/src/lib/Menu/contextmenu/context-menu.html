@@ -1,6 +1,6 @@
 <div
   #container
-  [ngClass]="containerClass()"
+  [class]="containerClass()"
   [class.magary-contextmenu-visible]="visible()"
   [style.left.px]="x()"
   [style.top.px]="y()"
@@ -10,7 +10,7 @@
     @for (item of processedModel(); track item.label) {
       <li
         class="magary-menuitem"
-        [ngClass]="{
+        [class]="{
           'magary-menuitem-active': item.expanded,
           'magary-menu-separator': item.separator,
           'magary-disabled': item.disabled,
@@ -68,7 +68,7 @@
   @for (child of items; track child.label) {
     <li
       class="magary-menuitem"
-      [ngClass]="{
+      [class]="{
         'magary-menuitem-active': child.expanded,
         'magary-menu-separator': child.separator,
         'magary-disabled': child.disabled,

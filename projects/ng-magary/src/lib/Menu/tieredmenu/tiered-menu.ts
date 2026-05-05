@@ -3,7 +3,6 @@ import {
   Component,
   Directive,
   ElementRef,
-  HostListener,
   OnDestroy,
   Renderer2,
   ViewChild,
@@ -23,6 +22,9 @@ import { MenuItem } from '../api/menu.interface';
 @Directive({
   selector: '[appTieredMenuItem]',
   standalone: true,
+  host: {
+    '(mouseenter)': 'onMouseEnter()',
+  },
 })
 export class TieredMenuItemDirective {
   item = input.required<MenuItem>();
@@ -33,7 +35,6 @@ export class TieredMenuItemDirective {
     private renderer: Renderer2,
   ) {}
 
-  @HostListener('mouseenter')
   onMouseEnter() {
     if (this.item().disabled) return;
     this.parent().onItemHover(this.item());

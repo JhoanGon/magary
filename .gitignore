@@ -50,7 +50,16 @@ yarn-error.log
 .cursorrules
 .cursor/
 
+# AI agent skills (local only)
+.agents/
+.claude/
+skills-lock.json
+
+# Generated type definitions
+tools/ci/api-contract-lib.d.ts
+
 # Internal planning/process docs (local only)
+.atl/
 docs/API_CONTRACT_BASELINE.md
 docs/API_CONTRACT_RULES.md
 docs/CONSUMO_MASIVO_ROADMAP.md

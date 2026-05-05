@@ -34,9 +34,13 @@ export interface MenuItem {
   separator?: boolean;
   id?: string;
   badge?: string;
+  badgeValue?: string | number;
   badgeSeverity?: MenuBadgeSeverity;
   iconSize?: number;
   styleClass?: string;
   iconClass?: string;
+  emoji?: string;
+  active?: boolean;
+  group?: string;
   metadata?: unknown;
 }

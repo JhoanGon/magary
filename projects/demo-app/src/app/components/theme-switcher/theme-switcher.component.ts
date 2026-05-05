@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryThemeService, Theme } from 'ng-magary';
 import { LucideAngularModule } from 'lucide-angular';
@@ -76,6 +76,7 @@ import { LucideAngularModule } from 'lucide-angular';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThemeSwitcherComponent {
   themeService = inject(MagaryThemeService);

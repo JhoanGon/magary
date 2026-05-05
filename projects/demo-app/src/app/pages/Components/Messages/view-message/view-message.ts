@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MagaryButton,
@@ -69,6 +69,7 @@ const CODE_EXAMPLES = {
   ],
   templateUrl: './view-message.html',
   styleUrl: './view-message.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewMessage {
   readonly i18n = inject(DemoI18nService);

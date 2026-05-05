@@ -7,7 +7,7 @@ export const DIALOG_DOC_TEXT = {
       'Componente de superposicion premium con soporte para glassmorphism, animaciones y control total.',
     'components.overlay.dialog.import.title': 'Import',
     'components.overlay.dialog.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.overlay.dialog.basic.title': 'Ejemplo Basico',
     'components.overlay.dialog.basic.cardTitle': 'Basic Dialog',
     'components.overlay.dialog.basic.button': 'Show Basic Dialog',
@@ -119,7 +119,7 @@ export const DIALOG_DOC_TEXT = {
       'Premium overlay component with support for glassmorphism, animations, and full control.',
     'components.overlay.dialog.import.title': 'Import',
     'components.overlay.dialog.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.overlay.dialog.basic.title': 'Basic Example',
     'components.overlay.dialog.basic.cardTitle': 'Basic Dialog',
     'components.overlay.dialog.basic.button': 'Show Basic Dialog',

@@ -98,11 +98,20 @@
         <div class="sidebar-shell">
           <magary-sidebar
             [menu]="menuDemo"
+            [layoutMode]="'rail-labeled'"
+            [menuFilters]="menuFiltersDemo"
+            [activeMenuFilter]="activeMenuFilter"
+            [showMenuFilters]="true"
+            [menuFilterLabel]="'Menu groups'"
             [menuTitle]="t('components.menu.sidebar.menuTitle.navigation')"
             [showLogo]="true"
             [logoSrc]="'assets/magary_logo.png'"
             [appTitle]="t('components.menu.sidebar.menuTitle.single')"
             [appTitleStyle]="appTitleStyle"
+            [sidebarWidth]="'132px'"
+            [sidebarBorder]="'1px solid var(--surface-300)'"
+            [sidebarShadow]="'none'"
+            [titleFontStyle]="'normal'"
             [collapsible]="false"
             [showToggle]="false"
             [showBrandLogo]="true"
@@ -111,14 +120,22 @@
             [showUserSection]="false"
             [menuBackgroundColor]="'var(--surface-200)'"
             [menuHoverColor]="'var(--surface-400)'"
+            (menuItemClick)="onSidebarMenuItemClick($event)"
+            (activeMenuFilterChange)="onActiveMenuFilterChange($event)"
           ></magary-sidebar>
           <div class="shell-content">
-            <h3>{{ t('components.menu.sidebar.menu.shell.title') }}</h3>
-            <p>{{ t('components.menu.sidebar.menu.shell.desc') }}</p>
+            <div class="shell-selection">
+              <span class="shell-selection-label">
+                {{ t('components.menu.sidebar.menu.shell.selected') }}
+              </span>
+              <strong>{{ selectedMenuItemLabel }}</strong>
+            </div>
+            <h3>{{ t(selectedMenuPreview.titleKey) }}</h3>
+            <p>{{ t(selectedMenuPreview.descriptionKey) }}</p>
             <ul class="content-list">
-              <li>{{ t('components.menu.sidebar.menu.shell.item1') }}</li>
-              <li>{{ t('components.menu.sidebar.menu.shell.item2') }}</li>
-              <li>{{ t('components.menu.sidebar.menu.shell.item3') }}</li>
+              @for (item of selectedMenuPreview.items; track item) {
+                <li>{{ t(item) }}</li>
+              }
             </ul>
           </div>
         </div>
@@ -161,7 +178,7 @@
       <div class="preview-scroll">
         <div class="sidebar-shell">
           <magary-sidebar
-            [menu]="menuDemo"
+            [menu]="footerMenuDemo"
             [menuTitle]="t('components.menu.sidebar.menuTitle.account')"
             [showLogo]="true"
             [logoSrc]="'assets/magary_logo.png'"

@@ -1,6 +1,23 @@
 {
   "name": "ng-magary",
   "version": "0.0.23",
+  "description": "Standalone-first Angular UI library with a curated frozen root API for Magary components, services, and public types.",
+  "keywords": [
+    "angular",
+    "standalone",
+    "ui",
+    "components",
+    "design-system",
+    "magary"
+  ],
+  "homepage": "https://magary.pages.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JhoanGon/magary.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JhoanGon/magary/issues"
+  },
   "license": "MIT",
   "peerDependencies": {
     "lucide-angular": ">=0.469.0 <1",

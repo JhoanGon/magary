@@ -1,11 +1,11 @@
-<div [ngClass]="containerClasses()" [ngStyle]="triggerStyles()">
+<div [class]="containerClasses()" [style]="triggerStyles()">
   @if (showMask() && isOpen()) {
     <div class="speed-dial-mask" (click)="closeMask()" aria-hidden="true"></div>
   }
   <ul
     class="speed-dial-items"
     [attr.data-direction]="direction()"
-    [ngStyle]="itemsStyles()"
+    [style]="itemsStyles()"
     role="menu"
     [attr.aria-expanded]="isOpen()"
     [attr.aria-label]="ariaLabel()"

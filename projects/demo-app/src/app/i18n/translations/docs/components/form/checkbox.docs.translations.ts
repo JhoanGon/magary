@@ -7,11 +7,17 @@ export const CHECKBOX_DOC_TEXT = {
       'Componente de seleccion binaria con soporte para estados, colores y animaciones personalizadas.',
     'components.form.checkbox.import.title': 'Import',
     'components.form.checkbox.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.form.checkbox.basic.title': 'Ejemplo Basico',
     'components.form.checkbox.basic.demoTitle': 'Default',
     'components.form.checkbox.basic.acceptTerms': 'Aceptar terminos',
     'components.form.checkbox.basic.valueLabel': 'Valor',
+    'components.form.checkbox.forms.title': 'Integracion con Forms',
+    'components.form.checkbox.forms.desc':
+      'El checkbox usa ControlValueAccessor como contrato unico de formularios.',
+    'components.form.checkbox.forms.demoTitle': 'Reactive Forms',
+    'components.form.checkbox.forms.errorMessage': 'Debes aceptar los terminos',
+    'components.form.checkbox.forms.helpText': 'Requerido para continuar',
     'components.form.checkbox.states.title': 'Estados',
     'components.form.checkbox.states.desc':
       'Diferentes estados interactivos del componente.',
@@ -33,8 +39,8 @@ export const CHECKBOX_DOC_TEXT = {
     'components.form.checkbox.api.header.type': 'Tipo',
     'components.form.checkbox.api.header.default': 'Default',
     'components.form.checkbox.api.header.description': 'Descripcion',
-    'components.form.checkbox.api.checked.desc':
-      'Valor del checkbox (two-way binding).',
+    'components.form.checkbox.api.forms.desc':
+      'Soporta ngModel, formControl y formControlName mediante ControlValueAccessor.',
     'components.form.checkbox.api.label.desc':
       'Texto a mostrar junto al checkbox.',
     'components.form.checkbox.api.disabled.desc': 'Deshabilita la interaccion.',
@@ -42,6 +48,12 @@ export const CHECKBOX_DOC_TEXT = {
       'Color semantico del componente.',
     'components.form.checkbox.api.required.desc':
       'Marca el campo como requerido.',
+    'components.form.checkbox.api.invalid.desc':
+      'Fuerza el estado visual invalido sin reemplazar Angular Forms.',
+    'components.form.checkbox.api.errorMessage.desc':
+      'Mensaje de error mostrado cuando el control esta invalido.',
+    'components.form.checkbox.api.helpText.desc':
+      'Texto de apoyo visible cuando no hay error.',
     'components.form.checkbox.api.change.desc':
       'Evento emitido al cambiar el valor.',
     'components.form.checkbox.a11y.title': 'Accesibilidad',
@@ -61,11 +73,17 @@ export const CHECKBOX_DOC_TEXT = {
       'Binary selection component with support for states, colors, and custom animations.',
     'components.form.checkbox.import.title': 'Import',
     'components.form.checkbox.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.form.checkbox.basic.title': 'Basic Example',
     'components.form.checkbox.basic.demoTitle': 'Default',
     'components.form.checkbox.basic.acceptTerms': 'Accept terms',
     'components.form.checkbox.basic.valueLabel': 'Value',
+    'components.form.checkbox.forms.title': 'Forms Integration',
+    'components.form.checkbox.forms.desc':
+      'The checkbox uses ControlValueAccessor as its single forms contract.',
+    'components.form.checkbox.forms.demoTitle': 'Reactive Forms',
+    'components.form.checkbox.forms.errorMessage': 'You must accept the terms',
+    'components.form.checkbox.forms.helpText': 'Required to continue',
     'components.form.checkbox.states.title': 'States',
     'components.form.checkbox.states.desc':
       'Different interactive states for the component.',
@@ -86,8 +104,8 @@ export const CHECKBOX_DOC_TEXT = {
     'components.form.checkbox.api.header.type': 'Type',
     'components.form.checkbox.api.header.default': 'Default',
     'components.form.checkbox.api.header.description': 'Description',
-    'components.form.checkbox.api.checked.desc':
-      'Checkbox value (two-way binding).',
+    'components.form.checkbox.api.forms.desc':
+      'Supports ngModel, formControl, and formControlName through ControlValueAccessor.',
     'components.form.checkbox.api.label.desc':
       'Text shown next to the checkbox.',
     'components.form.checkbox.api.disabled.desc': 'Disables interaction.',
@@ -95,6 +113,12 @@ export const CHECKBOX_DOC_TEXT = {
       'Semantic color of the component.',
     'components.form.checkbox.api.required.desc':
       'Marks the field as required.',
+    'components.form.checkbox.api.invalid.desc':
+      'Forces the invalid visual state without replacing Angular Forms.',
+    'components.form.checkbox.api.errorMessage.desc':
+      'Error message shown when the control is invalid.',
+    'components.form.checkbox.api.helpText.desc':
+      'Supporting text shown when there is no error.',
     'components.form.checkbox.api.change.desc':
       'Event emitted when the value changes.',
     'components.form.checkbox.a11y.title': 'Accessibility',

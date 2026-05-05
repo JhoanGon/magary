@@ -9,69 +9,118 @@
   <lucide-icon name="menu"></lucide-icon>
 </button>
 @if (isMobileOpen()) {
-  <div class="sidebar-backdrop" (click)="closeMobileSidebar()"></div>
+  <div
+    class="sidebar-backdrop"
+    aria-hidden="true"
+    (click)="closeMobileSidebar()"
+  ></div>
 }
 <aside
   #sidebarElement
   [id]="sidebarId"
-  class="sidebar"
-  [class.open]="isMobileOpen()"
-  [class.collapsed]="isCollapsed()"
+  [class]="getSidebarClasses()"
+  [style]="rootStyles()"
   role="complementary"
   [attr.aria-label]="navigationLabel()"
   tabindex="-1"
   (keydown)="onSidebarKeydown($event)"
 >
-  <div class="sidebar-header" [class.collapsed-header]="isCollapsed()">
+  <div
+    class="sidebar-header"
+    [class]="[headerStyleClass(), isCollapsed() ? 'collapsed-header' : '']"
+    [style]="headerStyle()"
+  >
+    <ng-content select="[sidebar-header-start]"></ng-content>
     @if (isCollapsed()) {
       @if (showToggle() && collapsible()) {
         <button
           class="header-toggle collapsed"
           type="button"
-          aria-label="Expandir sidebar"
+          [attr.aria-label]="expandButtonLabel()"
           (click)="toggleCollapse()"
         >
           <lucide-icon name="menu"></lucide-icon>
         </button>
       } @else {
         @if (showLogo()) {
-          <img
-            [ngSrc]="logoSrc()"
-            alt="Logo"
-            class="logo collapsed-logo"
-            routerLink="/"
-            style="cursor: pointer"
-            [width]="logoWidth()"
-            [height]="logoHeight()"
-            priority
-          />
+          @if (hasBrandRoute()) {
+            <a
+              class="collapsed-brand-link"
+              [routerLink]="brandRoute()"
+              [attr.aria-label]="appTitle()"
+            >
+              <img
+                [ngSrc]="logoSrc()"
+                [alt]="logoAlt()"
+                class="logo collapsed-logo"
+                [width]="logoWidth()"
+                [height]="logoHeight()"
+                priority
+              />
+            </a>
+          } @else {
+            <img
+              [ngSrc]="logoSrc()"
+              [alt]="logoAlt()"
+              class="logo collapsed-logo"
+              [width]="logoWidth()"
+              [height]="logoHeight()"
+              priority
+            />
+          }
         }
       }
     } @else {
-      <div class="header-brand" routerLink="/" style="cursor: pointer">
-        @if (showLogo()) {
-          <img
-            [ngSrc]="logoSrc()"
-            alt="Logo"
-            class="logo"
-            [width]="logoWidth()"
-            [height]="logoHeight()"
-            priority
-          />
-        }
-        <span
-          class="title"
-          [ngClass]="appTitleClass()"
-          [ngStyle]="appTitleStyle()"
+      @if (hasBrandRoute()) {
+        <a
+          class="header-brand header-brand-link"
+          [routerLink]="brandRoute()"
+          [attr.aria-label]="appTitle()"
         >
-          {{ appTitle() }}
-        </span>
-      </div>
+          @if (showLogo()) {
+            <img
+              [ngSrc]="logoSrc()"
+              [alt]="logoAlt()"
+              class="logo"
+              [width]="logoWidth()"
+              [height]="logoHeight()"
+              priority
+            />
+          }
+          <span
+            class="title"
+            [class]="appTitleClass()"
+            [style]="appTitleStyle()"
+          >
+            {{ appTitle() }}
+          </span>
+        </a>
+      } @else {
+        <div class="header-brand">
+          @if (showLogo()) {
+            <img
+              [ngSrc]="logoSrc()"
+              [alt]="logoAlt()"
+              class="logo"
+              [width]="logoWidth()"
+              [height]="logoHeight()"
+              priority
+            />
+          }
+          <span
+            class="title"
+            [class]="appTitleClass()"
+            [style]="appTitleStyle()"
+          >
+            {{ appTitle() }}
+          </span>
+        </div>
+      }
       @if (showToggle() && collapsible()) {
         <button
           class="header-toggle expanded"
           type="button"
-          aria-label="Colapsar sidebar"
+          [attr.aria-label]="collapseButtonLabel()"
           (click)="toggleCollapse()"
         >
           <lucide-icon name="chevron-left"></lucide-icon>
@@ -87,13 +136,18 @@
     >
       <lucide-icon name="x"></lucide-icon>
     </button>
+    <ng-content select="[sidebar-header-end]"></ng-content>
   </div>
-  <div class="sidebar-content">
+  <div
+    class="sidebar-content"
+    [class]="contentStyleClass()"
+    [style]="contentStyle()"
+  >
     @if (showBrandLogo() && brandLogoPosition() === "top") {
       <div class="brand-logo-container top" [class.collapsed]="isCollapsed()">
         <img
           [ngSrc]="brandLogoSrc()"
-          alt="Brand Logo"
+          [alt]="brandLogoAlt()"
           class="brand-logo"
           [width]="brandLogoWidth()"
           [height]="brandLogoHeight()"
@@ -101,9 +155,24 @@
         />
       </div>
     }
+    <ng-content select="[sidebar-content-top]"></ng-content>
+    @if (shouldShowMenuFilterControl()) {
+      <div class="menu-filter-control">
+        <magary-segmented
+          [options]="menuFilters()"
+          optionLabel="label"
+          optionValue="value"
+          [ngModel]="activeMenuFilter()"
+          [ariaLabel]="menuFilterLabel()"
+          size="small"
+          [fullWidth]="true"
+          (ngModelChange)="onMenuFilterChange($event)"
+        ></magary-segmented>
+      </div>
+    }
     <nav class="menu-container" [attr.aria-label]="navigationLabel()">
-      @if (sections().length > 0) {
-        @for (section of sections(); track $index) {
+      @if (filteredSections().length > 0) {
+        @for (section of filteredSections(); track $index) {
           <magary-panelmenu
             [title]="section.title"
             [icon]="section.icon || ''"
@@ -112,29 +181,62 @@
             [backgroundColor]="section.backgroundColor || menuBackgroundColor()"
             [textColor]="section.textColor || menuTextColor()"
             [hoverColor]="section.hoverColor || menuHoverColor()"
-            [borderRadius]="'0.5rem'"
-            [shadow]="2"
+            [borderRadius]="menuPanelBorderRadius()"
+            [shadow]="menuPanelShadow()"
             [width]="'100%'"
             [collapsed]="isCollapsed()"
+            [styleClass]="panelMenuClasses()"
+            [style]="menuPanelStyle()"
+            [mode]="panelMenuMode()"
+            [navigationLabel]="section.title"
+            [showHeader]="showPanelHeader()"
+            [showItemLabels]="showPanelLabels()"
+            [gridColumns]="gridColumns()"
+            [activeIndicator]="menuActiveIndicator()"
+            (menuToggle)="onMenuToggle($event, section.title)"
+            (itemClick)="onMenuItemClick($event, section.title)"
+            (itemExpand)="onMenuItemExpand($event, section.title)"
             (expandSidebar)="openSidebar()"
           />
         }
       }
-      @if (menu().length > 0 && sections().length === 0) {
+      @if (filteredMenu().length > 0 && filteredSections().length === 0) {
         <magary-panelmenu
           [title]="menuTitle()"
-          [items]="menu()"
+          [items]="filteredMenu()"
           [backgroundColor]="menuBackgroundColor()"
           [textColor]="menuTextColor()"
           [hoverColor]="menuHoverColor()"
-          [borderRadius]="'0.5rem'"
-          [shadow]="2"
+          [borderRadius]="menuPanelBorderRadius()"
+          [shadow]="menuPanelShadow()"
           [width]="'100%'"
           [collapsed]="isCollapsed()"
+          [styleClass]="panelMenuClasses()"
+          [style]="menuPanelStyle()"
+          [mode]="panelMenuMode()"
+          [navigationLabel]="menuTitle()"
+          [showHeader]="showPanelHeader()"
+          [showItemLabels]="showPanelLabels()"
+          [gridColumns]="gridColumns()"
+          [activeIndicator]="menuActiveIndicator()"
+          (menuToggle)="onMenuToggle($event)"
+          (itemClick)="onMenuItemClick($event)"
+          (itemExpand)="onMenuItemExpand($event)"
           (expandSidebar)="openSidebar()"
         />
       }
+      @if (shouldShowEmptyState()) {
+        <div class="menu-empty-state" aria-live="polite">
+          <div class="menu-empty-icon">
+            <lucide-icon [name]="emptyStateIcon()"></lucide-icon>
+          </div>
+          <h4>{{ emptyStateTitle() }}</h4>
+          <p>{{ emptyStateDescription() }}</p>
+          <ng-content select="[sidebar-empty-action]"></ng-content>
+        </div>
+      }
     </nav>
+    <ng-content select="[sidebar-content-bottom]"></ng-content>
     @if (showBrandLogo() && brandLogoPosition() === "bottom") {
       <div
         class="brand-logo-container bottom"
@@ -142,7 +244,7 @@
       >
         <img
           [ngSrc]="brandLogoSrc()"
-          alt="Brand Logo"
+          [alt]="brandLogoAlt()"
           class="brand-logo"
           [width]="brandLogoWidth()"
           [height]="brandLogoHeight()"
@@ -151,7 +253,11 @@
       </div>
     }
     @if (shouldRenderUserSection()) {
-      <div class="user-section">
+      <div
+        class="user-section"
+        [class]="userSectionStyleClass()"
+        [style]="userSectionStyle()"
+      >
         @if (shouldShowUserInfo()) {
           <div class="user-info">
             @if (showUserAvatar()) {
@@ -205,24 +311,25 @@
             <button
               class="logout-button"
               type="button"
-              aria-label="Cerrar sesion"
+              [attr.aria-label]="logoutLabel()"
               (click)="logout()"
             >
               <lucide-icon name="log-out"></lucide-icon>
-              Cerrar sesion
+              {{ logoutLabel() }}
             </button>
           } @else {
             <button
               class="logout-button"
               type="button"
-              aria-label="Cerrar sesion"
+              [attr.aria-label]="logoutLabel()"
               (click)="logout()"
-              title="Cerrar sesion"
+              [attr.title]="logoutLabel()"
             >
               <lucide-icon name="log-out"></lucide-icon>
             </button>
           }
         }
+        <ng-content select="[sidebar-user-extra]"></ng-content>
       </div>
     }
   </div>
@@ -230,7 +337,7 @@
     <div class="brand-logo-container center" [class.collapsed]="isCollapsed()">
       <img
         [ngSrc]="brandLogoSrc()"
-        alt="Brand Logo"
+        [alt]="brandLogoAlt()"
         class="brand-logo"
         [width]="brandLogoWidth()"
         [height]="brandLogoHeight()"

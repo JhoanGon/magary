@@ -10,6 +10,7 @@ export default [
       '**/dist/**',
       '**/node_modules/**',
       '**/.angular/**',
+      '**/out-tsc/**',
       'projects/magary-mcp/**',
       'e2e/playwright/report/**',
       'e2e/playwright/test-results/**',
@@ -57,7 +58,7 @@ export default [
     },
     rules: {
       ...angularTemplate.configs.recommended.rules,
-      '@angular-eslint/template/prefer-control-flow': 'off',
+      '@angular-eslint/template/prefer-control-flow': 'error',
     },
   },
   {

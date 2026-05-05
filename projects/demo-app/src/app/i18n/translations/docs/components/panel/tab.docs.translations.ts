@@ -5,7 +5,7 @@ export const TAB_DOC_TEXT = {
     'components.panel.tab.title': 'MagaryTabs',
     'components.panel.tab.import.title': 'Import',
     'components.panel.tab.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.panel.tab.basic.title': 'Ejemplo basico',
     'components.panel.tab.basic.tab1': 'Inicio',
     'components.panel.tab.basic.tab1Heading': 'Bienvenido',
@@ -76,7 +76,7 @@ export const TAB_DOC_TEXT = {
     'components.panel.tab.title': 'MagaryTabs',
     'components.panel.tab.import.title': 'Import',
     'components.panel.tab.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.panel.tab.basic.title': 'Basic Example',
     'components.panel.tab.basic.tab1': 'Home',
     'components.panel.tab.basic.tab1Heading': 'Welcome',

@@ -28,7 +28,7 @@
               {{ i18n.translateDocs('components.form.inputNumber.examples.basic.label') }}
             </label>
             <magary-input-number
-              [(value)]="val1"
+              [(ngModel)]="val1"
               mode="decimal"
               [showButtons]="true"
               inputId="minmax"
@@ -51,7 +51,7 @@
               }}
             </label>
             <magary-input-number
-              [(value)]="val3"
+              [(ngModel)]="val3"
               mode="currency"
               currency="USD"
               locale="en-US"
@@ -72,7 +72,7 @@
               }}
             </label>
             <magary-input-number
-              [(value)]="val9"
+              [(ngModel)]="val9"
               [showButtons]="true"
               buttonLayout="horizontal"
               inputId="horizontal"

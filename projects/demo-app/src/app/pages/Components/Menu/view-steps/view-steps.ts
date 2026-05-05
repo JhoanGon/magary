@@ -197,24 +197,24 @@ prev() {
 <magary-steps [model]="items" [activeIndex]="activeIndex" [readonly]="true"></magary-steps>
 
 <div class="step-content p-4 border-1 surface-border border-round mt-3">
-    <ng-container [ngSwitch]="activeIndex">
-        <div *ngSwitchCase="0">
+    @switch (activeIndex) {
+        @case (0) {
             <h3>Personal Information</h3>
             <p>Enter your personal details here...</p>
-        </div>
-        <div *ngSwitchCase="1">
+        }
+        @case (1) {
             <h3>Seat Selection</h3>
             <p>Choose your preferred seat...</p>
-        </div>
-        <div *ngSwitchCase="2">
+        }
+        @case (2) {
             <h3>Payment</h3>
             <p>Enter payment information...</p>
-        </div>
-        <div *ngSwitchCase="3">
+        }
+        @case (3) {
             <h3>Confirmation</h3>
             <p>Review and confirm your booking...</p>
-        </div>
-    </ng-container>
+        }
+    }
 </div>
 
 <div class="flex gap-2 mt-3 justify-content-end">

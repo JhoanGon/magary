@@ -40,33 +40,38 @@ export class ViewRadio {
     ];
   }
 
-  importRef = `import { MagaryRadioButton } from 'ng-magary';`;
+  importRef = `import { MagaryRadioButton, MagaryRadioGroup } from 'ng-magary';`;
 
-  basicHTML = `<magary-radio name="city" value="NY" label="New York" [(ngModel)]="city"></magary-radio>
-<magary-radio name="city" value="LDN" label="London" [(ngModel)]="city"></magary-radio>
-
-<!-- Disabled -->
-<magary-radio
-  name="city"
-  value="PAR"
-  label="Paris (Disabled)"
-  disabled>
-</magary-radio>`;
-
-  basicTS = `city: string | null = null;`;
-
-  groupHTML = `<magary-radio-group
+  recommendedHTML = `<magary-radio-group
   [options]="paymentOptions"
   [(ngModel)]="paymentMethod"
   name="payment"
-  layout="horizontal">
-</magary-radio-group>`;
+  layout="horizontal"
+  optionLabel="label"
+  optionValue="value"
+  optionDisabled="disabled"
+></magary-radio-group>`;
 
-  groupTS = `paymentMethod = 'paypal';
+  recommendedTS = `paymentMethod = 'paypal';
 
 paymentOptions = [
   { label: 'Credit Card', value: 'cc' },
   { label: 'PayPal', value: 'paypal' },
-  { label: 'Bitcoin', value: 'btc' }
+  { label: 'Bitcoin', value: 'btc', disabled: true }
 ];`;
+
+  primitiveHTML = `<magary-radio
+  name="city"
+  value="NY"
+  label="New York"
+  [(ngModel)]="city"
+></magary-radio>
+<magary-radio
+  name="city"
+  value="LDN"
+  label="London"
+  [(ngModel)]="city"
+></magary-radio>`;
+
+  primitiveTS = `city: string | null = null;`;
 }

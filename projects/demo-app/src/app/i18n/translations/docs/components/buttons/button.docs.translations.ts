@@ -7,7 +7,7 @@ export const BUTTON_DOC_TEXT = {
       'Componente de boton versatil y personalizable.',
     'components.buttons.button.import.title': 'Import',
     'components.buttons.button.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.buttons.button.basic.title': 'Ejemplo Basico',
     'components.buttons.button.basic.cardTitle': 'Default',
     'components.buttons.button.basic.label.button': 'Button',
@@ -105,7 +105,7 @@ export const BUTTON_DOC_TEXT = {
       'Versatile and customizable button component.',
     'components.buttons.button.import.title': 'Import',
     'components.buttons.button.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.buttons.button.basic.title': 'Basic Example',
     'components.buttons.button.basic.cardTitle': 'Default',
     'components.buttons.button.basic.label.button': 'Button',

@@ -7,7 +7,7 @@ export const GRID_DOC_TEXT = {
       'Sistema de layout dinamico Drag & Drop impulsado por Gridstack.js. Crea dashboards, galerias y paneles interactivos.',
     'components.grid.grid.import.title': 'Importacion',
     'components.grid.grid.import.desc':
-      'Importa el modulo en tu componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.grid.grid.basic.title': 'Uso Basico',
     'components.grid.grid.basic.desc':
       'Grid simple con widgets estaticos o bloqueados.',
@@ -105,7 +105,7 @@ export const GRID_DOC_TEXT = {
       'Dynamic Drag & Drop layout system powered by Gridstack.js. Build dashboards, galleries, and interactive panels.',
     'components.grid.grid.import.title': 'Import',
     'components.grid.grid.import.desc':
-      'Import the module in your standalone component.',
+      'Import the component in your standalone component.',
     'components.grid.grid.basic.title': 'Basic Usage',
     'components.grid.grid.basic.desc':
       'Simple grid with static or locked widgets.',

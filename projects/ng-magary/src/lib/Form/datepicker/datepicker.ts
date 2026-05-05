@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  Renderer2,
   booleanAttribute,
   computed,
   forwardRef,
@@ -9,9 +10,11 @@ import {
   signal,
   OnDestroy,
   OnInit,
+  inject,
+  Injector,
 } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
 type DatePickerValue = Date | Date[] | null;
@@ -33,8 +36,16 @@ type DatePickerValue = Date | Date[] | null;
 export class MagaryDatePicker
   implements ControlValueAccessor, OnInit, OnDestroy
 {
+  private readonly renderer = inject(Renderer2);
   readonly placeholder = input<string>();
   readonly disabled = input(false, { transform: booleanAttribute });
+  readonly inputId = input<string>('');
+  readonly ariaLabel = input<string>('');
+  readonly ariaLabelledby = input<string>('');
+  readonly ariaDescribedby = input<string>('');
+  readonly invalid = input(false, { transform: booleanAttribute });
+  readonly errorMessage = input<string>('');
+  readonly helpText = input<string>('');
   readonly minDate = input<Date>();
   readonly maxDate = input<Date>();
   readonly selectionMode = input<'single' | 'range'>('single');
@@ -68,9 +79,36 @@ export class MagaryDatePicker
   readonly activeYearValue = signal<number | null>(null);
   private readonly formDisabled = signal(false);
   readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
-  readonly triggerId = `magary-datepicker-${Math.random().toString(36).slice(2, 11)}`;
-  readonly panelId = `${this.triggerId}-panel`;
-  readonly panelLabelId = `${this.triggerId}-panel-label`;
+  private readonly uniqueId = `magary-datepicker-${Math.random().toString(36).slice(2, 11)}`;
+  readonly resolvedInputId = computed(() => this.inputId().trim() || this.uniqueId);
+  readonly panelId = `${this.uniqueId}-panel`;
+  readonly panelLabelId = `${this.uniqueId}-panel-label`;
+  readonly errorMessageId = `${this.uniqueId}-error`;
+  readonly helpMessageId = `${this.uniqueId}-help`;
+  private readonly injector = inject(Injector);
+  readonly resolvedAriaLabel = computed(() => {
+    if (this.ariaLabelledby().trim().length > 0) {
+      return null;
+    }
+
+    return this.ariaLabel().trim() || 'Date picker';
+  });
+  readonly isInvalid = computed(() => this.invalid() || this.hasControlError());
+  readonly hasVisibleErrorMessage = computed(() => {
+    return this.isInvalid() && this.errorMessage().trim().length > 0;
+  });
+  readonly describedBy = computed(() => {
+    const ids = [this.ariaDescribedby().trim()];
+
+    if (this.hasVisibleErrorMessage()) {
+      ids.push(this.errorMessageId);
+    } else if (this.helpText().trim().length > 0) {
+      ids.push(this.helpMessageId);
+    }
+
+    const filteredIds = ids.filter((id) => id.length > 0);
+    return filteredIds.length > 0 ? filteredIds.join(' ') : null;
+  });
   readonly activeDayId = computed(() => {
     const date = this.activeDate();
     if (!date || !this.isOpen() || this.currentView() !== 'day') {
@@ -157,25 +195,31 @@ export class MagaryDatePicker
 
   private onChange: (value: DatePickerValue) => void = () => {};
   private onTouched: () => void = () => {};
-  private documentClickListener: ((event: Event) => void) | null = null;
+  private documentClickListener: (() => void) | null = null;
+  private touched = false;
+  private resolvedNgControl: NgControl | null | undefined;
 
   constructor(private elementRef: ElementRef<HTMLElement>) {}
 
   ngOnInit() {
-    this.documentClickListener = (event: Event) => {
-      if (
-        this.isOpen() &&
-        !this.elementRef.nativeElement.contains(event.target as Node | null)
-      ) {
-        this.close();
-      }
-    };
-    document.addEventListener('click', this.documentClickListener);
+    this.documentClickListener = this.renderer.listen(
+      'document',
+      'click',
+      (event: Event) => {
+        if (
+          this.isOpen() &&
+          !this.elementRef.nativeElement.contains(event.target as Node | null)
+        ) {
+          this.close();
+        }
+      },
+    );
   }
 
   ngOnDestroy() {
     if (this.documentClickListener) {
-      document.removeEventListener('click', this.documentClickListener);
+      this.documentClickListener();
+      this.documentClickListener = null;
     }
   }
 
@@ -201,10 +245,14 @@ export class MagaryDatePicker
     this.activeDate.set(null);
     this.activeMonthIndex.set(null);
     this.activeYearValue.set(null);
-    this.onTouched();
+    this.markAsTouched();
   }
 
   onContainerClick(event: Event) {}
+
+  onInputBlur(): void {
+    this.markAsTouched();
+  }
 
   onTriggerKeydown(event: KeyboardEvent): void {
     if (this.isDisabled()) {
@@ -811,5 +859,31 @@ export class MagaryDatePicker
 
   private normalizeDate(date: Date): Date {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
+
+  private markAsTouched(): void {
+    if (this.touched) {
+      return;
+    }
+
+    this.touched = true;
+    this.onTouched();
+  }
+
+  private hasControlError(): boolean {
+    const control = this.getNgControl()?.control;
+    return !!control && control.invalid && control.touched;
+  }
+
+  private getNgControl(): NgControl | null {
+    if (this.resolvedNgControl !== undefined) {
+      return this.resolvedNgControl;
+    }
+
+    this.resolvedNgControl = this.injector.get(NgControl, null, {
+      self: true,
+      optional: true,
+    });
+    return this.resolvedNgControl;
   }
 }

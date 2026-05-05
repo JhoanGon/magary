@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagarySkeleton } from 'ng-magary';
 import { Highlight } from 'ngx-highlightjs';
@@ -38,6 +38,7 @@ type SkeletonApiRow = {
   imports: [CommonModule, MagarySkeleton, Highlight],
   templateUrl: './view-skeleton.html',
   styleUrls: ['./view-skeleton.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewSkeleton {
   readonly i18n = inject(DemoI18nService);

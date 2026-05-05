@@ -1,38 +1,27 @@
-import { ComponentScanner } from '../src/component-scanner.js';
+import { execSync } from 'child_process';
 import * as path from 'path';
-import * as fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-async function generate() {
-  // Resolve path to ng-magary library relative to this script (scripts folder)
-  // Structure: projects/magary-mcp/scripts/generate-catalog.ts
-  // Target: projects/ng-magary/src/lib
-  // ../ -> projects/magary-mcp
-  // ../../ -> projects
-  // ../../ng-magary -> projects/ng-magary
-  const libPath = path.resolve(__dirname, '../../ng-magary/src/lib');
-  console.log(`Scanning components from: ${libPath}`);
+// Structure: projects/magary-mcp/scripts/generate-catalog.ts
+// Workspace root: ../../.. (from scripts → magary-mcp → projects → workspace root)
+const workspaceRoot = path.resolve(__dirname, '../../..');
+const outputPath = path.resolve(__dirname, '../src/catalog.json');
 
-  if (!fs.existsSync(libPath)) {
-    console.error(`Error: Library path not found at ${libPath}`);
-    process.exit(1);
-  }
+console.log(`Generating MCP catalog from enriched manifest...`);
 
-  const scanner = new ComponentScanner(libPath);
-  const components = await scanner.scan();
-
-  console.log(`Found ${components.length} components.`);
-
-  const outputPath = path.resolve(__dirname, '../src/catalog.json');
-  fs.writeFileSync(outputPath, JSON.stringify(components, null, 2));
-  console.log(`Catalog saved to: ${outputPath}`);
-}
-
-generate().catch((err) => {
-  console.error(err);
+try {
+  execSync(
+    `node tools/ci/generate-mcp-catalog.mjs "${outputPath}"`,
+    {
+      cwd: workspaceRoot,
+      stdio: 'inherit',
+    },
+  );
+} catch (err) {
+  console.error('Catalog generation failed:', err.message);
   process.exit(1);
-});
+}

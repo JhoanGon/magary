@@ -7,10 +7,17 @@ export const PANEL_MENU_DOC_TEXT = {
       'Componente de menu lateral desplegable y personalizable.',
     'components.menu.panelMenu.import.title': 'Import',
     'components.menu.panelMenu.import.desc':
-      'Importa el componente en tu modulo o usalo como componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.menu.panelMenu.advanced.title': 'Ejemplo mejorado con eventos',
     'components.menu.panelMenu.advanced.desc':
       'Panel menu con funcionalidades avanzadas y manejo de eventos.',
+    'components.menu.panelMenu.layouts.title': 'Variantes de layout',
+    'components.menu.panelMenu.layouts.desc':
+      'El componente soporta modos accordion, list, rail y grid para distintos contextos de navegacion.',
+    'components.menu.panelMenu.layouts.accordion': 'Accordion',
+    'components.menu.panelMenu.layouts.list': 'List',
+    'components.menu.panelMenu.layouts.rail': 'Rail Icons',
+    'components.menu.panelMenu.layouts.grid': 'Grid',
     'components.menu.panelMenu.tabs.html': 'HTML',
     'components.menu.panelMenu.tabs.typescript': 'TypeScript',
     'components.menu.panelMenu.tabs.events': 'Eventos',
@@ -25,6 +32,14 @@ export const PANEL_MENU_DOC_TEXT = {
       'Titulo del panel que se muestra en el header.',
     'components.menu.panelMenu.apiInputs.items.desc':
       'Lista de elementos que componen el menu.',
+    'components.menu.panelMenu.apiInputs.icon.desc':
+      'Icono del header principal del panel.',
+    'components.menu.panelMenu.apiInputs.iconClass.desc':
+      'Clase CSS adicional para el icono del header.',
+    'components.menu.panelMenu.apiInputs.style.desc':
+      'Estilos inline para el contenedor del panel.',
+    'components.menu.panelMenu.apiInputs.styleClass.desc':
+      'Clase CSS adicional para el contenedor del panel.',
     'components.menu.panelMenu.apiInputs.backgroundColor.desc':
       'Color de fondo del panel.',
     'components.menu.panelMenu.apiInputs.textColor.desc': 'Color del texto.',
@@ -39,6 +54,20 @@ export const PANEL_MENU_DOC_TEXT = {
       'Permite multiples items expandidos al mismo tiempo.',
     'components.menu.panelMenu.apiInputs.defaultOpen.desc':
       'Si el panel debe estar abierto por defecto.',
+    'components.menu.panelMenu.apiInputs.collapsed.desc':
+      'Indica si el panel esta en modo colapsado (usado por Sidebar).',
+    'components.menu.panelMenu.apiInputs.mode.desc':
+      'Modo visual del menu: accordion, list, rail-icons, rail-labeled o grid.',
+    'components.menu.panelMenu.apiInputs.showHeader.desc':
+      'Muestra u oculta el header del panel.',
+    'components.menu.panelMenu.apiInputs.showItemLabels.desc':
+      'Muestra u oculta el texto de los items en modos compactos.',
+    'components.menu.panelMenu.apiInputs.gridColumns.desc':
+      'Numero de columnas cuando mode="grid".',
+    'components.menu.panelMenu.apiInputs.activeIndicator.desc':
+      'Activa el indicador visual del item marcado como activo.',
+    'components.menu.panelMenu.apiInputs.navigationLabel.desc':
+      'Etiqueta aria del landmark de navegacion del panel.',
     'components.menu.panelMenu.apiOutputs.title': 'Eventos (Outputs)',
     'components.menu.panelMenu.apiOutputs.desc':
       'Eventos que emite el componente.',
@@ -51,13 +80,15 @@ export const PANEL_MENU_DOC_TEXT = {
       'Se emite cuando se hace click en un item del menu.',
     'components.menu.panelMenu.apiOutputs.itemExpand.desc':
       'Se emite cuando un item se expande o contrae.',
+    'components.menu.panelMenu.apiOutputs.expandSidebar.desc':
+      'Se emite en modo colapsado para solicitar expansion del sidebar padre.',
     'components.menu.panelMenu.structure.title': 'Estructura esperada',
     'components.menu.panelMenu.structure.item1':
       'items debe ser un arreglo de objetos MenuItem.',
     'components.menu.panelMenu.structure.item2':
       'Cada MenuItem puede tener children de forma recursiva.',
     'components.menu.panelMenu.structure.item3':
-      'Cada item puede tener label, route e icon.',
+      'Cada item puede tener label, route, url, target, command e icon.',
     'components.menu.panelMenu.a11y.title': 'Accesibilidad',
     'components.menu.panelMenu.a11y.keyboard.title': 'Teclado',
     'components.menu.panelMenu.a11y.keyboard.desc':
@@ -67,7 +98,7 @@ export const PANEL_MENU_DOC_TEXT = {
       'Cambios de color y foco en hover para mejor UX.',
     'components.menu.panelMenu.a11y.semantic.title': 'Semantica',
     'components.menu.panelMenu.a11y.semantic.desc':
-      'Uso de elementos como <a> para enlaces semanticos.',
+      'Usa enlaces para rutas/urls y botones para acciones o toggles internos.',
     'components.menu.panelMenu.items.dashboard': 'Dashboard',
     'components.menu.panelMenu.items.users': 'Usuarios',
     'components.menu.panelMenu.items.list': 'Lista',
@@ -80,6 +111,8 @@ export const PANEL_MENU_DOC_TEXT = {
     'components.menu.panelMenu.items.security': 'Seguridad',
     'components.menu.panelMenu.items.notifications': 'Notificaciones',
     'components.menu.panelMenu.items.help': 'Ayuda',
+    'components.menu.panelMenu.items.tokens': 'Tokens',
+    'components.menu.panelMenu.items.activity': 'Actividad',
     'components.menu.panelMenu.status.none': 'Ninguno',
     'components.menu.panelMenu.status.open': 'Abierto',
     'components.menu.panelMenu.status.closed': 'Cerrado',
@@ -93,10 +126,17 @@ export const PANEL_MENU_DOC_TEXT = {
       'Expandable and customizable side menu component.',
     'components.menu.panelMenu.import.title': 'Import',
     'components.menu.panelMenu.import.desc':
-      'Import the component in your module or use it as a standalone component.',
+      'Import the component in your standalone component.',
     'components.menu.panelMenu.advanced.title': 'Enhanced events example',
     'components.menu.panelMenu.advanced.desc':
       'Panel menu with advanced features and event handling.',
+    'components.menu.panelMenu.layouts.title': 'Layout variants',
+    'components.menu.panelMenu.layouts.desc':
+      'The component supports accordion, list, rail and grid modes for different navigation contexts.',
+    'components.menu.panelMenu.layouts.accordion': 'Accordion',
+    'components.menu.panelMenu.layouts.list': 'List',
+    'components.menu.panelMenu.layouts.rail': 'Rail Icons',
+    'components.menu.panelMenu.layouts.grid': 'Grid',
     'components.menu.panelMenu.tabs.html': 'HTML',
     'components.menu.panelMenu.tabs.typescript': 'TypeScript',
     'components.menu.panelMenu.tabs.events': 'Events',
@@ -111,6 +151,14 @@ export const PANEL_MENU_DOC_TEXT = {
       'Panel title shown in the header.',
     'components.menu.panelMenu.apiInputs.items.desc':
       'List of items that compose the menu.',
+    'components.menu.panelMenu.apiInputs.icon.desc':
+      'Main panel header icon.',
+    'components.menu.panelMenu.apiInputs.iconClass.desc':
+      'Additional CSS class for the header icon.',
+    'components.menu.panelMenu.apiInputs.style.desc':
+      'Inline styles for the panel container.',
+    'components.menu.panelMenu.apiInputs.styleClass.desc':
+      'Additional CSS class for the panel container.',
     'components.menu.panelMenu.apiInputs.backgroundColor.desc':
       'Panel background color.',
     'components.menu.panelMenu.apiInputs.textColor.desc': 'Text color.',
@@ -124,6 +172,20 @@ export const PANEL_MENU_DOC_TEXT = {
       'Allows multiple expanded items at the same time.',
     'components.menu.panelMenu.apiInputs.defaultOpen.desc':
       'Whether the panel should be open by default.',
+    'components.menu.panelMenu.apiInputs.collapsed.desc':
+      'Whether the panel is in collapsed mode (used by Sidebar).',
+    'components.menu.panelMenu.apiInputs.mode.desc':
+      'Visual mode: accordion, list, rail-icons, rail-labeled, or grid.',
+    'components.menu.panelMenu.apiInputs.showHeader.desc':
+      'Shows or hides the panel header.',
+    'components.menu.panelMenu.apiInputs.showItemLabels.desc':
+      'Shows or hides item labels in compact modes.',
+    'components.menu.panelMenu.apiInputs.gridColumns.desc':
+      'Column count when mode="grid".',
+    'components.menu.panelMenu.apiInputs.activeIndicator.desc':
+      'Enables the active item visual indicator.',
+    'components.menu.panelMenu.apiInputs.navigationLabel.desc':
+      'ARIA label applied to the panel navigation landmark.',
     'components.menu.panelMenu.apiOutputs.title': 'Events (Outputs)',
     'components.menu.panelMenu.apiOutputs.desc':
       'Events emitted by the component.',
@@ -136,13 +198,15 @@ export const PANEL_MENU_DOC_TEXT = {
       'Emitted when a menu item is clicked.',
     'components.menu.panelMenu.apiOutputs.itemExpand.desc':
       'Emitted when an item expands or collapses.',
+    'components.menu.panelMenu.apiOutputs.expandSidebar.desc':
+      'Emitted in collapsed mode to request parent sidebar expansion.',
     'components.menu.panelMenu.structure.title': 'Expected structure',
     'components.menu.panelMenu.structure.item1':
       'items must be an array of MenuItem objects.',
     'components.menu.panelMenu.structure.item2':
       'Each MenuItem can have recursive children.',
     'components.menu.panelMenu.structure.item3':
-      'Each item can define label, route and icon.',
+      'Each item can define label, route, url, target, command, and icon.',
     'components.menu.panelMenu.a11y.title': 'Accessibility',
     'components.menu.panelMenu.a11y.keyboard.title': 'Keyboard',
     'components.menu.panelMenu.a11y.keyboard.desc':
@@ -152,7 +216,7 @@ export const PANEL_MENU_DOC_TEXT = {
       'Color and focus changes on hover for better UX.',
     'components.menu.panelMenu.a11y.semantic.title': 'Semantics',
     'components.menu.panelMenu.a11y.semantic.desc':
-      'Use elements such as <a> for semantic links.',
+      'Uses links for routes/urls and buttons for actions or internal toggles.',
     'components.menu.panelMenu.items.dashboard': 'Dashboard',
     'components.menu.panelMenu.items.users': 'Users',
     'components.menu.panelMenu.items.list': 'List',
@@ -165,6 +229,8 @@ export const PANEL_MENU_DOC_TEXT = {
     'components.menu.panelMenu.items.security': 'Security',
     'components.menu.panelMenu.items.notifications': 'Notifications',
     'components.menu.panelMenu.items.help': 'Help',
+    'components.menu.panelMenu.items.tokens': 'Tokens',
+    'components.menu.panelMenu.items.activity': 'Activity',
     'components.menu.panelMenu.status.none': 'None',
     'components.menu.panelMenu.status.open': 'Open',
     'components.menu.panelMenu.status.closed': 'Closed',

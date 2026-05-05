@@ -1,4 +1,4 @@
-<div [ngClass]="rootClass()" [ngStyle]="style() || {}">
+<div [class]="rootClass()" [style]="style() || {}">
   @for (item of model(); track item.label; let i = $index; let last = $last) {
     <!-- Step Item -->
     <div

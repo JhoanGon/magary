@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -16,10 +16,9 @@ const CODE_EXAMPLES = {
   [options]="languageOptions"
   optionLabel="label"
   optionValue="value"
-  [value]="language()"
-  (valueChange)="language.set($event)"
+  [(ngModel)]="language"
 ></magary-segmented>`,
-  BASIC_TS: `readonly language = signal<MagarySegmentedValue>('es');
+  BASIC_TS: `language: MagarySegmentedValue = 'es';
 
 readonly languageOptions = [
   { label: 'ES', value: 'es' },
@@ -29,15 +28,13 @@ readonly languageOptions = [
   [options]="planOptions"
   optionLabel="label"
   optionValue="value"
-  [value]="selectedPlan()"
-  (valueChange)="selectedPlan.set($event)"
+  [(ngModel)]="selectedPlan"
 ></magary-segmented>`,
   SIZES: `<magary-segmented
   [options]="languageOptions"
   optionLabel="label"
   optionValue="value"
-  [value]="language()"
-  (valueChange)="language.set($event)"
+  [(ngModel)]="smallLanguage"
   size="small"
 ></magary-segmented>
 
@@ -45,8 +42,7 @@ readonly languageOptions = [
   [options]="languageOptions"
   optionLabel="label"
   optionValue="value"
-  [value]="language()"
-  (valueChange)="language.set($event)"
+  [(ngModel)]="normalLanguage"
   size="normal"
 ></magary-segmented>
 
@@ -54,8 +50,7 @@ readonly languageOptions = [
   [options]="languageOptions"
   optionLabel="label"
   optionValue="value"
-  [value]="language()"
-  (valueChange)="language.set($event)"
+  [(ngModel)]="largeLanguage"
   size="large"
 ></magary-segmented>`,
   FORM_BINDING_HTML: `<magary-segmented
@@ -83,8 +78,11 @@ readonly localeOptions = ['es', 'en'];`,
 })
 export class ViewSegmented {
   readonly i18n = inject(DemoI18nService);
-  readonly language = signal<MagarySegmentedValue>('es');
-  readonly selectedPlan = signal<MagarySegmentedValue>('pro');
+  language: MagarySegmentedValue = 'es';
+  selectedPlan: MagarySegmentedValue = 'pro';
+  smallLanguage: MagarySegmentedValue = 'es';
+  normalLanguage: MagarySegmentedValue = 'en';
+  largeLanguage: MagarySegmentedValue = 'es';
 
   locale = 'en';
   readonly localeOptions = ['es', 'en'];

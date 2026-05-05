@@ -3,13 +3,13 @@
     #trigger
     cdkOverlayOrigin
     #origin="cdkOverlayOrigin"
-    [id]="triggerId"
+    [id]="resolvedInputId()"
     class="magary-select-container"
     [class.disabled]="isDisabled()"
     [class.focused]="focused()"
     [class.filled]="hasValue()"
     [class.loading]="loading()"
-    [class.invalid]="hasError()"
+    [class.invalid]="isInvalid()"
     [class.open]="isOpen()"
     [class.size-small]="size() === 'small'"
     [class.size-normal]="size() === 'normal'"
@@ -20,10 +20,11 @@
     [attr.aria-expanded]="isOpen()"
     [attr.aria-disabled]="isDisabled()"
     [attr.aria-label]="resolvedAriaLabel()"
+    [attr.aria-labelledby]="ariaLabelledby() || null"
     [attr.aria-controls]="listboxId"
     [attr.aria-activedescendant]="activeDescendantId()"
     [attr.aria-autocomplete]="filter() ? 'list' : null"
-    [attr.aria-invalid]="hasError() ? 'true' : null"
+    [attr.aria-invalid]="isInvalid() ? 'true' : null"
     [attr.aria-describedby]="describedBy()"
     (click)="toggleOverlay()"
     (keydown)="onTriggerKeydown($event)"
@@ -133,10 +134,10 @@
     </ng-template>
   </div>
 
-  @if (hasError()) {
+  @if (hasVisibleErrorMessage()) {
     <span class="select-message error-message" [id]="errorMessageId" role="alert">
       <lucide-icon name="circle-alert" [size]="16"></lucide-icon>
-      {{ errorMessage() }}
+      {{ resolvedErrorMessage() }}
     </span>
   } @else if (helpText().trim().length > 0) {
     <span class="select-message help-message" [id]="helpMessageId">

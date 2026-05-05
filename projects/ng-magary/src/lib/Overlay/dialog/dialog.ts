@@ -14,9 +14,8 @@ import {
   inject,
   AfterViewInit,
   OnDestroy,
-  HostListener,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import {
   trigger,
@@ -35,6 +34,9 @@ import {
   styleUrls: ['./dialog.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  host: {
+    '(document:keydown.escape)': 'onEscapeKey($event)',
+  },
   animations: [
     trigger('maskAnimation', [
       transition(':enter', [
@@ -63,6 +65,7 @@ import {
   ],
 })
 export class MagaryDialog implements AfterViewInit, OnDestroy {
+  private readonly document = inject(DOCUMENT);
   // Model for two-way binding of visibility
   visible = model<boolean>(false);
 
@@ -158,8 +161,8 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
 
       if (isVisible && !wasVisible) {
         this.previouslyFocusedElement =
-          document.activeElement instanceof HTMLElement
-            ? document.activeElement
+          this.document.activeElement instanceof HTMLElement
+            ? this.document.activeElement
             : null;
 
         if (this.autoFocus()) {
@@ -177,7 +180,7 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     if (this.appendTo() === 'body') {
-      this.renderer.appendChild(document.body, this.el.nativeElement);
+      this.renderer.appendChild(this.document.body, this.el.nativeElement);
     }
   }
 
@@ -225,7 +228,6 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('document:keydown.escape', ['$event'])
   onEscapeKey(event: Event) {
     if (!this.visible() || !this.closeOnEscape()) return;
     this.close(event);
@@ -245,7 +247,7 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
 
     const firstFocusable = focusableElements[0];
     const lastFocusable = focusableElements[focusableElements.length - 1];
-    const activeElement = document.activeElement;
+    const activeElement = this.document.activeElement;
     const activeInsideDialog =
       activeElement instanceof HTMLElement &&
       this.containerViewChild().nativeElement.contains(activeElement);
@@ -292,7 +294,7 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     const currentTarget = event.currentTarget as HTMLElement | null;
     currentTarget?.setPointerCapture?.(event.pointerId);
 
-    this.renderer.addClass(document.body, 'magary-dragging');
+    this.renderer.addClass(this.document.body, 'magary-dragging');
     this.bindGlobalListeners('drag');
     event.preventDefault();
   }
@@ -335,7 +337,7 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     }
 
     this.activeDragPointerId = null;
-    this.renderer.removeClass(document.body, 'magary-dragging');
+    this.renderer.removeClass(this.document.body, 'magary-dragging');
     this.unbindGlobalListeners();
     this.dragging.set(false);
   }
@@ -359,7 +361,7 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     const currentTarget = event.currentTarget as HTMLElement | null;
     currentTarget?.setPointerCapture?.(event.pointerId);
 
-    this.renderer.addClass(document.body, 'magary-resizing');
+    this.renderer.addClass(this.document.body, 'magary-resizing');
     this.bindGlobalListeners('resize');
     event.preventDefault();
   }
@@ -395,7 +397,7 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
     }
 
     this.activeResizePointerId = null;
-    this.renderer.removeClass(document.body, 'magary-resizing');
+    this.renderer.removeClass(this.document.body, 'magary-resizing');
     this.unbindGlobalListeners();
     this.resizing.set(false);
   }
@@ -456,19 +458,19 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
   // --- Utilities ---
 
   private blockBodyScroll() {
-    this.renderer.addClass(document.body, 'magary-overflow-hidden');
+    this.renderer.addClass(this.document.body, 'magary-overflow-hidden');
   }
 
   private unblockBodyScroll() {
-    this.renderer.removeClass(document.body, 'magary-overflow-hidden');
+    this.renderer.removeClass(this.document.body, 'magary-overflow-hidden');
   }
 
   private cancelInteractions() {
     this.activeDragPointerId = null;
     this.activeResizePointerId = null;
     this.unbindGlobalListeners();
-    this.renderer.removeClass(document.body, 'magary-dragging');
-    this.renderer.removeClass(document.body, 'magary-resizing');
+    this.renderer.removeClass(this.document.body, 'magary-dragging');
+    this.renderer.removeClass(this.document.body, 'magary-resizing');
     this.dragging.set(false);
     this.resizing.set(false);
   }
@@ -495,7 +497,7 @@ export class MagaryDialog implements AfterViewInit, OnDestroy {
       return;
     }
 
-    if (document.contains(element)) {
+    if (this.document.contains(element)) {
       queueMicrotask(() => element.focus());
     }
   }

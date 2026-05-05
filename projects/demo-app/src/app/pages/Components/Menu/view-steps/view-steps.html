@@ -193,92 +193,100 @@
                   background: var(--surface-50);
                 "
               >
-                <ng-container [ngSwitch]="activeIndexContent">
-                  <div *ngSwitchCase="0" class="fade-in">
-                    <h3 style="margin-top: 0">
-                      {{ t('components.menu.steps.content.step1.title') }}
-                    </h3>
-                    <p style="color: var(--text-secondary)">
-                      {{ t('components.menu.steps.content.step1.desc') }}
-                    </p>
-                    <div
-                      style="
-                        height: 100px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border: 1px dashed var(--surface-300);
-                        border-radius: 0.5rem;
-                        color: var(--text-tertiary);
-                      "
-                    >
-                      {{ t('components.menu.steps.content.step1.placeholder') }}
+                @switch (activeIndexContent) {
+                  @case (0) {
+                    <div class="fade-in">
+                      <h3 style="margin-top: 0">
+                        {{ t('components.menu.steps.content.step1.title') }}
+                      </h3>
+                      <p style="color: var(--text-secondary)">
+                        {{ t('components.menu.steps.content.step1.desc') }}
+                      </p>
+                      <div
+                        style="
+                          height: 100px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          border: 1px dashed var(--surface-300);
+                          border-radius: 0.5rem;
+                          color: var(--text-tertiary);
+                        "
+                      >
+                        {{ t('components.menu.steps.content.step1.placeholder') }}
+                      </div>
                     </div>
-                  </div>
-                  <div *ngSwitchCase="1" class="fade-in">
-                    <h3 style="margin-top: 0">
-                      {{ t('components.menu.steps.content.step2.title') }}
-                    </h3>
-                    <p style="color: var(--text-secondary)">
-                      {{ t('components.menu.steps.content.step2.desc') }}
-                    </p>
-                    <div
-                      style="
-                        height: 100px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border: 1px dashed var(--surface-300);
-                        border-radius: 0.5rem;
-                        color: var(--text-tertiary);
-                      "
-                    >
-                      {{ t('components.menu.steps.content.step2.placeholder') }}
+                  }
+                  @case (1) {
+                    <div class="fade-in">
+                      <h3 style="margin-top: 0">
+                        {{ t('components.menu.steps.content.step2.title') }}
+                      </h3>
+                      <p style="color: var(--text-secondary)">
+                        {{ t('components.menu.steps.content.step2.desc') }}
+                      </p>
+                      <div
+                        style="
+                          height: 100px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          border: 1px dashed var(--surface-300);
+                          border-radius: 0.5rem;
+                          color: var(--text-tertiary);
+                        "
+                      >
+                        {{ t('components.menu.steps.content.step2.placeholder') }}
+                      </div>
                     </div>
-                  </div>
-                  <div *ngSwitchCase="2" class="fade-in">
-                    <h3 style="margin-top: 0">
-                      {{ t('components.menu.steps.content.step3.title') }}
-                    </h3>
-                    <p style="color: var(--text-secondary)">
-                      {{ t('components.menu.steps.content.step3.desc') }}
-                    </p>
-                    <div
-                      style="
-                        height: 100px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border: 1px dashed var(--surface-300);
-                        border-radius: 0.5rem;
-                        color: var(--text-tertiary);
-                      "
-                    >
-                      {{ t('components.menu.steps.content.step3.placeholder') }}
+                  }
+                  @case (2) {
+                    <div class="fade-in">
+                      <h3 style="margin-top: 0">
+                        {{ t('components.menu.steps.content.step3.title') }}
+                      </h3>
+                      <p style="color: var(--text-secondary)">
+                        {{ t('components.menu.steps.content.step3.desc') }}
+                      </p>
+                      <div
+                        style="
+                          height: 100px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          border: 1px dashed var(--surface-300);
+                          border-radius: 0.5rem;
+                          color: var(--text-tertiary);
+                        "
+                      >
+                        {{ t('components.menu.steps.content.step3.placeholder') }}
+                      </div>
                     </div>
-                  </div>
-                  <div *ngSwitchCase="3" class="fade-in">
-                    <h3 style="margin-top: 0">
-                      {{ t('components.menu.steps.content.step4.title') }}
-                    </h3>
-                    <p style="color: var(--text-secondary)">
-                      {{ t('components.menu.steps.content.step4.desc') }}
-                    </p>
-                    <div
-                      style="
-                        height: 100px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border: 1px dashed var(--surface-300);
-                        border-radius: 0.5rem;
-                        color: var(--text-tertiary);
-                      "
-                    >
-                      {{ t('components.menu.steps.content.step4.placeholder') }}
+                  }
+                  @case (3) {
+                    <div class="fade-in">
+                      <h3 style="margin-top: 0">
+                        {{ t('components.menu.steps.content.step4.title') }}
+                      </h3>
+                      <p style="color: var(--text-secondary)">
+                        {{ t('components.menu.steps.content.step4.desc') }}
+                      </p>
+                      <div
+                        style="
+                          height: 100px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          border: 1px dashed var(--surface-300);
+                          border-radius: 0.5rem;
+                          color: var(--text-tertiary);
+                        "
+                      >
+                        {{ t('components.menu.steps.content.step4.placeholder') }}
+                      </div>
                     </div>
-                  </div>
-                </ng-container>
+                  }
+                }
               </div>
 
               <div

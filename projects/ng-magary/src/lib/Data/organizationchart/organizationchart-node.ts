@@ -34,120 +34,103 @@ import { LucideAngularModule } from 'lucide-angular';
     forwardRef(() => MagaryOrganizationChartNode),
   ],
   template: `
-    <!-- Connector Line Up (connects to parent bus) -->
-    <tr *ngIf="node()">
-      <td [attr.colspan]="colspan()">
-        <div class="magary-organizationchart-line-up"></div>
-      </td>
-    </tr>
-
-    <tr *ngIf="node()">
-      <td [attr.colspan]="colspan()">
-        <div
-          class="magary-organizationchart-node-content"
-          [class.magary-organizationchart-selectable]="selectionMode() !== null"
-          [class.magary-organizationchart-selected]="isSelected()"
-          [attr.tabindex]="isSelectable() || (collapsible() && !isLeaf()) ? 0 : -1"
-          (click)="onNodeClick($event)"
-          (keydown)="onNodeKeydown($event)"
-        >
-          <!-- Display content based on template or fallback -->
-          <ng-container *ngIf="template(); else defaultContent">
-            <ng-container
-              *ngTemplateOutlet="template(); context: { $implicit: node() }"
-            ></ng-container>
-          </ng-container>
-
-          <ng-template #defaultContent>
-            <div
-              *ngIf="node().header"
-              class="magary-organizationchart-node-header"
-            >
-              {{ node().header }}
-            </div>
-            <div class="magary-organizationchart-node-label">
-              {{ node().label }}
-            </div>
-          </ng-template>
-
-          <!-- Toggler -->
-          <button
-            type="button"
-            *ngIf="!isLeaf() && collapsible()"
-            class="magary-organizationchart-toggler"
-            [attr.aria-label]="getTogglerAriaLabel()"
-            (click)="toggle($event)"
-          >
-            <lucide-icon
-              [name]="internalExpanded() ? 'chevron-down' : 'chevron-up'"
-              [size]="14"
-            ></lucide-icon>
-          </button>
-        </div>
-      </td>
-    </tr>
-
-    <!-- Connector Lines Down -->
-    <tr
-      class="magary-organizationchart-lines"
-      *ngIf="!isLeaf() && internalExpanded()"
-      [@slideDown]
-    >
-      <td [attr.colspan]="colspan()">
-        <div class="magary-organizationchart-line-down"></div>
-      </td>
-    </tr>
-
-    <!-- Connector Lines Horizontal -->
-    <tr
-      class="magary-organizationchart-lines"
-      *ngIf="!isLeaf() && internalExpanded()"
-      [@slideDown]
-    >
-      <ng-container
-        *ngFor="
-          let child of node().children;
-          let first = first;
-          let last = last
-        "
-      >
-        <td
-          class="magary-organizationchart-line-left"
-          [class.magary-organizationchart-line-top]="!first"
-        ></td>
-        <td
-          class="magary-organizationchart-line-right"
-          [class.magary-organizationchart-line-top]="!last"
-        ></td>
-      </ng-container>
-    </tr>
-
-    <!-- Children Row -->
-    <tr
-      class="magary-organizationchart-nodes"
-      *ngIf="!isLeaf() && internalExpanded()"
-      [@slideDown]
-    >
-      <ng-container *ngFor="let child of node().children">
-        <td colspan="2">
-          <table class="magary-organizationchart-table">
-            <tbody
-              magary-organizationchart-node
-              [node]="child"
-              [level]="level() + 1"
-              [selectionMode]="selectionMode()"
-              [selection]="selection()"
-              [collapsible]="collapsible()"
-              [itemTemplate]="itemTemplate()"
-              (nodeSelect)="nodeSelect.emit($event)"
-              (nodeUnselect)="nodeUnselect.emit($event)"
-              (nodeExpand)="nodeExpand.emit($event)"
-              (nodeCollapse)="nodeCollapse.emit($event)"
-            ></tbody>
-          </table>
+    @if (node()) {
+      <tr>
+        <td [attr.colspan]="colspan()">
+          <div class="magary-organizationchart-line-up"></div>
         </td>
-      </ng-container>
-    </tr>
+      </tr>
+
+      <tr>
+        <td [attr.colspan]="colspan()">
+          <div
+            class="magary-organizationchart-node-content"
+            [class.magary-organizationchart-selectable]="selectionMode() !== null"
+            [class.magary-organizationchart-selected]="isSelected()"
+            [attr.tabindex]="isSelectable() || (collapsible() && !isLeaf()) ? 0 : -1"
+            (click)="onNodeClick($event)"
+            (keydown)="onNodeKeydown($event)"
+          >
+            @if (template()) {
+              <ng-container
+                *ngTemplateOutlet="template(); context: { $implicit: node() }"
+              ></ng-container>
+            } @else {
+              @if (node().header) {
+                <div class="magary-organizationchart-node-header">
+                  {{ node().header }}
+                </div>
+              }
+              <div class="magary-organizationchart-node-label">
+                {{ node().label }}
+              </div>
+            }
+
+            @if (!isLeaf() && collapsible()) {
+              <button
+                type="button"
+                class="magary-organizationchart-toggler"
+                [attr.aria-label]="getTogglerAriaLabel()"
+                (click)="toggle($event)"
+              >
+                <lucide-icon
+                  [name]="internalExpanded() ? 'chevron-down' : 'chevron-up'"
+                  [size]="14"
+                ></lucide-icon>
+              </button>
+            }
+          </div>
+        </td>
+      </tr>
+
+      @if (!isLeaf() && internalExpanded()) {
+        <tr class="magary-organizationchart-lines" [@slideDown]>
+          <td [attr.colspan]="colspan()">
+            <div class="magary-organizationchart-line-down"></div>
+          </td>
+        </tr>
+
+        <tr class="magary-organizationchart-lines" [@slideDown]>
+          @for (
+            child of node().children;
+            track child.key ?? $index;
+            let first = $first;
+            let last = $last
+          ) {
+            <td
+              class="magary-organizationchart-line-left"
+              [class.magary-organizationchart-line-top]="!first"
+            ></td>
+            <td
+              class="magary-organizationchart-line-right"
+              [class.magary-organizationchart-line-top]="!last"
+            ></td>
+          }
+        </tr>
+
+        <tr class="magary-organizationchart-nodes" [@slideDown]>
+          @for (child of node().children; track child.key ?? $index) {
+            <td colspan="2">
+              <table class="magary-organizationchart-table">
+                <tbody
+                  magary-organizationchart-node
+                  [node]="child"
+                  [level]="level() + 1"
+                  [selectionMode]="selectionMode()"
+                  [selection]="selection()"
+                  [collapsible]="collapsible()"
+                  [itemTemplate]="itemTemplate()"
+                  (nodeSelect)="nodeSelect.emit($event)"
+                  (nodeUnselect)="nodeUnselect.emit($event)"
+                  (nodeExpand)="nodeExpand.emit($event)"
+                  (nodeCollapse)="nodeCollapse.emit($event)"
+                ></tbody>
+              </table>
+            </td>
+          }
+        </tr>
+      }
+    }
   `,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

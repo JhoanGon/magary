@@ -7,7 +7,7 @@ export const PICK_LIST_DOC_TEXT = {
       'Componente para reordenar y transferir elementos entre dos listas.',
     'components.data.pickList.import.title': 'Importar',
     'components.data.pickList.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.data.pickList.basic.title': 'Uso Básico',
     'components.data.pickList.basic.desc':
       'PickList estandar con controles y drag-and-drop habilitados por defecto.',
@@ -61,7 +61,7 @@ export const PICK_LIST_DOC_TEXT = {
       'Component to reorder and transfer items between two lists.',
     'components.data.pickList.import.title': 'Import',
     'components.data.pickList.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.data.pickList.basic.title': 'Basic Usage',
     'components.data.pickList.basic.desc':
       'Standard PickList with buttons and drag-and-drop enabled by default.',

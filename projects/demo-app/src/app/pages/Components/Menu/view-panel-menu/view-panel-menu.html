@@ -1,13 +1,13 @@
 <div class="container">
   <div class="header">
-    <h1>{{ t('components.menu.panelMenu.title') }}</h1>
-    <p>{{ t('components.menu.panelMenu.subtitle') }}</p>
+    <h1>{{ t("components.menu.panelMenu.title") }}</h1>
+    <p>{{ t("components.menu.panelMenu.subtitle") }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.menu.panelMenu.import.title') }}</h2>
-      <p>{{ t('components.menu.panelMenu.import.desc') }}</p>
+      <h2>{{ t("components.menu.panelMenu.import.title") }}</h2>
+      <p>{{ t("components.menu.panelMenu.import.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -18,17 +18,102 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.menu.panelMenu.advanced.title') }}</h2>
-      <p>{{ t('components.menu.panelMenu.advanced.desc') }}</p>
+      <h2>{{ t("components.menu.panelMenu.layouts.title") }}</h2>
+      <p>{{ t("components.menu.panelMenu.layouts.desc") }}</p>
+    </div>
+    <div class="section-content">
+      <div class="layout-preview-grid">
+        <article class="layout-card">
+          <h4>{{ t("components.menu.panelMenu.layouts.accordion") }}</h4>
+          <div class="layout-panel-host">
+            <magary-panelmenu
+              [title]="'Accordion'"
+              [items]="menuItems"
+              [mode]="'accordion'"
+              [defaultOpen]="true"
+              [backgroundColor]="previewBackground"
+              [textColor]="previewTextColor"
+              [hoverColor]="previewHoverColor"
+              [style]="previewPanelStyle"
+              [width]="'100%'"
+            ></magary-panelmenu>
+          </div>
+        </article>
+
+        <article class="layout-card">
+          <h4>{{ t("components.menu.panelMenu.layouts.list") }}</h4>
+          <div class="layout-panel-host">
+            <magary-panelmenu
+              [title]="'List'"
+              [items]="menuItems"
+              [mode]="'list'"
+              [showHeader]="false"
+              [backgroundColor]="previewBackground"
+              [textColor]="previewTextColor"
+              [hoverColor]="previewHoverColor"
+              [style]="previewPanelStyle"
+              [width]="'100%'"
+            ></magary-panelmenu>
+          </div>
+        </article>
+
+        <article class="layout-card">
+          <h4>{{ t("components.menu.panelMenu.layouts.rail") }}</h4>
+          <div class="layout-panel-host rail-preview">
+            <magary-panelmenu
+              [title]="'Rail'"
+              [items]="menuItems"
+              [mode]="'rail-icons'"
+              [showHeader]="false"
+              [showItemLabels]="false"
+              [backgroundColor]="previewBackground"
+              [textColor]="previewTextColor"
+              [hoverColor]="previewHoverColor"
+              [style]="previewPanelStyle"
+              [width]="'96px'"
+            ></magary-panelmenu>
+          </div>
+        </article>
+
+        <article class="layout-card">
+          <h4>{{ t("components.menu.panelMenu.layouts.grid") }}</h4>
+          <div class="layout-panel-host">
+            <magary-panelmenu
+              [title]="'Grid'"
+              [items]="menuItems"
+              [mode]="'grid'"
+              [showHeader]="false"
+              [gridColumns]="2"
+              [backgroundColor]="previewBackground"
+              [textColor]="previewTextColor"
+              [hoverColor]="previewHoverColor"
+              [style]="previewPanelStyle"
+              [width]="'100%'"
+            ></magary-panelmenu>
+          </div>
+        </article>
+      </div>
+
+      <div class="code-block">
+        <pre><code [highlight]="layoutModesHtmlExample" language="html"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>{{ t("components.menu.panelMenu.advanced.title") }}</h2>
+      <p>{{ t("components.menu.panelMenu.advanced.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="component">
         <magary-panelmenu
           [title]="'Menu Avanzado'"
           [items]="menuItems"
-          [backgroundColor]="'#ffffff'"
-          [textColor]="'#1f2937'"
-          [hoverColor]="'#007bff'"
+          [backgroundColor]="'var(--surface-0)'"
+          [textColor]="'var(--text-primary)'"
+          [hoverColor]="advancedHoverColor"
+          [style]="advancedPanelStyle"
           [shadow]="3"
           [width]="'320px'"
           [allowMultipleExpanded]="false"
@@ -60,26 +145,42 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.menu.panelMenu.apiInputs.title') }}</h2>
-      <p>{{ t('components.menu.panelMenu.apiInputs.desc') }}</p>
+      <h2>{{ t("components.menu.panelMenu.apiInputs.title") }}</h2>
+      <p>{{ t("components.menu.panelMenu.apiInputs.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>{{ t('components.menu.panelMenu.apiInputs.header.name') }}</th>
-              <th>{{ t('components.menu.panelMenu.apiInputs.header.type') }}</th>
-              <th>{{ t('components.menu.panelMenu.apiInputs.header.default') }}</th>
-              <th>{{ t('components.menu.panelMenu.apiInputs.header.description') }}</th>
+              <th>
+                {{ t("components.menu.panelMenu.apiInputs.header.name") }}
+              </th>
+              <th>
+                {{ t("components.menu.panelMenu.apiInputs.header.type") }}
+              </th>
+              <th>
+                {{ t("components.menu.panelMenu.apiInputs.header.default") }}
+              </th>
+              <th>
+                {{
+                  t("components.menu.panelMenu.apiInputs.header.description")
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
             @for (row of inputsConfig; track row.name) {
               <tr>
-                <td><code>{{ row.name }}</code></td>
-                <td><code>{{ row.type }}</code></td>
-                <td><code>{{ row.default }}</code></td>
+                <td>
+                  <code>{{ row.name }}</code>
+                </td>
+                <td>
+                  <code>{{ row.type }}</code>
+                </td>
+                <td>
+                  <code>{{ row.default }}</code>
+                </td>
                 <td>{{ t(row.descriptionKey) }}</td>
               </tr>
             }
@@ -91,24 +192,36 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.menu.panelMenu.apiOutputs.title') }}</h2>
-      <p>{{ t('components.menu.panelMenu.apiOutputs.desc') }}</p>
+      <h2>{{ t("components.menu.panelMenu.apiOutputs.title") }}</h2>
+      <p>{{ t("components.menu.panelMenu.apiOutputs.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
         <table class="api-table">
           <thead>
             <tr>
-              <th>{{ t('components.menu.panelMenu.apiOutputs.header.name') }}</th>
-              <th>{{ t('components.menu.panelMenu.apiOutputs.header.type') }}</th>
-              <th>{{ t('components.menu.panelMenu.apiOutputs.header.description') }}</th>
+              <th>
+                {{ t("components.menu.panelMenu.apiOutputs.header.name") }}
+              </th>
+              <th>
+                {{ t("components.menu.panelMenu.apiOutputs.header.type") }}
+              </th>
+              <th>
+                {{
+                  t("components.menu.panelMenu.apiOutputs.header.description")
+                }}
+              </th>
             </tr>
           </thead>
           <tbody>
             @for (row of outputsConfig; track row.name) {
               <tr>
-                <td><code>{{ row.name }}</code></td>
-                <td><code>{{ row.type }}</code></td>
+                <td>
+                  <code>{{ row.name }}</code>
+                </td>
+                <td>
+                  <code>{{ row.type }}</code>
+                </td>
                 <td>{{ t(row.descriptionKey) }}</td>
               </tr>
             }
@@ -120,7 +233,7 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.menu.panelMenu.structure.title') }}</h2>
+      <h2>{{ t("components.menu.panelMenu.structure.title") }}</h2>
     </div>
     <div class="section-content">
       <ul>
@@ -133,7 +246,7 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ t('components.menu.panelMenu.a11y.title') }}</h2>
+      <h2>{{ t("components.menu.panelMenu.a11y.title") }}</h2>
     </div>
     <div class="section-content">
       <ul>

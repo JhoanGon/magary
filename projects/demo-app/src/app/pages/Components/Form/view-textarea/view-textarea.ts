@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Highlight } from 'ngx-highlightjs';
 import { MagaryTab, MagaryTabs, MagaryTextArea } from 'ng-magary';
 import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
@@ -11,6 +11,7 @@ import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MagaryTextArea,
     MagaryTabs,
     MagaryTab,
@@ -21,6 +22,10 @@ import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 })
 export class ViewTextArea {
   readonly i18n = inject(DemoI18nService);
+  readonly bioControl = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required],
+  });
 
   importRef = `import { MagaryTextArea } from 'ng-magary';`;
 
@@ -44,4 +49,18 @@ export class ViewTextArea {
   [maxlength]="20"
   [showCounter]="true">
 </magary-textarea>`;
+
+  validationHTML = `<label id="bio-label" for="bio-field">Biography</label>
+<magary-textarea
+  [formControl]="bioControl"
+  inputId="bio-field"
+  ariaLabelledby="bio-label"
+  errorMessage="Biography is required"
+  helpText="Tell us about your role"
+></magary-textarea>`;
+
+  validationTS = `readonly bioControl = new FormControl('', {
+  nonNullable: true,
+  validators: [Validators.required],
+});`;
 }

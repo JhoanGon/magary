@@ -1,331 +1,211 @@
-<div
+<nav
   class="panel-menu"
-  [ngClass]="['shadow-' + shadow()]"
-  [class.open]="isOpen()"
+  [class]="containerClasses()"
+  [class.open]="isPanelOpen()"
   [class.collapsed]="collapsed()"
-  [ngStyle]="panelStyles()"
+  [style]="panelStyles()"
+  [attr.aria-label]="getPanelAriaLabel()"
 >
-  <div
-    class="panel-header"
-    [class.header-hovered]="hoveredHeader()"
-    (click)="toggle()"
-    (mouseenter)="onHeaderHover(true)"
-    (mouseleave)="onHeaderHover(false)"
-  >
-    @if (icon()) {
-      <span class="header-icon {{ iconClass() || '' }}">
-        <lucide-icon [name]="icon()"></lucide-icon>
-      </span>
+  @if (showHeader()) {
+    @if (mode() === "accordion") {
+      <button
+        class="panel-header"
+        type="button"
+        [class.header-hovered]="hoveredHeader()"
+        [attr.aria-expanded]="isPanelOpen()"
+        [attr.aria-controls]="panelItemsId"
+        (click)="toggle()"
+        (mouseenter)="onHeaderHover(true)"
+        (mouseleave)="onHeaderHover(false)"
+      >
+        @if (icon()) {
+          <span class="header-icon {{ iconClass() || '' }}">
+            <lucide-icon [name]="icon()"></lucide-icon>
+          </span>
+        }
+        <span class="header-title">{{ title() }}</span>
+        <span class="arrow" [class.open]="isPanelOpen()">
+          <lucide-icon name="chevron-down"></lucide-icon>
+        </span>
+      </button>
+    } @else {
+      <div
+        class="panel-header"
+        [class.header-hovered]="hoveredHeader()"
+        (mouseenter)="onHeaderHover(true)"
+        (mouseleave)="onHeaderHover(false)"
+      >
+        @if (icon()) {
+          <span class="header-icon {{ iconClass() || '' }}">
+            <lucide-icon [name]="icon()"></lucide-icon>
+          </span>
+        }
+        <span class="header-title">{{ title() }}</span>
+      </div>
     }
-    <span class="header-title">{{ title() }}</span>
-    <span class="arrow" [class.open]="isOpen()">
-      <lucide-icon name="chevron-down"></lucide-icon>
-    </span>
-  </div>
-  <ul class="panel-items" [class.expanded]="isOpen()">
-    @for (item of items(); track getItemId(item, $index)) {
-      <li class="menu-item" [ngClass]="item.styleClass">
-        @if (hasChildren(item)) {
-          <div
-            class="category-item"
-            [class.item-hovered]="isItemHovered(getItemId(item, $index))"
-            [class.disabled]="isItemDisabled(item)"
-            (click)="
-              !isItemDisabled(item) &&
-                toggleSubItem(getUniqueItemKey(item), item)
-            "
-            (mouseenter)="onItemHover(getItemId(item, $index))"
-            (mouseleave)="onItemLeave()"
-          >
-            @if (item.icon) {
-              <span class="item-icon {{ item.iconClass || '' }}">
-                <lucide-icon
-                  [name]="item.icon"
-                  [size]="item.iconSize || 15"
-                ></lucide-icon>
-              </span>
-            }
-            <span class="item-label">{{ item.label }}</span>
-            @if (item.badgeSeverity) {
-              <span
-                class="menu-badge"
-                [class]="'badge-' + (item.badgeSeverity || 'info')"
-                >{{ item.badgeSeverity }}</span
-              >
-            }
-            <span
-              class="sub-arrow"
-              [class.expanded]="isSubItemExpanded(getUniqueItemKey(item))"
+  }
+
+  <ng-container
+    [ngTemplateOutlet]="renderItems"
+    [ngTemplateOutletContext]="{
+      $implicit: items(),
+      level: 0,
+      parentKey: '',
+      parentPath: [],
+      root: true,
+    }"
+  ></ng-container>
+</nav>
+
+<ng-template #renderItems let-menuItems let-level="level" let-parentKey="parentKey" let-parentPath="parentPath" let-root="root">
+  <ul
+    [class]="getListClass(level, root)"
+    [class.expanded]="root ? isPanelOpen() : isSubItemExpanded(parentKey)"
+    [attr.id]="root ? panelItemsId : getSubmenuId(parentKey)"
+  >
+    @for (item of menuItems; track getItemKeySegment(item, $index)) {
+      @if (item.visible !== false) {
+        @let itemKey = getUniqueItemKey(item, $index, parentKey);
+        @let itemId = getItemId(item, $index, parentKey);
+        @let itemPath = buildItemPath(parentPath, item);
+        <li class="menu-item" [class]="item.styleClass">
+          @if (item.separator) {
+            <div class="menu-separator">{{ item.label }}</div>
+          } @else if (shouldRenderAsCategory(item)) {
+            <button
+              [class]="getCategoryClass(level)"
+              type="button"
+              [class.item-hovered]="isItemHovered(itemId)"
+              [class.disabled]="isItemDisabled(item)"
+              [class.active]="isItemActive(item)"
+              [attr.title]="item.label || null"
+              [attr.aria-expanded]="isSubItemExpanded(itemKey)"
+              [attr.aria-controls]="getSubmenuId(itemKey)"
+              [disabled]="isItemDisabled(item)"
+              (click)="toggleSubItem(itemKey, item)"
+              (mouseenter)="onItemHover(itemId)"
+              (mouseleave)="onItemLeave()"
             >
-              <lucide-icon
-                [name]="
-                  isSubItemExpanded(getUniqueItemKey(item)) ? 'minus' : 'plus'
-                "
-              ></lucide-icon>
-            </span>
-          </div>
-          <ul
-            class="sub-items"
-            [class.expanded]="isSubItemExpanded(getUniqueItemKey(item))"
-          >
-            @for (
-              subItem of getChildren(item);
-              track subItem.label + "-" + $index
-            ) {
-              <li [ngClass]="subItem.styleClass">
-                @if (hasChildren(subItem)) {
-                  <div
-                    class="sub-category-item"
-                    [class.item-hovered]="
-                      isItemHovered(subItem.label + '-sub-' + $index)
-                    "
-                    [class.disabled]="isItemDisabled(subItem)"
-                    (click)="
-                      !isItemDisabled(subItem) &&
-                        toggleSubItem(
-                          getUniqueItemKey(subItem, getUniqueItemKey(item)),
-                          subItem
-                        )
-                    "
-                    (mouseenter)="onItemHover(subItem.label + '-sub-' + $index)"
-                    (mouseleave)="onItemLeave()"
-                  >
-                    @if (subItem.icon) {
-                      <span class="item-icon {{ subItem.iconClass || '' }}">
-                        <lucide-icon
-                          [name]="subItem.icon"
-                          [size]="subItem.iconSize || 15"
-                        ></lucide-icon>
-                      </span>
-                    }
-                    <span class="item-label">{{ subItem.label }}</span>
-                    <span
-                      class="sub-arrow"
-                      [class.expanded]="
-                        isSubItemExpanded(
-                          getUniqueItemKey(subItem, getUniqueItemKey(item))
-                        )
-                      "
-                    >
-                      <lucide-icon
-                        [name]="
-                          isSubItemExpanded(
-                            getUniqueItemKey(subItem, getUniqueItemKey(item))
-                          )
-                            ? 'minus'
-                            : 'plus'
-                        "
-                      ></lucide-icon>
-                    </span>
-                  </div>
-                  <ul
-                    class="sub-sub-items"
-                    [class.expanded]="
-                      isSubItemExpanded(
-                        getUniqueItemKey(subItem, getUniqueItemKey(item))
-                      )
-                    "
-                  >
-                    @for (
-                      subSubItem of getChildren(subItem);
-                      track subSubItem.label + "-" + $index
-                    ) {
-                      <li [ngClass]="subSubItem.styleClass">
-                        @if (hasRoute(subSubItem)) {
-                          <a
-                            [routerLink]="getRouterLink(subSubItem)"
-                            [queryParams]="subSubItem.queryParams || undefined"
-                            [class.item-hovered]="
-                              isItemHovered(
-                                subSubItem.label + '-subsub-' + $index
-                              )
-                            "
-                            [class.disabled]="isItemDisabled(subSubItem)"
-                            (click)="
-                              onItemClick(subSubItem, 2, [
-                                item.label || '',
-                                subItem.label || '',
-                              ])
-                            "
-                            (mouseenter)="
-                              onItemHover(
-                                subSubItem.label + '-subsub-' + $index
-                              )
-                            "
-                            (mouseleave)="onItemLeave()"
-                          >
-                            @if (subSubItem.icon) {
-                              <span
-                                class="item-icon {{
-                                  subSubItem.iconClass || ''
-                                }}"
-                              >
-                                <lucide-icon
-                                  [name]="subSubItem.icon"
-                                  [size]="subSubItem.iconSize || 15"
-                                ></lucide-icon>
-                              </span>
-                            }
-                            <span class="item-label">{{
-                              subSubItem.label
-                            }}</span>
-                          </a>
-                        } @else {
-                          <div
-                            class="menu-item-base"
-                            [class.item-hovered]="
-                              isItemHovered(
-                                subSubItem.label + '-subsub-' + $index
-                              )
-                            "
-                            [class.disabled]="isItemDisabled(subSubItem)"
-                            (click)="
-                              !isItemDisabled(subSubItem) &&
-                                onItemClick(subSubItem, 2, [
-                                  item.label || '',
-                                  subItem.label || '',
-                                ])
-                            "
-                            (mouseenter)="
-                              onItemHover(
-                                subSubItem.label + '-subsub-' + $index
-                              )
-                            "
-                            (mouseleave)="onItemLeave()"
-                          >
-                            @if (subSubItem.icon) {
-                              <span
-                                class="item-icon {{
-                                  subSubItem.iconClass || ''
-                                }}"
-                              >
-                                <lucide-icon
-                                  [name]="subSubItem.icon"
-                                  [size]="subSubItem.iconSize || 15"
-                                ></lucide-icon>
-                              </span>
-                            }
-                            <span class="item-label">{{
-                              subSubItem.label
-                            }}</span>
-                          </div>
-                        }
-                      </li>
-                    }
-                  </ul>
-                } @else {
-                  @if (hasRoute(subItem)) {
-                    <a
-                      [routerLink]="getRouterLink(subItem)"
-                      [queryParams]="subItem.queryParams || undefined"
-                      [class.item-hovered]="
-                        isItemHovered(subItem.label + '-sub-' + $index)
-                      "
-                      [class.disabled]="isItemDisabled(subItem)"
-                      (click)="onItemClick(subItem, 1, [item.label || ''])"
-                      (mouseenter)="
-                        onItemHover(subItem.label + '-sub-' + $index)
-                      "
-                      (mouseleave)="onItemLeave()"
-                    >
-                      @if (subItem.icon) {
-                        <span class="item-icon {{ subItem.iconClass || '' }}">
-                          <lucide-icon
-                            [name]="subItem.icon"
-                            [size]="subItem.iconSize || 15"
-                          ></lucide-icon>
-                        </span>
-                      }
-                      <span class="item-label">{{ subItem.label }}</span>
-                      @if (subItem.badgeSeverity) {
-                        <span
-                          class="menu-badge"
-                          [class]="'badge-' + (subItem.badgeSeverity || 'info')"
-                          >{{ subItem.badgeSeverity }}</span
-                        >
-                      }
-                    </a>
-                  } @else {
-                    <div
-                      class="menu-item-base"
-                      [class.item-hovered]="
-                        isItemHovered(subItem.label + '-sub-' + $index)
-                      "
-                      [class.disabled]="isItemDisabled(subItem)"
-                      (click)="
-                        !isItemDisabled(subItem) &&
-                          onItemClick(subItem, 1, [item.label || ''])
-                      "
-                      (mouseenter)="
-                        onItemHover(subItem.label + '-sub-' + $index)
-                      "
-                      (mouseleave)="onItemLeave()"
-                    >
-                      @if (subItem.icon) {
-                        <span class="item-icon {{ subItem.iconClass || '' }}">
-                          <lucide-icon
-                            [name]="subItem.icon"
-                            [size]="subItem.iconSize || 15"
-                          ></lucide-icon>
-                        </span>
-                      }
-                      <span class="item-label">{{ subItem.label }}</span>
-                    </div>
-                  }
-                }
-              </li>
-            }
-          </ul>
-        } @else {
-          @if (hasRoute(item)) {
+              <ng-container
+                [ngTemplateOutlet]="itemContent"
+                [ngTemplateOutletContext]="{
+                  item,
+                  itemKey,
+                  category: true,
+                }"
+              ></ng-container>
+            </button>
+            <ng-container
+              [ngTemplateOutlet]="renderItems"
+              [ngTemplateOutletContext]="{
+                $implicit: getChildren(item),
+                level: level + 1,
+                parentKey: itemKey,
+                parentPath: itemPath,
+                root: false,
+              }"
+            ></ng-container>
+          } @else if (hasRoute(item)) {
             <a
+              class="menu-item-base menu-item-leaf"
               [routerLink]="getRouterLink(item)"
               [queryParams]="item.queryParams || undefined"
-              [class.item-hovered]="isItemHovered(getItemId(item, $index))"
+              [class.item-hovered]="isItemHovered(itemId)"
               [class.disabled]="isItemDisabled(item)"
-              (click)="onItemClick(item, 0)"
-              (mouseenter)="onItemHover(getItemId(item, $index))"
+              [class.active]="isItemActive(item)"
+              [attr.aria-current]="getItemAriaCurrent(item)"
+              [attr.aria-disabled]="isItemDisabled(item)"
+              [attr.tabindex]="isItemDisabled(item) ? -1 : null"
+              [attr.title]="item.label || null"
+              (click)="onLeafClick(item, level, itemPath, $event)"
+              (mouseenter)="onItemHover(itemId)"
               (mouseleave)="onItemLeave()"
             >
-              @if (item.icon) {
-                <span class="item-icon {{ item.iconClass || '' }}">
-                  <lucide-icon
-                    [name]="item.icon"
-                    [size]="item.iconSize || 15"
-                  ></lucide-icon>
-                </span>
-              }
-              <span class="item-label">{{ item.label }}</span>
-              @if (item.badgeSeverity) {
-                <span
-                  class="menu-badge"
-                  [class]="'badge-' + (item.badgeSeverity || 'info')"
-                  >{{ item.badgeSeverity }}</span
-                >
-              }
+              <ng-container
+                [ngTemplateOutlet]="itemContent"
+                [ngTemplateOutletContext]="{
+                  item,
+                  itemKey,
+                  category: false,
+                }"
+              ></ng-container>
+            </a>
+          } @else if (hasExternalUrl(item)) {
+            <a
+              class="menu-item-base menu-item-leaf"
+              [href]="getUrl(item)"
+              [attr.target]="getLinkTarget(item)"
+              [attr.rel]="getLinkRel(item)"
+              [class.item-hovered]="isItemHovered(itemId)"
+              [class.disabled]="isItemDisabled(item)"
+              [class.active]="isItemActive(item)"
+              [attr.aria-current]="getItemAriaCurrent(item)"
+              [attr.aria-disabled]="isItemDisabled(item)"
+              [attr.tabindex]="isItemDisabled(item) ? -1 : null"
+              [attr.title]="item.label || null"
+              (click)="onLeafClick(item, level, itemPath, $event)"
+              (mouseenter)="onItemHover(itemId)"
+              (mouseleave)="onItemLeave()"
+            >
+              <ng-container
+                [ngTemplateOutlet]="itemContent"
+                [ngTemplateOutletContext]="{
+                  item,
+                  itemKey,
+                  category: false,
+                }"
+              ></ng-container>
             </a>
           } @else {
-            <div
-              class="menu-item-base"
-              [class.item-hovered]="isItemHovered(getItemId(item, $index))"
+            <button
+              class="menu-item-base menu-item-leaf"
+              type="button"
+              [class.item-hovered]="isItemHovered(itemId)"
               [class.disabled]="isItemDisabled(item)"
-              (click)="!isItemDisabled(item) && onItemClick(item, 0)"
-              (mouseenter)="onItemHover(getItemId(item, $index))"
+              [class.active]="isItemActive(item)"
+              [attr.aria-current]="getItemAriaCurrent(item)"
+              [attr.title]="item.label || null"
+              [disabled]="isItemDisabled(item)"
+              (click)="onLeafClick(item, level, itemPath, $event)"
+              (mouseenter)="onItemHover(itemId)"
               (mouseleave)="onItemLeave()"
             >
-              @if (item.icon) {
-                <span class="item-icon {{ item.iconClass || '' }}">
-                  <lucide-icon
-                    [name]="item.icon"
-                    [size]="item.iconSize || 15"
-                  ></lucide-icon>
-                </span>
-              }
-              <span class="item-label">{{ item.label }}</span>
-            </div>
+              <ng-container
+                [ngTemplateOutlet]="itemContent"
+                [ngTemplateOutletContext]="{
+                  item,
+                  itemKey,
+                  category: false,
+                }"
+              ></ng-container>
+            </button>
           }
-        }
-      </li>
+        </li>
+      }
     }
   </ul>
-</div>
+</ng-template>
+
+<ng-template #itemContent let-item="item" let-itemKey="itemKey" let-category="category">
+  @if (item.emoji) {
+    <span class="item-emoji">{{ item.emoji }}</span>
+  }
+  @if (item.icon) {
+    <span class="item-icon {{ item.iconClass || '' }}">
+      <lucide-icon [name]="item.icon" [size]="item.iconSize || 15"></lucide-icon>
+    </span>
+  }
+  <span class="item-label">{{ item.label }}</span>
+  @if (getBadgeText(item); as badgeText) {
+    <span class="menu-badge" [class]="'badge-' + getBadgeSeverity(item)">
+      {{ badgeText }}
+    </span>
+  }
+  @if (category) {
+    <span class="sub-arrow" [class.expanded]="isSubItemExpanded(itemKey)">
+      <lucide-icon
+        [name]="isSubItemExpanded(itemKey) ? 'chevron-down' : 'chevron-right'"
+      ></lucide-icon>
+    </span>
+  }
+</ng-template>

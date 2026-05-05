@@ -52,10 +52,10 @@
             [options]="languageOptions"
             optionLabel="label"
             optionValue="value"
-            [value]="i18n.language()"
+            [ngModel]="i18n.language()"
             [ariaLabel]="i18n.translateUi('languageSelector')"
             size="small"
-            (valueChange)="onLanguageSelection($event)"
+            (ngModelChange)="onLanguageSelection($event)"
           ></magary-segmented>
         </div>
 

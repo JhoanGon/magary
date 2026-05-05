@@ -1,7 +1,7 @@
 <div class="container">
   <div class="header">
     <h1>{{ i18n.translateDocs('components.buttons.button.title') }}</h1>
-    <p>{{ i18n.translateDocs('components.buttons.button.subtitle') }}</p>
+    <p>{{ editorialMetadata.description }}</p>
   </div>
 
   <div class="section">
@@ -12,6 +12,39 @@
     <div class="section-content">
       <div class="code-block">
         <pre><code [highlight]="importExample" language="typescript"></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section editorial-section">
+    <div class="section-header">
+      <h2>📋 Editorial Metadata</h2>
+      <p>{{ i18n.translateDocs('components.buttons.button.import.desc') }}</p>
+    </div>
+    <div class="section-content">
+      <div class="editorial-grid">
+        <div class="editorial-card">
+          <h4>{{ i18n.translateDocs('components.buttons.button.apiInputs.header.description') }}</h4>
+          <p>{{ editorialMetadata.description }}</p>
+        </div>
+        <div class="editorial-card">
+          <h4>Usage</h4>
+          <div class="code-block">
+            <pre><code [highlight]="editorialMetadata.usage" language="html"></code></pre>
+          </div>
+        </div>
+        <div class="editorial-card">
+          <h4>Examples</h4>
+          <ul class="editorial-list">
+            @for (example of editorialMetadata.examples; track $index) {
+              <li>{{ example }}</li>
+            }
+          </ul>
+        </div>
+        <div class="editorial-card">
+          <h4>Notes</h4>
+          <p>{{ editorialMetadata.notes }}</p>
+        </div>
       </div>
     </div>
   </div>

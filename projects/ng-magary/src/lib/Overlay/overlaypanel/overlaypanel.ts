@@ -60,6 +60,7 @@ export class MagaryOverlayPanel implements OnDestroy {
   renderer = inject(Renderer2);
   el = inject(ElementRef);
   document = inject(DOCUMENT);
+  private readonly defaultView = this.document.defaultView;
 
   toggle(event: Event, target?: EventTarget | null) {
     if (this.visible()) {
@@ -118,20 +119,21 @@ export class MagaryOverlayPanel implements OnDestroy {
 
   alignWithTarget() {
     const container = this.container();
-    if (!this.target || !container) return;
+    const view = this.defaultView;
+    if (!this.target || !container || !view) return;
 
     const targetRect = this.target.getBoundingClientRect();
     const containerRect = container.nativeElement.getBoundingClientRect();
-    const scrollY = window.scrollY || this.document.documentElement.scrollTop;
-    const scrollX = window.scrollX || this.document.documentElement.scrollLeft;
+    const scrollY = view.scrollY || this.document.documentElement.scrollTop;
+    const scrollX = view.scrollX || this.document.documentElement.scrollLeft;
 
     // Basic positioning: Bottom Left aligned
     let top = targetRect.bottom + scrollY + 5; // 5px gap
     let left = targetRect.left + scrollX;
 
     // Viewport check
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
+    const viewportWidth = view.innerWidth;
+    const viewportHeight = view.innerHeight;
     const viewportBottom = scrollY + viewportHeight;
 
     // If goes off screen right
@@ -159,38 +161,38 @@ export class MagaryOverlayPanel implements OnDestroy {
   }
 
   bindScrollListener() {
-    if (!this.scrollListener) {
+    if (!this.scrollListener && this.defaultView) {
       // Use native addEventListener with capture: true to catch scroll of every parent container
       this.scrollListener = () => {
         if (this.visible()) {
           this.alignWithTarget();
         }
       };
-      window.addEventListener('scroll', this.scrollListener, true);
+      this.defaultView.addEventListener('scroll', this.scrollListener, true);
     }
   }
 
   bindResizeListener() {
-    if (!this.resizeListener) {
+    if (!this.resizeListener && this.defaultView) {
       this.resizeListener = () => {
         if (this.visible()) {
           this.alignWithTarget();
         }
       };
-      window.addEventListener('resize', this.resizeListener);
+      this.defaultView.addEventListener('resize', this.resizeListener);
     }
   }
 
   unbindScrollListener() {
-    if (this.scrollListener) {
-      window.removeEventListener('scroll', this.scrollListener, true);
+    if (this.scrollListener && this.defaultView) {
+      this.defaultView.removeEventListener('scroll', this.scrollListener, true);
       this.scrollListener = null;
     }
   }
 
   unbindResizeListener() {
-    if (this.resizeListener) {
-      window.removeEventListener('resize', this.resizeListener);
+    if (this.resizeListener && this.defaultView) {
+      this.defaultView.removeEventListener('resize', this.resizeListener);
       this.resizeListener = null;
     }
   }

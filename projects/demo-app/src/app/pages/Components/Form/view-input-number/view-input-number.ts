@@ -52,12 +52,12 @@ export class ViewInputNumber {
   basicHTML = `<div class="formgrid">
   <div class="field">
       <label>Basic</label>
-      <magary-input-number [(value)]="val1" mode="decimal" [min]="0" [max]="100" />
+      <magary-input-number [(ngModel)]="val1" mode="decimal" [min]="0" [max]="100" />
   </div>
 
   <div class="field">
       <label>Currency (USD)</label>
-      <magary-input-number [(value)]="val3" mode="currency" currency="USD" locale="en-US" />
+      <magary-input-number [(ngModel)]="val3" mode="currency" currency="USD" locale="en-US" />
   </div>
 </div>`;
 
@@ -67,12 +67,6 @@ export class ViewInputNumber {
 }`;
 
   inputs: InputNumberApiRow[] = [
-    {
-      name: 'value',
-      type: 'number',
-      default: 'null',
-      descriptionKey: 'components.form.inputNumber.inputs.value.desc',
-    },
     {
       name: 'format',
       type: 'boolean',
@@ -172,6 +166,24 @@ export class ViewInputNumber {
       default: 'null',
       descriptionKey:
         'components.form.inputNumber.inputs.maxFractionDigits.desc',
+    },
+    {
+      name: 'invalid',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.form.inputNumber.inputs.invalid.desc',
+    },
+    {
+      name: 'errorMessage',
+      type: 'string',
+      default: "''",
+      descriptionKey: 'components.form.inputNumber.inputs.errorMessage.desc',
+    },
+    {
+      name: 'helpText',
+      type: 'string',
+      default: "''",
+      descriptionKey: 'components.form.inputNumber.inputs.helpText.desc',
     },
   ];
 

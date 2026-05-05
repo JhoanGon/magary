@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 
-export interface Toast {
+/** Public payload accepted by MagaryToastService.add(). */
+export interface MagaryToastMessage {
   id?: string;
   type?: 'success' | 'info' | 'warning' | 'error';
   title?: string;
@@ -16,10 +17,10 @@ export interface Toast {
   providedIn: 'root',
 })
 export class MagaryToastService {
-  private _toasts = signal<Toast[]>([]);
+  private _toasts = signal<MagaryToastMessage[]>([]);
   readonly toasts = this._toasts.asReadonly();
 
-  add(toast: Toast) {
+  add(toast: MagaryToastMessage) {
     const id = toast.id || this.generateId();
     const newToast = { ...toast, id };
 

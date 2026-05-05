@@ -1,4 +1,4 @@
-<nav [ngClass]="styleClass()" [ngStyle]="style() || {}">
+<nav [class]="styleClass()" [style]="style() || {}">
   <ol class="magary-breadcrumb">
     @if (home(); as homeItem) {
       <li class="magary-breadcrumb-home">
@@ -18,7 +18,7 @@
           [state]="homeItem.state"
           class="magary-menuitem-link"
           (click)="itemClick($event, homeItem)"
-          [ngClass]="{ 'magary-disabled': homeItem.disabled }"
+          [class]="{ 'magary-disabled': homeItem.disabled }"
           [attr.tabindex]="homeItem.disabled ? null : '0'"
         >
           @if (homeItem.icon) {
@@ -39,7 +39,7 @@
           <span
             class="magary-menuitem-text"
             (click)="itemClick($event, item)"
-            [ngClass]="{ 'magary-disabled': item.disabled }"
+            [class]="{ 'magary-disabled': item.disabled }"
           >
             @if (item.icon) {
               <lucide-icon
@@ -69,7 +69,7 @@
             [state]="item.state"
             class="magary-menuitem-link"
             (click)="itemClick($event, item)"
-            [ngClass]="{ 'magary-disabled': item.disabled }"
+            [class]="{ 'magary-disabled': item.disabled }"
             [attr.tabindex]="item.disabled ? null : '0'"
           >
             @if (item.icon) {

@@ -7,7 +7,7 @@ export const TABLE_DOC_TEXT = {
       'Componente de tabla con paginacion, filtrado y columnas personalizables.',
     'components.data.table.import.title': 'Import',
     'components.data.table.import.desc':
-      'Importa el componente en tu modulo o componente standalone.',
+      'Importa el componente en tu componente standalone.',
     'components.data.table.basic.title': 'Ejemplo Basico',
     'components.data.table.basic.desc':
       'Tabla simple con datos y columnas definidas.',
@@ -108,7 +108,7 @@ export const TABLE_DOC_TEXT = {
       'Data table component with pagination, filtering, and customizable columns.',
     'components.data.table.import.title': 'Import',
     'components.data.table.import.desc':
-      'Import the component in your module or standalone component.',
+      'Import the component in your standalone component.',
     'components.data.table.basic.title': 'Basic Example',
     'components.data.table.basic.desc':
       'Simple table with defined data and columns.',

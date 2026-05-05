@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Highlight } from 'ngx-highlightjs';
 import { MagarySpeedDial, MagaryTab, MagaryTabs } from 'ng-magary';
 import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
@@ -58,9 +58,11 @@ interface Section {
 
 @Component({
   selector: 'magary-view-speed-dial',
+  standalone: true,
   imports: [CommonModule, MagarySpeedDial, MagaryTabs, MagaryTab, Highlight],
   templateUrl: './view-speed-dial.html',
   styleUrl: './view-speed-dial.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewSpeedDial {
   readonly i18n = inject(DemoI18nService);

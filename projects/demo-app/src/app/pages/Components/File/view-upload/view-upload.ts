@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MagaryUpload, UploadEvent } from 'ng-magary';
 import { MagaryToastService } from 'ng-magary';
@@ -54,9 +54,11 @@ type UploadOutputRow = {
 
 @Component({
   selector: 'app-view-upload',
+  standalone: true,
   imports: [CommonModule, MagaryUpload, MagaryCard, Highlight],
   templateUrl: './view-upload.html',
   styleUrl: './view-upload.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewUpload {
   readonly i18n = inject(DemoI18nService);

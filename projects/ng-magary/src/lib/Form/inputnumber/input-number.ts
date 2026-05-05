@@ -1,25 +1,24 @@
 import {
+  ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
+  effect,
   forwardRef,
+  inject,
+  Injector,
+  input,
   output,
+  Provider,
+  signal,
   viewChild,
   ViewEncapsulation,
-  ChangeDetectionStrategy,
-  OnInit,
-  signal,
-  input,
-  model,
-  effect,
-  computed,
-  Provider,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
   NgControl,
-  FormsModule,
 } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -32,7 +31,7 @@ export const INPUTNUMBER_VALUE_ACCESSOR: Provider = {
 @Component({
   selector: 'magary-input-number',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, FormsModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './input-number.html',
   styleUrl: './input-number.scss',
   providers: [INPUTNUMBER_VALUE_ACCESSOR],
@@ -46,11 +45,11 @@ export const INPUTNUMBER_VALUE_ACCESSOR: Provider = {
       'showButtons() && buttonLayout() === "horizontal"',
     '[class.magary-inputnumber-vertical]':
       'showButtons() && buttonLayout() === "vertical"',
+    '[class.magary-inputnumber-invalid]': 'isInvalid()',
   },
 })
-export class MagaryInputNumber implements OnInit, ControlValueAccessor {
-  // Signal Inputs
-  value = model<number | null>(null);
+export class MagaryInputNumber implements ControlValueAccessor {
+  readonly value = signal<number | null>(null);
 
   format = input<boolean>(true);
   showButtons = input<boolean>(false);
@@ -87,6 +86,9 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
   maxlength = input<number | null>(null);
   tabindex = input<number | null>(null);
   disabled = input<boolean>(false);
+  invalid = input<boolean>(false);
+  errorMessage = input<string>('');
+  helpText = input<string>('');
   private readonly formDisabled = signal(false);
   readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
   readonly = input<boolean>(false);
@@ -101,19 +103,17 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
   inputElement = viewChild<ElementRef<HTMLInputElement>>('input');
 
   focused = signal<boolean>(false);
-
-  // Internal logic
   public formattedValue = signal<string>('');
+  readonly uniqueId = `magary-inputnumber-${Math.random().toString(36).substring(2, 11)}`;
+  readonly errorMessageId = `${this.uniqueId}-error`;
+  readonly helpMessageId = `${this.uniqueId}-help`;
+  readonly resolvedInputId = computed(() => this.inputId() || this.uniqueId);
+  private readonly injector = inject(Injector);
 
   onModelChange: (value: number | null) => void = () => {};
   onModelTouched: () => void = () => {};
-
-  ngOnInit() {
-    // initial format
-    if (this.value() != null) {
-      this.updateInput(this.value(), false);
-    }
-  }
+  private touched = false;
+  private resolvedNgControl: NgControl | null | undefined;
 
   constructor() {
     effect(() => {
@@ -123,6 +123,26 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
         this.updateInput(val, true);
       }
     });
+  }
+
+  isInvalid(): boolean {
+    return this.invalid() || this.hasControlError();
+  }
+
+  hasVisibleErrorMessage(): boolean {
+    return this.isInvalid() && this.errorMessage().trim().length > 0;
+  }
+
+  describedBy(): string | null {
+    if (this.hasVisibleErrorMessage()) {
+      return this.errorMessageId;
+    }
+
+    if (this.helpText().trim().length > 0) {
+      return this.helpMessageId;
+    }
+
+    return null;
   }
 
   // --- Formatting ---
@@ -229,6 +249,10 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
   // --- Event Handlers ---
 
   onUserInput(event: Event) {
+    if (this.isDisabled() || this.readonly()) {
+      return;
+    }
+
     const inputVal = (event.target as HTMLInputElement).value;
 
     // If not formatting, just take value
@@ -261,7 +285,7 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
 
   onInputBlur(event: FocusEvent) {
     this.focused.set(false);
-    this.onModelTouched();
+    this.markAsTouched();
 
     let currentVal = this.value();
 
@@ -385,5 +409,31 @@ export class MagaryInputNumber implements OnInit, ControlValueAccessor {
 
   setDisabledState(val: boolean): void {
     this.formDisabled.set(val);
+  }
+
+  private markAsTouched(): void {
+    if (this.touched) {
+      return;
+    }
+
+    this.touched = true;
+    this.onModelTouched();
+  }
+
+  private hasControlError(): boolean {
+    const control = this.getNgControl()?.control;
+    return !!control && control.invalid && control.touched;
+  }
+
+  private getNgControl(): NgControl | null {
+    if (this.resolvedNgControl !== undefined) {
+      return this.resolvedNgControl;
+    }
+
+    this.resolvedNgControl = this.injector.get(NgControl, null, {
+      self: true,
+      optional: true,
+    });
+    return this.resolvedNgControl;
   }
 }

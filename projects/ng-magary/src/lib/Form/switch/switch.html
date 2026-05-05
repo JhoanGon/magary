@@ -4,7 +4,9 @@
       type="checkbox"
       [id]="uniqueId"
       [checked]="checked()"
-      [disabled]="disabled()"
+      [disabled]="isDisabled()"
+      [attr.aria-invalid]="isInvalid() ? 'true' : null"
+      [attr.aria-describedby]="describedBy()"
       (change)="onChange($event)"
       (focus)="onFocus()"
       (blur)="onBlur()"
@@ -17,6 +19,20 @@
         <div class="handle-shadow"></div>
       </div>
     </div>
-    <span *ngIf="label()" class="switch-label">{{ label() }}</span>
+    @if (label()) {
+      <span class="switch-label">{{ label() }}</span>
+    }
   </label>
+
+  @if (hasVisibleErrorMessage() || helpText()) {
+    <div class="switch-message">
+      @if (hasVisibleErrorMessage()) {
+        <span class="error-message" [id]="errorMessageId" role="alert">
+          {{ errorMessage() }}
+        </span>
+      } @else if (helpText()) {
+        <span class="help-message" [id]="helpMessageId">{{ helpText() }}</span>
+      }
+    </div>
+  }
 </div>

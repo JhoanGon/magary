@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MagaryButton,
   MagaryCard,
@@ -74,8 +75,10 @@ type CardEventRow = {
   ],
   templateUrl: './view-card.html',
   styleUrl: './view-card.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewCard {
+  private readonly document = inject(DOCUMENT);
   private toastService: MagaryToastService = inject(MagaryToastService);
   readonly i18n = inject(DemoI18nService);
   readonly t = (key: DocsTextKey) => this.i18n.translateDocs(key);
@@ -462,10 +465,11 @@ export class ViewCard {
   }
 
   private showNotificationIfAllowed(): void {
-    if (!('Notification' in window)) return;
+    const NotificationApi = this.document.defaultView?.Notification;
+    if (!NotificationApi) return;
 
-    if (Notification.permission === 'granted') {
-      new Notification(this.t('components.panel.card.notification.title'), {
+    if (NotificationApi.permission === 'granted') {
+      new NotificationApi(this.t('components.panel.card.notification.title'), {
         body: this.t('components.panel.card.notification.body'),
         icon: '/assets/Magary.png',
         tag: 'magary-card-click',
@@ -473,8 +477,8 @@ export class ViewCard {
       return;
     }
 
-    if (Notification.permission !== 'denied') {
-      Notification.requestPermission().then((permission) => {
+    if (NotificationApi.permission !== 'denied') {
+      NotificationApi.requestPermission().then((permission) => {
         if (permission === 'granted') {
           this.showNotificationIfAllowed();
         }

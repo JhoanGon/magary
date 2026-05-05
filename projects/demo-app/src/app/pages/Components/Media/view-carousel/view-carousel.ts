@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  NgModule,
   computed,
   inject,
   signal,
@@ -9,7 +8,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  MagaryCarouselComponent,
+  MagaryCarousel,
   MagaryButton,
   MagaryTabs,
   MagaryTab,
@@ -25,28 +24,7 @@ import { DemoI18nService } from '../../../../i18n/demo-i18n.service';
 import { DocsTextKey } from '../../../../i18n/translations/docs-text.translations';
 import {
   LucideAngularModule,
-  Search,
-  Star,
-  ShoppingCart,
-  Heart,
-  Share2,
-  Plus,
 } from 'lucide-angular';
-
-@NgModule({
-  imports: [
-    LucideAngularModule.pick({
-      Search,
-      Star,
-      ShoppingCart,
-      Heart,
-      Share2,
-      Plus,
-    }),
-  ],
-  exports: [LucideAngularModule],
-})
-export class CarouselDemoIconsModule {}
 
 type InventoryStatus = 'INSTOCK' | 'LOWSTOCK' | 'OUTOFSTOCK';
 
@@ -82,14 +60,14 @@ type CarouselOutputRow = {
   imports: [
     CommonModule,
     FormsModule,
-    MagaryCarouselComponent,
+    MagaryCarousel,
     MagaryButton,
     Highlight,
     MagaryTabs,
     MagaryTab,
     MagaryCard,
     MagaryTag,
-    CarouselDemoIconsModule,
+    LucideAngularModule,
   ],
   templateUrl: './view-carousel.html',
   styleUrl: './view-carousel.scss',

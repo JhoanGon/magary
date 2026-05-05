@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://magary.dev/schemas/manifest.json",
+  "title": "Magary Manifest",
+  "description": "Canonical manifest of public API exports generated from public-api.ts via the TypeScript compiler API.",
+  "type": "object",
+  "required": ["version", "generatedAt", "exports"],
+  "properties": {
+    "version": {
+      "type": "number",
+      "description": "Schema version of this manifest file."
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of generation."
+    },
+    "exports": {
+      "type": "array",
+      "description": "All public exports from the barrel file.",
+      "items": {
+        "type": "object",
+        "required": ["name", "kind", "sourceFile"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The exported identifier name."
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "component",
+              "directive",
+              "service",
+              "type",
+              "constant",
+              "function",
+              "unknown"
+            ],
+            "description": "The classified kind of this export."
+          },
+          "sourceFile": {
+            "type": "string",
+            "description": "Relative path to the source file containing the declaration."
+          },
+          "selector": {
+            "type": "string",
+            "description": "CSS selector from @Component or @Directive decorator. Only present for components and directives."
+          },
+          "inputs": {
+            "type": "array",
+            "description": "Input properties extracted from input() or model() signal declarations.",
+            "items": {
+              "type": "object",
+              "required": ["name", "type", "required"],
+              "properties": {
+                "name": { "type": "string" },
+                "type": { "type": "string" },
+                "required": { "type": "boolean" },
+                "isModel": { "type": "boolean" }
+              }
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "description": "Output properties extracted from output() declarations.",
+            "items": {
+              "type": "object",
+              "required": ["name", "type"],
+              "properties": {
+                "name": { "type": "string" },
+                "type": { "type": "string" }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
