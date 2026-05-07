@@ -1,7 +1,7 @@
 # Migration and Compatibility Guide
 
-Date: `2026-02-27`
-Target package: `ng-magary@0.0.11`
+Date: `2026-05-06`
+Target package: `ng-magary@0.0.24`
 
 ## Compatibility Matrix
 
@@ -33,7 +33,18 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 ## Migration by Version
 
-### From <= `0.0.10` to `0.0.11`
+### From `0.0.23` to `0.0.24`
+
+Expected impact:
+- **No breaking changes.** Public API contract is unchanged.
+- Governance documentation added (`SEMVER_POLICY.md`, `RELEASE_WORKFLOW.md`, `RELEASE_CANDIDATE_CHECKLIST.md`).
+- Data components (`DataView`, `OrderList`, `PickList`, `Tree`) received async state handling improvements — behavior is backward-compatible.
+
+Recommended consumer actions:
+1. No migration required. Upgrade and run your existing test suite.
+2. If you use Data components, verify async loading/error states render as expected.
+
+### From `<= 0.0.10` to `0.0.11`
 
 Expected impact:
 - No intentional public API breaking changes.

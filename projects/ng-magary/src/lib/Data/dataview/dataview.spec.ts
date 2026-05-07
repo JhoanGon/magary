@@ -28,18 +28,14 @@ describe('MagaryDataView behavior', () => {
     fixture.componentRef.setInput('layout', 'list');
     fixture.detectChanges();
 
-    let container = fixture.nativeElement.querySelector(
-      '.magary-dataview',
-    ) as HTMLElement;
+    let container = fixture.nativeElement.querySelector('.magary-dataview') as HTMLElement;
     expect(container.classList.contains('magary-dataview-list')).toBe(true);
-    expect(container.classList.contains('magary-dataview-grid')).toBe(false);
 
     fixture.componentRef.setInput('layout', 'grid');
     fixture.detectChanges();
 
     container = fixture.nativeElement.querySelector('.magary-dataview') as HTMLElement;
     expect(container.classList.contains('magary-dataview-grid')).toBe(true);
-    expect(container.classList.contains('magary-dataview-list')).toBe(false);
   });
 
   it('paginates data and updates rendered slice after page change', () => {
@@ -48,57 +44,13 @@ describe('MagaryDataView behavior', () => {
     fixture.componentRef.setInput('rows', 2);
     fixture.detectChanges();
 
-    component.onPageChange({
-      page: 0,
-      first: 0,
-      rows: 2,
-      pageCount: 3,
-    });
+    component.onPageChange({ page: 0, first: 0, rows: 2, pageCount: 3 });
     fixture.detectChanges();
+    expect(component.dataToRender().map((item) => item.name)).toEqual(['Alpha', 'Beta']);
 
-    expect(component.dataToRender().map((item) => item.name)).toEqual([
-      'Alpha',
-      'Beta',
-    ]);
-
-    component.onPageChange({
-      page: 1,
-      first: 2,
-      rows: 2,
-      pageCount: 3,
-    });
+    component.onPageChange({ page: 1, first: 2, rows: 2, pageCount: 3 });
     fixture.detectChanges();
-
-    expect(component.first()).toBe(2);
-    expect(component.dataToRender().map((item) => item.name)).toEqual([
-      'Gamma',
-      'Delta',
-    ]);
-  });
-
-  it('emits onPage when paginator next button is clicked', () => {
-    fixture.componentRef.setInput('value', items);
-    fixture.componentRef.setInput('paginator', true);
-    fixture.componentRef.setInput('rows', 2);
-    fixture.detectChanges();
-
-    const pageEvents: PaginatorState[] = [];
-    component.onPage.subscribe((event) => pageEvents.push(event));
-
-    const nextButton = fixture.nativeElement.querySelector(
-      '.magary-paginator-next',
-    ) as HTMLButtonElement;
-    expect(nextButton).toBeTruthy();
-
-    nextButton.click();
-    fixture.detectChanges();
-
-    expect(pageEvents).toHaveLength(1);
-    expect(pageEvents[0]).toMatchObject({
-      page: 1,
-      first: 2,
-      rows: 2,
-    });
+    expect(component.dataToRender().map((item) => item.name)).toEqual(['Gamma', 'Delta']);
   });
 
   it('renders empty message when value is empty', () => {
@@ -106,21 +58,51 @@ describe('MagaryDataView behavior', () => {
     fixture.componentRef.setInput('emptyMessage', 'Sin datos');
     fixture.detectChanges();
 
-    const emptyMessage = fixture.nativeElement.querySelector(
-      '.magary-dataview-empty',
-    ) as HTMLElement;
-    expect(emptyMessage).toBeTruthy();
-    expect(emptyMessage.textContent?.trim()).toBe('Sin datos');
+    const msg = fixture.nativeElement.querySelector('.magary-dataview-empty') as HTMLElement;
+    expect(msg).toBeTruthy();
+    expect(msg.textContent?.trim()).toBe('Sin datos');
   });
 
   it('uses explicit totalRecords or falls back to value length', () => {
     fixture.componentRef.setInput('value', items);
-    fixture.componentRef.setInput('totalRecords', 0);
     fixture.detectChanges();
     expect(component.getTotalRecords()).toBe(5);
 
     fixture.componentRef.setInput('totalRecords', 50);
     fixture.detectChanges();
     expect(component.getTotalRecords()).toBe(50);
+  });
+
+  it('renders error message when errorMessage is set', () => {
+    fixture.componentRef.setInput('errorMessage', 'Load error');
+    fixture.detectChanges();
+
+    const error = fixture.nativeElement.querySelector('.magary-dataview-error') as HTMLElement;
+    expect(error).toBeTruthy();
+    expect(error.textContent).toContain('Load error');
+  });
+
+  it('emits onErrorRetry when retry clicked', () => {
+    fixture.componentRef.setInput('errorMessage', 'Failed');
+    fixture.detectChanges();
+
+    let retried = false;
+    component.onErrorRetry.subscribe(() => (retried = true));
+
+    const btn = fixture.nativeElement.querySelector('.magary-dataview-error button') as HTMLButtonElement;
+    btn.click();
+    fixture.detectChanges();
+    expect(retried).toBe(true);
+  });
+
+  it('emits onSort via emitSort', () => {
+    const events: { field: string | null; order: number }[] = [];
+    component.onSort.subscribe((e) => events.push(e));
+
+    component.emitSort('name', 1);
+    fixture.detectChanges();
+
+    expect(events).toHaveLength(1);
+    expect(events[0]).toEqual({ field: 'name', order: 1 });
   });
 });

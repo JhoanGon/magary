@@ -1,95 +1,110 @@
-<div class="picklist-list-wrapper source-wrapper">
-  @if (sourceHeader()) {
-    <div class="picklist-header">{{ sourceHeader() }}</div>
-  }
-  <ul #sourceList class="picklist-list" [style]="sourceStyle()" tabindex="0">
-    @for (item of source(); track item) {
-      <li
-        #sourceItem
-        class="picklist-item"
-        [class.picklist-item-drag-enabled]="dragDrop()"
-        [class.selected]="selectedSource().includes(item)"
-        (click)="onSourceItemClick($event, item)"
-      >
-        <ng-container
-          *ngTemplateOutlet="
-            itemTemplate() || defaultTemplate;
-            context: { $implicit: item }
-          "
-        ></ng-container>
-      </li>
+@if (errorMessage()) {
+  <div class="magary-picklist-error" role="alert">
+    <span>{{ errorMessage() }}</span>
+    <button type="button" (click)="onErrorRetry.emit()">Retry</button>
+  </div>
+} @else if (loading()) {
+  <div class="magary-picklist-loading" role="status" aria-label="Loading pick list">
+    @for (i of [0, 1, 2]; track i) {
+      <div class="picklist-skeleton-item">
+        <div class="skeleton-line skeleton-line-text"></div>
+      </div>
     }
-  </ul>
-</div>
+  </div>
+} @else {
+  <div class="picklist-list-wrapper source-wrapper">
+    @if (sourceHeader()) {
+      <div class="picklist-header">{{ sourceHeader() }}</div>
+    }
+    <ul #sourceList class="picklist-list" [style]="sourceStyle()" tabindex="0">
+      @for (item of source(); track item) {
+        <li
+          #sourceItem
+          class="picklist-item"
+          [class.picklist-item-drag-enabled]="dragDrop()"
+          [class.selected]="selectedSource().includes(item)"
+          (click)="onSourceItemClick($event, item)"
+        >
+          <ng-container
+            *ngTemplateOutlet="
+              itemTemplate() || defaultTemplate;
+              context: { $implicit: item }
+            "
+          ></ng-container>
+        </li>
+      }
+    </ul>
+  </div>
 
-@if (showSourceControls() || showTargetControls()) {
-  <div class="picklist-buttons">
-    <magary-button
-      type="button"
-      icon="chevrons-right"
-      severity="secondary"
-      size="small"
-      [iconSize]="16"
-      (buttonClick)="moveAllRight()"
-      [disabled]="source().length === 0"
-    >
-    </magary-button>
-    <magary-button
-      type="button"
-      icon="chevron-right"
-      (buttonClick)="moveRight()"
-      [disabled]="selectedSource().length === 0"
-      severity="secondary"
-      size="small"
-      [iconSize]="16"
-    >
-    </magary-button>
-    <magary-button
-      type="button"
-      icon="chevron-left"
-      (buttonClick)="moveLeft()"
-      [disabled]="selectedTarget().length === 0"
-      severity="secondary"
-      size="small"
-      [iconSize]="16"
-    >
-    </magary-button>
-    <magary-button
-      type="button"
-      icon="chevrons-left"
-      (buttonClick)="moveAllLeft()"
-      [disabled]="target().length === 0"
-      severity="secondary"
-      size="small"
-      [iconSize]="16"
-    >
-    </magary-button>
+  @if (showSourceControls() || showTargetControls()) {
+    <div class="picklist-buttons">
+      <magary-button
+        type="button"
+        icon="chevrons-right"
+        severity="secondary"
+        size="small"
+        [iconSize]="16"
+        (buttonClick)="moveAllRight()"
+        [disabled]="source().length === 0"
+      >
+      </magary-button>
+      <magary-button
+        type="button"
+        icon="chevron-right"
+        (buttonClick)="moveRight()"
+        [disabled]="selectedSource().length === 0"
+        severity="secondary"
+        size="small"
+        [iconSize]="16"
+      >
+      </magary-button>
+      <magary-button
+        type="button"
+        icon="chevron-left"
+        (buttonClick)="moveLeft()"
+        [disabled]="selectedTarget().length === 0"
+        severity="secondary"
+        size="small"
+        [iconSize]="16"
+      >
+      </magary-button>
+      <magary-button
+        type="button"
+        icon="chevrons-left"
+        (buttonClick)="moveAllLeft()"
+        [disabled]="target().length === 0"
+        severity="secondary"
+        size="small"
+        [iconSize]="16"
+      >
+      </magary-button>
+    </div>
+  }
+
+  <div class="picklist-list-wrapper target-wrapper">
+    @if (targetHeader()) {
+      <div class="picklist-header">{{ targetHeader() }}</div>
+    }
+    <ul #targetList class="picklist-list" [style]="targetStyle()" tabindex="0">
+      @for (item of target(); track item) {
+        <li
+          #targetItem
+          class="picklist-item"
+          [class.picklist-item-drag-enabled]="dragDrop()"
+          [class.selected]="selectedTarget().includes(item)"
+          (click)="onTargetItemClick($event, item)"
+        >
+          <ng-container
+            *ngTemplateOutlet="
+              itemTemplate() || defaultTemplate;
+              context: { $implicit: item }
+            "
+          ></ng-container>
+        </li>
+      }
+    </ul>
   </div>
 }
-
-<div class="picklist-list-wrapper target-wrapper">
-  @if (targetHeader()) {
-    <div class="picklist-header">{{ targetHeader() }}</div>
-  }
-  <ul #targetList class="picklist-list" [style]="targetStyle()" tabindex="0">
-    @for (item of target(); track item) {
-      <li
-        #targetItem
-        class="picklist-item"
-        [class.picklist-item-drag-enabled]="dragDrop()"
-        [class.selected]="selectedTarget().includes(item)"
-        (click)="onTargetItemClick($event, item)"
-      >
-        <ng-container
-          *ngTemplateOutlet="
-            itemTemplate() || defaultTemplate;
-            context: { $implicit: item }
-          "
-        ></ng-container>
-      </li>
-    }
-  </ul>
-</div>
 
 <ng-template #defaultTemplate let-item>
   {{ getItemLabel(item) }}

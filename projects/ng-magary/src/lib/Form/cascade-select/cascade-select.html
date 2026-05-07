@@ -42,7 +42,7 @@
         (keydown)="onPanelKeydown($event)"
         tabindex="-1"
       >
-        <ul class="select-list" role="listbox" [id]="listboxId">
+        <ul class="select-list" role="listbox" [id]="listboxId" [attr.aria-label]="listboxLabel()">
           <ng-template #optionTemplate let-items let-parentPath="parentPath" let-depth="depth">
             @for (option of items; track $index) {
               <li
@@ -71,7 +71,7 @@
 
                 @if (isOptionGroup(option) && (getOptionChildren(option)?.length ?? 0) > 0) {
                   <div class="submenu" [class.open]="isGroupExpanded(createPath(parentPath, $index))">
-                    <ul class="select-list" role="listbox">
+                    <ul class="select-list" role="listbox" [attr.aria-label]="submenuAriaLabel(option)">
                       <ng-container
                         *ngTemplateOutlet="
                           optionTemplate;

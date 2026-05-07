@@ -280,6 +280,11 @@ test.describe('ci a11y smoke', () => {
           .first();
         await trigger.click();
         await expect(currentPage.locator('.select-panel:visible')).toHaveCount(1);
+
+        // Expand first group to reveal nested submenu listbox
+        const firstGroup = currentPage.locator('.select-item.group').first();
+        await firstGroup.click();
+        await expect(currentPage.locator('.submenu.open')).toHaveCount(1);
       },
     );
   });

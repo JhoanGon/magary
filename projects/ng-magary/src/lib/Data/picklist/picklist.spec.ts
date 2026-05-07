@@ -1,5 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { importProvidersFrom } from '@angular/core';
+import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryPickList } from './picklist';
+
+const kebabCase = (value: string) =>
+  value
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([a-zA-Z])([0-9])/g, '$1-$2')
+    .toLowerCase();
+
+const lucideIcons = Object.entries(icons).reduce(
+  (acc, [key, icon]) => {
+    acc[key] = icon;
+    acc[kebabCase(key)] = icon;
+    return acc;
+  },
+  {} as Record<string, (typeof icons)[keyof typeof icons]>,
+);
 
 describe('MagaryPickList behavior', () => {
   let fixture: ComponentFixture<MagaryPickList>;
@@ -11,12 +28,8 @@ describe('MagaryPickList behavior', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MagaryPickList],
-    })
-      // These tests validate list transfer/selection logic and don't require child rendering.
-      .overrideComponent(MagaryPickList, {
-        set: { template: '<div></div>' },
-      })
-      .compileComponents();
+      providers: [importProvidersFrom(LucideAngularModule.pick(lucideIcons))],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MagaryPickList);
     component = fixture.componentInstance;
@@ -102,5 +115,47 @@ describe('MagaryPickList behavior', () => {
       sourceItems[0],
     );
     expect(component.selectedSource().map((item) => item.label)).toEqual(['B']);
+  });
+
+  // === Loading and error states ===
+
+  it('renders loading skeleton when loading is true', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+
+    const skeleton = fixture.nativeElement.querySelector(
+      '.magary-picklist-loading',
+    ) as HTMLElement;
+    expect(skeleton).toBeTruthy();
+  });
+
+  it('renders error message and retry when errorMessage is set', () => {
+    fixture.componentRef.setInput('errorMessage', 'Failed to load');
+    fixture.detectChanges();
+
+    const error = fixture.nativeElement.querySelector(
+      '.magary-picklist-error',
+    ) as HTMLElement;
+    expect(error).toBeTruthy();
+    expect(error.textContent).toContain('Failed to load');
+
+    const retryBtn = error.querySelector('button') as HTMLButtonElement;
+    expect(retryBtn).toBeTruthy();
+  });
+
+  it('emits onErrorRetry on retry click', () => {
+    fixture.componentRef.setInput('errorMessage', 'Error');
+    fixture.detectChanges();
+
+    let retried = false;
+    component.onErrorRetry.subscribe(() => (retried = true));
+
+    const retryBtn = fixture.nativeElement.querySelector(
+      '.magary-picklist-error button',
+    ) as HTMLButtonElement;
+    retryBtn.click();
+    fixture.detectChanges();
+
+    expect(retried).toBe(true);
   });
 });

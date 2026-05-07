@@ -51,6 +51,8 @@ export class MagaryOrderList implements AfterViewInit, OnDestroy {
   );
   dragDrop = input(false, { transform: booleanAttribute });
   showControls = input(true, { transform: booleanAttribute });
+  loading = input<boolean>(false);
+  errorMessage = input<string>('');
 
   // Data
   value = model<MagaryOrderListItem[]>([]);
@@ -63,6 +65,7 @@ export class MagaryOrderList implements AfterViewInit, OnDestroy {
   // Outputs
   onReorder = output<MagaryOrderListItem[]>();
   onSelectionChange = output<MagaryOrderListItem[]>();
+  onErrorRetry = output<void>();
 
   itemElements = viewChildren<ElementRef<HTMLLIElement>>('orderListItem');
   private ngZone = inject(NgZone);

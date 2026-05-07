@@ -59,6 +59,8 @@ export class MagaryPickList implements AfterViewInit, OnDestroy {
   showSourceControls = input<boolean>(true);
   showTargetControls = input<boolean>(true);
   dragDrop = input(false, { transform: booleanAttribute });
+  loading = input<boolean>(false);
+  errorMessage = input<string>('');
 
   // Data Models
   source = model<MagaryPickListItem[]>([]);
@@ -113,6 +115,7 @@ export class MagaryPickList implements AfterViewInit, OnDestroy {
   onMoveToSource = output<{ items: MagaryPickListItem[] }>();
   onMoveAllToTarget = output<{ items: MagaryPickListItem[] }>();
   onMoveAllToSource = output<{ items: MagaryPickListItem[] }>();
+  onErrorRetry = output<void>();
 
   // Methods
   moveRight() {

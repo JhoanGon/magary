@@ -54,6 +54,9 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
   private readonly uniqueId = `magary-cascade-select-${Math.random().toString(36).substring(2, 11)}`;
   readonly resolvedInputId = computed(() => this.inputId().trim() || `${this.uniqueId}-trigger`);
   readonly listboxId = `${this.uniqueId}-listbox`;
+  readonly listboxLabel = computed(() =>
+    this.placeholder().trim().length > 0 ? `${this.placeholder()} options` : 'Select options',
+  );
   readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
   private readonly injector = inject(Injector);
 
@@ -184,6 +187,11 @@ export class MagaryCascadeSelect implements ControlValueAccessor {
       }
     }
     return String(option[this.optionLabel()] ?? '');
+  }
+
+  public submenuAriaLabel(option: CascadeSelectOption): string {
+    const parentLabel = this.getOptionLabel(option);
+    return parentLabel ? `${parentLabel} sub-options` : 'Sub-options';
   }
 
   public getOptionValue(option: CascadeSelectOption): unknown {
