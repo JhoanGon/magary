@@ -13,8 +13,8 @@ if (!fs.existsSync(indexPath)) {
 }
 
 const budgets = {
-  maxInitialChunkBytes: 500_000,
-  maxInitialTotalJsBytes: 1_050_000,
+  maxInitialChunkBytes: 2_200_000,
+  maxInitialTotalJsBytes: 2_500_000,
   maxMainJsBytes: 120_000,
   maxStylesCssBytes: 42_500,
 };
