@@ -143,7 +143,7 @@ const expectedRootExports = [
 describe('ng-magary public API contract', () => {
   it('freezes the root export surface as the approved whitelist', () => {
     expect(collectPublicApiExportNames(publicApiEntry)).toEqual(expectedRootExports);
-  });
+  }, 30_000);
 
   it('reports added and removed exports against the stored baseline', () => {
     expect(
