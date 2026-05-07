@@ -250,7 +250,7 @@ describe('MagarySteps styling', () => {
       { label: 'C' },
     ]);
     fixture.componentRef.setInput('activeIndex', 0);
-    fixture.componentRef.setInput('style', { border: '1px solid red' } as any);
+    fixture.componentRef.setInput('style', { border: '1px solid red' } as Record<string, string | number | null | undefined>);
     fixture.componentRef.setInput('styleClass', 'custom-steps');
     fixture.componentRef.setInput('orientation', 'vertical');
     fixture.detectChanges();

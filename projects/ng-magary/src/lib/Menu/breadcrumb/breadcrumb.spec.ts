@@ -151,7 +151,7 @@ describe('MagaryBreadcrumb', () => {
 
   it('accepts styleClass and style inputs', () => {
     fixture.componentRef.setInput('styleClass', 'custom-bc');
-    fixture.componentRef.setInput('style', { color: 'red' } as any);
+    fixture.componentRef.setInput('style', { color: 'red' } as Record<string, string | number | null | undefined>);
     fixture.detectChanges();
 
     const nav = fixture.nativeElement.querySelector('nav');

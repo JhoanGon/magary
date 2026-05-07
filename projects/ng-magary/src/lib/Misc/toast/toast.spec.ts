@@ -152,7 +152,7 @@ describe('MagaryToast styling inputs', () => {
     fixture = TestBed.createComponent(MagaryToast);
     service = TestBed.inject(MagaryToastService);
 
-    fixture.componentRef.setInput('position', 'bottom-left' as any);
+    fixture.componentRef.setInput('position', 'bottom-left' as const);
     fixture.componentRef.setInput('baseZIndex', 9999);
     fixture.componentRef.setInput('offsetX', '2rem');
     fixture.componentRef.setInput('offsetY', '3rem');
