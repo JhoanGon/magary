@@ -1,5 +1,21 @@
+import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryGalleria } from './galleria';
+
+const kebabCase = (value: string) =>
+  value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+type LucideIconData = (typeof icons)[keyof typeof icons];
+
+const lucideIcons = Object.entries(icons).reduce(
+  (acc, [key, icon]) => {
+    acc[key] = icon;
+    acc[kebabCase(key)] = icon;
+    return acc;
+  },
+  {} as Record<string, LucideIconData>,
+);
 
 describe('MagaryGalleria mobile gestures', () => {
   let fixture: ComponentFixture<MagaryGalleria>;
@@ -8,6 +24,9 @@ describe('MagaryGalleria mobile gestures', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MagaryGalleria],
+      providers: [
+        importProvidersFrom(LucideAngularModule.pick(lucideIcons)),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MagaryGalleria);

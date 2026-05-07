@@ -287,4 +287,25 @@ describe('MagaryCascadeSelect behavior', () => {
       hostFixture.nativeElement.querySelector('.error-message')?.textContent,
     ).toContain('Region is required');
   });
+
+  it('provides accessible names to all listbox elements including nested submenus', () => {
+    component.isOpen.set(true);
+    fixture.detectChanges();
+
+    const topLevelListbox = fixture.nativeElement.querySelector(
+      '.select-panel > .select-list[role="listbox"]',
+    ) as HTMLElement;
+    expect(topLevelListbox.getAttribute('aria-label')).toContain('options');
+
+    // Expand the first group to reveal the submenu
+    const firstItem = fixture.nativeElement.querySelector('.select-item') as HTMLElement;
+    firstItem.click();
+    fixture.detectChanges();
+
+    const submenuListbox = fixture.nativeElement.querySelector(
+      '.submenu.open > .select-list[role="listbox"]',
+    ) as HTMLElement;
+    expect(submenuListbox).not.toBeNull();
+    expect(submenuListbox.getAttribute('aria-label')).toContain('sub-options');
+  });
 });

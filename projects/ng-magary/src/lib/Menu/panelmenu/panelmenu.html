@@ -65,9 +65,6 @@
   >
     @for (item of menuItems; track getItemKeySegment(item, $index)) {
       @if (item.visible !== false) {
-        @let itemKey = getUniqueItemKey(item, $index, parentKey);
-        @let itemId = getItemId(item, $index, parentKey);
-        @let itemPath = buildItemPath(parentPath, item);
         <li class="menu-item" [class]="item.styleClass">
           @if (item.separator) {
             <div class="menu-separator">{{ item.label }}</div>
@@ -75,22 +72,22 @@
             <button
               [class]="getCategoryClass(level)"
               type="button"
-              [class.item-hovered]="isItemHovered(itemId)"
+              [class.item-hovered]="isItemHovered(getItemId(item, $index, parentKey))"
               [class.disabled]="isItemDisabled(item)"
               [class.active]="isItemActive(item)"
               [attr.title]="item.label || null"
-              [attr.aria-expanded]="isSubItemExpanded(itemKey)"
-              [attr.aria-controls]="getSubmenuId(itemKey)"
+              [attr.aria-expanded]="isSubItemExpanded(getUniqueItemKey(item, $index, parentKey))"
+              [attr.aria-controls]="getSubmenuId(getUniqueItemKey(item, $index, parentKey))"
               [disabled]="isItemDisabled(item)"
-              (click)="toggleSubItem(itemKey, item)"
-              (mouseenter)="onItemHover(itemId)"
+              (click)="toggleSubItem(getUniqueItemKey(item, $index, parentKey), item)"
+              (mouseenter)="onItemHover(getItemId(item, $index, parentKey))"
               (mouseleave)="onItemLeave()"
             >
               <ng-container
                 [ngTemplateOutlet]="itemContent"
                 [ngTemplateOutletContext]="{
                   item,
-                  itemKey,
+                  itemKey: getUniqueItemKey(item, $index, parentKey),
                   category: true,
                 }"
               ></ng-container>
@@ -100,8 +97,8 @@
               [ngTemplateOutletContext]="{
                 $implicit: getChildren(item),
                 level: level + 1,
-                parentKey: itemKey,
-                parentPath: itemPath,
+                parentKey: getUniqueItemKey(item, $index, parentKey),
+                parentPath: buildItemPath(parentPath, item),
                 root: false,
               }"
             ></ng-container>
@@ -110,22 +107,22 @@
               class="menu-item-base menu-item-leaf"
               [routerLink]="getRouterLink(item)"
               [queryParams]="item.queryParams || undefined"
-              [class.item-hovered]="isItemHovered(itemId)"
+              [class.item-hovered]="isItemHovered(getItemId(item, $index, parentKey))"
               [class.disabled]="isItemDisabled(item)"
               [class.active]="isItemActive(item)"
               [attr.aria-current]="getItemAriaCurrent(item)"
               [attr.aria-disabled]="isItemDisabled(item)"
               [attr.tabindex]="isItemDisabled(item) ? -1 : null"
               [attr.title]="item.label || null"
-              (click)="onLeafClick(item, level, itemPath, $event)"
-              (mouseenter)="onItemHover(itemId)"
+              (click)="onLeafClick(item, level, buildItemPath(parentPath, item), $event)"
+              (mouseenter)="onItemHover(getItemId(item, $index, parentKey))"
               (mouseleave)="onItemLeave()"
             >
               <ng-container
                 [ngTemplateOutlet]="itemContent"
                 [ngTemplateOutletContext]="{
                   item,
-                  itemKey,
+                  itemKey: getUniqueItemKey(item, $index, parentKey),
                   category: false,
                 }"
               ></ng-container>
@@ -136,22 +133,22 @@
               [href]="getUrl(item)"
               [attr.target]="getLinkTarget(item)"
               [attr.rel]="getLinkRel(item)"
-              [class.item-hovered]="isItemHovered(itemId)"
+              [class.item-hovered]="isItemHovered(getItemId(item, $index, parentKey))"
               [class.disabled]="isItemDisabled(item)"
               [class.active]="isItemActive(item)"
               [attr.aria-current]="getItemAriaCurrent(item)"
               [attr.aria-disabled]="isItemDisabled(item)"
               [attr.tabindex]="isItemDisabled(item) ? -1 : null"
               [attr.title]="item.label || null"
-              (click)="onLeafClick(item, level, itemPath, $event)"
-              (mouseenter)="onItemHover(itemId)"
+              (click)="onLeafClick(item, level, buildItemPath(parentPath, item), $event)"
+              (mouseenter)="onItemHover(getItemId(item, $index, parentKey))"
               (mouseleave)="onItemLeave()"
             >
               <ng-container
                 [ngTemplateOutlet]="itemContent"
                 [ngTemplateOutletContext]="{
                   item,
-                  itemKey,
+                  itemKey: getUniqueItemKey(item, $index, parentKey),
                   category: false,
                 }"
               ></ng-container>
@@ -160,21 +157,21 @@
             <button
               class="menu-item-base menu-item-leaf"
               type="button"
-              [class.item-hovered]="isItemHovered(itemId)"
+              [class.item-hovered]="isItemHovered(getItemId(item, $index, parentKey))"
               [class.disabled]="isItemDisabled(item)"
               [class.active]="isItemActive(item)"
               [attr.aria-current]="getItemAriaCurrent(item)"
               [attr.title]="item.label || null"
               [disabled]="isItemDisabled(item)"
-              (click)="onLeafClick(item, level, itemPath, $event)"
-              (mouseenter)="onItemHover(itemId)"
+              (click)="onLeafClick(item, level, buildItemPath(parentPath, item), $event)"
+              (mouseenter)="onItemHover(getItemId(item, $index, parentKey))"
               (mouseleave)="onItemLeave()"
             >
               <ng-container
                 [ngTemplateOutlet]="itemContent"
                 [ngTemplateOutletContext]="{
                   item,
-                  itemKey,
+                  itemKey: getUniqueItemKey(item, $index, parentKey),
                   category: false,
                 }"
               ></ng-container>
