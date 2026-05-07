@@ -1,54 +1,72 @@
 <div class="magary-tree-container" cdkDropListGroup>
-  <!-- Filter Section -->
-  @if (filter()) {
-    <div class="magary-tree-filter">
-      <lucide-icon
-        name="search"
-        [size]="16"
-        class="magary-tree-filter-icon"
-      ></lucide-icon>
-      <input
-        type="text"
-        class="magary-tree-filter-input"
-        [placeholder]="filterPlaceholder()"
-        [attr.aria-label]="filterAriaLabel()"
-        autocomplete="off"
-        (input)="onFilterInput($event)"
-      />
+  <!-- Error State -->
+  @if (errorMessage()) {
+    <div class="magary-tree-error" role="alert">
+      <span>{{ errorMessage() }}</span>
+      <button type="button" (click)="onErrorRetry.emit()">Retry</button>
     </div>
   }
 
-  @if (filteredValue() && filteredValue().length) {
-    <ul
-      class="magary-tree-root-children"
-      role="tree"
-      [attr.aria-label]="treeAriaLabel()"
-      cdkDropList
-      [cdkDropListDisabled]="!droppable()"
-      [cdkDropListData]="filteredValue() || []"
-      (cdkDropListDropped)="handleDrop($event, null)"
-    >
-      @for (node of filteredValue(); track node.key || node.label) {
-        <magary-uitree-node
-          [node]="node"
-          [selectionMode]="selectionMode()"
-          [selection]="selection()"
-          [draggable]="draggable()"
-          [droppable]="droppable()"
-          (nodeSelect)="handleNodeSelect($event)"
-          (nodeUnselect)="handleNodeUnselect($event)"
-          (nodeExpand)="handleNodeExpand($event)"
-          (nodeCollapse)="handleNodeCollapse($event)"
-          (nodeDrop)="handleNodeDrop($event)"
-        >
-        </magary-uitree-node>
+  <!-- Loading State -->
+  @if (loading() && !errorMessage()) {
+    <div class="magary-tree-loading" role="status" aria-label="Loading tree">
+      @for (i of [0, 1, 2]; track i) {
+        <div class="tree-skeleton-item">
+          <div class="skeleton-line skeleton-line-tree"></div>
+        </div>
       }
-    </ul>
+    </div>
   }
 
-  @if (!filteredValue() || filteredValue().length === 0) {
-    <div class="magary-tree-empty-message" role="status" aria-live="polite">
-      No records found
-    </div>
+  <!-- Content (non-loading, non-error) -->
+  @if (!loading() && !errorMessage()) {
+    <!-- Filter Section -->
+    @if (filter()) {
+      <div class="magary-tree-filter">
+        <lucide-icon name="search" [size]="16" class="magary-tree-filter-icon"></lucide-icon>
+        <input
+          type="text"
+          class="magary-tree-filter-input"
+          [placeholder]="filterPlaceholder()"
+          [attr.aria-label]="filterAriaLabel()"
+          autocomplete="off"
+          (input)="onFilterInput($event)"
+        />
+      </div>
+    }
+
+    @if (filteredValue() && filteredValue().length) {
+      <ul
+        class="magary-tree-root-children"
+        role="tree"
+        [attr.aria-label]="treeAriaLabel()"
+        cdkDropList
+        [cdkDropListDisabled]="!droppable()"
+        [cdkDropListData]="filteredValue() || []"
+        (cdkDropListDropped)="handleDrop($event, null)"
+      >
+        @for (node of filteredValue(); track node.key || node.label) {
+          <magary-uitree-node
+            [node]="node"
+            [selectionMode]="selectionMode()"
+            [selection]="selection()"
+            [draggable]="draggable()"
+            [droppable]="droppable()"
+            (nodeSelect)="handleNodeSelect($event)"
+            (nodeUnselect)="handleNodeUnselect($event)"
+            (nodeExpand)="handleNodeExpand($event)"
+            (nodeCollapse)="handleNodeCollapse($event)"
+            (nodeDrop)="handleNodeDrop($event)"
+          >
+          </magary-uitree-node>
+        }
+      </ul>
+    }
+
+    @if (!filteredValue() || filteredValue().length === 0) {
+      <div class="magary-tree-empty-message" role="status" aria-live="polite">
+        No records found
+      </div>
+    }
   }
 </div>

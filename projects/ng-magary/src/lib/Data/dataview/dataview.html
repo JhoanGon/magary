@@ -6,43 +6,51 @@
     'magary-dataview-loading': loading(),
   }"
 >
-  @if (headerTemplate()) {
-    <div class="magary-dataview-header">
-      <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
+  <!-- Error State -->
+  @if (errorMessage()) {
+    <div class="magary-dataview-error" role="alert">
+      <span>{{ errorMessage() }}</span>
+      <button type="button" (click)="onRetryClick()">Retry</button>
     </div>
-  }
+  } @else {
+    @if (headerTemplate()) {
+      <div class="magary-dataview-header">
+        <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
+      </div>
+    }
 
-  <div class="magary-dataview-content">
-    <div class="magary-grid">
-      @for (item of dataToRender(); track trackBy()($index, item); let index = $index) {
-        <ng-container
-          *ngTemplateOutlet="
-            layout() === 'list' ? listItemTemplate() : gridItemTemplate();
-            context: { $implicit: item, index: index }
-          "
-        ></ng-container>
-      } @empty {
-        <div class="magary-dataview-empty">
-          {{ emptyMessage() }}
-        </div>
-      }
+    <div class="magary-dataview-content">
+      <div class="magary-grid">
+        @for (item of dataToRender(); track trackBy()($index, item); let index = $index) {
+          <ng-container
+            *ngTemplateOutlet="
+              layout() === 'list' ? listItemTemplate() : gridItemTemplate();
+              context: { $implicit: item, index: index }
+            "
+          ></ng-container>
+        } @empty {
+          <div class="magary-dataview-empty">
+            {{ emptyMessage() }}
+          </div>
+        }
+      </div>
     </div>
-  </div>
 
-  @if (footerTemplate()) {
-    <div class="magary-dataview-footer">
-      <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
-    </div>
-  }
+    @if (footerTemplate()) {
+      <div class="magary-dataview-footer">
+        <ng-container *ngTemplateOutlet="footerTemplate()"></ng-container>
+      </div>
+    }
 
-  @if (paginator()) {
-    <magary-paginator
-      [rows]="rows()"
-      [first]="first()"
-      [totalRecords]="getTotalRecords()"
-      [pageLinkSize]="pageLinks()"
-      [rowsPerPageOptions]="rowsPerPageOptions()"
-      (onPageChange)="onPageChange($event)"
-    ></magary-paginator>
+    @if (paginator()) {
+      <magary-paginator
+        [rows]="rows()"
+        [first]="first()"
+        [totalRecords]="getTotalRecords()"
+        [pageLinkSize]="pageLinks()"
+        [rowsPerPageOptions]="rowsPerPageOptions()"
+        (onPageChange)="onPageChange($event)"
+      ></magary-paginator>
+    }
   }
 </div>

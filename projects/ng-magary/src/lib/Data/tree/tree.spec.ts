@@ -205,12 +205,8 @@ describe('MagaryTree behavior', () => {
       '[data-node-key="0"] .magary-treenode-content',
     ) as HTMLElement | null;
 
-    expect(selectedNode?.classList.contains('magary-treenode-selected')).toBe(
-      true,
-    );
-    expect(unselectedNode?.classList.contains('magary-treenode-selected')).toBe(
-      false,
-    );
+    expect(selectedNode?.classList.contains('magary-treenode-selected')).toBe(true);
+    expect(unselectedNode?.classList.contains('magary-treenode-selected')).toBe(false);
   });
 
   it('emits onNodeDrop payload from root drop handler', () => {
@@ -218,9 +214,7 @@ describe('MagaryTree behavior', () => {
     component.onNodeDrop.subscribe((event) => dropEvents.push(event));
 
     const mockDropEvent = {
-      item: {
-        data: { key: 'drag-1', label: 'Dragged Node' },
-      },
+      item: { data: { key: 'drag-1', label: 'Dragged Node' } },
     } as unknown as CdkDragDrop<MagaryTreeNode[]>;
 
     component.handleDrop(mockDropEvent, null);
@@ -258,5 +252,45 @@ describe('MagaryTree behavior', () => {
 
     expect(dropEvents).toHaveLength(1);
     expect(dropEvents[0].parent).toBeNull();
+  });
+
+  // === Loading and error states ===
+
+  it('renders loading skeleton when loading input is true', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+
+    const skeleton = fixture.nativeElement.querySelector(
+      '.magary-tree-loading',
+    ) as HTMLElement;
+    expect(skeleton).toBeTruthy();
+
+    const treeRoot = fixture.nativeElement.querySelector('.magary-tree-root-children');
+    expect(treeRoot).toBeNull();
+  });
+
+  it('renders error message with retry button when errorMessage is set', () => {
+    fixture.componentRef.setInput('errorMessage', 'Unable to load tree');
+    fixture.detectChanges();
+
+    const error = fixture.nativeElement.querySelector('.magary-tree-error') as HTMLElement;
+    expect(error).toBeTruthy();
+    expect(error.textContent).toContain('Unable to load tree');
+  });
+
+  it('emits onErrorRetry when retry is clicked', () => {
+    fixture.componentRef.setInput('errorMessage', 'Failed');
+    fixture.detectChanges();
+
+    let retried = false;
+    component.onErrorRetry.subscribe(() => (retried = true));
+
+    const retryBtn = fixture.nativeElement.querySelector(
+      '.magary-tree-error button',
+    ) as HTMLButtonElement;
+    retryBtn.click();
+    fixture.detectChanges();
+
+    expect(retried).toBe(true);
   });
 });

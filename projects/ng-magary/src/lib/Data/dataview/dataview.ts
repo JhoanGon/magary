@@ -54,14 +54,17 @@ export class MagaryDataView implements OnDestroy {
   rowsPerPageOptions = input<number[]>([]);
   emptyMessage = input<string>('No records found');
   sortField = input<string | null>(null);
-  sortOrder = input<number | null>(null); // 1 or -1
+  sortOrder = input<number | null>(null);
   loading = input<boolean>(false);
+  errorMessage = input<string>('');
   trackBy = input<(index: number, item: MagaryDataViewItem) => unknown>(
     (index: number, item: MagaryDataViewItem) => item,
   );
 
   // Outputs
   onPage = output<PaginatorState>();
+  onSort = output<{ field: string | null; order: number }>();
+  onErrorRetry = output<void>();
 
   // Signals
   first = signal<number>(0);
@@ -77,7 +80,6 @@ export class MagaryDataView implements OnDestroy {
   // Computed
   processedData = computed(() => {
     let data = this.value() || [];
-    // Optional: Sorting logic could go here if we implemented internal sorting
     return data;
   });
 
@@ -85,7 +87,7 @@ export class MagaryDataView implements OnDestroy {
     const data = this.processedData();
     if (this.paginator()) {
       const first = this.first();
-      const rows = this._rows() || data.length; // fallback
+      const rows = this._rows() || data.length;
       return data.slice(first, first + rows);
     }
     return data;
@@ -105,6 +107,14 @@ export class MagaryDataView implements OnDestroy {
       : this.value()
         ? this.value().length
         : 0;
+  }
+
+  emitSort(field: string | null, order: number): void {
+    this.onSort.emit({ field, order });
+  }
+
+  onRetryClick(): void {
+    this.onErrorRetry.emit();
   }
 
   ngOnDestroy(): void {

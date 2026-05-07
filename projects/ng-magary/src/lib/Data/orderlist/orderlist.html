@@ -39,29 +39,44 @@
   </div>
 }
 
-<div class="orderlist-list-wrapper">
-  @if (header()) {
-    <div class="orderlist-header">{{ header() }}</div>
-  }
-  <ul class="orderlist-list" [style]="listStyle()">
-    @for (item of value(); track item; let i = $index) {
-      <li
-        #orderListItem
-        class="orderlist-item"
-        [class.orderlist-item-drag-enabled]="dragDrop()"
-        [class.selected]="selection().includes(item)"
-        (click)="onItemClick($event, item, i)"
-      >
-        <ng-container
-          *ngTemplateOutlet="
-            itemTemplate() || defaultTemplate;
-            context: { $implicit: item }
-          "
-        ></ng-container>
-      </li>
+@if (errorMessage()) {
+  <div class="magary-orderlist-error" role="alert">
+    <span>{{ errorMessage() }}</span>
+    <button type="button" (click)="onErrorRetry.emit()">Retry</button>
+  </div>
+} @else if (loading()) {
+  <div class="magary-orderlist-loading" role="status" aria-label="Loading order list">
+    @for (i of [0, 1, 2]; track i) {
+      <div class="orderlist-skeleton-item">
+        <div class="skeleton-line skeleton-line-text"></div>
+      </div>
     }
-  </ul>
-</div>
+  </div>
+} @else {
+  <div class="orderlist-list-wrapper">
+    @if (header()) {
+      <div class="orderlist-header">{{ header() }}</div>
+    }
+    <ul class="orderlist-list" [style]="listStyle()">
+      @for (item of value(); track item; let i = $index) {
+        <li
+          #orderListItem
+          class="orderlist-item"
+          [class.orderlist-item-drag-enabled]="dragDrop()"
+          [class.selected]="selection().includes(item)"
+          (click)="onItemClick($event, item, i)"
+        >
+          <ng-container
+            *ngTemplateOutlet="
+              itemTemplate() || defaultTemplate;
+              context: { $implicit: item }
+            "
+          ></ng-container>
+        </li>
+      }
+    </ul>
+  </div>
+}
 
 <ng-template #defaultTemplate let-item>
   {{ getItemLabel(item) }}

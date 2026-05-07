@@ -130,4 +130,46 @@ describe('MagaryOrderList behavior', () => {
     expect(component.value().map((item) => item.label)).toEqual(['A', 'B', 'C']);
     expect(orders).toEqual([]);
   });
+
+  // === Loading and error states ===
+
+  it('renders loading skeleton when loading is true', () => {
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+
+    const skeleton = fixture.nativeElement.querySelector(
+      '.magary-orderlist-loading',
+    ) as HTMLElement;
+    expect(skeleton).toBeTruthy();
+  });
+
+  it('renders error message and retry when errorMessage is set', () => {
+    fixture.componentRef.setInput('errorMessage', 'Load failed');
+    fixture.detectChanges();
+
+    const error = fixture.nativeElement.querySelector(
+      '.magary-orderlist-error',
+    ) as HTMLElement;
+    expect(error).toBeTruthy();
+    expect(error.textContent).toContain('Load failed');
+
+    const retryBtn = error.querySelector('button') as HTMLButtonElement;
+    expect(retryBtn).toBeTruthy();
+  });
+
+  it('emits onErrorRetry on retry click', () => {
+    fixture.componentRef.setInput('errorMessage', 'Failed');
+    fixture.detectChanges();
+
+    let retried = false;
+    component.onErrorRetry.subscribe(() => (retried = true));
+
+    const retryBtn = fixture.nativeElement.querySelector(
+      '.magary-orderlist-error button',
+    ) as HTMLButtonElement;
+    retryBtn.click();
+    fixture.detectChanges();
+
+    expect(retried).toBe(true);
+  });
 });
