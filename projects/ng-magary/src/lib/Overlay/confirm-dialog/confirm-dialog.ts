@@ -10,7 +10,6 @@ import {
   TemplateRef,
   computed,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { MagaryDialog } from '../dialog/dialog';
 import { MagaryButton } from '../../Button/button/button';
@@ -23,7 +22,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'magary-confirm-dialog',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, MagaryDialog, MagaryButton],
+  imports: [LucideAngularModule, MagaryDialog, MagaryButton],
   templateUrl: './confirm-dialog.html',
   styleUrl: './confirm-dialog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

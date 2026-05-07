@@ -9,7 +9,6 @@ import {
   Injector,
   signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { MagaryRadioButton } from './radio';
 
@@ -19,7 +18,7 @@ type RadioOption = string | number | boolean | RadioObjectOption;
 @Component({
   selector: 'magary-radio-group',
   standalone: true,
-  imports: [CommonModule, MagaryRadioButton],
+  imports: [MagaryRadioButton],
   templateUrl: './radio-group.html',
   styleUrl: './radio-group.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

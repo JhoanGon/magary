@@ -40,7 +40,7 @@ export interface StepsItem {
   standalone: true,
   imports: [CommonModule, RouterModule, LucideAngularModule],
   templateUrl: './steps.html',
-  styleUrls: ['./steps.scss'],
+  styleUrl: './steps.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

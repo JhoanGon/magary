@@ -13,14 +13,14 @@ import {
   inject,
   ViewEncapsulation,
 } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'magary-overlaypanel',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './overlaypanel.html',
   styleUrl: './overlaypanel.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

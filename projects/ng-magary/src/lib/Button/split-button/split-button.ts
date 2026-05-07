@@ -12,14 +12,13 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { MenuItem } from '../../Menu/api/menu.interface'; // Use api interface
 
 @Component({
   selector: 'magary-split-button',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './split-button.html',
   styleUrl: './split-button.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

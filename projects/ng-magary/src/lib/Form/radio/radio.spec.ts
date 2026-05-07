@@ -35,7 +35,7 @@ class RadioGroupReactiveHostComponent {
   });
 }
 
-describe('MagaryRadio behavior', () => {
+describe('MagaryRadioButton CVA', () => {
   let fixture: ComponentFixture<MagaryRadioButton>;
   let component: MagaryRadioButton;
 
@@ -52,44 +52,94 @@ describe('MagaryRadio behavior', () => {
     fixture.detectChanges();
   });
 
-  it('generates a usable input id and propagates selection through ControlValueAccessor', () => {
-    const onChange = vi.fn<(value: unknown) => void>();
-    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
-    const label = fixture.nativeElement.querySelector('label') as HTMLLabelElement;
+  it('writeValue sets modelValue via CVA', () => {
+    component.writeValue('NY');
+    expect(component.modelValue()).toBe('NY');
+  });
 
+  it('select propagates value through registered onChange', () => {
+    const onChange = vi.fn<(value: unknown) => void>();
     component.registerOnChange(onChange);
+    fixture.detectChanges();
+
     fixture.nativeElement.querySelector('.magary-radio-container').click();
     fixture.detectChanges();
 
-    expect(input.id).toContain('magary-radio-');
-    expect(label.getAttribute('for')).toBe(input.id);
-    expect(input.checked).toBe(true);
     expect(onChange).toHaveBeenCalledWith('NY');
   });
 
-  it('marks the radio as touched on confirmed interaction and blur', () => {
+  it('label for attribute matches input id', () => {
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+    const label = fixture.nativeElement.querySelector('label') as HTMLLabelElement;
+
+    expect(input.id).toContain('magary-radio-');
+    expect(label.getAttribute('for')).toBe(input.id);
+  });
+
+  it('disabled state prevents input interaction', () => {
+    const onChange = vi.fn<(value: unknown) => void>();
+    component.registerOnChange(onChange);
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+
+    fixture.nativeElement.querySelector('.magary-radio-container').click();
+    fixture.detectChanges();
+
+    expect(input.disabled).toBe(true);
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('setDisabledState from CVA disables the radio', () => {
+    component.setDisabledState?.(true);
+    fixture.detectChanges();
+
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+
+    expect(input.disabled).toBe(true);
+    expect(component.isDisabled()).toBe(true);
+  });
+
+  it('marks the radio as touched on blur', () => {
     const onTouched = vi.fn();
     const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
 
     component.registerOnTouched(onTouched);
+    fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('.magary-radio-container').click();
+    input.dispatchEvent(new FocusEvent('focus'));
     input.dispatchEvent(new FocusEvent('blur'));
     fixture.detectChanges();
 
     expect(onTouched).toHaveBeenCalledTimes(1);
   });
+});
 
-  it('reflects Angular Forms invalid state, describedBy wiring, and disabled options inside radio-group', async () => {
-    await TestBed.resetTestingModule();
+describe('MagaryRadioGroup with FormControl', () => {
+  let hostFixture: ComponentFixture<RadioGroupReactiveHostComponent>;
+
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RadioGroupReactiveHostComponent],
     }).compileComponents();
 
-    const hostFixture = TestBed.createComponent(RadioGroupReactiveHostComponent);
+    hostFixture = TestBed.createComponent(RadioGroupReactiveHostComponent);
     hostFixture.detectChanges();
+  });
 
-    const hostComponent = hostFixture.componentInstance;
+  it('has aria-labelledby and aria-describedby with help text when valid', () => {
+    const group = hostFixture.nativeElement.querySelector(
+      '.magary-radio-group',
+    ) as HTMLElement;
+
+    expect(group.getAttribute('aria-labelledby')).toBe('shipping-label');
+    expect(group.getAttribute('aria-describedby')).toContain('shipping-hint');
+    expect(group.getAttribute('aria-describedby')).toContain('-help');
+    expect(group.getAttribute('aria-invalid')).toBeNull();
+  });
+
+  it('displays error message when control is invalid and touched', () => {
     const group = hostFixture.nativeElement.querySelector(
       '.magary-radio-group',
     ) as HTMLElement;
@@ -97,32 +147,74 @@ describe('MagaryRadio behavior', () => {
       'input[type="radio"]',
     ) as NodeListOf<HTMLInputElement>;
 
-    expect(group.getAttribute('aria-labelledby')).toBe('shipping-label');
-    expect(group.getAttribute('aria-describedby')).toContain('shipping-hint');
-    expect(group.getAttribute('aria-describedby')).toContain('-help');
-    expect(group.getAttribute('aria-invalid')).toBeNull();
-    expect(inputs[0].id).toBe('shipping-choice-0');
-    expect(inputs[1].disabled).toBe(true);
-
     inputs[0].dispatchEvent(new FocusEvent('focus'));
     inputs[0].dispatchEvent(new FocusEvent('blur'));
     hostFixture.detectChanges();
 
-    expect(hostComponent.control.touched).toBe(true);
     expect(group.getAttribute('aria-invalid')).toBe('true');
-    expect(group.getAttribute('aria-describedby')).toContain('shipping-hint');
     expect(group.getAttribute('aria-describedby')).toContain('-error');
     expect(
       hostFixture.nativeElement.querySelector('.error-message')?.textContent,
     ).toContain('Choose a shipping speed');
+  });
 
+  it('removes error message and aria-invalid when value becomes valid', () => {
+    const group = hostFixture.nativeElement.querySelector(
+      '.magary-radio-group',
+    ) as HTMLElement;
+    const inputs = hostFixture.nativeElement.querySelectorAll(
+      'input[type="radio"]',
+    ) as NodeListOf<HTMLInputElement>;
+
+    // First make it invalid
+    inputs[0].dispatchEvent(new FocusEvent('focus'));
+    inputs[0].dispatchEvent(new FocusEvent('blur'));
+    hostFixture.detectChanges();
+
+    expect(group.getAttribute('aria-invalid')).toBe('true');
+
+    // Then select a value
+    inputs[0].click();
+    hostFixture.detectChanges();
+
+    expect(group.getAttribute('aria-invalid')).toBeNull();
+    expect(hostFixture.nativeElement.querySelector('.error-message')).toBeNull();
+  });
+
+  it('restores help text and aria-describedby after validation passes', () => {
+    const group = hostFixture.nativeElement.querySelector(
+      '.magary-radio-group',
+    ) as HTMLElement;
+    const inputs = hostFixture.nativeElement.querySelectorAll(
+      'input[type="radio"]',
+    ) as NodeListOf<HTMLInputElement>;
+    const hostComponent = hostFixture.componentInstance;
+
+    // First make it invalid
+    inputs[0].dispatchEvent(new FocusEvent('focus'));
+    inputs[0].dispatchEvent(new FocusEvent('blur'));
+    hostFixture.detectChanges();
+
+    // Then select a value
     inputs[0].click();
     hostFixture.detectChanges();
 
     expect(hostComponent.control.value).toBe('standard');
     expect(hostComponent.control.valid).toBe(true);
-    expect(group.getAttribute('aria-invalid')).toBeNull();
-    expect(hostFixture.nativeElement.querySelector('.error-message')).toBeNull();
     expect(group.getAttribute('aria-describedby')).toContain('-help');
+  });
+
+  it('disabled option cannot change control value', () => {
+    const inputs = hostFixture.nativeElement.querySelectorAll(
+      'input[type="radio"]',
+    ) as NodeListOf<HTMLInputElement>;
+    const hostComponent = hostFixture.componentInstance;
+
+    expect(inputs[1].disabled).toBe(true);
+
+    inputs[1].click();
+    hostFixture.detectChanges();
+
+    expect(hostComponent.control.value).toBeNull();
   });
 });

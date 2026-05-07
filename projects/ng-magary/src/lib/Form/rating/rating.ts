@@ -12,7 +12,6 @@ import {
   signal,
   computed,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -25,7 +24,7 @@ export const RATING_VALUE_ACCESSOR: Provider = {
 @Component({
   selector: 'magary-rating',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './rating.html',
   styleUrl: './rating.scss',
   providers: [RATING_VALUE_ACCESSOR],
@@ -61,8 +60,6 @@ export class MagaryRating implements ControlValueAccessor {
 
   onModelChange: (value: number | null) => void = () => {};
   onModelTouched: () => void = () => {};
-
-  constructor() {}
 
   get starsArray() {
     // Create array of size stars()

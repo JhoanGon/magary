@@ -14,7 +14,6 @@ import {
   viewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -31,7 +30,7 @@ export const INPUTNUMBER_VALUE_ACCESSOR: Provider = {
 @Component({
   selector: 'magary-input-number',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './input-number.html',
   styleUrl: './input-number.scss',
   providers: [INPUTNUMBER_VALUE_ACCESSOR],

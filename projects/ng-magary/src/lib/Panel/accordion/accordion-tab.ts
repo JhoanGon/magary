@@ -6,7 +6,6 @@ import {
   input,
   model,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   trigger,
   state,
@@ -20,9 +19,9 @@ import { MagaryAccordion } from './accordion';
 @Component({
   selector: 'magary-accordion-tab',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './accordion-tab.html',
-  styleUrls: ['./accordion.scss'], // Shared styles
+  styleUrl: './accordion.scss', // Shared styles
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated,
   animations: [

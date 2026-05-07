@@ -6,7 +6,6 @@ import {
   input,
   model,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import {
   animate,
@@ -24,7 +23,7 @@ export interface MagaryFieldsetToggleEvent {
 @Component({
   selector: 'magary-fieldset',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './fieldset.html',
   styleUrl: './fieldset.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

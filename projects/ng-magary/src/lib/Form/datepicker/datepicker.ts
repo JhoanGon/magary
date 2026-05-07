@@ -13,7 +13,7 @@ import {
   inject,
   Injector,
 } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -22,7 +22,7 @@ type DatePickerValue = Date | Date[] | null;
 @Component({
   selector: 'magary-datepicker',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './datepicker.html',
   styleUrl: './datepicker.scss',
   providers: [
@@ -199,7 +199,7 @@ export class MagaryDatePicker
   private touched = false;
   private resolvedNgControl: NgControl | null | undefined;
 
-  constructor(private elementRef: ElementRef<HTMLElement>) {}
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
 
   ngOnInit() {
     this.documentClickListener = this.renderer.listen(

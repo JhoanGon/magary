@@ -166,21 +166,6 @@ export class MagaryOrganizationChartNode implements OnInit {
   // Initialized from node().expanded but then managed locally for this component instance
   internalExpanded = signal<boolean>(false);
 
-  // Initialize the signal from the input when it changes (or initially)
-  constructor() {
-    // In a real scenario we might want an effect() here if the input changes later
-    // But for now, we just initialize. Since inputs are signals, we can read them.
-    // However, constructor runs before inputs are bound in standard Angular...
-    // but signal inputs are available.
-    // A better way is to use effect or just initialize it.
-    // Effect(() => this.internalExpanded.set(!!this.node().expanded));
-  }
-
-  // Actually, let's just use effect to sync from input to internal state if input changes
-  // and interactions update internal state.
-  // Ideally, 'expanded' should be two-way binding or event driven.
-  // For this component, we'll initialize it lazily or use an effect.
-
   ngOnInit() {
     this.internalExpanded.set(!!this.node().expanded);
   }

@@ -13,13 +13,12 @@ import {
   Injector,
   numberAttribute,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'magary-textarea',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './textarea.html',
   styleUrl: './textarea.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

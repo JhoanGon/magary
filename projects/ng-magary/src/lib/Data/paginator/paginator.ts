@@ -8,7 +8,6 @@ import {
   OnDestroy,
   SimpleChanges,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 export interface PaginatorState {
@@ -29,9 +28,9 @@ export interface PaginatorState {
 @Component({
   selector: 'magary-paginator',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './paginator.html',
-  styleUrls: ['./paginator.scss'],
+  styleUrl: './paginator.scss',
 })
 export class MagaryPaginator implements OnChanges, OnDestroy {
   private destroyed = false;
@@ -170,19 +169,6 @@ export class MagaryPaginator implements OnChanges, OnDestroy {
       // Signal inputs don't trigger ngOnChanges for themselves if accessed as signals, but standard OnChanges works if using attributes?
       // Actually, with signal inputs, we should use effect().
     }
-  }
-
-  constructor() {
-    // Effect to validate first index
-    // effect(() => {
-    //    const total = this.totalRecords();
-    //    const rows = this.rows();
-    //    const first = this.first();
-    //    if (first >= total && total > 0) {
-    //        // We cannot emit inside effect easily without causing loops if we are not careful
-    //        // logic to adjust page should be on consumer?
-    //    }
-    // });
   }
 
   ngOnDestroy(): void {

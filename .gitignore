@@ -81,3 +81,6 @@ testem.log
 .DS_Store
 Thumbs.db
 /magary-premium/
+
+#Rules Magary
+.magary/*

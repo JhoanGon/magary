@@ -1,4 +1,4 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -36,7 +36,7 @@ export type MagarySegmentedCompareWith = (
 @Component({
   selector: 'magary-segmented',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './segmented.html',
   styleUrl: './segmented.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

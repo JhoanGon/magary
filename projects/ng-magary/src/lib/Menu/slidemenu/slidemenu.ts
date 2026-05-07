@@ -11,7 +11,6 @@ import {
   input,
   effect,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, type UrlTree } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { MenuItem } from '../api/menu.interface';
@@ -27,7 +26,7 @@ import {
 @Component({
   selector: 'magary-slidemenu',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule],
+  imports: [RouterModule, LucideAngularModule],
   templateUrl: './slidemenu.html',
   styleUrl: './slidemenu.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

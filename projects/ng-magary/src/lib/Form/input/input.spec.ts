@@ -1,4 +1,4 @@
-﻿import { Component, importProvidersFrom } from '@angular/core';
+import { Component, importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LucideAngularModule, icons } from 'lucide-angular';

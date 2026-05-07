@@ -9,13 +9,12 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'magary-switch',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './switch.html',
   styleUrl: './switch.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

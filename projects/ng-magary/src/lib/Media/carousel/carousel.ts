@@ -171,7 +171,7 @@ export interface CarouselSlideEvent<T> {
   standalone: true,
   imports: [CommonModule, MagaryButton, LucideAngularModule],
   templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.scss'],
+  styleUrl: './carousel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   providers: [

@@ -1,4 +1,4 @@
-﻿import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MenuItem } from '../../Menu/api/menu.interface';
@@ -138,6 +138,159 @@ describe('MagarySplitButton behavior', () => {
 
     expect(host.style.getPropertyValue('--split-button-bg')).toBe('#0f766e');
     expect(host.style.getPropertyValue('--split-button-text')).toBe('#ecfeff');
+  });
+
+  it('disables both buttons when disabled input is true', () => {
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+
+    const defaultBtn = fixture.nativeElement.querySelector(
+      '.default-button',
+    ) as HTMLButtonElement;
+    const triggerBtn = fixture.nativeElement.querySelector(
+      '.dropdown-trigger',
+    ) as HTMLButtonElement;
+
+    expect(defaultBtn.disabled).toBe(true);
+    expect(triggerBtn.disabled).toBe(true);
+  });
+
+  it('does not emit onClick when default button is clicked while disabled', () => {
+    fixture.componentRef.setInput('disabled', true);
+    const clickSpy = vi.fn();
+    component.onClick.subscribe(clickSpy);
+    fixture.detectChanges();
+
+    const defaultBtn = fixture.nativeElement.querySelector(
+      '.default-button',
+    ) as HTMLButtonElement;
+    defaultBtn.click();
+    fixture.detectChanges();
+
+    expect(clickSpy).not.toHaveBeenCalled();
+  });
+
+  it('does not toggle dropdown or emit onDropdownClick when disabled', () => {
+    fixture.componentRef.setInput('disabled', true);
+    const dropdownSpy = vi.fn();
+    component.onDropdownClick.subscribe(dropdownSpy);
+    fixture.detectChanges();
+
+    const triggerBtn = fixture.nativeElement.querySelector(
+      '.dropdown-trigger',
+    ) as HTMLButtonElement;
+    triggerBtn.click();
+    fixture.detectChanges();
+
+    expect(component.isOpen()).toBe(false);
+    expect(dropdownSpy).not.toHaveBeenCalled();
+  });
+
+  it('renders severity-danger class on host when severity is danger', () => {
+    fixture.componentRef.setInput('severity', 'danger');
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement.querySelector(
+      '.magary-split-button',
+    ) as HTMLElement;
+
+    expect(host.classList.contains('severity-danger')).toBe(true);
+  });
+
+  it('renders correct severity class for each severity value', () => {
+    const severities: Array<'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'help' | 'danger'> = [
+      'primary', 'secondary', 'success', 'info', 'warning', 'help', 'danger',
+    ];
+
+    severities.forEach((sev) => {
+      fixture.componentRef.setInput('severity', sev);
+      fixture.detectChanges();
+
+      const host = fixture.nativeElement.querySelector(
+        '.magary-split-button',
+      ) as HTMLElement;
+
+      expect(host.classList.contains(`severity-${sev}`)).toBe(true);
+    });
+  });
+
+  it('opens menu and focuses first enabled item on Enter key', async () => {
+    const trigger = fixture.nativeElement.querySelector(
+      '.dropdown-trigger',
+    ) as HTMLButtonElement;
+
+    trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    fixture.detectChanges();
+
+    await new Promise<void>((resolve) => {
+      setTimeout(resolve, 0);
+    });
+    fixture.detectChanges();
+
+    expect(component.isOpen()).toBe(true);
+    const menuButtons = fixture.nativeElement.querySelectorAll(
+      '.menu-item-button',
+    ) as NodeListOf<HTMLButtonElement>;
+    expect(document.activeElement).toBe(menuButtons[0]);
+  });
+
+  it('skips disabled items on ArrowDown keyboard navigation', async () => {
+    const trigger = fixture.nativeElement.querySelector(
+      '.dropdown-trigger',
+    ) as HTMLButtonElement;
+
+    trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
+    fixture.detectChanges();
+
+    await new Promise<void>((resolve) => {
+      setTimeout(resolve, 0);
+    });
+    fixture.detectChanges();
+
+    const menuButtons = fixture.nativeElement.querySelectorAll(
+      '.menu-item-button',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    // Item at index 2 is disabled; ArrowDown from index 1 should skip to index 0 (wraps)
+    // but let's test from index 0: ArrowDown should go to index 1 (enabled), then again to skip index 2 (disabled)
+    menuButtons[0].dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowDown' }),
+    );
+    fixture.detectChanges();
+    expect(document.activeElement).toBe(menuButtons[1]);
+
+    menuButtons[1].dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowDown' }),
+    );
+    fixture.detectChanges();
+    // Should skip disabled item at index 2 and wrap to index 0
+    expect(document.activeElement).toBe(menuButtons[0]);
+  });
+
+  it('renders icon in default button when icon is provided with empty label', () => {
+    fixture.componentRef.setInput('label', '');
+    fixture.componentRef.setInput('icon', 'save');
+    fixture.detectChanges();
+
+    const defaultBtn = fixture.nativeElement.querySelector(
+      '.default-button',
+    ) as HTMLElement;
+    const icon = defaultBtn.querySelector('lucide-icon');
+    const labelSpan = defaultBtn.querySelector('.button-label');
+
+    expect(icon).toBeTruthy();
+    expect(labelSpan?.textContent).toBe('');
+  });
+
+  it('applies disabled class to host when disabled is true', () => {
+    fixture.componentRef.setInput('disabled', true);
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement.querySelector(
+      '.magary-split-button',
+    ) as HTMLElement;
+
+    expect(host.classList.contains('disabled')).toBe(true);
   });
 });
 

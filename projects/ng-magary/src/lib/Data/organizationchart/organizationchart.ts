@@ -8,7 +8,6 @@ import {
   contentChild,
   TemplateRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   MagaryTreeNode,
   MagaryTreeNodeSelectionEvent,
@@ -19,9 +18,9 @@ import { MagaryOrganizationChartNode } from './organizationchart-node';
 @Component({
   selector: 'magary-organization-chart',
   standalone: true,
-  imports: [CommonModule, MagaryOrganizationChartNode],
+  imports: [MagaryOrganizationChartNode],
   templateUrl: './organizationchart.html',
-  styleUrls: ['./organizationchart.scss'],
+  styleUrl: './organizationchart.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

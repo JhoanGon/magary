@@ -16,7 +16,7 @@ import {
   ViewEncapsulation,
   OnDestroy,
 } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -32,7 +32,7 @@ export const SLIDER_VALUE_ACCESSOR: Provider = {
 @Component({
   selector: 'magary-slider',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './slider.html',
   styleUrl: './slider.scss',
   providers: [SLIDER_VALUE_ACCESSOR],
@@ -133,8 +133,6 @@ export class MagarySlider implements ControlValueAccessor, OnDestroy {
 
   onModelChange: (value: number | number[] | null) => void = () => {};
   onModelTouched: () => void = () => {};
-
-  constructor() {}
 
   isInvalid(): boolean {
     return this.invalid() || this.hasControlError();

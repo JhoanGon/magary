@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, input, ViewEncapsulation, inject } from '@angular/core';
 import { MagaryToastItem } from './toast-item';
 import { MagaryToastService } from './toast.service';
@@ -14,7 +13,7 @@ import {
 @Component({
   selector: 'magary-toast',
   standalone: true,
-  imports: [CommonModule, MagaryToastItem],
+  imports: [MagaryToastItem],
   templateUrl: './toast.html',
   styleUrl: './toast.scss',
   encapsulation: ViewEncapsulation.None,

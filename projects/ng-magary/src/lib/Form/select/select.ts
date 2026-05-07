@@ -11,7 +11,7 @@ import {
   inject,
   Injector,
 } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { LucideAngularModule } from 'lucide-angular';
@@ -29,7 +29,7 @@ export type MagarySelectCompareWith = (
 @Component({
   selector: 'magary-select',
   standalone: true,
-  imports: [CommonModule, OverlayModule, LucideAngularModule],
+  imports: [OverlayModule, LucideAngularModule],
   templateUrl: './select.html',
   styleUrl: './select.scss',
   providers: [

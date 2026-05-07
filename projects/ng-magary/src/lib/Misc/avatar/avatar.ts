@@ -1,4 +1,4 @@
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import {
   Component,
   OnDestroy,
@@ -26,7 +26,7 @@ import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'magary-avatar',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, LucideAngularModule],
+  imports: [NgOptimizedImage, LucideAngularModule],
   templateUrl: './avatar.html',
   styleUrl: './avatar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

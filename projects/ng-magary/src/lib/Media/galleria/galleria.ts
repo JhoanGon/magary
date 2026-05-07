@@ -8,7 +8,6 @@ import {
   computed,
   OnInit,
   OnDestroy,
-  Inject,
   PLATFORM_ID,
   AfterViewInit,
   input,
@@ -62,7 +61,7 @@ interface DocumentWithFullscreenFallback extends Document {
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
   templateUrl: './galleria.html',
-  styleUrls: ['./galleria.scss'],
+  styleUrl: './galleria.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
@@ -199,7 +198,7 @@ export class MagaryGalleria implements OnInit, OnDestroy, AfterViewInit {
   interval: ReturnType<typeof setInterval> | null = null;
   progressInterval: ReturnType<typeof setInterval> | null = null;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  private readonly platformId = inject(PLATFORM_ID);
 
   ngOnInit() {
     // Initial sync not strictly needed with model(), but if logic depends on side effects, use effect()

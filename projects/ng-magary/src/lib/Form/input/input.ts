@@ -10,7 +10,6 @@
   signal,
   effect,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -30,7 +29,7 @@ export type InputVariant = 'filled' | 'outlined' | 'underlined';
 @Component({
   selector: 'magary-input',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './input.html',
   styleUrl: './input.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

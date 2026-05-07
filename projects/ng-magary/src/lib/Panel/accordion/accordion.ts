@@ -8,7 +8,6 @@ import {
   contentChildren,
   effect,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MagaryAccordionTab } from './accordion-tab';
 
 export interface MagaryAccordionTabChangeEvent {
@@ -19,9 +18,9 @@ export interface MagaryAccordionTabChangeEvent {
 @Component({
   selector: 'magary-accordion',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './accordion.html',
-  styleUrls: ['./accordion.scss'],
+  styleUrl: './accordion.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated,
   host: {

@@ -6,7 +6,6 @@ import {
   computed,
   forwardRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
@@ -20,7 +19,6 @@ import {
   selector: 'magary-uitree-node',
   standalone: true,
   imports: [
-    CommonModule,
     LucideAngularModule,
     DragDropModule,
     forwardRef(() => MagaryUITreeNode),

@@ -8,7 +8,6 @@ import {
   output,
   ViewEncapsulation,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { GridStack, GridStackNode, GridStackOptions } from 'gridstack';
 
 export interface MagaryGridEvent {
@@ -30,7 +29,7 @@ export interface MagaryGridLayoutItem {
 @Component({
   selector: 'magary-grid',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './grid.html',
   styleUrl: './grid.scss',
   encapsulation: ViewEncapsulation.None,

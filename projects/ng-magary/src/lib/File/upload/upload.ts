@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   input,
@@ -9,6 +8,7 @@ import {
   ChangeDetectionStrategy,
   inject,
 } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { MagaryButton } from '../../Button/button/button';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import {
@@ -38,7 +38,7 @@ import { OnDestroy } from '@angular/core';
 @Component({
   selector: 'magary-upload',
   standalone: true,
-  imports: [CommonModule, MagaryButton, LucideAngularModule],
+  imports: [MagaryButton, LucideAngularModule, DecimalPipe],
   templateUrl: './upload.html',
   styleUrl: './upload.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -73,8 +73,6 @@ export class MagaryUpload implements OnDestroy {
   fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
 
   private sanitizer = inject(DomSanitizer);
-
-  constructor() {}
 
   onFileSelect(event: Event) {
     const input = event.target as HTMLInputElement;

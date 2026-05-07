@@ -11,7 +11,6 @@ import {
   input,
   ChangeDetectorRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, type UrlTree } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
 import { MenuItem } from '../api/menu.interface';
@@ -38,7 +37,6 @@ export class MegaMenuItemDirective {
   selector: 'magary-megamenu',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     LucideAngularModule,
     MegaMenuItemDirective,
@@ -62,8 +60,6 @@ export class MagaryMegaMenu implements OnDestroy {
   private renderer = inject(Renderer2);
   public el = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
-
-  constructor() {}
 
   onItemClick(event: Event, item: MenuItem) {
     if (item.disabled) {

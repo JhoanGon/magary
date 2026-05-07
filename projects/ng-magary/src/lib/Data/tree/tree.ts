@@ -8,7 +8,6 @@ import {
   signal,
   computed,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
@@ -23,13 +22,12 @@ import { MagaryUITreeNode } from './uitree-node';
   selector: 'magary-tree',
   standalone: true,
   imports: [
-    CommonModule,
     MagaryUITreeNode,
     LucideAngularModule,
     DragDropModule,
   ],
   templateUrl: './tree.html',
-  styleUrls: ['./tree.scss'],
+  styleUrl: './tree.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   ViewEncapsulation,
@@ -36,9 +35,9 @@ export interface BreadcrumbItem {
 @Component({
   selector: 'magary-breadcrumb',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule],
+  imports: [RouterModule, LucideAngularModule],
   templateUrl: './breadcrumb.html',
-  styleUrls: ['./breadcrumb.scss'],
+  styleUrl: './breadcrumb.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

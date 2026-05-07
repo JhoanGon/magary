@@ -1,13 +1,15 @@
 <div class="container">
   <div class="header">
-    <h1>{{ i18n.translateDocs('components.buttons.button.title') }}</h1>
+    <h1>{{ i18n.translateDocs("components.buttons.button.title") }}</h1>
     <p>{{ editorialMetadata.description }}</p>
   </div>
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.import.title') }}</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.import.desc') }}</p>
+      <h2>
+        {{ i18n.translateDocs("components.buttons.button.import.title") }}
+      </h2>
+      <p>{{ i18n.translateDocs("components.buttons.button.import.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="code-block">
@@ -16,48 +18,17 @@
     </div>
   </div>
 
-  <div class="section editorial-section">
-    <div class="section-header">
-      <h2>📋 Editorial Metadata</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.import.desc') }}</p>
-    </div>
-    <div class="section-content">
-      <div class="editorial-grid">
-        <div class="editorial-card">
-          <h4>{{ i18n.translateDocs('components.buttons.button.apiInputs.header.description') }}</h4>
-          <p>{{ editorialMetadata.description }}</p>
-        </div>
-        <div class="editorial-card">
-          <h4>Usage</h4>
-          <div class="code-block">
-            <pre><code [highlight]="editorialMetadata.usage" language="html"></code></pre>
-          </div>
-        </div>
-        <div class="editorial-card">
-          <h4>Examples</h4>
-          <ul class="editorial-list">
-            @for (example of editorialMetadata.examples; track $index) {
-              <li>{{ example }}</li>
-            }
-          </ul>
-        </div>
-        <div class="editorial-card">
-          <h4>Notes</h4>
-          <p>{{ editorialMetadata.notes }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.basic.title') }}</h2>
+      <h2>{{ i18n.translateDocs("components.buttons.button.basic.title") }}</h2>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.basic.cardTitle') }}
+            {{
+              i18n.translateDocs("components.buttons.button.basic.cardTitle")
+            }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -76,12 +47,16 @@
             >
               <magary-button
                 [label]="
-                  i18n.translateDocs('components.buttons.button.basic.label.button')
+                  i18n.translateDocs(
+                    'components.buttons.button.basic.label.button'
+                  )
                 "
               ></magary-button>
               <magary-button
                 [label]="
-                  i18n.translateDocs('components.buttons.button.basic.label.home')
+                  i18n.translateDocs(
+                    'components.buttons.button.basic.label.home'
+                  )
                 "
                 icon="house"
                 [iconSize]="15"
@@ -89,7 +64,9 @@
               <magary-button icon="heart" [iconSize]="15"></magary-button>
               <magary-button
                 [label]="
-                  i18n.translateDocs('components.buttons.button.basic.label.loading')
+                  i18n.translateDocs(
+                    'components.buttons.button.basic.label.loading'
+                  )
                 "
                 [loading]="true"
               ></magary-button>
@@ -105,14 +82,18 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.severity.title') }}</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.severity.desc') }}</p>
+      <h2>
+        {{ i18n.translateDocs("components.buttons.button.severity.title") }}
+      </h2>
+      <p>{{ i18n.translateDocs("components.buttons.button.severity.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.severity.cardTitle') }}
+            {{
+              i18n.translateDocs("components.buttons.button.severity.cardTitle")
+            }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -169,7 +150,9 @@
               ></magary-button>
               <magary-button
                 [label]="
-                  i18n.translateDocs('components.buttons.button.severity.danger')
+                  i18n.translateDocs(
+                    'components.buttons.button.severity.danger'
+                  )
                 "
                 severity="danger"
               ></magary-button>
@@ -191,15 +174,17 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.sizes.title') }}</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.sizes.desc') }}</p>
+      <h2>{{ i18n.translateDocs("components.buttons.button.sizes.title") }}</h2>
+      <p>{{ i18n.translateDocs("components.buttons.button.sizes.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>
             {{
-              i18n.translateDocs('components.buttons.button.sizes.small.cardTitle')
+              i18n.translateDocs(
+                "components.buttons.button.sizes.small.cardTitle"
+              )
             }}
           </h4>
           <magary-card
@@ -208,7 +193,9 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
                   i18n.translateDocs(
@@ -225,7 +212,7 @@
           <h4>
             {{
               i18n.translateDocs(
-                'components.buttons.button.sizes.normal.cardTitle'
+                "components.buttons.button.sizes.normal.cardTitle"
               )
             }}
           </h4>
@@ -235,7 +222,9 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
                   i18n.translateDocs(
@@ -251,7 +240,9 @@
         <div class="demo-item">
           <h4>
             {{
-              i18n.translateDocs('components.buttons.button.sizes.large.cardTitle')
+              i18n.translateDocs(
+                "components.buttons.button.sizes.large.cardTitle"
+              )
             }}
           </h4>
           <magary-card
@@ -260,7 +251,9 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
                   i18n.translateDocs(
@@ -282,14 +275,16 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.variants.title') }}</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.variants.desc') }}</p>
+      <h2>
+        {{ i18n.translateDocs("components.buttons.button.variants.title") }}
+      </h2>
+      <p>{{ i18n.translateDocs("components.buttons.button.variants.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.variants.solid') }}
+            {{ i18n.translateDocs("components.buttons.button.variants.solid") }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -297,7 +292,9 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
                   i18n.translateDocs('components.buttons.button.variants.solid')
@@ -309,7 +306,9 @@
         </div>
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.variants.outlined') }}
+            {{
+              i18n.translateDocs("components.buttons.button.variants.outlined")
+            }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -317,7 +316,9 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
                   i18n.translateDocs(
@@ -332,7 +333,7 @@
         </div>
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.variants.text') }}
+            {{ i18n.translateDocs("components.buttons.button.variants.text") }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -340,7 +341,9 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
                   i18n.translateDocs('components.buttons.button.variants.text')
@@ -360,14 +363,16 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.custom.title') }}</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.custom.desc') }}</p>
+      <h2>
+        {{ i18n.translateDocs("components.buttons.button.custom.title") }}
+      </h2>
+      <p>{{ i18n.translateDocs("components.buttons.button.custom.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.custom.shadows') }}
+            {{ i18n.translateDocs("components.buttons.button.custom.shadows") }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -401,7 +406,7 @@
         </div>
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.custom.rounded') }}
+            {{ i18n.translateDocs("components.buttons.button.custom.rounded") }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -409,7 +414,9 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
                   i18n.translateDocs(
@@ -423,7 +430,9 @@
         </div>
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.custom.iconSize') }}
+            {{
+              i18n.translateDocs("components.buttons.button.custom.iconSize")
+            }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -431,7 +440,9 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
                   i18n.translateDocs('components.buttons.button.custom.icon32')
@@ -451,20 +462,26 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.states.title') }}</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.states.desc') }}</p>
+      <h2>
+        {{ i18n.translateDocs("components.buttons.button.states.title") }}
+      </h2>
+      <p>{{ i18n.translateDocs("components.buttons.button.states.desc") }}</p>
     </div>
     <div class="section-content">
       <div class="demo-grid">
         <div class="demo-item">
-          <h4>{{ i18n.translateDocs('components.buttons.button.states.normal') }}</h4>
+          <h4>
+            {{ i18n.translateDocs("components.buttons.button.states.normal") }}
+          </h4>
           <magary-card
             [width]="'100%'"
             [shadow]="2"
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
                   i18n.translateDocs('components.buttons.button.states.normal')
@@ -475,7 +492,9 @@
         </div>
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.states.disabled') }}
+            {{
+              i18n.translateDocs("components.buttons.button.states.disabled")
+            }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -483,10 +502,14 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
-                  i18n.translateDocs('components.buttons.button.states.disabled')
+                  i18n.translateDocs(
+                    'components.buttons.button.states.disabled'
+                  )
                 "
                 [disabled]="true"
               ></magary-button>
@@ -495,7 +518,7 @@
         </div>
         <div class="demo-item">
           <h4>
-            {{ i18n.translateDocs('components.buttons.button.states.loading') }}
+            {{ i18n.translateDocs("components.buttons.button.states.loading") }}
           </h4>
           <magary-card
             [width]="'100%'"
@@ -503,10 +526,14 @@
             [borderRadius]="'1rem'"
             [backgroundColor]="'var(--surface-0)'"
           >
-            <div style="padding: 1.5rem; display: flex; justify-content: center">
+            <div
+              style="padding: 1.5rem; display: flex; justify-content: center"
+            >
               <magary-button
                 [label]="
-                  i18n.translateDocs('components.buttons.button.basic.label.loading')
+                  i18n.translateDocs(
+                    'components.buttons.button.basic.label.loading'
+                  )
                 "
                 [loading]="true"
               ></magary-button>
@@ -522,8 +549,12 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.apiInputs.title') }}</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.apiInputs.desc') }}</p>
+      <h2>
+        {{ i18n.translateDocs("components.buttons.button.apiInputs.title") }}
+      </h2>
+      <p>
+        {{ i18n.translateDocs("components.buttons.button.apiInputs.desc") }}
+      </p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
@@ -531,22 +562,30 @@
           <thead>
             <tr>
               <th>
-                {{ i18n.translateDocs('components.buttons.button.apiInputs.header.name') }}
-              </th>
-              <th>
-                {{ i18n.translateDocs('components.buttons.button.apiInputs.header.type') }}
-              </th>
-              <th>
                 {{
                   i18n.translateDocs(
-                    'components.buttons.button.apiInputs.header.default'
+                    "components.buttons.button.apiInputs.header.name"
                   )
                 }}
               </th>
               <th>
                 {{
                   i18n.translateDocs(
-                    'components.buttons.button.apiInputs.header.description'
+                    "components.buttons.button.apiInputs.header.type"
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    "components.buttons.button.apiInputs.header.default"
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    "components.buttons.button.apiInputs.header.description"
                   )
                 }}
               </th>
@@ -555,9 +594,15 @@
           <tbody>
             @for (row of inputRows; track row.name) {
               <tr>
-                <td><code>{{ row.name }}</code></td>
-                <td><code>{{ row.type }}</code></td>
-                <td><code>{{ row.default }}</code></td>
+                <td>
+                  <code>{{ row.name }}</code>
+                </td>
+                <td>
+                  <code>{{ row.type }}</code>
+                </td>
+                <td>
+                  <code>{{ row.default }}</code>
+                </td>
                 <td>{{ i18n.translateDocs(row.descriptionKey) }}</td>
               </tr>
             }
@@ -569,8 +614,12 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.apiOutputs.title') }}</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.apiOutputs.desc') }}</p>
+      <h2>
+        {{ i18n.translateDocs("components.buttons.button.apiOutputs.title") }}
+      </h2>
+      <p>
+        {{ i18n.translateDocs("components.buttons.button.apiOutputs.desc") }}
+      </p>
     </div>
     <div class="section-content">
       <div class="table-wrapper">
@@ -579,18 +628,22 @@
             <tr>
               <th>
                 {{
-                  i18n.translateDocs('components.buttons.button.apiOutputs.header.name')
-                }}
-              </th>
-              <th>
-                {{
-                  i18n.translateDocs('components.buttons.button.apiOutputs.header.type')
+                  i18n.translateDocs(
+                    "components.buttons.button.apiOutputs.header.name"
+                  )
                 }}
               </th>
               <th>
                 {{
                   i18n.translateDocs(
-                    'components.buttons.button.apiOutputs.header.description'
+                    "components.buttons.button.apiOutputs.header.type"
+                  )
+                }}
+              </th>
+              <th>
+                {{
+                  i18n.translateDocs(
+                    "components.buttons.button.apiOutputs.header.description"
                   )
                 }}
               </th>
@@ -599,8 +652,12 @@
           <tbody>
             @for (row of outputRows; track row.name) {
               <tr>
-                <td><code>{{ row.name }}</code></td>
-                <td><code>{{ row.type }}</code></td>
+                <td>
+                  <code>{{ row.name }}</code>
+                </td>
+                <td>
+                  <code>{{ row.type }}</code>
+                </td>
                 <td>{{ i18n.translateDocs(row.descriptionKey) }}</td>
               </tr>
             }
@@ -612,30 +669,50 @@
 
   <div class="section">
     <div class="section-header">
-      <h2>{{ i18n.translateDocs('components.buttons.button.a11y.title') }}</h2>
-      <p>{{ i18n.translateDocs('components.buttons.button.a11y.desc') }}</p>
+      <h2>{{ i18n.translateDocs("components.buttons.button.a11y.title") }}</h2>
+      <p>{{ i18n.translateDocs("components.buttons.button.a11y.desc") }}</p>
     </div>
     <div class="section-content">
       <ul class="accessibility-list">
         <li>
           <strong>
-            {{ i18n.translateDocs('components.buttons.button.a11y.keyboard.title') }}:
+            {{
+              i18n.translateDocs(
+                "components.buttons.button.a11y.keyboard.title"
+              )
+            }}:
           </strong>
-          {{ i18n.translateDocs('components.buttons.button.a11y.keyboard.desc') }}
+          {{
+            i18n.translateDocs("components.buttons.button.a11y.keyboard.desc")
+          }}
         </li>
         <li>
-          <strong>{{ i18n.translateDocs('components.buttons.button.a11y.aria.title') }}:</strong>
-          {{ i18n.translateDocs('components.buttons.button.a11y.aria.desc') }}
+          <strong
+            >{{
+              i18n.translateDocs("components.buttons.button.a11y.aria.title")
+            }}:</strong
+          >
+          {{ i18n.translateDocs("components.buttons.button.a11y.aria.desc") }}
         </li>
         <li>
-          <strong>{{ i18n.translateDocs('components.buttons.button.a11y.focus.title') }}:</strong>
-          {{ i18n.translateDocs('components.buttons.button.a11y.focus.desc') }}
+          <strong
+            >{{
+              i18n.translateDocs("components.buttons.button.a11y.focus.title")
+            }}:</strong
+          >
+          {{ i18n.translateDocs("components.buttons.button.a11y.focus.desc") }}
         </li>
         <li>
           <strong>
-            {{ i18n.translateDocs('components.buttons.button.a11y.contrast.title') }}:
+            {{
+              i18n.translateDocs(
+                "components.buttons.button.a11y.contrast.title"
+              )
+            }}:
           </strong>
-          {{ i18n.translateDocs('components.buttons.button.a11y.contrast.desc') }}
+          {{
+            i18n.translateDocs("components.buttons.button.a11y.contrast.desc")
+          }}
         </li>
       </ul>
     </div>

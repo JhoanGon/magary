@@ -59,7 +59,7 @@ import { CommonModule } from '@angular/common';
       }
     </div>
   `,
-  styleUrls: ['./timeline.scss'],
+  styleUrl: './timeline.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {

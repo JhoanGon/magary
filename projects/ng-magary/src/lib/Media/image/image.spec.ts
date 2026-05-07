@@ -1,4 +1,4 @@
-﻿import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryImage } from './image';
@@ -76,8 +76,8 @@ describe('MagaryImage behavior', () => {
     component.onImageLoad(new Event('load'));
     component.onImageError(new Event('error'));
 
-    expect(component.loaded).toBe(true);
-    expect(component.error).toBe(true);
+    expect(component.loaded()).toBe(true);
+    expect(component.error()).toBe(true);
     expect(loadCalls).toBe(1);
     expect(errorCalls).toBe(1);
   });
@@ -128,6 +128,102 @@ describe('MagaryImage behavior', () => {
     expect(anchor.download).toBe('Sample image');
     expect(anchor.href).toContain('https://example.com/image.png');
     expect(anchorClickSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('propagates loading="lazy" attribute to img element', () => {
+    fixture.componentRef.setInput('loading', 'lazy');
+    fixture.detectChanges();
+
+    const img = fixture.nativeElement.querySelector(
+      '.magary-image-content img',
+    ) as HTMLImageElement;
+
+    expect(img.getAttribute('loading')).toBe('lazy');
+  });
+
+  it('propagates loading="eager" attribute to img element', () => {
+    fixture.componentRef.setInput('loading', 'eager');
+    fixture.detectChanges();
+
+    const img = fixture.nativeElement.querySelector(
+      '.magary-image-content img',
+    ) as HTMLImageElement;
+
+    expect(img.getAttribute('loading')).toBe('eager');
+  });
+
+  it('applies object-fit style when input changes', () => {
+    fixture.componentRef.setInput('objectFit', 'contain');
+    fixture.detectChanges();
+
+    const img = fixture.nativeElement.querySelector(
+      '.magary-image-content img',
+    ) as HTMLImageElement;
+
+    expect(img.style.objectFit).toBe('contain');
+  });
+
+  it('uses fallbackSrc when image error occurs and fallbackSrc is provided', () => {
+    fixture.componentRef.setInput('fallbackSrc', 'https://example.com/fallback.png');
+    fixture.detectChanges();
+
+    component.onImageError(new Event('error'));
+    fixture.detectChanges();
+
+    const img = fixture.nativeElement.querySelector(
+      '.magary-image-content img',
+    ) as HTMLImageElement;
+
+    expect(component.error()).toBe(true);
+    expect(img.getAttribute('src')).toBe('https://example.com/fallback.png');
+  });
+
+  it('sets error flag when image error occurs without fallbackSrc', () => {
+    component.onImageError(new Event('error'));
+    fixture.detectChanges();
+
+    expect(component.error()).toBe(true);
+  });
+
+  it('opens preview dialog via showModal() when preview is enabled', () => {
+    fixture.componentRef.setInput('preview', true);
+    fixture.detectChanges();
+
+    const img = fixture.nativeElement.querySelector(
+      '.magary-image-content img',
+    ) as HTMLImageElement;
+
+    img.click();
+
+    expect(showModalSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('preview dialog has role="dialog" and aria-modal="true"', () => {
+    fixture.componentRef.setInput('preview', true);
+    fixture.detectChanges();
+
+    const dialog = fixture.nativeElement.querySelector(
+      'dialog',
+    ) as HTMLDialogElement;
+
+    expect(dialog.getAttribute('role')).toBe('dialog');
+    expect(dialog.getAttribute('aria-modal')).toBe('true');
+  });
+
+  it('each preview toolbar button has an aria-label', () => {
+    fixture.componentRef.setInput('preview', true);
+    fixture.detectChanges();
+
+    const buttons = fixture.nativeElement.querySelectorAll(
+      '.magary-image-toolbar button',
+    ) as NodeListOf<HTMLButtonElement>;
+
+    expect(buttons.length).toBeGreaterThanOrEqual(6);
+
+    buttons.forEach((btn) => {
+      expect(btn.getAttribute('aria-label')).toBeTruthy();
+      expect(btn.getAttribute('aria-label')!.length).toBeGreaterThan(0);
+    });
   });
 });
 

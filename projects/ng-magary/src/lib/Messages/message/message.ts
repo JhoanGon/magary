@@ -9,7 +9,6 @@ import {
   OnDestroy,
   effect,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   trigger,
   state,
@@ -22,9 +21,9 @@ import { LucideAngularModule } from 'lucide-angular';
 @Component({
   selector: 'magary-message',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './message.html',
-  styleUrls: ['./message.scss'],
+  styleUrl: './message.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {

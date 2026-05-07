@@ -47,7 +47,7 @@
   <button
     type="button"
     class="trigger-button"
-    [attr.aria-label]="ariaLabel() + (isOpen() ? ' - Cerrar' : ' - Abrir')"
+    [attr.aria-label]="ariaLabel() + (isOpen() ? ' - Close' : ' - Open')"
     [attr.aria-expanded]="isOpen()"
     [attr.aria-haspopup]="'menu'"
     (click)="toggleSpeedDial($event)"

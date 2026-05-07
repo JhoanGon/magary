@@ -30,10 +30,8 @@ export class TieredMenuItemDirective {
   item = input.required<MenuItem>();
   parent = input.required<MagaryTieredMenu>();
 
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-  ) {}
+  private el = inject(ElementRef);
+  private renderer = inject(Renderer2);
 
   onMouseEnter() {
     if (this.item().disabled) return;
@@ -84,8 +82,6 @@ export class MagaryTieredMenu implements OnDestroy {
   private documentClickListener: (() => void) | null = null;
   private renderer = inject(Renderer2);
   private el = inject(ElementRef);
-
-  constructor() {}
 
   toggle(event: Event) {
     event.stopPropagation(); // Prevent immediate closing by document listener

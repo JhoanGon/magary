@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './skeleton.html',
-  styleUrls: ['./skeleton.scss'],
+  styleUrl: './skeleton.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[style.width]': 'styles().width',

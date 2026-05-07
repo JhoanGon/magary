@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   booleanAttribute,
   Component,
@@ -26,7 +25,7 @@ type SpeedDialDirection =
 @Component({
   selector: 'magary-speed-dial',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './speed-dial.html',
   styleUrl: './speed-dial.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

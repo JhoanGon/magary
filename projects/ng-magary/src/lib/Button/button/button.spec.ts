@@ -1,4 +1,4 @@
-﻿import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryButton } from './button';
@@ -166,6 +166,22 @@ describe('MagaryButton behavior', () => {
     fixture.componentRef.setInput('icon', undefined);
     fixture.detectChanges();
     expect(button.getAttribute('aria-label')).toBe('Button');
+  });
+
+  it('defaults type to "button" and supports "submit" and "reset"', () => {
+    const button = fixture.nativeElement.querySelector(
+      'button',
+    ) as HTMLButtonElement;
+
+    expect(button.getAttribute('type')).toBe('button');
+
+    fixture.componentRef.setInput('type', 'submit');
+    fixture.detectChanges();
+    expect(button.getAttribute('type')).toBe('submit');
+
+    fixture.componentRef.setInput('type', 'reset');
+    fixture.detectChanges();
+    expect(button.getAttribute('type')).toBe('reset');
   });
 });
 

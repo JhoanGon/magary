@@ -1,4 +1,4 @@
-﻿import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryTag } from './tag';

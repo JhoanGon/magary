@@ -1,4 +1,4 @@
-﻿import { importProvidersFrom } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagarySpeedDial } from './speed-dial';
@@ -132,6 +132,111 @@ describe('MagarySpeedDial behavior', () => {
     expect(selectEvents).toHaveLength(0);
     expect(component.isOpen()).toBe(true);
     expect(toggleEvents).toEqual([true]);
+  });
+
+  it('renders direction-{value} class for all four primary directions', () => {
+    const directions: Array<'up' | 'down' | 'left' | 'right'> = [
+      'up',
+      'down',
+      'left',
+      'right',
+    ];
+
+    for (const dir of directions) {
+      fixture.componentRef.setInput('direction', dir);
+      fixture.detectChanges();
+
+      const container = fixture.nativeElement.querySelector(
+        '.speed-dial-container',
+      ) as HTMLElement;
+      expect(container.classList.contains(`direction-${dir}`)).toBe(true);
+    }
+  });
+
+  it('trigger button has aria-haspopup="menu" and aria-expanded reflecting state', () => {
+    const trigger = fixture.nativeElement.querySelector(
+      '.trigger-button',
+    ) as HTMLButtonElement;
+
+    expect(trigger.getAttribute('aria-haspopup')).toBe('menu');
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
+
+    trigger.click();
+    fixture.detectChanges();
+
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+  });
+
+  it('tooltip elements have role="tooltip" and unique id per item', () => {
+    const trigger = fixture.nativeElement.querySelector(
+      '.trigger-button',
+    ) as HTMLButtonElement;
+    trigger.click();
+    fixture.detectChanges();
+
+    const tooltips = fixture.nativeElement.querySelectorAll(
+      '[role="tooltip"]',
+    );
+    expect(tooltips.length).toBeGreaterThanOrEqual(3);
+
+    const ids = new Set<string>();
+    tooltips.forEach((tooltip: HTMLElement) => {
+      expect(tooltip.id).toBeTruthy();
+      ids.add(tooltip.id);
+    });
+    expect(ids.size).toBe(tooltips.length);
+  });
+
+  it('action button aria-describedby references tooltip id', () => {
+    const trigger = fixture.nativeElement.querySelector(
+      '.trigger-button',
+    ) as HTMLButtonElement;
+    trigger.click();
+    fixture.detectChanges();
+
+    const firstTooltip = fixture.nativeElement.querySelector(
+      '[role="tooltip"]',
+    ) as HTMLElement;
+    const firstButton = fixture.nativeElement.querySelector(
+      '.action-button',
+    ) as HTMLButtonElement;
+
+    expect(firstButton.getAttribute('aria-describedby')).toBe(firstTooltip.id);
+  });
+
+  it('CSS custom property --speed-dial-trigger-size propagates from triggerSize input', () => {
+    fixture.componentRef.setInput('triggerSize', 64);
+    fixture.detectChanges();
+
+    const container = fixture.nativeElement.querySelector(
+      '.speed-dial-container',
+    ) as HTMLElement;
+    const style = container.style;
+
+    expect(style.getPropertyValue('--speed-dial-trigger-size')).toBe('64px');
+  });
+
+  it('Tab keyboard navigation moves focus between action items', () => {
+    const trigger = fixture.nativeElement.querySelector(
+      '.trigger-button',
+    ) as HTMLButtonElement;
+    trigger.click();
+    fixture.detectChanges();
+
+    const buttons = fixture.nativeElement.querySelectorAll(
+      '.action-button',
+    ) as NodeListOf<HTMLButtonElement>;
+    expect(buttons.length).toBeGreaterThanOrEqual(2);
+
+    buttons[0].focus();
+    expect(document.activeElement).toBe(buttons[0]);
+
+    buttons[0].dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }),
+    );
+
+    buttons[1].focus();
+    expect(document.activeElement).toBe(buttons[1]);
   });
 
   it('closes when clicking mask, clicking outside or pressing Escape', () => {

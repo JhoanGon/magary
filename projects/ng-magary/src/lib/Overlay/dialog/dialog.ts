@@ -15,7 +15,7 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import {
   trigger,
@@ -29,9 +29,9 @@ import {
 @Component({
   selector: 'magary-dialog',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './dialog.html',
-  styleUrls: ['./dialog.scss'],
+  styleUrl: './dialog.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {

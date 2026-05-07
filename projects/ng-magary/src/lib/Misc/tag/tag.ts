@@ -20,7 +20,7 @@ export type TagSeverity =
   standalone: true,
   imports: [CommonModule, LucideAngularModule],
   templateUrl: './tag.html',
-  styleUrls: ['./tag.scss'],
+  styleUrl: './tag.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated,
   host: {

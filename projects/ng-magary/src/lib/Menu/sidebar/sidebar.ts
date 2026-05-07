@@ -1,4 +1,4 @@
-import { CommonModule, DOCUMENT, NgOptimizedImage } from '@angular/common';
+import { DOCUMENT, NgOptimizedImage } from '@angular/common';
 import {
   ElementRef,
   Component,
@@ -87,7 +87,6 @@ export interface SidebarMenuItemExpandEvent {
   selector: 'magary-sidebar',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     RouterModule,
     MagaryPanelmenu,

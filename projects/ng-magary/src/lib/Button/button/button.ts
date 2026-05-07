@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   computed,
@@ -20,10 +19,11 @@ type ButtonVariant = 'solid' | 'text' | 'outlined';
 type ButtonSize = 'small' | 'normal' | 'large';
 type IconPosition = 'left' | 'right';
 type ShadowLevel = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+type ButtonType = 'button' | 'submit' | 'reset';
 @Component({
   selector: 'magary-button',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './button.html',
   styleUrl: './button.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -38,6 +38,7 @@ export class MagaryButton {
   readonly severity = input<ButtonSeverity>();
   readonly iconSize = input<number>();
   readonly loading = input<boolean>(false);
+  readonly type = input<ButtonType>('button');
   readonly disabled = input<boolean>(false);
   readonly variant = input<ButtonVariant>('solid');
   readonly size = input<ButtonSize>('normal');

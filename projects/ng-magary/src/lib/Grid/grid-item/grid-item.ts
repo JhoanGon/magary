@@ -9,13 +9,12 @@ import {
   inject,
   forwardRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MagaryGrid, MagaryGridLayoutItem } from '../grid/grid';
 
 @Component({
   selector: 'magary-grid-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './grid-item.html',
   styleUrl: './grid-item.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,9 +47,10 @@ export class MagaryGridItem implements OnInit, OnDestroy {
 
   // Inject parent grid
   private parentGrid = inject(forwardRef(() => MagaryGrid));
+  private el = inject(ElementRef);
   private registerTimeoutId: ReturnType<typeof setTimeout> | null = null;
 
-  constructor(private el: ElementRef) {
+  constructor() {
     // Reactively update attributes when signals change
     effect(() => {
       const val = this.x() ?? this.col() ?? this.item()?.col;

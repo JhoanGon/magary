@@ -3,12 +3,12 @@
   [style]="{ width: width(), height: height() }"
 >
   <img
-    [src]="src()"
+    [src]="activeSrc()"
     [alt]="alt()"
     [style.width]="width()"
     [style.height]="height()"
     [style.object-fit]="objectFit()"
-    [loading]="loading()"
+    [attr.loading]="loading()"
     (load)="onImageLoad($event)"
     (error)="onImageError($event)"
     [style]="preview() ? { cursor: 'pointer' } : {}"
@@ -19,32 +19,34 @@
 <dialog
   #previewDialog
   class="magary-image-preview-dialog"
+  role="dialog"
+  aria-modal="true"
   (click)="closePreview()"
   (cancel)="closePreview()"
 >
   <div class="magary-image-toolbar" (click)="$event.stopPropagation()">
-    <button class="magary-image-action" (click)="zoomOut()">
+    <button class="magary-image-action" (click)="zoomOut()" aria-label="Zoom out">
       <lucide-icon name="zoom-out"></lucide-icon>
     </button>
-    <button class="magary-image-action" (click)="zoomIn()">
+    <button class="magary-image-action" (click)="zoomIn()" aria-label="Zoom in">
       <lucide-icon name="zoom-in"></lucide-icon>
     </button>
-    <button class="magary-image-action" (click)="rotateLeft()">
+    <button class="magary-image-action" (click)="rotateLeft()" aria-label="Rotate left">
       <lucide-icon name="rotate-ccw"></lucide-icon>
     </button>
-    <button class="magary-image-action" (click)="rotateRight()">
+    <button class="magary-image-action" (click)="rotateRight()" aria-label="Rotate right">
       <lucide-icon name="rotate-cw"></lucide-icon>
     </button>
-    <button class="magary-image-action" (click)="download()">
+    <button class="magary-image-action" (click)="download()" aria-label="Download">
       <lucide-icon name="download"></lucide-icon>
     </button>
-    <button class="magary-image-action" (click)="closePreview()">
+    <button class="magary-image-action" (click)="closePreview()" aria-label="Close">
       <lucide-icon name="x"></lucide-icon>
     </button>
   </div>
   <div class="magary-image-preview-content" (click)="$event.stopPropagation()">
     <img
-      [src]="src()"
+      [src]="activeSrc()"
       [alt]="alt()"
       [style]="imagePreviewStyle()"
       class="preview-image"

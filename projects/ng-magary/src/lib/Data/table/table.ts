@@ -58,7 +58,7 @@ interface MagaryTableRow {
     MagaryPaginator, // Add to imports
   ],
   templateUrl: './table.html',
-  styleUrls: ['./table.scss'],
+  styleUrl: './table.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })

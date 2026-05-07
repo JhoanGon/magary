@@ -10,16 +10,16 @@ import {
   inject,
 } from '@angular/core';
 
-import { CommonModule, DOCUMENT, NgStyle } from '@angular/common';
+import { DOCUMENT, NgStyle } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { ElementRef, viewChild } from '@angular/core';
 
 @Component({
   selector: 'magary-image',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './image.html',
-  styleUrls: ['./image.scss'],
+  styleUrl: './image.scss',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -45,15 +45,26 @@ export class MagaryImage implements OnDestroy {
 
   loading = input<'lazy' | 'eager'>('lazy');
 
+  /** Optional fallback image URL shown when the main src fails to load. */
+  fallbackSrc = input<string | undefined>(undefined);
+
   preview = input<boolean>(false);
 
   onLoad = output<Event>();
 
   onError = output<Event>();
 
-  loaded: boolean = false;
+  loaded = signal<boolean>(false);
 
-  error: boolean = false;
+  error = signal<boolean>(false);
+
+  /** Resolved image source — switches to fallbackSrc when error occurs. */
+  activeSrc = computed(() => {
+    if (this.error()) {
+      return this.fallbackSrc() ?? this.src();
+    }
+    return this.src();
+  });
 
   private emitLoad(event: Event): void {
     if (!this.destroyed) {
@@ -68,12 +79,12 @@ export class MagaryImage implements OnDestroy {
   }
 
   onImageLoad(event: Event) {
-    this.loaded = true;
+    this.loaded.set(true);
     this.emitLoad(event);
   }
 
   onImageError(event: Event) {
-    this.error = true;
+    this.error.set(true);
     this.emitError(event);
   }
 

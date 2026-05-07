@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   computed,
@@ -12,7 +11,7 @@ import { MagaryToastMessage } from './toast.service';
 @Component({
   selector: 'magary-toast-item',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule],
+  imports: [LucideAngularModule],
   templateUrl: './toast-item.html',
   styleUrl: './toast-item.scss',
   encapsulation: ViewEncapsulation.None,

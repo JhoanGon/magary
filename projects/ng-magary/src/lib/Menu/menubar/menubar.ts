@@ -29,7 +29,7 @@ export class MenubarItemDirective {
   item = input.required<MenuItem>();
   parent = input.required<MagaryMenubar>();
 
-  constructor(private el: ElementRef) {}
+  private el = inject(ElementRef);
 
   onMouseEnter() {
     if (this.item().disabled) return;
@@ -64,8 +64,6 @@ export class MagaryMenubar implements OnDestroy {
   private documentClickListener: (() => void) | null = null;
   private renderer = inject(Renderer2);
   private el = inject(ElementRef);
-
-  constructor() {}
 
   onItemClick(event: Event, item: MenuItem) {
     if (item.disabled) {

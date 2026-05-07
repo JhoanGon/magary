@@ -15,7 +15,7 @@ export type DividerType = 'solid' | 'dashed' | 'dotted';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './divider.html',
-  styleUrls: ['./divider.scss'],
+  styleUrl: './divider.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.Emulated,
   host: {

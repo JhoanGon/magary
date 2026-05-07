@@ -12,7 +12,7 @@ import {
   viewChild,
   input,
 } from '@angular/core';
-import { CommonModule, NgTemplateOutlet, DOCUMENT } from '@angular/common';
+import { NgTemplateOutlet, DOCUMENT } from '@angular/common';
 import { LucideAngularModule } from 'lucide-angular';
 import { RouterModule, type UrlTree } from '@angular/router';
 import { MenuItem } from '../api/menu.interface';
@@ -25,7 +25,7 @@ import { MenuItem } from '../api/menu.interface';
 @Component({
   selector: 'magary-context-menu',
   standalone: true,
-  imports: [CommonModule, RouterModule, LucideAngularModule, NgTemplateOutlet],
+  imports: [RouterModule, LucideAngularModule, NgTemplateOutlet],
   templateUrl: './context-menu.html',
   styleUrl: './context-menu.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,8 +51,6 @@ export class MagaryContextMenu implements AfterViewInit, OnDestroy {
   private documentClickListener: (() => void) | null = null;
   private documentResizeListener: (() => void) | null = null;
   private contextMenuListener: (() => void) | null = null;
-
-  constructor() {}
 
   ngAfterViewInit() {
     if (this.global()) {
