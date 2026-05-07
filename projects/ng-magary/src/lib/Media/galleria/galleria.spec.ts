@@ -17,7 +17,7 @@ const lucideIcons = Object.entries(icons).reduce(
   {} as Record<string, LucideIconData>,
 );
 
-describe('MagaryGalleria mobile gestures', () => {
+describe('MagaryGalleria', () => {
   let fixture: ComponentFixture<MagaryGalleria>;
   let component: MagaryGalleria;
 
@@ -34,7 +34,71 @@ describe('MagaryGalleria mobile gestures', () => {
     fixture.detectChanges();
   });
 
-  afterEach(() => {
+  it('starts with empty value array by default', () => {
+    expect(component.value()).toEqual([]);
+  });
+
+  it('activeIndex model defaults to 0', () => {
+    expect(component.activeIndex()).toBe(0);
+  });
+
+  it('activeIndex is writable via model', () => {
+    component.activeIndex.set(2);
+    expect(component.activeIndex()).toBe(2);
+  });
+
+  it('applies thumbnailsPosition class', () => {
+    fixture.componentRef.setInput('thumbnailsPosition', 'left');
+    fixture.detectChanges();
+
+    const host = fixture.nativeElement as HTMLElement;
+    expect(host.classList.contains('magary-galleria-thumbnails-left')).toBe(true);
+  });
+
+  it('showThumbnails defaults to true', () => {
+    expect(component.showThumbnails()).toBe(true);
+  });
+
+  it('circular defaults to true', () => {
+    expect(component.circular()).toBe(true);
+  });
+
+  it('autoPlay defaults to false', () => {
+    expect(component.autoPlay()).toBe(false);
+  });
+
+  it('showIndicators defaults to false', () => {
+    expect(component.showIndicators()).toBe(false);
+  });
+
+  it('enableZoom defaults to true', () => {
+    expect(component.enableZoom()).toBe(true);
+  });
+
+  it('transitionInterval defaults to 4000', () => {
+    expect(component.transitionInterval()).toBe(4000);
+  });
+
+  it('theme defaults to dark', () => {
+    expect(component.theme()).toBe('dark');
+  });
+});
+
+describe('MagaryGalleria mobile gestures', () => {
+  let fixture: ComponentFixture<MagaryGalleria>;
+  let component: MagaryGalleria;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MagaryGalleria],
+      providers: [
+        importProvidersFrom(LucideAngularModule.pick(lucideIcons)),
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(MagaryGalleria);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   it('starts pinch zoom from default scale on touch devices', () => {

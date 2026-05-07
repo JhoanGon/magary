@@ -1,21 +1,9 @@
-﻿import { Component, importProvidersFrom, viewChild } from '@angular/core';
+﻿import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { importProvidersFrom } from '@angular/core';
 import { LucideAngularModule, icons } from 'lucide-angular';
 import { MagaryFieldset } from './fieldset';
-
-@Component({
-  standalone: true,
-  imports: [MagaryFieldset],
-  template: `
-    <magary-fieldset #fieldset legend="Details" [toggleable]="true">
-      Fieldset Content
-    </magary-fieldset>
-  `,
-})
-class FieldsetHostComponent {
-  fieldset = viewChild.required<MagaryFieldset>('fieldset');
-}
 
 const kebabCase = (value: string) =>
   value.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
@@ -29,20 +17,46 @@ const lucideIcons = Object.entries(icons).reduce(
   {} as Record<string, (typeof icons)[keyof typeof icons]>,
 );
 
-describe('MagaryFieldset behavior', () => {
-  let fixture: ComponentFixture<FieldsetHostComponent>;
-  let host: FieldsetHostComponent;
+@Component({
+  standalone: true,
+  imports: [MagaryFieldset],
+  template: `
+    <magary-fieldset #fieldset legend="Details" [toggleable]="true">
+      Fieldset Content
+    </magary-fieldset>
+  `,
+})
+class ToggleableFieldsetHostComponent {
+  fieldset = viewChild.required<MagaryFieldset>('fieldset');
+}
+
+@Component({
+  standalone: true,
+  imports: [MagaryFieldset],
+  template: `
+    <magary-fieldset #fieldset legend="Static Info" [toggleable]="false">
+      Static Content
+    </magary-fieldset>
+  `,
+})
+class StaticFieldsetHostComponent {
+  fieldset = viewChild.required<MagaryFieldset>('fieldset');
+}
+
+describe('MagaryFieldset toggleable', () => {
+  let fixture: ComponentFixture<ToggleableFieldsetHostComponent>;
+  let host: ToggleableFieldsetHostComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FieldsetHostComponent],
+      imports: [ToggleableFieldsetHostComponent],
       providers: [
         provideNoopAnimations(),
         importProvidersFrom(LucideAngularModule.pick(lucideIcons)),
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FieldsetHostComponent);
+    fixture = TestBed.createComponent(ToggleableFieldsetHostComponent);
     host = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -94,5 +108,79 @@ describe('MagaryFieldset behavior', () => {
     expect(beforeEvents[1].collapsed).toBe(false);
     expect(afterEvents[1].collapsed).toBe(false);
   });
+
+  it('renders legend text', () => {
+    const legend = fixture.nativeElement.querySelector('.magary-fieldset-legend');
+    expect(legend.textContent).toContain('Details');
+  });
+
+  it('renders content when not collapsed', () => {
+    expect(fixture.nativeElement.textContent).toContain('Fieldset Content');
+  });
+
+  it('expand() opens collapsed fieldset', () => {
+    host.fieldset().collapsed.set(true);
+    fixture.detectChanges();
+    expect(host.fieldset().collapsed()).toBe(true);
+
+    host.fieldset().expand(new Event('click'));
+    fixture.detectChanges();
+    expect(host.fieldset().collapsed()).toBe(false);
+  });
+
+  it('collapse() closes expanded fieldset', () => {
+    host.fieldset().collapsed.set(false);
+    fixture.detectChanges();
+    expect(host.fieldset().collapsed()).toBe(false);
+
+    host.fieldset().collapse(new Event('click'));
+    fixture.detectChanges();
+    expect(host.fieldset().collapsed()).toBe(true);
+  });
+
+  it('expand() and collapse() are no-ops when toggleable is false', () => {
+    // Use the static fieldset host which already has toggleable=false
+    const staticFixture = TestBed.createComponent(StaticFieldsetHostComponent);
+    const staticHost = staticFixture.componentInstance;
+    staticFixture.detectChanges();
+
+    const fieldset = staticHost.fieldset();
+    fieldset.collapsed.set(true);
+    staticFixture.detectChanges();
+
+    fieldset.expand(new Event('click'));
+    staticFixture.detectChanges();
+    expect(fieldset.collapsed()).toBe(true);
+  });
 });
 
+describe('MagaryFieldset static (non-toggleable)', () => {
+  let fixture: ComponentFixture<StaticFieldsetHostComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [StaticFieldsetHostComponent],
+      providers: [
+        provideNoopAnimations(),
+        importProvidersFrom(LucideAngularModule.pick(lucideIcons)),
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(StaticFieldsetHostComponent);
+    fixture.detectChanges();
+  });
+
+  it('does not render toggle button when toggleable is false', () => {
+    const toggleButton = fixture.nativeElement.querySelector('.magary-fieldset-toggler');
+    expect(toggleButton).toBeFalsy();
+  });
+
+  it('renders static legend text', () => {
+    const legend = fixture.nativeElement.querySelector('.magary-fieldset-legend');
+    expect(legend.textContent).toContain('Static Info');
+  });
+
+  it('renders content', () => {
+    expect(fixture.nativeElement.textContent).toContain('Static Content');
+  });
+});
