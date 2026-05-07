@@ -2,6 +2,35 @@
 
 All notable changes to this workspace are documented in this file.
 
+## [0.0.24] - 2026-05-06
+
+**Type:** `MINOR`
+
+### Added
+- Governance documentation suite:
+  - `docs/SEMVER_POLICY.md` — SemVer 2.0 policy with deprecation rules
+  - `docs/RELEASE_WORKFLOW.md` — End-to-end release process
+  - `docs/RELEASE_CANDIDATE_CHECKLIST.md` — Reusable release checklist
+  - `docs/MIGRATION_COMPATIBILITY.md` — Versioned migration guide
+- API contract CI gate (`check:api-contract`) for detecting unannounced public API changes
+
+### Changed
+- Data components (`DataView`, `OrderList`, `PickList`, `Tree`) — functional slice with typed events and consistent async state handling
+
+### Deprecated
+- *(none in this release)*
+
+### Removed
+- *(none in this release)*
+
+### Fixed
+- *(none reported in this release)*
+
+### Notes for Consumers
+- No breaking changes. Consumers on `0.0.23` can upgrade without code changes.
+
+---
+
 ## [0.0.11] - 2026-02-27
 
 ### CI and Compatibility

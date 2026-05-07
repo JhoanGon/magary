@@ -16,6 +16,11 @@ export default [
       'e2e/playwright/test-results/**',
       'e2e/playwright/snapshots/**',
       'e2e/playwright/{configDir}/**',
+      '.agents/**',
+      '.claude/**',
+      'coverage/**',
+      'tools/ci/api-contract-lib.d.ts',
+      'tools/codegen/editorial-metadata-integration.spec.ts',
     ],
   },
   {
