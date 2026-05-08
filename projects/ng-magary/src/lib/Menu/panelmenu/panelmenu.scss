@@ -2,13 +2,14 @@
   --panel-bg: var(--magary-panel-bg, var(--surface-0, #ffffff));
   --panel-text: var(--magary-panel-text, var(--text-primary, #1f2937));
   --panel-hover: var(--magary-panel-hover, var(--surface-100, #f1f5f9));
+  --panel-hover-text: var(--magary-panel-hover-text, var(--panel-text));
   --panel-radius: var(--magary-panel-radius, 8px);
   --panel-shadow: var(--magary-panel-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
   --panel-header-bg: var(--magary-panel-header-bg, color-mix(in srgb, var(--panel-text) 4%, transparent));
   --panel-header-hover: var(--magary-panel-header-hover, color-mix(in srgb, var(--panel-text) 8%, transparent));
   --panel-transition: var(--magary-panel-transition, 0.2s ease);
   --panel-active-bg: color-mix(in srgb, var(--panel-hover) 14%, transparent);
-  --panel-active-text: color-mix(in srgb, var(--panel-hover) 88%, #00112a 12%);
+  --panel-active-text: var(--magary-panel-active-text, var(--panel-text));
   --panel-item-border: color-mix(in srgb, var(--panel-text) 14%, transparent);
   margin-bottom: 1rem;
   transition: box-shadow 0.3s;
@@ -85,7 +86,7 @@
   &.expanded {
     opacity: 1;
     transform: scaleY(1);
-    margin-top: 0.5rem;
+    margin-top: 0.35rem;
     max-height: 1000px;
   }
 }
@@ -162,7 +163,13 @@
 }
 
 .menu-item {
-  padding-bottom: 10px;
+  padding-bottom: 0.35rem;
+}
+
+.panel-items > .menu-item:last-child,
+.sub-items > .menu-item:last-child,
+.sub-sub-items > .menu-item:last-child {
+  padding-bottom: 0;
 }
 
 .sidebar-panel-menu {
