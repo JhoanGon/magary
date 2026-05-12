@@ -488,6 +488,12 @@ export class ViewSidebar {
       descriptionKey: 'components.menu.sidebar.api.collapsible.desc',
     },
     {
+      name: 'isCollapsed',
+      type: 'boolean',
+      default: 'false',
+      descriptionKey: 'components.menu.sidebar.api.isCollapsed.desc',
+    },
+    {
       name: 'showToggle',
       type: 'boolean',
       default: 'true',
@@ -514,6 +520,11 @@ export class ViewSidebar {
   ];
 
   outputsRows: SidebarOutputRow[] = [
+    {
+      name: 'isCollapsedChange',
+      type: 'boolean',
+      descriptionKey: 'components.menu.sidebar.outputs.isCollapsedChange.desc',
+    },
     {
       name: 'onLogout',
       type: 'void',

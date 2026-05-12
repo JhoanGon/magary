@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   signal,
   viewChild,
   ElementRef,
@@ -108,7 +109,18 @@ export class Layout implements AfterViewInit {
     },
   ];
 
-  isSidebarOpen = signal(false);
+  private readonly COLLAPSED_KEY = 'magary.demo.sidebar-collapsed';
+
+  sidebarCollapsed = signal(this.readCollapsed());
+
+  constructor() {
+    effect(() => {
+      localStorage.setItem(
+        this.COLLAPSED_KEY,
+        String(this.sidebarCollapsed()),
+      );
+    });
+  }
 
   ngAfterViewInit() {
     this.router.events
@@ -121,12 +133,8 @@ export class Layout implements AfterViewInit {
       });
   }
 
-  toggleSidebar() {
-    this.isSidebarOpen.update((open) => !open);
-  }
-
-  closeSidebar() {
-    this.isSidebarOpen.set(false);
+  handleLogout() {
+    console.log('Usuario cerrando sesion...');
   }
 
   setLanguage(language: DemoLanguage) {
@@ -139,8 +147,12 @@ export class Layout implements AfterViewInit {
     }
   }
 
-  handleLogout() {
-    console.log('Usuario cerrando sesion...');
+  private readCollapsed(): boolean {
+    try {
+      return localStorage.getItem(this.COLLAPSED_KEY) === 'true';
+    } catch {
+      return false;
+    }
   }
 
   private openExternalUrl(url: string) {

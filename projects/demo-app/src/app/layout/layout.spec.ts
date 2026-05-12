@@ -103,18 +103,18 @@ describe('Layout', () => {
     expect(component).toBeTruthy();
   });
 
-  it('toggles and closes sidebar state', () => {
-    expect(component.isSidebarOpen()).toBe(false);
+  it('reads and writes sidebar collapsed state', () => {
+    expect(component.sidebarCollapsed()).toBe(false);
 
-    component.toggleSidebar();
-    expect(component.isSidebarOpen()).toBe(true);
+    component.sidebarCollapsed.set(true);
+    fixture.detectChanges();
+    expect(component.sidebarCollapsed()).toBe(true);
+    expect(localStorage.getItem('magary.demo.sidebar-collapsed')).toBe('true');
 
-    component.toggleSidebar();
-    expect(component.isSidebarOpen()).toBe(false);
-
-    component.toggleSidebar();
-    component.closeSidebar();
-    expect(component.isSidebarOpen()).toBe(false);
+    component.sidebarCollapsed.set(false);
+    fixture.detectChanges();
+    expect(component.sidebarCollapsed()).toBe(false);
+    expect(localStorage.getItem('magary.demo.sidebar-collapsed')).toBe('false');
   });
 
   it('resets content scroll on NavigationEnd after view init', () => {

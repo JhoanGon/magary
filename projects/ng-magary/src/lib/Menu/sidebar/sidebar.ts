@@ -187,7 +187,7 @@ export class MagarySidebar implements OnDestroy {
   public trapFocus = input(true, { transform: booleanAttribute });
 
   public isMobileOpen = signal(false);
-  public isCollapsed = signal(false);
+  public isCollapsed = model<boolean>(false);
   readonly sidebarId = `magary-sidebar-${Math.random().toString(36).substring(2, 11)}`;
   readonly sidebarElement = viewChild<ElementRef<HTMLElement>>('sidebarElement');
   readonly closeButtonElement = viewChild<ElementRef<HTMLButtonElement>>('closeButton');

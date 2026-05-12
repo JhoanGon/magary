@@ -224,6 +224,8 @@ export const SIDEBAR_DOC_TEXT = {
       'Color hover para items interactivos.',
     'components.menu.sidebar.api.collapsible.desc':
       'Permite colapsar/expandir sidebar en desktop.',
+    'components.menu.sidebar.api.isCollapsed.desc':
+      'Estado colapsado con two-way binding. Usa [(isCollapsed)] para controlar y observar el colapso del sidebar.',
     'components.menu.sidebar.api.showToggle.desc':
       'Muestra boton de toggle en header.',
     'components.menu.sidebar.api.expandButtonLabel.desc':
@@ -242,6 +244,8 @@ export const SIDEBAR_DOC_TEXT = {
       'Se emite cuando el usuario pulsa Cerrar sesion.',
     'components.menu.sidebar.outputs.closeSidebar.desc':
       'Se emite cuando el sidebar mobile se cierra.',
+    'components.menu.sidebar.outputs.isCollapsedChange.desc':
+      'Se emite cuando cambia el estado colapsado del sidebar en desktop.',
     'components.menu.sidebar.outputs.menuToggle.desc':
       'Reexpone el evento de apertura/cierre del panel interno, con source y sectionTitle.',
     'components.menu.sidebar.outputs.menuItemClick.desc':
@@ -519,6 +523,8 @@ export const SIDEBAR_DOC_TEXT = {
       'Hover color for interactive items.',
     'components.menu.sidebar.api.collapsible.desc':
       'Allows collapsing/expanding sidebar on desktop.',
+    'components.menu.sidebar.api.isCollapsed.desc':
+      'Two-way bindable collapsed state. Use [(isCollapsed)] to control and observe the sidebar collapse state.',
     'components.menu.sidebar.api.showToggle.desc':
       'Shows toggle button in header.',
     'components.menu.sidebar.api.expandButtonLabel.desc':
@@ -537,6 +543,8 @@ export const SIDEBAR_DOC_TEXT = {
       'Emitted when user clicks logout.',
     'components.menu.sidebar.outputs.closeSidebar.desc':
       'Emitted when mobile sidebar closes.',
+    'components.menu.sidebar.outputs.isCollapsedChange.desc':
+      'Emitted when the sidebar desktop collapse state changes.',
     'components.menu.sidebar.outputs.menuToggle.desc':
       'Re-emits inner panel open/close events with source and sectionTitle.',
     'components.menu.sidebar.outputs.menuItemClick.desc':

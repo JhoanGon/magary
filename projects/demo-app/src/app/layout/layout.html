@@ -1,5 +1,6 @@
 <div class="layout">
   <magary-sidebar
+    [(isCollapsed)]="sidebarCollapsed"
     [sections]="sidebarSections()"
     [showUserSection]="true"
     [userName]="i18n.translateUi('demoUserName')"
