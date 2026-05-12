@@ -1,0 +1,4320 @@
+[
+  {
+    "name": "MagaryAccordion",
+    "selector": "magary-accordion",
+    "inputs": [
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onClose",
+        "description": "Event emitter for onClose"
+      },
+      {
+        "name": "onOpen",
+        "description": "Event emitter for onOpen"
+      }
+    ],
+    "description": "Container component that shows/hides content sections. Only one section can be expanded at a time.",
+    "filePath": "projects/ng-magary/src/lib/Panel/accordion/accordion.ts"
+  },
+  {
+    "name": "MagaryAvatar",
+    "selector": "magary-avatar",
+    "inputs": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "image",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "shape",
+        "type": "AvatarShape",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "AvatarSize",
+        "required": false
+      },
+      {
+        "name": "badgeValue",
+        "type": "string | number",
+        "required": true
+      },
+      {
+        "name": "badgeSeverity",
+        "type": "BadgeSeverity",
+        "required": false
+      },
+      {
+        "name": "customStyle",
+        "type": "Record<string, unknown>",
+        "required": true
+      },
+      {
+        "name": "alt",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "clickable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "avatarClick",
+        "description": "Event emitter for avatarClick"
+      }
+    ],
+    "description": "Displays user avatars as images, initials, or icons with optional badge.",
+    "filePath": "projects/ng-magary/src/lib/Misc/avatar/avatar.ts"
+  },
+  {
+    "name": "MagaryBreadcrumb",
+    "selector": "magary-breadcrumb",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "BreadcrumbItem[]",
+        "required": false
+      },
+      {
+        "name": "home",
+        "type": "BreadcrumbItem | undefined",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "NavStyleMap | null | undefined",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string | undefined",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onItemClick",
+        "description": "Event emitter for onItemClick"
+      }
+    ],
+    "description": "Navigation breadcrumb trail showing the current page location within a hierarchy.",
+    "filePath": "projects/ng-magary/src/lib/Menu/breadcrumb/breadcrumb.ts"
+  },
+  {
+    "name": "MagaryButton",
+    "selector": "magary-button",
+    "inputs": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "shadow",
+        "type": "ShadowLevel",
+        "required": false
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "customBackgroundColor",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "iconPos",
+        "type": "IconPosition",
+        "required": false
+      },
+      {
+        "name": "severity",
+        "type": "ButtonSeverity",
+        "required": true
+      },
+      {
+        "name": "iconSize",
+        "type": "number",
+        "required": true
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "ButtonType",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "ButtonVariant",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "ButtonSize",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "height",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onClick",
+        "description": "Event emitter for onClick"
+      },
+      {
+        "name": "buttonClick",
+        "description": "Event emitter for buttonClick"
+      }
+    ],
+    "description": "Primary action button with multiple variants: solid, outlined, and text. Supports icons and loading state.",
+    "filePath": "projects/ng-magary/src/lib/Button/button/button.ts"
+  },
+  {
+    "name": "MagaryCard",
+    "selector": "magary-card",
+    "inputs": [
+      {
+        "name": "img",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "positionImage",
+        "type": "ImagePosition",
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "ShadowLevel",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "height",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "padding",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "gap",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "borderRadius",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "imageSize",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "responsive",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "altText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "imageFit",
+        "type": "'cover' | 'contain' | 'fill' | 'scale-down' | 'none'",
+        "required": false
+      },
+      {
+        "name": "clickable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "variant",
+        "type": "CardVariant",
+        "required": false
+      },
+      {
+        "name": "loadingText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "hoverEffect",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "badge",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "badgeColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "border",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "outputs": [
+      {
+        "name": "cardClick",
+        "description": "Event emitter for cardClick"
+      }
+    ],
+    "description": "Container card with optional header, footer, and image for grouping related content.",
+    "filePath": "projects/ng-magary/src/lib/Panel/card/card.ts"
+  },
+  {
+    "name": "MagaryCarousel",
+    "selector": "magary-carousel",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "T[]",
+        "required": false
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "initialSlide",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "numVisible",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "numScroll",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "numActive",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "spaceBetween",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "responsiveOptions",
+        "type": "CarouselResponsiveOptions[]",
+        "required": false
+      },
+      {
+        "name": "orientation",
+        "type": "CarouselOrientation",
+        "required": false
+      },
+      {
+        "name": "direction",
+        "type": "'ltr' | 'rtl'",
+        "required": false
+      },
+      {
+        "name": "verticalViewPortHeight",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "contentClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "indicatorsContentClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "theme",
+        "type": "'modern' | 'minimal' | 'classic' | 'ios' | 'material'",
+        "required": false
+      },
+      {
+        "name": "effect",
+        "type": "CarouselEffect",
+        "required": false
+      },
+      {
+        "name": "transitionDuration",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "transitionTimingFunction",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "freeMode",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "resistance",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "optimizePerformance",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "circular",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "loop",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "centerMode",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "peekMode",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "peekAmount",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "showNavigators",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "navStyle",
+        "type": "CarouselNavStyle",
+        "required": false
+      },
+      {
+        "name": "navPosition",
+        "type": "CarouselNavPosition",
+        "required": false
+      },
+      {
+        "name": "prevButtonClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "nextButtonClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "showIndicators",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "indicatorStyle",
+        "type": "CarouselIndicatorStyle",
+        "required": false
+      },
+      {
+        "name": "indicatorPosition",
+        "type": "CarouselIndicatorPosition",
+        "required": false
+      },
+      {
+        "name": "swipeable",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "touchRatio",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "threshold",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "grabCursor",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "mousewheel",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "keyboard",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "momentum",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "momentumRatio",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "hapticFeedback",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "autoplayInterval",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "autoplayDirection",
+        "type": "CarouselAutoplayDirection",
+        "required": false
+      },
+      {
+        "name": "pauseOnHover",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "pauseOnInteraction",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "showProgress",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "progressStyle",
+        "type": "'bar' | 'circular'",
+        "required": false
+      },
+      {
+        "name": "autoplayOnlyInView",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "autoplayResumeDelay",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "virtual",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "virtualBuffer",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "preloadStrategy",
+        "type": "CarouselPreloadStrategy",
+        "required": false
+      },
+      {
+        "name": "prefetchAdjacent",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "respectReducedMotion",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "hashNavigation",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "hashPrefix",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "history",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "trackViewTime",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "zoomOnClick",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "zoomScale",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "watchSlidesProgress",
+        "type": "unknown",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "pageChange",
+        "description": "Event emitter for pageChange"
+      },
+      {
+        "name": "slideChange",
+        "description": "Event emitter for slideChange"
+      },
+      {
+        "name": "slideChanged",
+        "description": "Event emitter for slideChanged"
+      },
+      {
+        "name": "reachBeginning",
+        "description": "Event emitter for reachBeginning"
+      },
+      {
+        "name": "reachEnd",
+        "description": "Event emitter for reachEnd"
+      },
+      {
+        "name": "progressChange",
+        "description": "Event emitter for progressChange"
+      },
+      {
+        "name": "itemClick",
+        "description": "Event emitter for itemClick"
+      },
+      {
+        "name": "itemView",
+        "description": "Event emitter for itemView"
+      },
+      {
+        "name": "autoplayStart",
+        "description": "Event emitter for autoplayStart"
+      },
+      {
+        "name": "autoplayStop",
+        "description": "Event emitter for autoplayStop"
+      },
+      {
+        "name": "autoplayPause",
+        "description": "Event emitter for autoplayPause"
+      },
+      {
+        "name": "autoplayResume",
+        "description": "Event emitter for autoplayResume"
+      },
+      {
+        "name": "touchStart",
+        "description": "Event emitter for touchStart"
+      },
+      {
+        "name": "touchMove",
+        "description": "Event emitter for touchMove"
+      },
+      {
+        "name": "touchEnd",
+        "description": "Event emitter for touchEnd"
+      },
+      {
+        "name": "swipeDirection",
+        "description": "Event emitter for swipeDirection"
+      }
+    ],
+    "description": "Slideshow component for cycling through images or content panels.",
+    "filePath": "projects/ng-magary/src/lib/Media/carousel/carousel.ts"
+  },
+  {
+    "name": "MagaryCascadeSelect",
+    "selector": "magary-cascade-select",
+    "inputs": [
+      {
+        "name": "options",
+        "type": "CascadeSelectOption[]",
+        "required": false
+      },
+      {
+        "name": "optionLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "optionValue",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "optionGroupLabel",
+        "type": "string[] | string | null",
+        "required": false
+      },
+      {
+        "name": "optionGroupChildren",
+        "type": "string[]",
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "inputId",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaDescribedby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "CascadeSelectSize",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "compareWith",
+        "type": "CascadeSelectCompareWith",
+        "required": false
+      },
+      {
+        "name": "disabledInput",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "optionGroupSelectable",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Hierarchical dropdown selector for choosing from nested category trees.",
+    "filePath": "projects/ng-magary/src/lib/Form/cascade-select/cascade-select.ts"
+  },
+  {
+    "name": "MagaryCheckbox",
+    "selector": "magary-checkbox",
+    "inputs": [
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "'primary' | 'success' | 'danger' | 'warning' | 'info'",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "change",
+        "description": "Event emitter for change"
+      }
+    ],
+    "description": "Binary checkbox input with label support.",
+    "filePath": "projects/ng-magary/src/lib/Form/checkbox/checkbox.ts"
+  },
+  {
+    "name": "MagaryConfirmDialog",
+    "selector": "magary-confirm-dialog",
+    "inputs": [
+      {
+        "name": "header",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "message",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "key",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "acceptLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "rejectLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "acceptIcon",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "rejectIcon",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "acceptVisible",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "rejectVisible",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "dismissableMask",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "closeOnEscape",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Modal confirmation dialog with accept/reject actions.",
+    "filePath": "projects/ng-magary/src/lib/Overlay/confirm-dialog/confirm-dialog.ts"
+  },
+  {
+    "name": "MagaryContextMenu",
+    "selector": "magary-context-menu",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "global",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "target",
+        "type": "string | ElementRef<HTMLElement> | HTMLElement | null",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Right-click context menu attached to a target element.",
+    "filePath": "projects/ng-magary/src/lib/Menu/contextmenu/context-menu.ts"
+  },
+  {
+    "name": "MagaryDataView",
+    "selector": "magary-dataview",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "MagaryDataViewItem[]",
+        "required": false
+      },
+      {
+        "name": "layout",
+        "type": "'list' | 'grid'",
+        "required": false
+      },
+      {
+        "name": "paginator",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "rows",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "totalRecords",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "pageLinks",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "rowsPerPageOptions",
+        "type": "number[]",
+        "required": false
+      },
+      {
+        "name": "emptyMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "sortField",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "sortOrder",
+        "type": "number | null",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "trackBy",
+        "type": "(index: number, item: MagaryDataViewItem) => unknown",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onPage",
+        "description": "Event emitter for onPage"
+      },
+      {
+        "name": "onSort",
+        "description": "Event emitter for onSort"
+      },
+      {
+        "name": "onErrorRetry",
+        "description": "Event emitter for onErrorRetry"
+      }
+    ],
+    "description": "Flexible layout container for displaying data collections in grid or list mode.",
+    "filePath": "projects/ng-magary/src/lib/Data/dataview/dataview.ts"
+  },
+  {
+    "name": "MagaryDatePicker",
+    "selector": "magary-datepicker",
+    "inputs": [
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "disabled",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "inputId",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaDescribedby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "minDate",
+        "type": "Date",
+        "required": true
+      },
+      {
+        "name": "maxDate",
+        "type": "Date",
+        "required": true
+      },
+      {
+        "name": "selectionMode",
+        "type": "'single' | 'range'",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onSelect",
+        "description": "Event emitter for onSelect"
+      }
+    ],
+    "description": "Date picker input with calendar popup for selecting single dates.",
+    "filePath": "projects/ng-magary/src/lib/Form/datepicker/datepicker.ts"
+  },
+  {
+    "name": "MagaryDialog",
+    "selector": "magary-dialog",
+    "inputs": [
+      {
+        "name": "visible",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "header",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "draggable",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "resizable",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "modal",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "closeOnEscape",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "dismissableMask",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "maximizable",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "trapFocus",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "autoFocus",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "contentStyle",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "appendTo",
+        "type": "'body' | 'local'",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "height",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "position",
+        "type": "| 'center'\r\n    | 'top'\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'right'\r\n    | 'top-left'\r\n    | 'top-right'\r\n    | 'bottom-left'\r\n    | 'bottom-right'",
+        "required": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "headerBackground",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "contentBackground",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "footerBackground",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "showBorder",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "showSectionBorders",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "glass",
+        "type": "unknown",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onShow",
+        "description": "Event emitter for onShow"
+      },
+      {
+        "name": "onHide",
+        "description": "Event emitter for onHide"
+      }
+    ],
+    "description": "Modal dialog overlay for displaying content on top of the current page.",
+    "filePath": "projects/ng-magary/src/lib/Overlay/dialog/dialog.ts"
+  },
+  {
+    "name": "MagaryDivider",
+    "selector": "magary-divider",
+    "inputs": [
+      {
+        "name": "layout",
+        "type": "DividerLayout",
+        "required": false
+      },
+      {
+        "name": "align",
+        "type": "DividerAlign",
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "DividerType",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Visual separator line between content sections with optional label.",
+    "filePath": "projects/ng-magary/src/lib/Misc/divider/divider.ts"
+  },
+  {
+    "name": "MagaryFieldset",
+    "selector": "magary-fieldset",
+    "inputs": [
+      {
+        "name": "legend",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "toggleable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "collapsed",
+        "type": "unknown",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onBeforeToggle",
+        "description": "Event emitter for onBeforeToggle"
+      },
+      {
+        "name": "onAfterToggle",
+        "description": "Event emitter for onAfterToggle"
+      }
+    ],
+    "description": "Group of form controls with a legend label and collapsible toggle.",
+    "filePath": "projects/ng-magary/src/lib/Panel/fieldset/fieldset.ts"
+  },
+  {
+    "name": "MagaryGalleria",
+    "selector": "magary-galleria",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "GalleriaItem[]",
+        "required": false
+      },
+      {
+        "name": "activeIndex",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "responsiveOptions",
+        "type": "GalleriaResponsiveOptions[]",
+        "required": false
+      },
+      {
+        "name": "showItemNavigators",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showThumbnailNavigators",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showItemNavigatorsOnHover",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showThumbnails",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "thumbnailsPosition",
+        "type": "'bottom' | 'top' | 'left' | 'right'",
+        "required": false
+      },
+      {
+        "name": "showIndicators",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showIndicatorsOnItem",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "indicatorPosition",
+        "type": "'bottom' | 'top' | 'left' | 'right'",
+        "required": false
+      },
+      {
+        "name": "circular",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "autoPlay",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "transitionInterval",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "changeItemOnIndicatorHover",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showFullScreenButton",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showDownloadButton",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showShareButton",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showProgressBar",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showImageCounter",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showPlayPauseButton",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "enableZoom",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "maxZoomLevel",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "enableSwipe",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "enableKeyboardNavigation",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "enableDoubleClickZoom",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "enablePinchZoom",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "transitionEffect",
+        "type": "'fade' | 'slide' | 'zoom' | 'flip'",
+        "required": false
+      },
+      {
+        "name": "transitionDuration",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "lazyLoad",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "preloadRange",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "showLoadingSpinner",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "captionPosition",
+        "type": "'bottom' | 'overlay' | 'outside'",
+        "required": false
+      },
+      {
+        "name": "showCaption",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "allowPresentationMode",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "presentationAutoPlay",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "containerStyle",
+        "type": "GalleriaContainerStyle | null",
+        "required": false
+      },
+      {
+        "name": "containerClass",
+        "type": "string | undefined",
+        "required": true
+      },
+      {
+        "name": "theme",
+        "type": "'light' | 'dark' | 'auto'",
+        "required": false
+      },
+      {
+        "name": "accentColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string | undefined",
+        "required": true
+      },
+      {
+        "name": "itemTemplateRef",
+        "type": "TemplateRef<unknown> | undefined",
+        "required": true
+      },
+      {
+        "name": "thumbnailTemplateRef",
+        "type": "TemplateRef<unknown> | undefined",
+        "required": true
+      },
+      {
+        "name": "captionTemplateRef",
+        "type": "TemplateRef<unknown> | undefined",
+        "required": true
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onImageClick",
+        "description": "Event emitter for onImageClick"
+      },
+      {
+        "name": "onFullScreenChange",
+        "description": "Event emitter for onFullScreenChange"
+      },
+      {
+        "name": "onImageLoad",
+        "description": "Event emitter for onImageLoad"
+      },
+      {
+        "name": "onImageError",
+        "description": "Event emitter for onImageError"
+      },
+      {
+        "name": "onShare",
+        "description": "Event emitter for onShare"
+      },
+      {
+        "name": "onDownload",
+        "description": "Event emitter for onDownload"
+      }
+    ],
+    "description": "Full-screen image gallery with thumbnail navigation.",
+    "filePath": "projects/ng-magary/src/lib/Media/galleria/galleria.ts"
+  },
+  {
+    "name": "MagaryGrid",
+    "selector": "magary-grid",
+    "inputs": [
+      {
+        "name": "columns",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "rowHeight",
+        "type": "number | 'auto' | undefined",
+        "required": false
+      },
+      {
+        "name": "gap",
+        "type": "number | string | undefined",
+        "required": false
+      },
+      {
+        "name": "editable",
+        "type": "boolean | undefined",
+        "required": false
+      },
+      {
+        "name": "options",
+        "type": "GridStackOptions",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "change",
+        "description": "Event emitter for change"
+      },
+      {
+        "name": "added",
+        "description": "Event emitter for added"
+      },
+      {
+        "name": "removed",
+        "description": "Event emitter for removed"
+      },
+      {
+        "name": "itemsChange",
+        "description": "Event emitter for itemsChange"
+      }
+    ],
+    "description": "Drag-and-drop grid layout system. Items can be repositioned and resized.",
+    "filePath": "projects/ng-magary/src/lib/Grid/grid/grid.ts"
+  },
+  {
+    "name": "MagaryImage",
+    "selector": "magary-image",
+    "inputs": [
+      {
+        "name": "src",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "alt",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "height",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "objectFit",
+        "type": "'cover' | 'contain' | 'fill' | 'none' | 'scale-down'",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "'lazy' | 'eager'",
+        "required": false
+      },
+      {
+        "name": "fallbackSrc",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "preview",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onLoad",
+        "description": "Event emitter for onLoad"
+      },
+      {
+        "name": "onError",
+        "description": "Event emitter for onError"
+      }
+    ],
+    "description": "Enhanced image component with lazy loading, preview, and error handling.",
+    "filePath": "projects/ng-magary/src/lib/Media/image/image.ts"
+  },
+  {
+    "name": "MagaryInput",
+    "selector": "magary-input",
+    "inputs": [
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "InputType",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "InputSize",
+        "required": false
+      },
+      {
+        "name": "variant",
+        "type": "InputVariant",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "success",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "prefixIcon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "suffixIcon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "maxLength",
+        "type": "number | undefined",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "inputFocus",
+        "description": "Event emitter for inputFocus"
+      },
+      {
+        "name": "inputBlur",
+        "description": "Event emitter for inputBlur"
+      },
+      {
+        "name": "iconClick",
+        "description": "Event emitter for iconClick"
+      }
+    ],
+    "description": "Text input field with multiple variants: outlined, filled. Supports icons and validation.",
+    "filePath": "projects/ng-magary/src/lib/Form/input/input.ts"
+  },
+  {
+    "name": "MagaryInputNumber",
+    "selector": "magary-input-number",
+    "inputs": [
+      {
+        "name": "format",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showButtons",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "buttonLayout",
+        "type": "'stacked' | 'horizontal' | 'vertical'",
+        "required": false
+      },
+      {
+        "name": "incrementButtonClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "decrementButtonClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "incrementButtonIcon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "decrementButtonIcon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "locale",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "localeMatcher",
+        "type": "'lookup' | 'best fit'",
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "'decimal' | 'currency' | 'percent'",
+        "required": false
+      },
+      {
+        "name": "currency",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "currencyDisplay",
+        "type": "'symbol' | 'narrowSymbol' | 'code' | 'name'",
+        "required": false
+      },
+      {
+        "name": "useGrouping",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "minFractionDigits",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "maxFractionDigits",
+        "type": "number | undefined",
+        "required": false
+      },
+      {
+        "name": "prefix",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "suffix",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "min",
+        "type": "number | null",
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "number | null",
+        "required": false
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "allowEmpty",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "inputStyle",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "inputStyleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "number | null",
+        "required": false
+      },
+      {
+        "name": "maxlength",
+        "type": "number | null",
+        "required": false
+      },
+      {
+        "name": "tabindex",
+        "type": "number | null",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "inputId",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onInput",
+        "description": "Event emitter for onInput"
+      },
+      {
+        "name": "onFocus",
+        "description": "Event emitter for onFocus"
+      },
+      {
+        "name": "onBlur",
+        "description": "Event emitter for onBlur"
+      },
+      {
+        "name": "onKeyDown",
+        "description": "Event emitter for onKeyDown"
+      }
+    ],
+    "description": "Numeric input with increment/decrement buttons and range validation.",
+    "filePath": "projects/ng-magary/src/lib/Form/inputnumber/input-number.ts"
+  },
+  {
+    "name": "MagaryKanban",
+    "selector": "magary-kanban",
+    "inputs": [
+      {
+        "name": "columns",
+        "type": "MagaryKanbanColumn[]",
+        "required": false
+      },
+      {
+        "name": "listStyle",
+        "type": "Record<string, string | number | null | undefined> | null",
+        "required": false
+      },
+      {
+        "name": "dragDrop",
+        "type": "unknown",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onColumnsChange",
+        "description": "Event emitter for onColumnsChange"
+      },
+      {
+        "name": "onMove",
+        "description": "Event emitter for onMove"
+      }
+    ],
+    "description": "Kanban board for drag-and-drop task management across columns.",
+    "filePath": "projects/ng-magary/src/lib/Data/kanban/kanban.ts"
+  },
+  {
+    "name": "MagaryMegaMenu",
+    "selector": "magary-megamenu",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical'",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Horizontal mega menu with multi-column dropdown panels.",
+    "filePath": "projects/ng-magary/src/lib/Menu/megamenu/megamenu.ts"
+  },
+  {
+    "name": "MagaryMenubar",
+    "selector": "magary-menubar",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Horizontal menu bar for application navigation with dropdown submenus.",
+    "filePath": "projects/ng-magary/src/lib/Menu/menubar/menubar.ts"
+  },
+  {
+    "name": "MagaryMessage",
+    "selector": "magary-message",
+    "inputs": [
+      {
+        "name": "severity",
+        "type": "'success' | 'info' | 'warn' | 'error' | 'secondary' | 'contrast'",
+        "required": false
+      },
+      {
+        "name": "text",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "detail",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "icon",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "closable",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "life",
+        "type": "number | undefined",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onClose",
+        "description": "Event emitter for onClose"
+      }
+    ],
+    "description": "Inline notification message with severity levels: success, info, warn, error.",
+    "filePath": "projects/ng-magary/src/lib/Messages/message/message.ts"
+  },
+  {
+    "name": "MagaryOrderList",
+    "selector": "magary-order-list",
+    "inputs": [
+      {
+        "name": "header",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "listStyle",
+        "type": "Record<string, string | number | null | undefined> | null",
+        "required": false
+      },
+      {
+        "name": "dragDrop",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "showControls",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "MagaryOrderListItem[]",
+        "required": false
+      },
+      {
+        "name": "selection",
+        "type": "MagaryOrderListItem[]",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onReorder",
+        "description": "Event emitter for onReorder"
+      },
+      {
+        "name": "onSelectionChange",
+        "description": "Event emitter for onSelectionChange"
+      },
+      {
+        "name": "onErrorRetry",
+        "description": "Event emitter for onErrorRetry"
+      }
+    ],
+    "description": "Sortable list where items can be reordered via drag-and-drop.",
+    "filePath": "projects/ng-magary/src/lib/Data/orderlist/orderlist.ts"
+  },
+  {
+    "name": "MagaryOrganizationChart",
+    "selector": "magary-organization-chart",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "MagaryTreeNode[]",
+        "required": false
+      },
+      {
+        "name": "selectionMode",
+        "type": "'single' | 'multiple' | null",
+        "required": false
+      },
+      {
+        "name": "selection",
+        "type": "MagaryTreeSelectionValue",
+        "required": false
+      },
+      {
+        "name": "collapsible",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "chartAriaLabel",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onNodeSelect",
+        "description": "Event emitter for onNodeSelect"
+      },
+      {
+        "name": "onNodeUnselect",
+        "description": "Event emitter for onNodeUnselect"
+      },
+      {
+        "name": "onNodeExpand",
+        "description": "Event emitter for onNodeExpand"
+      },
+      {
+        "name": "onNodeCollapse",
+        "description": "Event emitter for onNodeCollapse"
+      }
+    ],
+    "description": "Hierarchical tree visualization for organizational structures.",
+    "filePath": "projects/ng-magary/src/lib/Data/organizationchart/organizationchart.ts"
+  },
+  {
+    "name": "MagaryOverlayPanel",
+    "selector": "magary-overlaypanel",
+    "inputs": [
+      {
+        "name": "dismissable",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "showCloseIcon",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "closeOnEscape",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "panelAriaLabel",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onShow",
+        "description": "Event emitter for onShow"
+      },
+      {
+        "name": "onHide",
+        "description": "Event emitter for onHide"
+      }
+    ],
+    "description": "Floating overlay panel that appears relative to a target element.",
+    "filePath": "projects/ng-magary/src/lib/Overlay/overlaypanel/overlaypanel.ts"
+  },
+  {
+    "name": "MagaryPaginator",
+    "selector": "magary-paginator",
+    "inputs": [
+      {
+        "name": "rows",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "first",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "rowsPerPageOptions",
+        "type": "number[]",
+        "required": false
+      },
+      {
+        "name": "showPageLinks",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "pageLinkSize",
+        "type": "number",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onPageChange",
+        "description": "Event emitter for onPageChange"
+      }
+    ],
+    "description": "Pagination control for navigating between pages of data.",
+    "filePath": "projects/ng-magary/src/lib/Data/paginator/paginator.ts"
+  },
+  {
+    "name": "MagaryPanelmenu",
+    "selector": "magary-panelmenu",
+    "inputs": [
+      {
+        "name": "title",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "iconClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "items",
+        "type": "MenuItem[]",
+        "required": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "textColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "borderRadius",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "shadow",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "hoverColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "allowMultipleExpanded",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "defaultOpen",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "collapsed",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "mode",
+        "type": "PanelMenuMode",
+        "required": false
+      },
+      {
+        "name": "showHeader",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "showItemLabels",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "gridColumns",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "activeIndicator",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "navigationLabel",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "menuToggle",
+        "description": "Event emitter for menuToggle"
+      },
+      {
+        "name": "itemClick",
+        "description": "Event emitter for itemClick"
+      },
+      {
+        "name": "itemExpand",
+        "description": "Event emitter for itemExpand"
+      },
+      {
+        "name": "expandSidebar",
+        "description": "Event emitter for expandSidebar"
+      }
+    ],
+    "description": "Hierarchical accordion-style navigation menu for sidebars.",
+    "filePath": "projects/ng-magary/src/lib/Menu/panelmenu/panelmenu.ts"
+  },
+  {
+    "name": "MagaryPickList",
+    "selector": "magary-pick-list",
+    "inputs": [
+      {
+        "name": "sourceHeader",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "targetHeader",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "sourceStyle",
+        "type": "Record<string, string | number | null | undefined> | null",
+        "required": false
+      },
+      {
+        "name": "targetStyle",
+        "type": "Record<string, string | number | null | undefined> | null",
+        "required": false
+      },
+      {
+        "name": "showSourceControls",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showTargetControls",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "dragDrop",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "source",
+        "type": "MagaryPickListItem[]",
+        "required": false
+      },
+      {
+        "name": "target",
+        "type": "MagaryPickListItem[]",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onMoveToTarget",
+        "description": "Event emitter for onMoveToTarget"
+      },
+      {
+        "name": "onMoveToSource",
+        "description": "Event emitter for onMoveToSource"
+      },
+      {
+        "name": "onMoveAllToTarget",
+        "description": "Event emitter for onMoveAllToTarget"
+      },
+      {
+        "name": "onMoveAllToSource",
+        "description": "Event emitter for onMoveAllToSource"
+      },
+      {
+        "name": "onErrorRetry",
+        "description": "Event emitter for onErrorRetry"
+      }
+    ],
+    "description": "Dual-list transfer component for moving items between source and target lists.",
+    "filePath": "projects/ng-magary/src/lib/Data/picklist/picklist.ts"
+  },
+  {
+    "name": "MagaryRadioButton",
+    "selector": "magary-radio",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "unknown",
+        "required": true
+      },
+      {
+        "name": "checked",
+        "type": "boolean | undefined",
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "inputId",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaDescribedby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "unknown",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "selectionChange",
+        "description": "Event emitter for selectionChange"
+      },
+      {
+        "name": "blurred",
+        "description": "Event emitter for blurred"
+      }
+    ],
+    "description": "Single radio button input. Use MagaryRadioGroup for exclusive selection.",
+    "filePath": "projects/ng-magary/src/lib/Form/radio/radio.ts"
+  },
+  {
+    "name": "MagaryRadioGroup",
+    "selector": "magary-radio-group",
+    "inputs": [
+      {
+        "name": "options",
+        "type": "RadioOption[]",
+        "required": false
+      },
+      {
+        "name": "layout",
+        "type": "'vertical' | 'horizontal'",
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "inputId",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaDescribedby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "optionLabel",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "optionValue",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "optionDisabled",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Group of radio buttons for exclusive single-value selection.",
+    "filePath": "projects/ng-magary/src/lib/Form/radio/radio-group.ts"
+  },
+  {
+    "name": "MagaryRating",
+    "selector": "magary-rating",
+    "inputs": [
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "stars",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "cancel",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "iconOn",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "iconOff",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "iconCancel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "number | null",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onRate",
+        "description": "Event emitter for onRate"
+      },
+      {
+        "name": "onCancel",
+        "description": "Event emitter for onCancel"
+      }
+    ],
+    "description": "Star rating input for collecting user ratings from 1 to N stars.",
+    "filePath": "projects/ng-magary/src/lib/Form/rating/rating.ts"
+  },
+  {
+    "name": "MagarySegmented",
+    "selector": "magary-segmented",
+    "inputs": [
+      {
+        "name": "options",
+        "type": "MagarySegmentedOption[]",
+        "required": false
+      },
+      {
+        "name": "optionLabel",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "optionValue",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "SegmentedSize",
+        "required": false
+      },
+      {
+        "name": "fullWidth",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "compareWith",
+        "type": "MagarySegmentedCompareWith | null",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "change",
+        "description": "Event emitter for change"
+      }
+    ],
+    "description": "Segmented button group for selecting one option from a horizontal set.",
+    "filePath": "projects/ng-magary/src/lib/Form/segmented/segmented.ts"
+  },
+  {
+    "name": "MagarySelect",
+    "selector": "magary-select",
+    "inputs": [
+      {
+        "name": "options",
+        "type": "MagarySelectOption[]",
+        "required": false
+      },
+      {
+        "name": "optionLabel",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "optionValue",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "inputId",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaDescribedby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "SelectSize",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "filter",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "showClear",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "compareWith",
+        "type": "MagarySelectCompareWith",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Dropdown selector with search, filtering, and templating support.",
+    "filePath": "projects/ng-magary/src/lib/Form/select/select.ts"
+  },
+  {
+    "name": "MagarySidebar",
+    "selector": "magary-sidebar",
+    "inputs": [
+      {
+        "name": "sections",
+        "type": "SidebarSection[]",
+        "required": false
+      },
+      {
+        "name": "menu",
+        "type": "MenuItem[]",
+        "required": false
+      },
+      {
+        "name": "menuTitle",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "showUserSection",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showUserAvatar",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showUserName",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showUserEmail",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showLogoutButton",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "userName",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "userEmail",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "avatarConfig",
+        "type": "SidebarAvatarConfig",
+        "required": false
+      },
+      {
+        "name": "logoSrc",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "appTitle",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "appTitleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "appTitleStyle",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "layoutMode",
+        "type": "SidebarLayoutMode",
+        "required": false
+      },
+      {
+        "name": "titleColor",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "titleFontFamily",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "titleFontWeight",
+        "type": "string | number | undefined",
+        "required": false
+      },
+      {
+        "name": "titleFontStyle",
+        "type": "'normal' | 'italic' | 'oblique'",
+        "required": false
+      },
+      {
+        "name": "titleSize",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "sidebarBorder",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "sidebarShadow",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "sidebarBackground",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "sidebarWidth",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "sidebarCollapsedWidth",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "rootStyleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "rootStyle",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "headerStyleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "headerStyle",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "contentStyleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "contentStyle",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "userSectionStyleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "userSectionStyle",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "menuFilters",
+        "type": "SidebarMenuFilter[]",
+        "required": false
+      },
+      {
+        "name": "showMenuFilters",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "menuFilterLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "activeMenuFilter",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "showEmptyState",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "emptyStateTitle",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "emptyStateDescription",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "emptyStateIcon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "gridColumns",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "menuBackgroundColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "menuTextColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "menuHoverColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showToggle",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "showLogo",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "brandRoute",
+        "type": "string | readonly unknown[] | UrlTree | null",
+        "required": false
+      },
+      {
+        "name": "logoAlt",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "brandLogoAlt",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "showBrandLogo",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "brandLogoSrc",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "brandLogoPosition",
+        "type": "'top' | 'bottom' | 'center'",
+        "required": false
+      },
+      {
+        "name": "logoWidth",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "logoHeight",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "brandLogoWidth",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "brandLogoHeight",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "navigationLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "mobileMenuButtonLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "closeButtonLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "expandButtonLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "collapseButtonLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "logoutLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "menuPanelStyleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "menuPanelStyle",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "menuPanelBorderRadius",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "menuPanelShadow",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "menuActiveIndicator",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "closeOnEscape",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "trapFocus",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "isCollapsed",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onLogout",
+        "description": "Event emitter for onLogout"
+      },
+      {
+        "name": "closeSidebar",
+        "description": "Event emitter for closeSidebar"
+      },
+      {
+        "name": "menuToggle",
+        "description": "Event emitter for menuToggle"
+      },
+      {
+        "name": "menuItemClick",
+        "description": "Event emitter for menuItemClick"
+      },
+      {
+        "name": "menuItemExpand",
+        "description": "Event emitter for menuItemExpand"
+      }
+    ],
+    "description": "Application sidebar with navigation menus, avatar, theme switcher, and multiple layout modes.",
+    "filePath": "projects/ng-magary/src/lib/Menu/sidebar/sidebar.ts"
+  },
+  {
+    "name": "MagarySkeleton",
+    "selector": "magary-skeleton",
+    "inputs": [
+      {
+        "name": "shape",
+        "type": "'rectangle' | 'circle'",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "width",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "height",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "borderRadius",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "animation",
+        "type": "'shimmer' | 'none'",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Placeholder loading animation for content that is still being fetched.",
+    "filePath": "projects/ng-magary/src/lib/Misc/skeleton/skeleton.ts"
+  },
+  {
+    "name": "MagarySlideMenu",
+    "selector": "magary-slidemenu",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "menuWidth",
+        "type": "number | string",
+        "required": false
+      },
+      {
+        "name": "viewportHeight",
+        "type": "number | string",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Sliding panel menu that overlays from the edge of the screen.",
+    "filePath": "projects/ng-magary/src/lib/Menu/slidemenu/slidemenu.ts"
+  },
+  {
+    "name": "MagarySlider",
+    "selector": "magary-slider",
+    "inputs": [
+      {
+        "name": "min",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "max",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "step",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "range",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical'",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onChange",
+        "description": "Event emitter for onChange"
+      },
+      {
+        "name": "onSlideEnd",
+        "description": "Event emitter for onSlideEnd"
+      }
+    ],
+    "description": "Range slider input for selecting a numeric value within a range.",
+    "filePath": "projects/ng-magary/src/lib/Form/slider/slider.ts"
+  },
+  {
+    "name": "MagarySpeedDial",
+    "selector": "magary-speed-dial",
+    "inputs": [
+      {
+        "name": "icon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "activeIcon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "type",
+        "type": "SpeedDialType",
+        "required": false
+      },
+      {
+        "name": "direction",
+        "type": "SpeedDialDirection",
+        "required": true
+      },
+      {
+        "name": "radius",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "showMask",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "background",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "triggerSize",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "itemSize",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "itemGap",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "closeOnItemSelect",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "speedDialToggle",
+        "description": "Event emitter for speedDialToggle"
+      },
+      {
+        "name": "itemSelect",
+        "description": "Event emitter for itemSelect"
+      }
+    ],
+    "description": "Floating action button that expands to show multiple quick actions.",
+    "filePath": "projects/ng-magary/src/lib/Button/speed-dial/speed-dial.ts"
+  },
+  {
+    "name": "MagarySplitButton",
+    "selector": "magary-split-button",
+    "inputs": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "iconSize",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "backgroundColor",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "textColor",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "severity",
+        "type": "'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'help' | 'danger'",
+        "required": false
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg'",
+        "required": false
+      },
+      {
+        "name": "menuPosition",
+        "type": "'start' | 'end'",
+        "required": false
+      },
+      {
+        "name": "menuAriaLabel",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "closeOnItemSelect",
+        "type": "unknown",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onClick",
+        "description": "Event emitter for onClick"
+      },
+      {
+        "name": "onDropdownClick",
+        "description": "Event emitter for onDropdownClick"
+      },
+      {
+        "name": "itemClick",
+        "description": "Event emitter for itemClick"
+      }
+    ],
+    "description": "Button with a primary action and a dropdown arrow for additional options.",
+    "filePath": "projects/ng-magary/src/lib/Button/split-button/split-button.ts"
+  },
+  {
+    "name": "MagarySteps",
+    "selector": "magary-steps",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "StepsItem[]",
+        "required": false
+      },
+      {
+        "name": "activeIndex",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "readonly",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "NavStyleMap | null | undefined",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "orientation",
+        "type": "'horizontal' | 'vertical'",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "activeIndexChange",
+        "description": "Event emitter for activeIndexChange"
+      }
+    ],
+    "description": "Step indicator for multi-step workflows showing current progress.",
+    "filePath": "projects/ng-magary/src/lib/Menu/steps/steps.ts"
+  },
+  {
+    "name": "MagarySwitch",
+    "selector": "magary-switch",
+    "inputs": [
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "color",
+        "type": "'primary' | 'success' | 'danger' | 'warning' | 'info'",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "change",
+        "description": "Event emitter for change"
+      }
+    ],
+    "description": "Toggle switch for boolean on/off states.",
+    "filePath": "projects/ng-magary/src/lib/Form/switch/switch.ts"
+  },
+  {
+    "name": "MagaryTable",
+    "selector": "magary-table",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "MagaryTableRow[]",
+        "required": false
+      },
+      {
+        "name": "columns",
+        "type": "MagaryTableColumn[]",
+        "required": false
+      },
+      {
+        "name": "paginator",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "rows",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "globalFilterFields",
+        "type": "string[]",
+        "required": false
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "responsiveLayout",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "rowsPerPageOptions",
+        "type": "number[]",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onPageChange",
+        "description": "Event emitter for onPageChange"
+      },
+      {
+        "name": "onSortChange",
+        "description": "Event emitter for onSortChange"
+      }
+    ],
+    "description": "Feature-rich data table with sorting, filtering, pagination, and custom templates.",
+    "filePath": "projects/ng-magary/src/lib/Data/table/table.ts"
+  },
+  {
+    "name": "MagaryTabs",
+    "selector": "magary-tabs",
+    "inputs": [
+      {
+        "name": "tabListAriaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "lineColor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "backgroundLine",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "hoverBg",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "positionContent",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "background",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "padding",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "heightLine",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "panelWidth",
+        "type": "'auto' | 'full'",
+        "required": false
+      },
+      {
+        "name": "activeBg",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "activeText",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "activeTabBackground",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "activeTabTextColor",
+        "type": "string | null",
+        "required": false
+      },
+      {
+        "name": "showHeaderScrollbar",
+        "type": "unknown",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Container for tab-based navigation. Manages active tab state.",
+    "filePath": "projects/ng-magary/src/lib/Panel/tabs/tabs.ts"
+  },
+  {
+    "name": "MagaryTag",
+    "selector": "magary-tag",
+    "inputs": [
+      {
+        "name": "severity",
+        "type": "TagSeverity",
+        "required": false
+      },
+      {
+        "name": "value",
+        "type": "string | undefined",
+        "required": true
+      },
+      {
+        "name": "icon",
+        "type": "string | undefined",
+        "required": true
+      },
+      {
+        "name": "rounded",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Small label/tag for categorizing, filtering, or displaying status.",
+    "filePath": "projects/ng-magary/src/lib/Misc/tag/tag.ts"
+  },
+  {
+    "name": "MagaryTextArea",
+    "selector": "magary-textarea",
+    "inputs": [
+      {
+        "name": "rows",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "cols",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "autoResize",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "disabled",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "inputId",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaLabelledby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "ariaDescribedby",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "invalid",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "maxlength",
+        "type": "number | null",
+        "required": false
+      },
+      {
+        "name": "showCounter",
+        "type": "unknown",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Multi-line text input for longer text content.",
+    "filePath": "projects/ng-magary/src/lib/Form/textarea/textarea.ts"
+  },
+  {
+    "name": "MagaryTieredMenu",
+    "selector": "magary-tiered-menu",
+    "inputs": [
+      {
+        "name": "model",
+        "type": "MenuItem[]",
+        "required": false
+      },
+      {
+        "name": "popup",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "style",
+        "type": "Record<string, unknown> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Multi-level flyout menu that opens submenus on hover.",
+    "filePath": "projects/ng-magary/src/lib/Menu/tieredmenu/tiered-menu.ts"
+  },
+  {
+    "name": "MagaryTimeline",
+    "selector": "magary-timeline",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "unknown[]",
+        "required": false
+      },
+      {
+        "name": "layout",
+        "type": "'vertical' | 'horizontal'",
+        "required": false
+      },
+      {
+        "name": "align",
+        "type": "'left' | 'right' | 'top' | 'bottom' | 'alternate'",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Vertical timeline for displaying chronological events or steps.",
+    "filePath": "projects/ng-magary/src/lib/Data/timeline/timeline.ts"
+  },
+  {
+    "name": "MagaryToast",
+    "selector": "magary-toast",
+    "inputs": [
+      {
+        "name": "position",
+        "type": "| 'top-right'\r\n    | 'top-left'\r\n    | 'bottom-right'\r\n    | 'bottom-left'\r\n    | 'top-center'\r\n    | 'bottom-center'\r\n    | 'center'",
+        "required": false
+      },
+      {
+        "name": "baseZIndex",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "offsetX",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "offsetY",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Temporary notification that appears at the edge of the screen.",
+    "filePath": "projects/ng-magary/src/lib/Misc/toast/toast.ts"
+  },
+  {
+    "name": "MagaryToolbar",
+    "selector": "magary-toolbar",
+    "inputs": [
+      {
+        "name": "style",
+        "type": "Record<string, string | number> | null",
+        "required": false
+      },
+      {
+        "name": "styleClass",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Horizontal toolbar for grouping action buttons and controls.",
+    "filePath": "projects/ng-magary/src/lib/Panel/toolbar/toolbar.ts"
+  },
+  {
+    "name": "MagaryTooltip",
+    "selector": "[magaryTooltip]",
+    "inputs": [
+      {
+        "name": "text",
+        "type": "string | undefined",
+        "required": false
+      },
+      {
+        "name": "tooltipPosition",
+        "type": "'top' | 'bottom' | 'left' | 'right'",
+        "required": false
+      },
+      {
+        "name": "tooltipDisabled",
+        "type": "unknown",
+        "required": false
+      }
+    ],
+    "outputs": [],
+    "description": "Directive that shows a floating tooltip on hover/focus over the host element.",
+    "filePath": "projects/ng-magary/src/lib/Overlay/tooltip/tooltip.ts"
+  },
+  {
+    "name": "MagaryTree",
+    "selector": "magary-tree",
+    "inputs": [
+      {
+        "name": "value",
+        "type": "MagaryTreeNode[]",
+        "required": false
+      },
+      {
+        "name": "selectionMode",
+        "type": "'single' | 'multiple' | 'checkbox' | null",
+        "required": false
+      },
+      {
+        "name": "selection",
+        "type": "MagaryTreeSelectionValue",
+        "required": false
+      },
+      {
+        "name": "filter",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "filterPlaceholder",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "filterAriaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "filterMode",
+        "type": "'lenient' | 'strict'",
+        "required": false
+      },
+      {
+        "name": "draggable",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "droppable",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "validateDrop",
+        "type": "unknown",
+        "required": false
+      },
+      {
+        "name": "treeAriaLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "loading",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "errorMessage",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onNodeSelect",
+        "description": "Event emitter for onNodeSelect"
+      },
+      {
+        "name": "onNodeUnselect",
+        "description": "Event emitter for onNodeUnselect"
+      },
+      {
+        "name": "onNodeExpand",
+        "description": "Event emitter for onNodeExpand"
+      },
+      {
+        "name": "onNodeCollapse",
+        "description": "Event emitter for onNodeCollapse"
+      },
+      {
+        "name": "onNodeDrop",
+        "description": "Event emitter for onNodeDrop"
+      },
+      {
+        "name": "onErrorRetry",
+        "description": "Event emitter for onErrorRetry"
+      }
+    ],
+    "description": "Hierarchical tree component with expand/collapse, selection, and drag-and-drop.",
+    "filePath": "projects/ng-magary/src/lib/Data/tree/tree.ts"
+  },
+  {
+    "name": "MagaryUpload",
+    "selector": "magary-upload",
+    "inputs": [
+      {
+        "name": "mode",
+        "type": "'basic' | 'advanced'",
+        "required": false
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "accept",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "maxFileSize",
+        "type": "number | null",
+        "required": false
+      },
+      {
+        "name": "url",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "chooseLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "chooseIcon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "uploadLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "uploadIcon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "cancelLabel",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "cancelIcon",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "withCredentials",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "outputs": [
+      {
+        "name": "onUpload",
+        "description": "Event emitter for onUpload"
+      },
+      {
+        "name": "onSelect",
+        "description": "Event emitter for onSelect"
+      },
+      {
+        "name": "onClear",
+        "description": "Event emitter for onClear"
+      },
+      {
+        "name": "onError",
+        "description": "Event emitter for onError"
+      }
+    ],
+    "description": "File upload component with drag-and-drop support, progress indication, and file list.",
+    "filePath": "projects/ng-magary/src/lib/File/upload/upload.ts"
+  }
+]
