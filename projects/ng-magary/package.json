@@ -1,6 +1,6 @@
 {
   "name": "ng-magary",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "Standalone-first Angular UI library with a curated frozen root API for Magary components, services, and public types.",
   "keywords": [
     "angular",
